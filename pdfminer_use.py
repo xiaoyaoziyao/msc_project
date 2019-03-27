@@ -27,6 +27,7 @@ for page in doc.get_pages():
     for lt_obj in layout:
         if isinstance(lt_obj, LTTextBox) or isinstance(lt_obj, LTTextLine):
             extracted_text += lt_obj.get_text()
+print(extracted_text)
                 
 
 
