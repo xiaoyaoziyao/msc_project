@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-13800R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0009383</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Biochemistry/Bioinformatics</subject><subject>Biotechnology/Protein Chemistry and Proteomics</subject><subject>Microbiology/Microbial Evolution and Genomics</subject></subj-group></article-categories><title-group><article-title>Protein Aggregation Profile of the Bacterial Cytosol</article-title><alt-title alt-title-type="running-head">Protein Aggregation in <italic>E. coli</italic></alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>de Groot</surname><given-names>Natalia S.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Ventura</surname><given-names>Salvador</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Departament de Bioquímica i Biologia Molecular, Universitat Autònoma de Barcelona, Barcelona, Spain</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Lashuel</surname><given-names>Hilal</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Swiss Federal Institute of Technology Lausanne, Switzerland</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">salvador.ventura@uab.es</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: SV. Performed the experiments: NSdG. Analyzed the data: NSdG SV. Wrote the paper: NSdG SV.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>25</day><month>2</month><year>2010</year></pub-date><volume>5</volume><issue>2</issue><elocation-id>e9383</elocation-id><history>
+<date date-type="received"><day>25</day><month>10</month><year>2009</year></date>
+<date date-type="accepted"><day>30</day><month>1</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>de Groot, Ventura</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract><sec>
+<title>Background</title>
+<p>Protein misfolding is usually deleterious for the cell, either as a consequence of the loss of protein function or the buildup of insoluble and toxic aggregates. The aggregation behavior of a given polypeptide is strongly influenced by the intrinsic properties encoded in its sequence. This has allowed the development of effective computational methods to predict protein aggregation propensity.</p>
+</sec><sec>
+<title>Methodology/Principal Findings</title>
+<p>Here, we use the AGGRESCAN algorithm to approximate the aggregation profile of an experimental cytosolic <italic>Escherichia coli</italic> proteome. The analysis indicates that the aggregation propensity of bacterial proteins is associated with their length, conformation, location, function, and abundance. The data are consistent with the predictions of other algorithms on different theoretical proteomes.</p>
+</sec><sec>
+<title>Conclusions/Significance</title>
+<p>Overall, the study suggests that the avoidance of protein aggregation in functional environments acts as a strong evolutionary constraint on polypeptide sequences in both prokaryotic and eukaryotic organisms.</p>
+</sec></abstract><funding-group><funding-statement>This work was supported by grants BIO2007-68046-C02-02 from Ministerio de Ciencia y Innovación (Spain) and 2009-SGR-760 from Agència de Gestió d'Ajuts Universitaris i de Recerca (Generalitat de Catalunya). NSdG was beneficiary of a Formación del Personal Investigador fellowship awarded by the Ministerio de Ciencia y Innovación (Spain). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="17"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>In the cellular context, it is the native protein fold that determines the biological function. Therefore, protein misfolding is usually associated with the impairment of essential cellular processes. In many cases, the assembly of misfolded polypeptides into cytotoxic aggregates mediates this deleterious effect. Accordingly, protein deposition is linked to the onset of more than 40 different human disorders <xref ref-type="bibr" rid="pone.0009383-Chiti1">[1]</xref>. In these diseases, proteins usually self-assemble into highly ordered, β-sheet enriched, supramolecular structures known as amyloid fibrils. However, the aggregation into amyloid conformations is not restricted to disease-related proteins but appears to be a generic property of polypeptides <xref ref-type="bibr" rid="pone.0009383-Chiti2">[2]</xref>, <xref ref-type="bibr" rid="pone.0009383-Fandrich1">[3]</xref>, <xref ref-type="bibr" rid="pone.0009383-Guijarro1">[4]</xref>. Moreover, although traditionally thought to be restricted to eukaryotic cells, recent studies provide compelling evidence for the formation of toxic amyloid assemblies inside bacteria <xref ref-type="bibr" rid="pone.0009383-Carrio1">[5]</xref>, <xref ref-type="bibr" rid="pone.0009383-Wang1">[6]</xref>, <xref ref-type="bibr" rid="pone.0009383-Wasmer1">[7]</xref>, <xref ref-type="bibr" rid="pone.0009383-Morell1">[8]</xref>. In this scenario, because all organisms face the important challenges of protein misfolding and aggregation, the existence of evolutionarily conserved strategies to avoid the deleterious effects of undesired protein deposition is likely.</p>
+<p>The main intrinsic properties that determine protein aggregation have been defined and different computational approximations <xref ref-type="bibr" rid="pone.0009383-Tartaglia1">[9]</xref>, <xref ref-type="bibr" rid="pone.0009383-ConchilloSole1">[10]</xref>, <xref ref-type="bibr" rid="pone.0009383-FernandezEscamilla1">[11]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia2">[12]</xref>, <xref ref-type="bibr" rid="pone.0009383-Zibaee1">[13]</xref>, <xref ref-type="bibr" rid="pone.0009383-Bryan1">[14]</xref>, <xref ref-type="bibr" rid="pone.0009383-RojasQuijano1">[15]</xref>, <xref ref-type="bibr" rid="pone.0009383-Trovato1">[16]</xref>, <xref ref-type="bibr" rid="pone.0009383-Saiki1">[17]</xref>, <xref ref-type="bibr" rid="pone.0009383-Thompson1">[18]</xref>, <xref ref-type="bibr" rid="pone.0009383-Galzitskaya1">[19]</xref>, <xref ref-type="bibr" rid="pone.0009383-Yoon1">[20]</xref> have exploited them to predict with reasonable accuracy the regions of proteins with the highest aggregation propensity, also called hot spots, as well as the overall protein aggregation propensity. Most of these algorithms only require the protein primary sequence as the input, allowing their easy implementation for the large-scale analysis of protein sets <xref ref-type="bibr" rid="pone.0009383-Chiti1">[1]</xref>, <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Linding1">[22]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia3">[23]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia4">[24]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot1">[25]</xref>, <xref ref-type="bibr" rid="pone.0009383-Ventura1">[26]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>. Rosseau and co-workers used the TANGO algorithm to analyse the aggregation propensity of 28 complete proteomes, finding that polypeptides without a defined structure, and therefore with a solvent-accessible sequence, are less aggregation-prone than globular proteins <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>. The same group demonstrated that in <italic>Escherichia coli</italic> (<italic>E. coli</italic>), there is a bias towards the presence of residues with a low aggregation propensity flanking aggregation-prone stretches and that chaperones seem to have evolved to recognise these sequence features <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>. Tartaglia and co-workers employed their algorithm to compare the deposition tendency of different eukaryotic proteomes. They observed that the proteins of higher eukaryotes, and specifically of those with a longer lifespan, tend to be less aggregation-prone <xref ref-type="bibr" rid="pone.0009383-Tartaglia4">[24]</xref>. Moreover, the study of the <italic>Saccharomyces cerevisiae</italic> proteome revealed that in this organism, the protein aggregation propensity is associated to both protein function and localisation <xref ref-type="bibr" rid="pone.0009383-Tartaglia3">[23]</xref>. More recently, Chiti and co-workers used the Zyggregator program to analyse the aggregation tendency of the human proteome, their results recapitulated those of the above-discussed studies and additionally showed that long human proteins posses less-intense aggregation peaks than shorter ones <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>.</p>
+<p>Here, we have used AGGRESCAN, an algorithm previously developed by our group <xref ref-type="bibr" rid="pone.0009383-ConchilloSole1">[10]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot2">[28]</xref>, to analyse the aggregation propensity of the experimentally determined cytosolic proteome of the <italic>E. coli</italic> strain MC4100. This protein set comprises more than 1000 different proteins for which the individual abundance in the cytoplasmic fraction could be experimentally measured <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. The results of our analyses provide new insights into the relationship between the intrinsic deposition propensities, cellular protein concentrations and protein expression regulation. In addition, the data recapitulate most of the previous observations on virtual proteomes. The overall analysis suggests that natural selection modulates proteins aggregation propensities according to their cellular function, structure, concentration and localization.</p>
+</sec><sec id="s2">
+<title>Results and Discussion</title>
+<p>Increasing evidence suggests that, in addition to protein function, protein solubility acts as a strong evolutionary constrain, so that any protein can remain functional in its native state under physiological conditions at its specific cellular localisation <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>. Many of the data supporting this view come from the analysis of the aggregation properties of theoretical proteomes derived from the predicted ORFs in different genomes. Bacterial organisms have long provided the bedrock on which to understand the complexity of protein folding and aggregation <italic>in vivo</italic> <xref ref-type="bibr" rid="pone.0009383-Baneyx1">[31]</xref>. In the present work, we address the determinants underlying the aggregation properties of the real set of proteins that are present in the bacterial cytosol during exponential growth. Because these polypeptides coexist in time and space and their specific activities and relative abundance levels are the real effectors of cell function under such conditions, one might expect, in principle, that the evolutionary constrains modulating protein aggregation would become more evident in this specific protein group that when analyzing virtual proteomes, or even experimental transcriptomes, both of which do not necessarily represent the final complement of functional proteins present in a cell under particular, physiologically relevant, conditions. In addition, because the bacterial cytosol is the major cell factory for recombinant protein production, the information about the factors modulating protein aggregation in this specific compartment could be of biotechnological interest.</p>
+<sec id="s2a">
+<title>AGGRESCAN Parameters and the Protein Data Set</title>
+<p>AGGRESCAN is based in the use of a scale of amino acid aggregation propensities derived from experimental intracellular aggregation assays in living cells in the presence of the intact protein quality control machinery <xref ref-type="bibr" rid="pone.0009383-DeGroot1">[25]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot3">[32]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot4">[33]</xref>. Because, <italic>E. coli</italic> was used as a model system to derive such scale, one might expect that the algorithm would provide accurate predictions for the aggregation properties of natural bacterial proteins expressed in the same cellular context, as those analyzed in the present work. From the different outputs provided by the program, in the present work we have selected the following parameters: the number of hot spots in a sequence (NnHS), the total area of these aggregation-prone regions (THSAr) and the global protein aggregation propensity (Na4vSS). We choose this particular set of values because, in AGGRESCAN, all of them are normalized relative to the number of amino acids in the sequence, allowing the direct comparison of proteins with different sizes (<xref ref-type="fig" rid="pone-0009383-g001">Figure 1</xref>).</p>
+<fig id="pone-0009383-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g001</object-id><label>Figure 1</label><caption>
+<title>Example of AGGRESCAN output.</title>
+<p>The red line represents the aggregation profile of a putative protein with 35 amino acids. The blue line indicates the hot spot threshold, according to the individual aggregation propensity of the 20 natural amino acids and their frequency in natural proteins <xref ref-type="bibr" rid="pone.0009383-DeGroot2">[28]</xref>. The green line corresponds to the average aggregation propensity of the putative protein. The aggregation-prone areas over the threshold are filled in red (A and B). a4v is the aggregation propensity average over a sliding window of 5 to 11 residues <xref ref-type="bibr" rid="pone.0009383-ConchilloSole1">[10]</xref>. The aggregation propensity of each amino acid results from the depositional analysis of a set of amyloid polypeptides in the <italic>E. coli</italic> cytoplasm <xref ref-type="bibr" rid="pone.0009383-DeGroot1">[25]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot2">[28]</xref>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g001" xlink:type="simple"/></fig>
+<p>The protein data set includes 1103 different proteins whose presence could be experimentally detected in the purified bacterial cytosol <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. We curated the data by eliminating proteins that PSORT <xref ref-type="bibr" rid="pone.0009383-Gardy1">[34]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rey1">[35]</xref> classified as belonging to other subcellular compartments (190) and those for which experimental evidences indicated that they were not or not mainly cytosolic (49). Similarly, proteins assigned by PSORT to other compartments but experimentally shown to be cytosolic (11), were included in the analysis, resulting in an 875 cytosolic polypeptide set. It is worth to mention, that 334 proteins in this set were classified by PSORT as having an unknown location. Because they have been experimentally identified in the cytosol we considered them to belong to this cellular compartment. Importantly, removing them from the cytosolic group does not change the results we obtained for this set (data not shown) and, accordingly, the complete 875 polypeptide set was used for all of the subsequent analyses, except for the calculation of the aggregation propensities of bacterial compartments, where the whole data set was employed. AGGRESCAN was run and the above-mentioned values were calculated for each protein in the set.</p>
+</sec><sec id="s2b">
+<title>The Cytosolic Proteins Abundance Correlate with Their Aggregation Propensity</title>
+<p>Most protein aggregation processes follow a nucleation-polymerization scheme, in which the formation of the initial aggregation nuclei represents the rate-limiting step of the overall process. Nucleation processes correspond to second-order reactions and therefore the rate of protein aggregation is strongly dependent on the initial protein concentration. Therefore, the effective intracellular concentration becomes an important parameter when studying protein aggregation <italic>in vivo</italic>. The number of mRNAs in the bacterial cytosol encoding a given protein can vary from 1 to 100,000 <xref ref-type="bibr" rid="pone.0009383-Selinger1">[36]</xref>. Ishihama and co-workers developed the exponentially modified Protein Abundance Index (emPAI) to approximate the real concentration of a protein in a living cell. This index associates the number of mass spectrometry-sequenced peptides for each experimentally detected protein with its concentration in a given preparation. Later on, they applied this approach to successfully calculate the abundance of individual proteins in the bacterial cytosolic fraction <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>, <xref ref-type="bibr" rid="pone.0009383-Ishihama2">[37]</xref>.</p>
+<p>The aggregation properties of proteins appear to be associated to the specific cellular compartment where they reside <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>, which makes sense because all the polypeptides in a given location feel the same environmental conditions. This suggests that the dynamic range of aggregation propensities in a given compartment cannot be very large. Therefore, to analyze if there is any relationship between the abundance and the aggregation of cytosolic proteins, we compared the aggregation features of the 10% most abundant proteins with those of the 10% least abundant ones according to their experimental emPAI values.</p>
+<p>The normalized average number of aggregation-prone regions (NnHS) is approximately three in both groups. However, sequences devoid of any hot spot were observed only in the high-abundant group and sequences with NnHS values ≤2 were also more frequent in this subset (<xref ref-type="fig" rid="pone-0009383-g002">Figure 2A</xref>). Nevertheless, the frequency of proteins with NnHS values ≥5 was also higher in this group. The graphic of the THSAr closely resembles that of the NnHS, indicating that no important differences exist in the area associated with the aggregation-prone regions between the two groups (<xref ref-type="fig" rid="pone-0009383-g002">Figure 2B</xref>). In contrast, the overall aggregation propensity of low-abundant sequences is clearly much higher than that of high-abundant (<xref ref-type="fig" rid="pone-0009383-g002">Figure 2C</xref>).</p>
+<fig id="pone-0009383-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g002</object-id><label>Figure 2</label><caption>
+<title>Relationship between the cytosolic proteins abundance and the AGGRESCAN aggregation parameters.</title>
+<p>Cumulative distributions of the NnHS (A), THSAr (B) and Na4vSS (C) parameters in the 10% most abundant cytosolic proteins (black) and the 10% least abundant ones (grey). D) Correlation between protein abundance, measured as LN(emPAI), and protein aggregation propensity, measured as Na4vSS, in the complete cytosolic protein set. The 875 cytosolic proteins were divided in 45 groups according to their LN(emPAI) values. Each point in the graphic represents the average value of the corresponding group. Standard errors for aggregation and abundance measurements are shown.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g002" xlink:type="simple"/></fig>
+<p>To study the degree of association between the abundance of cytosolic proteins and their overall aggregation propensity, the complete 875 cytosolic protein set was divided in 45 groups according to their abundance. The average Na4vSS value of each group was calculated and the two parameters were compared (<xref ref-type="fig" rid="pone-0009383-g002">Figure 2D</xref>). A significant correlation was observed (R = 0.71), indicating a relationship between the polypeptide solubility and the abundance levels in the cytosol. This correlation suggests an evolutionary selection of bacterial cytoplasmic proteins to minimize their deposition at the concentrations required for their proper biological functions. The higher solubility of high-abundant proteins would work to prevent the aggregation of these proteins even if they become concentrated at specific sub-cytosolic locations. Moreover, because of their high concentrations, their low deposition propensity would contribute significantly to decrease the overall cytosol aggregation tendency and prevent the initiation of spontaneous, non-specific aggregation processes that can deplete the cell of less represented and/or functionally important proteins.</p>
+</sec><sec id="s2c">
+<title>The Intrinsic Properties of High-Abundant Proteins Decrease Their Aggregation Propensities</title>
+<p>The results suggest that the high-abundant proteins would be less aggregation-susceptible than low-abundant ones not because they have fewer or weaker aggregation-prone regions, but because these segments are located in a much more soluble sequence context, which counteracts their self-assembly tendency. Therefore, we analysed whether the two groups of sequences differed in their amino acid composition (<xref ref-type="fig" rid="pone-0009383-g003">Figure 3A</xref>). One of the most striking differences between the compositions of the two protein sets is a strong bias for a higher presence of Lys residues in the high-abundant protein set. Also, Glu is more represented in this set, but the difference compared to the low-abundant protein set is lower than in the case of Lys. The other charged residues, Arg and Asp, are found in similar amounts in both protein sets. This causes the overall theoretical isoalectric point (pI) of high-abundant proteins (8.48) to be higher than that of low-abundant ones (6.71). The pH of the <italic>E. coli</italic> cytosol is thought to be around 7.5 <xref ref-type="bibr" rid="pone.0009383-Wilks1">[38]</xref>. Accordingly, the overall deviation from the physiological pH is higher for the high-abundant protein set (+0.98 units) than for the low-abundant group (−0.79 units). We analysed the individual contributions of polypeptides to these deviations by measuring the percentage of proteins whose pI deviated two pH units below or above the physiological pH. According to this criterion, highly acidic and basic polypeptides constituted 27% and 53% of high-abundant proteins, respectively; in contrast, to 20% and 10% in the low-abundant protein set. This means that, as a general trend, low-abundant proteins have a pI closer to the cytosolic pH than those high-abundant. To test whether there is any relationship between the theoretical pI of a protein and its predicted deposition propensity, we grouped the polypeptides in the cytosolic fraction according to their pIs. Then the average Na4vSS was calculated for each group and plotted against the pI. The resulting graphic shows that proteins with a pI distant from the bacterial cytosolic pH, either more acidic or more basic, have lower aggregation propensities (<xref ref-type="fig" rid="pone-0009383-g003">Figure 3B</xref>), explaining why high-abundant proteins tend to populate the extremes of the pI distribution. Because the net charge of a protein at a given pH depends on its pI, these results are in agreement with previous observations indicating that, <italic>in vitro</italic>, the net charge of a protein anti-correlates with its aggregation propensity <xref ref-type="bibr" rid="pone.0009383-Chiti3">[39]</xref>, <xref ref-type="bibr" rid="pone.0009383-Vetri1">[40]</xref>, <xref ref-type="bibr" rid="pone.0009383-Militello1">[41]</xref>.</p>
+<fig id="pone-0009383-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g003</object-id><label>Figure 3</label><caption>
+<title>Relationship between the cytosolic proteins abundance and their intrinsic properties.</title>
+<p>A) Amino acid abundance in high-abundant (pale grey) and low-abundant (dark grey) sequences relative to the expected frequencies in natural proteins as deduced from Swiss-Prot <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>. B) Comparison between the proteins pI and Na4vSS values. C) Correlation between proteins hydropathicity (GRAVY) and Na4vSS values.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g003" xlink:type="simple"/></fig>
+<p>The abundance of both acidic and basic proteins in the high-abundant proteins can be attributed to the overrepresentation of Glu and especially Lys residues and suggests that these excesses of charged residues do not mutually compensate for each other in this protein group. Importantly, Lys is by far the least frequently buried residue among the 20 natural amino acids <xref ref-type="bibr" rid="pone.0009383-Shirota1">[42]</xref>. This is because it needs two other residues to hydrogen bond to its side chain nitrogen atom when it is located in the core of the protein. Glu residues are also less frequently buried in the core than Asp because they have a weaker tendency to bond to the local main chain. This suggests that in high-abundant polypeptides, these residues are preferentially located at the surface in the folded conformation. Interestingly enough, it has been recently shown that increasing the net charge in the surface of a globular protein is a very effective strategy to prevent its aggregation, even in harsh conditions <xref ref-type="bibr" rid="pone.0009383-Lawrence1">[43]</xref>, <xref ref-type="bibr" rid="pone.0009383-Vendruscolo1">[44]</xref>. It is likely that the <italic>E. coli</italic> cytosol would exploit the same strategy to prevent the aggregation of highly abundant polypeptides.</p>
+<p>Apart from the charge, another property that strongly influences the overall aggregation propensity of a protein sequence is its hydrophobicity <xref ref-type="bibr" rid="pone.0009383-Chiti2">[2]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot1">[25]</xref>, <xref ref-type="bibr" rid="pone.0009383-DeGroot5">[45]</xref>. Interestingly, the proportion of hydrophobic residues in these two groups is not dramatically different: 41.6% and 42.4% for high-abundant and low-abundant proteins, respectively. However, a bias toward the presence of larger residues, like Trp or Tyr, in the place of smaller residues, like Val, is observed in low-abundant proteins (<xref ref-type="fig" rid="pone-0009383-g003">Figure 3A</xref>). This suggests that low-abundant polypeptides could be overall more hydrophobic. We used the grand average of the hydropathicity (GRAVY) as measure of the hydrophobicity of both protein sets <xref ref-type="bibr" rid="pone.0009383-Kyte1">[46]</xref>. The average GRAVY scores are −0.24 and −0.36 for low- and high-abundant proteins, respectively. Also, 38% of high-abundant polypeptides have a GRAVY value below -0.5, in contrast with only 10% of low-abundant ones. Both data indicate that high-abundant proteins tend to be less hydrophobic than low-abundant. This is likely because hydrophobicity is strongly associated with the aggregation propensity, as shown when analyzing the correlation between these two parameters in the complete cytosolic set (R = 0.88) (<xref ref-type="fig" rid="pone-0009383-g003">Figure 3C</xref>). It is worth mentioning that Cys residues are underrepresented in both cytosolic protein sets, but especially in the high-abundant set, relative to the conjunct of natural proteins. Reducing conditions prevail in the cytoplasm and disulfide bonds do not normally form correctly in this compartment, which can result in the accumulation of misfolded and inactive proteins <xref ref-type="bibr" rid="pone.0009383-Seo1">[47]</xref>. The low content of Cys in bacterial cytosolic proteins is likely the result of a negative selection to avoid these phenomena.</p>
+</sec><sec id="s2d">
+<title>Gene Expression Levels and Cytosolic Proteins Aggregation Propensities Are Anti-Correlated</title>
+<p>The correlation between the effective protein concentration and aggregation propensity suggests that this relationship is controlled at the gene level, providing the cell with the versatility and adaptability necessary to react to different environmental conditions and/or cellular states. However, mRNA and protein abundances do not necessarily exhibit a strong correlation <xref ref-type="bibr" rid="pone.0009383-Maier1">[48]</xref>. We compared theoretical expression levels and aggregation propensities to test if the observed correlation at the protein level applies also for gene expression. The codon usage can be employed to approximate the theoretical protein expression levels, obtaining similar estimations to those derived from quantifying mRNA abundance <xref ref-type="bibr" rid="pone.0009383-Sharp1">[49]</xref>, <xref ref-type="bibr" rid="pone.0009383-Jansen1">[50]</xref>. We used the codon adaptation index as a measure of the codon usage. Low values are associated with low expression levels and high values correspond to high expression levels <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. The comparison of the 10% of genes encoding cytoplasmic proteins with the higher and lower values shows that both sets present distinctive aggregation features. The low expressed group presents higher Na4vSS values than the highly expressed one (<xref ref-type="fig" rid="pone-0009383-g004">Figure 4A</xref>). In addition, when all the cytoplasmic proteins are arranged into 20 groups according to their codon adaptation indexes, a significant correlation between this parameter and the protein aggregation propensity (R = 0.77) is observed (<xref ref-type="fig" rid="pone-0009383-g004">Figure 4B</xref>).</p>
+<fig id="pone-0009383-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g004</object-id><label>Figure 4</label><caption>
+<title>Comparison between cytosolic proteins theoretical expression levels and their aggregation parameters.</title>
+<p>A) Cumulative distributions of Na4vSS values in the 10% cytosolic proteins with the highest (black) and lowest (grey) Codon Adaptation Index (CAI) values. B) Correlation between the CAI and the Na4vSS values. Each point represents the average value over all the sequences having a CAI value comprised in an interval of 0.03.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g004" xlink:type="simple"/></fig>
+<p>These results are in agreement with those obtained using emPAI as a measure of the experimental protein concentration, which overall suggests that the relationship between the protein concentration and aggregation propensity is controlled at the gene expression level. Confirming this hypothesis, a relationship between the mRNA expression levels and protein solubility in <italic>E. coli</italic> has been recently described <xref ref-type="bibr" rid="pone.0009383-Tartaglia6">[51]</xref>. Beginning with the AGGRESCAN scale, Tartaglia and co-workers also observed that sequences with the highest mRNA expression levels are less aggregation-prone and <italic>vice versa</italic>. Importantly, this anti-correlation also applies for human proteins <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia7">[52]</xref> suggesting, that, in general, and across the different realms of life, the degree of protein solubility is sharply adjusted to the gene expression levels required for an optimal cell function. This implies that there is little margin of response in front of changes that decrease intrinsic solubility or increase expression levels <xref ref-type="bibr" rid="pone.0009383-Tartaglia7">[52]</xref>, both effects resulting in an increased aggregation probability.</p>
+</sec><sec id="s2e">
+<title>Soluble Recombinant Proteins Resemble Cytosolic High-Abundant Proteins</title>
+<p>We have previously shown that recombinant soluble proteins have, on average, lower aggregation propensities than those that accumulate as insoluble deposits in the bacterial cytosol upon heterologous overexpression <xref ref-type="bibr" rid="pone.0009383-ConchilloSole1">[10]</xref>. Extending this observation, Tartaglia and co-workers were able to theoretically forecast the solubility of recombinant proteins in bacteria from their expected expression levels <xref ref-type="bibr" rid="pone.0009383-Tartaglia6">[51]</xref>. These data converge to indicate that successfully expressed recombinant proteins would resemble the high-abundant more than the low-abundant proteins. The sum of the squared differences between the amino acid composition of a set of soluble recombinant proteins <xref ref-type="bibr" rid="pone.0009383-ConchilloSole1">[10]</xref> and that of the high-abundant and low-abundant groups is 79.5 and 114.9, respectively, thus providing support for this hypothesis.</p>
+</sec><sec id="s2f">
+<title>A Relationship between Protein Molecular Weight and Aggregation Propensity</title>
+<p>Chiti and co-workers have recently suggested that long human protein sequences have been shaped by evolution in order to reduce their intrinsic aggregation properties <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>. To study the relationship between the protein size and deposition propensity in bacterial cytosolic proteins, we grouped proteins into 50 sets according to their molecular weights (MW) and the average Na4vSS for each particular group was calculated. As shown in <xref ref-type="fig" rid="pone-0009383-g005">Figure 5A</xref>, the nature of the relationship between the aggregation propensity and protein length depends on the particular size of the polypeptide. For small proteins, up to approximately 20 kDa in size, the increase in MW is associated with a rapid increase in the aggregation propensity (R = 0.92). Once this size limit is over-passed, the correlation is inverted and further increases in size are linked to a predicted slow, but progressive, increase in solubility (R = 0.75). If we consider the shape of a protein close to a sphere, then its surface area would be approximately proportional to the two-thirds power law of its volume <xref ref-type="bibr" rid="pone.0009383-Shen1">[53]</xref>. This implies that, for globular proteins, the relative size of the core grows with protein size <xref ref-type="bibr" rid="pone.0009383-Teller1">[54]</xref>. Because hydrophobic residues usually occupy the core of the protein to avoid interaction with water molecules, it is deduced that the proportion of hydrophobic residues, and therefore the overall aggregation propensity, increases with the protein size. Nevertheless, in real proteins, the correlation between the protein size and the fraction of hydrophobic amino acids appears to apply only for proteins until 170 residues <xref ref-type="bibr" rid="pone.0009383-Shirota1">[42]</xref>, in agreement with the observation that the aggregation propensity attains maximum values in this size range. The protein aggregation propensity might act as a determinant of protein size and could be the underlying reason explaining why, above the ∼20 kDa limit, the ratio between hydrophobic and hydrophilic residues does not increase significantly with size <xref ref-type="bibr" rid="pone.0009383-Sandelin1">[55]</xref>, <xref ref-type="bibr" rid="pone.0009383-Irback1">[56]</xref>. An important implication of the volume/surface relationship in globular proteins, is that, if the proportion of hydrophobic residues is approximately constant, the number of polar residues buried inside the structure should increase with protein size <xref ref-type="bibr" rid="pone.0009383-Sandelin1">[55]</xref>, <xref ref-type="bibr" rid="pone.0009383-Kajander1">[57]</xref>, <xref ref-type="bibr" rid="pone.0009383-Bolon1">[58]</xref>. Because charged residues are more hardly accommodated inside proteins than other polar residues, long proteins tend to have fewer charges <xref ref-type="bibr" rid="pone.0009383-Kiraga1">[59]</xref>, which together with their slow folding rates <xref ref-type="bibr" rid="pone.0009383-Ivankov1">[60]</xref>, would make these proteins aggregation susceptible. According to our data, in <italic>E. coli</italic> polypeptides, these effects are partially compensated by an overall decreased sequence aggregation propensity. Importantly, above the 20-kDa limit, the NnHS values steadily decrease with the protein size indicating that in longer proteins (<xref ref-type="fig" rid="pone-0009383-g005">Figure 5B</xref>), the aggregating regions tend to be more distant in the sequence. Interestingly enough, the main bacterial chaperones, GroEL and DnaK, interact poorly with proteins smaller than 20 kDa and display a preference for larger substrates (<xref ref-type="fig" rid="pone-0009383-g005">Figure 5A</xref>) <xref ref-type="bibr" rid="pone.0009383-Ellis1">[61]</xref>, <xref ref-type="bibr" rid="pone.0009383-Thulasiraman1">[62]</xref>, <xref ref-type="bibr" rid="pone.0009383-Srikakulam1">[63]</xref>, suggesting the presence of redundant mechanisms to reduce the aggregation propensity of long bacterial proteins, as previously described for the human proteome <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>.</p>
+<fig id="pone-0009383-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g005</object-id><label>Figure 5</label><caption>
+<title>Dependence of proteins length on their aggregation properties and chaperone binding affinity.</title>
+<p>A) Dot plot distribution represents the relationship between the molecular weight and Na4vSS. Columns show the size distribution of polypeptides that bind to GroEL (grey) or DnaK (white) in <italic>E. coli</italic> according to the data in <xref ref-type="bibr" rid="pone.0009383-Ellis1">[61]</xref>. B) Relationship between the molecular weight and the NnHS. Each point corresponds to the average value over all the sequences having a length comprised in an interval of 1.9 kDa.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g005" xlink:type="simple"/></fig></sec><sec id="s2g">
+<title>The Composition of Hot Spot and Gatekeeper Stretches</title>
+<p>It has been suggested that evolution exploits negative design principles to modulate protein deposition by placing residues that counteract aggregation at the flanks of hot spots <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>, <xref ref-type="bibr" rid="pone.0009383-Monsellier2">[64]</xref>. These residues would act as gatekeepers <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref> and reduce the protein propensity to self-assemble into macromolecular aggregates. At the same time, it appears that the cellular quality control has evolved to recognize and block these sequence patterns <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>. Accordingly, several disease-associated mutations have been linked to the disruption of gatekeeper stretches <xref ref-type="bibr" rid="pone.0009383-Reumers1">[65]</xref>. To confirm these observations, we proceeded to study whether, in bacterial cytosolic proteins, aggregation-prone segments and their flanking sequence stretches differ in composition (<xref ref-type="fig" rid="pone-0009383-g006">Figure 6A</xref>). The comparison of the amino acid frequency in the these regions with their natural abundance shows that hydrophobic and aggregation-promoting residues (Val, Phe, Ile, Tyr Met and Leu) are overrepresented inside HS and, on the contrary, that flanking regions are enriched with polar and soluble residues (Arg, Asp, Glu, Asn Lys and Gln). The rate between the frequency of each amino acid inside aggregation-prone sequences and at the flanks evidenced that Phe displays a high preference for being a component of aggregation-prone regions (<xref ref-type="fig" rid="pone-0009383-g006">Figure 6B</xref>). In contrast, the charged Arg, Lys, Asp and Glu residues display a high preference for being at the flanks (<xref ref-type="fig" rid="pone-0009383-g006">Figure 6C</xref>). The gatekeeper action of these residues is exerted through the repulsive effect of the charge (Arg, Lys, Asp and Glu) and the increase in entropy penalties upon assembly (Arg and Lys). Our data are in agreement with the distribution found using the TANGO and Zygregator algorithms on the theoretical <italic>E. coli</italic> and human proteomes <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>, indicating that the protective action of the flanking residues acts on the combination of proteins that are being effectively expressed in the bacterial cytosol. As described above, another important gatekeeper residue is Pro, which acts as a beta-breaker. Because AGGRESCAN considers the presence of a Pro residue in a sequence stretch incompatible with this sequence being a hot spot, its frequency could not calculated.</p>
+<fig id="pone-0009383-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g006</object-id><label>Figure 6</label><caption>
+<title>Amino acid composition of cytosolic proteins hot spots and their flanks.</title>
+<p>A) Amino acid frequencies relative to their average frequency in natural proteins as deduced from Swiss-Prot <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>. A relative frequency of 0 for a given residue at a given position means that the residue occupies that position with a frequency identical to that in natural proteins. Residues enrichment in the hot spots (B) and at the flanks (C) relative to their frequency in natural proteins. Values above or below 1.0 point denote increases or decreases in frequency, respectively.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g006" xlink:type="simple"/></fig></sec><sec id="s2h">
+<title>The Relationship between the Aggregation Propensity and Protein Function in Cytosolic Proteins</title>
+<p>The set of genes in an operon share a common gene expression regulation and are generally connected by their biological function. As a result, proteins encoded by the same operon are suggested to be present in similar amounts in the cell <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. The observed association between protein aggregation and abundance would imply that polypeptides in the same operon should have related aggregation propensities. In agreement with this hypothesis, the standard deviation of the Na4vSS value between proteins regulated by the same operon is lower in 78% of the cases (25 of 33) than the standard deviation in the complete set of proteins (7,72 Na4vSS) that could be ascribed to a particular operon (<xref ref-type="fig" rid="pone-0009383-g007">Figure 7</xref>). This suggests again a link between protein aggregation propensities and the rates of transcriptional initiation.</p>
+<fig id="pone-0009383-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g007</object-id><label>Figure 7</label><caption>
+<title>Proteins encoded by the same operon display related aggregation propensities.</title>
+<p>Standard deviation of Na4vSS values in the 25 analysed operons. The standard deviation in the complete cytosolic set is 7.72 (dashed line). Low standard deviation within an operon indicates that the aggregation propensity of its proteins is similar.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g007" xlink:type="simple"/></fig>
+<p>The impact of protein aggregation on cellular function would be ultimately associated to individual fitness. Therefore, it is conceivable that evolution would select for an overall decreased aggregation propensity in operons performing essential cellular functions. To explore this possibility, the bacterial operons where divided in two groups according to their Na4vSS values, those with lower and higher aggregation propensity than the mean propensity of the complete operon protein set (−6.4 Na4vSS). The essentiality of approximately half of the proteins in each subset has been annotated via genetic footprinting or knockout experiments <xref ref-type="bibr" rid="pone.0009383-Gerdes1">[66]</xref>, <xref ref-type="bibr" rid="pone.0009383-Baba1">[67]</xref>. Importantly, considering only the annotated polypeptides, operons with low aggregation tendency regulate 85% of essential proteins and 15% of nonessential ones. In contrast, operons with high aggregation propensity encode a similar proportion of essential and nonessential proteins, 48% and 52% respectively (<xref ref-type="table" rid="pone-0009383-t001">Table 1</xref>), suggesting that the sequences of essential bacterial cytoplasmic proteins suffer a stronger selection against deposition than those of nonessential ones, as previously proposed for different eukaryotic organisms <xref ref-type="bibr" rid="pone.0009383-Chen1">[68]</xref>.</p>
+<table-wrap id="pone-0009383-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.t001</object-id><label>Table 1</label><caption>
+<title>Different operons regulate proteins with different aggregation propensity and biological function.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0009383-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>LA operons name</bold><xref ref-type="table-fn" rid="nt101">a</xref></td>
+<td align="left" colspan="1" rowspan="1"><bold>Na4vSS</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>n° proteins</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Ribosomal</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Essential</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Non-essential</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Unknown</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>yjeFE-amiB-mutL-miaA-hfq-hflXKC</bold></td>
+<td align="left" colspan="1" rowspan="1">−15.63</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>hscBA-fdx</bold></td>
+<td align="left" colspan="1" rowspan="1">−14.33</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rpsMKD-rpoA-rplQ</bold></td>
+<td align="left" colspan="1" rowspan="1">−14.32</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>cmk-rpsA-himD</bold></td>
+<td align="left" colspan="1" rowspan="1">−13.20</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rpsF-priB-rpsR-rplI</bold></td>
+<td align="left" colspan="1" rowspan="1">−12.93</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>pheST-himA</bold></td>
+<td align="left" colspan="1" rowspan="1">−12.50</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rpsLG-fusA-tufA</bold></td>
+<td align="left" colspan="1" rowspan="1">−11.70</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rpsJ-rplCDWB-rpsS-rplV-rpsC-rplP-rpmC-rpsQ</bold></td>
+<td align="left" colspan="1" rowspan="1">−11.47</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>thrS-infC-rpmI-rplT</bold></td>
+<td align="left" colspan="1" rowspan="1">−11.25</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>metY-yhbC-nusA-infB-rbfA-truB-rpsO-pnp</bold></td>
+<td align="left" colspan="1" rowspan="1">−11.17</td>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>iscRSUA</bold></td>
+<td align="left" colspan="1" rowspan="1">−9.78</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rpsP-rimM-trmD-rplS</bold></td>
+<td align="left" colspan="1" rowspan="1">−8.60</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rplNXE-rpsNH-rplFR-rpsE-rpmD-rplO-prlA-rpmJ</bold></td>
+<td align="left" colspan="1" rowspan="1">−8.52</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>aroKB-damX-dam-rpe-gph-trpS</bold></td>
+<td align="left" colspan="1" rowspan="1">−7.60</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>galETKM</bold></td>
+<td align="left" colspan="1" rowspan="1">−7.47</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>Total</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>68</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>35</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>28</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>34</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>51.47</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>41.18</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>7.35</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>50.00</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>HA operons name</bold><xref ref-type="table-fn" rid="nt102">b</xref></td>
+<td align="left" colspan="1" rowspan="1"><bold>Na4vSS</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>n° proteins</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Ribosomal</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Essential</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Non-essential</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Unknown</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>ribF-ileS-lspA-slpA-lytB</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.97</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rplJL-rpoBC</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.93</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>nuoABCEFGHIJKLMN</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.87</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>sdhCDAB-b0725-sucABCD</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.74</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>leuLABCD</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.55</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>entCEBA-ybdB</bold></td>
+<td align="left" colspan="1" rowspan="1">−5.54</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>minced</bold></td>
+<td align="left" colspan="1" rowspan="1">−4.50</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>fabHDG-acpP-fabF</bold></td>
+<td align="left" colspan="1" rowspan="1">−4.38</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>gcvTHP</bold></td>
+<td align="left" colspan="1" rowspan="1">−4.13</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>dhaKLM</bold></td>
+<td align="left" colspan="1" rowspan="1">−4.03</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>ptsHI-crr</bold></td>
+<td align="left" colspan="1" rowspan="1">−3.33</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>deoCABD</bold></td>
+<td align="left" colspan="1" rowspan="1">−3.23</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>thiCEFGH</bold></td>
+<td align="left" colspan="1" rowspan="1">−2.53</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>hisGDCBHAFI</bold></td>
+<td align="left" colspan="1" rowspan="1">−1.87</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>mraZW-ftsLI-murEF-mraY-murD-ftsW-murGC-ddlB-ftsQAZ</bold></td>
+<td align="left" colspan="1" rowspan="1">−1.68</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>rfbBDACX</bold></td>
+<td align="left" colspan="1" rowspan="1">−0.86</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>gatYZABCDR_2</bold></td>
+<td align="left" colspan="1" rowspan="1">5.90</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>Total</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>64</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>14</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>15</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>35</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>3.13</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>21.88</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>23.44</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>54.69</bold></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p><italic>a Operons regulating proteins with aggregation propensity lower (LA) than the mean aggregation propensity of the complete operon protein set (−6.4 Na4vSS).</italic></p></fn><fn id="nt102"><label/><p><italic>b Operons regulating proteins with aggregation propensity higher (HA) than the mean aggregation propensity of the complete operon protein set (−6.4 Na4vSS).</italic></p></fn></table-wrap-foot></table-wrap>
+<p>A deeper analysis of the two operon subsets reveals that operons with associated low aggregation propensity control the expression of 95% of the bacterial ribosomal proteins that could be ascribed to a given operon (<xref ref-type="table" rid="pone-0009383-t001">Table 1</xref>). This suggests, because of their crucial function, ribosomal proteins might display differential aggregation traits. The analysis of the 53 ribosomal proteins detected in the cytosolic extract shows that these polypeptides display fewer aggregating segments and lower Na4vSS values than the rest of proteins in the bacterial cytoplasm (<xref ref-type="fig" rid="pone-0009383-g008">Figures 8A and 8B</xref>). Low aggregation propensities have been also predicted for human ribosomal proteins <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>. Tartaglia and Vendruscolo have recently shown that human proteins in small cellular localisations tend to have low aggregation propensities, being the polypeptides residing at the ribosome the ones confined in the smallest volume and having the highest associated average solubility <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>. The same principle seems to apply for the bacterial ribosome proteins, suggesting a common evolutionary pressure for highly soluble ribosomal proteins.</p>
+<fig id="pone-0009383-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g008</object-id><label>Figure 8</label><caption>
+<title>Disordered sequence stretches display reduced protein aggregation.</title>
+<p>Cumulative distributions of NnHS and Na4vSS values in ribosomal proteins (A and B), intrinsically unstructured proteins (C and D) and disordered fragments in cytosolic proteins (E and F) are compared with the distribution in the complete cytosolic set (grey).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g008" xlink:type="simple"/></fig>
+<p>Ribosomal proteins are commonly characterised by the presence of unstructured sequence stretches. These regions act as “structural mortar”. They have evolved to bind the ribosomal RNA and thereafter acquire a partial ordered structure that fills the gaps of the ribosome structure <xref ref-type="bibr" rid="pone.0009383-Chen2">[69]</xref>. These unstructured regions might confer ribosomal proteins with a lower aggregation propensity than the rest of the cytosolic domains, in line with the idea that disordered sequences have been evolutionary selected to avoid the presence of aggregation-prone residues as a strategy to prevent the self-assembly of the fully solvent-exposed polypeptide chain in the absence of a protective secondary structure <xref ref-type="bibr" rid="pone.0009383-Linding1">[22]</xref>. To confirm that this relationship applies for bacterial cytosolic proteins, we identified those polypeptides classified as intrinsically unstructured (IUP) according to the Disprot Database <xref ref-type="bibr" rid="pone.0009383-Vucetic1">[70]</xref>, calculated their aggregation parameters and compared them with the rest of cytosolic proteins (<xref ref-type="fig" rid="pone-0009383-g008">Figures 8C and 8D</xref>). As expected, bacterial cytosolic IUPs present a significantly decreased aggregation propensity. The difference in the aggregation propensity between the folded and disordered protein regions becomes even clearer if we only consider the fully unstructured sequences in IUPs and not the whole protein (<xref ref-type="fig" rid="pone-0009383-g008">Figures 8E and 8F</xref>). Very similar results were obtained when we analyzed the 32 proteins in the cytosolic fraction predicted by the FoldUnfold algorithm <xref ref-type="bibr" rid="pone.0009383-Galzitskaya1">[19]</xref> to be intrinsically unstructured (data not shown).</p>
+<p>Computational analysis suggest that, on the average, proteins in the bacterial cytosol are more aggregation prone than those in the human cytosol <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>, which is in agreement with the hypothesis that organisms with simpler cellular organisation and shorter life span have, as a trend, higher aggregation propensities <xref ref-type="bibr" rid="pone.0009383-Tartaglia4">[24]</xref>. Because, IUPs tend to be more soluble than their globular counterparts, independently of the analyzed proteome, the higher proportion of unstructured proteins in the proteomes of higher organisms, and specifically in humans, might well account for the lower aggregation propensities of their cytosolic protein ensemble.</p>
+</sec><sec id="s2i">
+<title>Bacterial Proteins in the Periplasm and Inner and Outer Membranes Possess Characteristic Aggregation Propensities</title>
+<p>Eukaryotic cells consist of a complex collection of compartments characterised by different environmental conditions and molecular compositions <xref ref-type="bibr" rid="pone.0009383-Santoni1">[71]</xref>, <xref ref-type="bibr" rid="pone.0009383-Dougan1">[72]</xref>. It is suggested that proteins located in a particular eukaryotic subcellular location have been evolutionary selected to fold and avoid protein aggregation in this environment <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Linding1">[22]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia3">[23]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia4">[24]</xref>. Bacterial proteins are found in other compartments apart from the cytosol, like the periplasm and the inner and outer membranes. Presumably their aggregation properties would be also adapted for their optimal function at those subcellular locations. As described above, the original data set used in the present work was enriched in cytoplasmic proteins but contained also polypeptides assigned to other cellular places. We took advantage of this protein diversity to analyse the aggregation properties of proteins residing in different compartments.</p>
+<p>Cytoplasmic and periplasmic proteins exhibit a similar average aggregation propensity although a sharper distribution of Na4vSS values was observed in the periplasm, in which proteins with extreme aggregation propensities were absent (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9</xref>). The number of aggregation-prone fragments and their associated areas are lower in periplasmic proteins, suggesting that despite having a content of aggregation-prone residues similar to that of cytosolic proteins, these residues are differently arranged in the sequence (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9</xref>). This is consistent with the observation that the average number of alternating hydrophobic/hydrophilic stretches (&gt;5 residues) is 30% higher in periplasmic proteins, which might indicate a tendency to reduce the presence and impact of contiguous aggregation-prone regions. In line with this hypothesis, Chang and co-workers demonstrated experimentally that periplasmic proteins are preferentially resistant against aggregation under denaturing conditions and that this behaviour is not related to a higher thermodynamic stability, but rather to sequence characteristics <xref ref-type="bibr" rid="pone.0009383-Liu1">[73]</xref>. This property can be evolutionary advantageous in the periplasm that, in contrast to the cytosol, lacks a sophisticated cellular system to control protein quality and avoid aggregation <xref ref-type="bibr" rid="pone.0009383-Dougan1">[72]</xref> and is separated from the outside solution by a highly permeable outer membrane that provides limited protection against environmental variations. In addition, taking into account that the volume of the periplasm (0,065 µm<sup>3</sup>) is ten fold smaller than that of the cytoplasm (0,67 µm<sup>3</sup>), the results suggest that the inverse correlation observed in human tissues between the size of the cellular compartment and the aggregation propensity of the proteins that reside in it <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>, also applies in the less compartmented bacterial background.</p>
+<fig id="pone-0009383-g009" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g009</object-id><label>Figure 9</label><caption>
+<title>Relationship between subcellular localisation and protein aggregation propensity.</title>
+<p>Cumulative distribution of NnHS (A), THSAr (B) and Na4vSS (C) of proteins located in the cytoplasm (C, red), outer membrane (OM, dark green), periplasm (P, blue). D) Dot distribution of the Na4vSS values of the proteins in the previous four protein sets as well as those located in the inner membrane (IM, pale green); the vertical lines correspond to the Na4vSS mean in each protein set. Cumulative distribution of NnHS (E) and Na4vSS (F) in cytosolic and inner membrane proteins.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g009" xlink:type="simple"/></fig>
+<p>The gram-negative bacterial inner membrane is a semipermeable shield that preserves the cytoplasm environment. The proteins associated with the this membrane are principally composed of α-helices and could have a variable number of transmembrane segments (TS) per protein <xref ref-type="bibr" rid="pone.0009383-Santoni1">[71]</xref>. These regions are stable in the hydrophobic environment of this lipid bilayer due to a primary sequence rich in apolar residues. In this sense, it is necessary for a protein to have a stretch of 15–25 residues to transverse the membrane bilayer. Consequently, the extraction and analysis of these proteins in aqueous solvents frequently causes aggregation problems <xref ref-type="bibr" rid="pone.0009383-Santoni1">[71]</xref>. In agreement with these data, AGGRESCAN shows that inner membrane proteins possess the highest aggregation propensities of all bacterial proteins (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9C</xref>). Surprisingly, inner membrane proteins contain a number of hot spots similar to that in cytoplasmic proteins (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9D</xref>). However, in the inner membrane proteins, the area associated to these hot spots is much larger, indicating that they are significantly longer and/or contain more aggregation-prone residues (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9E</xref>). These results are consistent with the observations obtained with TANGO, which also showed that membrane-associated proteins do not contain a higher amount of beta-aggregation nucleating regions than the proteins located in the cytoplasm <xref ref-type="bibr" rid="pone.0009383-Linding1">[22]</xref>. Interestingly, when the Na4vSS values of inner membrane proteins were plotted as a dotted distribution, the existence of two protein groups become evident: a first group with an aggregation propensity similar to that of cytosolic proteins and a second group with particularly high Na4vSS values (<xref ref-type="fig" rid="pone-0009383-g010">Figure 10</xref>). We found that the main difference between these groups is the number of TS. The TMHMM version 2.0 <xref ref-type="bibr" rid="pone.0009383-Krogh1">[74]</xref> program calculated that 83% of the proteins in the first group contain fewer than three TS whereas 89% of the second group has more than three TS (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9</xref>, <xref ref-type="table" rid="pone-0009383-t001">Table 1</xref>). To decipher whether the different aggregation propensities exhibited by these two protein subsets was associated with particular biological functions (<xref ref-type="fig" rid="pone-0009383-g011">Figure 11</xref>), we consulted the functional descriptions collected in the Functional Catalogue Database (FunCatDB) <xref ref-type="bibr" rid="pone.0009383-Ruepp1">[75]</xref> and in the Protein Knowledgebase (UniProtKB) <xref ref-type="bibr" rid="pone.0009383-Apweiler1">[76]</xref>, <xref ref-type="bibr" rid="pone.0009383-Bairoch1">[77]</xref>. According to the FunCatDB, proteins with high Na4vSS are preferably related to “transport facilitation” whereas functions like “cellular communication” or “protein fate” appear to be associated with membrane proteins displaying lower aggregation propensities. In agreement with these data, according to UniProtKB, membrane proteins with a high aggregation propensity are preferentially involved in “electron transport” and “sugar transport” whereas proteins with low Na4vSS are associated to processes like “protein binding” and “ATP binding”. Because, according to our analysis, inner membrane proteins with high aggregation propensities also contain many TS, they must be totally inserted in the membrane, limiting their actions to functions principally related to transport and respiratory activities. In contrast, polypeptides with low aggregation propensities are anchored in the membrane by only one or two transmembrane helices, the rest of the protein being available to assume different biological activities like signal transduction <xref ref-type="bibr" rid="pone.0009383-Alix1">[78]</xref>.</p>
+<fig id="pone-0009383-g010" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g010</object-id><label>Figure 10</label><caption>
+<title>The inner membrane contains proteins with different number of transmembrane segments and associated aggregation propensities.</title>
+<p>Diagram of the inner membrane protein set showing the Na4vSS value and the number of transmembrane segments.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g010" xlink:type="simple"/></fig><fig id="pone-0009383-g011" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009383.g011</object-id><label>Figure 11</label><caption>
+<title>Inner membrane proteins with differential aggregation propensities are involved in different biological functions.</title>
+<p>Percentage of inner membrane proteins associated with the biological functions described in FunCat (A) and UniProtKB (B). The inner membrane proteins were divided in two groups according to their Na4vSS value: Na4vSS &lt;6 (42 proteins; pale grey) or Na4vSS ≥6 (43 proteins; dark grey).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009383.g011" xlink:type="simple"/></fig>
+<p>Outer membrane proteins are thought to be located in a hydrophobic environment, and consequently, they are expected to have a high aggregation tendency. However, they exhibit a low aggregation propensity according to all AGGRESCAN parameters (<xref ref-type="fig" rid="pone-0009383-g009">Figure 9</xref>). In fact, the outer membrane acts as a permeable barrier to hydrophobic substances. In general, outer membrane proteins display a beta barrel structure that encloses a hydrophilic cavity covered by a hydrophobic outer layer. The presence of an apolar hollow space is essential for their function as porins. Interestingly, this particular assembly is achieved by alternating hydrophobic and hydrophilic segments <xref ref-type="bibr" rid="pone.0009383-Cowan1">[79]</xref>, <xref ref-type="bibr" rid="pone.0009383-Schirmer1">[80]</xref>. As a result, outer membrane proteins display two times more alternating hydrophobic/hydrophilic stretches (&gt;5 residues) than cytoplasmic proteins. The presence of these characteristic polar regions reduces the protein hydropathy and overall aggregation propensity but also limits the number and area associated to aggregation-prone sequence stretches. These properties could be important not only for their biological function but also for their biogenesis. As recently reviewed by Knowles and co-workers, the folding of proteins into the outer membrane presents important challenges to Gram-negative bacteria because they must migrate from the cytosol, through the inner membrane and into the periplasm before they could be recognized by the beta-barrel assembly machinery and inserted into the outer membrane <xref ref-type="bibr" rid="pone.0009383-Knowles1">[81]</xref>. In most of these steps and compartments, the protein is unfolded and accordingly sequences with reduced aggregation propensities would represent a selective advantage.</p>
+<p>In the present study, we have characterized the aggregation properties of an experimentally determined bacterial proteome. The data are consistent with previous observations obtained through the analysis of theoretical proteomes using different computational strategies. In particular, we could confirm that the observed anti-correlation between mRNA levels and aggregations propensities <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia6">[51]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia7">[52]</xref> is effectively translated to the protein level in physiologically relevant environments. The data argue that selective pressure against protein aggregation plays an important role in shaping the protein sequence space. In this way, abundant proteins have evolved specific sequence features aimed to increase their solubility in the crowded bacterial cytosol. We could confirm that nature uses negative design principles to avoid the self-assembly of aggregation-prone regions in globular cytosolic proteins as well as the strongly decreased aggregation propensity of cytosolic IUPs, as previously proposed by Serrano and Chiti groups by analyzing different virtual proteomes <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Linding1">[22]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rousseau1">[27]</xref>. Our data demonstrate that, as in humans <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, the evolution of long bacterial protein sequences has been constrained to reduce their aggregation propensity, suggesting a general rule that applies independently of the organism complexity. Importantly, this feature appears to have coevolved coordinately with the size recognition preferences of the chaperone complement present in each particular organism <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>. The analysis of the operons aggregation propensity shows that, as previously shown in eukaryotes <xref ref-type="bibr" rid="pone.0009383-Tartaglia3">[23]</xref>, <xref ref-type="bibr" rid="pone.0009383-Chen1">[68]</xref>, bacterial proteins executing important cellular functions tend to be better adapted against aggregation than nonessential ones, suggesting again a generic mechanism to improve cellular fitness in normal physiological conditions but specially in front of stress. Finally, we could confirm that, as in humans <xref ref-type="bibr" rid="pone.0009383-Monsellier1">[21]</xref>, <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref> and yeast <xref ref-type="bibr" rid="pone.0009383-Tartaglia3">[23]</xref>, in bacteria, proteins residing in different compartments display specific aggregation features, suggesting a preferential adaptation to each particular subcellular environment, that as proposed by Tartaglia and Vendruscolo might well be related to the volume of the considered compartment <xref ref-type="bibr" rid="pone.0009383-Tartaglia5">[30]</xref>.</p>
+<p>Overall, our results confirm the general validity of bioinformatic analyses to elucidate the mechanisms by which evolution tunes protein aggregation properties. Together, the results of such analyses argue that aggregation propensity acts as strong constraint during evolution, shaping different polypeptide properties. Accordingly, redundant natural mechanisms to avoid protein aggregation in biological contexts appear to exist. In turn, it is likely that the analysis of the aggregation properties of natural bacterial proteins would provide useful lessons to rationally manipulate and control the production of recombinant proteins in the bacterial cytosol.</p>
+</sec></sec><sec id="s3" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s3a">
+<title>Databases and Parameters Calculation</title>
+<p>The amino acid sequences of bacterial proteins were obtained from Swiss-Prot Protein knowledgebase <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>. The protein subcellular location was obtained from PSORT database, version 2.0 <xref ref-type="bibr" rid="pone.0009383-Gardy1">[34]</xref>, <xref ref-type="bibr" rid="pone.0009383-Rey1">[35]</xref>.</p>
+<p>The functions associated with the different sequences in the study were identified using the hierarchically structured functional catalogue (FunCat) <xref ref-type="bibr" rid="pone.0009383-Ruepp1">[75]</xref> and the Protein Knowledgebase (UniProtKB) <xref ref-type="bibr" rid="pone.0009383-Apweiler1">[76]</xref>, <xref ref-type="bibr" rid="pone.0009383-Bairoch1">[77]</xref>. FunCat provides a set of functional categories, from 25 catalogued, for each classified protein. The biological processes associated with the different protein sets were assigned according to the ontology information in the TrEMBL database at the UniProtKB server. The essentiality of the bacterial proteins for the cellular fitness was derived from the data reported in <xref ref-type="bibr" rid="pone.0009383-Gerdes1">[66]</xref>, <xref ref-type="bibr" rid="pone.0009383-Baba1">[67]</xref>.</p>
+<p>The Database of Protein Disorder (DisProt) (release 4.9) has been used to identify disordered proteins or proteins containing extensive unstructured sequence stretches <xref ref-type="bibr" rid="pone.0009383-Vucetic1">[70]</xref>. DisProt contains 47 <italic>E. coli</italic> proteins experimentally shown to be intrinsically disordered; 20 of them are included in the analysed protein set.</p>
+<p>The RegulonDB data base has been used to obtain the known <italic>E. coli</italic> operon structure set <xref ref-type="bibr" rid="pone.0009383-Huerta1">[83]</xref>. We only considered those operons encoding for at least 3 of the cytosolic proteins in the set.</p>
+<p>The average hydropathy score (GRAVY) was calculated using the hydrophobicity values obtained from the Kyte-Doolittle scale <xref ref-type="bibr" rid="pone.0009383-Kyte1">[46]</xref>. The GRAVY was described as (<bold>∑<sup>n</sup><sub>i = 1</sub>H<sub>i</sub></bold>)<bold>/n</bold> where <bold>Hi</bold> is the protein residue hydrophobicity at position <bold>i</bold> and <bold>n</bold> is the protein length.</p>
+<p>The number of transmembrane regions was calculated employing TMHMM version 2.0 <xref ref-type="bibr" rid="pone.0009383-Krogh1">[74]</xref>.</p>
+<p>The Exponentially Modified Protein Abundance Index (emPAI) of each protein was obtained from the data reported in <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. The cumulative distribution of the Na4vSS, NnHS and THSAr values associated with the 87 cytosolic polypeptides displaying the highest and lowest emPAI were plotted to analyse their aggregational properties. To analyse the overall correlation between cytosolic proteins abundance and their aggregation propensity we used the logarithm of emPAI LN(emPAI), because, as Na4vSS, it displays in a lineal distribution. The LN(emPAI) comprise values between −2.5 and 23; however there were only 4 proteins between 14 and 23 values and they were discarded for further analysis. The remaining 871 proteins were divided in 45 grups at intervals of LN(emPAI) of 0.37 and the average value of each group calculated. In this way, the different length intervals have similar weights in the correlation, independently of the number of polypeptides present in each group.</p>
+<p>The Codon Adaptation Index values were obtained from <xref ref-type="bibr" rid="pone.0009383-Ishihama1">[29]</xref>. The cytosolic polypeptides possess values between 0.19 and 0.83. They were distributed in 20 intervals according to their indexes. Two of these intervals do not contain any protein or only one polypeptide and were discarded to avoid the dispersion of the data distribution. Subsequently the Na4vSS and codon adaptation index average of the 18 remainder groups were calculated.</p>
+<p>The pI of the different polypeptides were calculated using the ProtParam tool of the ExPASy proteomics server of the Swiss Institute of Bioinformatics <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>.</p>
+</sec><sec id="s3b">
+<title>Composition of Hot Spots and Flanquing Stretches</title>
+<p>Flanquing regions were defined as the 5 residues at the N- and C-sides of a given HS. The frequency of each natural amino acid inside the hot spots and at their flanks was compared with their average frequency in natural proteins as deduced from Swiss-Prot <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>. The relative frequency of a given amino acid in hot spots (F<sub>rh</sub>) was calculated as: <bold>F<sub>rh</sub> = (F<sub>h</sub>/F<sub>n</sub>)−1</bold> where <bold>F<sub>f</sub></bold> is its frequency inside the hot spots and <bold>F<sub>n</sub></bold> its frequency in nature accordingly to Swiss-Prot data base <xref ref-type="bibr" rid="pone.0009383-Boeckmann1">[82]</xref>. Values above 1 or below 1 indicate higher or lower frequency, respectively. The same procedure was used to calculate the relative frequency of a given amino acid at the flanks.</p>
+</sec></sec></body>
+<back>
+<ack>
+<p>We thank Monica Pardo for her assistance with the initial data analysis. We thank Prof. Aviles and Dr. Vendrell for lab facilities and continuous support.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0009383-Chiti1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Protein Misfolding, Functional Amyloid, And Human Disease.</article-title>             <source>Annu Rev Biochem</source>             <volume>75</volume>             <fpage>333</fpage>             <lpage>366</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Chiti2"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Stefani</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Taddei</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Ramponi</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Rationalization Of The Effects Of Mutations On Peptide And Protein Aggregation Rates.</article-title>             <source>Nature</source>             <volume>424</volume>             <fpage>805</fpage>             <lpage>808</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Fandrich1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fandrich</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Fletcher</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Amyloid Fibrils From Muscle Myoglobin.</article-title>             <source>Nature</source>             <volume>410</volume>             <fpage>165</fpage>             <lpage>166</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Guijarro1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Guijarro</surname><given-names>JI</given-names></name>
+<name name-style="western"><surname>Sunde</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Jones</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Campbell</surname><given-names>ID</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Amyloid Fibril Formation By An SH3 Domain.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>95</volume>             <fpage>4224</fpage>             <lpage>4228</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Carrio1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Carrio</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Gonzalez-Montalban</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Vera</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Villaverde</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Amyloid-Like Properties Of Bacterial Inclusion Bodies.</article-title>             <source>J Mol Biol</source>             <volume>347</volume>             <fpage>1025</fpage>             <lpage>1037</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Wang1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Maji</surname><given-names>SK</given-names></name>
+<name name-style="western"><surname>Sawaya</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Eisenberg</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Riek</surname><given-names>R</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Bacterial Inclusion Bodies Contain Amyloid-Like Structure.</article-title>             <source>Plos Biol</source>             <volume>6</volume>             <fpage>E195</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Wasmer1"><label>7</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wasmer</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Benkemoun</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Sabaté</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Steinmetz</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Coulary-Salin</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2009</year>             <comment>Solid-State NMR Reveals That E. Coli Inclusion Bodies Of HET-S(218–289) Are Amyloids. Angewandte Chemie. In Press</comment>          </element-citation></ref>
+<ref id="pone.0009383-Morell1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morell</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Bravo</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Espargaro</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Sisquella</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Inclusion Bodies: Specificity In Their Aggregation Process And Amyloid-Like Structure.</article-title>             <source>Biochim Biophys Acta</source>             <volume>1783</volume>             <fpage>1815</fpage>             <lpage>1825</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The Zyggregator Method For Predicting Protein Aggregation Propensities.</article-title>             <source>Chem Soc Rev</source>             <volume>37</volume>             <fpage>1395</fpage>             <lpage>1401</lpage>          </element-citation></ref>
+<ref id="pone.0009383-ConchilloSole1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Conchillo-Sole</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>
+<name name-style="western"><surname>Vendrell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Daura</surname><given-names>X</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>AGGRESCAN: A Server For The Prediction And Evaluation Of “Hot Spots” Of Aggregation In Polypeptides.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <fpage>65</fpage>          </element-citation></ref>
+<ref id="pone.0009383-FernandezEscamilla1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fernandez-Escamilla</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Schymkowitz</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Prediction Of Sequence-Dependent And Mutational Effects On The Aggregation Of Peptides And Proteins.</article-title>             <source>Nat Biotechnol</source>             <volume>22</volume>             <fpage>1302</fpage>             <lpage>1306</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia2"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Cavalli</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pellarin</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Caflisch</surname><given-names>A</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Prediction Of Aggregation Rate And Aggregation-Prone Segments In Polypeptide Sequences.</article-title>             <source>Protein Sci</source>             <volume>14</volume>             <fpage>2723</fpage>             <lpage>2734</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Zibaee1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zibaee</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Makin</surname><given-names>OS</given-names></name>
+<name name-style="western"><surname>Goedert</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Serpell</surname><given-names>LC</given-names></name>
+</person-group>             <year>2007</year>             <article-title>A Simple Algorithm Locates Beta-Strands In The Amyloid Fibril Core Of Alpha-Synuclein, Abeta, And Tau Using The Amino Acid Sequence Alone.</article-title>             <source>Protein Sci</source>             <volume>16</volume>             <fpage>906</fpage>             <lpage>918</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Bryan1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bryan</surname><given-names>AW</given-names><suffix>Jr</suffix></name>
+<name name-style="western"><surname>Menke</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Cowen</surname><given-names>LJ</given-names></name>
+<name name-style="western"><surname>Lindquist</surname><given-names>SL</given-names></name>
+<name name-style="western"><surname>Berger</surname><given-names>B</given-names></name>
+</person-group>             <year>2009</year>             <article-title>BETASCAN: Probable Beta-Amyloids Identified By Pairwise Probabilistic Analysis.</article-title>             <source>Plos Comput Biol</source>             <volume>5</volume>             <fpage>E1000333</fpage>          </element-citation></ref>
+<ref id="pone.0009383-RojasQuijano1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rojas Quijano</surname><given-names>FA</given-names></name>
+<name name-style="western"><surname>Morrow</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Wise</surname><given-names>BM</given-names></name>
+<name name-style="western"><surname>Brancia</surname><given-names>FL</given-names></name>
+<name name-style="western"><surname>Goux</surname><given-names>WJ</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Prediction Of Nucleating Sequences From Amyloidogenic Propensities Of Tau-Related Peptides.</article-title>             <source>Biochemistry</source>             <volume>45</volume>             <fpage>4638</fpage>             <lpage>4652</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Trovato1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Trovato</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Maritan</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Seno</surname><given-names>F</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Insight Into The Structure Of Amyloid Fibrils From The Analysis Of Globular Proteins.</article-title>             <source>Plos Comput Biol</source>             <volume>2</volume>             <fpage>E170</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Saiki1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Saiki</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Konakahara</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Morii</surname><given-names>H</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Interaction-Based Evaluation Of The Propensity For Amyloid Formation With Cross-Beta Structure.</article-title>             <source>Biochem Biophys Res Commun</source>             <volume>343</volume>             <fpage>1262</fpage>             <lpage>1271</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Thompson1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thompson</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Sievers</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Karanicolas</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ivanova</surname><given-names>MI</given-names></name>
+<name name-style="western"><surname>Baker</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>The 3D Profile Method For Identifying Fibril-Forming Segments Of Proteins.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>103</volume>             <fpage>4074</fpage>             <lpage>4078</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Galzitskaya1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Galzitskaya</surname><given-names>OV</given-names></name>
+<name name-style="western"><surname>Garbuzynskiy</surname><given-names>SO</given-names></name>
+<name name-style="western"><surname>Lobanov</surname><given-names>MY</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Prediction Of Amyloidogenic And Disordered Regions In Protein Chains.</article-title>             <source>Plos Comput Biol</source>             <volume>2</volume>             <fpage>E177</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Yoon1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yoon</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Welsh</surname><given-names>WJ</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Detecting Hidden Sequence Propensity For Amyloid Fibril Formation.</article-title>             <source>Protein Sci</source>             <volume>13</volume>             <fpage>2149</fpage>             <lpage>2160</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Monsellier1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Monsellier</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Ramazzotti</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Taddei</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Aggregation Propensity Of The Human Proteome.</article-title>             <source>Plos Comput Biol</source>             <volume>4</volume>             <fpage>E1000199</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Linding1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Linding</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Schymkowitz</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Diella</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A Comparative Study Of The Relationship Between Protein Structure And Beta-Aggregation In Globular And Intrinsically Disordered Proteins.</article-title>             <source>J Mol Biol</source>             <volume>342</volume>             <fpage>345</fpage>             <lpage>353</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia3"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Caflisch</surname><given-names>A</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Computational Analysis Of The S. Cerevisiae Proteome Reveals The Function And Cellular Localization Of The Least And Most Amyloidogenic Proteins.</article-title>             <source>Proteins</source>             <volume>68</volume>             <fpage>273</fpage>             <lpage>278</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia4"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Pellarin</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Cavalli</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Caflisch</surname><given-names>A</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Organism Complexity Anti-Correlates With Proteomic Beta-Aggregation Propensity.</article-title>             <source>Protein Sci</source>             <volume>14</volume>             <fpage>2735</fpage>             <lpage>2740</lpage>          </element-citation></ref>
+<ref id="pone.0009383-DeGroot1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>
+<name name-style="western"><surname>Vendrell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Mutagenesis Of The Central Hydrophobic Cluster In Abeta42 Alzheimer's Peptide. Side-Chain Properties Correlate With Aggregation Propensities.</article-title>             <source>Febs J</source>             <volume>273</volume>             <fpage>658</fpage>             <lpage>668</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Ventura1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Zurdo</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Narayanan</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Parreno</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Mangues</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Short Amino Acid Stretches Can Mediate Amyloid Formation In Globular Proteins: The Src Homology 3 (SH3) Case.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>101</volume>             <fpage>7258</fpage>             <lpage>7263</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Rousseau1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Schymkowitz</surname><given-names>JW</given-names></name>
+</person-group>             <year>2006</year>             <article-title>How Evolutionary Pressure Against Protein Aggregation Shaped Chaperone Specificity.</article-title>             <source>J Mol Biol</source>             <volume>355</volume>             <fpage>1037</fpage>             <lpage>1047</lpage>          </element-citation></ref>
+<ref id="pone.0009383-DeGroot2"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Pallares</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>
+<name name-style="western"><surname>Vendrell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Prediction Of “Hot Spots” Of Aggregation In Disease-Linked Polypeptides.</article-title>             <source>BMC Struct Biol</source>             <volume>5</volume>             <fpage>18</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Ishihama1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ishihama</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Schmidt</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Rappsilber</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mann</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Hartl</surname><given-names>FU</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Protein Abundance Profiling Of The Escherichia Coli Cytosol.</article-title>             <source>BMC Genomics</source>             <volume>9</volume>             <fpage>102</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia5"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Correlation Between Mrna Expression Levels And Protein Aggregation Propensities In Subcellular Localisations.</article-title>             <source>Mol Biosyst</source>             <volume>5</volume>             <fpage>1873</fpage>             <lpage>1876</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Baneyx1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Baneyx</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Mujacic</surname><given-names>M</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Recombinant Protein Folding And Misfolding In Escherichia Coli.</article-title>             <source>Nat Biotechnol</source>             <volume>22</volume>             <fpage>1399</fpage>             <lpage>1408</lpage>          </element-citation></ref>
+<ref id="pone.0009383-DeGroot3"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Protein Activity In Bacterial Inclusion Bodies Correlates With Predicted Aggregation Rates.</article-title>             <source>J Biotechnol</source>             <volume>125</volume>             <fpage>110</fpage>             <lpage>113</lpage>          </element-citation></ref>
+<ref id="pone.0009383-DeGroot4"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Effect Of Temperature On Protein Quality In Bacterial Inclusion Bodies.</article-title>             <source>FEBS Lett</source>             <volume>580</volume>             <fpage>6471</fpage>             <lpage>6476</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Gardy1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gardy</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Laird</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Rey</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Walsh</surname><given-names>CJ</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Psortb V.2.0: Expanded Prediction Of Bacterial Protein Subcellular Localization And Insights Gained From Comparative Proteome Analysis.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>617</fpage>             <lpage>623</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Rey1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rey</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Acab</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Gardy</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Laird</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Defays</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Psortdb: A Protein Subcellular Localization Database For Bacteria.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>D164</fpage>             <lpage>168</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Selinger1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Selinger</surname><given-names>DW</given-names></name>
+<name name-style="western"><surname>Cheung</surname><given-names>KJ</given-names></name>
+<name name-style="western"><surname>Mei</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Johansson</surname><given-names>EM</given-names></name>
+<name name-style="western"><surname>Richmond</surname><given-names>CS</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>RNA Expression Analysis Using A 30 Base Pair Resolution Escherichia Coli Genome Array.</article-title>             <source>Nat Biotechnol</source>             <volume>18</volume>             <fpage>1262</fpage>             <lpage>1268</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Ishihama2"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ishihama</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Oda</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Tabata</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Sato</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Nagasu</surname><given-names>T</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Exponentially Modified Protein Abundance Index (Empai) For Estimation Of Absolute Protein Amount In Proteomics By The Number Of Sequenced Peptides Per Protein.</article-title>             <source>Mol Cell Proteomics</source>             <volume>4</volume>             <fpage>1265</fpage>             <lpage>1272</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Wilks1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wilks</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Slonczewski</surname><given-names>JL</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Ph Of The Cytoplasm And Periplasm Of Escherichia Coli: Rapid Measurement By Green Fluorescent Protein Fluorimetry.</article-title>             <source>J Bacteriol</source>             <volume>189</volume>             <fpage>5601</fpage>             <lpage>5607</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Chiti3"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Calamai</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Taddei</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Stefani</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Ramponi</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Studies Of The Aggregation Of Mutant Proteins In Vitro Provide Insights Into The Genetics Of Amyloid Diseases.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>99</volume>             <supplement>Suppl 4</supplement>             <fpage>16419</fpage>             <lpage>16426</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Vetri1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vetri</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Librizzi</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Leone</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Militello</surname><given-names>V</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Thermal Aggregation Of Bovine Serum Albumin At Different Ph: Comparison With Human Serum Albumin.</article-title>             <source>Eur Biophys J</source>             <volume>36</volume>             <fpage>717</fpage>             <lpage>725</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Militello1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Militello</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Casarino</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Emanuele</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Giostra</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pullara</surname><given-names>F</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Aggregation Kinetics Of Bovine Serum Albumin Studied By FTIR Spectroscopy And Light Scattering.</article-title>             <source>Biophys Chem</source>             <volume>107</volume>             <fpage>175</fpage>             <lpage>187</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Shirota1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shirota</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Ishida</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Kinoshita</surname><given-names>K</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Effects Of Surface-To-Volume Ratio Of Proteins On Hydrophilic Residues: Decrease In Occurrence And Increase In Buried Fraction.</article-title>             <source>Protein Sci</source>             <volume>17</volume>             <fpage>1596</fpage>             <lpage>1602</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Lawrence1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lawrence</surname><given-names>MS</given-names></name>
+<name name-style="western"><surname>Phillips</surname><given-names>KJ</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>DR</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Supercharging Proteins Can Impart Unusual Resilience.</article-title>             <source>J Am Chem Soc</source>             <volume>129</volume>             <fpage>10110</fpage>             <lpage>10112</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Vendruscolo1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Chemical Biology: More Charges Against Aggregation.</article-title>             <source>Nature</source>             <volume>449</volume>             <fpage>555</fpage>          </element-citation></ref>
+<ref id="pone.0009383-DeGroot5"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Groot</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Parella</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>
+<name name-style="western"><surname>Vendrell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Ile-Phe Dipeptide Self-Assembly: Clues To Amyloid Formation.</article-title>             <source>Biophys J</source>             <volume>92</volume>             <fpage>1732</fpage>             <lpage>1741</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Kyte1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kyte</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Doolittle</surname><given-names>RF</given-names></name>
+</person-group>             <year>1982</year>             <article-title>A Simple Method For Displaying The Hydropathic Character Of A Protein.</article-title>             <source>J Mol Biol</source>             <volume>157</volume>             <fpage>105</fpage>             <lpage>132</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Seo1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Seo</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Jeong</surname><given-names>KJ</given-names></name>
+<name name-style="western"><surname>Leysath</surname><given-names>CE</given-names></name>
+<name name-style="western"><surname>Ellington</surname><given-names>AD</given-names></name>
+<name name-style="western"><surname>Iverson</surname><given-names>BL</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Engineering Antibody Fragments To Fold In The Absence Of Disulfide Bonds.</article-title>             <source>Protein Sci</source>             <volume>18</volume>             <fpage>259</fpage>             <lpage>267</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Maier1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maier</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Guell</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Correlation Of Mrna And Protein In Complex Biological Samples.</article-title>             <source>FEBS Lett</source>             <volume>583</volume>             <fpage>3966</fpage>             <lpage>3973</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Sharp1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sharp</surname><given-names>PM</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>WH</given-names></name>
+</person-group>             <year>1987</year>             <article-title>The Codon Adaptation Index–A Measure Of Directional Synonymous Codon Usage Bias, And Its Potential Applications.</article-title>             <source>Nucleic Acids Res</source>             <volume>15</volume>             <fpage>1281</fpage>             <lpage>1295</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Jansen1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jansen</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Bussemaker</surname><given-names>HJ</given-names></name>
+<name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Revisiting The Codon Adaptation Index From A Whole-Genome Perspective: Analyzing The Relationship Between Gene Expression And Codon Occurrence In Yeast Using A Variety Of Models.</article-title>             <source>Nucleic Acids Res</source>             <volume>31</volume>             <fpage>2242</fpage>             <lpage>2251</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia6"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Pechmann</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A Relationship Between Mrna Expression Levels And Protein Solubility In E. Coli.</article-title>             <source>J Mol Biol</source>             <volume>388</volume>             <fpage>381</fpage>             <lpage>389</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Tartaglia7"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tartaglia</surname><given-names>GG</given-names></name>
+<name name-style="western"><surname>Pechmann</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Life On The Edge: A Link Between Gene Expression Levels And Aggregation Rates Of Human Proteins.</article-title>             <source>Trends Biochem Sci</source>             <volume>32</volume>             <fpage>204</fpage>             <lpage>206</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Shen1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shen</surname><given-names>M-Y</given-names></name>
+<name name-style="western"><surname>Davis</surname><given-names>FP</given-names></name>
+<name name-style="western"><surname>Sali</surname><given-names>A</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The Optimal Size Of A Globular Protein Domain: A Simple Sphere-Packing Model.</article-title>             <source>Chemical Physics Letters</source>             <volume>405</volume>             <fpage>224</fpage>             <lpage>228</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Teller1"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Teller</surname><given-names>DC</given-names></name>
+</person-group>             <year>1976</year>             <article-title>Accessible Area, Packing Volumes And Interaction Surfaces Of Globular Proteins.</article-title>             <source>Nature</source>             <volume>260</volume>             <fpage>729</fpage>             <lpage>731</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Sandelin1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sandelin</surname><given-names>E</given-names></name>
+</person-group>             <year>2004</year>             <article-title>On Hydrophobicity And Conformational Specificity In Proteins.</article-title>             <source>Biophys J</source>             <volume>86</volume>             <fpage>23</fpage>             <lpage>30</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Irback1"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Irback</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Sandelin</surname><given-names>E</given-names></name>
+</person-group>             <year>2000</year>             <article-title>On Hydrophobicity Correlations In Protein Chains.</article-title>             <source>Biophys J</source>             <volume>79</volume>             <fpage>2252</fpage>             <lpage>2258</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Kajander1"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kajander</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Kahn</surname><given-names>PC</given-names></name>
+<name name-style="western"><surname>Passila</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Cohen</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>Lehtio</surname><given-names>L</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Buried Charged Surface In Proteins.</article-title>             <source>Structure</source>             <volume>8</volume>             <fpage>1203</fpage>             <lpage>1214</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Bolon1"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolon</surname><given-names>DN</given-names></name>
+<name name-style="western"><surname>Mayo</surname><given-names>SL</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Polar Residues In The Protein Core Of Escherichia Coli Thioredoxin Are Important For Fold Specificity.</article-title>             <source>Biochemistry</source>             <volume>40</volume>             <fpage>10047</fpage>             <lpage>10053</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Kiraga1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kiraga</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mackiewicz</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Mackiewicz</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Kowalczuk</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Biecek</surname><given-names>P</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The Relationships Between The Isoelectric Point And: Length Of Proteins, Taxonomy And Ecology Of Organisms.</article-title>             <source>BMC Genomics</source>             <volume>8</volume>             <fpage>163</fpage>          </element-citation></ref>
+<ref id="pone.0009383-Ivankov1"><label>60</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ivankov</surname><given-names>DN</given-names></name>
+<name name-style="western"><surname>Garbuzynskiy</surname><given-names>SO</given-names></name>
+<name name-style="western"><surname>Alm</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Plaxco</surname><given-names>KW</given-names></name>
+<name name-style="western"><surname>Baker</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Contact Order Revisited: Influence Of Protein Size On The Folding Rate.</article-title>             <source>Protein Sci</source>             <volume>12</volume>             <fpage>2057</fpage>             <lpage>2062</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Ellis1"><label>61</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ellis</surname><given-names>RJ</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Chaperone Substrates Inside The Cell.</article-title>             <source>Trends Biochem Sci</source>             <volume>25</volume>             <fpage>210</fpage>             <lpage>212</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Thulasiraman1"><label>62</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thulasiraman</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>CF</given-names></name>
+<name name-style="western"><surname>Frydman</surname><given-names>J</given-names></name>
+</person-group>             <year>1999</year>             <article-title>In Vivo Newly Translated Polypeptides Are Sequestered In A Protected Folding Environment.</article-title>             <source>EMBO J</source>             <volume>18</volume>             <fpage>85</fpage>             <lpage>95</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Srikakulam1"><label>63</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Srikakulam</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Winkelmann</surname><given-names>DA</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Myosin II Folding Is Mediated By A Molecular Chaperonin.</article-title>             <source>J Biol Chem</source>             <volume>274</volume>             <fpage>27265</fpage>             <lpage>27273</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Monsellier2"><label>64</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Monsellier</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Prevention Of Amyloid-Like Aggregation As A Driving Force Of Protein Evolution.</article-title>             <source>EMBO Rep</source>             <volume>8</volume>             <fpage>737</fpage>             <lpage>742</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Reumers1"><label>65</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Reumers</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Maurer-Stroh</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Schymkowitz</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Protein Sequences Encode Safeguards Against Aggregation.</article-title>             <source>Hum Mutat</source>             <volume>30</volume>             <fpage>431</fpage>             <lpage>437</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Gerdes1"><label>66</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gerdes</surname><given-names>SY</given-names></name>
+<name name-style="western"><surname>Scholle</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Campbell</surname><given-names>JW</given-names></name>
+<name name-style="western"><surname>Balazsi</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Ravasz</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Experimental Determination And System Level Analysis Of Essential Genes In Escherichia Coli MG1655.</article-title>             <source>J Bacteriol</source>             <volume>185</volume>             <fpage>5673</fpage>             <lpage>5684</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Baba1"><label>67</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Baba</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Ara</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Hasegawa</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Takai</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Okumura</surname><given-names>Y</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Construction Of Escherichia Coli K-12 In-Frame, Single-Gene Knockout Mutants: The Keio Collection.</article-title>             <source>Mol Syst Biol</source>             <volume>2</volume>             <comment>2006 0008</comment>          </element-citation></ref>
+<ref id="pone.0009383-Chen1"><label>68</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Dokholyan</surname><given-names>NV</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Natural Selection Against Protein Aggregation On Self-Interacting And Essential Proteins In Yeast, Fly, And Worm.</article-title>             <source>Mol Biol Evol</source>             <volume>25</volume>             <fpage>1530</fpage>             <lpage>1533</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Chen2"><label>69</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>JW</given-names></name>
+<name name-style="western"><surname>Romero</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Uversky</surname><given-names>VN</given-names></name>
+<name name-style="western"><surname>Dunker</surname><given-names>AK</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Conservation Of Intrinsic Disorder In Protein Domains And Families: II. Functions Of Conserved Disorder.</article-title>             <source>J Proteome Res</source>             <volume>5</volume>             <fpage>888</fpage>             <lpage>898</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Vucetic1"><label>70</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vucetic</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Obradovic</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Vacic</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Radivojac</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Peng</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Disprot: A Database Of Protein Disorder.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>137</fpage>             <lpage>140</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Santoni1"><label>71</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Santoni</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Molloy</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Rabilloud</surname><given-names>T</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Membrane Proteins And Proteomics: Un Amour Impossible?</article-title>             <source>Electrophoresis</source>             <volume>21</volume>             <fpage>1054</fpage>             <lpage>1070</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Dougan1"><label>72</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dougan</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Mogk</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bukau</surname><given-names>B</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Protein Folding And Degradation In Bacteria: To Degrade Or Not To Degrade? That Is The Question.</article-title>             <source>Cell Mol Life Sci</source>             <volume>59</volume>             <fpage>1607</fpage>             <lpage>1616</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Liu1"><label>73</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Fu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Shen</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Hong</surname><given-names>W</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Periplasmic Proteins Of Escherichia Coli Are Highly Resistant To Aggregation: Reappraisal For Roles Of Molecular Chaperones In Periplasm.</article-title>             <source>Biochem Biophys Res Commun</source>             <volume>316</volume>             <fpage>795</fpage>             <lpage>801</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Krogh1"><label>74</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Krogh</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Larsson</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Von Heijne</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Sonnhammer</surname><given-names>EL</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Predicting Transmembrane Protein Topology With A Hidden Markov Model: Application To Complete Genomes.</article-title>             <source>J Mol Biol</source>             <volume>305</volume>             <fpage>567</fpage>             <lpage>580</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Ruepp1"><label>75</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ruepp</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Zollner</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Maier</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Albermann</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hani</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>The Funcat, A Functional Annotation Scheme For Systematic Classification Of Proteins From Whole Genomes.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>5539</fpage>             <lpage>5545</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Apweiler1"><label>76</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Apweiler</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Barker</surname><given-names>WC</given-names></name>
+<name name-style="western"><surname>Boeckmann</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Uniprot: The Universal Protein Knowledgebase.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>D115</fpage>             <lpage>119</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Bairoch1"><label>77</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Apweiler</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Barker</surname><given-names>WC</given-names></name>
+<name name-style="western"><surname>Boeckmann</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>The Universal Protein Resource (Uniprot).</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>D154</fpage>             <lpage>159</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Alix1"><label>78</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Alix</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Blanc-Potard</surname><given-names>AB</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Hydrophobic Peptides: Novel Regulators Within Bacterial Membrane.</article-title>             <source>Mol Microbiol</source>             <volume>72</volume>             <fpage>5</fpage>             <lpage>11</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Cowan1"><label>79</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cowan</surname><given-names>SW</given-names></name>
+<name name-style="western"><surname>Schirmer</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Rummel</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Steiert</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Ghosh</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>1992</year>             <article-title>Crystal Structures Explain Functional Properties Of Two E. Coli Porins.</article-title>             <source>Nature</source>             <volume>358</volume>             <fpage>727</fpage>             <lpage>733</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Schirmer1"><label>80</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schirmer</surname><given-names>T</given-names></name>
+</person-group>             <year>1998</year>             <article-title>General And Specific Porins From Bacterial Outer Membranes.</article-title>             <source>J Struct Biol</source>             <volume>121</volume>             <fpage>101</fpage>             <lpage>109</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Knowles1"><label>81</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Knowles</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Scott-Tucker</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Overduin</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Henderson</surname><given-names>IR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Membrane Protein Architects: The Role Of The BAM Complex In Outer Membrane Protein Assembly.</article-title>             <source>Nat Rev Microbiol</source>             <volume>7</volume>             <fpage>206</fpage>             <lpage>214</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Boeckmann1"><label>82</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Boeckmann</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Apweiler</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Blatter</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Estreicher</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>The SWISS-PROT Protein Knowledgebase And Its Supplement Trembl In 2003.</article-title>             <source>Nucleic Acids Res</source>             <volume>31</volume>             <fpage>365</fpage>             <lpage>370</lpage>          </element-citation></ref>
+<ref id="pone.0009383-Huerta1"><label>83</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huerta</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Salgado</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Thieffry</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Collado-Vides</surname><given-names>J</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Regulondb: A Database On Transcriptional Regulation In Escherichia Coli.</article-title>             <source>Nucleic Acids Res</source>             <volume>26</volume>             <fpage>55</fpage>             <lpage>59</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-18315</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0079606</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>Probability Weighted Ensemble Transfer Learning for Predicting Interactions between HIV-1 and Human Proteins</article-title>
+<alt-title alt-title-type="running-head">Predicting HIV-Human Protein Interaction</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mei</surname><given-names>Suyu</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><addr-line>Software College, Shenyang Normal University, Shenyang, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Menéndez-Arias</surname><given-names>Luis</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Centro de Biología Molecular Severo Ochoa (CSIC-UAM), Spain</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">meisygle@gmail.com</email></corresp>
+<fn fn-type="conflict"><p>The author has declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: SM. Performed the experiments: SM. Analyzed the data: SM. Contributed reagents/materials/analysis tools: SM. Wrote the paper: SM.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>18</day><month>11</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>11</issue>
+<elocation-id>e79606</elocation-id>
+<history>
+<date date-type="received"><day>3</day><month>5</month><year>2013</year></date>
+<date date-type="accepted"><day>24</day><month>9</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Suyu Mei</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Reconstruction of host-pathogen protein interaction networks is of great significance to reveal the underlying microbic pathogenesis. However, the current experimentally-derived networks are generally small and should be augmented by computational methods for less-biased biological inference. From the point of view of computational modelling, <italic>data scarcity</italic>, <italic>data unavailability</italic> and <italic>negative data sampling</italic> are the three major problems for host-pathogen protein interaction networks reconstruction. In this work, we are motivated to address the three concerns and propose a <underline>p</underline>robability <underline>w</underline>eighted <underline>en</underline>semble <underline>t</underline>ransfer <underline>l</underline>earning <underline>m</underline>odel for HIV-human protein interaction prediction (<italic>PWEN-TLM</italic>), where <italic>support vector machine</italic> (<italic>SVM</italic>) is adopted as the individual classifier of the ensemble model. In the model, <italic>data scarcity</italic> and <italic>data unavailability</italic> are tackled by homolog knowledge transfer. The importance of homolog knowledge is measured by the <italic>ROC-AUC</italic> metric of the individual classifiers, whose outputs are probability weighted to yield the final decision. In addition, we further validate the assumption that only the homolog knowledge is sufficient to train a satisfactory model for host-pathogen protein interaction prediction. Thus the model is more robust against <italic>data unavailability</italic> with less demanding data constraint. As regards with <italic>negative</italic> data construction, experiments show that <italic>exclusiveness of subcellular co-localized proteins</italic> is unbiased and more reliable than <italic>random sampling</italic>. Last, we conduct analysis of overlapped predictions between our model and the existing models, and apply the model to novel host-pathogen PPIs recognition for further biological research.</p>
+</abstract>
+<funding-group><funding-statement>This author has no support or funding to report.</funding-statement></funding-group><counts><page-count count="14"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Accurate mapping of protein interactome is essential to reveal protein functions, biological processes, signal transduction pathways. In recent years, although high throughput experimental techniques have drastically accumulated much knowledge about protein-protein interactions (PPI), the derived PPI networks are far incomplete and noisy <xref ref-type="bibr" rid="pone.0079606-vonMering1">[1]</xref>, <xref ref-type="bibr" rid="pone.0079606-Edwards1">[2]</xref>. As a good complement to the labour-intensive biological experiments, computational methods can accelerate the reconstruction of PPI networks at low cost <xref ref-type="bibr" rid="pone.0079606-Wu1">[3]</xref>.</p>
+<p>At present most of the existing computational methods are developed for <italic>intra-species</italic> PPI networks reconstruction, e.g. yeast PPI network <xref ref-type="bibr" rid="pone.0079606-Wu1">[3]</xref>, <italic>Arabidopsis thaliana</italic> PPI network <xref ref-type="bibr" rid="pone.0079606-DeBodt1">[4]</xref>, human PPI network <xref ref-type="bibr" rid="pone.0079606-Shen1">[5]</xref>, etc. As compared to <italic>intra-species</italic> PPI networks reconstruction, <italic>inter-species</italic> host-pathogen PPI networks (the interacting partners are from two different species) reconstruction is faced up with more challenges in that the scale of the host-pathogen PPI networks is generally rather small. Small PPI network results in <italic>data scarcity</italic> that would easily lead to poor generalization ability of computational model. <italic>Data integration</italic> is an effective method to compensate for <italic>data scarcity</italic>. By simultaneously leveraging a catalog of biological feature information, <italic>data integration</italic> can greatly increase the information abundance for sufficient model training. Tastan et al. <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref> applied <italic>Random Forest</italic> to integrate the feature information of <italic>binding motif</italic>, <italic>gene expression profile</italic>, <italic>gene ontology</italic>, <italic>sequence similarity</italic>, <italic>post-translational modification</italic>, <italic>tissue distribution</italic> and <italic>PPI network topology</italic> for HIV-human protein interaction prediction. Based on the work, Qi et al. <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref> further proposed a semi-supervised multi-task learning method to exploit the weakly labelled data. Dyer et al. <xref ref-type="bibr" rid="pone.0079606-Dyer1">[8]</xref> combined <italic>protein domain profile</italic>, <italic>sequence k-mer</italic> and <italic>PPI network properties</italic> for HIV-human protein interaction prediction. For another pathogenetic microbe <italic>Plasmodium falciparum</italic>, Dyer et al. <xref ref-type="bibr" rid="pone.0079606-Dyer2">[9]</xref> combined <italic>protein domain profile</italic>, <italic>gene expression</italic>, <italic>gene ontology</italic> and <italic>gene co-expression</italic> to predict and validate the host-pathogen protein interactions. Wuchty S <xref ref-type="bibr" rid="pone.0079606-Wuchty1">[10]</xref> combined <italic>sequence k-mer</italic>, <italic>interlog</italic>, <italic>gene ontology</italic> and <italic>signal transduction pathways</italic> to predict and validate the protein interactions between <italic>Plasmodium falciparum</italic> and <italic>Homo sapiens</italic>. In the latter two models, the validation information (<italic>gene co-expression</italic>, <italic>signal transduction pathways</italic>, <italic>gene ontology</italic>) was used to manually filter the predicted PPIs. It has been claimed that <italic>gene ontology</italic> (<italic>GO</italic>) is one of the strongest indicators for host-pathogen PPI prediction <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref> and <italic>intra-species</italic> PPI prediction <xref ref-type="bibr" rid="pone.0079606-Wu1">[3]</xref>, <xref ref-type="bibr" rid="pone.0079606-DeBodt1">[4]</xref>, <xref ref-type="bibr" rid="pone.0079606-Miller1">[11]</xref>, <xref ref-type="bibr" rid="pone.0079606-Lin1">[12]</xref>, <xref ref-type="bibr" rid="pone.0079606-Patil1">[13]</xref>, <xref ref-type="bibr" rid="pone.0079606-Maetschke1">[14]</xref>, <xref ref-type="bibr" rid="pone.0079606-Qi2">[15]</xref>, <xref ref-type="bibr" rid="pone.0079606-Tirosh1">[16]</xref>, <xref ref-type="bibr" rid="pone.0079606-Yu1">[17]</xref> among the catalog of feature information. The work <xref ref-type="bibr" rid="pone.0079606-Maetschke1">[14]</xref> explained the reasons why <italic>GO</italic> feature outperformed the other feature information based on the observations: (1) proteins localized in identical <italic>cellular compartments</italic> are more likely to interact than are proteins that reside in spatially distant compartments; (2) proteins that participate in similar <italic>biological processes</italic> or perform similar <italic>molecular functions</italic> are likely to interact. Hence the three aspects of <italic>gene ontology</italic> (<italic>cellular compartments, biological processes</italic> and <italic>molecular functions</italic>) are informative to indicate PPI.</p>
+<p>Although <italic>data integration</italic> can simultaneously exploit multiple aspects of biological knowledge, the difficulty in availability of some feature information such as <italic>gene co-expression</italic> poses a great challenge on host-pathogen PPI networks reconstruction <xref ref-type="bibr" rid="pone.0079606-Dyer2">[9]</xref>. Once the feature information is unavailable for the proteins to be predicted, the <italic>data integration</italic> methods <xref ref-type="bibr" rid="pone.0079606-DeBodt1">[4]</xref>, <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref>, <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref>, <xref ref-type="bibr" rid="pone.0079606-Miller1">[11]</xref>, <xref ref-type="bibr" rid="pone.0079606-Tirosh1">[16]</xref> would fail to work. Even for those methods that exploit only one type of non-sequence feature information (e.g. <italic>gene ontology</italic>) <xref ref-type="bibr" rid="pone.0079606-Maetschke1">[14]</xref>, <italic>data integration</italic> would also fail to work because the information required for prediction (e.g. <italic>GO</italic> annotations) may be potentially not available. For the reasons, <italic>data integration</italic> model should deliberately take into account the case of <italic>data unavailability</italic> and provide effective solutions to information substitution. Less demanding data constraint helps the model gain wide applicability. Like the other feature information, <italic>structural similarity</italic>, is also a strong indicator of protein-protein interaction. Doolittle et al. <xref ref-type="bibr" rid="pone.0079606-Doolittle1">[18]</xref> exploited the information of protein <italic>structural similarity</italic> to predict host-pathogen PPI. However, the potential unavailability of the <italic>spatial structural information</italic> would likewise restrict the model application. As compared to the costly feature information such as <italic>structural information</italic>, <italic>gene ontology</italic>, <italic>gene co-expression</italic> and <italic>metabolic pathways</italic>, etc., obtaining protein sequence information is less expensive, thus the computational model based on protein sequence only has the least data constraint nearly without the problem of <italic>data unavailability</italic>. Unfortunately, the work <xref ref-type="bibr" rid="pone.0079606-Yu2">[19]</xref> argued that protein sequence alone was not sufficient to train a satisfactory model for PPI prediction.</p>
+<p>HIV-human PPI prediction can be viewed as a problem of 2-class classification that needs both <italic>positive</italic> data and <italic>negative</italic> data to define the decision function. <italic>Positive</italic> data contains the information of interaction and <italic>negative</italic> data contains the information of non-interaction. Unfortunately, there are far few experimentally derived <italic>negative</italic> data available to computational modelling for host-pathogen PPI networks reconstruction. At present <italic>negative</italic> data construction is a hard-tackling problem and the common method is <italic>random sampling</italic>. <italic>Random sampling</italic> is simple but has the demerits of model uncertainty and potential inclusion of interacting protein pairs. The work <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref> proposed one-class <italic>Biclustering</italic> method to mine association rules from the <italic>positive</italic> data for HIV-human PPI prediction. <italic>Biclustering</italic> need not construct the <italic>negative</italic> data, so that the computational modelling is much simplified. However, the model that does not learn the <italic>non-interacting</italic> patterns would run the risk of high rate of <italic>false positive</italic>.</p>
+<p>In this work, we are motivated to address the concerns of <italic>data scarcity</italic>, <italic>data unavailability</italic> and <italic>negative data sampling</italic> for HIV-human PPI prediction. To reduce data dependency, we choose <italic>gene ontology</italic> as the only feature information for host-pathogen PPI prediction. Unlike the existing <italic>GO</italic>-based PPI prediction models <xref ref-type="bibr" rid="pone.0079606-Wu1">[3]</xref>, <xref ref-type="bibr" rid="pone.0079606-DeBodt1">[4]</xref>, <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref>, <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref>, <xref ref-type="bibr" rid="pone.0079606-Miller1">[11]</xref>, <xref ref-type="bibr" rid="pone.0079606-Lin1">[12]</xref>, <xref ref-type="bibr" rid="pone.0079606-Patil1">[13]</xref>, <xref ref-type="bibr" rid="pone.0079606-Maetschke1">[14]</xref>, <xref ref-type="bibr" rid="pone.0079606-Qi2">[15]</xref>, <xref ref-type="bibr" rid="pone.0079606-Tirosh1">[16]</xref>, <xref ref-type="bibr" rid="pone.0079606-Yu1">[17]</xref>, we attempt to exploit the homolog <italic>GO</italic> information (<italic>GO</italic> annotations from the homologs) to compensate for <italic>data scarcity</italic> and <italic>data unavailability</italic>. We deliberately investigate the assumption that only the homolog <italic>GO</italic> information is sufficient to train a satisfactory model for HIV-human PPI prediction. If the assumption is validated, effective information substitution could make the model more robust against <italic>data unavailability</italic> with less demanding data constraint. To validate the assumption, we conduct three experimental settings, namely the <italic>Optimistic case</italic>, the <italic>Moderate case</italic> and the <italic>Pessimistic case</italic>. The <italic>Optimistic case</italic> assumes that both the target <italic>GO</italic> information (<italic>GO</italic> annotations from the protein itself) and the homolog <italic>GO</italic> information are available for model training and model evaluation. Good performance can indicate that <italic>data scarcity</italic> is properly tackled to a certain degree. The <italic>Moderate case</italic> assumes that the target <italic>GO</italic> information of the test data is not available and the <italic>Pessimistic case</italic> assumes that the target <italic>GO</italic> information of the training data and the test data is not available. If any of the two cases achieves good performance, it can be convincingly concluded that <italic>data unavailability</italic> is well tackled. As regards with <italic>negative data sampling</italic>, we further conduct two experimental settings for each case, one is <italic>random sampling</italic> and the other is <italic>exclusiveness of subcellular co-localized proteins</italic>. All the tasks are implemented by our proposed <italic>p</italic>robability <italic>w</italic>eighted <italic>en</italic>semble <italic>t</italic>ransfer <italic>l</italic>earning <italic>m</italic>odel (<italic>PWEN-TLM</italic>). The target <italic>GO</italic> information and the homolog <italic>GO</italic> information are used to train individual <italic>support vector machine</italic> (<italic>SVM</italic>) and are assigned different weights according to their contributions to the model performance. The merit is that the weights could depress the potential noise from the homolog <italic>GO</italic> information. To investigate the importance of <italic>molecular functions</italic>, <italic>cellular compartments</italic> and <italic>biological processes</italic> (three aspects of <italic>gene ontology</italic>) to HIV-human PPI prediction, the three aspects of the target <italic>GO</italic> information and the homolog <italic>GO</italic> information are used to train three individual classifiers respectively, thus there are totally 6 individual classifiers. The ensemble classifier yields the final decision in the form of probability by linearly weighting the probability outputs of the individual classifiers. For critical model performance estimation, we conduct cross validation, independent test and novel PPI detection on the benchmark HIV-human PPI dataset <xref ref-type="bibr" rid="pone.0079606-Fu1">[21]</xref>.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Transfer Learning</title>
+<p>Transfer learning is a hot research topic in machine learning community. As compared to traditional supervised learning, transfer learning aims at leveraging useful information from auxiliary data. In most cases, the auxiliary data and the target data show different distributions or heterogeneous representations <xref ref-type="bibr" rid="pone.0079606-Pan1">[22]</xref>. Especially in bioinformatics field, the biological data from different laboratories are usually subjected to different distributions, heterogeneous representations and noise levels <xref ref-type="bibr" rid="pone.0079606-Tu1">[23]</xref>. Thus it is necessary for us to develop sophisticated transfer learning models to exploit useful information from the auxiliary data for the target domain learning. The work <xref ref-type="bibr" rid="pone.0079606-Mei1">[24]</xref>, <xref ref-type="bibr" rid="pone.0079606-Mei2">[25]</xref>, <xref ref-type="bibr" rid="pone.0079606-Mei3">[26]</xref> proposed several non-parametric multiple kernel learning based transfer learning models (<italic>GO-TLM, MK-TLM</italic> and <italic>MLMK-TLM</italic>) to reduce the risk of <italic>negative knowledge transfer</italic>. In this work, we propose a <underline>p</underline>robability <underline>w</underline>eighted <underline>en</underline>semble <underline>l</underline>earning <underline>m</underline>odel (<italic>PWEN-TLM</italic>) to transfer the homolog <italic>GO</italic> information to enrich or substitute for the target <italic>GO</italic> information. As compared to multiple kernel learning based transfer learning models, the ensemble based transfer learning method can take full advantages of <italic>SVM</italic> (<italic>support vector machine</italic>) <italic>sparseness</italic> to reduce the computational complexity. The details are described in the section <italic>Probability weighted ensemble learning</italic>.</p>
+</sec><sec id="s2b">
+<title><italic>GO</italic> Feature Construction</title>
+<p>The homologs are extracted from <italic>SwissProt</italic> 57.3 database <xref ref-type="bibr" rid="pone.0079606-Boeckmann1">[27]</xref> using <italic>PSI-BLast</italic> <xref ref-type="bibr" rid="pone.0079606-Altschul1">[28]</xref>. Here we adopt the <italic>default</italic> parameters setting (e.g. default <italic>E-value</italic> = 10) to enlarge the <italic>GO</italic> term coverage. The <italic>GO</italic> terms are extracted from the latest <italic>GOA</italic> database <xref ref-type="bibr" rid="pone.0079606-Barrell1">[29]</xref> (114 Release, as of 28 November, 2012). For each protein <italic>i</italic>, we separate the target set of <italic>GO</italic> terms (denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e001" xlink:type="simple"/></inline-formula>) from the homolog set of <italic>GO</italic> terms (denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e002" xlink:type="simple"/></inline-formula>), and further divide <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e003" xlink:type="simple"/></inline-formula> into three subsets corresponding to the three aspects of <italic>gene ontology</italic>, denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e004" xlink:type="simple"/></inline-formula>, respectively. Here <italic>T</italic> denotes the target protein, <italic>H</italic> denotes the homolog protein, <italic>F</italic> denotes <italic>molecular functions</italic>, <italic>C</italic> denotes <italic>cellular components</italic> and <italic>P</italic> denotes <italic>biological processes</italic>. It is noted that the term <italic>target</italic> here is used to denote the protein itself (comparative to <italic>homolog</italic>), it does not refer to the virus<italic>-targeted</italic> protein. Let capital <italic>I</italic> denote the set of proteins, then the total set of <italic>GO</italic> terms can be defined as follows:<disp-formula id="pone.0079606.e005"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e005" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>Based on the denotations, we can formally define the feature vector for each PPI pair (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e006" xlink:type="simple"/></inline-formula>) as follows:<disp-formula id="pone.0079606.e007"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e007" xlink:type="simple"/><label>(2)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e008" xlink:type="simple"/></inline-formula> denotes the component <italic>g</italic> of PPI feature vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e009" xlink:type="simple"/></inline-formula> (each PPI pair follows the same feature representation, so we use <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e010" xlink:type="simple"/></inline-formula> instead of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e011" xlink:type="simple"/></inline-formula> as the general definition). Formula (2) means that if the interacting protein pair shares the same <italic>GO</italic> term <italic>g</italic>, then the corresponding component in the feature vector <italic>B</italic> is set 2; if neither protein in the protein pair (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e012" xlink:type="simple"/></inline-formula>) possesses <italic>GO</italic> term <italic>g,</italic> then the value is set 0; otherwise the value is set 1. From the formula, we can see that the above definition is symmetrical, i.e., (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e013" xlink:type="simple"/></inline-formula>) and (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e014" xlink:type="simple"/></inline-formula>) have identical feature representation, thus the order of the proteins in each protein pair does not change the feature representation.</p>
+</sec><sec id="s2c">
+<title>Probability Weighted Ensemble Learning</title>
+<p><italic>Sparseness</italic> is one of the graceful characteristics of <italic>SVM</italic>, which means that the parameters are optimized on a small <italic>working set</italic> instead of the whole training set <xref ref-type="bibr" rid="pone.0079606-Dong1">[30]</xref>. <italic>Kuhn-Tucker Theorem</italic> states that only the training examples that lie on the surface of the optimal hypersphere have their corresponding <italic>Lagrange</italic> parameters non-zero, and the corresponding <italic>Lagrange</italic> parameters are all zero for the remaining examples. The training examples with non-zero <italic>Lagrange</italic> parameters are referred to as <italic>support vectors</italic>. Only the <italic>support vectors</italic> are informative to support the optimal hypersphere and the other data can be discarded. Assuming there are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e015" xlink:type="simple"/></inline-formula> training data, the <italic>working set</italic> that helps define the final decision function generally contains rather small number of data points <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e016" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e017" xlink:type="simple"/></inline-formula>, that’s, we only need to compute the kernel matrix on the <italic>working set</italic> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e018" xlink:type="simple"/></inline-formula>) instead of the whole training dataset (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e019" xlink:type="simple"/></inline-formula>), thus the runtime complexity and the space complexity are greatly reduced. In our method, the six independent individual <italic>SVM</italic>s (denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e020" xlink:type="simple"/></inline-formula>) trained by the six feature vectors (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e021" xlink:type="simple"/></inline-formula>) have time complexity <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e022" xlink:type="simple"/></inline-formula>, much smaller than the <italic>multiple kernel learning</italic> method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e023" xlink:type="simple"/></inline-formula>.</p>
+<p>Traditional two-class labels {−1, +1} are not convenient to reveal the confidence level of the prediction. Probability output is a good alternative to the classical 2-class output and is especially applicable to vote-weighted ensemble learning for the final decisions combination. Platt <xref ref-type="bibr" rid="pone.0079606-Platt1">[31]</xref> proposed a method to yield posterior class probability output for binary <italic>SVM</italic> as defined below:<disp-formula id="pone.0079606.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e024" xlink:type="simple"/><label>(3)</label></disp-formula>where the coefficient <italic>A</italic> and <italic>B</italic> can be derived from data by cross validation, and <italic>f(x)</italic> is the decision value of binary <italic>SVM</italic>. The final decision function of the ensemble classifier is defined as follows:<disp-formula id="pone.0079606.e025"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e025" xlink:type="simple"/><label>(4)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e026" xlink:type="simple"/></inline-formula> denotes the test protein, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e027" xlink:type="simple"/></inline-formula> denotes the weight of the individual classifier <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e028" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e029" xlink:type="simple"/></inline-formula> denotes the probability that the individual classifier <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e030" xlink:type="simple"/></inline-formula> assigns protein <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e031" xlink:type="simple"/></inline-formula> to the jth class. ROC curve <xref ref-type="bibr" rid="pone.0079606-Faraggi1">[32]</xref> is a frequently-used statistical tool to illustrate the predictive performance of 2-class classification. In this work, we use AUC score (area under the ROC curve) to measure the individual SVM weight <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e032" xlink:type="simple"/></inline-formula>:<disp-formula id="pone.0079606.e033"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e033" xlink:type="simple"/><label>(5)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e034" xlink:type="simple"/></inline-formula> can be derived by 2-fold cross validation on the training set. The individual <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e035" xlink:type="simple"/></inline-formula> adopts Gaussian kernel defined as follows:<disp-formula id="pone.0079606.e036"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e036" xlink:type="simple"/><label>(6)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e037" xlink:type="simple"/></inline-formula>denotes 2-norm of a vector, and the hyperparameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e038" xlink:type="simple"/></inline-formula> controls the flexibility of the kernel.</p>
+</sec><sec id="s2d">
+<title>Model Evaluation and Model Selection</title>
+<p>We design three experimental settings, namely the <italic>Optimistic case</italic>, the <italic>Moderate case</italic> and the <italic>Pessimistic case</italic>, to validate the assumptions that the homolog <italic>GO</italic> information is useful to tackle the problems of <italic>data scarcity</italic> and <italic>data unavailability</italic>. To formally define the three cases, we first define the following sets:<disp-formula id="pone.0079606.e039"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e039" xlink:type="simple"/><label>(7)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e040" xlink:type="simple"/></inline-formula> denote the training set and the test set, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e041" xlink:type="simple"/></inline-formula> denotes the target <italic>GO</italic> term set and the homolog <italic>GO</italic> term set of the training data, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e042" xlink:type="simple"/></inline-formula> denotes the target <italic>GO</italic> term set and the homolog <italic>GO</italic> term set of the test data. Based on the notations, we can formally define the three cases as follows:<disp-formula id="pone.0079606.e043"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e043" xlink:type="simple"/><label>(8)</label></disp-formula></p>
+<p>From the formula, we can see that both the training set and the test set abound in target <italic>GO</italic> information in the <italic>Optimistic</italic> case, the test set contains no target <italic>GO</italic> information in the <italic>Moderate case</italic>, and neither the training set nor the test set contains target <italic>GO</italic> information in the <italic>Pessimistic case.</italic> In the <italic>Moderate case</italic>, we substitute the homolog <italic>GO</italic> information <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e044" xlink:type="simple"/></inline-formula> for the missing target <italic>GO</italic> information <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e045" xlink:type="simple"/></inline-formula>. In the <italic>Pessimistic case</italic>, we use the homolog <italic>GO</italic> information (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e046" xlink:type="simple"/></inline-formula>) alone.</p>
+<p>We conduct model estimation and mode selection by two-level cross validation. The outer 3-fold cross validation is conducted for model estimation and the inner 2-fold cross validation is conducted to derive the weights of individual <italic>SVM</italic> classifiers. For the outer 3-fold cross validation, the dataset is randomly divided into three nearly-even disjoint subsets that have the same distributions as the original dataset (<italic>stratified cross validation</italic>). For each outer fold, one subset is used as test set and the other two subsets are merged as training set, which repeat three times until all data are estimated. Within each outer fold, 2-fold inner cross validation is further conducted for weight derivation on the training set.</p>
+<p>HIV-1 protein can be catalogued as Env, Gag, Nef, Pol, Rev, Tat, Vif, Vpr and Vpu <xref ref-type="bibr" rid="pone.0079606-Fu1">[21]</xref>. For the sake of critical assessment of model performance, we also conduct several independent tests by treating one catalogue of HIV-1 proteins (e.g. Env) as independent test set and the other catalogues of HIV-1 proteins (e.g. Gag, Nef, Pol, Rev, Tat, Vif, Vpr, Vpu) are merged as training set. In such a way, the independent test is more challenging because the test data (e.g. Env) have no corresponding training data in the training set (e.g. Gag, Nef, Pol, Rev, Tat, Vif, Vpr, Vpu). Wide variance between the test set and the training set helps conduct more critical performance estimation on the proposed model.</p>
+<p>The model performance is measured by <italic>Receiver Operating Characteristic</italic> (<italic>ROC</italic>) <italic>AUC</italic> (<italic>Area Under Curve</italic>) (<italic>ROC-AUC</italic>), <italic>Precision recall curve AUC</italic> (<italic>PR-AUC</italic>), <italic>Specificity</italic> (<italic>SP</italic>), <italic>Sensitivity</italic> (<italic>SE</italic>) and <italic>MCC</italic> (<italic>Matthews correlation coefficient</italic>). The performance metrics <italic>SP</italic>, <italic>SE</italic> and <italic>MCC</italic> can be calculated through confusion matrix <italic>M</italic>. By means of the intermediate variables defined as formula (9), we can calculate <italic>SP</italic>, <italic>SE</italic> and <italic>MCC</italic> for each label (<italic>SP<sub>l</sub></italic>, <italic>SE<sub>l</sub></italic> and <italic>MCC<sub>l</sub></italic>) by formula (10), and further calculate the overall accuracy (<italic>Acc</italic>) and the overall MCC (<italic>MCC</italic>) by formula (11).<disp-formula id="pone.0079606.e047"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e047" xlink:type="simple"/><label>(9)</label></disp-formula><disp-formula id="pone.0079606.e048"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e048" xlink:type="simple"/><label>(10)</label></disp-formula><disp-formula id="pone.0079606.e049"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0079606.e049" xlink:type="simple"/><label>(11)</label></disp-formula>where the confusion matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e050" xlink:type="simple"/></inline-formula> records the counts that class <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e051" xlink:type="simple"/></inline-formula> are classified to class <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e052" xlink:type="simple"/></inline-formula> and <italic>L</italic> denotes the number of labels. <italic>AUC</italic> is calculated based on the weighted <italic>SVM</italic> decision values.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Data and Materials</title>
+<p>The interactions between HIV-1 and human proteins are taken from the database available at <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/projects/RefSeq/HIVInteractions/" xlink:type="simple">http://www.ncbi.nlm.nih.gov/projects/RefSeq/HIVInteractions/</ext-link><xref ref-type="bibr" rid="pone.0079606-Fu1">[21]</xref>. In order to acquire corresponding <italic>gene ontology</italic> annotations, we map the protein accessions to Uniprot accessions via the id mapping file available at <ext-link ext-link-type="uri" xlink:href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz" xlink:type="simple">ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz</ext-link>. After removing duplicate PPIs and putative PPIs, we totally get 3,638 PPIs including 539 Env PPIs, 487 Gag PPIs, 349 Nef PPIs, 272 Pol PPIs, 278 Rev PPIs, 1,101 Tat PPIs, 126 Vif PPIs, 338 Vpr PPIs and 148 Vpu PPIs. All the PPIs are treated as <italic>positive</italic> data. As far, there is no gold-standard <italic>negative</italic> data available for model training and model assessment. How to construct <italic>negative</italic> data is still a challenging problem for PPI prediction. At present, the common practice to generate <italic>negative</italic> data is <italic>random sampling</italic> from the huge protein-protein pair space exclusive of those experimentally derived PPIs. Unbiased as it is, <italic>random sampling</italic> would probably introduce a certain level of noise. For the reason, the work <xref ref-type="bibr" rid="pone.0079606-BenHur1">[33]</xref> proposed to exclude those subcellular <italic>co-localized</italic> proteins out of the <italic>negative</italic> data (hereinafter called <italic>exclusiveness of subcellular co-localized proteins</italic>), based on the common sense that subcellular <italic>co-localization</italic> is the premise of protein-protein physical interaction. But even so, the method still received criticism that the information about protein subcellular localization is likely to dominate the prediction and thus yields bias. In this work, we will compare the two methods of <italic>negative data sampling</italic> and investigate whether or not <italic>exclusiveness of subcellular co-localized proteins</italic> yields model bias. For simplicity of reference, we call <italic>S1</italic> the dataset with <italic>negative</italic> data exclusive of subcellular <italic>co-localized</italic> proteins, and <italic>S2</italic> the dataset with randomly sampled <italic>negative</italic> data. Dataset <italic>S1</italic> and <italic>S2</italic> both contain 3,638 <italic>positive</italic> data and 3,638 <italic>negative</italic> data.</p>
+<p>How to determine the ratio of <italic>positive</italic> data to <italic>negative</italic> data is a second concern to be addressed. The work <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref>, <xref ref-type="bibr" rid="pone.0079606-Dyer1">[8]</xref> solved the problem by introducing different ratio of <italic>positive</italic> data to <italic>negative</italic> data (e.g. 1∶1, 1∶100) to train the model. Actually, the true ratio is hard to determine and pooling so large a <italic>negative</italic> data makes little sense to computational modelling. Contrarily, the adverse effect is that extremely unbalanced training data would yield a highly biased model. For the reason, we construct a <italic>negative</italic> data with the same size as the <italic>positive</italic> data. To randomly select a quality and representative <italic>negative</italic> data is a hard and important problem to computational biologists, though maybe not so appealing to experimental biologists. For reliable computational modelling, experimental evidences of <italic>negatome</italic> should be collected and made available to academic use.</p>
+<p>Model comparison is a third concern for the reasons: (1) there is no standard benchmark data available for model evaluation and comparison; (2) some <italic>positive</italic> data are outdated and some novel <italic>positive</italic> data are included; (3) <italic>random sampling</italic> of <italic>negative</italic> data yields different training data; (4) there are no identical data partition of cross validation, etc. Hence, what we can do is to conduct critical assessment on the proposed model and conduct a <italic>rough</italic> comparison with other models for biologists’ reference.</p>
+</sec><sec id="s3b">
+<title>Model Performance Evaluation</title>
+<sec id="s3b1">
+<title>Cross validation performance evaluation</title>
+<p>Dataset <italic>S1</italic> totally contains 7,672 data including 3,638 <italic>positive</italic> data and 3,638 <italic>negative</italic> data. The <italic>ROC curve</italic> for 3-fold cross validation on dataset <italic>S1</italic> is shown in <xref ref-type="fig" rid="pone-0079606-g001">Figure 1</xref>, where the <italic>ROC curves</italic> are drawn for the three cases. In the <italic>Optimistic case</italic>, <italic>PWEN-TLM</italic> achieves <italic>ROC</italic>-<italic>AUC</italic> score 0.9326, a little better than <italic>SMLR</italic> (<italic>ROC</italic>-<italic>AUC</italic> score 0.919) <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref> that combined 16 catalogs of feature information including <italic>gene ontology</italic>. From <xref ref-type="fig" rid="pone-0079606-g001">Figure 1</xref>, we can see that <italic>PWEN-TLM</italic> performs the best in the <italic>Optimistic</italic> case (<italic>AUC</italic> = 0.9326), the second in the <italic>Pessimistic</italic> case (<italic>AUC</italic> = 0.8735) and the worst in the <italic>Moderate</italic> case (<italic>AUC</italic> = 0.8156). The relatively small performance difference between the <italic>Optimistic</italic> case and the <italic>Pessimistic</italic> case (<italic>ROC</italic>-<italic>AUC</italic> score difference = 0.0591) demonstrates that <italic>PWEN-TLM</italic> still works soundly when the target <italic>GO</italic> information is not available, and thus the homolog <italic>GO</italic> information can be treated as an effective substitute for the potentially unavailable target <italic>GO</italic> information. If the protein pair to be predicted contains novel protein, we can choose the model that is trained for the <italic>Pessimistic</italic> case. The results that <italic>PWEN-TLM</italic> performs the worst in the <italic>Moderate</italic> case can be explained that the heterogeneous distribution between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e053" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e054" xlink:type="simple"/></inline-formula> deteriorates the model performance. The performance deterioration reveals that <italic>data unavailability</italic> is an important concern to be addressed for computational modelling. The data integration model <italic>SMLR</italic> <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref> did not deliberately dwell on the problem of <italic>data unavailability</italic>.</p>
+<fig id="pone-0079606-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g001</object-id><label>Figure 1</label><caption>
+<title><italic>ROC curve</italic> on <italic>S1</italic> dataset.</title>
+<p>The negative data is constructed by the negative data sampling method of <italic>exclusiveness of subcellular co-localized proteins</italic>. The <italic>ROC</italic> curves in red, blue and green indicate the performance for the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g001" position="float" xlink:type="simple"/></fig>
+<p>Dyer et al. <xref ref-type="bibr" rid="pone.0079606-Dyer1">[8]</xref> adopted <italic>PR-AUC</italic> (<italic>AUC</italic> of <italic>Precision-Recall Curve</italic>) as the performance metric of HIV-human PPI prediction. In their work, the best <italic>PR-AUC</italic> score among different ratios of <italic>positive</italic> data to <italic>negative</italic> data is 0.707. As compared to <italic>ROC Curve</italic>, <italic>Precision-Recall Curve</italic> is more suited to highly <italic>skewed</italic> (extremely <italic>unbalanced</italic>) data <xref ref-type="bibr" rid="pone.0079606-Davis1">[34]</xref>. For comparison, we also plot <italic>Precision-Recall Curve</italic> and indicate the corresponding <italic>PR-AUC</italic> score in <xref ref-type="fig" rid="pone-0079606-g002">Figure 2</xref>. As shown in <xref ref-type="fig" rid="pone-0079606-g002">Figure 2</xref>, <italic>PWEN-TLM</italic> achieves <italic>PR-AUC</italic> score 0.9361, 0.8172 and 0.8799 in the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case, respectively. The <italic>PR-AUC</italic> scores demonstrate that <italic>PWEN-TLM</italic> significantly outperforms the baseline model (<italic>PR-AUC</italic> score 0.707) <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref>. By comparing <xref ref-type="fig" rid="pone-0079606-g001">Figure 1</xref> and <xref ref-type="fig" rid="pone-0079606-g002">Figure 2</xref>, we can see that there is little difference between <italic>ROC-AUC</italic> score and <italic>PR-AUC</italic> score. The reason is that dataset <italic>S1</italic> is not <italic>skewed</italic> but perfectly <italic>balanced</italic> with 1∶1 ratio of <italic>positive</italic> data to <italic>negative</italic> data. <italic>Skewed</italic> training data is prone to yield a biased model.</p>
+<fig id="pone-0079606-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g002</object-id><label>Figure 2</label><caption>
+<title><italic>Precision-Recall (PR) curve</italic> on <italic>S1</italic> dataset.</title>
+<p>The negative data is constructed by the negative data sampling method of <italic>exclusiveness of subcellular co-localized proteins</italic>. The <italic>PR</italic> curves in red, blue and green indicate the performance for the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g002" position="float" xlink:type="simple"/></fig>
+<p><italic>ROC curve</italic> plots the true <italic>positive</italic> rate against the false <italic>positive</italic> rate and <italic>Precision-Recall curve</italic> plots the <italic>precision</italic> against <italic>recall</italic>. Both the curves focus on the reliability of <italic>positive</italic> predictions, but the <italic>negative class</italic> is largely ignored. For 2-class classification, <italic>predictive balance</italic> is an important aspect of model performance. Highly biased predictions are not reliable. From the point of view of biomedical research, true protein-protein non-interaction (i.e. <italic>true negative</italic>) also provides much insight into functional proteomics and drug research. Hence we also report <italic>SP</italic>, <italic>SE</italic>, <italic>MCC</italic> and <italic>Accuracy</italic> for comprehensive survey of model performance. As shown in <xref ref-type="table" rid="pone-0079606-t001">Table 1</xref>, <italic>PWEN-TLM</italic> achieves good <italic>predictive balance</italic> in the <italic>Optimistic</italic> case (<italic>Acc</italic> = 85.62%, <italic>MCC</italic> = 0.7446) and in the <italic>Pessimistic</italic> case (<italic>Acc</italic> = 80.22%, <italic>MCC</italic> = 0.6605). But <italic>PWEN-TLM</italic> shows bias towards the <italic>positive class</italic> in the <italic>Moderate</italic> case (<italic>Acc</italic> = 66.22%, <italic>MCC</italic> = 0.4606, <italic>positive SP</italic> = 0.6015, <italic>negative SE</italic> = 0.3631). Comparatively, <italic>AUC</italic> scores do not detect the bias (<italic>ROC-AUC</italic> score = 0.8156, <italic>PR-AUC</italic> score = 0.8172), implying that the performance metrics of <italic>SP</italic>, <italic>SE</italic>, <italic>MCC</italic> and <italic>Accuracy</italic> are important to model estimation. Summarizing all the performance metrics, we can see that <italic>PWEN-TLM</italic> performs well in the <italic>Optimistic</italic> case and in the <italic>Pessimistic</italic> case. If the target <italic>GO</italic> information of the test data is available, we choose the model trained in the <italic>Optimistic</italic> case; <italic>otherwise,</italic> we choose the model trained in the <italic>Pessimistic</italic> case.</p>
+<table-wrap id="pone-0079606-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t001</object-id><label>Table 1</label><caption>
+<title>Cross validation performance estimation on dataset <italic>S1</italic>.</title>
+</caption><alternatives><graphic id="pone-0079606-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-I (Optimistic)</italic></td>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-II (Moderate)</italic></td>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-III (Pessimistic)</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>Positive (interacting)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">0.8774</td>
+<td align="left" rowspan="1" colspan="1">0.8282</td>
+<td align="left" rowspan="1" colspan="1">0.7439</td>
+<td align="left" rowspan="1" colspan="1">0.6015</td>
+<td align="left" rowspan="1" colspan="1">0.9612</td>
+<td align="left" rowspan="1" colspan="1"><underline>0.5733</underline></td>
+<td align="left" rowspan="1" colspan="1">0.8160</td>
+<td align="left" rowspan="1" colspan="1">0.7804</td>
+<td align="left" rowspan="1" colspan="1">0.6589</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>Negative (non-interacting)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">0.8373</td>
+<td align="left" rowspan="1" colspan="1">0.8843</td>
+<td align="left" rowspan="1" colspan="1">0.7471</td>
+<td align="left" rowspan="1" colspan="1">0.9036</td>
+<td align="left" rowspan="1" colspan="1"><underline>0.3631</underline></td>
+<td align="left" rowspan="1" colspan="1"><underline>0.4604</underline></td>
+<td align="left" rowspan="1" colspan="1">0.7896</td>
+<td align="left" rowspan="1" colspan="1">0.8241</td>
+<td align="left" rowspan="1" colspan="1">0.6631</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>[AUC;Acc;MCC]</italic></bold></td>
+<td colspan="3" align="left" rowspan="1">[0.9326; 85.62%; 0.7446]</td>
+<td colspan="3" align="left" rowspan="1">[<underline>0.8155</underline>; <underline>66.22%</underline>; <underline>0.4606</underline>]</td>
+<td colspan="3" align="left" rowspan="1">[0.8735;80.22%;0.6605]</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>To attenuate the noise from the homolog <italic>GO</italic> information, we explicitly investigate the importance of the three aspects of <italic>gene ontology</italic> (<italic>molecular function</italic>, <italic>cellular component</italic>, <italic>biological process</italic>) to HIV-human PPI prediction. As illustrated in <xref ref-type="fig" rid="pone-0079606-g003">Figure 3</xref>, the target <italic>GO</italic> information and the homolog <italic>GO</italic> information contribute equivalently to the model performance in the <italic>Optimistic</italic> case. In the <italic>Moderate</italic> case, the target <italic>GO</italic> information unexpectedly makes less contribution than the homolog <italic>GO</italic> information. The result is not surprising, because we substitute the homolog <italic>GO</italic> information <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e055" xlink:type="simple"/></inline-formula> for the missing target <italic>GO</italic> information <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e056" xlink:type="simple"/></inline-formula> to derive the weights of the target <italic>GO</italic> information. The heterogeneous distribution between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e057" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0079606.e058" xlink:type="simple"/></inline-formula> unjustly decreases the importance of the target <italic>GO</italic> information. The three aspects of <italic>gene ontology</italic> unexceptionally make equivalent contributions to the model performance in all the three cases. The <italic>GO</italic> information about <italic>cellular component</italic> does not <italic>predominate</italic> the contributions to model performance, indicating that the <italic>negative</italic> data constructed by <italic>exclusiveness of subcellular co-localized proteins</italic> does not yield predictive bias as worried about.</p>
+<fig id="pone-0079606-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g003</object-id><label>Figure 3</label><caption>
+<title>Individual <italic>SVM</italic> weight distribution on <italic>S1</italic> dataset.</title>
+<p>The negative data is constructed by the negative data sampling method of <italic>exclusiveness of subcellular co-localized proteins</italic>. The horizontal axis is the combination of two sets {T, H} and {F,C, P}. T denotes the target protein, H denotes the homolog protein; F denotes <italic>molecular function</italic>, C denotes <italic>cellular component</italic> and P denotes <italic>biological process</italic>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g003" position="float" xlink:type="simple"/></fig>
+<p>Dataset <italic>S2</italic> similarly contains 7,672 data including 3,638 <italic>positive</italic> data and 3,638 <italic>negative</italic> data, with the exception to dataset <italic>S1</italic> that the <italic>negative</italic> data are randomly sampled. The <italic>ROC curve</italic> and the <italic>PR curve</italic> are plotted in <xref ref-type="fig" rid="pone-0079606-g004">Figure 4</xref> and <xref ref-type="fig" rid="pone-0079606-g005">Figure 5</xref>. Comparing <xref ref-type="fig" rid="pone-0079606-g001">Figure 1</xref> with <xref ref-type="fig" rid="pone-0079606-g004">Figure 4</xref> and <xref ref-type="fig" rid="pone-0079606-g002">Figure 2</xref> with <xref ref-type="fig" rid="pone-0079606-g005">Figure 5</xref>, we can see that dataset <italic>S1</italic> achieves higher <italic>ROC-AUC</italic> score and <italic>PR-AUC</italic> score than dataset <italic>S2</italic> for all the three cases. The highest difference of <italic>ROC-AUC</italic> score is 0.0495 and the highest difference of <italic>PR-AUC</italic> score is 0.0692. <xref ref-type="table" rid="pone-0079606-t002">Table 2</xref> demonstrates the performance metrics of <italic>SP</italic>, <italic>SE</italic>, <italic>MCC</italic> and <italic>Accuracy</italic> on dataset <italic>S2</italic>. Comparing <xref ref-type="table" rid="pone-0079606-t001">Table 1</xref> and <xref ref-type="table" rid="pone-0079606-t002">Table 2</xref>, we can see that dataset <italic>S1</italic> demonstrates much better predictive balance than dataset <italic>S2</italic>, with highest <italic>MCC</italic> difference 0.1053. The results demonstrate that <italic>exclusiveness of subcellular co-localized protein</italic>s is more reliable to construct a reliable and unbiased classifier than r<italic>andom sampling</italic>.</p>
+<fig id="pone-0079606-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g004</object-id><label>Figure 4</label><caption>
+<title><italic>ROC curve</italic> on <italic>S2</italic> dataset.</title>
+<p>The negative data is constructed by by the negative data sampling method of <italic>random sampling</italic>. The <italic>ROC</italic> curves in red, blue and green indicate the performance for the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g004" position="float" xlink:type="simple"/></fig><fig id="pone-0079606-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g005</object-id><label>Figure 5</label><caption>
+<title><italic>Precision-Recall (PR) curve</italic> on <italic>S2</italic> dataset.</title>
+<p>The negative data is constructed by by the negative data sampling method of <italic>random sampling</italic>. The <italic>PR</italic> curves in red, blue and green indicate the performance for the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g005" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0079606-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t002</object-id><label>Table 2</label><caption>
+<title>Cross validation performance estimation on dataset <italic>S2</italic>.</title>
+</caption><alternatives><graphic id="pone-0079606-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-I (Optimistic)</italic></td>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-II (Moderate)</italic></td>
+<td colspan="3" align="left" rowspan="1"><italic>PWEN-TLM-III (Pessimistic)</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SP</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>SE</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>MCC</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>Positive (interacting)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">0.8413</td>
+<td align="left" rowspan="1" colspan="1">0.7988</td>
+<td align="left" rowspan="1" colspan="1">0.6926</td>
+<td align="left" rowspan="1" colspan="1"><underline>0.5832</underline></td>
+<td align="left" rowspan="1" colspan="1">0.9560</td>
+<td align="left" rowspan="1" colspan="1"><underline>0.5515</underline></td>
+<td align="left" rowspan="1" colspan="1">0.7811</td>
+<td align="left" rowspan="1" colspan="1">0.7622</td>
+<td align="left" rowspan="1" colspan="1">0.6175</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>Negative (non-interacting)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">0.8085</td>
+<td align="left" rowspan="1" colspan="1">0.8494</td>
+<td align="left" rowspan="1" colspan="1">0.6966</td>
+<td align="left" rowspan="1" colspan="1">0.8780</td>
+<td align="left" rowspan="1" colspan="1"><underline>0.3167</underline></td>
+<td align="left" rowspan="1" colspan="1"><underline>0.4143</underline></td>
+<td align="left" rowspan="1" colspan="1">0.7678</td>
+<td align="left" rowspan="1" colspan="1">0.7864</td>
+<td align="left" rowspan="1" colspan="1">0.6204</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>[AUC;Acc;MCC]</italic></bold></td>
+<td colspan="3" align="left" rowspan="1">[0.9005;82.41%;0.6393]</td>
+<td colspan="3" align="left" rowspan="1">[<underline>0.7661</underline>;<underline>63.63%</underline>;<underline>0.4258</underline>]</td>
+<td colspan="3" align="left" rowspan="1">[0.8518;77.43%;0.6188]</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>The weight distribution for the three aspects of <italic>gene ontology</italic> is illustrated in <xref ref-type="fig" rid="pone-0079606-g006">Figure 6</xref>. Comparing <xref ref-type="fig" rid="pone-0079606-g003">Figure 3</xref> with <xref ref-type="fig" rid="pone-0079606-g006">Figure 6</xref>, we can see that there is little difference of weight distribution between dataset <italic>S1</italic> and dataset <italic>S2</italic>.</p>
+<fig id="pone-0079606-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g006</object-id><label>Figure 6</label><caption>
+<title>Individual <italic>SVM</italic> weight distribution on <italic>S2</italic> dataset.</title>
+<p>The negative data is constructed by by the negative data sampling method of <italic>random sampling</italic>. The horizontal axis is the combination of two sets {T, H} and {F,C, P}. T denotes the target protein, H denotes the homolog protein; F denotes <italic>molecular function</italic>, C denotes <italic>cellular component</italic> and P denotes <italic>biological process</italic>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g006" position="float" xlink:type="simple"/></fig></sec><sec id="s3b2">
+<title>Independent test performance evaluation</title>
+<p>The HIV-human PPI database <xref ref-type="bibr" rid="pone.0079606-Doolittle1">[18]</xref> is catalogued into 9 categories (539 Env PPIs, 487 Gag PPIs, 349 Nef PPIs, 272 Pol PPIs, 278 Rev PPIs, 1,101 Tat PPIs, 126 Vif PPIs, 338 Vpr PPIs and 148 Vpu PPIs). To evaluate the generalization ability, we simply use one catalog of PPI (e.g. Env PPI) as independent test set and other catalogs of PPIs (e.g. Gag, Nef, Pol, Rev, Tat, Vif, Vpr, Vpu) are merged together as <italic>positive</italic> training set. The corresponding <italic>negative</italic> training set is derived for each catalog of HIV protein with the constraints: (1) the <italic>negative</italic> PPIs and the <italic>positive</italic> PPIs are of the same size; (2) the human proteins that are subcellular <italic>co-localized</italic> with the HIV proteins are excluded; (3) the human proteins are randomly sampled. Constraint (2) is based on the above experimental conclusion that <italic>exclusiveness of subcellular co-localized proteins</italic> yields unbiased and better performance. We don’t conduct independent test for the <italic>Moderate</italic> case because of its poor performance in the cross validation performance evaluation.</p>
+<p>The experimental results of the independent test are shown in <xref ref-type="table" rid="pone-0079606-t003">Table 3</xref>. We can see that <italic>PWEN-TLM</italic> can recognize most catalogs of HIV-human PPIs with high <italic>recall rate</italic> except one small Pol PPIs (272 PPIs, <italic>Optimistic</italic> 51.84%, <italic>Pessimistic</italic> 54.04%) and one large Tat PPIs (1,101 PPIs, <italic>Optimistic</italic> 52.04%, <italic>Pessimistic</italic> 55.77%). As compared to the generally small overlap between experimental host-pathogen PPIs and predicted host-pathogen PPIs, e.g. 10% overlap between siRNA screen and predictions <xref ref-type="bibr" rid="pone.0079606-Qi1">[7]</xref> and 5.29% recall rate (57 PPIs were computationally recognized out of the 1,078 experimental PPIs) <xref ref-type="bibr" rid="pone.0079606-Wuchty1">[10]</xref>, the results are considerably promising. From the results, we also see that the <italic>Optimistic</italic> case is unsurprisingly better than the <italic>Pessimistic</italic> case, because the target <italic>GO</italic> information is available. Nevertheless, <italic>PWEN-TLM</italic> still works well in the <italic>Pessimistic</italic> case. The independent test again validates the assumption that the homolog <italic>GO</italic> information alone is sufficient to train a satisfactory HIV-human PPI classifier.</p>
+<table-wrap id="pone-0079606-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t003</object-id><label>Table 3</label><caption>
+<title>Independent test performance estimation.</title>
+</caption><alternatives><graphic id="pone-0079606-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>env</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>gag</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>nef</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>pol</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>rev</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>tat</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>vif</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>vpr</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>vpu</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>539</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>487</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>349</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>272</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>278</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>1,101</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>126</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>338</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>148</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>PWEN-TLM-I (Optimistic)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">68.46%</td>
+<td align="left" rowspan="1" colspan="1">81.34%</td>
+<td align="left" rowspan="1" colspan="1">88.54%</td>
+<td align="left" rowspan="1" colspan="1"><underline>51.84%</underline></td>
+<td align="left" rowspan="1" colspan="1">64.75%</td>
+<td align="left" rowspan="1" colspan="1">5<underline>2.04%</underline></td>
+<td align="left" rowspan="1" colspan="1">88.89%</td>
+<td align="left" rowspan="1" colspan="1">80.77%</td>
+<td align="left" rowspan="1" colspan="1">66.89%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold><italic>PWEN-TLM-III (Pessimistic)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">67.53%</td>
+<td align="left" rowspan="1" colspan="1">65.91%</td>
+<td align="left" rowspan="1" colspan="1">77.36%</td>
+<td align="left" rowspan="1" colspan="1"><underline>54.04%</underline></td>
+<td align="left" rowspan="1" colspan="1"><underline>52.88%</underline></td>
+<td align="left" rowspan="1" colspan="1"><underline>55.77%</underline></td>
+<td align="left" rowspan="1" colspan="1">87.30%</td>
+<td align="left" rowspan="1" colspan="1">81.66%</td>
+<td align="left" rowspan="1" colspan="1">66.89%</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec></sec><sec id="s3c">
+<title>Novel PPI Prediction</title>
+<sec id="s3c1">
+<title>Overlap analysis of predicted interactions between <italic>PWEN-TLM</italic> and the existing models</title>
+<p>Overlap analysis of predicted interactions between different computational models is of significance to reveal the confidence and complementariness of predictions. In this work, we investigate the overlap of predictions between <italic>PWEN-TLM</italic> and the latest <italic>bi-clustering</italic> method <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref>, for the reason that <italic>bi-clustering</italic> has found several supporting evidences from the recent literature. In <italic>bi-clustering</italic> method, there are 180 predicted interactions, among which there are 80 interactions overlapped with the work <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref>. As pointed out in the work <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref>, some predicted interactions have been validated by the recent literatures, e.g. env_gp120:CASP8[83.33%] <xref ref-type="bibr" rid="pone.0079606-Vashistha1">[35]</xref>, env_gp120:CD86[83.33%] <xref ref-type="bibr" rid="pone.0079606-Wang1">[36]</xref>, env_gp120: NOS3[74.67%] <xref ref-type="bibr" rid="pone.0079606-Jiang1">[37]</xref>, env_gp120:SOD2[88.89%] <xref ref-type="bibr" rid="pone.0079606-Saha1">[38,]</xref>, env_gp120:SRC[78%] <xref ref-type="bibr" rid="pone.0079606-Cheung1">[39]</xref>, env_gp41:MAPK1[77.78%] <xref ref-type="bibr" rid="pone.0079606-Zhou1">[40]</xref>, Gag_Pr55:MAPK1[71.43%] <xref ref-type="bibr" rid="pone.0079606-Gupta1">[41]</xref>, Tat:TNFSF[86.30%]) <xref ref-type="bibr" rid="pone.0079606-Gibellini1">[42]</xref>. The square bracketed percentage following the protein pair denotes the confidence level of predictions.</p>
+<p>We apply <italic>PWEN-TLM</italic> to validate the 180 predicted interactions for overlap analysis. Among the HIV-1 proteins, the protein env_gp120 (<italic>Envelope surface glycoprotein gp120, NP_579894.2</italic>) has no reviewed entry in the <italic>UniprotKB</italic> database (<ext-link ext-link-type="uri" xlink:href="http://www.uniprot.org/uniprot/" xlink:type="simple">http://www.uniprot.org/uniprot/</ext-link>). The target <italic>GO</italic> information of protein env_gp120 can not be retrieved from the database and thus is treated as novel protein in our model. For reliable training, env_gp120 is not included in the training data. Thus the training data is <italic>more stringent</italic> than that of <italic>bi-clustering</italic> method, because it contains no interaction patterns between env_gp120 and human proteins. The 180 interactions predicted by <italic>bi-clustering</italic> method are treated as test data without overlap with the training data.</p>
+<p>The experimental results show that <italic>PWEN-TLM</italic> predicts 132 interactions in the <italic>Optimistic case</italic> (<xref ref-type="supplementary-material" rid="pone.0079606.s001">File S1</xref>) and 165 interactions in the <italic>Pessimistic case</italic> (<xref ref-type="supplementary-material" rid="pone.0079606.s002">File S2</xref>). Comparing the results of the two cases, we find that <italic>PWEN-TLM</italic> can not recognize most env_gp120 interactions in the <italic>Optimistic case</italic>, but <italic>PWEN-TLM</italic> behaves contrarily very well in the <italic>Pessimistic case</italic>. The results are not surprising because the unreviewed env_gp120 is treated as novel protein (the target <italic>GO</italic> information is treated as <italic>null</italic> and only the homolog <italic>GO</italic> information takes effect). In the <italic>Pessimistic case</italic>, <italic>PWEN-TLM</italic> correctly recognizes all the literature-validated interactions (env_gp120:CASP8[81.63%];env_gp120:CD86[83.51%];env_gp120:NOS3[84.34%];env_gp120:SOD2[70.78%];env_gp120:SRC[79.54%];env_gp41:MAPK1[89.88%];Tat:TNFSF[90.90%]) except Gag_Pr55:MAPK1 <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref>. The results once again validate our model assumption that the homolog <italic>GO</italic> information can be effectively exploited to compensat<italic>e for data scarcity</italic> and <italic>data unavailability</italic>. Especially, we can safely draw the conclusion that the homolog <italic>GO</italic> information alone is sufficient to train a satisfactory model for HIV-human PPI prediction. We can see that <italic>PWEN-TLM</italic> has less demanding data constraint and hardly fails to work even in the worst case (the <italic>Pessimistic</italic> case). As long as <italic>GO</italic> annotated homologs can be retrieved, <italic>PWEN-TLM</italic> can convincingly predict the protein pairs that contain novel proteins. It is noted that although the model is trained without env_gp120 interaction patterns, the env_gp120<italic>-</italic>related interactions are still soundly recognized, which implies that <italic>PWEN-TLM</italic> has good generalization ability.</p>
+<p>Besides the validation of the 180 predicted interactions, we also validate against <italic>PWEN-TLM</italic> the 80 overlapped interactions between the two work <xref ref-type="bibr" rid="pone.0079606-Tastan1">[6]</xref>, <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref>. The results show that <italic>PWEN-TLM</italic> predicts 46 interactions in the <italic>Optimistic case</italic> (<bold><xref ref-type="supplementary-material" rid="pone.0079606.s003">File S3</xref></bold>) and 61 interactions in the <italic>Pessimistic case</italic> (<bold><xref ref-type="supplementary-material" rid="pone.0079606.s004">File S4</xref></bold>). From the results, we can see that <italic>PWEN-TLM</italic> narrows down the predictions and thus is relatively more conservative than the <italic>bi-clustering</italic> method <xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[20]</xref>. Conservative prediction has the merit of low <italic>false positive</italic> rate but meanwhile has the demerit of missing some true interactions (e.g. Gag_Pr55:MAPK1). From the 8 literature-validated interactions, only one unrecognized interaction is acceptable.</p>
+</sec><sec id="s3c2">
+<title>Predicted interactions with peripheral human proteins</title>
+<p>In addition to validating the interactions predicted by the existing models, we also independently apply <italic>PWEN-TLM</italic> to detect novel HIV-human PPIs for further biological research. To narrow down the scope of potential HIV-targeted human proteins, we first statistically investigate the way that HIV proteins attack the human PPI network. Some diseases, like lung squamous cell carcinoma <xref ref-type="bibr" rid="pone.0079606-Vidal1">[43]</xref>, are prone to attack the densely-connected human proteins (hub proteins). Here we attempt to acquire the knowledge about the behaviour that HIV-1 attacks the human PPI network. We can calculate the degree distribution of the HIV-targeted human proteins from HPRD database (<ext-link ext-link-type="uri" xlink:href="http://hprd.org/" xlink:type="simple">http://hprd.org/</ext-link>) <xref ref-type="bibr" rid="pone.0079606-KeshavaPrasad1">[44]</xref>. The degree distribution of the HIV-targeted human proteins in human PPI network is plotted in <xref ref-type="fig" rid="pone-0079606-g007">Figure 7</xref>, where the <italic>horizontal axis</italic> denotes the protein degree and the <italic>vertical axis</italic> denotes the number of proteins possessing that degree. From <xref ref-type="fig" rid="pone-0079606-g007">Figure 7</xref>, we can intuitively see that the number of HIV-targeted human proteins exponentially decreases with protein degree. It can be inferred from the figure that the HIV proteins are prone to target the peripheral human proteins. For the sake, we choose the peripheral human proteins as test candidates. For each type of HIV proteins, we randomly choose 400 <italic>distinct</italic> human proteins with <italic>lowest degree</italic> (<italic>e.g. degree = 1, 2, 3</italic>) that do not occur in dataset <italic>S1</italic>. The predicted results are shown in <xref ref-type="supplementary-material" rid="pone.0079606.s005">File S5</xref> (<italic>Optimistic case</italic>) and <xref ref-type="supplementary-material" rid="pone.0079606.s006">File S6</xref> (<italic>Pessimistic case</italic>). Since literature could offer very sparse direct information about the interactions we are concerned about, we analyse the predicted interactions based on the study of <italic>gene ontology</italic>.</p>
+<fig id="pone-0079606-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.g007</object-id><label>Figure 7</label><caption>
+<title>Degree distribution of the HIV-targeted human proteins in human PPI network.</title>
+<p>The horizontal axis denotes protein degree and the vertical axis denotes the number of proteins that possess that degree.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.g007" position="float" xlink:type="simple"/></fig></sec><sec id="s3c3">
+<title>Interactions with env_gp160</title>
+<p>Among the 400 human proteins, <italic>PWEN-TLM</italic> predicts 64 interactions with env_gp160 (P04578) in the <italic>Optimistic case</italic> (<bold><xref ref-type="supplementary-material" rid="pone.0079606.s005">File S5</xref></bold>) and 66 interactions in the <italic>Pessimistic case</italic> (<bold><xref ref-type="supplementary-material" rid="pone.0079606.s006">File S6</xref></bold>). After filtering the weak interactions (probability within [0.5, 0.6]), there are 44 interactions in the <italic>Pessimistic case</italic> and 45 interactions in the <italic>Optimistic case</italic>. Take the <italic>Optimistic case</italic> for example, <xref ref-type="table" rid="pone-0079606-t004">Table 4</xref> clusters the interacting human partners according to <italic>GO</italic> terms (see <xref ref-type="table" rid="pone-0079606-t004">Table 4</xref> <italic>Main cluster of interacting human partners</italic>). From <xref ref-type="table" rid="pone-0079606-t004">Table 4</xref>, we can see that env_gp160 mainly interacts with the host <italic>membrane</italic> proteins (<italic>GO:0016020, GO:0016021, GO:0005886</italic>), and the interacting human partners are mainly involved in the <italic>biological processes of metabolic process</italic> (<italic>GO:0044267</italic>), <italic>post-translational modification</italic> (<italic>GO:0043687, GO:0006486</italic>), <italic>transport</italic> (<italic>GO:0006810</italic>), <italic>host immune response</italic> (<italic>GO:0006954, GO:0045087</italic>), etc. From the aspect of <italic>molecular functions</italic>, env_gp160 mainly affects host protein <italic>binding activity</italic> (<italic>GO:0005515</italic>), <italic>transferase activity</italic> (<italic>GO:0016740</italic>), etc. From the analysis of <italic>gene ontology</italic>, we can see that the interactions with env_gp120 may affect the <italic>metabolic process</italic>, <italic>molecule transfer</italic>, <italic>binding activity</italic> of the host proteins and may also activate the <italic>host immune response</italic>.</p>
+<table-wrap id="pone-0079606-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t004</object-id><label>Table 4</label><caption>
+<title>Predicted interactions between env_gp160 and human proteins.</title>
+</caption><alternatives><graphic id="pone-0079606-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">GOcategory</td>
+<td colspan="4" align="left" rowspan="1">Predicted interacting human partners</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO term</td>
+<td align="left" rowspan="1" colspan="1">GO description</td>
+<td align="left" rowspan="1" colspan="1">Rate</td>
+<td align="left" rowspan="1" colspan="1">Main cluster of interacting human partners</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Biological</bold><bold>process</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0044267</td>
+<td align="left" rowspan="1" colspan="1">cellular proteinmetabolic process</td>
+<td align="left" rowspan="1" colspan="1">23%</td>
+<td align="left" rowspan="1" colspan="1">Q9NR34[0.91];Q5I7T1[0.67];Q9NYU2[0.92];Q8N3T1[0.71];Q9NY97[0.86];O43173[0.70];Q13454[0.72];Q9BV94[0.81];O60476[0.91];Q8IUC8[0.70]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0043687</td>
+<td align="left" rowspan="1" colspan="1">post-translationalproteinmodification</td>
+<td align="left" rowspan="1" colspan="1">23%</td>
+<td align="left" rowspan="1" colspan="1">Q9NR34[0.91];Q5I7T1[0.67];Q9NYU2[0.92];Q8N3T1[0.71];Q9NY97[0.86];O43173[0.70];Q13454[0.72];Q9BV94[0.81];O60476[0.91];Q8IUC8[0.70]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006486</td>
+<td align="left" rowspan="1" colspan="1">proteinglycosylation</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+<td align="left" rowspan="1" colspan="1">Q9NR34[0.91];Q5I7T1[0.67];Q9NYU2[0.92];Q8N3T1[0.71];Q9NY97[0.86];O43173[0.70];O60476[0.91];Q8IUC8[0.70]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006457</td>
+<td align="left" rowspan="1" colspan="1">protein folding</td>
+<td align="left" rowspan="1" colspan="1">16%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.79];Q9NYU2[0.92];O14967[0.87];O60884[0.79];P30414[0.78];Q14696[0.81];Q9BV94[0.81]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006810</td>
+<td align="left" rowspan="1" colspan="1">transport</td>
+<td align="left" rowspan="1" colspan="1">9%</td>
+<td align="left" rowspan="1" colspan="1">P13866[0.75];Q01650[0.86];Q13454[0.72];&gt;O75947[0.73]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006954</td>
+<td align="left" rowspan="1" colspan="1">inflammatoryresponse</td>
+<td align="left" rowspan="1" colspan="1">9%</td>
+<td align="left" rowspan="1" colspan="1">O43916[0.87];Q96E93[0.78];Q9NYK1[0.62];Q9H293[0.62]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0045087</td>
+<td align="left" rowspan="1" colspan="1">innate immuneresponse</td>
+<td align="left" rowspan="1" colspan="1">7%</td>
+<td align="left" rowspan="1" colspan="1">Q96E93[0.78];Q9NYK1[0.62];Q9NY25[0.61]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Cellular</bold><bold>component</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0016020</td>
+<td align="left" rowspan="1" colspan="1">membrane</td>
+<td align="left" rowspan="1" colspan="1">77%</td>
+<td align="left" rowspan="1" colspan="1">O43916[0.87];Q86Z14[0.72];Q9NR34[0.91];Q9UDY4[0.79];O75509[0.63];P13866[0.75];Q96E93[0.78];Q8IXI1[0.82];Q5I7T1[0.67];O14967[0.87];Q8N3T1[0.71];Q01650[0.86];P41732[0.63];O75096[0.61];O60884[0.79];Q9NY97[0.86];P30414[0.78];O43173[0.70];P06126[0.82];Q9NYK1[0.62];P04062[0.79];Q13454[0.72];P43626[0.66];Q9P035[0.89];Q9NY25[0.61];O75947[0.73];Q9H293[0.62];Q6UW60[0.69];P23435[0.65];Q9BV94[0.81];O14548[0.71];O60476[0.91];[0.70];P09669[0.77]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0016021</td>
+<td align="left" rowspan="1" colspan="1">integral tomembrane</td>
+<td align="left" rowspan="1" colspan="1">57%</td>
+<td align="left" rowspan="1" colspan="1">O43916[0.87];Q86Z14[0.72];Q9NR34[0.91];O75509[0.63];P13866[0.75];Q96E93[0.78];Q8IXI1[0.82];Q5I7T1[0.67];O14967[0.87];Q8N3T1[0.71];Q01650[0.86];P41732[0.63];O75096[0.61];Q9NY97[0.86];O43173[0.70];P06126[0.82];Q9NYK1[0.62];Q13454[0.72];P43626[0.66];Q9P035[0.89];Q9NY25[0.61];Q6UW60[0.69];O60476[0.91];Q8IUC8[0.70];P09669[0.77]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005886</td>
+<td align="left" rowspan="1" colspan="1">plasma membrane</td>
+<td align="left" rowspan="1" colspan="1">32%</td>
+<td align="left" rowspan="1" colspan="1">Q86Z14[0.72];Q9UDY4[0.79];O75509[0.63];P13866[0.75];Q96E93[0.78];Q8IXI1[0.82];Q5I7T1[0.67];Q01650[0.86];O75096[0.61];P06126[0.82];Q9NYK1[0.62];P43626[0.66];Q9NY25[0.61];Q14696[0.81]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0000139</td>
+<td align="left" rowspan="1" colspan="1">Golgi membrane</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+<td align="left" rowspan="1" colspan="1">O43916[0.87];Q9NR34[0.91];Q8N3T1[0.71];Q9NY97[0.86];O43173[0.70];Q9NYK1[0.62];O60476[0.91];Q8IUC8[0.70]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Molecular</bold><bold>function</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0016787</td>
+<td align="left" rowspan="1" colspan="1">hydrolase activity</td>
+<td align="left" rowspan="1" colspan="1">20%</td>
+<td align="left" rowspan="1" colspan="1">Q9NR34[0.91];Q8IXI1[0.82];O00754[0.85];P04062[0.79];P04746[0.63];Q9NTJ4[0.74];Q9NRW3[0.67];Q6UW60[0.69];O60476[0.91]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0016740</td>
+<td align="left" rowspan="1" colspan="1">transferase activity</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+<td align="left" rowspan="1" colspan="1">O43916[0.87];Q08188[0.81];Q5I7T1[0.67];Q9NYU2[0.92];Q8N3T1[0.71];Q9NY97[0.86];O43173[0.70];Q8IUC8[0.70]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005515</td>
+<td align="left" rowspan="1" colspan="1">protein binding</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.79];O75509[0.63];P13866[0.75];Q8IXI1[0.82];O75096[0.61];P13667[0.87];P06126[0.82];P43626[0.66]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0051082</td>
+<td align="left" rowspan="1" colspan="1">unfolded proteinbinding</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.79];Q9NYU2[0.92];O14967[0.87];O14657[0.61];O60884[0.79]</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Illustrations:</p></fn><fn id="nt102"><label/><p><xref ref-type="bibr" rid="pone.0079606-vonMering1">[1]</xref> Rate denotes that the cluster of interacting human proteins possessing the same corresponding GO term accounts for the total predicted env_gp160-interacting human proteins;</p></fn><fn id="nt103"><label/><p><xref ref-type="bibr" rid="pone.0079606-Edwards1">[2]</xref> Q9NR34[0.91] denotes that protein env_gp160 is predicted to interact with the human protein P01024 with 0.81 confidence;</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c4">
+<title>Interactions with Rev</title>
+<p>Among the 400 human proteins, <italic>PWEN-TLM</italic> predicts 37 interactions with Rev (P04618) in the <italic>Optimistic case</italic> and 54 interactions in the <italic>Pessimistic case</italic> (probability&gt;0.6). From <xref ref-type="table" rid="pone-0079606-t005">Table 5</xref>, we can see that Rev mainly interacts with the host <italic>nucleus</italic> proteins (<italic>GO:0005634</italic>) and <italic>cytoplasm</italic> proteins (<italic>GO:0005737</italic>), and participates in the <italic>biological processes</italic> of <italic>viral reproduction</italic> (<italic>GO:0010467, GO:0019083, GO:0016032, GO:0006355</italic>), <italic>viral mRNA translation</italic> (<italic>GO:0016071, GO:0006413, GO:0006414</italic>), etc. These predicted interactions indicate that Rev plays important roles in <italic>viral mRNA transcription</italic> and <italic>mRNA translation into viral proteins</italic>.</p>
+<table-wrap id="pone-0079606-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t005</object-id><label>Table 5</label><caption>
+<title>Predicted interactions between Rev and human proteins.</title>
+</caption><alternatives><graphic id="pone-0079606-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">GOcategory</td>
+<td colspan="4" align="left" rowspan="1">Predicted interacting human partners</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO term</td>
+<td align="left" rowspan="1" colspan="1">GO description</td>
+<td align="left" rowspan="1" colspan="1">Rate</td>
+<td align="left" rowspan="1" colspan="1">Main cluster of interacting human partners</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Biological</bold><bold>process</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0010467</td>
+<td align="left" rowspan="1" colspan="1">gene expression</td>
+<td align="left" rowspan="1" colspan="1">14%</td>
+<td align="left" rowspan="1" colspan="1">Q9P2I0[0.87];P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0019083</td>
+<td align="left" rowspan="1" colspan="1">viral transcription</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0016071</td>
+<td align="left" rowspan="1" colspan="1">mRNA metabolicprocess</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0016032</td>
+<td align="left" rowspan="1" colspan="1">viral reproduction</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006355</td>
+<td align="left" rowspan="1" colspan="1">regulation oftranscription,DNA-dependent</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">Q9NRC8[0.61];O00472[0.60];Q92925[0.64];Q13342[0.65]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006413</td>
+<td align="left" rowspan="1" colspan="1">translationalinitiation</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006414</td>
+<td align="left" rowspan="1" colspan="1">translationalelongation</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];P62899[0.90];Q9Y3U8[0.86];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Cellular</bold><bold>component</bold></td>
+<td align="left" rowspan="1" colspan="1">O:0005634</td>
+<td align="left" rowspan="1" colspan="1">nucleus</td>
+<td align="left" rowspan="1" colspan="1">41%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.69];Q9P2I0[0.87];Q99877[0.82];Q8IX01[0.62];Q8WWL7[0.70];Q9NRC8[0.61];O00472[0.60];Q9NYP9[0.66];Q92925[0.64];Q9H668[0.66];Q13342[0.65];Q15003[0.67];Q8NDV3[0.74];Q13601[0.76];O15523[0.63]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005737</td>
+<td align="left" rowspan="1" colspan="1">cytoplasm</td>
+<td align="left" rowspan="1" colspan="1">38%</td>
+<td align="left" rowspan="1" colspan="1">Q96C10[0.74];P09972[0.63];Q9UBB4[0.76];Q08188[0.68];P46781[0.90];Q06210[0.70];Q01650[0.75];Q9NRC8[0.61];Q9NYP9[0.66];Q9Y3U8[0.86];Q13342[0.65];Q15003[0.67];Q13601[0.76];O15523[0.63]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005829</td>
+<td align="left" rowspan="1" colspan="1">cytosol</td>
+<td align="left" rowspan="1" colspan="1">30%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.69];P09972[0.63];Q9UBB4[0.76];Q8IXI1[0.72];P46781[0.90];Q06210[0.70];Q01650[0.75];P62899[0.90];Q9Y3U8[0.86];Q9BU89[0.66];P62280[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005730</td>
+<td align="left" rowspan="1" colspan="1">nucleolus</td>
+<td align="left" rowspan="1" colspan="1">22%</td>
+<td align="left" rowspan="1" colspan="1">P46781[0.90];Q8WWL7[0.70];Q9NRC8[0.61];O00472[0.60];Q9H668[0.66];Q9Y3U8[0.86];Q13342[0.65];Q13601[0.76]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Molecular</bold><bold>function</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0005515</td>
+<td align="left" rowspan="1" colspan="1">protein binding</td>
+<td align="left" rowspan="1" colspan="1">35%</td>
+<td align="left" rowspan="1" colspan="1">Q96C10[0.74];P09972[0.63];Q9UBB4[0.76];P13866[0.64];Q9P2I0[0.87];Q8IXI1[0.72];P46781[0.90];Q8WWL7[0.70];Q9NRC8[0.61];P06126[0.70];Q9H668[0.66];Q15003[0.67];Q9BU89[0.66]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0003723</td>
+<td align="left" rowspan="1" colspan="1">RNA binding</td>
+<td align="left" rowspan="1" colspan="1">24%</td>
+<td align="left" rowspan="1" colspan="1">Q96C10[0.74];Q9P2I0[0.87];Q9Y6V7[0.63];P46781[0.90];Q8IX01[0.62];P62899[0.90];Q13601[0.76];P62280[0.82];O15523[0.63]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0003677</td>
+<td align="left" rowspan="1" colspan="1">DNA binding</td>
+<td align="left" rowspan="1" colspan="1">16%</td>
+<td align="left" rowspan="1" colspan="1">96C10[0.74];Q99877[0.82];Q9H668[0.66];Q13342[0.65];Q8NDV3[0.74];O15523[0.63]</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3c5">
+<title>Interactions with Vpr</title>
+<p>Similarly, the predicted interactions with Vpr (Q77YF9) are shown in <xref ref-type="table" rid="pone-0079606-t005">Table 6</xref> (18 predicted interactions with probability greater than 0.6). From the results we can see that Vpr mainly affects the <italic>host cell cycle</italic> (<italic>GO:0007049, GO:0051301, GO:0007067, GO:0030261, GO:0007126</italic>) and the <italic>regulation of DNA transcription</italic> (<italic>GO:0006355</italic>). The predicted interactions are consistent with our prior knowledge about HIV-1 Vpr proteins.</p>
+<table-wrap id="pone-0079606-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0079606.t006</object-id><label>Table 6</label><caption>
+<title>Predicted interactions between Vpr and human proteins.</title>
+</caption><alternatives><graphic id="pone-0079606-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0079606.t006" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">GOcategory</td>
+<td colspan="4" align="left" rowspan="1">Predicted interacting human partners</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO term</td>
+<td align="left" rowspan="1" colspan="1">GO description</td>
+<td align="left" rowspan="1" colspan="1">Rate</td>
+<td align="left" rowspan="1" colspan="1">Main cluster of interacting human partners</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Biological</bold><bold>process</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0007049</td>
+<td align="left" rowspan="1" colspan="1">cell cycle</td>
+<td align="left" rowspan="1" colspan="1">22%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.63];Q8WWL7[0.72];Q15003[0.61];Q8NDV3[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0051301</td>
+<td align="left" rowspan="1" colspan="1">cell division</td>
+<td align="left" rowspan="1" colspan="1">17%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.63];Q8WWL7[0.72];Q15003[0.61]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0007067</td>
+<td align="left" rowspan="1" colspan="1">mitosis</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.63];Q15003[0.61]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0022904</td>
+<td align="left" rowspan="1" colspan="1">respiratory electrontransport chain</td>
+<td align="left" rowspan="1" colspan="1">17%</td>
+<td align="left" rowspan="1" colspan="1">O75947[0.64];O14548[0.74];P09669[0.77]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0030261</td>
+<td align="left" rowspan="1" colspan="1">chromosomecondensation</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">Q15003[0.61];Q8NDV3[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0006355</td>
+<td align="left" rowspan="1" colspan="1">regulation oftranscription,DNA-dependent</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P58012[0.61];Q13342[0.67]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0007126</td>
+<td align="left" rowspan="1" colspan="1">meiosis</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">Q8WWL7[0.72];Q8NDV3[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Cellular</bold><bold>component</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0005634</td>
+<td align="left" rowspan="1" colspan="1">nucleus</td>
+<td align="left" rowspan="1" colspan="1">50%</td>
+<td align="left" rowspan="1" colspan="1">Q9H1A4[0.63];Q9UDY4[0.62];Q99877[0.64];Q8WWL7[0.72];P58012[0.61];Q9H668[0.61];Q13342[0.67];Q15003[0.61];Q8NDV3[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0016020</td>
+<td align="left" rowspan="1" colspan="1">membrane</td>
+<td align="left" rowspan="1" colspan="1">44%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.62];Q96E93[0.61];Q8IXI1[0.64];P30414[0.69];P04062[0.64];O75947[0.64];O14548[0.74];P09669[0.77]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005730</td>
+<td align="left" rowspan="1" colspan="1">nucleolus</td>
+<td align="left" rowspan="1" colspan="1">22%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.62];Q8WWL7[0.72];Q9H668[0.61];Q13342[0.67]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0005737</td>
+<td align="left" rowspan="1" colspan="1">cytoplasm</td>
+<td align="left" rowspan="1" colspan="1">22%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.62];Q13342[0.67];Q15003[0.61];Q5SW79[0.68]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Molecular</bold><bold>function</bold></td>
+<td align="left" rowspan="1" colspan="1">GO:0005515</td>
+<td align="left" rowspan="1" colspan="1">protein binding</td>
+<td align="left" rowspan="1" colspan="1">39%</td>
+<td align="left" rowspan="1" colspan="1">Q9UDY4[0.62];Q8IXI1[0.64];Q8WWL7[0.72];P58012[0.61];Q9H668[0.61];Q15003[0.61];Q5SW79[0.68]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0003677</td>
+<td align="left" rowspan="1" colspan="1">DNA binding</td>
+<td align="left" rowspan="1" colspan="1">28%</td>
+<td align="left" rowspan="1" colspan="1">Q99877[0.64];P58012[0.61];Q9H668[0.61];Q13342[0.67];Q8NDV3[0.82]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GO:0003700</td>
+<td align="left" rowspan="1" colspan="1">sequence-specific DNAbinding transcriptionfactor activity</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+<td align="left" rowspan="1" colspan="1">P58012[0.61];Q13342[0.67]</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3c6">
+<title>Interactions with other HIV-1 proteins</title>
+<p>The predicted interactions with other HIV-1 proteins (Gag, Pol, Tat, Vpu, Nef, Vif) are shown in <bold><xref ref-type="supplementary-material" rid="pone.0079606.s005">File S5</xref></bold> and <bold><xref ref-type="supplementary-material" rid="pone.0079606.s006">File S6</xref></bold>. The experimental results show that Gag mainly interacts with the human proteins that participate in the <italic>biological processes</italic> of <italic>signal transduction</italic> (<italic>GO:0007165</italic>, the interacting partners include <italic>O75509[0.67]; Q9NYK1[0.69]; Q9NY25[0.63]; O60609[0.61]</italic>), <italic>innate immune response</italic> (<italic>GO:0045087, Q96E93[0.64]; Q9NYK1[0.69]; Q9NY25[0.63]</italic>), <italic>apoptotic process</italic> (<italic>GO:0006915, P09972[0.67];O75509[0.67];Q8IXI1[0.81]</italic>), etc. Tat mainly affects the <italic>regulation of transcription</italic> (<italic>GO:0006355, Q9NRC8[0.67]; O00472[0.74]; Q92925[0.72]; Q13342[0.80]</italic>), <italic>host cell defense response to virus</italic> (<italic>GO:0051607, Q96C10[0.67]; Q9NYK1[0.70]; Q9NRW3[0.69]</italic>), etc. Vpu mainly interacts with the human proteins of <italic>transport activity</italic> (<italic>GO:0006810, P13866[0.62]; O75947[0.86]</italic>), <italic>receptor activity</italic> (<italic>GO:0004872, Q96E93[0.70]; P22897[0.61]), cell death</italic> (<italic>GO:0008219, Q9UBB4[0.82]; P04062[0.78]</italic>), etc. Full interactions are shown in <bold><xref ref-type="supplementary-material" rid="pone.0079606.s005">File S5</xref></bold> and <bold><xref ref-type="supplementary-material" rid="pone.0079606.s006">File S6</xref></bold>.</p>
+</sec></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p><italic>Data scarcity</italic>, <italic>data unavailability</italic> and <italic>negative data sampling</italic> are the three major concerns to be addressed for the computational reconstruction of HIV-human PPI networks. At present feature-level data integration is still the major effective method to compensate for <italic>data scarcity</italic>, but potential unavailability of some feature information is likely to make the existing data integration methods fail to work. In this work, we are motivated to develop a less data-demanding computational model for HIV-human PPI prediction that hardly fails to work in most cases. We investigate the assumption that the homolog <italic>GO</italic> information is useful to well tackle the problems of <italic>data scarcity</italic> and <italic>data unavailability</italic>. To fulfil the motivation and assumption, we propose a <underline>p</underline>robability <underline>w</underline>eighted <underline>en</underline>semble <underline>t</underline>ransfer <underline>l</underline>earning <underline>m</underline>odel for HIV-human PPI prediction (<italic>PWEN-TLM</italic>). In this model, <italic>gene ontology</italic> is the only feature information used for model training and model evaluation. The target <italic>GO</italic> information and the homolog <italic>GO</italic> information are separately extracted to cope with <italic>data unavailability</italic>, and the three aspects of <italic>gene ontology</italic> are further separated to evaluate their contributions to the model performance. The contributions are measured in terms of weights by <italic>ROC-AUC</italic> performance metric of the individual classifiers. The weights of the homolog <italic>GO</italic> information play the role of enhancing <italic>positive knowledge transfer</italic> and depressing <italic>negative knowledge transfer</italic>.</p>
+<p>To validate the assumption that the homolog <italic>GO</italic> information is effective to enrich or substitute for the target <italic>GO</italic> information, we conduct three experimental settings, namely the <italic>Optimistic</italic> case, the <italic>Moderate</italic> case and the <italic>Pessimistic</italic> case. The latter two cases take into account the unavailability of the target <italic>GO</italic> information. 3-fold cross validation and independent test are used to evaluate the model performance. The performance measured by multiple metrics (<italic>ROC-AUC</italic>, <italic>PR-AUC</italic>, <italic>MCC</italic>, <italic>SP</italic>, <italic>SE</italic> and <italic>Accuracy</italic>) show that <italic>PWEN-TLM</italic> performs well in the <italic>Optimistic</italic> case and in the <italic>Pessimistic</italic> case. The sound performance in the <italic>Optimistic</italic> case demonstrates that the homolog <italic>GO</italic> information is useful to solve the problem of <italic>data scarcity</italic> by enriching the target <italic>GO</italic> information. The good performance in the <italic>Pessimistic</italic> case shows that the homolog <italic>GO</italic> information is an effective substitute for the target <italic>GO</italic> information to solve the problem of <italic>data unavailability</italic>.</p>
+<p><italic>Negative data sampling</italic> is another important concern to be addressed for HIV-human PPI prediction. In this work, we have compared <italic>exclusiveness of subcellular co-localization</italic> to <italic>random sampling</italic>. We find that the <italic>GO</italic> information about <italic>cellular components</italic> makes equivalent contributions to the model performance as the <italic>GO</italic> information about <italic>biological processes</italic> and <italic>molecular functions</italic> does. This result shows that <italic>exclusiveness of subcellular co-localized proteins</italic> outperforms <italic>random sampling</italic> without introducing model bias.</p>
+<p>Lastly, we apply <italic>PWEN-TLM</italic> to novel HIV-human PPIs detection. The overlap analysis of the predictions between <italic>PWEN-TLM</italic> and the existing models show that <italic>PWEN-TLM</italic> can recognize most of the literature-validated interactions and is relatively more conservative than the <italic>bi-clustering</italic> method. We also report some novel interactions for further biological research. The analysis based on g<italic>ene ontology</italic> shows that the information revealed by the predicted interactions is consistent with our prior knowledge about the HIV-1 proteins.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0079606.s001" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s001" position="float" xlink:type="simple"><label>File S1</label><caption>
+<p><bold>Text file contains the overlapped predictions between </bold><bold><italic>PWEN-TLM</italic></bold><bold> and </bold><bold><italic>Bi-clustering</italic></bold><bold> </bold><xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[<bold>20</bold>]</xref><bold> (</bold><bold><italic>Optimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0079606.s002" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s002" position="float" xlink:type="simple"><label>File S2</label><caption>
+<p><bold>Text file contains the overlapped predictions between </bold><bold><italic>PWEN-TLM</italic></bold><bold> and </bold><bold><italic>Bi-clustering</italic></bold><bold> </bold><xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[<bold>20</bold>]</xref><bold> (</bold><bold><italic>Pessimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0079606.s003" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s003" position="float" xlink:type="simple"><label>File S3</label><caption>
+<p><bold>Text file contains the overlapped predictions among </bold><bold><italic>PWEN-TLM</italic></bold><bold>, </bold><bold><italic>Bi-clustering</italic></bold><bold> </bold><xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[<bold>20</bold>]</xref><bold> and the method </bold><xref ref-type="bibr" rid="pone.0079606-Tastan1">[<bold>6</bold>]</xref><bold> (</bold><bold><italic>Optimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0079606.s004" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s004" position="float" xlink:type="simple"><label>File S4</label><caption>
+<p><bold>Text file contains the overlapped predictions among </bold><bold><italic>PWEN-TLM</italic></bold><bold>, </bold><bold><italic>Bi-clustering</italic></bold><bold> </bold><xref ref-type="bibr" rid="pone.0079606-Mukhopadhyay1">[<bold>20</bold>]</xref><bold> and the method </bold><xref ref-type="bibr" rid="pone.0079606-Tastan1">[<bold>6</bold>]</xref><bold> (</bold><bold><italic>Pessimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0079606.s005" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s005" position="float" xlink:type="simple"><label>File S5</label><caption>
+<p><bold>Text file contains the predictions between HIV-1 and peripheral human proteins (</bold><bold><italic>Optimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0079606.s006" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0079606.s006" position="float" xlink:type="simple"><label>File S6</label><caption>
+<p><bold>Text file contains the predictions between HIV-1 and peripheral human proteins (</bold><bold><italic>Pessimistic case</italic></bold><bold>).</bold></p>
+<p>(TXT)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>Thanks for the helpful comments from the anonymous reviewers.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0079606-vonMering1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>von Mering</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Krause</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Cornell</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>SG</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Comparative assessment of large-scale datasets of protein-protein interactions</article-title>. <source>Nature</source> <volume>417</volume>: <fpage>399</fpage>–<lpage>403</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Edwards1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edwards</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kus</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Jansen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Greenbaum</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Greenblatt</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Bridging structural biology and genomics: assessing protein interaction data with known complexes</article-title>. <source>Trends Genet</source> <volume>18</volume>: <fpage>529</fpage>–<lpage>536</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Wu1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Guo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>K</given-names></name> (<year>2006</year>) <article-title>Prediction of yeast protein-protein interaction network: insights from the Gene Ontology and annotations</article-title>. <source>Nucleic Acids Res</source> <volume>34</volume>: <fpage>2137</fpage>–<lpage>2150</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-DeBodt1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeBodt</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Proost</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Vandepoele</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Rouzé</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Peer</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Predicting protein-protein interactions in Arabidopsis thaliana through integration of orthology, gene ontology and co-expression</article-title>. <source>BMC Genomics</source> <volume>10</volume>: <fpage>288</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Shen1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Luo</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Predicting protein–protein interactions based only on sequences information</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>104</volume>: <fpage>4337</fpage>–<lpage>41</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Tastan1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tastan</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Qi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Carbonell</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Klein-Seetharaman</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>Prediction of interactions between HIV- 1 and human proteins by information integration</article-title>. <source>In: Proceedings of the Pacific Symposium on Biocomputing</source> <volume>(PSB-2009)</volume>: <fpage>516</fpage>–<lpage>527</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Qi1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Qi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tastan</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Carbone</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Klein-Seetharaman, Weston</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Semi-supervised multi-task learning for predicting interactions between HIV-1 and human proteins</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>i645</fpage>–<lpage>i652</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Dyer1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dyer</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Muralib</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sobrala</surname><given-names>B</given-names></name> (<year>2011</year>) <article-title>Supervised learning and prediction of physical interactions between human and HIV proteins</article-title>. <source>Infect Genet Evol</source> <volume>11</volume>: <fpage>917</fpage>–<lpage>923</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Dyer2"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dyer</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Murali</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sobral</surname><given-names>B</given-names></name> (<year>2007</year>) <article-title>Computational prediction of host-pathogen protein-protein interactions</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>i159</fpage>–<lpage>i166</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Wuchty1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wuchty</surname><given-names>S</given-names></name> (<year>2011</year>) <article-title>Computational Prediction of Host-Parasite Protein Interactions between P. falciparum and H. sapiens</article-title>. <source>PLoS ONE</source> <volume>6</volume>: <fpage>e26960</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Miller1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miller</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lo</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Ben-Hur</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Desmarais</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Stagljar</surname><given-names>I</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Large-scale identification of yeast integral membrane protein interactions</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>102</volume>: <fpage>12123</fpage>–<lpage>12128</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Lin1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Wu</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Jansen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Zhao</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Information assessment on predicting protein-protein interactions</article-title>. <source>BMC Bioinformatics</source> <volume>5</volume>: <fpage>154</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Patil1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patil</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Nakamura</surname><given-names>H</given-names></name> (<year>2005</year>) <article-title>Filtering high-throughput protein-protein interaction data using a combination of genomic features</article-title>. <source>BMC Bioinformatics</source> <volume>6</volume>: <fpage>100</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Maetschke1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maetschke</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Simonsen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Davis</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ragan</surname><given-names>MA</given-names></name> (<year>2012</year>) <article-title>Gene Ontology-driven inference of protein–protein interactions using inducers</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>69</fpage>–<lpage>75</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Qi2"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Qi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Bar-Joseph</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Klein-Seetharaman</surname><given-names>J</given-names></name> (<year>2006</year>) <article-title>Evaluation of different biological data and computational methods for use in protein interaction prediction</article-title>. <source>Proteins</source> <volume>63</volume>: <fpage>490</fpage>–<lpage>500</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Tirosh1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tirosh</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Barkai</surname><given-names>N</given-names></name> (<year>2005</year>) <article-title>Computational verification of protein-protein interactions by orthologous co-expression</article-title>. <source>BMC Bioinformatics</source> <volume>6</volume>: <fpage>40</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Yu1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Luscombe</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Lu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Xia</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Annotation transfer between genomes: Protein-protein interologs and protein-dna regulogs</article-title>. <source>Genome Res</source> <volume>1</volume>: <fpage>1107</fpage>–<lpage>18</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Doolittle1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Doolittle</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gomez</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Structural similarity-based predictions of protein interactions between HIV-1 and Homo sapiens</article-title>. <source>Virology J</source> <volume>7</volume>: <fpage>82</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Yu2"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Guo</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Needham</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Cai</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Simple sequence-based kernels do not predict protein-protein interactions</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>2610</fpage>–<lpage>2614</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Mukhopadhyay1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mukhopadhyay</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Maulik</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Bandyopadhyay</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>A Novel Biclustering Approach to Association Rule Mining for Predicting HIV-1–Human Protein Interactions</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e32289</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Fu1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Sanders-Beer</surname><given-names>BE</given-names></name>, <name name-style="western"><surname>Katz</surname><given-names>KS</given-names></name>, <name name-style="western"><surname>Maglott</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Pruitt</surname><given-names>KD</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Human immunodeficiency virus type 1, human protein interaction database at NCBI</article-title>. <source>Nucleic Acids Res (Database Issue)</source> <volume>37</volume>: <fpage>D417</fpage>–<lpage>22</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Pan1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pan</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Q</given-names></name> (<year>2010</year>) <article-title>A Survey on Transfer Learning</article-title>. <source>IEEE Transactions on Knowledge and Data Engineering</source> <volume>22</volume>: <fpage>1345</fpage>–<lpage>1359</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Tu1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tolovitzky</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Klein</surname><given-names>U</given-names></name> (<year>2002</year>) <article-title>Quantitative noise analysis for gene expression microarray experiments</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>99</volume>: <fpage>14031</fpage>–<lpage>14036</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Mei1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mei</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Zhou</surname><given-names>S</given-names></name> (<year>2011</year>) <article-title>Gene ontology based transfer learning for protein subcellular localization</article-title>. <source>BMC Bioinformatics</source> <volume>12</volume>: <fpage>44</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Mei2"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mei</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>Multi-kernel transfer learning based on Chou’s PseAAC formulation for protein submitochondria localization</article-title>. <source>J Theor Biol</source> <volume>293</volume>: <fpage>121</fpage>–<lpage>130</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Mei3"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mei</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>Multi-label Multi-kernel Transfer Learning for Human Protein Subcellular Localization</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e37716</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Boeckmann1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Boeckmann</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Apweiler</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Blatter</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Estreicher</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>The SWISS-PROT Protein Knowledgebase and Its Supplement TrEMBL</article-title>. <source>Nucleic Acids Res</source> <volume>31</volume>: <fpage>365</fpage>–<lpage>370</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Altschul1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Altschul</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Madden</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Schaffer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Gapped BLAST and PSI-BLAST: A New Generation of Protein Database Search Programs</article-title>. <source>Nucleic Acids Res</source> <volume>25</volume>: <fpage>3389</fpage>–<lpage>3402</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Barrell1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barrell</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Dimmer</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Huntley</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Binns</surname><given-names>D</given-names></name>, <name name-style="western"><surname>O’Donovan</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The GOA database in 2009–an integrated Gene Ontology Annotation resource</article-title>. <source>Nucleic Acids Res (Database Issue)</source> <volume>37</volume>: <fpage>D396</fpage>–<lpage>D403</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Dong1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dong</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Adam</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Ching</surname><given-names>Y</given-names></name> (<year>2005</year>) <article-title>Fast SVM Training Algorithm with Decomposition on Very Large Data Sets</article-title>. <source>IEEE Trans Pattern Anal Mach Intell</source> <volume>27</volume>: <fpage>603</fpage>–<lpage>18</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Platt1"><label>31</label>
+<mixed-citation publication-type="other" xlink:type="simple">Platt J (1999) Probabilistic outputs for support vector machines and comparison to regularized likelihood methods. In Advances in Large Margin Classifiers. MIT Press.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Faraggi1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faraggi</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Reiser</surname><given-names>B</given-names></name> (<year>2002</year>) <article-title>Estimation of the area under the ROC curve</article-title>. <source>Stat Med</source> <volume>21</volume>: <fpage>3093</fpage>–<lpage>106</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-BenHur1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ben-Hur</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Noble</surname><given-names>W</given-names></name> (<year>2006</year>) <article-title>Choosing negative examples for the prediction of protein-protein interactions</article-title>. <source>BMC Bioinformatics</source> <volume>7</volume>: <fpage>S2</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Davis1"><label>34</label>
+<mixed-citation publication-type="other" xlink:type="simple">Davis J, Goadrich M (2006) The relationship between precision-recall and ROC curves. In: Proceedings of the 23rd International Conference on Machine Learning.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Vashistha1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vashistha</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Husain</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kumar</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Singhal</surname><given-names>PC</given-names></name> (<year>2009</year>) <article-title>Tubular cell HIV-1 gp120 expression induces caspase 8 activation and apoptosis</article-title>. <source>Ren Fail</source> <volume>31</volume>: <fpage>303</fpage>–<lpage>312</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Wang1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>DG</given-names></name> (<year>2009</year>) <article-title>Recombinant murine cytomegalovirus vector activates human monocytederived dendritic cells in a NF-kappaB dependent pathway</article-title>. <source>Mol Immunol</source> <volume>46</volume>: <fpage>3462</fpage>–<lpage>3465</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Jiang1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jiang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>PH</given-names></name>, <name name-style="western"><surname>Yao</surname><given-names>Q</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>HIV gp120 induces endothelial dysfunction in tumour necrosis factor-alpha-activated porcine and human endothelial cells</article-title>. <source>Cardiovasc Res</source> <volume>87</volume>: <fpage>366</fpage>–<lpage>374</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Saha1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saha</surname><given-names>RN</given-names></name>, <name name-style="western"><surname>Pahan</surname><given-names>K</given-names></name> (<year>2007</year>) <article-title>Differential regulation of Mn-superoxide dismutase in neurons and astroglia by HIV-1 gp120: Implications for HIV-associated dementia</article-title>. <source>Free Radic Biol Med</source> <volume>42</volume>: <fpage>1866</fpage>–<lpage>1878</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Cheung1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheung</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Ravyn</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Ptasznik</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Collman</surname><given-names>RG</given-names></name> (<year>2008</year>) <article-title>Signaling mechanism of HIV-1 gp120 and virion-induced IL-1beta release in primary human macrophages</article-title>. <source>J Immunol</source> <volume>180</volume>: <fpage>6675</fpage>–<lpage>6684</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Zhou1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhou</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Tan</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Jiang</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>YH</given-names></name> (<year>2011</year>) <article-title>HIV-1 Glycoprotein 41 Ectodomain Induces Activation of the CD74 Protein-mediated Extracellular Signal-regulated Kinase/Mitogen-activated Protein Kinase Pathway to Enhance Viral Infection</article-title>. <source>J Biol Chem</source> <volume>286</volume>: <fpage>44869</fpage>–<lpage>44877</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Gupta1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gupta</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Singhal</surname><given-names>PK</given-names></name>, <name name-style="western"><surname>Rajendrakumar</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Padwad</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tendulkar</surname><given-names>AV</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Mechanism of host cell MAPK/ERK-2 incorporation into lentivirus particles:characterization of the interaction between MAPK/ERK-2 and proline-richdomain containing capsid region of structural protein Gag</article-title>. <source>J Mol Biol</source> <volume>410</volume>: <fpage>681</fpage>–<lpage>697</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Gibellini1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gibellini</surname><given-names>D</given-names></name>, <name name-style="western"><surname>De Crignis</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Ponti</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Borderi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Clo</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>HIV-1 Tat protein enhances RANKL/M-CSF-mediated osteoclast differentiation</article-title>. <source>Biochem Biophys Res Commun</source> <volume>401</volume>: <fpage>429</fpage>–<lpage>434</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-Vidal1"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vidal</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Cusick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Barabási</surname><given-names>A</given-names></name> (<year>2011</year>) <article-title>Interactome Networks and Human Disease</article-title>. <source>Cell</source> <volume>144</volume>: <fpage>986</fpage>–<lpage>98</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0079606-KeshavaPrasad1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keshava-Prasad</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>Goel</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kandasamy</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Keerthikumar</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Human Protein Reference Database–2009 Update</article-title>. <source>Nucleic Acids Res (Database Issue)</source> <volume>37</volume>: <fpage>D767</fpage>–<lpage>72</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

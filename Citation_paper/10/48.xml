@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-10-05309</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0017331</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Proteomics</subject>
+            <subj-group>
+              <subject>Protein interactions</subject>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+          <subject>Biochemistry</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Incorporating Distant Sequence Features and Radial Basis Function Networks to Identify Ubiquitin Conjugation Sites</article-title><alt-title alt-title-type="running-head">Identify Ubiquitin Conjugation Sites</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lee</surname>
+            <given-names>Tzong-Yi</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+          <name name-style="western">
+            <surname>Chen</surname>
+            <given-names>Shu-An</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Hung</surname>
+            <given-names>Hsin-Yi</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Ou</surname>
+            <given-names>Yu-Yen</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">          <addr-line>Department of Computer Science and Engineering, Yuan Ze University, Chung-Li, Taiwan</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Uversky</surname>
+            <given-names>Vladimir</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">University of South Florida College of Medicine, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">francis@saturn.yzu.edu.tw</email> (TYL); <email xlink:type="simple">yien@csie.org</email> (YYO)</corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: TYL SAC HYH YYO. Performed the experiments: TYL SAC HYH YYO. Analyzed the data: TYL SAC HYH YYO. Contributed reagents/materials/analysis tools: TYL SAC HYH YYO. Wrote the paper: TYL SAC YYO.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>9</day>
+        <month>3</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>3</issue><elocation-id>e17331</elocation-id><history>
+        <date date-type="received">
+          <day>22</day>
+          <month>11</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>27</day>
+          <month>1</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Lee et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>Ubiquitin (Ub) is a small protein that consists of 76 amino acids about 8.5 kDa. In ubiquitin conjugation, the ubiquitin is majorly conjugated on the lysine residue of protein by Ub-ligating (E3) enzymes. Three major enzymes participate in ubiquitin conjugation. They are – E1, E2 and E3 which are responsible for activating, conjugating and ligating ubiquitin, respectively. Ubiquitin conjugation in eukaryotes is an important mechanism of the proteasome-mediated degradation of a protein and regulating the activity of transcription factors. Motivated by the importance of ubiquitin conjugation in biological processes, this investigation develops a method, UbSite, which uses utilizes an efficient radial basis function (RBF) network to identify protein ubiquitin conjugation (ubiquitylation) sites. This work not only investigates the amino acid composition but also the structural characteristics, physicochemical properties, and evolutionary information of amino acids around ubiquitylation (Ub) sites. With reference to the pathway of ubiquitin conjugation, the substrate sites for E3 recognition, which are distant from ubiquitylation sites, are investigated. The measurement of F-score in a large window size (−20∼+20) revealed a statistically significant amino acid composition and position-specific scoring matrix (evolutionary information), which are mainly located distant from Ub sites. The distant information can be used effectively to differentiate Ub sites from non-Ub sites. As determined by five-fold cross-validation, the model that was trained using the combination of amino acid composition and evolutionary information performs best in identifying ubiquitin conjugation sites. The prediction sensitivity, specificity, and accuracy are 65.5%, 74.8%, and 74.5%, respectively. Although the amino acid sequences around the ubiquitin conjugation sites do not contain conserved motifs, the cross-validation result indicates that the integration of distant sequence features of Ub sites can improve predictive performance. Additionally, the independent test demonstrates that the proposed method can outperform other ubiquitylation prediction tools.</p>
+      </abstract><funding-group><funding-statement>This work was partially supported by National Science Council (NSC) of Taiwan, NSC99-2320-B155-001 to TYL, and NSC99-2221-E155-073 to YYO. No additional external funding was received for this study. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="11"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Ubiquitin (Ub) is a small protein that consists of 76 amino acids about 8.5 kDa. Ubiquitin conjugation sites of protein (Ubiquitylation), which is an essential post-translational modification, is a sequential process that involves a group of enzymes known as E1 (activating enzyme), E2 (conjugating enzyme) and E3 (ubiquitin ligase). The ubiquitylation system is well-known for the selective degradation of serveral short-lived proteins in eukaryotic cells <xref ref-type="bibr" rid="pone.0017331-Hershko1">[1]</xref>. The attachment of a ubiquitin or poly-ubiquitin chains to proteins influences serveral cellular processes, including transcriptional regulation, signal transduction, development, apoptosis, endocytosis, and cell proliferation <xref ref-type="bibr" rid="pone.0017331-Ou1">[2]</xref>. Ubiquitin is mostly conjugated on the lysine residue of a protein by Ub-ligating (E3) enzymes. The E3 ligase must be sufficiently specific and must act only on a defined subset of cellular targets to ensure signal fidelity <xref ref-type="bibr" rid="pone.0017331-Hicke1">[3]</xref>. Another enzyme, E4, has that can stabilize and extend a poly-ubiquitin chain, has also been found <xref ref-type="bibr" rid="pone.0017331-Gilon1">[4]</xref>.</p>
+      <p>With the development of high-throughput tandem mass spectrometry-based proteomics, the number of studies of the comprehensive identification ubiquitylated proteins and their conjugated sites is increasing <xref ref-type="bibr" rid="pone.0017331-Peng1">[5]</xref>. UbiProt <xref ref-type="bibr" rid="pone.0017331-Chernorudskiy1">[6]</xref> identified all experimentally verified ubiquitin-conjugated sites from the publicly literature. Some of the entries include information about enzyme data obtained by enzyme purification and isolation. The entries supply annotations of the ubiquitin-conjugated and the exact positions of the ubiquitin-conjugation sites. UniProtKB/Swiss-Prot <xref ref-type="bibr" rid="pone.0017331-Boeckmann1">[7]</xref> is a comprehensively annotated protein database. Both experimentally validated and putative ubiquitin-conjugated annotations can be obtained from the post-translation modification annotations in the database.</p>
+      <p>Experimental identifications of ubiquitin-conjugation sites on ubiquitylated proteins <italic>in vivo</italic> and <italic>in vitro</italic> are the foundation for understanding the mechanisms of ubiquitination dynamics. However, these experiments are commonly time-consuming, labor-intensive and expensive. the <italic>in silico</italic> prediction of ubiquitin-conjugated sites with high predictive performance could be promising for preliminary analyses and could greatly reduce the number of potential targets that require further <italic>in vivo</italic> or <italic>in vitro</italic> confirmation. UbiPred <xref ref-type="bibr" rid="pone.0017331-Tung1">[8]</xref> used an algorithm for mining informative physicochemical properties from protein sequences to train SVM-based ubiquitylation site prediction system. Based on leave-one-out cross-validation, the SVM model that is trained with 31 physicochemical properties was evaluated. It was found to improve the predictive accuracy from 72.1% to 84.4%. Recently, Radivojac <italic>et al.</italic> <xref ref-type="bibr" rid="pone.0017331-Radivojac1">[9]</xref> have investigated that the sequence biases and structural preferences around known ubiquitination sites are similar to those of intrinsically disordered protein regions. Additionally, Radivojac <italic>et al.</italic> developed a random forest predictor of ubiquitination sites, UbPred, that could reach a balanced accuracy of 72%.</p>
+      <p>Given the importance of ubiquitin conjugation in biological processes, this investigation presents a method, UbSite, in which an efficient radial basis function (RBF) network is utilized to identify protein ubiquitin conjugation (ubiquitylation) sites. The experimentally verified ubiquitylated proteins and ubiquitylation sites are collected from UbiProt <xref ref-type="bibr" rid="pone.0017331-Chernorudskiy1">[6]</xref> and UniProtKB/Swiss-Prot <xref ref-type="bibr" rid="pone.0017331-Boeckmann1">[7]</xref>. Not only amino acid composition, but also structural characteristics, physicochemical properties, and evolutionary information of amino acids around the ubiquitylation (Ub) sites are investigated. With reference to the pathway of ubiquitin conjugation, which is by sequential process that involves a group of enzymes, E1 (activating enzyme), E2 (conjugating enzyme) and E3 (ubiquitin ligase), the distant sequence features of ubiquitylation sites for E3 recognition are investigated. A position specific scoring matrix (PSSM), which is generated by PSI-BLAST <xref ref-type="bibr" rid="pone.0017331-Altschul1">[10]</xref> search against a non-redundant database of protein sequences, is utilized to study the evolutionary information surround the ubiquitin conjugation sites. The constructed PSSM is regarded as a measure of residue conservation in a window of a given length. Based on the measurement of F-score in a large window size (−20∼+20), the statistically significant amino acid composition and evolutionary information, which are mainly located at positions distant from the ubiquitylation sites, can be utilized effectively to differentiate ubiquitylation sites from non-ubiquitylation sites. An evaluation of the trained models based on five-fold cross-validation revealed, that the prediction sensitivity, specificity and accuracy were 65.5%, 74.8%, and 74.5%, respectively. The independent test demonstrates shows that UbSite outperform previous ubiquitylation prediction tools.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <p>As shown in <xref ref-type="fig" rid="pone-0017331-g001">Fig. 1</xref>, the proposed approach, UbSite, is composed of three major analytical steps - data collection and preprocessing, feature extraction, and model training and evaluation. This investigation comprehensively analyzes the structural characteristics and physicochemical properties that surround the ubiquitin conjugation sites. The details of the analysis are described as follows.</p>
+      <fig id="pone-0017331-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>The analytic flowchart of UbSite.</title>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g001" xlink:type="simple"/>
+      </fig>
+      <sec id="s2a">
+        <title>Data collection and preprocessing</title>
+        <p>Experimentally confirmed ubiquitin conjugation sites are collected from UbiProt <xref ref-type="bibr" rid="pone.0017331-Chernorudskiy1">[6]</xref> and UniProtKB/Swiss-Prot <xref ref-type="bibr" rid="pone.0017331-Boeckmann1">[7]</xref>. UbiProt consists of 158 experimentally confirmed ubiquitin-conjugation sites. Then, we extracted the sequences from release 57.0 of UniProtKB/Swiss-Prot if the sequences are annotated as ‘ubiquitin’ in the ‘MOD_RES’ fields. We also removed the sites that are annotated as “by similarity”, “potential” or “probable”. A total of 337 entries are annotated as ubiquitin-conjugated proteins in UniProtKB/Swiss-Prot, and they include 416 ubiquitylation sites. After removing the redundant data from UbiProt and UniProtKB/Swiss-Prot, a total of 442 experimental ubiquitylation sites associated with 350 ubiquitylated proteins are obtained. In this work, the 442 experimental ubiquitylation sites are regarded as the positive dataset.</p>
+        <p>To prevent overestimation of the predictive performance, homologous sequences are removed from the training data by using a window size of 2<italic>n</italic>+1 for ubiquitylation sites. With reference to the reduction process in MASA <xref ref-type="bibr" rid="pone.0017331-Shien1">[11]</xref>, two ubiquitylated protein sequences with more than 30% identity were defined as homologous sequences. Then, two homologous sequences were specified to re-align the fragment sequences using a window length of 2<italic>n</italic>+1, centered on the ubiquitylation sites using BL2SEQ <xref ref-type="bibr" rid="pone.0017331-Tatusova1">[12]</xref>. For two fragment sequences with 100% identity, when the ubiquitylation sites in the two proteins are in the same positions, only one site was kept. The homologous negative data were also reduced by using the same approach.</p>
+        <p>With respect to classification, the predictive performance of the trained models may be overestimated because of the over-fitting of a training set. To estimate the real predictive performance, the experimental ubiquitylation sites, whose annotated dates are after April 4 2006, are selected as the independent test set. As shown in <xref ref-type="table" rid="pone-0017331-t001">Table 1</xref>, the data in the non-homologous training set include 385 positive sites (ubiquitylation) and 12582 negative sites (non-ubiquitylation) in 301 ubiquitylated proteins. The data of the non-homologous independent test set include 57 positive sites and 3502 negative sites in 49 ubiquitylated proteins. Following the evaluation by five-fold cross-validation, the trained model with the highest accuracy was further evaluated based on independent test data. The independent test sets were utilized to test not only the proposed method but also the previously proposed ubiquitylation prediction tools, UbiPred <xref ref-type="bibr" rid="pone.0017331-Tung1">[8]</xref> and UbPred <xref ref-type="bibr" rid="pone.0017331-Radivojac1">[9]</xref>.</p>
+        <table-wrap id="pone-0017331-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0017331.t001</object-id><label>Table 1</label><caption>
+            <title>The statistics of non-homologous training data and independent test data for ubiquitylation and non-ubiquitylation sites.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0017331-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.t001" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Training data<xref ref-type="table-fn" rid="nt101">a</xref></td>
+                <td align="left" colspan="1" rowspan="1">Independent data<xref ref-type="table-fn" rid="nt102">b</xref></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Number of proteins</td>
+                <td align="left" colspan="1" rowspan="1">301</td>
+                <td align="left" colspan="1" rowspan="1">49</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Number of ubiquitylated lysines</td>
+                <td align="left" colspan="1" rowspan="1">385</td>
+                <td align="left" colspan="1" rowspan="1">57</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Number of non-ubiquitylated lysines</td>
+                <td align="left" colspan="1" rowspan="1">12,582</td>
+                <td align="left" colspan="1" rowspan="1">3,502</td>
+              </tr>
+            </tbody>
+          </table></alternatives><table-wrap-foot>
+            <fn id="nt101">
+              <label>a</label>
+              <p>Training data: the annotation date of experimental ubiquitylation site is before April 4 2006.</p>
+            </fn>
+            <fn id="nt102">
+              <label>b</label>
+              <p>Independent data I: the annotation date of experimental ubiquitylation site is between April 4 2006 and January 1 2008.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+      </sec>
+      <sec id="s2b">
+        <title>Feature extraction and coding</title>
+        <sec id="s2b1">
+          <title>Coding of amino acid sequences</title>
+          <p>Fragments of amino acids are extracted from positive and negative training sets using a window of length 2<italic>n</italic>+1 that is centered on ubiquitylation sites. Various values of <italic>n</italic> are used to determine the optimal window length. The BLOSUM62 matrix is adopted to represent the protein primary sequence information as the basic feature set for learning radial basis function networks. A matrix of <italic>m</italic>×<italic>n</italic> elements is used to represent each residue in a training dataset, where <italic>n</italic> denotes the window size and <italic>m</italic> = 21, which elements comprise 20 amino acids and one terminal signal. Each row of the normalized BLOSUM62 matrix is adopted to encode one of 20 amino acids.</p>
+        </sec>
+        <sec id="s2b2">
+          <title>Compositions of amino acids and amino acid pairs</title>
+          <p>A total of <italic>n</italic> vectors {<italic>x<sub>i</sub></italic>, <italic>i</italic> = 1, …, <italic>n</italic>} were used, to represent all <italic>n</italic> proteins in the training data. Each vector is labeled with the group of its corresponding protein (e.g. ubiquitylated or non-ubiquitylated). The vector <italic>x<sub>i</sub></italic> has 20 elements for the amino acid composition and 400 elements for the amino acid pair composition. The 20 elements specify the numbers of occurrences of 20 amino acids normalized with the total number of residues in the protein, and the 400 elements specify the numbers of occurrences of 400 amino acid pairs normalized with the total number of residues in the protein. In this investigation, amino acid composition and amino acid pair composition are combined, yielding, 420 elements in each vector.</p>
+        </sec>
+        <sec id="s2b3">
+          <title>Position Specific Scoring Matrix Profiles</title>
+          <p>In the point of view of structure, several amino acid residues of a protein can be mutated without changing its structure, and two proteins may have similar structures with different amino acid compositions. Position Specific Scoring Matrix (PSSM) profiles, which have been extensively utilized in protein secondary structure prediction, subcellular localization and other bioinformatics problems are adopted herein with significant improvement <xref ref-type="bibr" rid="pone.0017331-Jones1">[13]</xref>, <xref ref-type="bibr" rid="pone.0017331-Xie1">[14]</xref>, <xref ref-type="bibr" rid="pone.0017331-Ou2">[15]</xref>. The PSSM profiles were obtained by PSI-BLAST against non-redundant fragment sequences of Ub sites.</p>
+          <p><xref ref-type="fig" rid="pone-0017331-g002">Figure 2</xref> displays in detail how to generate the 400D PSSM features for each ubiquitylation and non-ubiquitylation site. The matrix of <italic>m</italic>×20 elements has rows centered on ubiquitylation or non-ubiquitylation site, extracted from the PSSM profile, where <italic>m</italic> represents the window size and 20 represents the position specific scores for each type of amino acid. Thereafter, the <italic>m</italic>×20 matrix is transformed into a 20×20 matrix by summing up the rows that are associated with the same type of amino acid. Finally, every element in 20×20 matrix is divided by the window length <italic>m</italic> and then is normalized using the formula: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e001" xlink:type="simple"/></inline-formula>.</p>
+          <fig id="pone-0017331-g002" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g002</object-id>
+            <label>Figure 2</label>
+            <caption>
+              <title>The detailed process of generating position specific scoring matrix (PSSM) and encoding the fragment of amino acid sequence by generated PSSM.</title>
+            </caption>
+            <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g002" xlink:type="simple"/>
+          </fig>
+        </sec>
+        <sec id="s2b4">
+          <title>Structural characteristics</title>
+          <p>Since most of the experimental ubiquitylated proteins do not have corresponding protein tertiary structures in PDB <xref ref-type="bibr" rid="pone.0017331-Berman1">[16]</xref>, an effective tool, RVP-Net <xref ref-type="bibr" rid="pone.0017331-Ahmad1">[17]</xref>, was used to compute the ASA value based on the protein sequence. The computed ASA value is the percentage area of each amino acid on the proteins that is accessible to the solvent. RVP-net applies a neural network to predict real ASA values of the residues based on neighborhood information, with a mean absolute error of 18.0–19.5%, defined as the absolute difference between the predicted and experimental values of relative ASA per residue <xref ref-type="bibr" rid="pone.0017331-Ahmad1">[17]</xref>. Full-length protein sequences with experimental ubiquitylated sites are input to RVP-Net to compute the ASA value for all residues. The ASA values of amino acids that surround the ubiquitylation site were extracted and scaled from zero to one.</p>
+          <p>PSIPRED <xref ref-type="bibr" rid="pone.0017331-McGuffin1">[18]</xref> was utilized to compute the secondary structure that surrounds the ubiquitylation sites from the protein sequence. PSIPRED is a simple and reliable method for predicting secondary structure, which applies two feed-forward neural networks to analyze the output obtained from PSI-BLAST <xref ref-type="bibr" rid="pone.0017331-Altschul2">[19]</xref>. PSIPRED 2.0 achieved a mean Q<sub>3</sub> score of 80.6% across all 40 submitted target domains without obvious sequence similarity with structures that are present in PDB; accordingly, PSIPRED has been ranked as the best of 20 evaluated methods <xref ref-type="bibr" rid="pone.0017331-Bryson1">[20]</xref>. The output of PSIPRED is “H,” “E” or “C”, which stand for helix, sheet and coil, respectively. The full-length protein sequences with ubiquitylation sites are inputted to PSIPRED to determine the secondary structure of all residues. The orthogonal binary coding approach is adopted to transform the three terms that specify the secondary structure into numeric vectors. For instance, helix is encoded “100;” sheet is encoded “010,” and coil is encoded “001.”</p>
+        </sec>
+        <sec id="s2b5">
+          <title>F-score measurement</title>
+          <p>To study further the specificity of the substrate sites, the features that statistically differ between ubiquitylation sites and non-ubiquitylation sites are identified, based on a statistical measurement of F-score <xref ref-type="bibr" rid="pone.0017331-Lin1">[21]</xref>. The F-score of the <italic>i</italic>th feature is defined as,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.e002" xlink:type="simple"/><label>(1)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e003" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e004" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e005" xlink:type="simple"/></inline-formula> are the average value of the <italic>i</italic>th feature in whole, positive, and negative data sets, respectively. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e006" xlink:type="simple"/></inline-formula> denotes the number of positive data, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e007" xlink:type="simple"/></inline-formula> denotes the number of negative data, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e008" xlink:type="simple"/></inline-formula> denotes the <italic>i</italic>th feature of the <italic>k</italic>th positive instance, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e009" xlink:type="simple"/></inline-formula> denotes the <italic>i</italic>th feature of the <italic>k</italic>th negative instance <xref ref-type="bibr" rid="pone.0017331-Lin1">[21]</xref>. F-score supports a simple approach for measuring features that are more discriminative. If the <italic>i</italic>-th feature has a high F-score, then this feature effectively discriminates between positive and negative datasets.</p>
+        </sec>
+      </sec>
+      <sec id="s2c">
+        <title>Training and evaluation of model</title>
+        <p>In this work, the QuickRBF package <xref ref-type="bibr" rid="pone.0017331-Ou3">[22]</xref> has been employed to construct radial basis function network (RBFN) classifiers. As presented in <xref ref-type="supplementary-material" rid="pone.0017331.s001">Fig. S1</xref> (See Supplementary Materials), the general architecture in an RBFN consists of three layers, namely the input layer, the hidden layer, and the output layer. The input layer broadcasts the coordinates of the input vector to each of the nodes in the hidden layer. Each node in the hidden layer then produces an activation based on the associated radial basis kernel function. Finally, each node in the output layer computes a linear combination of the activations of the hidden nodes. The general mathematical form of the output nodes in RBFN is as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.e010" xlink:type="simple"/><label>(2)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e011" xlink:type="simple"/></inline-formula> denotes the function corresponding to the <italic>j</italic>-<italic>th</italic> output node and is a linear combination of <italic>k</italic> radial basis functions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0017331.e012" xlink:type="simple"/></inline-formula> with center m<italic><sub>i</sub></italic> and bandwidth s<italic><sub>i</sub></italic>; Also, <italic>w<sub>ji</sub></italic> denotes the weight associated with the correlation between the <italic>j</italic>-<italic>th</italic> output node and the <italic>i</italic>-<italic>th</italic> hidden node. In this work, we adopted a fixed bandwidth (σ) of five, and used all input nodes as centers (<italic>k</italic> = n). With its several bioinformatics applications, classification based on radial basis function network has been extensively adopted to predict factors such as the cleavage sites in proteins <xref ref-type="bibr" rid="pone.0017331-Yang1">[23]</xref>, inter-residue contacts <xref ref-type="bibr" rid="pone.0017331-Zhang1">[24]</xref>, protein disorder <xref ref-type="bibr" rid="pone.0017331-Su1">[25]</xref>, discrimination of β-barrel proteins <xref ref-type="bibr" rid="pone.0017331-Ou2">[15]</xref>, and identification of O-linked glycosylation <xref ref-type="bibr" rid="pone.0017331-Chen1">[26]</xref>.</p>
+        <p>Predictive performance of the constructed RBFN classifier is evaluated by performing <italic>k</italic>-fold cross validation. The original data (training data in <xref ref-type="table" rid="pone-0017331-t001">Table 1</xref>) is divided into <italic>k</italic> subgroups by splitting each dataset into <italic>k</italic> approximately equal sized subgroups. In one round of cross-validation, a subgroup is regarded as the test set, and the remaining <italic>k</italic>-1 subgroups are regarded as the training set. The cross-validation process is repeated <italic>k</italic> rounds, with each of <italic>k</italic> subgroups used as the test set in turn. Then, the k results are combined to produce a single estimation. The advantage of <italic>k</italic>-fold cross-validation is that all original data are regarded as both training set and test set, and each data is used for test exactly once <xref ref-type="bibr" rid="pone.0017331-Ron1">[27]</xref>.The following measures of predictive performance of the trained models are defined. Precision (Pr) = TP/(TP+FP), Sensitivity (Sn) = TP/(TP+FN), Specificity (Sp) = TN/(TN+FP), and Accuracy (Acc) = (TP+TN)/(TP+FP+TN+FN), where TP, TN, FP and FN represent the numbers of true positives, true negatives, false positives and false negatives, respectively.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results and Discussion</title>
+      <sec id="s3a">
+        <title>Amino acid composition of ubiquitin conjugation sites</title>
+        <p>This investigation focuses on the analysis of ubiquitin conjugated lysine. In ubiquitin conjugation, the region of the ubiquitin-conjugated lysine residues is in directly contact with the E3 ligase catalytic center. Since E3 ubiquitin ligase enzymes have a substrate binding specificity, whether the region of ubiquitin-conjugated lysine conserved amino acid motifs for E3 ubiquitin ligase recognition must be explored. After the duplicated sequences of experimental ubiquitylation sites are removed, as shown in <xref ref-type="fig" rid="pone-0017331-g003">Fig. 3</xref>, the amino acids composition that flanked the ubiquitin-conjugated lysines (ubiquitylation site centered at position 0) are graphically visualized as a 41-mer sequence logo. WebLogo <xref ref-type="bibr" rid="pone.0017331-Crooks1">[28]</xref>, <xref ref-type="bibr" rid="pone.0017331-Schneider1">[29]</xref> is adapted to generate the graphical sequence logo for the relative frequency of the amino acid at each position around the ubiquitylated sites. The conservation of amino acids around the ubiquitylation sites can then be easily investigated. Based on the sequence logo representation, the most abundant residues of the ubiquitylation sites are the charged and polar amino acids, including Aspartic acid (D) and Glutamic acid (E). The amino acids around the modified sites are not obviously conserved, a slight difference between the preferences of amino acids for the ubiquitylation and non-ubiquitylation sites.</p>
+        <fig id="pone-0017331-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>The position-specific amino acid composition, accessible surface area and secondary structure of ubiquitin conjugated lysines and non-ubiquitin conjugated lysines.</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g003" xlink:type="simple"/>
+        </fig>
+        <p>Since the representation of sequence logos involves different preferences of amino acids for ubiquitylated and non-ubiquitylated sites, the statistical difference in the distribution of amino acids around ubiquitylated (Ub) and non-ubiquitylated (non-Ub) lysines is calculated. <xref ref-type="supplementary-material" rid="pone.0017331.s002">Figure S2</xref> (See Supplementary Materials) displays the compositional differences between Ub and non-Ub sites. The more abundant amino acids at the Ub sites are Alanine (A), Aspartic acid (D), Glycine (G) and Isoleucine (I), and the depleted hydrophobic residues around these sites include Cysteine (C) and Leucine (L) around Ub sites. Moreover, the Lysine (K) and Serine (S) are less abundant around Ub sites. The amino acid sequences around the ubiquitin-conjugated sites can be alternatively grouped by various methods to generalize the sequence feature because amino acid classification is hierarchical. As presented in <xref ref-type="supplementary-material" rid="pone.0017331.s004">Table S1</xref> (See Supplementary Materials), the three-class grouping method and the eight-class grouping method are used to 20 amino acids into subgroups that capture their chemical properties. Three-class grouping methods can be based on hydrophobicity <xref ref-type="bibr" rid="pone.0017331-Chothia1">[30]</xref>, polarity <xref ref-type="bibr" rid="pone.0017331-Grantham1">[31]</xref>, normalized van der Waals volume <xref ref-type="bibr" rid="pone.0017331-Fauchere1">[32]</xref> and polarizability <xref ref-type="bibr" rid="pone.0017331-Charton1">[33]</xref>. Additionally, a Two Sample Logo <xref ref-type="bibr" rid="pone.0017331-Vacic1">[34]</xref> of 41-mer compositional biases around Ub conjugation sites compared to non-Ub conjugation sites is presented in <xref ref-type="supplementary-material" rid="pone.0017331.s003">Fig. S3</xref> (See Supplementary Materials). The amino acid residues that significantly enriched and depleted (<italic>P</italic>-value &lt;0.05; t-test) around Ub conjugation sites are shown. With the investigation of position-specific difference of amino acid composition in 41-mer window length, <xref ref-type="supplementary-material" rid="pone.0017331.s003">Figure S3</xref> indicates the positions that are distant from Ub sites have statistically significant differences of amino acid composition.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Structural characteristics of ubiquitin conjugation sites</title>
+        <p>A side-chain of an amino acid that undergoes post-translational modification preferentially accesses the surface of a protein <xref ref-type="bibr" rid="pone.0017331-Pang1">[35]</xref>. To investigate the preference of the solvent accessible surface area <xref ref-type="bibr" rid="pone.0017331-Hu1">[36]</xref> that surrounds ubiquitin conjugation sites in protein tertiary structures, the experimentally identified ubiquitylation sites are mapped to the corresponding positions of the protein entries in the Protein Data Bank (PDB) <xref ref-type="bibr" rid="pone.0017331-Berman1">[16]</xref>. The preference of the secondary structure around the ubiquitylation sites is also considered. Since most of the experimentally confirmed ubiquitylated proteins do not have corresponding protein tertiary structures in PDB <xref ref-type="bibr" rid="pone.0017331-Berman1">[16]</xref>, RVP-Net <xref ref-type="bibr" rid="pone.0017331-Ahmad1">[17]</xref> and PSIPRED <xref ref-type="bibr" rid="pone.0017331-McGuffin1">[18]</xref> are adopted to compute the ASA value and secondary structure, respectively, from the protein sequence. <xref ref-type="fig" rid="pone-0017331-g003">Figure 3</xref> presents the sequence logo of the secondary structure and the average percentage of ASA in the 41-mer window (−20∼+20) of the ubiquitylation (Ub) and non-ubiquitylation (non-Ub) sites. In the investigation of secondary structure around the Ub sites, Catic <italic>et al.</italic> <xref ref-type="bibr" rid="pone.0017331-Catic1">[37]</xref> has found the preference for coil structure. In this work, the observations reveal that Ub ligase (E3) prefers to recognize the regions that are located in coil (loop) or helix structures. In contrast to Ub sites, non-Ub sites don not have an obviously preferred secondary structure. In the study of solvent accessibility, most of the Ub or non-Ub lysines are located in the highly accessible surface area. However, the mean solvent-accessible surface area that surrounds the Ub sites slightly exceeds that around non-Ub sites.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Investigation of distant sequence features for ubiquitylation sites</title>
+        <p>Owing to the direct interaction between the enzyme and the substrate site, most of the proposed PTM prediction methods investigate amino acid sequences close to the modified sites. The ubiquitin conjugation pathway, which involves a sequential process with a group of enzymes known as E1 (activating enzyme), E2 (conjugating enzyme) and E3 (ubiquitin ligase) <xref ref-type="bibr" rid="pone.0017331-Hershko1">[1]</xref> motivates an investigation of the distant sequence features that are distant from ubiquitylation sites. In <xref ref-type="fig" rid="pone-0017331-g004">Fig. 4</xref>, a graphical model represents the hypothesis that contains a substrate site that is distant from ubiquitylated lysine for E3 recognition. Ubiquitin is mostly conjugated on the lysine residue of a protein by substrate recognition of Ub-ligating (E3) enzymes <xref ref-type="bibr" rid="pone.0017331-Ou1">[2]</xref>. E3 enzymes function as the substrate recognition modules of the system and are capable of interaction with both E2 and substrate. Thus, the E3 ligase must be sufficiently specific and must act only on a defined subset of cellular targets to ensure signal fidelity <xref ref-type="bibr" rid="pone.0017331-Hicke1">[3]</xref>. Based on the measurement of the F-score in a large window size (−20∼+20), <xref ref-type="fig" rid="pone-0017331-g005">Fig. 5</xref> displays the statistically significant composition of amino acids at positions −16, −10, −3, −1, +1, +5, +10, +13, and +17. The surrounding positions that have high F-scores are (significant for differentiating the ubiquitylation sites from the non-ubiquitylation sites. Additionally, <xref ref-type="supplementary-material" rid="pone.0017331.s005">Tables S2</xref> and <xref ref-type="supplementary-material" rid="pone.0017331.s006">S3</xref> (See Supplementary Materials) present the significant amino acids and di-peptides in the surrounding region (−20∼+20), which have a higher F-score value.</p>
+        <fig id="pone-0017331-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>The hypothetic model of identifying the distant sequence features for E3 recognition.</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g004" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0017331-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>The statistically significant composition of amino acids for each position in the window length from −20 to +20.</title>
+            <p>Based on the measurement of F-score, the positions −16, −10, −3, −1, +1, +5, +10, +13, and +17, containing higher value of F-score, are significant for differentiating the ubiquitylation sites from non-ubiquitylation sites.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g005" xlink:type="simple"/>
+        </fig>
+        <p>Position specific scoring matrix (PSSM), which is generated by PSI-BLAST <xref ref-type="bibr" rid="pone.0017331-Altschul1">[10]</xref> search against a non-redundant database of protein sequence, is utilized to obtain evolutionary information about amino acids around the ubiquitin conjugation sites. The constructed PSSM includes the probability that each amino acid is present at each position. Therefore, PSSM is regarded as a measure of residue conservation in a window of a particular length. <xref ref-type="fig" rid="pone-0017331-g006">Figure 6</xref> displays statistically significant evolutionary information concerning amino acids at each position in the window from −20 to +20. Based on the measurement of F-scores, the positions −19, −17, −15, −12, −10, −4, −1, +5, +9, +13, +15 and +18, where the F-scores are highest, are significant for differentiating the ubiquitylation sites from the non-ubiquitylation sites. In the investigation of distant sequence features that are distant from ubiquitylation sites, the length of the training data window for learning the predictive model is set to 41-mer (−20∼+20).</p>
+        <fig id="pone-0017331-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>The statistically significant evolutionary information of amino acids for each position in the window length from −20 to +20.</title>
+            <p>Based on the measurement of F-score, the positions −19, −17, −15, −12, −10, −4, −1, +5, +9, +13, +15 and +18, containing higher value of F-score, are significant for differentiating the ubiquitylation sites from non-ubiquitylation sites.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g006" xlink:type="simple"/>
+        </fig>
+        <p>To demonstrate the distant sequence features are informative for the identification of ubiquitylation sites, herein, five-fold cross-validation is performed to evaluate the models trained with various window sizes 2<italic>n</italic>+1, where <italic>n</italic> varies from five to twenty. The predictive models (RBFN classifiers) are trained with the feature of amino acid composition. <xref ref-type="fig" rid="pone-0017331-g007">Figure 7</xref> presents the sensitivity, specificity, and accuracy of cross-validation based on various window lengths. As different window sizes from 11-mer to 41-mer are applied, the predictive accuracy improves from 63.1% to 73.7%, the sensitivity and specificity increase as well. Especially for the window length which is longer than 35-mer, the predictive power is apparently improved with the accuracy that is higher than 70.0%. As the investigation of distant sequence features in <xref ref-type="fig" rid="pone-0017331-g005">Figures 5</xref> and <xref ref-type="fig" rid="pone-0017331-g006">6</xref>, the model that was trained with a large window length performs better than that without the distant sequence features.</p>
+        <fig id="pone-0017331-g007" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017331.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>The predictive performance of the models trained with different window length varying from 11-mer to 41-mer.</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.g007" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3d">
+        <title>Predictive performance of cross-validation using various training features</title>
+        <p>Most predictive models are based on the features of amino acid sequences. To determine which features can be utilized to construct models that differentiate between ubiquitylation sites and non-ubiquitylation sites, various features, including the sequence of amino acids, amino acid composition, accessible surface area, and physicochemical properties are evaluated by <italic>k</italic>-fold cross-validation. The amino acids (AA) and accessible surface area (ASA) around the ubiquitylated sites are encoded using a BLOSUM62 matrix and the RVP-Net-computed ASA values, respectively. <xref ref-type="table" rid="pone-0017331-t002">Table 2</xref> presents the predictive performance achieved using various training features, based on five-fold cross-validation. Of the models trained using individual features, those that are trained using amino acid composition slightly outperform those that are trained using amino acids, ASA, the secondary structure, or PSSMs. In particular, the model trained with the PSSM profile of non-redundant ubiquitylated protein sequences achieves an accuracy of 70%. However, the model that is trained with the secondary structure underperforms prediction based on ubiquitylation sites. According to the F-score of distant sequence features, the amino acid composition and evolutionary information (PSSM) at several flanking positions are statistically differently distributed between ubiquitylation sites and non-ubiquitylation sites. Therefore, the effects of combining informative features are evaluated. As presented in <xref ref-type="table" rid="pone-0017331-t002">Table 2</xref>, the model that is trained using the combination of amino acid composition and PSSM profile of non-redundant fragment sequences of Ub sites performs best, with the best-balanced predictive sensitivity and specificity.</p>
+        <table-wrap id="pone-0017331-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0017331.t002</object-id><label>Table 2</label><caption>
+            <title>The predictive performance of cross-validation using various training features.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0017331-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.t002" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Training features</td>
+                <td align="left" colspan="1" rowspan="1">Sensitivity (%)</td>
+                <td align="left" colspan="1" rowspan="1">Specificity (%)</td>
+                <td align="left" colspan="1" rowspan="1">Accuracy (%)</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA (Blosum62)</td>
+                <td align="left" colspan="1" rowspan="1">54.3</td>
+                <td align="left" colspan="1" rowspan="1">67.9</td>
+                <td align="left" colspan="1" rowspan="1">67.5</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA composition</td>
+                <td align="left" colspan="1" rowspan="1">63.6</td>
+                <td align="left" colspan="1" rowspan="1">74.1</td>
+                <td align="left" colspan="1" rowspan="1">73.7</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA pair composition</td>
+                <td align="left" colspan="1" rowspan="1">59.2</td>
+                <td align="left" colspan="1" rowspan="1">74.4</td>
+                <td align="left" colspan="1" rowspan="1">74.0</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Accessible Surface Area</td>
+                <td align="left" colspan="1" rowspan="1">59.3</td>
+                <td align="left" colspan="1" rowspan="1">69.7</td>
+                <td align="left" colspan="1" rowspan="1">68.6</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Secondary structure</td>
+                <td align="left" colspan="1" rowspan="1">58.4</td>
+                <td align="left" colspan="1" rowspan="1">59.7</td>
+                <td align="left" colspan="1" rowspan="1">59.1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">PSSM 1</td>
+                <td align="left" colspan="1" rowspan="1">60.0</td>
+                <td align="left" colspan="1" rowspan="1">66.2</td>
+                <td align="left" colspan="1" rowspan="1">66.0</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">PSSM 2</td>
+                <td align="left" colspan="1" rowspan="1">50.9</td>
+                <td align="left" colspan="1" rowspan="1">69.3</td>
+                <td align="left" colspan="1" rowspan="1">68.7</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">PSSM 3</td>
+                <td align="left" colspan="1" rowspan="1">54.3</td>
+                <td align="left" colspan="1" rowspan="1">68.9</td>
+                <td align="left" colspan="1" rowspan="1">68.5</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA composition + PSSM 1</td>
+                <td align="left" colspan="1" rowspan="1">62.3</td>
+                <td align="left" colspan="1" rowspan="1">73.5</td>
+                <td align="left" colspan="1" rowspan="1">73.1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA composition + PSSM 2</td>
+                <td align="left" colspan="1" rowspan="1">61.8</td>
+                <td align="left" colspan="1" rowspan="1">74.6</td>
+                <td align="left" colspan="1" rowspan="1">74.2</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA composition + PSSM 3</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>65.5</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>74.8</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>74.5</bold>
+                </td>
+              </tr>
+            </tbody>
+          </table></alternatives><table-wrap-foot>
+            <fn id="nt103">
+              <label/>
+              <p>AA: amino acid; PSSM 1: The PSSM profiles were obtained by using PSI-BLAST against UniProt NR database; PSSM 2: The PSSM profiles were obtained by using PSI-BLAST against non-redundant Ub protein sequence database; PSSM 3: The PSSM profiles have been obtained by using PSI-BLAST against non-redundant fragments of Ub site sequ2ences.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+      </sec>
+      <sec id="s3e">
+        <title>Predictive performance of independent testing</title>
+        <p>To determine whether the models (are over-fitted to their training data, independent sets of data concerning Ub sites and non-Ub sites are constructed and used to test the model that was trained with the combination of amino acid composition and the PSSM profile of non-redundant fragment sequences of Ub sites, which have the highest predictive accuracy. Independent test sets include 57 ubiquitylation sites and 3502 non-ubiquitylation sites, According to <xref ref-type="table" rid="pone-0017331-t003">Table 3</xref>, are used to determine the predictive sensitivity, specificity, and accuracy of the proposed method, which were 57.9%, 72.4%, and 72.2%, respectively. Generally, the performance in an independent test approaches that of cross-validation. Whereas cross-validation outperforms independent testing, the performance of the trained model may be overestimated. The independent test establishes that the constructed RBF model does not over-fit the training data. The independent test sets were used to test other ubiquitylation predictors. The predictive sensitivity and specificity of UbiPred <xref ref-type="bibr" rid="pone.0017331-Tung1">[8]</xref> were 52.6% and 52.6%, respectively, indicating balanced predictive performance. However, the independent test also indicates that UbiPred does not perform as well as its developers claimed. The predictive sensitivity and specificity of UbPred <xref ref-type="bibr" rid="pone.0017331-Radivojac1">[9]</xref> were 42.1% and 68.7%, respectively, indicating poor sensitivity for an independent test set. In UbiPred and UbPred, the data source of experimental ubiquitylation sites is collected from UbiProt <xref ref-type="bibr" rid="pone.0017331-Chernorudskiy1">[6]</xref>, which mainly stored the yeast ubiquitylation data. However, UbSite integrates the experimental ubiquitylation sites from UbiProt and UniProtKB/Swiss-Prot <xref ref-type="bibr" rid="pone.0017331-Boeckmann1">[7]</xref>, which accumulated the ubiquitylation data from multiple species. This could partially explain the low sensitivities of UbPred and UbiPred on these independent test data which come from multiple species.</p>
+        <table-wrap id="pone-0017331-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0017331.t003</object-id><label>Table 3</label><caption>
+            <title>Comparison between our method (UbSite) and other ubiquitylation prediction tools.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0017331-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.t003" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="2" rowspan="1">Tools</td>
+                <td align="left" colspan="1" rowspan="1">UbSite</td>
+                <td align="left" colspan="1" rowspan="1">UbiPred</td>
+                <td align="left" colspan="1" rowspan="1">UbPred</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="2" rowspan="1">Materials</td>
+                <td align="left" colspan="1" rowspan="1">UbiProt + Swiss-Prot</td>
+                <td align="left" colspan="1" rowspan="1">UbiProt</td>
+                <td align="left" colspan="1" rowspan="1">UbiProt</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="2" rowspan="1">Method</td>
+                <td align="left" colspan="1" rowspan="1">Radial basis function network</td>
+                <td align="left" colspan="1" rowspan="1">Support vector machine</td>
+                <td align="left" colspan="1" rowspan="1">Random forest</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="2" rowspan="1">Training features</td>
+                <td align="left" colspan="1" rowspan="1">AAC + PSSM</td>
+                <td align="left" colspan="1" rowspan="1">Physicochemical properties</td>
+                <td align="left" colspan="1" rowspan="1">AAC + PSSM + disordered regions + physicochemical properties</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Training data</td>
+                <td align="left" colspan="1" rowspan="1">Number of positive data</td>
+                <td align="left" colspan="1" rowspan="1">385</td>
+                <td align="left" colspan="1" rowspan="1">151</td>
+                <td align="left" colspan="1" rowspan="1">272</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Number of negative data</td>
+                <td align="left" colspan="1" rowspan="1">12,582</td>
+                <td align="left" colspan="1" rowspan="1">3,424</td>
+                <td align="left" colspan="1" rowspan="1">4,651</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="2" rowspan="1">Window length</td>
+                <td align="left" colspan="1" rowspan="1">−20∼+20</td>
+                <td align="left" colspan="1" rowspan="1">−10∼+10</td>
+                <td align="left" colspan="1" rowspan="1">−12∼+12</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Proposed performance</td>
+                <td align="left" colspan="1" rowspan="1">Sensitivity (%)</td>
+                <td align="left" colspan="1" rowspan="1">65.5</td>
+                <td align="left" colspan="1" rowspan="1">83.44</td>
+                <td align="left" colspan="1" rowspan="1">-</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Specificity (%)</td>
+                <td align="left" colspan="1" rowspan="1">74.8</td>
+                <td align="left" colspan="1" rowspan="1">85.43</td>
+                <td align="left" colspan="1" rowspan="1">-</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Accuracy (%)</td>
+                <td align="left" colspan="1" rowspan="1">74.5</td>
+                <td align="left" colspan="1" rowspan="1">84.44</td>
+                <td align="left" colspan="1" rowspan="1">72.0</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Independent test</td>
+                <td align="left" colspan="1" rowspan="1">Sensitivity (%)</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>57.9</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">52.6</td>
+                <td align="left" colspan="1" rowspan="1">42.1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Specificity (%)</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>72.4</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">52.6</td>
+                <td align="left" colspan="1" rowspan="1">68.7</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Accuracy (%)</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>72.2</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">52.6</td>
+                <td align="left" colspan="1" rowspan="1">68.3</td>
+              </tr>
+            </tbody>
+          </table></alternatives><table-wrap-foot>
+            <fn id="nt104">
+              <label/>
+              <p>Abbreviation: AAC, amino acid composition; PSSM, position-specific scoring matrix.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+      </sec>
+      <sec id="s3f">
+        <title>Conclusion</title>
+        <p>This investigation proposes a method, UbSite, which incorporates the efficient radial basis function (RBF) network to identify ubiquitin conjugation sites on protein sequences. Not only the amino acid composition but also the structural characteristics, physicochemical properties, and evolutionary information of amino acids around the ubiquitylation (Ub) sites are explored. With reference to the pathway of ubiquitin conjugation, which involves a sequential process with a group of enzymes known as E1 (activating enzyme), E2 (conjugating enzyme) and E3 (ubiquitin ligase), the substrate sites for E3 recognition, which are distant from ubiquitylation sites, are examined. According to the measurement of F-score in a large window size(−20∼+20), most of the statistically significant amino acids and evolutionary information (PSSM), which can be used effectively to differentiate Ub sites from non-Ub sites, are located at large distances from Ub sites. To prevent any overestimation of predictive performance, duplicated sequences are removed using a window size determined by the collected data sets. Although the amino acid sequences around the ubiquitin conjugated sites do not contain a conserved motif, cross-validation results indicate that the integration of the evolutionary information around the sites can improve predictive performance. <xref ref-type="table" rid="pone-0017331-t003">Table 3</xref> compares proposed method with other ubiquitylation prediction tools, in terms of materials, method, training features, number of training data, window length, and proposed predictive performances. Furthermore, the independent test demonstrates that UbSite can outperform other ubiquitylation prediction tools.</p>
+        <p>Although the proposed method is accurate and robust, according to independent tests, some issues remain to address in the future. Firstly, the structural preferences of ubiquitin conjugation sites preferred structures at ubiquitin conjugation sites must be examined in greater detail because flanking residues are not conserved. In addition to the solvent-accessible surface area and the secondary structure, the B-factor, intrinsically disordered region, protein linker region, and other factors should be explored experimentally at ubiquitylation sites in the protein regions with PDB entries. Following work done previously on phosphorylation <xref ref-type="bibr" rid="pone.0017331-Zanzoni1">[38]</xref>, the local 3D structure of ubiquitylation sites may be extracted for further analysis. Secondly, with reference to the pathway of ubiquitin conjugation, the ubiquitylated proteins may contain a substrate site is distant from ubiquitylation lysine and useful in E3 recognition. Therefore, the distant sequence features of ubiquitylation sites should be investigated in more detail. For instance, using the motif discovery tool, like MEME <xref ref-type="bibr" rid="pone.0017331-Bailey1">[39]</xref>, to explore the significant motifs which may be the substrate sites of E3 recognition.</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0017331.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p>
+            <bold>The general architecture of RBFN consisting of input layer, hidden layer, and output layer.</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017331.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s002" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p>
+            <bold>The compositional differences of amino acids around ubiquitylation sites compared to non-ubiquitylation sites.</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017331.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s003" xlink:type="simple">
+        <label>Figure S3</label>
+        <caption>
+          <p><bold>A Two Sample Logo of the compositional biases around Ub conjugation sites compared to non-Ub conjugation sites.</bold> The amino acid residues that significantly enriched and depleted (<italic>P</italic>-value&lt;0.05; t-test) around Ub conjugation sites are shown.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017331.s004" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s004" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p>
+            <bold>The graphical representation of chemical properties surrounding ubiquitylation sites using different grouping method.</bold>
+          </p>
+          <p>(DOC)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017331.s005" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s005" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p>
+            <bold>F-score of amino acid composition for 40 positions around Ubi site.</bold>
+          </p>
+          <p>(DOC)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017331.s006" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0017331.s006" xlink:type="simple">
+        <label>Table S3</label>
+        <caption>
+          <p>
+            <bold>Top 20 di-peptides with high value of F-score in the 41-mer window size (−20∼+20) around Ub site.</bold>
+          </p>
+          <p>(DOC)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank the reviewers for their constructive comments, which improved the quality of this manuscript.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0017331-Hershko1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hershko</surname><given-names>A</given-names></name><name name-style="western"><surname>Ciechanover</surname><given-names>A</given-names></name></person-group>             <year>1998</year>             <article-title>The ubiquitin system.</article-title>             <source>Annu Rev Biochem</source>             <volume>67</volume>             <fpage>425</fpage>             <lpage>479</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Ou1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ou</surname><given-names>CY</given-names></name><name name-style="western"><surname>Pi</surname><given-names>H</given-names></name><name name-style="western"><surname>Chien</surname><given-names>CT</given-names></name></person-group>             <year>2003</year>             <article-title>Control of protein degradation by E3 ubiquitin ligases in Drosophila eye development.</article-title>             <source>Trends Genet</source>             <volume>19</volume>             <fpage>382</fpage>             <lpage>389</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Hicke1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hicke</surname><given-names>L</given-names></name><name name-style="western"><surname>Schubert</surname><given-names>HL</given-names></name><name name-style="western"><surname>Hill</surname><given-names>CP</given-names></name></person-group>             <year>2005</year>             <article-title>Ubiquitin-binding domains.</article-title>             <source>Nat Rev Mol Cell Biol</source>             <volume>6</volume>             <fpage>610</fpage>             <lpage>621</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Gilon1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gilon</surname><given-names>T</given-names></name><name name-style="western"><surname>Chomsky</surname><given-names>O</given-names></name><name name-style="western"><surname>Kulka</surname><given-names>RG</given-names></name></person-group>             <year>1998</year>             <article-title>Degradation signals for ubiquitin system proteolysis in Saccharomyces cerevisiae.</article-title>             <source>EMBO J</source>             <volume>17</volume>             <fpage>2759</fpage>             <lpage>2766</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Peng1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>J</given-names></name><name name-style="western"><surname>Schwartz</surname><given-names>D</given-names></name><name name-style="western"><surname>Elias</surname><given-names>JE</given-names></name><name name-style="western"><surname>Thoreen</surname><given-names>CC</given-names></name><name name-style="western"><surname>Cheng</surname><given-names>D</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>A proteomics approach to understanding protein ubiquitination.</article-title>             <source>Nat Biotechnol</source>             <volume>21</volume>             <fpage>921</fpage>             <lpage>926</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Chernorudskiy1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chernorudskiy</surname><given-names>AL</given-names></name><name name-style="western"><surname>Garcia</surname><given-names>A</given-names></name><name name-style="western"><surname>Eremin</surname><given-names>EV</given-names></name><name name-style="western"><surname>Shorina</surname><given-names>AS</given-names></name><name name-style="western"><surname>Kondratieva</surname><given-names>EV</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>UbiProt: a database of ubiquitylated proteins.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <fpage>126</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Boeckmann1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Boeckmann</surname><given-names>B</given-names></name><name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name><name name-style="western"><surname>Apweiler</surname><given-names>R</given-names></name><name name-style="western"><surname>Blatter</surname><given-names>MC</given-names></name><name name-style="western"><surname>Estreicher</surname><given-names>A</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>The SWISS-PROT protein knowledgebase and its supplement TrEMBL in 2003.</article-title>             <source>Nucleic Acids Res</source>             <volume>31</volume>             <fpage>365</fpage>             <lpage>370</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Tung1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tung</surname><given-names>CW</given-names></name><name name-style="western"><surname>Ho</surname><given-names>SY</given-names></name></person-group>             <year>2008</year>             <article-title>Computational identification of ubiquitylation sites from protein sequences.</article-title>             <source>BMC Bioinformatics</source>             <volume>9</volume>             <fpage>310</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Radivojac1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Radivojac</surname><given-names>P</given-names></name><name name-style="western"><surname>Vacic</surname><given-names>V</given-names></name><name name-style="western"><surname>Haynes</surname><given-names>C</given-names></name><name name-style="western"><surname>Cocklin</surname><given-names>RR</given-names></name><name name-style="western"><surname>Mohan</surname><given-names>A</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Identification, analysis, and prediction of protein ubiquitination sites.</article-title>             <source>Proteins</source>             <volume>78</volume>             <fpage>365</fpage>             <lpage>380</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Altschul1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name><name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name><name name-style="western"><surname>Schaffer</surname><given-names>AA</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>JH</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name><etal/></person-group>             <year>1997</year>             <article-title>Gapped BLAST and PSI-BLAST: a new generation of protein database search programs.</article-title>             <source>Nucleic Acids Research</source>             <volume>25</volume>             <fpage>3389</fpage>             <lpage>3402</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Shien1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Shien</surname><given-names>DM</given-names></name><name name-style="western"><surname>Lee</surname><given-names>TY</given-names></name><name name-style="western"><surname>Chang</surname><given-names>WC</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>JB</given-names></name><name name-style="western"><surname>Horng</surname><given-names>JT</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Incorporating structural characteristics for identification of protein methylation sites.</article-title>             <source>J Comput Chem</source>             <volume>30</volume>             <fpage>1532</fpage>             <lpage>1543</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Tatusova1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tatusova</surname><given-names>TA</given-names></name><name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name></person-group>             <year>1999</year>             <article-title>BLAST 2 Sequences, a new tool for comparing protein and nucleotide sequences.</article-title>             <source>FEMS Microbiol Lett</source>             <volume>174</volume>             <fpage>247</fpage>             <lpage>250</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Jones1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Jones</surname><given-names>DT</given-names></name></person-group>             <year>1999</year>             <article-title>Protein secondary structure prediction based on position-specific scoring matrices.</article-title>             <source>Journal of Molecular Biology</source>             <volume>292</volume>             <fpage>195</fpage>             <lpage>202</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Xie1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Xie</surname><given-names>D</given-names></name><name name-style="western"><surname>Li</surname><given-names>A</given-names></name><name name-style="western"><surname>Wang</surname><given-names>MH</given-names></name><name name-style="western"><surname>Fan</surname><given-names>ZW</given-names></name><name name-style="western"><surname>Feng</surname><given-names>HQ</given-names></name></person-group>             <year>2005</year>             <article-title>LOCSVMPSI: a web server for subcellular localization of eukaryotic proteins using SVM and profile of PSI-BLAST.</article-title>             <source>Nucleic Acids Research</source>             <volume>33</volume>             <fpage>W105</fpage>             <lpage>W110</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Ou2">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ou</surname><given-names>YY</given-names></name><name name-style="western"><surname>Gromiha</surname><given-names>MM</given-names></name><name name-style="western"><surname>Chen</surname><given-names>SA</given-names></name><name name-style="western"><surname>Suwa</surname><given-names>M</given-names></name></person-group>             <year>2008</year>             <article-title>TMBETADISC-RBF: Discrimination of beta-barrel membrane proteins using RBF networks and PSSM profiles.</article-title>             <source>Computational Biology and Chemistry</source>             <volume>32</volume>             <fpage>227</fpage>             <lpage>231</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Berman1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Berman</surname><given-names>HM</given-names></name><name name-style="western"><surname>Westbrook</surname><given-names>J</given-names></name><name name-style="western"><surname>Feng</surname><given-names>Z</given-names></name><name name-style="western"><surname>Gilliland</surname><given-names>G</given-names></name><name name-style="western"><surname>Bhat</surname><given-names>TN</given-names></name><etal/></person-group>             <year>2000</year>             <article-title>The Protein Data Bank.</article-title>             <source>Nucleic Acids Res</source>             <volume>28</volume>             <fpage>235</fpage>             <lpage>242</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Ahmad1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ahmad</surname><given-names>S</given-names></name><name name-style="western"><surname>Gromiha</surname><given-names>MM</given-names></name><name name-style="western"><surname>Sarai</surname><given-names>A</given-names></name></person-group>             <year>2003</year>             <article-title>RVP-net: online prediction of real valued accessible surface area of proteins from single sequences.</article-title>             <source>Bioinformatics</source>             <volume>19</volume>             <fpage>1849</fpage>             <lpage>1851</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-McGuffin1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>McGuffin</surname><given-names>LJ</given-names></name><name name-style="western"><surname>Bryson</surname><given-names>K</given-names></name><name name-style="western"><surname>Jones</surname><given-names>DT</given-names></name></person-group>             <year>2000</year>             <article-title>The PSIPRED protein structure prediction server.</article-title>             <source>Bioinformatics</source>             <volume>16</volume>             <fpage>404</fpage>             <lpage>405</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Altschul2">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name><name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name><name name-style="western"><surname>Schaffer</surname><given-names>AA</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name><etal/></person-group>             <year>1997</year>             <article-title>Gapped BLAST and PSI-BLAST: a new generation of protein database search programs.</article-title>             <source>Nucleic Acids Res</source>             <volume>25</volume>             <fpage>3389</fpage>             <lpage>3402</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Bryson1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bryson</surname><given-names>K</given-names></name><name name-style="western"><surname>McGuffin</surname><given-names>LJ</given-names></name><name name-style="western"><surname>Marsden</surname><given-names>RL</given-names></name><name name-style="western"><surname>Ward</surname><given-names>JJ</given-names></name><name name-style="western"><surname>Sodhi</surname><given-names>JS</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Protein structure prediction servers at University College London.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>W36</fpage>             <lpage>38</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Lin1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lin</surname><given-names>C-J</given-names></name><name name-style="western"><surname>Chen</surname><given-names>Y-W</given-names></name></person-group>             <year>2003</year>             <article-title>Combining SVMs with various feature selection strategies.</article-title>             <source>NIPS 2003 feature selection challenge</source>             <fpage>1</fpage>             <lpage>10</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Ou3">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ou</surname><given-names>Y-Y</given-names></name></person-group>             <year>2005</year>             <article-title>A novel radial basis function network classifier with centers set by hierarchical clustering.</article-title>             <source>Proc IEEE Int Conf Neural Networks 2005</source>             <volume>3</volume>             <fpage>1383</fpage>             <lpage>1388</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Yang1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yang</surname><given-names>ZR</given-names></name><name name-style="western"><surname>Thomson</surname><given-names>R</given-names></name></person-group>             <year>2005</year>             <article-title>Bio-basis function neural network for prediction of protease cleavage sites in proteins.</article-title>             <source>Ieee Transactions on Neural Networks</source>             <volume>16</volume>             <fpage>263</fpage>             <lpage>274</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Zhang1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhang</surname><given-names>GZ</given-names></name><name name-style="western"><surname>Huang</surname><given-names>DS</given-names></name></person-group>             <year>2004</year>             <article-title>Prediction of inter-residue contacts map based on genetic algorithm optimized radial basis function neural network and binary input encoding scheme.</article-title>             <source>Journal of Computer-Aided Molecular Design</source>             <volume>18</volume>             <fpage>797</fpage>             <lpage>810</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Su1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Su</surname><given-names>CT</given-names></name><name name-style="western"><surname>Chen</surname><given-names>CY</given-names></name><name name-style="western"><surname>Ou</surname><given-names>YY</given-names></name></person-group>             <year>2006</year>             <article-title>Protein disorder prediction by condensed PSSM considering propensity for order or disorder.</article-title>             <source>Bmc Bioinformatics</source>             <volume>7</volume>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Chen1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chen</surname><given-names>SA</given-names></name><name name-style="western"><surname>Lee</surname><given-names>TY</given-names></name><name name-style="western"><surname>Ou</surname><given-names>YY</given-names></name></person-group>             <year>2010</year>             <article-title>Incorporating significant amino acid pairs to identify O-linked glycosylation sites on transmembrane proteins and non-transmembrane proteins.</article-title>             <source>BMC Bioinformatics</source>             <volume>11</volume>             <fpage>536</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Ron1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ron</surname><given-names>K</given-names></name></person-group>             <year>1995</year>             <article-title>A study of cross-validation and bootstrap for accuracy estimation and model selection.</article-title>             <source>Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence</source>             <volume>2</volume>             <fpage>1137</fpage>             <lpage>1143</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Crooks1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Crooks</surname><given-names>GE</given-names></name><name name-style="western"><surname>Hon</surname><given-names>G</given-names></name><name name-style="western"><surname>Chandonia</surname><given-names>JM</given-names></name><name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name></person-group>             <year>2004</year>             <article-title>WebLogo: a sequence logo generator.</article-title>             <source>Genome Res</source>             <volume>14</volume>             <fpage>1188</fpage>             <lpage>1190</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Schneider1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Schneider</surname><given-names>TD</given-names></name><name name-style="western"><surname>Stephens</surname><given-names>RM</given-names></name></person-group>             <year>1990</year>             <article-title>Sequence logos: a new way to display consensus sequences.</article-title>             <source>Nucleic Acids Res</source>             <volume>18</volume>             <fpage>6097</fpage>             <lpage>6100</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Chothia1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chothia</surname><given-names>C</given-names></name><name name-style="western"><surname>Finkelstein</surname><given-names>AV</given-names></name></person-group>             <year>1990</year>             <article-title>The classification and origins of protein folding patterns.</article-title>             <source>Annu Rev Biochem</source>             <volume>59</volume>             <fpage>1007</fpage>             <lpage>1039</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Grantham1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Grantham</surname><given-names>R</given-names></name></person-group>             <year>1974</year>             <article-title>Amino acid difference formula to help explain protein evolution.</article-title>             <source>Science</source>             <volume>185</volume>             <fpage>862</fpage>             <lpage>864</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Fauchere1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Fauchere</surname><given-names>JL</given-names></name><name name-style="western"><surname>Charton</surname><given-names>M</given-names></name><name name-style="western"><surname>Kier</surname><given-names>LB</given-names></name><name name-style="western"><surname>Verloop</surname><given-names>A</given-names></name><name name-style="western"><surname>Pliska</surname><given-names>V</given-names></name></person-group>             <year>1988</year>             <article-title>Amino acid side chain parameters for correlation studies in biology and pharmacology.</article-title>             <source>Int J Pept Protein Res</source>             <volume>32</volume>             <fpage>269</fpage>             <lpage>278</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Charton1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Charton</surname><given-names>M</given-names></name><name name-style="western"><surname>Charton</surname><given-names>BI</given-names></name></person-group>             <year>1982</year>             <article-title>The structural dependence of amino acid hydrophobicity parameters.</article-title>             <source>J Theor Biol</source>             <volume>99</volume>             <fpage>629</fpage>             <lpage>644</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Vacic1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vacic</surname><given-names>V</given-names></name><name name-style="western"><surname>Iakoucheva</surname><given-names>LM</given-names></name><name name-style="western"><surname>Radivojac</surname><given-names>P</given-names></name></person-group>             <year>2006</year>             <article-title>Two Sample Logo: a graphical representation of the differences between two sets of sequence alignments.</article-title>             <source>Bioinformatics</source>             <volume>22</volume>             <fpage>1536</fpage>             <lpage>1537</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Pang1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Pang</surname><given-names>CN</given-names></name><name name-style="western"><surname>Hayen</surname><given-names>A</given-names></name><name name-style="western"><surname>Wilkins</surname><given-names>MR</given-names></name></person-group>             <year>2007</year>             <article-title>Surface accessibility of protein post-translational modifications.</article-title>             <source>J Proteome Res</source>             <volume>6</volume>             <fpage>1833</fpage>             <lpage>1845</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Hu1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hu</surname><given-names>Z</given-names></name><name name-style="western"><surname>Fu</surname><given-names>Y</given-names></name><name name-style="western"><surname>Halees</surname><given-names>AS</given-names></name><name name-style="western"><surname>Kielbasa</surname><given-names>SM</given-names></name><name name-style="western"><surname>Weng</surname><given-names>Z</given-names></name></person-group>             <year>2004</year>             <article-title>SeqVISTA: a new module of integrated computational tools for studying transcriptional regulation.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>W235</fpage>             <lpage>241</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Catic1">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Catic</surname><given-names>A</given-names></name><name name-style="western"><surname>Collins</surname><given-names>C</given-names></name><name name-style="western"><surname>Church</surname><given-names>GM</given-names></name><name name-style="western"><surname>Ploegh</surname><given-names>HL</given-names></name></person-group>             <year>2004</year>             <article-title>Preferred in vivo ubiquitination sites.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>3302</fpage>             <lpage>3307</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Zanzoni1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zanzoni</surname><given-names>A</given-names></name><name name-style="western"><surname>Ausiello</surname><given-names>G</given-names></name><name name-style="western"><surname>Via</surname><given-names>A</given-names></name><name name-style="western"><surname>Gherardini</surname><given-names>PF</given-names></name><name name-style="western"><surname>Helmer-Citterich</surname><given-names>M</given-names></name></person-group>             <year>2007</year>             <article-title>Phospho3D: a database of three-dimensional structures of protein phosphorylation sites.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>D229</fpage>             <lpage>231</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017331-Bailey1">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bailey</surname><given-names>TL</given-names></name><name name-style="western"><surname>Williams</surname><given-names>N</given-names></name><name name-style="western"><surname>Misleh</surname><given-names>C</given-names></name><name name-style="western"><surname>Li</surname><given-names>WW</given-names></name></person-group>             <year>2006</year>             <article-title>MEME: discovering and analyzing DNA and protein sequence motifs.</article-title>             <source>Nucleic Acids Res</source>             <volume>34</volume>             <fpage>W369</fpage>             <lpage>373</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>
