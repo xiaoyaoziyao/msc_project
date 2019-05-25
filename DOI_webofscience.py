@@ -74,17 +74,21 @@ def PLOS_revise(ids,a,i):
             f.write(str(a)+"/"+str(i)+"    "+str(e.code)+"    "+str(ids)+'\n')
         print("error:"+str(a)+"\\"+str(i)+"    "+str(e.code)+"    "+str(ids))
         pass
-    
-#for a in range(1,11):
-#    l = DOI_find(a)
-#    PLOS_get(l,a)
-#l = DOI_find(2)
-#PLOS_get(l,2)
+
+'''
+top 10 citations
+for a in range(1,11):
+    l = DOI_find(a)
+    PLOS_get(l,a)
+'''
+
+'''
+manually revision with error.log
 PLOS_revise("10.1371/journal.pone.0186461",9,12)
 PLOS_revise("10.1371/journal.pone.0186943",1,113)
 PLOS_revise("10.1371/journal.pone.0176993",1,149)
 PLOS_revise("10.1371/journal.pone.0197599",2,6)
-
+'''
 
 
 

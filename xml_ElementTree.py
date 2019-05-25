@@ -6,7 +6,7 @@ use pdfminer to get the data
 
 import xml.etree.ElementTree as ET
 i = 0
-tree = ET.ElementTree(file='journal.pcbi.1003897.XML')
+tree = ET.ElementTree(file='1\\1.xml')
 root = tree.getroot()
 for elm in tree.iter("ref"):      
     if(elm.find(".//article-title") != None and elm.find(".//article-title").text == "Introductory science and mathematics education for 21st-century biologists"):
