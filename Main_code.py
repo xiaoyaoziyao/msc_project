@@ -43,9 +43,9 @@ def DOI_find_highpaper():
                 i=i+1
     finally:
          file_object.close()
-         with open("highly_cited_paper.txt", 'w') as f:
-             for word in l:
-                 f.write(word+"\n")
+#         with open("highly_cited_paper.txt", 'w') as f:
+#             for word in l:
+#                 f.write(word+"\n")
     return l
 
 '''
@@ -102,35 +102,42 @@ Extract the rid and location of citations from xml files
 '''   
 def xml_find_loc(i,target):
     files= os.listdir("Citation_paper\\" + str(i))
+    savefile = "Citation_paper\\" + str(i) + "\\" + "result.txt"
+    f = open(savefile,'w')
     for file in files:
-        print("Citation_paper\\" + str(i) + '\\' + file)
+#        print("Citation_paper\\" + str(i) + '\\' + file)
+        f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
         titles = {}
         rid_real = ''
         location = ''
         try:
             tree = ET.ElementTree(file = "Citation_paper\\" + str(i)+ "\\" + file)
-            root = tree.getroot()
-            for elm in tree.iter("ref"):
-                if(elm.find(".//article-title") != None):
-    #                    rid = elm.attrib['id'] 
+            body = tree.getroot().find('.//body')
+            for elm in tree.iterfind('.//ref'):      
+                if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
                     f_title = elm.find(".//article-title").text
                     titles[f_title] = elm.attrib['id']
 #            print(titles)
             rid_real = edit_distance(target,titles)
-            print(rid_real)
-            for sec in root[1]:
-                for s in sec:
-                    if(s.tag == 'p'):                                                                   
-                        for ss in s:
-                            if(ss.tag == 'xref' and ss.attrib['rid'] == rid_real):
-                                location = sec[0].text
-            if (rid_real != '' and location == ''):
-                print("Cannot find in-text citation!")
+            if(rid_real == ''):
+#                print("#Cannot find reference id!!!")
+                f.write("#Cannot find reference id!!!\n")
             else:
-                print(location)
+                f.write("RId: " + rid_real + '\n')
+            for sec in body:
+                for ref in sec.iterfind('.//xref'):
+                    if(ref != None and ref.attrib["rid"] == rid_real):
+                        location = sec[0].text
+                        f.write("Location: " + location + '\n')
+            if(rid_real != '' and location == ''):
+#                print("#Cannot find in-text citation!!!")
+                f.write("#Cannot find in-text citation!!!\n")          
         except Exception as e:
-            print('Reason:', e) 
-        print('------------------------------------------------------------------------')
+#            print('Reason:', e) 
+            f.write('Reason:' + str(e) + '\n')
+#        print('------------------------------------------------------------------------')
+        f.write('------------------------------------------------------------------------\n')
+    f.close()
 #    return location
 
 '''
@@ -165,10 +172,10 @@ Main function
 ###Ongoing part###
 
 l = DOI_find_highpaper()
-#for i in range(1,11):
-#    xml_find_loc(i,l[i-1].lower())
-print(l[4])
-xml_find_loc(5,l[4])
+for i in range(1,11):
+    print("Highly-cited paper " + str(i) + "......")
+    xml_find_loc(i,l[i-1].lower())
+#xml_find_loc(6,l[5])
 
 
 
