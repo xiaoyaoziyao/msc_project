@@ -33,20 +33,24 @@ Extract the titles of highly-cited papers
 '''
 def DOI_find_highpaper():
     l = []
+    m = []
     i = 0
     file_object = open('WOS_list\\savedrecs.ciw','rU', encoding='UTF-8')
     try:
         for line in file_object:
             g = re.search("(?<=TI ).*$", line)     
+            y = re.search("(?<=PY ).*$", line)
             if g:
                 l.append(g.group())
                 i=i+1
+            if y:
+                m.append(y.group())
     finally:
          file_object.close()
 #         with open("highly_cited_paper.txt", 'w') as f:
 #             for word in l:
 #                 f.write(word+"\n")
-    return l
+    return (l,m)
 
 '''
 Acquire the xml files of citations from PLOS ONE, meanwhile record the error in "error.log"
@@ -100,43 +104,60 @@ def PLOS_revise(ids,a,i):
 '''
 Extract the rid and location of citations from xml files
 '''   
-def xml_find_loc(i,target):
+def xml_find_loc(i,target_title,target_year):
     files= os.listdir("Citation_paper\\" + str(i))
-    savefile = "Citation_paper\\" + str(i) + "\\" + "result.txt"
+    folder = os.path.exists("Results")
+    if not folder:      
+        os.makedirs("Results")
+    savefile = "Results\\result(" + str(i) +").txt"
     f = open(savefile,'w')
+    f.write("Target_Title: " + target_title + "\n")
+    f.write("Target_Year: " + target_year + "\n")
+    f.write('************************************************************************\n')
+    a = 0
+    b = 0
     for file in files:
-#        print("Citation_paper\\" + str(i) + '\\' + file)
-        f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
-        titles = {}
-        rid_real = ''
-        location = ''
-        try:
-            tree = ET.ElementTree(file = "Citation_paper\\" + str(i)+ "\\" + file)
-            body = tree.getroot().find('.//body')
-            for elm in tree.iterfind('.//ref'):      
-                if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
-                    f_title = elm.find(".//article-title").text
-                    titles[f_title] = elm.attrib['id']
-#            print(titles)
-            rid_real = edit_distance(target,titles)
-            if(rid_real == ''):
-#                print("#Cannot find reference id!!!")
-                f.write("#Cannot find reference id!!!\n")
-            else:
-                f.write("RId: " + rid_real + '\n')
-            for sec in body:
-                for ref in sec.iterfind('.//xref'):
-                    if(ref != None and ref.attrib["rid"] == rid_real):
-                        location = sec[0].text
-                        f.write("Location: " + location + '\n')
-            if(rid_real != '' and location == ''):
-#                print("#Cannot find in-text citation!!!")
-                f.write("#Cannot find in-text citation!!!\n")          
-        except Exception as e:
-#            print('Reason:', e) 
-            f.write('Reason:' + str(e) + '\n')
-#        print('------------------------------------------------------------------------')
-        f.write('------------------------------------------------------------------------\n')
+        if file.endswith('.xml'):
+    #        print("Citation_paper\\" + str(i) + '\\' + file)
+            f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
+            titles = {}
+            rid_real = ''
+            location = []
+            try:
+                tree = ET.ElementTree(file = "Citation_paper\\" + str(i)+ "\\" + file)
+                body = tree.getroot().find('.//body')
+                year = tree.find(".//pub-date/year").text
+                f.write("Year: " + year + '\n')
+                for elm in tree.iterfind('.//ref'):      
+                    if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
+                        f_title = elm.find(".//article-title").text
+                        titles[f_title] = elm.attrib['id']
+    #            print(titles)
+                rid_real = edit_distance(target_title,titles)
+                if(rid_real == ''):
+    #                print("#Cannot find reference id!!!")
+                    f.write("#Cannot find reference id!!!\n")
+                    a = a + 1
+                else:
+                    f.write("RId: " + rid_real + '\n')
+                for sec in body:
+                    for ref in sec.iterfind('.//xref'):
+                        if(ref != None and ref.attrib["rid"] == rid_real):
+                            location.append(sec[0].text)
+                for loc in list(set(location)):
+                    f.write("Location: " + loc + '\n')
+                if(rid_real != '' and len(location) == 0):
+    #                print("#Cannot find in-text citation!!!")
+                    f.write("#Cannot find in-text citation!!!\n")  
+                    b = b + 1
+            except Exception as e:
+    #            print('Reason:', e) 
+                f.write('Reason:' + str(e) + '\n')
+    #        print('------------------------------------------------------------------------')
+            f.write('------------------------------------------------------------------------\n')
+    f.write('************************************************************************\n')
+    f.write("Cannot find reference id: " + str(a) + '\n')
+    f.write("Cannot find in-text citation: " + str(b) + '\n')
     f.close()
 #    return location
 
@@ -147,7 +168,7 @@ def edit_distance(target,titles):
     rid_real = ''
     distance0 = distance.levenshtein(target, list(titles.keys())[0])
     for title in titles.items():       
-        if (distance.levenshtein(target, title[0]) < distance0):
+        if (distance.levenshtein(target, title[0]) <= distance0):
             distance0 = distance.levenshtein(target, title[0])
             rid_real = title[1]
     return rid_real
@@ -171,10 +192,13 @@ Main function
 
 ###Ongoing part###
 
-l = DOI_find_highpaper()
+targets_title = DOI_find_highpaper()[0]
+targets_year = DOI_find_highpaper()[1]
+#xml_find_loc(5,targets_title[4],targets_year[4])
 for i in range(1,11):
     print("Highly-cited paper " + str(i) + "......")
-    xml_find_loc(i,l[i-1].lower())
+    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
+
 #xml_find_loc(6,l[5])
 
 
