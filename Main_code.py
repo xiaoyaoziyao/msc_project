@@ -127,7 +127,6 @@ def xml_find_loc(i,target_title,target_year):
                 tree = ET.ElementTree(file = "Citation_paper\\" + str(i)+ "\\" + file)
                 body = tree.getroot().find('.//body')
                 year = tree.find(".//pub-date/year").text
-                f.write("Year: " + year + '\n')
                 for elm in tree.iterfind('.//ref'):      
                     if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
                         f_title = elm.find(".//article-title").text
@@ -146,6 +145,7 @@ def xml_find_loc(i,target_title,target_year):
                             location.append(sec[0].text)
                 for loc in list(set(location)):
                     f.write("Location: " + loc + '\n')
+                    f.write("Year_Diff: " + str(int(year)-int(target_year)) + '\n')
                 if(rid_real != '' and len(location) == 0):
     #                print("#Cannot find in-text citation!!!")
                     f.write("#Cannot find in-text citation!!!\n")  
@@ -175,6 +175,23 @@ def edit_distance(target,titles):
 
 
 '''
+Read the results.txt as lists
+'''   
+def read_results(i):
+    Year_Diff = []
+    Location = []
+    savefile = "Results\\result(" + str(i) +").txt"
+    with open(savefile,'r') as f:
+        lines = f.readlines()
+        for i in range(3,len(lines)-2):
+            if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
+                Location.append(lines[i][10:].replace('\n',''))
+                Year_Diff.append(int(lines[i+1][11:].replace('\n','')))
+    for k in range(len(Location)):
+        print(Location[k],'           ',Year_Diff[k])
+    return (Location, Year_Diff)
+
+'''
 Main function
 '''
 ###Finished part###
@@ -189,17 +206,20 @@ Main function
 #PLOS_revise("10.1371/journal.pone.0176993",1,149)
 #PLOS_revise("10.1371/journal.pone.0197599",2,6)
 #PLOS_revise("10.1371/journal.pone.0186461",9,12)
-
+#
+##Extract year and location of citations
+#targets_title = DOI_find_highpaper()[0]
+#targets_year = DOI_find_highpaper()[1]
+#for i in range(1,11):
+#    print("Highly-cited paper " + str(i) + "......")
+#    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
+    
 ###Ongoing part###
-
-targets_title = DOI_find_highpaper()[0]
-targets_year = DOI_find_highpaper()[1]
-#xml_find_loc(5,targets_title[4],targets_year[4])
 for i in range(1,11):
-    print("Highly-cited paper " + str(i) + "......")
-    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
+    print(i,'----------------------------------------------')
+    read_results(i)
 
-#xml_find_loc(6,l[5])
+
 
 
 
