@@ -8,6 +8,8 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 import distance
+import numpy as np
+import matplotlib.pyplot as plt
 
 '''
 Extract the DOI of citations
@@ -183,14 +185,24 @@ def read_results(i):
     savefile = "Results\\result(" + str(i) +").txt"
     with open(savefile,'r') as f:
         lines = f.readlines()
+        Year = lines[1][13:].replace('\n','')
         for i in range(3,len(lines)-2):
             if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
                 Location.append(lines[i][10:].replace('\n',''))
                 Year_Diff.append(int(lines[i+1][11:].replace('\n','')))
-    for k in range(len(Location)):
-        print(Location[k],'           ',Year_Diff[k])
-    return (Location, Year_Diff)
+#    for k in range(len(Location)):
+#        print(Location[k],'           ',Year_Diff[k])
+    return (Location, Year_Diff, Year)
 
+def visualization(x,y,z):
+    fig = plt.figure()
+    ax1 = fig.add_subplot(111)
+    ax1.set_title('Scatter Plot')
+    plt.xlabel('Year_Diff')
+    plt.ylabel('Location')
+    ax1.scatter(x,y,c = 'r',marker = 'o')
+    plt.legend('1999')
+    plt.show()
 '''
 Main function
 '''
@@ -215,11 +227,18 @@ Main function
 #    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
     
 ###Ongoing part###
-for i in range(1,11):
-    print(i,'----------------------------------------------')
-    read_results(i)
+#loc_all = []
+#for i in range(1,11):
+##    print(i,'----------------------------------------------')
+#    for loc in read_results(i)[0]:
+#        loc_all.append(loc)
+#loc_all = sorted(list(set(loc_all)))
+#for a in loc_all:
+#    print(a)
 
-
-
-
+location = read_results(6)[0]
+year_diff = read_results(6)[1]
+year = read_results(6)[2]
+print(year_diff,location,year)
+visualization(year_diff,location,year)
 
