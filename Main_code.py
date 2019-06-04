@@ -8,8 +8,9 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 import distance
+import difflib
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 '''
 Extract the DOI of citations
@@ -36,17 +37,22 @@ Extract the titles of highly-cited papers
 def DOI_find_highpaper():
     l = []
     m = []
-    i = 0
     file_object = open('WOS_list\\savedrecs.ciw','rU', encoding='UTF-8')
     try:
-        for line in file_object:
-            g = re.search("(?<=TI ).*$", line)     
+        i = 0
+        f_read = file_object.readlines()
+        for line in f_read:
             y = re.search("(?<=PY ).*$", line)
+            g = re.search("(?<=TI ).*$", line)
             if g:
-                l.append(g.group())
-                i=i+1
+                if(f_read[i+1].startswith('SO')):
+                    title = g.group()
+                else:
+                    title = g.group() + f_read[i+1].replace('\n','') .replace('  ','')  
+                l.append(title)
             if y:
                 m.append(y.group())
+            i = i+1
     finally:
          file_object.close()
 #         with open("highly_cited_paper.txt", 'w') as f:
@@ -118,8 +124,10 @@ def xml_find_loc(i,target_title,target_year):
     f.write('************************************************************************\n')
     a = 0
     b = 0
+    target_title = target_title.lower()
     for file in files:
-        if file.endswith('.xml'):
+#        if file.endswith('.xml'):
+        if file == "33.xml":
     #        print("Citation_paper\\" + str(i) + '\\' + file)
             f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
             titles = {}
@@ -131,10 +139,10 @@ def xml_find_loc(i,target_title,target_year):
                 year = tree.find(".//pub-date/year").text
                 for elm in tree.iterfind('.//ref'):      
                     if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
-                        f_title = elm.find(".//article-title").text
+                        f_title = elm.find(".//article-title").text.lower()
                         titles[f_title] = elm.attrib['id']
     #            print(titles)
-                rid_real = edit_distance(target_title,titles)
+                rid_real = edit_distance(file,target_title,titles)
                 if(rid_real == ''):
     #                print("#Cannot find reference id!!!")
                     f.write("#Cannot find reference id!!!\n")
@@ -142,37 +150,64 @@ def xml_find_loc(i,target_title,target_year):
                 else:
                     f.write("RId: " + rid_real + '\n')
                 for sec in body:
-                    for ref in sec.iterfind('.//xref'):
-                        if(ref != None and ref.attrib["rid"] == rid_real):
+                    for xref in sec.iterfind('.//xref'):
+                        if(xref != None and xref.attrib["rid"] == rid_real):
                             location.append(sec[0].text)
+                if(len(location) == 0):
+                    xml_find_revise(tree,body,rid_real,location)
                 for loc in list(set(location)):
                     f.write("Location: " + loc + '\n')
                     f.write("Year_Diff: " + str(int(year)-int(target_year)) + '\n')
                 if(rid_real != '' and len(location) == 0):
-    #                print("#Cannot find in-text citation!!!")
+    #                print("#Cannot find in-text citation!!!")                  
                     f.write("#Cannot find in-text citation!!!\n")  
                     b = b + 1
             except Exception as e:
     #            print('Reason:', e) 
                 f.write('Reason:' + str(e) + '\n')
+                print(file,'Reason:', str(e), '\n')
     #        print('------------------------------------------------------------------------')
             f.write('------------------------------------------------------------------------\n')
     f.write('************************************************************************\n')
+    print('Cannot find reference id: {:.2%}'.format(a/len(files)))
+    print('Cannot find in-text citation: {:.2%}'.format(b/len(files)))
     f.write("Cannot find reference id: " + str(a) + '\n')
     f.write("Cannot find in-text citation: " + str(b) + '\n')
     f.close()
 #    return location
 
+def xml_find_revise(tree,body,rid_real,location):
+    for elm in tree.iterfind('.//ref'):
+        if elm.attrib['id'] == rid_real:
+            label = elm.find(".//label").text
+    for sec in body:
+        for xref in sec.iterfind('.//xref'):
+            if(xref.tail == '–' and not re.search('[a-zA-Z]', xref.text)):
+                xref_text = ''.join(c for c in xref.text if c.isdigit())
+                if(abs(int(xref_text)-int(label)) < 4 and int(xref_text) < int(label)):
+                    location.append(sec[0].text)
 '''
 Calculate the levenshtein distance to do fuzzy match for titles
 '''   
-def edit_distance(target,titles):
+def edit_distance(file,target,titles):
     rid_real = ''
-    distance0 = distance.levenshtein(target, list(titles.keys())[0])
+    dis = []
+    diff = []
     for title in titles.items():       
-        if (distance.levenshtein(target, title[0]) <= distance0):
-            distance0 = distance.levenshtein(target, title[0])
-            rid_real = title[1]
+        dis.append(distance.levenshtein(target, title[0]))
+    dis_index = dis.index(min(dis))
+    real_title = list(titles)[dis_index]
+    rid_real = list(titles.values())[dis_index]
+#    if(min(dis) >= 20 and abs(len(target) - len(real_title)) >= 20):
+#        for title in titles.items():    
+#            seq = difflib.SequenceMatcher(None,target, title[0])
+#            diff.append(seq.ratio())
+#        diff_index = diff.index(max(diff))
+#        real_title = list(titles)[diff_index]
+#        rid_real = list(titles.values())[diff_index]
+#    print(target)
+#    print(real_title)
+#    print(file)
     return rid_real
 
 
@@ -195,14 +230,15 @@ def read_results(i):
     return (Location, Year_Diff, Year)
 
 def visualization(x,y,z):
-    fig = plt.figure()
-    ax1 = fig.add_subplot(111)
+    plt.figure()
+    ax1 = plt.subplot(1,1,1)
     ax1.set_title('Scatter Plot')
     plt.xlabel('Year_Diff')
     plt.ylabel('Location')
-    ax1.scatter(x,y,c = 'r',marker = 'o')
-    plt.legend('1999')
+    ax1.scatter(x,y,c = 'r',label = z, marker = 'o')
+    plt.legend()
     plt.show()
+
 '''
 Main function
 '''
@@ -220,12 +256,12 @@ Main function
 #PLOS_revise("10.1371/journal.pone.0186461",9,12)
 #
 ##Extract year and location of citations
-#targets_title = DOI_find_highpaper()[0]
-#targets_year = DOI_find_highpaper()[1]
+targets_title = DOI_find_highpaper()[0]
+targets_year = DOI_find_highpaper()[1]
 #for i in range(1,11):
 #    print("Highly-cited paper " + str(i) + "......")
 #    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
-    
+xml_find_loc(7,targets_title[6],targets_year[6])    
 ###Ongoing part###
 #loc_all = []
 #for i in range(1,11):
@@ -236,9 +272,11 @@ Main function
 #for a in loc_all:
 #    print(a)
 
-location = read_results(6)[0]
-year_diff = read_results(6)[1]
-year = read_results(6)[2]
-print(year_diff,location,year)
-visualization(year_diff,location,year)
+#location = read_results(2)[0]
+#year_diff = read_results(2)[1]
+#year = read_results(2)[2]
+#print(year_diff,location,year)
+#visualization(year_diff,location,year)
+
+
 
