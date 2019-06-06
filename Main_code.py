@@ -8,10 +8,12 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 import distance
-import difflib
-import numpy as np
+from collections import Counter
 import matplotlib.pyplot as plt 
-
+import nltk
+import numpy as np
+import pandas as pd
+import seaborn as sns
 '''
 Extract the DOI of citations
 '''
@@ -126,8 +128,7 @@ def xml_find_loc(i,target_title,target_year):
     b = 0
     target_title = target_title.lower()
     for file in files:
-#        if file.endswith('.xml'):
-        if file == "33.xml":
+        if file.endswith('.xml'):
     #        print("Citation_paper\\" + str(i) + '\\' + file)
             f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
             titles = {}
@@ -142,7 +143,7 @@ def xml_find_loc(i,target_title,target_year):
                         f_title = elm.find(".//article-title").text.lower()
                         titles[f_title] = elm.attrib['id']
     #            print(titles)
-                rid_real = edit_distance(file,target_title,titles)
+                rid_real = edit_distance(target_title,titles)
                 if(rid_real == ''):
     #                print("#Cannot find reference id!!!")
                     f.write("#Cannot find reference id!!!\n")
@@ -189,14 +190,14 @@ def xml_find_revise(tree,body,rid_real,location):
 '''
 Calculate the levenshtein distance to do fuzzy match for titles
 '''   
-def edit_distance(file,target,titles):
+def edit_distance(target,titles):
     rid_real = ''
     dis = []
-    diff = []
+#    diff = []
     for title in titles.items():       
         dis.append(distance.levenshtein(target, title[0]))
     dis_index = dis.index(min(dis))
-    real_title = list(titles)[dis_index]
+#    real_title = list(titles)[dis_index]
     rid_real = list(titles.values())[dis_index]
 #    if(min(dis) >= 20 and abs(len(target) - len(real_title)) >= 20):
 #        for title in titles.items():    
@@ -212,32 +213,59 @@ def edit_distance(file,target,titles):
 
 
 '''
-Read the results.txt as lists
+Read the results.txt as lists and get the dictionary of {locations:{year_diff:times}}
 '''   
-def read_results(i):
-    Year_Diff = []
-    Location = []
-    savefile = "Results\\result(" + str(i) +").txt"
+def read_results(n):
+    dic = {}
+    a = []
+    b = []
+    savefile = "Results\\result(" + str(n) +").txt"
     with open(savefile,'r') as f:
         lines = f.readlines()
-        Year = lines[1][13:].replace('\n','')
+        year = lines[1][13:].replace('\n','')
         for i in range(3,len(lines)-2):
             if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
-                Location.append(lines[i][10:].replace('\n',''))
-                Year_Diff.append(int(lines[i+1][11:].replace('\n','')))
-#    for k in range(len(Location)):
-#        print(Location[k],'           ',Year_Diff[k])
-    return (Location, Year_Diff, Year)
+                loc = lines[i][10:].replace('\n','')
+                loc = standard_loc(loc)
+                a.append(loc)
+                y_diff = int(lines[i+1][11:].replace('\n',''))
+                b.append(y_diff)
+                dic.setdefault(loc, []).append(y_diff)  
+#        for k,v in dic.items():
+        #count times of year_diff and sort this dictionary by year_diff
+#            v = dict(sorted(dict(Counter(v)).items(),key=lambda item:item[0]))
+#            dic[k] = v
+    return (a,b,year)
 
-def visualization(x,y,z):
-    plt.figure()
-    ax1 = plt.subplot(1,1,1)
+def preprocess(sentence):
+    tokens = [i.lower() for i in nltk.word_tokenize(sentence)]
+    s = nltk.stem.SnowballStemmer('english')
+    tokens = [s.stem(i) for i in tokens]
+    return tokens
+
+def standard_loc(loc): 
+    sta_loc = ["Introduction", "Literature Review \ Related work", "Methods \ Methodology", "Results", "Discussion", "Conclusion"]
+    loc = preprocess(loc)
+    for i in loc:
+        for j in sta_loc:
+            k = preprocess(j)
+            if i in k:
+                loc = j
+                break
+    if loc not in sta_loc:
+         loc = "Others"
+    return loc    
+
+def visualization(a,b,year):
+    fig = plt.figure()
+    ax1 = fig.add_subplot(111)
     ax1.set_title('Scatter Plot')
     plt.xlabel('Year_Diff')
     plt.ylabel('Location')
-    ax1.scatter(x,y,c = 'r',label = z, marker = 'o')
-    plt.legend()
+    ax1.scatter(b,a,c = 'r',marker = 'o',alpha = 0.3)
+    plt.legend(year)
     plt.show()
+
 
 '''
 Main function
@@ -256,27 +284,29 @@ Main function
 #PLOS_revise("10.1371/journal.pone.0186461",9,12)
 #
 ##Extract year and location of citations
-targets_title = DOI_find_highpaper()[0]
-targets_year = DOI_find_highpaper()[1]
+#targets_title = DOI_find_highpaper()[0]
+#targets_year = DOI_find_highpaper()[1]
 #for i in range(1,11):
 #    print("Highly-cited paper " + str(i) + "......")
-#    xml_find_loc(i,targets_title[i-1],targets_year[i-1])
-xml_find_loc(7,targets_title[6],targets_year[6])    
+#    xml_find_loc(i,targets_title[i-1],targets_year[i-1]) 
 ###Ongoing part###
 #loc_all = []
-#for i in range(1,11):
-##    print(i,'----------------------------------------------')
-#    for loc in read_results(i)[0]:
+for i in range(1,11):
+    print(i,'----------------------------------------------')
+    a = read_results(i)[0]
+    b = read_results(i)[1]
+    year = read_results(i)[2]
+    visualization(a,b,year)
+#print(dic)
+#    for loc in read_results(i):
 #        loc_all.append(loc)
-#loc_all = sorted(list(set(loc_all)))
+#loc_all = sorted(Counter(list(set(loc_all))))
 #for a in loc_all:
 #    print(a)
 
-#location = read_results(2)[0]
-#year_diff = read_results(2)[1]
-#year = read_results(2)[2]
+
 #print(year_diff,location,year)
-#visualization(year_diff,location,year)
+
 
 
 
