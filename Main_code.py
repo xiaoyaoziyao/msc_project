@@ -14,6 +14,7 @@ import nltk
 import numpy as np
 import pandas as pd
 import seaborn as sns
+
 '''
 Extract the DOI of citations
 '''
@@ -213,29 +214,33 @@ def edit_distance(target,titles):
 
 
 '''
-Read the results.txt as lists and get the dictionary of {locations:{year_diff:times}}
+Read the results.txt as lists and save them into csv files to help visualize the data
 '''   
-def read_results(n):
-    dic = {}
+def read_results():
     a = []
     b = []
-    savefile = "Results\\result(" + str(n) +").txt"
-    with open(savefile,'r') as f:
-        lines = f.readlines()
-        year = lines[1][13:].replace('\n','')
-        for i in range(3,len(lines)-2):
-            if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
-                loc = lines[i][10:].replace('\n','')
-                loc = standard_loc(loc)
-                a.append(loc)
-                y_diff = int(lines[i+1][11:].replace('\n',''))
-                b.append(y_diff)
-                dic.setdefault(loc, []).append(y_diff)  
-#        for k,v in dic.items():
-        #count times of year_diff and sort this dictionary by year_diff
-#            v = dict(sorted(dict(Counter(v)).items(),key=lambda item:item[0]))
-#            dic[k] = v
-    return (a,b,year)
+    c = []
+    d = []
+    n = []
+    sta_loc = ["Introduction", "Literature Review \ Related work", "Methods \ Methodology", "Results", "Discussion", "Conclusion"]
+    for k in range(1,11):
+        savefile = "Results\\result(" + str(k) +").txt"
+        with open(savefile,'r') as f:
+            lines = f.readlines()
+            year = lines[1][13:].replace('\n','')
+            for i in range(3,len(lines)-2):
+                if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
+                    loc = lines[i][10:].replace('\n','')
+                    loc = standard_loc(sta_loc,loc)
+                    a.append(loc)
+                    y_diff = int(lines[i+1][11:].replace('\n',''))
+                    b.append(y_diff)
+                    n.append(k)
+                    d.append(year)
+        c.append(year)
+    dataframe = pd.DataFrame({'file':n,'location':a,'year_diff':b,'year_pub':d})
+    dataframe.to_csv("data.csv",index=False,sep=',')
+    return c
 
 def preprocess(sentence):
     tokens = [i.lower() for i in nltk.word_tokenize(sentence)]
@@ -243,8 +248,7 @@ def preprocess(sentence):
     tokens = [s.stem(i) for i in tokens]
     return tokens
 
-def standard_loc(loc): 
-    sta_loc = ["Introduction", "Literature Review \ Related work", "Methods \ Methodology", "Results", "Discussion", "Conclusion"]
+def standard_loc(sta_loc,loc): 
     loc = preprocess(loc)
     for i in loc:
         for j in sta_loc:
@@ -262,8 +266,8 @@ def visualization(a,b,year):
     ax1.set_title('Scatter Plot')
     plt.xlabel('Year_Diff')
     plt.ylabel('Location')
-    ax1.scatter(b,a,c = 'r',marker = 'o',alpha = 0.3)
-    plt.legend(year)
+    ax1.scatter(b,a,c = 'r',marker = 'o',alpha = 0.1)
+    plt.legend(str(year))
     plt.show()
 
 
@@ -289,24 +293,19 @@ Main function
 #for i in range(1,11):
 #    print("Highly-cited paper " + str(i) + "......")
 #    xml_find_loc(i,targets_title[i-1],targets_year[i-1]) 
+
 ###Ongoing part###
-#loc_all = []
-for i in range(1,11):
-    print(i,'----------------------------------------------')
-    a = read_results(i)[0]
-    b = read_results(i)[1]
-    year = read_results(i)[2]
-    visualization(a,b,year)
-#print(dic)
-#    for loc in read_results(i):
-#        loc_all.append(loc)
-#loc_all = sorted(Counter(list(set(loc_all))))
-#for a in loc_all:
-#    print(a)
 
-
-#print(year_diff,location,year)
-
-
+c = read_results()
+data = pd.read_csv('data.csv')
+fig,axes=plt.subplots(1,1,figsize=(24,8),dpi=80) 
+#sns.violinplot(x="year_pub",y="year_diff",hue='location',inner='stick',data=data)
+sns.swarmplot(x="year_pub",y="year_diff",hue='location', data=data)
+plt.show()
+#plt.savefig('result.png')
+#for i in range(1,11):
+#    fig,axes=plt.subplots(1,1,figsize=(10,4),dpi=80) 
+#    sns.violinplot(x="location",y="year_diff",data=data[data['file']==i])
+#    plt.legend([c[i-1]])
 
 
