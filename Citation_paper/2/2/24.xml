@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-16-13897</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0157022</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Gene expression</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Engineering and technology</subject><subj-group><subject>Industrial engineering</subject><subj-group><subject>Quality control</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Molecular biology techniques</subject><subj-group><subject>Molecular biology assays and analysis techniques</subject><subj-group><subject>Nucleic acid analysis</subject><subj-group><subject>RNA analysis</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Molecular biology techniques</subject><subj-group><subject>Molecular biology assays and analysis techniques</subject><subj-group><subject>Nucleic acid analysis</subject><subj-group><subject>RNA analysis</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Research design</subject><subj-group><subject>Experimental design</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Statistics (mathematics)</subject><subj-group><subject>Statistical models</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Statistics (mathematics)</subject><subj-group><subject>Statistical data</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Computational biology</subject><subj-group><subject>Genome analysis</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Genomics</subject><subj-group><subject>Genome analysis</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Research assessment</subject><subj-group><subject>Reproducibility</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>SARTools: A DESeq2- and EdgeR-Based R Pipeline for Comprehensive Differential Analysis of RNA-Seq Data</article-title>
+<alt-title alt-title-type="running-head">SARTools: Differential Analysis of RNA-Seq Data</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Varet</surname> <given-names>Hugo</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Brillet-Guéguen</surname> <given-names>Loraine</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Coppée</surname> <given-names>Jean-Yves</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Dillies</surname> <given-names>Marie-Agnès</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Institut Pasteur, Plate-forme Transcriptome &amp; Epigenome, Biomics, Centre d’Innovation et Recherche Technologique (Citech), Paris, France</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Institut Pasteur, Hub Bioinformatique et Biostatistique, Centre de Bioinformatique, Biostatistique et Biologie Intégrative (C3BI, USR 3756 IP CNRS), Paris, France</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>CNRS, UPMC, FR2424, ABiMS, Station Biologique, Roscoff, France</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Mills</surname> <given-names>Ken</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Queen’s University Belfast, UNITED KINGDOM</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Analyzed the data: HV MAD. Contributed reagents/materials/analysis tools: HV LBG MAD. Wrote the paper: HV LBG JYC MAD.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">marie-agnes.dillies@pasteur.fr</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<year>2016</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>9</day>
+<month>6</month>
+<year>2016</year>
+</pub-date>
+<volume>11</volume>
+<issue>6</issue>
+<elocation-id>e0157022</elocation-id>
+<history>
+<date date-type="received">
+<day>6</day>
+<month>4</month>
+<year>2016</year>
+</date>
+<date date-type="accepted">
+<day>23</day>
+<month>5</month>
+<year>2016</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2016</copyright-year>
+<copyright-holder>Varet et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0157022"/>
+<abstract>
+<sec id="sec001">
+<title>Background</title>
+<p>Several R packages exist for the detection of differentially expressed genes from RNA-Seq data. The analysis process includes three main steps, namely normalization, dispersion estimation and test for differential expression. Quality control steps along this process are recommended but not mandatory, and failing to check the characteristics of the dataset may lead to spurious results. In addition, normalization methods and statistical models are not exchangeable across the packages without adequate transformations the users are often not aware of. Thus, dedicated analysis pipelines are needed to include systematic quality control steps and prevent errors from misusing the proposed methods.</p>
+</sec>
+<sec id="sec002">
+<title>Results</title>
+<p>SARTools is an R pipeline for differential analysis of RNA-Seq count data. It can handle designs involving two or more conditions of a single biological factor with or without a blocking factor (such as a batch effect or a sample pairing). It is based on DESeq2 and edgeR and is composed of an R package and two R script templates (for DESeq2 and edgeR respectively). Tuning a small number of parameters and executing one of the R scripts, users have access to the full results of the analysis, including lists of differentially expressed genes and a HTML report that (i) displays diagnostic plots for quality control and model hypotheses checking and (ii) keeps track of the whole analysis process, parameter values and versions of the R packages used.</p>
+</sec>
+<sec id="sec003">
+<title>Conclusions</title>
+<p>SARTools provides systematic quality controls of the dataset as well as diagnostic plots that help to tune the model parameters. It gives access to the main parameters of DESeq2 and edgeR and prevents untrained users from misusing some functionalities of both packages. By keeping track of all the parameters of the analysis process it fits the requirements of reproducible research.</p>
+</sec>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100001665</institution-id>
+<institution>Agence Nationale de la Recherche</institution>
+</institution-wrap>
+</funding-source>
+<award-id>ANR-10-INBS-09</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Varet</surname> <given-names>Hugo</given-names></name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100001665</institution-id>
+<institution>Agence Nationale de la Recherche</institution>
+</institution-wrap>
+</funding-source>
+<award-id>ANR-11-INBS-0013</award-id>
+</award-group>
+<award-group id="award003">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100001665</institution-id>
+<institution>Agence Nationale de la Recherche</institution>
+</institution-wrap>
+</funding-source>
+<award-id>ANR-10-INBS-0009</award-id>
+</award-group>
+<funding-statement>This work was supported by the France Génomique National infrastructure, funded as part of the "Investissements d’Avenir" program managed by the Agence Nationale pour la Recherche (contract ANR-10-INBS-09).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="2"/>
+<table-count count="1"/>
+<page-count count="8"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are available on <ext-link ext-link-type="uri" xlink:href="https://github.com/PF2-pasteur-fr/SARToolsPaperData" xlink:type="simple">https://github.com/PF2-pasteur-fr/SARToolsPaperData</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec004" sec-type="intro">
+<title>Introduction</title>
+<p>DESeq2 [<xref ref-type="bibr" rid="pone.0157022.ref001">1</xref>] and edgeR [<xref ref-type="bibr" rid="pone.0157022.ref002">2</xref>] are very popular Bioconductor [<xref ref-type="bibr" rid="pone.0157022.ref003">3</xref>] packages for differential expression analysis of RNA-Seq, SAGE-Seq, ChIP-Seq or HiC count data. They are very well documented and easy-to-use, even for inexperienced R users. In recent years edgeR and a previous version of DESeq2, DESeq [<xref ref-type="bibr" rid="pone.0157022.ref004">4</xref>], have been included in several benchmark studies [<xref ref-type="bibr" rid="pone.0157022.ref005">5</xref>, <xref ref-type="bibr" rid="pone.0157022.ref006">6</xref>] and have shown to perform well in replicated experiments. However, running these packages, users can analyse their own dataset without entering important steps of the analysis process such as controlling the quality of the data, exploring its structure or checking some hypotheses of the statistical model. Although these steps are strongly recommended by the authors of the packages [<xref ref-type="bibr" rid="pone.0157022.ref007">7</xref>], they can be skipped by the users without stopping the analysis process.</p>
+<p>In an attempt to provide a user friendly access to the whole analysis process of RNA-Seq data, the RNASeqGUI R package has been proposed to provide users with a graphical interface and help R beginners to run a differential analysis without writing R code [<xref ref-type="bibr" rid="pone.0157022.ref008">8</xref>]. The analysis is divided into six main steps among which the pre-analysis section proposes no less than 12 possible figures to explore the data. Similarly, systemPipeR is a R package that proposes a pipeline to process raw fastq RNA-Seq reads from quality filtering to the alignment and counting and to perform a differential analysis using either the edgeR or DESeq2 package [<xref ref-type="bibr" rid="pone.0157022.ref009">9</xref>].</p>
+<p>Normalization is another key issue when looking for differentially expressed genes [<xref ref-type="bibr" rid="pone.0157022.ref010">10</xref>]. The normalization methods associated with edgeR and DESeq2 have been shown to outperform other methods, in particular when expressed RNA repertoires vary across biological conditions or in the presence of highly expressed genes [<xref ref-type="bibr" rid="pone.0157022.ref011">11</xref>]. Although both methods are based on the hypothesis that most genes are not differentially expressed, they are computed differently and are not exchangeable unaltered. The size factors computed by DESeq2 are used in the estimation of the mean of the Negative Binomial distribution when the scaling factors proposed by edgeR apply to library sizes (total counts), the normalized library sizes being included as an offset in the statistical model. Thus, an adequate transformation is needed when willing to use any of these normalization methods with any test for differential expression, otherwise leading to inconsistent results as shown in [<xref ref-type="bibr" rid="pone.0157022.ref012">12</xref>] and in the <xref ref-type="supplementary-material" rid="pone.0157022.s001">S1 Appendix</xref>.</p>
+<p>Similarly, transformation is an important issue at the quality control step where clustering methods and Principal Component Analysis can be used to explore the structure of the dataset. These methods make the assumption that the data are homoscedastic, meaning that the variance is independent of the signal intensity. However count data are not homoscedastic. Using either raw counts or popular transformations such as Reads Per Kilobase per Million mapped reads (RPKM) normalized expression values is not suited for such methods [<xref ref-type="bibr" rid="pone.0157022.ref001">1</xref>, <xref ref-type="bibr" rid="pone.0157022.ref004">4</xref>].</p>
+<p>Finally, in the context of developing reproducible research it is essential to fully describe and explore the data and keep track of the full analysis process with the associated parameter values and software versions. edgeR and DESeq2 do not provide an automatic reporting tool for this purpose.</p>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>SARTools (Statistical Analysis of RNA-Seq data Tools) addresses these limitations by proposing a comprehensive, easy-to-use, DESeq2- and edgeR-based R pipeline that covers all the steps of a differential analysis, from the quality control of raw count data to the detection of differentially expressed genes. It applies to experimental designs involving one biological factor with two or more levels, such as time series or KO vs. WT experiments. When more than two levels are included in the design, all pairwise comparisons are performed. A blocking factor can be specified to take into account data pairing or the presence of a batch effect (e.g. day of preparation effect). However, SARTools does not handle complex experimental designs with interactions since it involves a careful definition of the design formula and of the contrasts to be tested according to the biological question under study. Indeed, it is neither desired nor safe to automate this part of the analysis process. Users who would have to analyse complex experimental designs are encouraged to use directly either DESeq2 or edgeR which both provide extensive help about this kind of experiments.</p>
+<p>SARTools is composed of an R package and two R script templates that allow to run the analysis with either DESeq2 or edgeR. Both scripts rely on each package-specific functions as often as possible, and on SARTools functions to export figures and tables and to generate the HTML report. Each script starts with a section of about 15 parameters that refer to (i) paths to input files and the working directory where the analysis will be performed, (ii) project identification, (iii) experimental design, (iv) normalization and statistical test, (v) filtering process and (vi) plotting. Parameters (i) to (iii) have to be adapted to each analysis. The other parameters have default values and can be left unchanged but are accessible to advanced users if they wish to tune the analysis or the reporting more finely.</p>
+<p>SARTools requires two types of input files: count data files containing raw counts and a target file that describes the experimental design [<xref ref-type="bibr" rid="pone.0157022.ref013">13</xref>]. Count data files are sample-specific and are composed of two columns (a unique feature identifier and a raw feature count) with no header. Note that the alignment and counting steps are out of the scope of SARTools and have to be carried out before using specific tools. HTSeq-count output files can be used as input for instance [<xref ref-type="bibr" rid="pone.0157022.ref014">14</xref>]. The target file contains one row per sample and at least three columns with headers: a unique sample identifier or label, the name of the associated raw counts file and the sample biological condition (see <xref ref-type="table" rid="pone.0157022.t001">Table 1</xref>). If a blocking factor has to be accounted for (e.g. in case of batch effect or paired samples), it is reported in a fourth column. These input files are read by SARTools to build a matrix of integer values in which the intersection of the <italic>i</italic>-th row and the <italic>j</italic>-th column reflects how many reads have been mapped to feature <italic>i</italic> in sample <italic>j</italic>. This matrix is then used as input for DESeq2 or edgeR.</p>
+<table-wrap id="pone.0157022.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0157022.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Example of target file for a KO vs. WT experiment including 3 replicates in each biological condition.</title>
+</caption>
+<alternatives>
+<graphic id="pone.0157022.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0157022.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr><th align="left">label</th>
+<th align="left">files</th>
+<th align="left">condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">WT1</td>
+<td align="left">WT1.counts.txt</td>
+<td align="left">WT</td>
+</tr>
+<tr>
+<td align="left">WT2</td>
+<td align="left">WT2.counts.txt</td>
+<td align="left">WT</td>
+</tr>
+<tr>
+<td align="left">WT3</td>
+<td align="left">WT3.counts.txt</td>
+<td align="left">WT</td>
+</tr>
+<tr>
+<td align="left">KO1</td>
+<td align="left">KO1.counts.txt</td>
+<td align="left">KO</td>
+</tr>
+<tr>
+<td align="left">KO2</td>
+<td align="left">KO2.counts.txt</td>
+<td align="left">KO</td>
+</tr>
+<tr>
+<td align="left">KO3</td>
+<td align="left">KO3.counts.txt</td>
+<td align="left">KO</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>The source code of the package and instructions to quickly install it are available on GitHub (<ext-link ext-link-type="uri" xlink:href="https://github.com/PF2-pasteur-fr/SARTools" xlink:type="simple">https://github.com/PF2-pasteur-fr/SARTools</ext-link>). <xref ref-type="fig" rid="pone.0157022.g001">Fig 1</xref> describes the successive steps of the workflow and provides the names of the scripts and R functions corresponding to each step. Furthermore, the Galaxy wrappers to integrate SARTools into a Galaxy instance [<xref ref-type="bibr" rid="pone.0157022.ref015">15</xref>–<xref ref-type="bibr" rid="pone.0157022.ref017">17</xref>] are available on the Galaxy Tool Shed of the Institut Franҫais de Bioinformatique at <ext-link ext-link-type="uri" xlink:href="http://toolshed.france-bioinformatique.fr/view/lgueguen/sartools_1_1_0" xlink:type="simple">http://toolshed.france-bioinformatique.fr/view/lgueguen/sartools_1_1_0</ext-link>. Galaxy is known to be very user-friendly for biologists and allows them to create worflows to deal with RNA-Seq data. Many tools were already available for the cleaning, mapping and counting steps and SARTools now offers the possibility to run the differential analysis step within the Galaxy environment.</p>
+<fig id="pone.0157022.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0157022.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>SARTools workflow.</title>
+<p>Left part (black): successive steps of the analysis; Right part (blue): SARTools functions associated with each step when running either DESeq2 or edgeR.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0157022.g001" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec006" sec-type="conclusions">
+<title>Results and Discussion</title>
+<p>As soon as the script parameters have been given proper values, and assuming that input files fulfill the format requirements described above, the R script can be run. Using a standard desktop computer, the running time is usually lower than one minute to perform the analysis of 10 samples containing about 50 000 features each. Two types of output files are then made available:</p>
+<list list-type="order">
+<list-item>
+<p>a HTML report that describes the whole analysis process in four main steps:
+<list list-type="bullet">
+<list-item>
+<p><italic>data quality control</italic>: numerous plots are proposed to provide a comprehensive description of the dataset, including, for each sample: total number of reads, proportion of null counts, name of the feature having the highest count and proportion of reads associated with it (see the SARTools vignette on GitHub for a full list of the descriptive plots). Principal Component Analysis (PCA) and sample clustering use properly transformed data (with either the Variance Stabilizing Transformation (VST) or the rlog transformation for DESeq2, or log Count Per Million (CPM) for edgeR). These figures provide redundant yet complementary information that help the user to understand the structure of the data and detect possible problems. Legends and titles are added to all figures. The color associated with each sample remains consistent across all figures to ease the interpretation.</p>
+</list-item>
+<list-item>
+<p><italic>normalization</italic>: this section uses the default normalization associated with each package, as they have been shown to perform equally well [<xref ref-type="bibr" rid="pone.0157022.ref011">11</xref>]. Two alternative normalization methods are available with edgeR and are accessible through a normalization parameter. When running DESeq2 specific histograms are plotted to check the relevance of the normalization option (refer to the package vignette for additional information). Note that SARTools does not allow the user to perform other normalizations than the ones proposed with the package used for the analysis. For example, it is impossible to provide DESeq2 or edgeR with a matrix of (rounded) RPKM counts as input or any matrix of already normalized values, as both statistical models only accept raw counts as input.</p>
+</list-item>
+<list-item>
+<p><italic>test for differential expression</italic>: results include plots to assess the validity of the statistical test as well as lists of up- and down-regulated features. These figures include a histogram a raw p-values, a MA-plot and a volcano-plot for each pairwise comparison. A detailed description of the tab-delimited text files containing these lists is also provided.</p>
+</list-item>
+<list-item>
+<p><italic>R session information and parameter values</italic>: this section keeps track of all the information about the packages, methods and parameter values used to run the analysis. In a reproducible research framework, this section is particularly important if the user has to re-perform the analysis later within the same environment and with the same parameters. Furthermore, providing these pieces of information is also often required for publication purposes.</p>
+</list-item>
+</list></p>
+</list-item>
+<list-item>
+<p>three tab-delimited text files per comparison, containing (i) information about all the genes included in the analysis, (ii-iii) lists of significantly up- and down-regulated features ordered by adjusted p-value. Even if Gene Ontology (GO) term analysis is out of the scope of SARTools, these files can be used as a starting point for such an analysis.</p>
+</list-item>
+</list>
+<p>All the figures produced by SARTools are integrated into the HTML report and enable the user to perform quality control of the dataset in several ways. Indeed, as they provide complementary pieces of information, they allow a reliable detection and interpretation of possible problems within the dataset and the analysis results. Common problems that may arise from RNA-Seq experiments can be, but are not limited to, the presence of outlier samples, the presence of a batch effect, an inversion between two samples, the presence of a highly expressed sequence in some or all samples, etc. As an example, the presence of an outlier sample in the dataset may be detected in several ways (<xref ref-type="fig" rid="pone.0157022.g002">Fig 2</xref>): it can have a much lower—or higher—total number of reads than the other samples. This total count difference may be associated with a higher proportion of null counts (in that case the DESeq2 normalization process will hardly compensate for the difference for these genes having a null count in this sample only, since it is a multiplicative correction), or a clear difference in the density distribution of the counts, or a higher proportion of reads associated with the most represented feature. This outlier sample will also be detected on the PCA plot as well as the clustering one, and may lead to inconsistent values of the SERE coefficients [<xref ref-type="bibr" rid="pone.0157022.ref018">18</xref>]. These complementary information will help to decide whether this sample should be excluded from further analyses or not. The package vignette provides other detailed examples of possible problems that may be encountered and the different plots that can help to interpret inconsistencies between samples.</p>
+<fig id="pone.0157022.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0157022.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Several ways to detect an outlier (d3-WT).</title>
+<p>(a) Low total number of reads for d3-WT, (b) High proportion of null counts for d3-WT, (c) Most expressed sequence different for d3-WT, (d) Different distribution of counts for d3-WT, (e-f) d3-WT falls far from the other samples on the first component of the PCA and on the dendrogram.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0157022.g002" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec007" sec-type="conclusions">
+<title>Conclusions</title>
+<p>SARTools supplies a detailed description of the dataset and proposes diagnostic plots for each step of the analysis. The simple structure of the scripts allows the user to easily and quickly adapt the analysis process to the characteristics of the dataset and to detect possible problems. Unlike other RNA-Seq data analysis pipelines, it does not allow the user to pipe any possible method at any step of the analysis process to build his own workflow, as it focuses on the proper use of these statistical methods. Experienced data analysts may be able to use appropriate command lines to check the quality of raw reads and map them appropriately, they may be regular R users as well without being aware of specific requirements of the statistical models involved and possible problems arising from mixing different methods relying on different models or assumptions. In this context, SARTools provides a safe environment for differential expression analysis of RNA-Seq data on a gene basis. SARTools has been designed for the detection of differentially expressed genes but very recent advances enable one to perform the differential analysis at the transcript/isoform level. For instance, the new tximport R package [<xref ref-type="bibr" rid="pone.0157022.ref019">19</xref>] available on Bioconductor allows to import in R transcript-level quantification results from softwares like salmon [<xref ref-type="bibr" rid="pone.0157022.ref020">20</xref>] and pass them to DESeq2. One of our objectives in the near future is to adapt SARTools to this kind of analysis.</p>
+</sec>
+<sec id="sec008">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0157022.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0157022.s001" xlink:type="simple">
+<label>S1 Appendix</label>
+<caption>
+<title>Why are normalization methods not interchangeable?</title>
+<p>This additional file shows why normalization methods are not interchangeable between statistical models without adequate transformation.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Odile Sismeiro, Caroline Proux, Bernd Jagla, Andrea Rau and Christelle Hennequet-Antier for their support and very helpful comments. We also thank Christophe Caron in charge of the IFB Galaxy Working Group (Institut Franҫais de Bioinformatique) and Valentin Loux in charge of the bioinformatics work package of the France Génomique project.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0157022.ref001">
+<label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Love</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Anders</surname> <given-names>S</given-names></name>. <article-title>Moderated estimation of fold change and dispersion for RNA-Seq data with DESeq2</article-title>. <source><italic>Genome Biology</italic></source>. <year>2014</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/s13059-014-0550-8" xlink:type="simple">10.1186/s13059-014-0550-8</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Robinson</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>McCarthy</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Smyth</surname> <given-names>GK</given-names></name>. <article-title>edgeR: a Bioconductor package for differential expression analysis of digital gene expression data</article-title>. <source><italic>Bioinformatics</italic></source>. <year>2009</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp616" xlink:type="simple">10.1093/bioinformatics/btp616</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref003">
+<label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gentleman</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Carey</surname> <given-names>VJ</given-names></name>, <name name-style="western"><surname>Bates</surname> <given-names>DM</given-names></name>, <etal>et al</etal>. <article-title>Bioconductor: Open software development for computational biology and bioinformatics</article-title>. <source><italic>Genome iology</italic></source>. <year>2004</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2004-5-10-r80" xlink:type="simple">10.1186/gb-2004-5-10-r80</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Anders</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>. <article-title>Differential expression analysis for sequence count data</article-title>. <source><italic>Genome Biology</italic></source>. <year>2010</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2010-11-10-r106" xlink:type="simple">10.1186/gb-2010-11-10-r106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Soneson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Delorenzi</surname> <given-names>M</given-names></name>. <article-title>A comparison of methods for differential expression analysis of RNA-seq data</article-title>. <source><italic>BMC Bioinformatics</italic></source>. <year>2013</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-14-91" xlink:type="simple">10.1186/1471-2105-14-91</ext-link></comment> <object-id pub-id-type="pmid">23497356</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref006">
+<label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rapaport</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Khanin</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Lyang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Comprehensive evaluation of differential gene expression analysis methods for RNA-seq data</article-title>. <source><italic>Genome Biology</italic></source>. <year>2013</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2013-14-9-r95" xlink:type="simple">10.1186/gb-2013-14-9-r95</ext-link></comment> <object-id pub-id-type="pmid">24020486</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref007">
+<label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Anders</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>McCarthy</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Count-based differential expression analysis of RNA sequencing data using R and Bioconductor</article-title>. <source><italic>Nature Protocols</italic></source>. <year>2013</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nprot.2013.099" xlink:type="simple">10.1038/nprot.2013.099</ext-link></comment> <object-id pub-id-type="pmid">23975260</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Russo</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Angelini</surname> <given-names>C</given-names></name>. <article-title>RNASeqGUI: a GUI for analysing RNA-Seq data</article-title>. <source><italic>Bioinformatics</italic></source>. <year>2014</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btu308" xlink:type="simple">10.1093/bioinformatics/btu308</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref009">
+<label>9</label>
+<mixed-citation publication-type="other" xlink:type="simple">Girke, T. systemPipeR: NGS workflow and report generation environment. R package version 1.0.0. 2014; <ext-link ext-link-type="uri" xlink:href="https://github.com/tgirke/systemPipeR" xlink:type="simple">https://github.com/tgirke/systemPipeR</ext-link>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bullard</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Purdom</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Hansen</surname> <given-names>KD</given-names></name>, <etal>et al</etal>. <article-title>Evaluation of statistical methods for normalization and differential expression in mRNA-Seq experiments</article-title>. <source><italic>BMC Bioinformatics</italic></source>. <year>2010</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-11-94" xlink:type="simple">10.1186/1471-2105-11-94</ext-link></comment> <object-id pub-id-type="pmid">20167110</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dillies</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Rau</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Aubert</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>A comprehensive evaluation of normalization methods for Illumina high-throughput RNA sequencing data analysis</article-title>. <source><italic>Briefings in Bioinformatics</italic></source>. <year>2013</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bib/bbs046" xlink:type="simple">10.1093/bib/bbs046</ext-link></comment> <object-id pub-id-type="pmid">22988256</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Zhou</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Oshlack</surname> <given-names>A</given-names></name> and <name name-style="western"><surname>Robinson</surname> <given-names>MD</given-names></name>. <article-title>miRNA-seq normalization comparisons need improvement</article-title>. <source><italic>RNA</italic></source>. <year>2013</year>;</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref013">
+<label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ritchie</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Phipson</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Wu</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>limma powers differential expression analyses for RNA-sequencing and microarray studies</article-title>. <source><italic>Nucleic Acids Research</italic></source>. <year>2015</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkv007" xlink:type="simple">10.1093/nar/gkv007</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Anders</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Pyl</surname> <given-names>TP</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>. <article-title>HTSeq—A Python framework to work with high-throughput sequencing data</article-title>. <source><italic>Bioinformatics</italic></source>. <year>2014</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btu638" xlink:type="simple">10.1093/bioinformatics/btu638</ext-link></comment> <object-id pub-id-type="pmid">25260700</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Goecks</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Nekrutenko</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>J</given-names></name> and <collab>The Galaxy Team</collab>. <article-title>Galaxy: a comprehensive approach for supporting accessible, reproducible, and transparent computational research in the life sciences</article-title>. <source><italic>Genome Biology</italic></source>. <year>2010</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2010-11-8-r86" xlink:type="simple">10.1186/gb-2010-11-8-r86</ext-link></comment> <object-id pub-id-type="pmid">20738864</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Blankenberg</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Von Kuster</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Coraor</surname> <given-names>N</given-names></name>, <etal>et al</etal>. <article-title>Galaxy: a web-based genome analysis tool for experimentalists</article-title>. <source><italic>Current Protocols in Molecular Biology</italic></source>. <year>2010</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/0471142727.mb1910s89" xlink:type="simple">10.1002/0471142727.mb1910s89</ext-link></comment> <object-id pub-id-type="pmid">20069535</object-id>.</mixed-citation>
+</ref>
+<ref id="pone.0157022.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Giardine</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Riemer</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Hardison</surname> <given-names>RC</given-names></name>, <etal>et al</etal>. <article-title>Galaxy: a platform for interactive large-scale genome analysis</article-title>. <source><italic>Genome Research</italic></source>. <year>2005</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.4086505" xlink:type="simple">10.1101/gr.4086505</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Schulze</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Kanwar</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Gölzenleuchter</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>SERE: Single-parameter quality control and sample comparison for RNA-Seq</article-title>. <source><italic>BMC Genomics</italic></source>. <year>2012</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2164-13-524" xlink:type="simple">10.1186/1471-2164-13-524</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref019">
+<label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Soneson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Love</surname> <given-names>MI</given-names></name> and <name name-style="western"><surname>Robinson</surname> <given-names>MD</given-names></name>. <article-title>Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences</article-title>. <source><italic>F1000Research</italic></source>. <year>2016</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.12688/f1000research.7563.2" xlink:type="simple">10.12688/f1000research.7563.2</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0157022.ref020">
+<label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Patro</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Duggal</surname> <given-names>G</given-names></name> and <name name-style="western"><surname>Kingsford</surname> <given-names>C</given-names></name>. <article-title>Accurate, fast, and model-aware transcript expression quantification with Salmon</article-title>. <source><italic>bioRxiv</italic> preprint</source>. <year>2015</year>;</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

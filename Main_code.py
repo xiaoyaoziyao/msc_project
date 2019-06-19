@@ -14,25 +14,39 @@ import nltk
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC 
+from sklearn.cross_validation import cross_val_score
+from sklearn.learning_curve import learning_curve
 
+stand_title = {0:"Others",
+               1:"Introduction",
+               2:"Literature Review \ Related work",
+               3:"Methods \ Methodology",
+               4:"Results",
+               5:"Discussion",
+               6:"Conclusion"}
 '''
 Extract the DOI of citations
 '''
 def DOI_find(a):
-    file_object = open('WOS_list\\savedrecs ('+str(a)+').ciw','rU', encoding='UTF-8')
-    name = 'out('+str(a)+').txt'
+    file_object = open('WOS_list\\2\\savedrecs ('+str(a)+').ciw','rU', encoding='UTF-8')
+    name = 'DOI_list\\2\\out('+str(a)+').txt'
     f = open(name,'w', encoding='UTF-8')
     i=0
+    l=[]
     try:
         for line in file_object:
             g = re.search("(?<=DI )10\.([0-9]{4}).*", line)    
             if g:
                 print(g.group())
+                l.append(g.group())
                 f.writelines(g.group()+'\n')
                 i=i+1
     finally:
          file_object.close()
          print(i,'            ',a)  
+    return l
 
 '''
 Extract the titles of highly-cited papers
@@ -40,7 +54,7 @@ Extract the titles of highly-cited papers
 def DOI_find_highpaper():
     l = []
     m = []
-    file_object = open('WOS_list\\savedrecs.ciw','rU', encoding='UTF-8')
+    file_object = open('WOS_list\\2\\savedrecs.ciw','rU', encoding='UTF-8')
     try:
         i = 0
         f_read = file_object.readlines()
@@ -75,10 +89,10 @@ def PLOS_get(l,a):
             req = Request(url)
             req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
             html = urlopen(req)
-            name=str(a)+'\\'+str(i)+".xml"
-            folder = os.path.exists(str(a))
+            folder = os.path.exists("Citation_paper\\2\\"+str(a))
             if not folder:      
-                os.makedirs(str(a))
+                os.makedirs("Citation_paper\\2\\"+str(a))
+            name="Citation_paper\\2\\"+str(a)+"\\"+str(i)+".xml"
             with open(name, 'wb') as f:
                 f.write(html.read())
                 print(ids,"               ",name)
@@ -98,10 +112,10 @@ def PLOS_revise(ids,a,i):
         req = Request(url)
         req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
         html = urlopen(req)
-        name=str(a)+'\\'+str(i)+".xml"
-        folder = os.path.exists(str(a))
+        name="Citation_paper\\2\\"+str(a)+"\\"+str(i)+".xml"
+        folder = os.path.exists("Citation_paper\\2\\"+str(a))
         if not folder:      
-            os.makedirs(str(a))
+            os.makedirs("Citation_paper\\2\\"+str(a))
         with open(name, 'wb') as f:
             f.write(html.read())
             print(ids,"               ",name)
@@ -116,11 +130,11 @@ def PLOS_revise(ids,a,i):
 Extract the rid and location of citations from xml files
 '''   
 def xml_find_loc(i,target_title,target_year):
-    files= os.listdir("Citation_paper\\" + str(i))
+    files= os.listdir("Citation_paper\\2\\" + str(i))
     folder = os.path.exists("Results")
     if not folder:      
         os.makedirs("Results")
-    savefile = "Results\\result(" + str(i) +").txt"
+    savefile = "Results\\2\\result(" + str(i) +").txt"
     f = open(savefile,'w')
     f.write("Target_Title: " + target_title + "\n")
     f.write("Target_Year: " + target_year + "\n")
@@ -131,12 +145,12 @@ def xml_find_loc(i,target_title,target_year):
     for file in files:
         if file.endswith('.xml'):
     #        print("Citation_paper\\" + str(i) + '\\' + file)
-            f.write("Citation_paper\\" + str(i) + '\\' + file + '\n')
+            f.write("Citation_paper\\2\\" + str(i) + '\\' + file + '\n')
             titles = {}
             rid_real = ''
             location = []
             try:
-                tree = ET.ElementTree(file = "Citation_paper\\" + str(i)+ "\\" + file)
+                tree = ET.ElementTree(file = "Citation_paper\\2\\" + str(i)+ "\\" + file)
                 body = tree.getroot().find('.//body')
                 year = tree.find(".//pub-date/year").text
                 for elm in tree.iterfind('.//ref'):      
@@ -213,6 +227,12 @@ def edit_distance(target,titles):
     return rid_real
 
 
+def preprocess(sentence):
+    tokens = [i.lower() for i in nltk.word_tokenize(sentence)]
+    s = nltk.stem.SnowballStemmer('english')
+    tokens = [s.stem(i) for i in tokens if i.isalpha()]
+    return tokens
+
 '''
 Read the results.txt as lists and save them into csv files to help visualize the data
 '''   
@@ -222,16 +242,20 @@ def read_results():
     c = []
     d = []
     n = []
-    sta_loc = ["Introduction", "Literature Review \ Related work", "Methods \ Methodology", "Results", "Discussion", "Conclusion"]
-    for k in range(1,11):
-        savefile = "Results\\result(" + str(k) +").txt"
+    global stand_title
+    for key,value in stand_title.items():
+            stand_title[key]=preprocess(value)
+    print(stand_title)
+    for k in range(1,12):
+        savefile = "Results\\2\\result(" + str(k) +").txt"
         with open(savefile,'r') as f:
             lines = f.readlines()
             year = lines[1][13:].replace('\n','')
             for i in range(3,len(lines)-2):
                 if(lines[i].startswith('Location:') and lines[i+1].startswith('Year_Diff:')):
                     loc = lines[i][10:].replace('\n','')
-                    loc = standard_loc(sta_loc,loc)
+                    loc = preprocess(loc)
+                    loc = standard_loc(loc)
                     a.append(loc)
                     y_diff = int(lines[i+1][11:].replace('\n',''))
                     b.append(y_diff)
@@ -242,22 +266,14 @@ def read_results():
     dataframe.to_csv("data.csv",index=False,sep=',')
     return c
 
-def preprocess(sentence):
-    tokens = [i.lower() for i in nltk.word_tokenize(sentence)]
-    s = nltk.stem.SnowballStemmer('english')
-    tokens = [s.stem(i) for i in tokens]
-    return tokens
-
-def standard_loc(sta_loc,loc): 
-    loc = preprocess(loc)
+def standard_loc(loc): 
     for i in loc:
-        for j in sta_loc:
-            k = preprocess(j)
-            if i in k:
-                loc = j
+        for key,value in stand_title.items():
+            if i in value:
+                loc = key
                 break
-    if loc not in sta_loc:
-         loc = "Others"
+    if loc not in range(1,7):
+         loc = 0
     return loc    
 
 def visualization(a,b,year):
@@ -277,7 +293,7 @@ Main function
 ###Finished part###
 
 ##citations of top 10 highly-cited paper
-#for a in range(1,11):
+#for a in range(1,12):
 #    l = DOI_find(a)
 #    PLOS_get(l,a)
 #
@@ -286,26 +302,59 @@ Main function
 #PLOS_revise("10.1371/journal.pone.0176993",1,149)
 #PLOS_revise("10.1371/journal.pone.0197599",2,6)
 #PLOS_revise("10.1371/journal.pone.0186461",9,12)
+#PLOS_revise("10.1371/journal.pone.0063671",3,62)
+#PLOS_revise("10.1371/journal.pone.0180444",8,13)
 #
 ##Extract year and location of citations
 #targets_title = DOI_find_highpaper()[0]
 #targets_year = DOI_find_highpaper()[1]
-#for i in range(1,11):
+#for i in range(1,12):
 #    print("Highly-cited paper " + str(i) + "......")
 #    xml_find_loc(i,targets_title[i-1],targets_year[i-1]) 
 
 ###Ongoing part###
 
 c = read_results()
-data = pd.read_csv('data.csv')
-fig,axes=plt.subplots(1,1,figsize=(24,8),dpi=80) 
-#sns.violinplot(x="year_pub",y="year_diff",hue='location',inner='stick',data=data)
-sns.swarmplot(x="year_pub",y="year_diff",hue='location', data=data)
-plt.show()
+data1 = pd.read_csv('data.csv')
+data2 = pd.read_csv('data1.csv')
+data = pd.merge(data1,data2)
+#fig,axes=plt.subplots(1,1,figsize=(10,4),dpi=80) 
+#violin plot
+#sns.violinplot(x=data["year_diff"]+data["year_pub"],y="year_pub",hue='location',inner='stick',data=data1)
+##scatter plot
+#sns.swarmplot(x="year_pub",y="year_diff",hue='location', data=data)
 #plt.savefig('result.png')
+
 #for i in range(1,11):
 #    fig,axes=plt.subplots(1,1,figsize=(10,4),dpi=80) 
-#    sns.violinplot(x="location",y="year_diff",data=data[data['file']==i])
+#    sns.violinplot(x="year_diff",y="location",data=data[data['file']==i])
 #    plt.legend([c[i-1]])
+
+X = list(zip(data['year_pub'],data['year_diff']+data['year_pub']))
+y = data['location']
+model = SVC()
+score = cross_val_score(model,X,y,scoring='accuracy')
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+model.fit(X_train,y_train)
+print(score.mean())
+
+
+train_sizes, train_loss, test_loss = learning_curve(
+    SVC(gamma=0.001), X, y, cv=10, scoring='neg_mean_squared_error',
+    train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
+#print(train_sizes, train_loss, test_loss)
+train_loss_mean = -np.mean(train_loss, axis=1)
+test_loss_mean = -np.mean(test_loss, axis=1)
+plt.plot(train_sizes, train_loss_mean, 'o-', color="r",
+         label="Training")
+plt.plot(train_sizes, test_loss_mean, 'o-', color="g",
+        label="Cross-validation")
+plt.xlabel("Training examples")
+plt.ylabel("Loss")
+plt.legend(loc="best")
+plt.show()
+
+
+
 
 
