@@ -18,6 +18,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC 
 from sklearn.cross_validation import cross_val_score
 from sklearn.learning_curve import learning_curve
+import pymongo
+import time
 
 stand_title = {0:"Others",
                1:"Introduction",
@@ -29,168 +31,127 @@ stand_title = {0:"Others",
 '''
 Extract the DOI of citations
 '''
-def DOI_find(a):
-    file_object = open('WOS_list\\2\\savedrecs ('+str(a)+').ciw','rU', encoding='UTF-8')
-    name = 'DOI_list\\2\\out('+str(a)+').txt'
-    f = open(name,'w', encoding='UTF-8')
-    i=0
-    l=[]
-    try:
-        for line in file_object:
-            g = re.search("(?<=DI )10\.([0-9]{4}).*", line)    
-            if g:
-                print(g.group())
-                l.append(g.group())
-                f.writelines(g.group()+'\n')
-                i=i+1
-    finally:
-         file_object.close()
-         print(i,'            ',a)  
-    return l
+def file_list(path):
+    files = []
+    for file in os.listdir(path):
+        files.append(path+"//"+file)
+    return files
 
+def DOI_find(collection,file,num):
+    doi_dic = {}
+    f = open(file,'r', encoding='UTF-8')
+    for line in f:
+        g = re.search("(?<=DI )10\.([0-9]{4}).*", line)                
+        if g:
+            doi_dic = {"cited_no":int(re.findall('\((.*?)\)', file)[0]) + num,"doi_link":str(g.group())}
+            if not collection.find_one(doi_dic):
+                collection.insert_one(doi_dic)
+    f.close()  
 '''
 Extract the titles of highly-cited papers
 '''
-def DOI_find_highpaper():
-    l = []
-    m = []
-    file_object = open('WOS_list\\2\\savedrecs.ciw','rU', encoding='UTF-8')
-    try:
+def DOI_find_highpaper(collection,file,num):
+    with open(file,'r', encoding='UTF-8') as f:
+        f = f.readlines()
         i = 0
-        f_read = file_object.readlines()
-        for line in f_read:
+        for line in f:
             y = re.search("(?<=PY ).*$", line)
-            g = re.search("(?<=TI ).*$", line)
-            if g:
-                if(f_read[i+1].startswith('SO')):
-                    title = g.group()
+            t = re.search("(?<=TI ).*$", line)
+            if t:
+                if(f[i+1].startswith('SO')):
+                    title = t.group()
                 else:
-                    title = g.group() + f_read[i+1].replace('\n','') .replace('  ','')  
-                l.append(title)
+                    title = t.group() + f[i+1].replace('\n','') .replace('  ','') 
+                num = num + 1
+                collection.update_many({'cited_no': num},{'$set':{'cited_title':title}})
             if y:
-                m.append(y.group())
-            i = i+1
-    finally:
-         file_object.close()
-#         with open("highly_cited_paper.txt", 'w') as f:
-#             for word in l:
-#                 f.write(word+"\n")
-    return (l,m)
+                year = y.group()                
+                collection.update_many({'cited_no': num},{'$set':{'cited_year':year}})
+            i = i + 1                      
 
 '''
 Acquire the xml files of citations from PLOS ONE, meanwhile record the error in "error.log"
 '''
-def PLOS_get(l,a):
-    i = 0    
-    for ids in l:
+def PLOS_get(collection,path,num):
+    i = 0
+    cursor = collection.find({'cited_no': {'$gt': num}})
+    for docu in cursor:
+        link = docu["doi_link"]
+        cited_no = docu["cited_no"]
         try:
-            url = "http://journals.plos.org/plosone/article/file?id="+ids+"&type=manuscript"
+            url = "http://journals.plos.org/plosone/article/file?id="+link+"&type=manuscript"
             i=i+1
             req = Request(url)
             req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
             html = urlopen(req)
-            folder = os.path.exists("Citation_paper\\2\\"+str(a))
-            if not folder:      
-                os.makedirs("Citation_paper\\2\\"+str(a))
-            name="Citation_paper\\2\\"+str(a)+"\\"+str(i)+".xml"
+            name = path + "\\" + str(i) + ".xml"
+            collection.update_many({'doi_link': link,'cited_no':cited_no},{'$set':{'content_path':name}})
             with open(name, 'wb') as f:
                 f.write(html.read())
-                print(ids,"               ",name)
+                print(link,"               ",name)
                 time.sleep(1)
         except URLError as e:
-            with open("error.log",'a') as f:
-                f.write(str(a)+"/"+str(i)+"    "+str(e.code)+"    "+str(ids)+'\n')
-            print("error:"+str(a)+"\\"+str(i)+"    "+str(e.code)+"    "+str(ids))
+            with open(path + "//error.log",'a') as f:
+                f.write(str(i)+"    "+str(link)+"    "+str(e.code)+'\n')
             pass
 
 '''
 According to "error.log", revise the DOI manually and  get the rest of xml files of citations from PLOS ONE
 '''      
-def PLOS_revise(ids,a,i):
-    try:
-        url = "http://journals.plos.org/plosone/article/file?id="+ids+"&type=manuscript"
+def PLOS_revise(t_links,path,collection):
+    f_links = []
+    f_nos = []
+    with open(path + "//error.log",'r') as f:
+        f = f.readlines()
+        for line in f:
+            f_nos.append(line.split("    ")[0])
+            f_links.append(line.split("    ")[1])
+    for i in range(len(t_links)):
+        url = "http://journals.plos.org/plosone/article/file?id="+t_links[i]+"&type=manuscript"
         req = Request(url)
         req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
         html = urlopen(req)
-        name="Citation_paper\\2\\"+str(a)+"\\"+str(i)+".xml"
-        folder = os.path.exists("Citation_paper\\2\\"+str(a))
-        if not folder:      
-            os.makedirs("Citation_paper\\2\\"+str(a))
+        name = path + "\\" + str(f_nos[i]) + ".xml"
+        collection.update_many({'doi_link': f_links[i]},{'$set':{'doi_link': t_links[i],'content_path':name}})
         with open(name, 'wb') as f:
             f.write(html.read())
-            print(ids,"               ",name)
+            print(t_links[i],"               ",name)
             time.sleep(1)
-    except URLError as e:
-        with open("error.log",'a') as f:
-            f.write(str(a)+"/"+str(i)+"    "+str(e.code)+"    "+str(ids)+'\n')
-        print("error:"+str(a)+"\\"+str(i)+"    "+str(e.code)+"    "+str(ids))
-        pass
+
 
 '''
 Extract the rid and location of citations from xml files
 '''   
-def xml_find_loc(i,target_title,target_year):
-    files= os.listdir("Citation_paper\\2\\" + str(i))
-    folder = os.path.exists("Results")
-    if not folder:      
-        os.makedirs("Results")
-    savefile = "Results\\2\\result(" + str(i) +").txt"
-    f = open(savefile,'w')
-    f.write("Target_Title: " + target_title + "\n")
-    f.write("Target_Year: " + target_year + "\n")
-    f.write('************************************************************************\n')
-    a = 0
-    b = 0
-    target_title = target_title.lower()
-    for file in files:
-        if file.endswith('.xml'):
-    #        print("Citation_paper\\" + str(i) + '\\' + file)
-            f.write("Citation_paper\\2\\" + str(i) + '\\' + file + '\n')
-            titles = {}
-            rid_real = ''
-            location = []
-            try:
-                tree = ET.ElementTree(file = "Citation_paper\\2\\" + str(i)+ "\\" + file)
-                body = tree.getroot().find('.//body')
-                year = tree.find(".//pub-date/year").text
-                for elm in tree.iterfind('.//ref'):      
-                    if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
-                        f_title = elm.find(".//article-title").text.lower()
-                        titles[f_title] = elm.attrib['id']
-    #            print(titles)
-                rid_real = edit_distance(target_title,titles)
-                if(rid_real == ''):
-    #                print("#Cannot find reference id!!!")
-                    f.write("#Cannot find reference id!!!\n")
-                    a = a + 1
-                else:
-                    f.write("RId: " + rid_real + '\n')
-                for sec in body:
-                    for xref in sec.iterfind('.//xref'):
-                        if(xref != None and xref.attrib["rid"] == rid_real):
-                            location.append(sec[0].text)
-                if(len(location) == 0):
-                    xml_find_revise(tree,body,rid_real,location)
-                for loc in list(set(location)):
-                    f.write("Location: " + loc + '\n')
-                    f.write("Year_Diff: " + str(int(year)-int(target_year)) + '\n')
-                if(rid_real != '' and len(location) == 0):
-    #                print("#Cannot find in-text citation!!!")                  
-                    f.write("#Cannot find in-text citation!!!\n")  
-                    b = b + 1
-            except Exception as e:
-    #            print('Reason:', e) 
-                f.write('Reason:' + str(e) + '\n')
-                print(file,'Reason:', str(e), '\n')
-    #        print('------------------------------------------------------------------------')
-            f.write('------------------------------------------------------------------------\n')
-    f.write('************************************************************************\n')
-    print('Cannot find reference id: {:.2%}'.format(a/len(files)))
-    print('Cannot find in-text citation: {:.2%}'.format(b/len(files)))
-    f.write("Cannot find reference id: " + str(a) + '\n')
-    f.write("Cannot find in-text citation: " + str(b) + '\n')
-    f.close()
-#    return location
+def xml_find_loc(collection,num):
+    titles = {}
+    rid_real = ''
+    cursor = collection.find({'cited_no': {'$gt': num}})
+    for docu in cursor:
+        location = []
+        target_title = docu["cited_title"]
+        path = docu["content_path"]      
+        try: 
+            tree = ET.ElementTree(file=path)
+            body = tree.getroot().find('.//body')
+            year = tree.find(".//pub-date/year").text
+            collection.update_one({'content_path': path,"cited_title":target_title },{'$set':{'pub_year':year}})
+            for elm in tree.iterfind('.//ref'):      
+                if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
+                    f_title = elm.find(".//article-title").text.lower()
+                    titles[f_title] = elm.attrib['id']
+            rid_real = edit_distance(target_title,titles)
+            collection.update_one({'cited_title':target_title,'content_path': path},{'$set':{'reference_id':rid_real}})
+            print("updata path:",path,",updata rid:",rid_real)
+            for sec in body:
+                for xref in sec.iterfind('.//xref'):
+                    if(xref != None and xref.attrib["rid"] == rid_real):
+                        location.append(sec[0].text)
+            if(len(location) == 0):
+                xml_find_revise(tree,body,rid_real,location)
+            collection.update_one({'content_path': path},{'$set':{'cited_location':list(set(location))}})
+        except Exception as e:
+            pass
+            print(path,'Reason:', str(e), '\n')
 
 def xml_find_revise(tree,body,rid_real,location):
     for elm in tree.iterfind('.//ref'):
@@ -235,7 +196,7 @@ def preprocess(sentence):
 
 '''
 Read the results.txt as lists and save them into csv files to help visualize the data
-'''   
+   
 def read_results():
     a = []
     b = []
@@ -245,7 +206,6 @@ def read_results():
     global stand_title
     for key,value in stand_title.items():
             stand_title[key]=preprocess(value)
-    print(stand_title)
     for k in range(1,12):
         savefile = "Results\\2\\result(" + str(k) +").txt"
         with open(savefile,'r') as f:
@@ -263,8 +223,9 @@ def read_results():
                     d.append(year)
         c.append(year)
     dataframe = pd.DataFrame({'file':n,'location':a,'year_diff':b,'year_pub':d})
-    dataframe.to_csv("data.csv",index=False,sep=',')
+    dataframe.to_csv("data2.csv",index=False,sep=',')
     return c
+'''
 
 def standard_loc(loc): 
     for i in loc:
@@ -276,26 +237,52 @@ def standard_loc(loc):
          loc = 0
     return loc    
 
-def visualization(a,b,year):
-    fig = plt.figure()
-    ax1 = fig.add_subplot(111)
-    ax1.set_title('Scatter Plot')
-    plt.xlabel('Year_Diff')
-    plt.ylabel('Location')
-    ax1.scatter(b,a,c = 'r',marker = 'o',alpha = 0.1)
-    plt.legend(str(year))
-    plt.show()
-
-
 '''
 Main function
 '''
+#start = time.clock()
+client = pymongo.MongoClient('localhost:27017',connect =True)
+db = client['msc_project']
+collection = db['citations']
+#files = file_list("WOS_list\\1")
+num = 0
+#for file in files:
+#    if "(" in file and ")" in file:
+#        DOI_find(collection,file,num)
+#    else:
+#        DOI_find_highpaper(collection,file,num)
+#elapsed = (time.clock() - start)
+#print("Time used1:",elapsed)
+#path = "Citation_paper\\1"
+#PLOS_get(collection,path,num)
+#elapsed = (time.clock() - start)
+#print("Time used2:",elapsed)
+#t_links = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
+#PLOS_revise(t_links,path,collection)
+#elapsed = (time.clock() - start)
+#print("Time used3:",elapsed)
+xml_find_loc(collection,num)
+
+#files = file_list("WOS_list\\2")
+#num = 10
+#for file in files:
+#    if "(" in file and ")" in file:
+#        DOI_find(collection,file,num)
+#    else:
+#        DOI_find_highpaper(collection,file,num)
+#path = "Citation_paper\\2"
+#PLOS_get(collection,path,num)
+#t_links = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0063671"]
+#PLOS_revise(t_links,path,collection)
+#xml_find_loc(collection,num)
+#client.close()    
+
 ###Finished part###
 
 ##citations of top 10 highly-cited paper
-#for a in range(1,12):
-#    l = DOI_find(a)
-#    PLOS_get(l,a)
+
+
+    
 #
 ##manually revision according to "error.log"
 #PLOS_revise("10.1371/journal.pone.0186943",1,113)
@@ -314,10 +301,12 @@ Main function
 
 ###Ongoing part###
 
-c = read_results()
-data1 = pd.read_csv('data.csv')
-data2 = pd.read_csv('data1.csv')
-data = pd.merge(data1,data2)
+#c = read_results()
+#data1 = pd.read_csv('data1.csv')
+#data2 = pd.read_csv('data2.csv')
+#frames = [data1,data2]
+#data = pd.concat(frames,axis=0,keys=['data1','data2'], join='outer')
+
 #fig,axes=plt.subplots(1,1,figsize=(10,4),dpi=80) 
 #violin plot
 #sns.violinplot(x=data["year_diff"]+data["year_pub"],y="year_pub",hue='location',inner='stick',data=data1)
@@ -330,31 +319,28 @@ data = pd.merge(data1,data2)
 #    sns.violinplot(x="year_diff",y="location",data=data[data['file']==i])
 #    plt.legend([c[i-1]])
 
-X = list(zip(data['year_pub'],data['year_diff']+data['year_pub']))
-y = data['location']
-model = SVC()
-score = cross_val_score(model,X,y,scoring='accuracy')
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-model.fit(X_train,y_train)
-print(score.mean())
-
-
-train_sizes, train_loss, test_loss = learning_curve(
-    SVC(gamma=0.001), X, y, cv=10, scoring='neg_mean_squared_error',
-    train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
-#print(train_sizes, train_loss, test_loss)
-train_loss_mean = -np.mean(train_loss, axis=1)
-test_loss_mean = -np.mean(test_loss, axis=1)
-plt.plot(train_sizes, train_loss_mean, 'o-', color="r",
-         label="Training")
-plt.plot(train_sizes, test_loss_mean, 'o-', color="g",
-        label="Cross-validation")
-plt.xlabel("Training examples")
-plt.ylabel("Loss")
-plt.legend(loc="best")
-plt.show()
-
-
+#X = list(zip(data['year_pub'],data['year_diff']))
+#y = data['location']
+#
+#train_sizes, train_loss, test_loss = learning_curve(
+#    SVC(gamma=0.001), X, y, cv=10, scoring='neg_mean_squared_error',
+#    train_sizes=[0.25, 0.5, 0.75, 1])
+#train_loss_mean = -np.mean(train_loss, axis=1)
+#test_loss_mean = -np.mean(test_loss, axis=1)
+#plt.plot(train_sizes, train_loss_mean, 'o-', color="r",
+#         label="Training")
+#plt.plot(train_sizes, test_loss_mean, 'o-', color="g",
+#        label="Cross-validation")
+#plt.xlabel("Training examples")
+#plt.ylabel("Loss")
+#plt.legend(loc="best")
+#plt.show()
+#
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+#model = SVC()
+#score = cross_val_score(model,X,y,scoring='accuracy')
+#model.fit(X_train,y_train)
+#print(score.mean())
 
 
 
