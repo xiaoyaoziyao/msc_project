@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-12-22722</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0066245</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Computational biology</subject><subj-group><subject>Evolutionary modeling</subject></subj-group></subj-group><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary systematics</subject><subj-group><subject>Molecular systematics</subject><subject>Phylogenetics</subject></subj-group></subj-group><subj-group><subject>Paleontology</subject><subj-group><subject>Paleobiology</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Mathematics</subject><subj-group><subject>Probability theory</subject><subj-group><subject>Probability distribution</subject><subject>Statistical distributions</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>A Simple Method for Estimating Informative Node Age Priors for the Fossil Calibration of Molecular Divergence Time Analyses</article-title>
+<alt-title alt-title-type="running-head">Estimating Informative Node Age Priors</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nowak</surname><given-names>Michael D.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>Andrew B.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Simpson</surname><given-names>Carl</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Zwickl</surname><given-names>Derrick J.</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Institute of Systematic Botany, University of Zürich, Zürich, Switzerland</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Department of Palaeontology, The Natural History Museum, London, United Kingdom</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Museum für Naturkunde der Humboldt-Universität zu Berlin, Berlin, Germany</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Department of Ecology and Evolution, University of Kansas, Lawrence, Kansas, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Moreau</surname><given-names>Corrie S.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Field Museum of Natural History, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">michael.nowak@systbot.uzh.ch</email></corresp>
+<fn fn-type="conflict"><p>Google Summer of Code provided part of the funding towards this study. There are no patents, products in development or marketed products to declare. This does not alter our adherence to all the PLOS ONE policies on sharing data and materials.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: MDN DJZ. Performed the experiments: MDN. Analyzed the data: MDN. Contributed reagents/materials/analysis tools: ABS CS. Wrote the paper: MDN.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>5</day><month>6</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>6</issue>
+<elocation-id>e66245</elocation-id>
+<history>
+<date date-type="received"><day>25</day><month>7</month><year>2012</year></date>
+<date date-type="accepted"><day>3</day><month>5</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Nowak et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Molecular divergence time analyses often rely on the age of fossil lineages to calibrate node age estimates. Most divergence time analyses are now performed in a Bayesian framework, where fossil calibrations are incorporated as parametric prior probabilities on node ages. It is widely accepted that an ideal parameterization of such node age prior probabilities should be based on a comprehensive analysis of the fossil record of the clade of interest, but there is currently no generally applicable approach for calculating such informative priors. We provide here a simple and easily implemented method that employs fossil data to estimate the likely amount of missing history prior to the oldest fossil occurrence of a clade, which can be used to fit an informative parametric prior probability distribution on a node age. Specifically, our method uses the extant diversity and the stratigraphic distribution of fossil lineages confidently assigned to a clade to fit a branching model of lineage diversification. Conditioning this on a simple model of fossil preservation, we estimate the likely amount of missing history prior to the oldest fossil occurrence of a clade. The likelihood surface of missing history can then be translated into a parametric prior probability distribution on the age of the clade of interest. We show that the method performs well with simulated fossil distribution data, but that the likelihood surface of missing history can at times be too complex for the distribution-fitting algorithm employed by our software tool. An empirical example of the application of our method is performed to estimate echinoid node ages. A simulation-based sensitivity analysis using the echinoid data set shows that node age prior distributions estimated under poor preservation rates are significantly less informative than those estimated under high preservation rates.</p>
+</abstract>
+<funding-group><funding-statement>This work was financially supported through a Society of Systematic Biologists Graduate Student Research Award to MN, the National Evolutionary Synthesis Center (NESCent), and Google Summer of Code. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="13"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The increasingly popular integration of molecular systematics and paleobiology known as molecular divergence time estimation involves estimating the age of extant lineages through analysis of DNA sequence divergence calibrated with data from the fossil record. While estimates of lineage age were historically the purview of paleobiology alone, the widespread development of molecular divergence time estimation methods has fueled the rapid expansion of systematic biology into dating clade ages. Molecular divergence time estimation is fundamentally based on the translation of genetic divergence between taxa into an estimate of the age of their most recent common ancestor (MRCA). Implicitly, this involves calibrating the absolute rate of molecular evolution on a phylogenetic tree, and all methods of molecular divergence time estimation require some externally derived temporal data to provide this calibration <xref ref-type="bibr" rid="pone.0066245-Zuckerkandl1">[1]</xref>. Generally, temporal data from the fossil record of the focal clade or a closely related clade are often employed to calibrate the rate of molecular evolution <xref ref-type="bibr" rid="pone.0066245-Donoghue1">[2]</xref>–<xref ref-type="bibr" rid="pone.0066245-Benton2">[4]</xref>. Alternatively, several divergence time studies have employed assumptions of biogeographic history to calibrate node ages, such as the maximum age of a volcanic island <xref ref-type="bibr" rid="pone.0066245-Renner1">[5]</xref>, <xref ref-type="bibr" rid="pone.0066245-Heads1">[6]</xref>.</p>
+<p>While molecular divergence time estimation is heavily reliant on paleobiological data, the manner in which fossil data are employed as temporal calibrations has consistently generated criticism of divergence time estimates and the conclusions drawn from these estimates <xref ref-type="bibr" rid="pone.0066245-Graur1">[7]</xref>–<xref ref-type="bibr" rid="pone.0066245-Clarke1">[9]</xref>. Much of this criticism specifically cites the misrepresentation of potential sources of error associated with molecular divergence time estimates (see for example <xref ref-type="bibr" rid="pone.0066245-Shaul1">[10]</xref>). Generally, there are three primary sources of error in divergence time estimates: 1) uncertainty in topology and branch length estimates; 2) uncertainty in the extent of heterogeneity in the rate of molecular evolution; 3) uncertainty in the temporal calibrations provided by fossil data <xref ref-type="bibr" rid="pone.0066245-Hugall1">[11]</xref>–<xref ref-type="bibr" rid="pone.0066245-Lee1">[16]</xref>. Error associated with estimates of topology/branch length and rate heterogeneity (i.e. points 1 and 2 above) have been largely accommodated through the development of Bayesian methods that jointly estimate topology and divergence times and employ sophisticated relaxed-clock models of molecular rate variation such as BEAST <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>, <xref ref-type="bibr" rid="pone.0066245-Drummond2">[17]</xref>, MCMCTREE <xref ref-type="bibr" rid="pone.0066245-Rannala1">[18]</xref>, MultiDivTime <xref ref-type="bibr" rid="pone.0066245-Thorne1">[19]</xref>, PhyloBayes <xref ref-type="bibr" rid="pone.0066245-Lartillot1">[20]</xref>, and TimeTree <xref ref-type="bibr" rid="pone.0066245-Himmelmann1">[21]</xref>. Despite these powerful methodological improvements, a number of recent simulation and empirical studies have shown that the phylogenetic placement and temporal representation of fossil calibrations (i.e. point 3 above) represent the most significant contribution to imprecision and potential inaccuracy in node age estimates <xref ref-type="bibr" rid="pone.0066245-Clarke1">[9]</xref>, <xref ref-type="bibr" rid="pone.0066245-Hugall1">[11]</xref>, <xref ref-type="bibr" rid="pone.0066245-Rutschmann1">[12]</xref>, <xref ref-type="bibr" rid="pone.0066245-Ho1">[14]</xref>, <xref ref-type="bibr" rid="pone.0066245-Inoue1">[15]</xref>, <xref ref-type="bibr" rid="pone.0066245-Ho2">[22]</xref>–<xref ref-type="bibr" rid="pone.0066245-Sauquet1">[24]</xref>.</p>
+<p>It has long been appreciated that the age of the oldest fossil taxon confidently attributable to a given clade represents the minimum age for the MRCA of that clade and its sister clade <xref ref-type="bibr" rid="pone.0066245-Donoghue1">[2]</xref>. While these minimum age constraints can be easily and relatively confidently interpreted from the fossil record, all methods of molecular divergence time estimation (e.g. Bayesian, likelihood, etc.) require some information to calibrate the maximum age of the clade. Aside from a few well-documented paleobiological events and/or fossil lineages that can be applied confidently as maximum age constraints (see for example <xref ref-type="bibr" rid="pone.0066245-Benton1">[3]</xref>, <xref ref-type="bibr" rid="pone.0066245-Mller1">[25]</xref>), maximum ages are notoriously difficult to interpret from the fossil record <xref ref-type="bibr" rid="pone.0066245-Donoghue1">[2]</xref>, <xref ref-type="bibr" rid="pone.0066245-Clarke1">[9]</xref>, <xref ref-type="bibr" rid="pone.0066245-Ho1">[14]</xref>, <xref ref-type="bibr" rid="pone.0066245-Parham2">[26]</xref>.</p>
+<p>This uncertainty in assignment of maximum age constraints in divergence time analyses has lead to the recent development of Bayesian divergence time methods that allow node ages to be temporally constrained through the application of parametric prior probability distributions, which are meant to reflect the researchers confidence in the temporal calibration provided by the fossil data at hand <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>, <xref ref-type="bibr" rid="pone.0066245-Lartillot1">[20]</xref>, <xref ref-type="bibr" rid="pone.0066245-Himmelmann1">[21]</xref>, <xref ref-type="bibr" rid="pone.0066245-Yang1">[27]</xref>. Node age priors in Bayesian divergence time analyses can be theoretically expressed using any statistical distribution, but the most common are uniform, exponential, lognormal, gamma, normal, or truncated normal distributions because these tend to represent diminishing probability at greater ages (i.e. “soft-bounds”, see <xref ref-type="bibr" rid="pone.0066245-Lee1">[16]</xref>, <xref ref-type="bibr" rid="pone.0066245-Yang1">[27]</xref>). While these methodological advances provide the framework for integrating uncertainty in temporal calibrations provided by fossils, they do not provide an explicit means of quantifying this uncertainty. It follows then that many of the studies that have employed such prior probability distributions to calibrate node ages have employed somewhat arbitrary parameterizations of these node age priors (see for example <xref ref-type="bibr" rid="pone.0066245-Clayton1">[28]</xref>, <xref ref-type="bibr" rid="pone.0066245-Sallam1">[29]</xref>). Ho and Phillips <xref ref-type="bibr" rid="pone.0066245-Zuckerkandl1">[1]</xref> among others have suggested an alternative solution by applying “soft-bound” node age priors whose 95% densities are based on well-reasoned arguments from the paleobiological literature (see for example <xref ref-type="bibr" rid="pone.0066245-Alfaro1">[30]</xref>), but such arguments tend to be idiosyncratic and subjective. This is particularly relevant because it has been shown by several authors now that the parameterization (i.e. shape) of node age prior distributions can significantly impact the resulting node age estimates <xref ref-type="bibr" rid="pone.0066245-Inoue1">[15]</xref>, <xref ref-type="bibr" rid="pone.0066245-Warnock1">[31]</xref>.</p>
+<p>It is clear now that there is a need for objective means of informing the construction of parametric node age prior distributions based on analyses of fossil data <xref ref-type="bibr" rid="pone.0066245-Parham2">[26]</xref>. Marshall <xref ref-type="bibr" rid="pone.0066245-Marshall1">[32]</xref> has proposed the use of stratigraphic confidence intervals as a means of constructing biologically meaningful prior distributions. Marshall's <xref ref-type="bibr" rid="pone.0066245-Marshall1">[32]</xref> method requires a fixed topology with branch lengths proportional to relative time (i.e. an ultrametric tree), and represents an elegant and computationally simple means of estimating a potentially informative node age prior distribution. Despite this, the input requirements of Marshall's method limit its practical application for Bayesian divergence time analyses, as fossil calibrations act as prior distributions to inform the estimation of an ultrametric tree and thus these processes are not easily decoupled <xref ref-type="bibr" rid="pone.0066245-Dornburg1">[33]</xref>. More recently, Wilkinson et al. <xref ref-type="bibr" rid="pone.0066245-Wilkinson1">[34]</xref> developed a method for constructing a node age prior distribution based on an analysis of the primate fossil record. Their method employs a stochastic forward-modeling approach to simultaneously estimate parameters of the diversification process (i.e. speciation and extinction) and process of fossil preservation. While their method is both elegant and powerful, it is also quite complex and appears to be tailored to the primate fossil record, and thus it may be difficult to apply to other taxonomic groups <xref ref-type="bibr" rid="pone.0066245-Clarke1">[9]</xref>, <xref ref-type="bibr" rid="pone.0066245-Kenrick1">[35]</xref>.</p>
+<p>We present here an alternative approach to constructing informative prior distributions on node ages for use in Bayesian divergence time estimation software packages. Our method fits a branching model to paleobiological data relating the stratigraphic range of all fossil taxa that can be confidently assigned to a given clade in the extant phylogeny of a group to estimate the age of the most recent common ancestor (MRCA) of that clade. The difference between the age of the MRCA and the oldest fossil assignable to a clade represents the amount of time that passed after the clade's origin but before the first recovered fossilization event (<xref ref-type="fig" rid="pone-0066245-g001">Figure 1</xref>), and is referred to as the “missing history” of a clade <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref>, <xref ref-type="bibr" rid="pone.0066245-Tavar1">[37]</xref>. Briefly, the method we describe utilizes the entire fossil history of a clade (i.e. the stratigraphic ranges of all relevant fossil lineages) to fit a model of lineage diversification, which is then used together with a user-supplied estimate of the per-interval fossil preservation and sampling probability (herein referred to as the “fossil preservation rate”) to estimate the amount of missing history before the first preserved fossil attributable to the focal clade. The primary output of this approach is a probability distribution of the missing history estimate for a given clade, which can then be summarized by fitting a simple parametric probability distribution for use as a node age prior in a Bayesian divergence time program such as BEAST <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>. While in many ways similar to the approach developed by Wilkinson et al. <xref ref-type="bibr" rid="pone.0066245-Wilkinson1">[34]</xref>, our method differs in that it was specifically designed to be easily applied to nearly any clade with a reasonably diverse fossil record (i.e. sufficient to estimate the key origination and extinction rate parameters based on the distribution of fossil lineages in a clade). Relying on a few key assumptions regarding the diversification history of the focal clade, our method achieves an ease of application that makes it a powerful addition to the suite of available approaches for assigning node age priors.</p>
+<fig id="pone-0066245-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.g001</object-id><label>Figure 1</label><caption>
+<title>Simplified Diagram of the Model.</title>
+<p>Our method provides an estimate for the length of time after age of the MRCA of a clade but prior to the age of the oldest fossil (i.e. the missing history). This hypothetical clade has N  =  11 lineages at time T, representing the current standing diversity of the group. Thick bars on the internal branches of the tree represent the preserved fossil history of the clade, such that n  =  1 lineage preserved at time t. The expressions for deriving the probability of the three key temporal durations in the history of a clade are shown.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.g001" position="float" xlink:type="simple"/></fig>
+<p>The performance of the method is evaluated by analyzing a diverse set of simulated data sets, and an example empirical application of the method is conducted to estimate divergence times in echinoids using fossil distribution data and a DNA sequence dataset from Smith et al. <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref>. Echinoid divergence time estimates based on informed priors are compared to estimates generated with priors established through the “traditional” application of fossil-based minimum age constraints. While our method was designed to estimate a node age prior for a single clade (i.e. a node in an extant phylogeny), we explain how the method can be applied iteratively throughout a given phylogeny when more than a single clade has a suitably diverse fossil record. The calibration scheme we employ in estimating echinoid divergence times provides an example of such an iterative application of the method to generate several informative priors for sub-clades, which we subsequently apply in concert to constrain a molecular divergence time analysis using the BEAST software package <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>, <xref ref-type="bibr" rid="pone.0066245-Drummond2">[17]</xref>. Finally, a second simulation study on the echinoid fossil range data is performed to examine how the precision of priors estimated by our method is affected by varying rates of fossil preservation and recovery.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>The method we describe here employs the logical framework developed by Foote et al. <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref>, who analyzed the mammal fossil record using a conditioned model of diversification (i.e. birth-death branching model) and fossil preservation to estimate the age of the MRCA of extant mammals. Their analysis was specifically designed to independently evaluate the remarkable discrepancy between estimates of the age of mammal origins based on molecular clock studies and estimates based on the fossil record. While Foote et al. <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref> was focused on hypothesis testing, we have modified their model to estimate the amount of time prior to the oldest fossil in a clade directly from parameters of the fossil record (see <xref ref-type="fig" rid="pone-0066245-g001">Figure 1</xref>). The method described below estimates the “missing history” of the fossil record for a clade of interest by fitting the observed stratigraphic distribution of fossil lineages attributable to that clade to a model of cladogenesis conditioned on known clade diversity at both the extant time (i.e. current standing diversity) and within the clade's oldest stratigraphic interval. The accuracy of the method is contingent upon accurate counts for fossil lineage diversity in the oldest stratigraphic bin of the clade of interest, and thus the effects of incomplete fossil preservation are incorporated through model averaging.</p>
+<sec id="s2a">
+<title>Data</title>
+<p>Our method requires as input the stratigraphic range of each fossil taxon confidently assignable to a given clade (e.g. first and last occurrence at minimum), an estimate of the current standing diversity, and an estimate of the fossil preservation and recovery rate for the fossil record of the clade of interest. While no specific phylogeny is required or utilized by the method, as with any temporal calibration based on fossil data, one should be confident that the clade of interest represents a natural and monophyletic group. The stratigraphic data associated with each fossil taxon must be expressed in terms of a consistent stratigraphic binning scheme (e.g. see <xref ref-type="supplementary-material" rid="pone.0066245.s004">Table S1</xref>). The use of a binning scheme is conventional when dealing with fossil data because the exact age of a geologic formation holding a fossil is often not known, but a range of dates can often be estimated based on comparative analysis with surrounding strata (for review see <xref ref-type="bibr" rid="pone.0066245-Benton2">[4]</xref>, <xref ref-type="bibr" rid="pone.0066245-Gradstein1">[39]</xref>). As currently configured, the software that implements our method is capable of interpreting stratigraphic ranges expressed in terms of International Stratigraphic Commission (ISC) Stages <xref ref-type="bibr" rid="pone.0066245-Gradstein1">[39]</xref>, or PBDB 10 Ma Bins (The Paleobiology Database 2008). While it is theoretically possible to employ any binning scheme, it is important to consider the fact that statistical power is increased proportional to the absolute number of stratigraphic bins. Therefore, a binning scheme with higher resolution should provide better parameter estimates, with the caveat that the fossil occurrence data can be confidently assigned to such bins.</p>
+</sec><sec id="s2b">
+<title>Estimating Origination and Extinction Rates</title>
+<p>Origination and extinction rates (sometimes called “birth” and “death” rates) are estimated directly from fossil stratigraphic range data using methods developed by Foote <xref ref-type="bibr" rid="pone.0066245-Foote2">[40]</xref>. Briefly, Foote's method provides per-capita estimates of origination and extinction rates for a single stratigraphic bin. There are four fundamental classes of lineages for a given bin: 1) those that cross only the lower boundary of the bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e001" xlink:type="simple"/></inline-formula>); 2) those that cross only the upper boundary of the bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e002" xlink:type="simple"/></inline-formula>); 3) those that cross both the lower and the upper boundary of the bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e003" xlink:type="simple"/></inline-formula>); 4) those with a range confined to the bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e004" xlink:type="simple"/></inline-formula>). The sum of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e005" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e006" xlink:type="simple"/></inline-formula> provides the total number of lineages crossing the upper boundary (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e007" xlink:type="simple"/></inline-formula>), and the sum of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e008" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e009" xlink:type="simple"/></inline-formula> provides the total number of lineages crossing the lower boundary (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e010" xlink:type="simple"/></inline-formula>). The per-capita rates of origination (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e011" xlink:type="simple"/></inline-formula>) and extinction (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e012" xlink:type="simple"/></inline-formula>) are given by the equations<disp-formula id="pone.0066245.e013"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e013" xlink:type="simple"/></disp-formula><disp-formula id="pone.0066245.e014"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e014" xlink:type="simple"/></disp-formula></p>
+<p>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e015" xlink:type="simple"/></inline-formula> is the temporal length of the bin in question. In this way, origination and extinction rates are estimated for each bin throughout the preserved stratigraphic distribution of the clade. For any given clade estimates of origination and extinction rate can vary considerably through time. While such fluctuations may be pertinent to the diversification history of the clade, it can be difficult to decouple the signal of such processes from that of preservational anomalies <xref ref-type="bibr" rid="pone.0066245-Foote3">[41]</xref>, <xref ref-type="bibr" rid="pone.0066245-Alroy1">[42]</xref>. The model of cladogenesis we employ assumes constant diversification rates through time, and subsequently the estimated average rates of origination (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e016" xlink:type="simple"/></inline-formula>) and extinction (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e017" xlink:type="simple"/></inline-formula>) are used in all equations herein.</p>
+</sec><sec id="s2c">
+<title>The Model</title>
+<p>The core of our method is based on the branching process derivations originally performed by Raup <xref ref-type="bibr" rid="pone.0066245-Raup1">[43]</xref> and Foote et al. <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref>. We provide here a brief summary of the model that serves as the logical framework for the method, but a more detailed derivation can be found in Foote et al. <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref> and Raup <xref ref-type="bibr" rid="pone.0066245-Raup1">[43]</xref>. The primary formula is the probability of starting a stratigraphic interval of length <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e018" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e019" xlink:type="simple"/></inline-formula> lineages and ending with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e020" xlink:type="simple"/></inline-formula> lineages, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e021" xlink:type="simple"/></inline-formula> (i.e. this is equivalent to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e022" xlink:type="simple"/></inline-formula> in <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref>). A special case of this is the probability of complete extinction (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e023" xlink:type="simple"/></inline-formula>), which is given by<disp-formula id="pone.0066245.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e024" xlink:type="simple"/></disp-formula></p>
+<p>By subtraction, the probability of survival over the interval is then given by<disp-formula id="pone.0066245.e025"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e025" xlink:type="simple"/></disp-formula></p>
+<p>Another special case of particular interest is starting with one lineage (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e026" xlink:type="simple"/></inline-formula>) and ending with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e027" xlink:type="simple"/></inline-formula> lineages, given by<disp-formula id="pone.0066245.e028"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e028" xlink:type="simple"/></disp-formula></p>
+<p>where again <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e029" xlink:type="simple"/></inline-formula> is the probability of extinction (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e030" xlink:type="simple"/></inline-formula>, see above), and <disp-formula id="pone.0066245.e031"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e031" xlink:type="simple"/></disp-formula></p>
+<p>Similarly, for other values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e032" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e033" xlink:type="simple"/></inline-formula><disp-formula id="pone.0066245.e034"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e034" xlink:type="simple"/></disp-formula></p>
+<p>In our case, we have two time intervals of interest: the length of the interval from the MRCA to the first known fossil occurrence (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e035" xlink:type="simple"/></inline-formula>, i.e. the “missing interval” of <xref ref-type="bibr" rid="pone.0066245-Foote1">[36]</xref>), and the observed time interval from the first known fossil occurrence to the present time (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e036" xlink:type="simple"/></inline-formula>). We also have three variables representing the diversity of the clade of interest: the number of extant lineages known to exist at the present time (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e037" xlink:type="simple"/></inline-formula>); the observed number of fossil lineages in the oldest stratigraphic bin of the clade of interest (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e038" xlink:type="simple"/></inline-formula>); an estimate of the true number of fossil lineages in the oldest stratigraphic bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e039" xlink:type="simple"/></inline-formula>).</p>
+<p>Our method requires the user to supply an estimate of the per-interval fossil preservation and sampling probability (i.e. preservation rate) of the clade of interest (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e040" xlink:type="simple"/></inline-formula>) in order to estimate the true diversity of the clade in the first stratigraphic bin (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e041" xlink:type="simple"/></inline-formula>) based on the diversity of the clade at this time observed from the fossil record (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e042" xlink:type="simple"/></inline-formula>). This relationship is modeled by a binomial distribution with probability mass function <disp-formula id="pone.0066245.e043"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e043" xlink:type="simple"/></disp-formula></p>
+<p>Our method implicitly relies on the assumption that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e044" xlink:type="simple"/></inline-formula> (i.e. the true diversity in the first bin) is less than the assumed known extant diversity of the clade (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e045" xlink:type="simple"/></inline-formula>). For some taxonomic groups (e.g. clades showing explosive radiations shortly after their first appearance) this assumption will be violated, and in such cases it would not be appropriate to use this method.</p>
+<p>At this point the data (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e046" xlink:type="simple"/></inline-formula>; the fixed values) are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e047" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e048" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e049" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e050" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e051" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e052" xlink:type="simple"/></inline-formula>, and the unknowns are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e053" xlink:type="simple"/></inline-formula> (the missing interval) and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e054" xlink:type="simple"/></inline-formula> (a nuisance parameter that we ideally want to integrate out). If we ignore estimating <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e055" xlink:type="simple"/></inline-formula> for the moment, the likelihood is <disp-formula id="pone.0066245.e056"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e056" xlink:type="simple"/></disp-formula></p>
+<p>or the probability of starting with one lineage and ending with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e057" xlink:type="simple"/></inline-formula> lineages over the missing interval of length <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e058" xlink:type="simple"/></inline-formula> times the probability of starting with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e059" xlink:type="simple"/></inline-formula> lineages and ending with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e060" xlink:type="simple"/></inline-formula> lineages over the interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e061" xlink:type="simple"/></inline-formula>. We now can get the total likelihood of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e062" xlink:type="simple"/></inline-formula>by summing over values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e063" xlink:type="simple"/></inline-formula>, stopping at some arbitrary point when additional terms contribute little to the likelihood.<disp-formula id="pone.0066245.e064"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066245.e064" xlink:type="simple"/></disp-formula></p>
+<p>We implicitly assume a uniform prior on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e065" xlink:type="simple"/></inline-formula> and fit a parametric distribution to the discretized likelihood curve (see below), which is used as a prior on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e066" xlink:type="simple"/></inline-formula> in molecular divergence time analyses. A graphical representation of the problem is shown in <xref ref-type="fig" rid="pone-0066245-g001">Figure 1</xref> (but also see <xref ref-type="bibr" rid="pone.0066245-Wilkinson1">[34]</xref>, and <xref ref-type="fig" rid="pone-0066245-g002">Figure 2</xref> shows two example discretized likelihood surfaces).</p>
+<fig id="pone-0066245-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.g002</object-id><label>Figure 2</label><caption>
+<title>Example informative divergence time priors estimated with the SNAPE v1.0 software.</title>
+<p>These likelihood curves and associated best-fit gamma distributions show some of the variation in prior shape that can be estimated using this method. The y-axis scale is the likelihood (or <italic>f</italic> for the best-fit gamma distribution) and the x-axis is in millions of years ago (MYA). Note that the scale of discretized likelihood curve and the gamma distribution are not equivalent, and they must be scaled to assist in visualization. <bold>A</bold>. Estimated prior distribution for the root node in the echinoid data set. Values of the discretized likelihood curve are shown in black, and the best-fit gamma distribution is shown in red. Horizontal lines representing the 95%, 75%, and 50% quantiles of the discretized likelihood curve are labeled on the figure. The quantile values are shown here only for reference when interpreting the simulation results shown in <xref ref-type="fig" rid="pone-0066245-g003">Figure 3</xref>. <bold>B</bold>. Estimated prior distribution for the MRCA of the mammalian order Rodentia. The input data for this prior estimate was assembled by searching the Paleobiology Database (<ext-link ext-link-type="uri" xlink:href="http://www.pbdb.org" xlink:type="simple">www.pbdb.org</ext-link>) for all Rodentia occurrences (see <xref ref-type="supplementary-material" rid="pone.0066245.s006">File S2</xref>). This analysis assumed the existence of 400 extant genera in Rodentia. The oldest Rodentia fossil occurrence that met the input data criteria was 55.8 Ma. The vertical line shows the position of the Cretaceous/Paleogene (K/PG) boundary at 65.5 Ma. The analysis was performed once for each of four preservation rates: 0.1  =  black; 0.2  =  blue; 0.3  =  orange; 0.4  =  yellow. The best-fit gamma distribution for the likelihood curve assuming a 0.1 preservation rate is shown in red. This prior for the age of the MRCA of Rodentia was estimated solely for demonstration purposes. The results show how the preservation rate estimate provided by the user can have a large impact on the shape of the prior estimated.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s2d">
+<title>Fitting a Parametric Probability Distribution to the Discretized Likelihood Curve of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e067" xlink:type="simple"/></inline-formula></title>
+<p>The primary output from the method described above is a list of likelihood values for missing intervals of time (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e068" xlink:type="simple"/></inline-formula>) and a proposed zero offset value representing a conservative estimate for the minimum age of the clade of interest. The discrete likelihood curve represented by this list cannot be applied directly as a prior probability distribution for a given clade. Bayesian molecular divergence time software packages (e.g. BEAST, PhyloBayes, TimeTree) require priors to be specified under relatively simple parametric distributions (e.g. uniform, exponential, gamma, lognormal). Thus a specific parametric distribution with appropriate parameter values must be chosen to mimic the discretized likelihood curve generated by the method (e.g. see <xref ref-type="fig" rid="pone-0066245-g002">Figure 2</xref>). In the software that has been developed to implement our method, we have attempted to extract the information from the discretized likelihood curve through a least-squares distribution fitting function. Theoretically any parametric distribution could be used to fit the discrete likelihood curve, but we have chosen a gamma distribution for implementation in our software tool because it performed consistently well in fitting a diverse set of likelihood curves tested during software development. Still it is important to note here that the likelihood curves produced for some data sets can be quite complex, and thus fitting a gamma distribution can be very difficult. Therefore, the fit between the discrete likelihood curve generated by the software tool and the parametric distribution to be employed as a node age prior must be visually validated and, when necessary, manually adjusted by the user to accurately characterize the node age prior probability distribution.</p>
+<p>The method described above is implemented in an open source software package written in C++ called the Single Node Age Prior Estimator (SNAPE) v1.0 (<ext-link ext-link-type="uri" xlink:href="https://github.com/michaeldnowak/snape" xlink:type="simple">https://github.com/michaeldnowak/snape</ext-link>).</p>
+</sec><sec id="s2e">
+<title>Performance of the Method with Simulated Data</title>
+<p>To evaluate the performance of the method under various scenarios of diversification and fossil preservation, clades of fossil lineages were simulated and subjected to incomplete preservation. Briefly, a branching model of cladogenesis was employed to simulate a clade that originated 250 million years ago and diversified under an origination rate of 1.0 and an extinction rate of 0.9. The stratigraphic ranges of the resulting fossil lineages were binned according to ISC stages and the effects of incomplete sampling and preservation on the ranges of these lineages were simulated under a specific preservation rate. The branching process simulation was performed for 100 replicates and each replicate was subjected to the simulated fossil preservation process 10 times. The simulation was conducted under three different preservation rates (0.8, 0.45, and 0.1), yielding a total of 1000 replicates for each preservation rate. Using as input the preserved fossil record, the true number of extant lineages of each simulated clade, and the simulated preservation rate, the length of missing history (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066245.e069" xlink:type="simple"/></inline-formula>) was estimated for each clade and a parametric prior distribution was fit to the resulting likelihood curve using the SNAPE v.1.0 software tool. Simulated data sets were constructed using R scripts (see <xref ref-type="supplementary-material" rid="pone.0066245.s005">File S1</xref>) and software written in the C programming language by C. Simpson.</p>
+</sec><sec id="s2f">
+<title>Echinoid Divergence Times</title>
+<p>Smith et al. <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref> employed a data set consisting of 3680 nucleotides sequenced from one mitochondrial (16 S large subunit) and two nuclear rRNA genes (18 S small subunit, and 28 S large subunit) to reconstruct the phylogeny of extant echinoids and estimate divergence times in the clade. The resulting data set includes representatives of thirteen of the fourteen extant echinoid orders and resulted in approximately 70% coverage of extant echinoid families. The molecular clock was significantly rejected in their study, and thus relaxed-clock models of molecular evolution were applied in a number of different molecular divergence time software packages including multidivtime. Divergence time estimates were then examined for congruence with the observed echinoid fossil record. Molecular and fossil-based estimates of clade age were examined for congruence in a number of focal nodes. Their results show congruence between these independent sources of data in approximately 70% of the nodes tested <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref>.</p>
+<p>The echinoid fossil record is particularly well suited to the estimation of informative divergence time priors due largely to the compilation of detailed stratigraphic range data for all relevant fossil genera in a comprehensive database (The Echinoid Directory; <ext-link ext-link-type="uri" xlink:href="http://www.nhm.ac.uk/research-curation/research/projects/echinoid-directory/" xlink:type="simple">http://www.nhm.ac.uk/research-curation/research/projects/echinoid-directory/</ext-link>). Furthermore, well-preserved morphological synapomorphies allow fossil genera to be confidently placed within clades of the extant echinoid phylogeny <xref ref-type="bibr" rid="pone.0066245-Kroh1">[44]</xref>. We estimate informative divergence time priors for eight well-supported nodes (i.e. Bayesian posterior probabilities greater than 0.95 and likelihood bootstrap proportions greater than 70%) from the phylogenetic analyses of Smith et al. <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref> and apply these as constraints in the estimation of echinoid divergence times in the Bayesian divergence time estimation software BEAST v1.7.2 <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>. Briefly, stratigraphic range data for all fossil echinoid genera were compiled from the Echinoid Directory and used to construct data sets of fossil lineages attributable to the clades defined by the eight constraint nodes (see <xref ref-type="supplementary-material" rid="pone.0066245.s004">Table S1</xref>). While both the ISC Stages <xref ref-type="bibr" rid="pone.0066245-Gradstein1">[39]</xref> and PBDB 10 Ma Bins (The Paleobiology Database 2008) were found to be suitable stratigraphic binning schemes for these data, we found the ISC Stages favorable due to the increased stratigraphic resolution it allowed. A complete list of fossil echinoid genera used in this study with associated stratigraphic ranges is provided in <xref ref-type="supplementary-material" rid="pone.0066245.s004">Table S1</xref>. Informative gamma-distributed divergence time priors for each of the eight constraint nodes were estimated through the method described above. A high preservation rate estimate of 0.8 was chosen because echinoids are thought to have relatively high rates of fossil preservation, and while not based explicitly on an analysis of the echinoid fossil record, this value is consistent with independent paleobiological evidence <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref>, <xref ref-type="bibr" rid="pone.0066245-Kroh1">[44]</xref>. Furthermore, while we chose to analyze these data under a single preservation rate estimate (0.8), it would be practical to examine a range of potential preservation rates if the goal of this study was primarily aimed at estimating echinoid divergence times, rather than providing an example implementation of the method. A set of uniform divergence time priors for the same eight nodes was also established using the oldest fossil occurrence attributable to each constraint node as a minimum age (see below).</p>
+<p>Two sets of BEAST v1.7.2 analyses were performed with identical settings, but differing in the application of constraint node age priors: 1) Uniformly-distributed priors determined through minimum and maximum age constraints; 2) Informative gamma-distributed priors as estimated through the method described above. In the “uniform” set, prior distributions were established such that lower bounds (i.e. minimum age constraints) represent the age of the oldest stratigraphic bin containing an appropriate fossil taxon for a given constraint node, and upper bounds (i.e. maximum age constraints) were set to 355 Ma for all constraint nodes. A maximum age constraint is required when a uniform prior is employed, and our choice of 355 Ma represents an unreasonably old age for the root of the tree based on the absence of any crown-group echinoids in the two previous (e.g. younger) stratigraphic bins. The “gamma” analysis set applied gamma-distributed node age priors estimated through the method described above for each of the eight constraint nodes.</p>
+<p>All BEAST analyses were performed in triplicate (i.e. three independent chains), with each chain allowed to run 8 million generations and sampled every 1000 generations to provide an estimate of the posterior distribution. The best-fit substitution model was found to be GTR+G+I through the application of the Akaike Information Criterion (AIC) with the program MrModeltest v2.3 <xref ref-type="bibr" rid="pone.0066245-Nylander1">[45]</xref>. In BEAST, the default parameterization of the birth/death model of cladogenesis was employed as the tree prior, and the rate of molecular evolution was assumed to vary between branches following a lognormal distribution with default parameters. As suggested by Heled and Drummond <xref ref-type="bibr" rid="pone.0066245-Heled1">[46]</xref>, a separate single chain was run in which the sequence data was excluded to confirm the absence of anomalous structure in the joint prior distribution (i.e. deviating from expectations given the priors employed (see <xref ref-type="supplementary-material" rid="pone.0066245.s002">Figures S2</xref> and <xref ref-type="supplementary-material" rid="pone.0066245.s003">S3</xref>). In all BEAST analyses the eight constraint nodes were constrained to be monophyletic and each analysis was provided with the same starting tree, which conformed to both to the topological constraints and minimum age constraints as derived from fossil range data for each constraint node.</p>
+<p>The program Tracer v1.5 was used to confirm suitable effective sample size of all parameters estimated from the posterior distribution of trees (i.e. ESS greater than 100; <xref ref-type="bibr" rid="pone.0066245-Drummond1">[13]</xref>). Additionally, Tracer provided visual confirmation of the stationarity of each chain following removal of a suitable burn-in and convergence of the three runs for each analysis set. Based on these results, the BEAST utility program LogCombiner v1.7.2 was used to remove the first 800 trees from the posterior distribution as burn-in, and the remaining trees from the three runs were combined to yield a final posterior distribution of 12600 trees for each of the two analysis sets (i.e. uniform and gamma-distributed priors). The BEAST utility program TreeAnnotator v1.7.2 was used to calculate the posterior probabilities of branches, the posterior distribution of node times, and the maximum <italic>a posteriori</italic> tree, which was then annotated with branch and node posterior summaries and exported in nexus format for visualization in the program FigTree v1.3.1.</p>
+</sec><sec id="s2g">
+<title>Simulating the Effects of Incomplete Preservation on the Echinoid Fossil Record</title>
+<p>An appropriate examination of the effects of incomplete preservation requires raw occurrence data for all fossil taxa. Occurrence data relating to a single fossil taxon represents a global compilation of every published and unpublished observation of that fossil taxon. While such data are ideal for studies of analytical paleobiology, occurrence data have thus far been exhaustively compiled for only a few fossil taxa (but see the Paleobiology Database 2008). Since occurrence data were not immediately available for the echinoid fossil record, we simulated fossil occurrence data within the observed stratigraphic ranges of all fossil echinoid genera. Observed stratigraphic ranges were populated with simulated occurrences in discrete stratigraphic bins following a beta distribution (α  =  β  =  2) between the first and last stratigraphic bins for each generic range. This procedure was designed to mimic the well-documented observation that most fossil ranges are relatively occurrence-poor in the “tails” compared to the rest of the range <xref ref-type="bibr" rid="pone.0066245-Liow1">[47]</xref>. Occurrences were added to the observed range of each fossil echinoid genus by sampling from an exponential distribution with a mean of 14. In this way, each echinoid genus had at minimum one (singletons) or two occurrences to define their observed range. The mean of 14 occurrences to add to the observed range was chosen because it corresponds to the mean number of occurrences calculated from all of the fossil echinoid genera in the Paleobiology Database (2008). It was impossible to calculate this value from the Echinoid Directory because this database does not contain stratigraphic data at the level of occurrence. Observed ranges were populated with occurrences 100 times for each constraint node in the echinoid tree. The resulting eight occurrence data sets were subjected to random sub-sampling according to four preservation rates: 0.20, 0.40, 0.60, and 0.80. This generated four occurrence data sets, each consisting of 100 replicates sub-sampled under a single preservation rate. This procedure generates 400 occurrence data sets (i.e. 100 replicates for each of four preservation rates) for each of eight constraint nodes in the echinoid tree. An informative gamma-distributed prior was estimated for each occurrence data set (a total of 3200) using the method described above. The preservation rate provided for the calculation of node age priors was identical to the preservation rate employed to sub-sample the data (i.e. 0.20, 0.40, 0.60, and 0.80). This allowed our study to limit the number of potentially confounding factors that might impact the precision of the priors estimated.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Performance of the Method with Simulated Data</title>
+<p>Simulated data sets were constructed to test the method's capacity for accurately estimating the missing history prior to the oldest simulated fossil occurrence of a clade. The sensitivity of the method to varying preservation rates was evaluated by constructing three unique groups of simulated data sets representing high preservation (0.8), moderate preservation (0.45), and low preservation (0.1). The accuracy of missing history estimates is assessed by evaluating for each simulation replicate if the likelihood of the true age of the TMRCA is greater than the 50%, 75%, or 95% quantile of the discretized likelihood surface (e.g. see <xref ref-type="fig" rid="pone-0066245-g002">Figure 2</xref>). We establish a minimum bound for success of the method as those replicates for which the likelihood of the true TMRCA is greater than the 50% quantile of the discretized likelihood curve. We consider simulation replicates for which the likelihood of the true TMRCA is greater than the 75% quantile as accurate, and those that are greater than the 95% quantile as highly accurate. As can be seen in <xref ref-type="fig" rid="pone-0066245-g003">Figure 3</xref>, the success rate of our method was very high across all simulation replicates. When the fossil preservation was low (0.1) the method succeeded in 902 out of 1000 replicates, but of the 98 failed replicates 69 were due to an inability to calculate origination and extinction rates because the stratigraphic ranges of the simulated fossil lineages were not sufficiently overlapping. In the low preservation rate data sets the method provided accurate estimates for 83.5% of the replicates, and highly accurate estimates for 48.8% of the replicates. When data sets were simulated under moderate (0.45) or high (0.9) preservation rates the success rate was greater than 99%, and the method produced accurate estimates more than 95% of the time. Highly accurate estimates were produced by the method for 87.8% of the replicates under moderate preservation and for 97.2% of the replicates under high preservation. It is important to note here that it was often difficult to fit a gamma distribution to the discretized likelihood surfaces produced for the simulated data sets. The relatively simple distribution fitting algorithm employed by our SNAPE v1.0 software failed to provide an appropriate gamma distribution for 40.8%, 66.5%, and 1.5% of the replicates simulated under low, moderate, and high preservation rate, respectively.</p>
+<fig id="pone-0066245-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.g003</object-id><label>Figure 3</label><caption>
+<title>Performance of the method with simulated data.</title>
+<p>For three different preservation rate categories (0.1, 0.45, and 0.8) a total of 1000 simulation replicates were analyzed using the SNAPE v1.0 software. Method success was determined by the likelihood of the true TMRCA being greater than the 50% quantile of the discretized likelihood curve, which is shown by the purple bars. The percentage of replicates in which the method failed to meet this standard is shown in red. Replicates that failed due to an inability to calculate origination and extinction rates are shown in black. Simulation replicates in which the method returned a prior in which the likelihood of the true TMRCA was greater than the 75% quantile were considered accurate and these are shown in blue. Those replicates in which the prior showed the likelihood of the true TMRCA was greater than the 95% quantile were considered highly accurate, and the proportion of replicates meeting this standard are shown in green.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.g003" position="float" xlink:type="simple"/></fig></sec><sec id="s3b">
+<title>Informative Priors Improve the Precision of Echinoid Divergence Times</title>
+<p>Our method was developed to estimate node age priors that are more informative than the standard application of priors reflecting the minimum age of a node implied by the oldest fossil attributable to that clade. To test our method using empirical data, we estimated informative priors for eight constraint nodes and compared divergence time estimates in echinoids with the results of identical analyses using minimum-age priors established through conservative procedures. The resulting divergence time priors employed in the analyses of echinoid node ages (i.e. uniform minimum-age and informative gamma priors) and parameter estimates generated from fossil distribution data of each constraint node (i.e. origination and extinction rates) are shown in <xref ref-type="table" rid="pone-0066245-t001">Tables 1</xref> and <xref ref-type="table" rid="pone-0066245-t002">2</xref>. Our estimates of the average origination rate are consistently higher than average extinction rate, suggesting that the clade may not be at equilibrium carrying capacity. The BEAST analyses performed to estimate echinoid divergence times are summarized in the time calibrated ultrametric phylogeny shown in <xref ref-type="fig" rid="pone-0066245-g004">Figure 4</xref>, and clade credibility values can be found in <xref ref-type="supplementary-material" rid="pone.0066245.s001">Figure S1</xref>. A more thorough summary of the node age estimates are shown in <xref ref-type="table" rid="pone-0066245-t002">Table 2</xref>, where it can be seen that the mean divergence times (%D<sub>mean</sub>) estimated through the application of minimum age constraints were on average 27% (i.e. nearly 30 million years; D<sub>mean</sub>) older than those estimated with informative gamma distribution priors calculated with our method. Furthermore, 95% highest posterior densities (HPD) of the posterior distribution of node ages (i.e. a measure of the precision of the posterior estimate;%D<sub>HPD</sub>) were on average 35% (i.e. nearly 33 million years; D<sub>HPD</sub>) larger than those estimated with informative gamma distribution priors.</p>
+<fig id="pone-0066245-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.g004</object-id><label>Figure 4</label><caption>
+<title>Echinoid divergence times estimated using two alternative node age prior calibration schemes.</title>
+<p>Bars on nodes represent the 95% HPD of the node age and are colored by the two prior calibration schemes used: red bars  =  uniform priors; blue bars  =  informative gamma priors; purple  =  overlap of 95% HPD from both approaches. The tree represents the highest <italic>a posteriori</italic> chronogram for the analyses run with informative gamma priors, and the nodes are placed at the mean of the posterior distribution of node age. The bright red vertical dash on each node bar represents the mean of that node's age from the posterior distribution of the analyses run with uniform priors. Nodes are numbered as in <xref ref-type="table" rid="pone-0066245-t002">Table 2</xref>, and calibration nodes are indicated with an asterisk. The scale at the bottom of the figure is in millions of years before present (Ma), and the time scale is binned by 50 Ma intervals. The tips of the tree are labeled by genus name as in Smith et al. <xref ref-type="bibr" rid="pone.0066245-Himmelmann1">[21]</xref>, <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref>. Posterior clade probabilities are provided in <xref ref-type="supplementary-material" rid="pone.0066245.s001">Figure S1</xref>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.g004" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0066245-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.t001</object-id><label>Table 1</label><caption>
+<title>Node age priors employed to estimate echinoid divergence times.</title>
+</caption><alternatives><graphic id="pone-0066245-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">Minimum Age Constraints</td>
+<td colspan="5" align="left" rowspan="1">Gamma-Distributed Priors</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Node</td>
+<td align="left" rowspan="1" colspan="1">Uniform Prior</td>
+<td align="left" rowspan="1" colspan="1">Joint Uniform Prior Mean and 95% Density</td>
+<td align="left" rowspan="1" colspan="1">Gamma Prior (shape, scale)</td>
+<td align="left" rowspan="1" colspan="1">Prior 95% Density</td>
+<td align="left" rowspan="1" colspan="1">Joint Gamma Prior Mean and 95% Density</td>
+<td align="left" rowspan="1" colspan="1">Origination Rate (<italic>p</italic>)</td>
+<td align="left" rowspan="1" colspan="1">Extinction Rate (<italic>q</italic>)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1(root)</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(260.4, 355)</td>
+<td align="left" rowspan="1" colspan="1">320 (273.3, 355)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9773, 25.83979)</td>
+<td align="left" rowspan="1" colspan="1">(261.6, 336.7)</td>
+<td align="left" rowspan="1" colspan="1">279.6 (260.4, 319.4)</td>
+<td align="left" rowspan="1" colspan="1">0.0578</td>
+<td align="left" rowspan="1" colspan="1">0.0449</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(199.6, 355)</td>
+<td align="left" rowspan="1" colspan="1">288.4 (227.8, 345.4)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9773, 27.39726)</td>
+<td align="left" rowspan="1" colspan="1">(200.9, 280.5)</td>
+<td align="left" rowspan="1" colspan="1">226.2 (199.6, 263.5)</td>
+<td align="left" rowspan="1" colspan="1">0.0573</td>
+<td align="left" rowspan="1" colspan="1">0.0449</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(40.4, 355)</td>
+<td align="left" rowspan="1" colspan="1">144 (45.4, 246.5)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9910, 11.57407)</td>
+<td align="left" rowspan="1" colspan="1">(40.9, 74.9)</td>
+<td align="left" rowspan="1" colspan="1">56.7 (40.4, 83.9)</td>
+<td align="left" rowspan="1" colspan="1">0.1023</td>
+<td align="left" rowspan="1" colspan="1">0.0356</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">27</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(171.6, 355)</td>
+<td align="left" rowspan="1" colspan="1">233.1 (172.1, 296.2)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9773, 19.60784)</td>
+<td align="left" rowspan="1" colspan="1">(172.5, 229.5)</td>
+<td align="left" rowspan="1" colspan="1">184.6 (171.6, 206.1)</td>
+<td align="left" rowspan="1" colspan="1">0.0756</td>
+<td align="left" rowspan="1" colspan="1">0.0585</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">28</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(150.8, 355)</td>
+<td align="left" rowspan="1" colspan="1">190.4 (150.8, 247.7)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9743, 18.79699)</td>
+<td align="left" rowspan="1" colspan="1">(151.7, 206.2)</td>
+<td align="left" rowspan="1" colspan="1">161.7 (150.8, 178.3)</td>
+<td align="left" rowspan="1" colspan="1">0.0754</td>
+<td align="left" rowspan="1" colspan="1">0.066</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">34</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(93.5, 355)</td>
+<td align="left" rowspan="1" colspan="1">123.2 (93.5, 173)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9802, 25.06266)</td>
+<td align="left" rowspan="1" colspan="1">(94.7, 167.6)</td>
+<td align="left" rowspan="1" colspan="1">107 (93.5, 134)</td>
+<td align="left" rowspan="1" colspan="1">0.0702</td>
+<td align="left" rowspan="1" colspan="1">0.0534</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">35</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(99.6, 355)</td>
+<td align="left" rowspan="1" colspan="1">158.1 (99.6, 228.8)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9734, 14.81481)</td>
+<td align="left" rowspan="1" colspan="1">(100.3, 143.2)</td>
+<td align="left" rowspan="1" colspan="1">111.6 (99.6, 134.2)</td>
+<td align="left" rowspan="1" colspan="1">0.0913</td>
+<td align="left" rowspan="1" colspan="1">0.1024</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">37</td>
+<td align="left" rowspan="1" colspan="1"><italic>U</italic>(40.4, 355)</td>
+<td align="left" rowspan="1" colspan="1">87.1 (40.4, 153.2)</td>
+<td align="left" rowspan="1" colspan="1">Gamma(0.9792, 14.70588)</td>
+<td align="left" rowspan="1" colspan="1">(41.1, 83.9)</td>
+<td align="left" rowspan="1" colspan="1">52 (40.4, 74.4)</td>
+<td align="left" rowspan="1" colspan="1">0.0719</td>
+<td align="left" rowspan="1" colspan="1">0.1012</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0066245-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.t002</object-id><label>Table 2</label><caption>
+<title>Summary of echinoid divergence time estimates comparing uniform and informative gamma priors.</title>
+</caption><alternatives><graphic id="pone-0066245-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Uniform Priors</td>
+<td align="left" rowspan="1" colspan="1">Informative Gamma Priors</td>
+<td colspan="4" align="left" rowspan="1">Summary</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Node</td>
+<td align="left" rowspan="1" colspan="1">Mean Node Age (95% HPD)</td>
+<td align="left" rowspan="1" colspan="1">Mean Node Age (95% HPD)</td>
+<td align="left" rowspan="1" colspan="1">Dmean</td>
+<td align="left" rowspan="1" colspan="1">%Dmean</td>
+<td align="left" rowspan="1" colspan="1">DHPD</td>
+<td align="left" rowspan="1" colspan="1">%DHPD</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>1 (root)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>317.34 (271, 355)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>276.16 (260.4, 307.46)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>41.18</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>12.98%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>36.94</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>43.98%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">73.89 (25.9, 139.35)</td>
+<td align="left" rowspan="1" colspan="1">59.85 (17.34, 117.63)</td>
+<td align="left" rowspan="1" colspan="1">14.04</td>
+<td align="left" rowspan="1" colspan="1">19.00%</td>
+<td align="left" rowspan="1" colspan="1">13.16</td>
+<td align="left" rowspan="1" colspan="1">11.60%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">39.89 (7.43, 81.8)</td>
+<td align="left" rowspan="1" colspan="1">30.21 (6, 65.29)</td>
+<td align="left" rowspan="1" colspan="1">9.68</td>
+<td align="left" rowspan="1" colspan="1">24.27%</td>
+<td align="left" rowspan="1" colspan="1">15.08</td>
+<td align="left" rowspan="1" colspan="1">20.28%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>4</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>286.59 (230.42, 342.64)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>222 (199.6, 254.9)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>64.59</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>22.54%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>56.92</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>50.72%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">263.72 (206.44, 320.88)</td>
+<td align="left" rowspan="1" colspan="1">202.46 (177.32, 234.16)</td>
+<td align="left" rowspan="1" colspan="1">61.26</td>
+<td align="left" rowspan="1" colspan="1">23.23%</td>
+<td align="left" rowspan="1" colspan="1">57.6</td>
+<td align="left" rowspan="1" colspan="1">50.33%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">246.31 (183.41, 312.85)</td>
+<td align="left" rowspan="1" colspan="1">179.48 (133.54, 219.88)</td>
+<td align="left" rowspan="1" colspan="1">66.83</td>
+<td align="left" rowspan="1" colspan="1">27.13%</td>
+<td align="left" rowspan="1" colspan="1">43.1</td>
+<td align="left" rowspan="1" colspan="1">33.30%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">207.12 (145.5, 269.3)</td>
+<td align="left" rowspan="1" colspan="1">145.67 (102.73, 186.9)</td>
+<td align="left" rowspan="1" colspan="1">61.45</td>
+<td align="left" rowspan="1" colspan="1">29.67%</td>
+<td align="left" rowspan="1" colspan="1">39.63</td>
+<td align="left" rowspan="1" colspan="1">32.01%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">178.36 (123.56, 238.13)</td>
+<td align="left" rowspan="1" colspan="1">120.54 (83.92, 160.64)</td>
+<td align="left" rowspan="1" colspan="1">57.82</td>
+<td align="left" rowspan="1" colspan="1">32.42%</td>
+<td align="left" rowspan="1" colspan="1">37.85</td>
+<td align="left" rowspan="1" colspan="1">33.04%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">162.77 (108.91, 216.33)</td>
+<td align="left" rowspan="1" colspan="1">107.23 (73.46, 143.27)</td>
+<td align="left" rowspan="1" colspan="1">55.54</td>
+<td align="left" rowspan="1" colspan="1">34.12%</td>
+<td align="left" rowspan="1" colspan="1">37.61</td>
+<td align="left" rowspan="1" colspan="1">35.01%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>10</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>137.9 (89.25, 187.3)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>84.3 (57.41, 113.92)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>53.6</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>38.87%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>41.54</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>42.37%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">104.22 (64.73, 147.81)</td>
+<td align="left" rowspan="1" colspan="1">65.55 (42.73, 91.19)</td>
+<td align="left" rowspan="1" colspan="1">38.67</td>
+<td align="left" rowspan="1" colspan="1">37.10%</td>
+<td align="left" rowspan="1" colspan="1">34.62</td>
+<td align="left" rowspan="1" colspan="1">41.67%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1">80.68 (44.38, 117.61)</td>
+<td align="left" rowspan="1" colspan="1">51.81 (31.22, 75.37)</td>
+<td align="left" rowspan="1" colspan="1">28.87</td>
+<td align="left" rowspan="1" colspan="1">35.78%</td>
+<td align="left" rowspan="1" colspan="1">29.08</td>
+<td align="left" rowspan="1" colspan="1">39.71%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">72.39 (35.64, 109.19)</td>
+<td align="left" rowspan="1" colspan="1">48.17 (24.84, 71.12)</td>
+<td align="left" rowspan="1" colspan="1">24.22</td>
+<td align="left" rowspan="1" colspan="1">33.46%</td>
+<td align="left" rowspan="1" colspan="1">27.27</td>
+<td align="left" rowspan="1" colspan="1">37.08%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">22.36 (1.25, 53.37)</td>
+<td align="left" rowspan="1" colspan="1">15.97 (1.31, 37.36)</td>
+<td align="left" rowspan="1" colspan="1">6.39</td>
+<td align="left" rowspan="1" colspan="1">28.58%</td>
+<td align="left" rowspan="1" colspan="1">16.07</td>
+<td align="left" rowspan="1" colspan="1">30.83%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1">39.03 (13.39, 68.8)</td>
+<td align="left" rowspan="1" colspan="1">25.92 (8.98, 45.65)</td>
+<td align="left" rowspan="1" colspan="1">13.11</td>
+<td align="left" rowspan="1" colspan="1">33.59%</td>
+<td align="left" rowspan="1" colspan="1">18.74</td>
+<td align="left" rowspan="1" colspan="1">33.82%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">16</td>
+<td align="left" rowspan="1" colspan="1">52.57 (19.29, 87.47)</td>
+<td align="left" rowspan="1" colspan="1">32.32 (11.43, 56.61)</td>
+<td align="left" rowspan="1" colspan="1">20.25</td>
+<td align="left" rowspan="1" colspan="1">38.52%</td>
+<td align="left" rowspan="1" colspan="1">23</td>
+<td align="left" rowspan="1" colspan="1">33.73%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">17</td>
+<td align="left" rowspan="1" colspan="1">11.94 (0.98, 27.47)</td>
+<td align="left" rowspan="1" colspan="1">8.53 (0.99, 19.43)</td>
+<td align="left" rowspan="1" colspan="1">3.41</td>
+<td align="left" rowspan="1" colspan="1">28.56%</td>
+<td align="left" rowspan="1" colspan="1">8.05</td>
+<td align="left" rowspan="1" colspan="1">30.39%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">18</td>
+<td align="left" rowspan="1" colspan="1">99.76 (39.55, 162.58)</td>
+<td align="left" rowspan="1" colspan="1">67.24 (27.6, 105.72)</td>
+<td align="left" rowspan="1" colspan="1">32.52</td>
+<td align="left" rowspan="1" colspan="1">32.60%</td>
+<td align="left" rowspan="1" colspan="1">44.91</td>
+<td align="left" rowspan="1" colspan="1">36.50%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">34.46 (8.17, 68.51)</td>
+<td align="left" rowspan="1" colspan="1">25.79 (6.32, 51.75)</td>
+<td align="left" rowspan="1" colspan="1">8.67</td>
+<td align="left" rowspan="1" colspan="1">25.16%</td>
+<td align="left" rowspan="1" colspan="1">14.91</td>
+<td align="left" rowspan="1" colspan="1">24.71%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="left" rowspan="1" colspan="1">11.72 (0.76, 27.61)</td>
+<td align="left" rowspan="1" colspan="1">8.68 (0.76, 20.94)</td>
+<td align="left" rowspan="1" colspan="1">3.04</td>
+<td align="left" rowspan="1" colspan="1">25.94%</td>
+<td align="left" rowspan="1" colspan="1">6.67</td>
+<td align="left" rowspan="1" colspan="1">24.84%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">103.13 (44.15, 166.81)</td>
+<td align="left" rowspan="1" colspan="1">70.32 (30.77, 115.58)</td>
+<td align="left" rowspan="1" colspan="1">32.81</td>
+<td align="left" rowspan="1" colspan="1">31.81%</td>
+<td align="left" rowspan="1" colspan="1">37.85</td>
+<td align="left" rowspan="1" colspan="1">30.86%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">86.67 (34.15, 146.83)</td>
+<td align="left" rowspan="1" colspan="1">57.7 (23.63, 98.24)</td>
+<td align="left" rowspan="1" colspan="1">28.97</td>
+<td align="left" rowspan="1" colspan="1">33.43%</td>
+<td align="left" rowspan="1" colspan="1">38.07</td>
+<td align="left" rowspan="1" colspan="1">33.79%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">23</td>
+<td align="left" rowspan="1" colspan="1">36.88 (9.24, 73.7)</td>
+<td align="left" rowspan="1" colspan="1">25.12 (5.48, 51.13)</td>
+<td align="left" rowspan="1" colspan="1">11.76</td>
+<td align="left" rowspan="1" colspan="1">31.89%</td>
+<td align="left" rowspan="1" colspan="1">18.81</td>
+<td align="left" rowspan="1" colspan="1">29.18%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">24</td>
+<td align="left" rowspan="1" colspan="1">193.69 (108.37, 279.41)</td>
+<td align="left" rowspan="1" colspan="1">140.41 (74.09, 199.29)</td>
+<td align="left" rowspan="1" colspan="1">53.28</td>
+<td align="left" rowspan="1" colspan="1">27.51%</td>
+<td align="left" rowspan="1" colspan="1">45.84</td>
+<td align="left" rowspan="1" colspan="1">26.80%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">25</td>
+<td align="left" rowspan="1" colspan="1">116.54 (39.74, 193.36)</td>
+<td align="left" rowspan="1" colspan="1">83.5 (28.22, 140.42)</td>
+<td align="left" rowspan="1" colspan="1">33.04</td>
+<td align="left" rowspan="1" colspan="1">28.35%</td>
+<td align="left" rowspan="1" colspan="1">41.42</td>
+<td align="left" rowspan="1" colspan="1">26.96%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">26</td>
+<td align="left" rowspan="1" colspan="1">232.29 (175.19, 287.57)</td>
+<td align="left" rowspan="1" colspan="1">181.66 (171.6, 198.37)</td>
+<td align="left" rowspan="1" colspan="1">50.63</td>
+<td align="left" rowspan="1" colspan="1">21.80%</td>
+<td align="left" rowspan="1" colspan="1">85.61</td>
+<td align="left" rowspan="1" colspan="1">76.18%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>27</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>210.12 (161.63, 263.51)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>166.64 (152.41, 182.25)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>43.48</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>20.69%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>72.04</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>70.71%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>28</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>195.13 (150.86, 244.03)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>159.8 (150.8, 174)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>35.33</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>18.11%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>69.97</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>75.10%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">29</td>
+<td align="left" rowspan="1" colspan="1">125.64 (97.81, 162.23)</td>
+<td align="left" rowspan="1" colspan="1">112.52 (96.01, 132.04)</td>
+<td align="left" rowspan="1" colspan="1">13.12</td>
+<td align="left" rowspan="1" colspan="1">10.44%</td>
+<td align="left" rowspan="1" colspan="1">28.39</td>
+<td align="left" rowspan="1" colspan="1">44.07%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="left" rowspan="1" colspan="1">77.95 (39.91, 118.25)</td>
+<td align="left" rowspan="1" colspan="1">64.9 (29.13, 102.12)</td>
+<td align="left" rowspan="1" colspan="1">13.05</td>
+<td align="left" rowspan="1" colspan="1">16.74%</td>
+<td align="left" rowspan="1" colspan="1">5.35</td>
+<td align="left" rowspan="1" colspan="1">6.83%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">31</td>
+<td align="left" rowspan="1" colspan="1">52.75 (21.93, 86.86)</td>
+<td align="left" rowspan="1" colspan="1">42.19 (14.59, 73.7)</td>
+<td align="left" rowspan="1" colspan="1">10.56</td>
+<td align="left" rowspan="1" colspan="1">20.02%</td>
+<td align="left" rowspan="1" colspan="1">5.82</td>
+<td align="left" rowspan="1" colspan="1">8.96%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">32</td>
+<td align="left" rowspan="1" colspan="1">31.95 (8.72, 60.79)</td>
+<td align="left" rowspan="1" colspan="1">24.54 (6.15, 50.45)</td>
+<td align="left" rowspan="1" colspan="1">7.41</td>
+<td align="left" rowspan="1" colspan="1">23.19%</td>
+<td align="left" rowspan="1" colspan="1">7.77</td>
+<td align="left" rowspan="1" colspan="1">14.92%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">43.73 (13.62, 78.98)</td>
+<td align="left" rowspan="1" colspan="1">33.88 (8.51, 65.7)</td>
+<td align="left" rowspan="1" colspan="1">9.85</td>
+<td align="left" rowspan="1" colspan="1">22.52%</td>
+<td align="left" rowspan="1" colspan="1">8.17</td>
+<td align="left" rowspan="1" colspan="1">12.50%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>34</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>108.64 (93.5, 136.7)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>101.07 (93.5, 115.08)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>7.57</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>6.97%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>21.62</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>50.05%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>35</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>166.78 (114.26, 225.5)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>113.73 (99.6, 137.84)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>53.05</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>31.81%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>73</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>65.62%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">36</td>
+<td align="left" rowspan="1" colspan="1">124.98 (76.09, 176.54)</td>
+<td align="left" rowspan="1" colspan="1">81.41 (54.42, 107.18)</td>
+<td align="left" rowspan="1" colspan="1">43.57</td>
+<td align="left" rowspan="1" colspan="1">34.86%</td>
+<td align="left" rowspan="1" colspan="1">47.69</td>
+<td align="left" rowspan="1" colspan="1">47.48%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>37</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>100.94 (57.89, 148.21)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>61.26 (40.59, 81.49)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>39.68</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>39.31%</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>49.42</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>54.72%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">38</td>
+<td align="left" rowspan="1" colspan="1">75.3 (33.76, 117.91)</td>
+<td align="left" rowspan="1" colspan="1">45.25 (22.69, 69.05)</td>
+<td align="left" rowspan="1" colspan="1">30.05</td>
+<td align="left" rowspan="1" colspan="1">39.91%</td>
+<td align="left" rowspan="1" colspan="1">37.79</td>
+<td align="left" rowspan="1" colspan="1">44.91%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">39</td>
+<td align="left" rowspan="1" colspan="1">44.45 (13.66, 78.45)</td>
+<td align="left" rowspan="1" colspan="1">28.41 (10.7, 48.58)</td>
+<td align="left" rowspan="1" colspan="1">16.04</td>
+<td align="left" rowspan="1" colspan="1">36.09%</td>
+<td align="left" rowspan="1" colspan="1">26.91</td>
+<td align="left" rowspan="1" colspan="1">41.53%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">40</td>
+<td align="left" rowspan="1" colspan="1">46.85 (6.09, 107)</td>
+<td align="left" rowspan="1" colspan="1">32.69 (4.51, 71.9)</td>
+<td align="left" rowspan="1" colspan="1">14.16</td>
+<td align="left" rowspan="1" colspan="1">30.22%</td>
+<td align="left" rowspan="1" colspan="1">33.52</td>
+<td align="left" rowspan="1" colspan="1">33.22%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">41</td>
+<td align="left" rowspan="1" colspan="1">12.57 (1.11, 31.14)</td>
+<td align="left" rowspan="1" colspan="1">9.75 (0.69, 24.89)</td>
+<td align="left" rowspan="1" colspan="1">2.82</td>
+<td align="left" rowspan="1" colspan="1">22.43%</td>
+<td align="left" rowspan="1" colspan="1">5.83</td>
+<td align="left" rowspan="1" colspan="1">19.41%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">42</td>
+<td align="left" rowspan="1" colspan="1">232.02 (158.91, 312.28)</td>
+<td align="left" rowspan="1" colspan="1">182.41 (123.61, 237.76)</td>
+<td align="left" rowspan="1" colspan="1">49.61</td>
+<td align="left" rowspan="1" colspan="1">21.38%</td>
+<td align="left" rowspan="1" colspan="1">39.22</td>
+<td align="left" rowspan="1" colspan="1">25.57%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">43</td>
+<td align="left" rowspan="1" colspan="1">196.12 (117.11, 273.54)</td>
+<td align="left" rowspan="1" colspan="1">152.08 (88.27, 209.5)</td>
+<td align="left" rowspan="1" colspan="1">44.04</td>
+<td align="left" rowspan="1" colspan="1">22.46%</td>
+<td align="left" rowspan="1" colspan="1">35.2</td>
+<td align="left" rowspan="1" colspan="1">22.50%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">44</td>
+<td align="left" rowspan="1" colspan="1">80.65 (26.24, 146.36)</td>
+<td align="left" rowspan="1" colspan="1">58.04 (19.79, 107.64)</td>
+<td align="left" rowspan="1" colspan="1">22.61</td>
+<td align="left" rowspan="1" colspan="1">28.03%</td>
+<td align="left" rowspan="1" colspan="1">32.27</td>
+<td align="left" rowspan="1" colspan="1">26.86%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">45</td>
+<td align="left" rowspan="1" colspan="1">140.37 (61.13, 222.16)</td>
+<td align="left" rowspan="1" colspan="1">104.15 (37.88, 166.97)</td>
+<td align="left" rowspan="1" colspan="1">36.22</td>
+<td align="left" rowspan="1" colspan="1">25.80%</td>
+<td align="left" rowspan="1" colspan="1">31.94</td>
+<td align="left" rowspan="1" colspan="1">19.83%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">46</td>
+<td align="left" rowspan="1" colspan="1">30.18 (5.58, 65.73)</td>
+<td align="left" rowspan="1" colspan="1">22.33 (3.71, 50.52)</td>
+<td align="left" rowspan="1" colspan="1">7.85</td>
+<td align="left" rowspan="1" colspan="1">26.01%</td>
+<td align="left" rowspan="1" colspan="1">13.34</td>
+<td align="left" rowspan="1" colspan="1">22.18%</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><p>Nodes in bold were employed as calibrations in the divergence time analyses. The mean node age and lower and upper bounds of the 95% HPD are shown for each node. Summary statistics provided include the absolute and percentage difference in mean node age (Dmean and%Dmean, respectively), and the absolute and percentage difference in the width of the 95% HPD Node Age (DHPD and%DHPD, respectively).</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>The Effects of Fossil Preservation Rates on the Shape of Informative Node Age Prior Distributions</title>
+<p>The record of fossil echinoid genera is relatively complete for most clades, and this is likely due to a relatively high preservation rate throughout the history of this group <xref ref-type="bibr" rid="pone.0066245-Smith1">[38]</xref>, <xref ref-type="bibr" rid="pone.0066245-Kroh1">[44]</xref>. This characteristic of the echinoid fossil record provides an opportunity to examine the effects of incomplete preservation on the precision of informative node age priors estimated with our method. To test the sensitivity of our method, we simulated fossil occurrence data for the eight calibration nodes in the echinoid data set and sub-sampled these data under four preservation rates (i.e. 0.2, 0.4, 0.6, 0.8, respectively) and estimated informative node age priors. The results are shown in <xref ref-type="fig" rid="pone-0066245-g005">Figure 5</xref>. An obvious pattern in the results from all calibration nodes is that higher rates of fossil preservation (i.e. a more complete fossil record) reduce the 95% density of estimated gamma distributions significantly (see <xref ref-type="fig" rid="pone-0066245-g005">Figure 5</xref>), and this result suggests that when provided with data of higher quality (i.e. more meaningful for calibrating the age of the node in question), our method provides a more informative prior distribution. Conversely, when our method is provided with less useful fossil data (i.e. data simulated under a poor preservation rate), it provides a prior distribution that is less informative. Furthermore, aside from Node 27, data simulated under poor preservation rates have a consistently older gamma prior mean (results not shown). Despite this, the potential for bias in the resulting divergence time estimates may in reality be small, because this older mean is generally accompanied by a considerably more diffuse gamma distribution (i.e. a larger 95% density).</p>
+<fig id="pone-0066245-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066245.g005</object-id><label>Figure 5</label><caption>
+<title>Simulating the impacts of incomplete preservation on the estimation of informative node age priors.</title>
+<p>To test the sensitivity of our method of prior estimation to the quality of the fossil record (i.e. under varying rates of fossil preservation), we simulated fossil occurrences for all fossil lineages in each of the eight constraint nodes and sub-sampled these under four preservation rates (0.2, 0.4, 0.6, 0.8). We constructed node age priors for each simulated data set, and summarized the results using boxplots of the 95% density of the estimated gamma distributions (measured in millions of years) for each of the four preservation rates grouped by calibration node (following the node numbering scheme in <xref ref-type="fig" rid="pone-0066245-g002">Figure 2</xref>, and <xref ref-type="table" rid="pone-0066245-t001">Tables 1</xref> and <xref ref-type="table" rid="pone-0066245-t002">2</xref>). Note that higher rates of fossil preservation reduce the 95% density of the gamma distribution significantly, which shows that when provided with data of higher quality (i.e. more meaningful for calibrating the age of the node in question), the method provides a more informative prior distribution. Conversely, when the method is provided with less informative fossil data (i.e. data simulated under a poor preservation rate), it provides a prior distribution that is less informative, and thus likely to have less of an impact in the resulting divergence time analysis.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066245.g005" position="float" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>The method we present here employs analyses of paleobiological data to inform the construction of prior probability distributions on node ages in Bayesian divergence time analyses. Given the importance of the prior in Bayesian statistical inference generally <xref ref-type="bibr" rid="pone.0066245-Alfaro2">[48]</xref>, and molecular divergence time estimation specifically <xref ref-type="bibr" rid="pone.0066245-Inoue1">[15]</xref>, we feel that this approach is philosophically attractive and likely to improve both the precision and accuracy of divergence time estimates. Our method provides a simple way of synthesizing data from the diverse fields of paleobiology and systematic biology, providing a foundation for increased accuracy and precision in dating lineage divergence events in the tree of life.</p>
+<p>Our method makes several assumptions regarding both the appropriateness of the model and nature of the data. These assumptions include: 1) the origination (birth) and extinction (death) parameters of the branching model and the rate of preservation are constant through time; 2) all fossil lineages can be confidently assigned to the clade of interest as defined by the presence of well preserved morphological synapomorphies; 3) the stratigraphic ranges of fossil lineages are accurate both in terms of the appropriateness of the binning scheme employed and the absolute ages of the stratigraphic bins in question. Assumptions regarding the model and data are not explicitly accounted for in the uncertainty of prior distribution estimates, but these assumptions are not unique to our method and are in fact common to all molecular divergence time analyses that rely on fossil data for temporal calibration. Thus, while we feel that these assumptions likely impact the accuracy of the results, it is unclear how these issues can be accounted for in the current implementation of the method.</p>
+<p>One input requirement for our method that is not required for other currently available divergence time analyses is that of a preservation rate estimate. As the results shown in <xref ref-type="fig" rid="pone-0066245-g002">Figure 2B</xref> show clearly, this parameter can have a large impact on the shape of the node age prior estimated for a given clade. Several analytical methods are currently available to estimate suitable preservation rates for a given clade using fossil range data similar to that required as input for our method. A simple approach to estimating preservation rates was developed by Foote and Raup called the range-frequency ratio method, or FreqRat <xref ref-type="bibr" rid="pone.0066245-Foote4">[49]</xref>. This method relies on the assumption that under a simple model of cladogenesis in which the origination rate is not dramatically greater than the extinction rate the true distribution of fossil ranges should be exponential. The random process of fossil preservation and recovery will thus tend to degrade this distribution of fossil ranges yielding a distribution that is enriched for singletons (i.e. fossil taxa confined to a single stratigraphic interval). The FreqRat method thus uses the assumed degradation of fossil ranges to estimate the preservation rate that produced the observed distribution of fossil ranges for the clade of interest <xref ref-type="bibr" rid="pone.0066245-Foote4">[49]</xref>. The simplicity of this approach is appealing, and we provide the option of automatically estimating preservation rates using the FreqRat method in the SNAPE v1.0 software. But it is important to note here that in our experience the preservation rate estimates provided by FreqRat are at times unrealistic, and thus this approach should be used with considerable caution. A second approach would be to apply Alroy's <xref ref-type="bibr" rid="pone.0066245-Alroy1">[42]</xref>, <xref ref-type="bibr" rid="pone.0066245-Alroy2">[50]</xref> two-timer rates method, which provides estimates of the preservation rate based on the ratio of different fossil range classes. There are many approaches for estimating preservation rates available (see for example <xref ref-type="bibr" rid="pone.0066245-Friedman1">[51]</xref>), and ultimately the users of this method will need to decide which approach is most appropriate for their taxonomic group of interest.</p>
+<p>Given our method's reliance on quality fossil range data, it is possible that its primary utility will be realized by those researchers interested in estimating divergence times in groups with relatively large and diverse fossil records. This includes groups whose habitat preferences place them in convenient proximity to suitable depositional environments for fossil preservation (e.g. eutrophic lakes, marine intertidal zones, etc.), or groups whose anatomy provides a wealth of readily fossilized parts that retain a suitable number of taxonomically useful characteristics (e.g. foraminifera, arthropods, angiosperm pollen, etc.). Additionally, we feel that this method holds great promise in estimating informative node age priors for relatively deep divergences in the tree of life, particularly those in which the fossil record may be relatively poor near the presumed MRCA, but relatively rich later in their history (e.g. angiosperms, mammals, primates, and birds). The current implementation of our method is not applicable to divergence time studies utilizing temporal information from a single fossil lineage, despite the fact that these studies are arguably most in need of a method to quantify calibration uncertainty. The precise number of fossil lineages required to estimate priors that are more informative than simple minimum age constraints is dependent on too many parameters to confidently estimate. The fundamental limitation to the application of our method in clades with very few fossil lineages lies in the ability to estimate origination and extinction rate parameters, as this is highly contingent on the number of stratigraphic intervals in question and the amount of stratigraphic overlap between fossil ranges. While the theoretical foundations of our method could be applied to clades with one fossil lineage or even a complete absence of fossil lineages, the key parameters of the absolute lineage origination and extinction rates would need to be estimated in some way, and such an estimate will be accompanied by significant error.</p>
+<p>It is now well known that Bayesian molecular divergence time methods such as BEAST can yield results that are inconsistent with calibration prior densities when provided with multiple fossil calibrations <xref ref-type="bibr" rid="pone.0066245-Inoue1">[15]</xref>, <xref ref-type="bibr" rid="pone.0066245-Warnock1">[31]</xref>, <xref ref-type="bibr" rid="pone.0066245-Reisdos1">[52]</xref>. The issue arises due to the conflict between the node age suggested by the prior distribution and the reality that descendant nodes must be younger or maximally the same age as ancestral nodes deeper in the tree. To identify the potential impact of prior truncation Heled and Drummond <xref ref-type="bibr" rid="pone.0066245-Heled1">[46]</xref> suggest that users of the BEAST software package perform an analysis of their data without any data to identify any inconsistencies between the user-defined node age prior distributions and the joint prior distribution resulting from the combined effects of all of the node age priors and topological constraints. The results of our analyses of echinoid divergence times provide an important perspective on the truncation of joint priors because we performed identical analyses using both minimum-age (uniform) priors and informative gamma-distributed priors. When considering just prior truncation on the upper bound or 95% density of the eight calibration priors, we found that the average truncation was 99 million years for minimum age priors and 16 million years for gamma-distributed priors (<xref ref-type="table" rid="pone-0066245-t001">Table 1</xref>). This dramatic difference in prior truncation points to the inadequacy of minimum age priors in divergence time estimation and highlights the importance of the node age prior paramter choice.</p>
+<p>The approach to estimating node age priors that we present here is computationally simple, powerful, and sufficiently flexible to be used in a diversity of taxonomic groups. Future work could improve upon our approach by developing an iterative framework for the estimation of multiple calibrations in a clade, or perhaps our method could be integrated into a Bayesian divergence time software package directly, thus removing the need for fitting a parametric distribution entirely. Given that this is a field of active development, the years to come are sure to see important advances in establishing objective means of estimating node age priors for dating divergence events in the tree of life.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0066245.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0066245.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>The highest </bold><bold><italic>a posteriori</italic></bold><bold> chronogram for the echinoid BEAST analyses performed with informative gamma-distributed calibration priors.</bold> The clade credibility values are shown above the branches.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0066245.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0066245.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>Joint prior tree estimated with echinoid data using uniformly distributed minimum node age priors.</bold> Node bars show the 95% HPD of node height.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0066245.s003" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0066245.s003" position="float" xlink:type="simple"><label>Figure S3</label><caption>
+<p><bold>Joint prior tree estimated with echinoid data using gamma-distributed informative node age priors.</bold> Node bars show the 95% HPD of node height.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0066245.s004" mimetype="application/vnd.ms-excel" xlink:href="info:doi/10.1371/journal.pone.0066245.s004" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>The table shows a comprehensive listing of fossil echinoid genera used in our analysis.</bold> Fossil taxa are organized in groups representing the calibration node (i.e. clade) to which these fossil lineages are associated.</p>
+<p>(XLS)</p>
+</caption></supplementary-material><supplementary-material id="pone.0066245.s005" mimetype="text/plain" xlink:href="info:doi/10.1371/journal.pone.0066245.s005" position="float" xlink:type="simple"><label>File S1</label><caption>
+<p><bold>R scripts used to construct the simulated data sets employed to test the method.</bold></p>
+<p>(R)</p>
+</caption></supplementary-material><supplementary-material id="pone.0066245.s006" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pone.0066245.s006" position="float" xlink:type="simple"><label>File S2</label><caption>
+<p><bold>Raw fossil occurrence data used to construct the example prior distribution for the MRCA of Rodentia presented in </bold><xref ref-type="fig" rid="pone-0066245-g002"><bold>Figure 2B</bold></xref><bold>.</bold></p>
+<p>(CSV)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors would like to thank John Alroy and the Paleobiology Database Intensive Summer Course in Analytical Paleobiology. The manuscript was greatly improved by comments and suggestions by Mark Holder, Richard Carter, David Bapst, Philip Donoghue, and one anonymous reviewer.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0066245-Zuckerkandl1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zuckerkandl</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Pauling</surname><given-names>L</given-names></name> (<year>1965</year>) <article-title>Evolutionary divergence and convergence in proteins</article-title>. <source>Evolving genes and proteins</source> <volume>97</volume>: <fpage>166</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Donoghue1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Donoghue</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Benton</surname><given-names>M</given-names></name> (<year>2007</year>) <article-title>Rocks and clocks: calibrating the Tree of Life using fossils and molecules</article-title>. <source>Trends in Ecology &amp; Evolution</source> <volume>22</volume>: <fpage>424</fpage>–<lpage>431</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Benton1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Benton</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name> (<year>2006</year>) <article-title>Paleontological Evidence to Date the Tree of Life</article-title>. <source>Molecular Biology and Evolution</source> <volume>24</volume>: <fpage>26</fpage>–<lpage>53</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/msl150" xlink:type="simple">10.1093/molbev/msl150</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Benton2"><label>4</label>
+<mixed-citation publication-type="other" xlink:type="simple">Benton M, Donoghue P, Asher R (2009) Calibrating and constraining molecular clocks. The timetree of life: 35–86.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Renner1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Renner</surname><given-names>S</given-names></name> (<year>2005</year>) <article-title>Relaxed molecular clocks for dating historical plant dispersal events</article-title>. <source>Trends in Plant Science</source> <volume>10</volume>: <fpage>550</fpage>–<lpage>558</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Heads1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heads</surname><given-names>M</given-names></name> (<year>2005</year>) <article-title>Dating nodes on molecular phylogenies: a critique of molecular biogeography</article-title>. <source>Cladistics</source> <volume>21</volume>: <fpage>62</fpage>–<lpage>78</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Graur1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Graur</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>W</given-names></name> (<year>2004</year>) <article-title>Reading the entrails of chickens: molecular timescales of evolution and the illusion of precision</article-title>. <source>Trends in Genetics</source> <volume>20</volume>: <fpage>80</fpage>–<lpage>86</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Parham1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Parham</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Irmis</surname><given-names>RB</given-names></name> (<year>2008</year>) <article-title>Caveats on the Use of Fossil Calibrations for Molecular Dating: A Comment on Near et al</article-title>. <source>Am Nat</source> <volume>171</volume>: <fpage>132</fpage>–<lpage>136</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/524198" xlink:type="simple">10.1086/524198</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Clarke1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clarke</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Warnock</surname><given-names>RCM</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name> (<year>2011</year>) <article-title>Establishing a time-scale for plant evolution</article-title>. <source>New Phytologist</source> <volume>192</volume>: <fpage>266</fpage>–<lpage>301</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1469-8137.2011.03794.x" xlink:type="simple">10.1111/j.1469-8137.2011.03794.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Shaul1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shaul</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Graur</surname><given-names>D</given-names></name> (<year>2002</year>) <article-title>Playing chicken (Gallus gallus): methodological inconsistencies of molecular divergence date estimates due to secondary calibration points</article-title>. <source>Gene</source> <volume>300</volume>: <fpage>59</fpage>–<lpage>61</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Hugall1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hugall</surname><given-names>AF</given-names></name>, <name name-style="western"><surname>Foster</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>MSY</given-names></name> (<year>2007</year>) <article-title>Calibration Choice, Rate Smoothing, and the Pattern of Tetrapod Diversification According to the Long Nuclear Gene RAG-1</article-title>. <source>Systematic Biol</source> <volume>56</volume>: <fpage>543</fpage>–<lpage>563</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/10635150701477825" xlink:type="simple">10.1080/10635150701477825</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Rutschmann1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rutschmann</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Eriksson</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Salim</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Conti</surname><given-names>E</given-names></name> (<year>2007</year>) <article-title>Assessing calibration uncertainty in molecular dating: the assignment of fossils to alternative calibration points</article-title>. <source>Systematic Biol</source> <volume>56</volume>: <fpage>591</fpage>–<lpage>608</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Drummond1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Drummond</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Ho</surname><given-names>SYW</given-names></name>, <name name-style="western"><surname>Phillips</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Rambaut</surname><given-names>A</given-names></name> (<year>2006</year>) <article-title>Relaxed Phylogenetics and Dating with Confidence</article-title>. <source>PLoS Biol</source> <volume>4</volume>: <fpage>e88</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0040088.sd001" xlink:type="simple">10.1371/journal.pbio.0040088.sd001</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Ho1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ho</surname><given-names>SYW</given-names></name>, <name name-style="western"><surname>Phillips</surname><given-names>MJ</given-names></name> (<year>2009</year>) <article-title>Accounting for Calibration Uncertainty in Phylogenetic Estimation of Evolutionary Divergence Times</article-title>. <source>Systematic Biol</source> <volume>58</volume>: <fpage>367</fpage>–<lpage>380</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syp035" xlink:type="simple">10.1093/sysbio/syp035</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Inoue1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Inoue</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name> (<year>2009</year>) <article-title>The Impact of the Representation of Fossil Calibrations on Bayesian Estimation of Species Divergence Times</article-title>. <source>Systematic Biol</source> <volume>59</volume>: <fpage>74</fpage>–<lpage>89</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syp078" xlink:type="simple">10.1093/sysbio/syp078</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Lee1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>MSY</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>PM</given-names></name>, <name name-style="western"><surname>Hutchinson</surname><given-names>MN</given-names></name> (<year>2009</year>) <article-title>Phylogenetic uncertainty and molecular clock calibrations: A case study of legless lizards (Pygopodidae, Gekkota)</article-title>. <source>Molecular Phylogenetics and Evolution</source> <volume>50</volume>: <fpage>661</fpage>–<lpage>666</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ympev.2008.11.024" xlink:type="simple">10.1016/j.ympev.2008.11.024</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Drummond2"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Drummond</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Suchard</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Xie</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Rambaut</surname><given-names>A</given-names></name> (<year>2012</year>) <article-title>Bayesian Phylogenetics with BEAUti and the BEAST 1.7</article-title>. <source>Molecular Biology and Evolution</source> <volume>29</volume>: <fpage>1969</fpage>–<lpage>1973</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/mss075" xlink:type="simple">10.1093/molbev/mss075</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Rannala1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rannala</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name> (<year>2007</year>) <article-title>Inferring Speciation Times under an Episodic Molecular Clock</article-title>. <source>Systematic Biol</source> <volume>56</volume>: <fpage>453</fpage>–<lpage>466</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/10635150701420643" xlink:type="simple">10.1080/10635150701420643</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Thorne1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Thorne</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Kishino</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Painter</surname><given-names>I</given-names></name> (<year>1998</year>) <article-title>Estimating the rate of evolution of the rate of molecular evolution</article-title>. <source>Molecular Biology and Evolution</source> <volume>15</volume>: <fpage>1647</fpage>–<lpage>1657</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Lartillot1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lartillot</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Lepage</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Blanquart</surname><given-names>S</given-names></name> (<year>2009</year>) <article-title>PhyloBayes 3: a Bayesian software package for phylogenetic reconstruction and molecular dating</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2286</fpage>–<lpage>2288</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp368" xlink:type="simple">10.1093/bioinformatics/btp368</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Himmelmann1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Himmelmann</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Metzler</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>TreeTime: an extensible C++ software package for Bayesian phylogeny reconstruction with time-calibration</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2440</fpage>–<lpage>2441</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp417" xlink:type="simple">10.1093/bioinformatics/btp417</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Ho2"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ho</surname><given-names>SYW</given-names></name>, <name name-style="western"><surname>Saarma</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Barnett</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Haile</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Shapiro</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The Effect of Inappropriate Calibration: Three Case Studies in Molecular Ecology</article-title>. <source>PLoS ONE</source> <volume>3</volume>: <fpage>e1615</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0001615.t003" xlink:type="simple">10.1371/journal.pone.0001615.t003</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Pyron1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pyron</surname><given-names>RA</given-names></name> (<year>2010</year>) <article-title>A Likelihood Method for Assessing Molecular Divergence Time Estimates and the Placement of Fossil Calibrations</article-title>. <source>Systematic Biol</source> <volume>59</volume>: <fpage>185</fpage>–<lpage>194</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syp090" xlink:type="simple">10.1093/sysbio/syp090</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Sauquet1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sauquet</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Ho</surname><given-names>SYW</given-names></name>, <name name-style="western"><surname>Gandolfo</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Jordan</surname><given-names>GJ</given-names></name>, <name name-style="western"><surname>Wilf</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Testing the Impact of Calibration on Molecular Divergence Times Using a Fossil-Rich Group: The Case of Nothofagus (Fagales)</article-title>. <source>Systematic Biol</source> <volume>61</volume>: <fpage>289</fpage>–<lpage>313</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr116" xlink:type="simple">10.1093/sysbio/syr116</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Mller1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Müller</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Reisz</surname><given-names>RR</given-names></name> (<year>2005</year>) <article-title>Four well-constrained calibration points from the vertebrate fossil record for molecular clock estimates</article-title>. <source>Bioessays</source> <volume>27</volume>: <fpage>1069</fpage>–<lpage>1075</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/bies.20286" xlink:type="simple">10.1002/bies.20286</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Parham2"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Parham</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name>, <name name-style="western"><surname>Bell</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Calway</surname><given-names>TD</given-names></name>, <name name-style="western"><surname>Head</surname><given-names>JJ</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Best Practices for Justifying Fossil Calibrations</article-title>. <source>Systematic Biol</source> <volume>61</volume>: <fpage>346</fpage>–<lpage>359</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr107" xlink:type="simple">10.1093/sysbio/syr107</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Yang1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Rannala</surname><given-names>B</given-names></name> (<year>2006</year>) <article-title>Bayesian estimation of species divergence times under a molecular clock using multiple fossil calibrations with soft bounds</article-title>. <source>Molecular Biology and Evolution</source> <volume>23</volume>: <fpage>212</fpage>–<lpage>226</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/msj024" xlink:type="simple">10.1093/molbev/msj024</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Clayton1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clayton</surname><given-names>JW</given-names></name>, <name name-style="western"><surname>Soltis</surname><given-names>PS</given-names></name>, <name name-style="western"><surname>Soltis</surname><given-names>DE</given-names></name> (<year>2009</year>) <article-title>Recent Long-Distance Dispersal Overshadows Ancient Biogeographical Patterns in a Pantropical Angiosperm Family (Simaroubaceae, Sapindales)</article-title>. <source>Systematic Biol</source> <volume>58</volume>: <fpage>395</fpage>–<lpage>410</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syp041" xlink:type="simple">10.1093/sysbio/syp041</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Sallam1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sallam</surname><given-names>HM</given-names></name>, <name name-style="western"><surname>Seiffert</surname><given-names>ER</given-names></name>, <name name-style="western"><surname>Steiper</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Simons</surname><given-names>EL</given-names></name> (<year>2009</year>) <article-title>Fossil and molecular evidence constrain scenarios for the early evolutionary and biogeographic history of hystricognathous rodents</article-title>. <source>P Natl Acad Sci Usa</source> <volume>106</volume>: <fpage>16722</fpage>–<lpage>16727</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0908702106" xlink:type="simple">10.1073/pnas.0908702106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Alfaro1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alfaro</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Santini</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Brock</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Alamillo</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Dornburg</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>106</volume>: <fpage>13410</fpage>–<lpage>13414</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0811087106" xlink:type="simple">10.1073/pnas.0811087106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Warnock1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Warnock</surname><given-names>RCM</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name> (<year>2012</year>) <article-title>Exploring uncertainty in the calibration of the molecular clock</article-title>. <source>Biology Letters</source> <volume>8</volume>: <fpage>156</fpage>–<lpage>159</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rsbl.2011.0710" xlink:type="simple">10.1098/rsbl.2011.0710</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Marshall1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marshall</surname><given-names>CR</given-names></name> (<year>2008</year>) <article-title>A Simple Method for Bracketing Absolute Divergence Times on Molecular Phylogenies Using Multiple Fossil Calibration Points</article-title>. <source>Am Nat</source> <volume>171</volume>: <fpage>726</fpage>–<lpage>742</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/587523" xlink:type="simple">10.1086/587523</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Dornburg1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dornburg</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Beaulieu</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Near</surname><given-names>TJ</given-names></name> (<year>2011</year>) <article-title>Integrating Fossil Preservation Biases in the Selection of Calibrations for Molecular Divergence Time Estimation</article-title>. <source>Systematic Biol</source> <volume>60</volume>: <fpage>519</fpage>–<lpage>527</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr019" xlink:type="simple">10.1093/sysbio/syr019</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Wilkinson1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wilkinson</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Steiper</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Soligo</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Dating primate divergences through an integrated analysis of palaeontological and molecular data</article-title>. <source>Systematic Biol</source> <volume>60</volume>: <fpage>16</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Kenrick1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kenrick</surname><given-names>P</given-names></name> (<year>2011</year>) <article-title>Timescales and timetrees</article-title>. <source>New Phytologist</source> <volume>192</volume>: <fpage>3</fpage>–<lpage>6</lpage> <comment>doi:–<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.14698137.2011.03856.x" xlink:type="simple">10.1111/j.1469–8137.2011.03856.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Foote1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Foote</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hunter</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Janis</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Sepkoski</surname><given-names>J</given-names><suffix>Jr</suffix></name> (<year>1999</year>) <article-title>Evolutionary and preservational constraints on origins of biologic groups: divergence times of eutherian mammals</article-title>. <source>Science</source> <volume>283</volume>: <fpage>1310</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Tavar1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tavaré</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Marshall</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Will</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Soligo</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>R</given-names></name> (<year>2002</year>) <article-title>Using the fossil record to estimate the age of the last common ancestor of extant primates</article-title>. <source>Nature</source> <volume>416</volume>: <fpage>726</fpage>–<lpage>729</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Smith1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pisani</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Mackenzie-Dodds</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Stockley</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Webster</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Testing the molecular clock: molecular and paleontological estimates of divergence times in the Echinoidea (Echinodermata)</article-title>. <source>Molecular Biology and Evolution</source> <volume>23</volume>: <fpage>1832</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Gradstein1"><label>39</label>
+<mixed-citation publication-type="book" xlink:type="simple">Gradstein F, Ogg J (2009) The Geologic Time Scale. In: Hedges S, Kumar S, editors. The Timetree of Life.Oxford Univ Press.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Foote2"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Foote</surname><given-names>M</given-names></name> (<year>2000</year>) <article-title>Origination and extinction components of taxonomic diversity: general problems</article-title>. <source>Paleobiology</source> <volume>26</volume>: <fpage>74</fpage>–<lpage>102</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Foote3"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Foote</surname><given-names>M</given-names></name> (<year>2003</year>) <article-title>Origination and extinction through the Phanerozoic: a new approach</article-title>. <source>The Journal of Geology</source> <volume>111</volume>: <fpage>125</fpage>–<lpage>148</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Alroy1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alroy</surname><given-names>J</given-names></name> (<year>2008</year>) <article-title>Dynamics of origination and extinction in the marine fossil record</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>105</volume>: <fpage>11536</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Raup1"><label>43</label>
+<mixed-citation publication-type="other" xlink:type="simple">Raup DM (1985) Mathematical models of cladogenesis. Paleobiology: 42–52.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Kroh1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kroh</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>AB</given-names></name> (<year>2010</year>) <article-title>The phylogeny and classification of post-Palaeozoic echinoids</article-title>. <source>Journal of Systematic Palaeontology</source> <volume>8</volume>: <fpage>147</fpage>–<lpage>212</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/14772011003603556" xlink:type="simple">10.1080/14772011003603556</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Nylander1"><label>45</label>
+<mixed-citation publication-type="other" xlink:type="simple">NylanderJ (n.d.) MrModeltest.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Heled1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heled</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Drummond</surname><given-names>AJ</given-names></name> (<year>2012</year>) <article-title>Calibrated Tree Priors for Relaxed Phylogenetics and Divergence Time Estimation</article-title>. <source>Systematic Biol</source> <volume>61</volume>: <fpage>138</fpage>–<lpage>149</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr087" xlink:type="simple">10.1093/sysbio/syr087</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Liow1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liow</surname><given-names>LH</given-names></name>, <name name-style="western"><surname>Quental</surname><given-names>TB</given-names></name>, <name name-style="western"><surname>Marshall</surname><given-names>CR</given-names></name> (<year>2010</year>) <article-title>When Can Decreasing Diversification Rates Be Detected with Molecular Phylogenies and the Fossil Record?</article-title> <source>Systematic Biol</source> <volume>59</volume>: <fpage>646</fpage>–<lpage>659</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syq052" xlink:type="simple">10.1093/sysbio/syq052</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Alfaro2"><label>48</label>
+<mixed-citation publication-type="other" xlink:type="simple">Alfaro M, Holder M (2006) The posterior and the prior in Bayesian phylogenetics.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Foote4"><label>49</label>
+<mixed-citation publication-type="other" xlink:type="simple">Foote M, Raup D (1996) Fossil preservation and the stratigraphic ranges of taxa. Paleobiology: 121–140.</mixed-citation>
+</ref>
+<ref id="pone.0066245-Alroy2"><label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alroy</surname><given-names>J</given-names></name> (<year>2010</year>) <article-title>Geographical, environmental and intrinsic biotic controls on Phanerozoic marine diversification</article-title>. <source>Palaeontology</source> <volume>53</volume>: <fpage>1211</fpage>–<lpage>1235</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1475-4983.2010.01011.x" xlink:type="simple">10.1111/j.1475-4983.2010.01011.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Friedman1"><label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Brazeau</surname><given-names>MD</given-names></name> (<year>2010</year>) <article-title>Sequences, stratigraphy and scenarios: what can we say about the fossil record of the earliest tetrapods?</article-title> <source>P R Soc B</source> <volume>278</volume>: <fpage>432</fpage>–<lpage>439</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/463040a" xlink:type="simple">10.1038/463040a</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0066245-Reisdos1"><label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reis dos</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Inoue</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hasegawa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Asher</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Donoghue</surname><given-names>PCJ</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Phylogenomic datasets provide both precision and accuracy in estimating the timescale of placental mammal phylogeny</article-title>. <source>P R Soc B</source> <volume>279</volume>: <fpage>3491</fpage>–<lpage>3500</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2012.0683" xlink:type="simple">10.1098/rspb.2012.0683</ext-link></comment></mixed-citation>
+</ref>
+</ref-list></back>
+</article>

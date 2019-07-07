@@ -13,13 +13,13 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
-stand_title = ["Others","Introduction","Background",
+stand_title = ["Others","Introduction and Background",
                "Materials and Methods","Results and Discussion","Conclusion"]
 '''
 Extract the rid and location of citations from xml files
 '''   
-def xml_find_loc(collection):
-    cursor = collection.find()
+def xml_find_loc(collection,i):
+    cursor = collection.find({'cited_no': {'$gt': (i-1)*10 ,'$lte': i*10}})
     for docu in cursor:
         titles = {}
         rid_real = ''
@@ -44,7 +44,7 @@ def xml_find_loc(collection):
                         location.append(sec[0].text)
             if(len(rid_real) != 0 and len(location) == 0):
                 xml_find_revise(tree,body,rid_real,location)
-                print("updata path:",path,",updata rid:",rid_real,"cited_location",list(set(location)))
+#                print("updata path:",path,",updata rid:",rid_real,"cited_location",list(set(location)))
             collection.update_one({'content_path': path},{'$set':{'cited_location':list(set(location))}})            
         except Exception as e:
             pass
@@ -106,29 +106,40 @@ def compare(location):
                 loc = stand_title[i]
                 loc_num = i
                 break
-    print(loc,loc_num)
+#    print(loc,loc_num)
     return(loc,loc_num)
                 
 '''
 Standardize the citation locations to help do the visualization
 '''   
-def standard_loc(collection):    
-    cursor = collection.find({"cited_location" : {'$exists': True }})    
+def standard_loc(collection,i):    
+    cursor = collection.find({'cited_no': {'$gt': (i-1)*10 ,'$lte': i*10},"cited_location" : {'$exists': True }})    
     for docu in cursor:
-        stand_loc = [] 
-        stand_num = []
-        path = docu["content_path"]
-        location = docu["cited_location"]
-        if (len(location) != 0):
-            for loc in location:
-                stand = compare(loc)
-                stand_loc.append(stand[0])
-                stand_num.append(stand[1])
-            collection.update_one({'content_path': path,"cited_location":location},{'$set':{'stand_location':stand_loc,'location_num':stand_num}})
-        
-client = pymongo.MongoClient('localhost:27017',connect = True)
-db = client['msc_project']
-collection = db['citations']        
-xml_find_loc(collection)
-standard_loc(collection)
-client.close() 
+        try:
+            stand_loc = [] 
+            stand_num = []
+            path = docu["content_path"]
+            location = docu["cited_location"]
+            if (len(location) != 0):
+                for loc in location:
+                    stand = compare(loc)
+                    stand_loc.append(stand[0])
+                    stand_num.append(stand[1])
+                collection.update_one({'content_path': path,"cited_location":location},{'$set':{'stand_location':stand_loc,'location_num':stand_num}})
+        except Exception as e:
+            pass
+            print(path,'Reason:', str(e), '\n')
+            
+def main_function(i):           
+    client = pymongo.MongoClient('localhost:27017',connect = True)
+    db = client['msc_project']
+    collection = db['citations']        
+#    xml_find_loc(collection,i)
+    standard_loc(collection,i)
+    client.close() 
+
+main_function(3)
+main_function(4)
+main_function(5)
+ 
+#print(collection.find({"location_num":None}).count())

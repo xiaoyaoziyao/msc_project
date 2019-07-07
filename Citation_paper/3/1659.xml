@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-12369R2</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0008861</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Comparative Sequence Analysis</subject><subject>Computational Biology/Evolutionary Modeling</subject><subject>Computational Biology/Genomics</subject></subj-group></article-categories><title-group><article-title>CYNTENATOR: Progressive Gene Order Alignment of 17 Vertebrate Genomes</article-title><alt-title alt-title-type="running-head">CYNTENATOR</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rödelsperger</surname><given-names>Christian</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Dieterich</surname><given-names>Christoph</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Institute for Medical Genetics, Charité-Universitätsmedizin, Berlin, Germany</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Max Planck Institute for Molecular Genetics, Berlin, Germany</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Bioinformatics in Quantitative Biology, Berlin Institute for Medical Systems Biology, Berlin, Germany</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Hannenhalli</surname><given-names>Sridhar</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Pennsylvania School of Medicine, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">christoph.dieterich@mdc-berlin.de</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: CD. Performed the experiments: CR. Analyzed the data: CR. Wrote the paper: CR CD.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>28</day><month>1</month><year>2010</year></pub-date><volume>5</volume><issue>1</issue><elocation-id>e8861</elocation-id><history>
+<date date-type="received"><day>20</day><month>8</month><year>2009</year></date>
+<date date-type="accepted"><day>23</day><month>12</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Rödelsperger, Dieterich</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Whole genome gene order evolution in higher eukaryotes was initially considered as a random process. Gene order conservation or conserved synteny was seen as a feature of common descent and did not imply the existence of functional constraints. This view had to be revised in the light of results from sequencing dozens of vertebrate genomes.</p>
+<p>It became apparent that other factors exist that constrain gene order in some genomic regions over long evolutionary time periods. Outside of these regions, genomes diverge more rapidly in terms of gene content and order.</p>
+<p>We have developed CYNTENATOR, a progressive gene order alignment software, to identify genomic regions of conserved synteny over a large set of diverging species. CYNTENATOR does not depend on nucleotide-level alignments and a priori homology assignment. Our software implements an improved scoring function that utilizes the underlying phylogeny.</p>
+<p>In this manuscript, we report on our progressive gene order alignment approach, a and give a comparison to previous software and an analysis of 17 vertebrate genomes for conservation in gene order.</p>
+<p>CYNTENATOR has a runtime complexity of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e001" xlink:type="simple"/></inline-formula> and a space complexity of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e002" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e003" xlink:type="simple"/></inline-formula> being the gene number in a genome. CYNTENATOR performs as good as state-of-the-art software on simulated pairwise gene order comparisons, but is the only algorithm that works in practice for aligning dozens of vertebrate-sized gene orders.</p>
+<p>Lineage-specific characterization of gene order across 17 vertebrate genomes revealed mechanisms for maintaining conserved synteny such as enhancers and coregulation by bidirectional promoters. Genes outside conserved synteny blocks show enrichments for genes involved in responses to external stimuli, stimuli such as immunity and olfactory response in primate genome comparisons. We even see significant gene ontology term enrichments for breakpoint regions of ancestral nodes close to the root of the phylogeny. Additionally, our analysis of transposable elements has revealed a significant accumulation of LINE-1 elements in mammalian breakpoint regions. In summary, CYNTENATOR is a flexible and scalable tool for the identification of conserved gene orders across multiple species over long evolutionary distances.</p>
+</abstract><funding-group><funding-statement>CR acknowledges funding by the Max Planck Society. CD acknowledges funding by the Helmholtz Society. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Whole genome evolution operates on different levels of detail: from single nucleotides to functional elements (e.g. genes) to whole chromosomes <xref ref-type="bibr" rid="pone.0008861-Gregory1">[1]</xref>. An interesting phenomenon in the evolution of whole genomes is the existence of conserved synteny, which is the maintenance of gene content and order in certain chromosomal regions of two or more related species. Ever since Nadeau and Taylor <xref ref-type="bibr" rid="pone.0008861-Nadeau1">[2]</xref> published their groundbreaking paper on the distribution of synteny breakpoints in the human and mouse genome, it was commonly believed that breakpoints are essentially distributed at random. In other words, gene order conservation is a feature of common descent and does not imply the existence of functional constraints, which would preserve gene orders. With the advent of whole genome sequencing, this view is increasingly challenged by hard data. For example, several invertebrate genomes contain operons (e.g. nematodes <xref ref-type="bibr" rid="pone.0008861-Blumenthal1">[3]</xref> and ascidians <xref ref-type="bibr" rid="pone.0008861-Satou1">[4]</xref>), where gene order is functionally constrained by the necessity to generate a poly-cistronic messenger RNA. Pevzner and Tesler <xref ref-type="bibr" rid="pone.0008861-Pevzner1">[5]</xref> were the first to report a deviation from the “random” breakpoint model for vertebrates. They distinguish “fragile” from “solid” regions. Fragile regions accumulate breakpoints whereas solid regions remain intact over long evolutionary periods. Several genome-wide studies highlighted potential explanations for the existence of regions of conserved synteny in distantly related genomes (e.g. <xref ref-type="bibr" rid="pone.0008861-Margulies1">[6]</xref>). Long-ranging mechanisms of gene regulation are a recurring theme in this context. Especially single developmental genes are often found in regions of conserved synteny <xref ref-type="bibr" rid="pone.0008861-Woolfe1">[7]</xref>. Kikuta et al. <xref ref-type="bibr" rid="pone.0008861-Kikuta1">[8]</xref> demonstrated that interspersed regulatory elements, which control the expression of such genes, are often located in introns of surrounding genes (bystander genes). This configuration cannot be broken up without a loss of regulatory inputs and constitutes a functional constraint on genome rearrangement. Another simple constrained scenario arises from bidirectional gene pairs, which share a common promoter <xref ref-type="bibr" rid="pone.0008861-Yang1">[9]</xref>.</p>
+<p>These two examples illustrate how analysis of conserved synteny might provide insights into the evolution of regulatory mechanisms and biological functions.</p>
+<sec id="s1a">
+<title>Previous Work</title>
+<p>We and others have presented several approaches for the identification of conserved syntenic regions, which can be grouped into two classes: The first class uses ideas from set theory to identify maximal gene clusters, which fulfill certain criteria in terms of gene-gene distance, orientation and orthology relations. Such approaches have been implemented in the TEAM software <xref ref-type="bibr" rid="pone.0008861-Luc1">[10]</xref>, ADHoRe <xref ref-type="bibr" rid="pone.0008861-Vandepoele1">[11]</xref>, LineUp <xref ref-type="bibr" rid="pone.0008861-Hampson1">[12]</xref>, the Max-gap Clusters by Multiple Sequence Comparison (MCMuSeC) <xref ref-type="bibr" rid="pone.0008861-Ling1">[13]</xref> and more generically in a correspondance multigraph approach termed cccpart <xref ref-type="bibr" rid="pone.0008861-Boyer1">[14]</xref>. The program OrthoCluster <xref ref-type="bibr" rid="pone.0008861-Zeng1">[15]</xref> is another development in this domain. OrthoCluster implements several combinations of side constraints for the identification of conserved gene clusters. It combines a set enumeration tree strategy with an efficient search on this tree to detect orthologous gene clusters in multiple genomes for a predefined seed window size. It has to be noted that these approaches identify cooccurring gene clusters that are not restricted on colinearity which is the case in our definition of conserved synteny.</p>
+<p>A second class consists of programs like ColinearScan <xref ref-type="bibr" rid="pone.0008861-Wang1">[16]</xref>, DAGchainer <xref ref-type="bibr" rid="pone.0008861-Haas1">[17]</xref>, FISH <xref ref-type="bibr" rid="pone.0008861-Calabrese1">[18]</xref>, and SyMAP <xref ref-type="bibr" rid="pone.0008861-Soderlund1">[19]</xref>, which employ dynamic programming to detect pairwise conserved gene orders. Recently, we developed the SYNTENATOR software <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>, which uses dynamic programming in combination with a partial order graph representation to detect conserved gene orders in multiple genomes. <xref ref-type="table" rid="pone-0008861-t001">Table 1</xref> gives an overview of the described approaches. Some of the mentioned programs are theoretically capable to perform multiple genome comparisons <xref ref-type="bibr" rid="pone.0008861-Ling1">[13]</xref>, <xref ref-type="bibr" rid="pone.0008861-Zeng1">[15]</xref>, <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>, but in practice they exceed acceptable costs in terms of memory and computation time as soon as they are confronted with a large number of vertebrate genomes.</p>
+<table-wrap id="pone-0008861-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.t001</object-id><label>Table 1</label><caption>
+<title>Overview of synteny prediction methods.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008861-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Software</td>
+<td align="left" colspan="1" rowspan="1">Reference</td>
+<td align="left" colspan="1" rowspan="1">Homology type</td>
+<td align="left" colspan="1" rowspan="1">Strandedness</td>
+<td align="left" colspan="1" rowspan="1">Colinearity</td>
+<td align="left" colspan="1" rowspan="1">Clustering</td>
+<td align="left" colspan="1" rowspan="1">Genomes</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">MCMuSeC</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Ling1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">*</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">OrthoCluster</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Zeng1">[15]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">+/−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">*</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Cynteny</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Sinha1">[40]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">N</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">cccpart</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Boyer1">[14]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">N</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">LineUp</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Hampson1">[12]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">TEAM</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Luc1">[10]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary 1∶1</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">N</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">ADHoRe</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Vandepoele1">[11]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">FISH</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Calabrese1">[18]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">DAGchainer</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Haas1">[17]</xref></td>
+<td align="left" colspan="1" rowspan="1">gene-specific</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">SyMAP</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Soderlund1">[19]</xref></td>
+<td align="left" colspan="1" rowspan="1">gene-specific</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">ColinearScan</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Wang1">[16]</xref></td>
+<td align="left" colspan="1" rowspan="1">binary</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Syntenator</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref></td>
+<td align="left" colspan="1" rowspan="1">gene-specific</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e004" xlink:type="simple"/></inline-formula></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">CYNTENATOR</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">gene-specific</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">N</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>Existing methods for identification of conserved syntenic regions differ in many criteria like the type of the homology data used, strand awareness and gene order conservation (colinearity/clustering, whereby colinearity implies clustering). The ‘Homology type’ column indicates how matches between genes are scored and what kind of homology data is used, ‘binary 1∶1’ denotes for example best-reciprocal hits and ‘binary’ indicates that some kind of binary gene family concept like COGs, Inparanoid or EnsEMBL can be used. ‘gene-specific’ means that BLASTP similarities or conserved distances are used in the scoring function. Of all the listed approaches, OrthoCluster is the most flexible. ‘*’ For the two most recent approaches (OrthoCluster and MCMuSeC), computation of 17 vertebrate genome comparisons proved to be not feasable.</p></fn></table-wrap-foot></table-wrap>
+<p>We propose a method, called CYNTENATOR, to discover conserved syntenic regions over large evolutionary distances by progressive multiple gene order alignment. A key feature of our approach is its dynamic integration of protein-level similarities and gene context. Consequently, we do not need to assign homology relations to genes in the first place. This method is rooted in our SYNTENATOR approach for detecting conserved gene orders <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref> and scales, unlike SYNTENATOR, to dozens of vertebrate genomes (17 in this study). We improved on the efficiency of our approach by recasting it into a profile-profile alignment setting, which is an extension of the Waterman-Eggert algorithm <xref ref-type="bibr" rid="pone.0008861-Waterman1">[21]</xref> to the comparison of multiple gene orders. We enhanced our scoring function to explicitly consider the phylogenetic distance of each gene pair in the sum-of-pair scoring scheme.</p>
+</sec></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Pairwise Gene Order Alignments</title>
+<p>We employ a similar approach as our previous software SYNTENATOR <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>. The basic concept is to compute alignments between sequences where the alphabet consists of genes rather than nucleotides or amino acids. Chromosomes are represented as linear sequences of genes and homologies between genes are defined by the bitscores from all vs. all BLASTP searches <xref ref-type="bibr" rid="pone.0008861-Altschul1">[22]</xref> among all species of interest. In a pairwise comparison Smith-Waterman local alignments <xref ref-type="bibr" rid="pone.0008861-Smith1">[23]</xref> are computed between all chromosomes or contigs and a modified backtracking strategy is employed to extracted all non-intersecting local alignments with a score higher than a predefined threshold. This is identical to our previously published work <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>.</p>
+<p>A match between two genes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e005" xlink:type="simple"/></inline-formula> is computed from the pairwise bitscores of BLAST similarities <xref ref-type="bibr" rid="pone.0008861-Altschul1">[22]</xref> and the distances in a species tree for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e006" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e007" xlink:type="simple"/></inline-formula> (<xref ref-type="fig" rid="pone-0008861-g001">Figure 1</xref>).<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.e008" xlink:type="simple"/><label>(1)</label></disp-formula>Mismatch, linear gap, and minimal alignment score threshold are adjusted at each step by multiplying with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e009" xlink:type="simple"/></inline-formula> whereby <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e010" xlink:type="simple"/></inline-formula> denotes the phylogenetic distance between both species. The factor of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e011" xlink:type="simple"/></inline-formula> is a reminiscent of SYNTENATOR and is meant to adapt the matchscores of both programs to a comparable level.</p>
+<fig id="pone-0008861-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.g001</object-id><label>Figure 1</label><caption>
+<title>Phlyogenetic tree of 17 vertebrates.</title>
+<p>Dendroscope view on a subtree of the 28-way MULTIZ alignment tree <xref ref-type="bibr" rid="pone.0008861-Miller1">[24]</xref>, <xref ref-type="bibr" rid="pone.0008861-Huson1">[38]</xref> which we used as a guide tree for the progressive alignment, carried out by CYNTENATOR. Distances at branches indicate the average number of substitutions per site in blastz alignments <xref ref-type="bibr" rid="pone.0008861-Schwartz1">[39]</xref>. These distances were used to weight the scores between gene matches in the alignment.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.g001" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Progressive Alignment Procedure</title>
+<p>For multiple genome comparisons, a guide tree is used to determine the alignment order. Single genomes correspond to leaf nodes and pairwise alignments to their parent nodes. Inner nodes can either be aligned to a leaf node or to another inner node (profile-profile alignment). Matches between two positions of multiple alignments <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e012" xlink:type="simple"/></inline-formula> are scored using a sum of pairs score.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.e013" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>For the sum of pair scoring we multiplied mismatch, linear gap, and minimal alignment score thresholds with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e014" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e015" xlink:type="simple"/></inline-formula> denotes the phylogenetic distance between the species in A and B). In short, missing homologous gene pairs of two closely related species are penalized more severly than missing gene pairs of two remotely related species.</p>
+<p>The progressive alignment methodology translates to a runtime complexity of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e016" xlink:type="simple"/></inline-formula> and a space complexity of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e017" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e018" xlink:type="simple"/></inline-formula> being the gene number in a given genome.</p>
+</sec><sec id="s2c">
+<title>Alignment Filters</title>
+<p>Pairwise and multiple alignments of vertebrate genomes may result in hundreds to thousands of local alignments. We implemented several filters to lower the computational costs and the degree of redundancy among the alignments. First, we discard all alignments or single genome regions that were used to compute the alignments for the current guide tree node. For example, for a comparison of the human, mouse, and rat genomes, first mouse and rat are aligned. Only the mouse-rat pairwise alignments are used for comparisons with the human genome and all other sequence regions from mouse and rat are discarded. Second, all alignments are ordered and processed by decreasing score. We start with the highest scoring alignment and retain all alignments that do not overlap with gene sets from higher scoring alignments. Optionally, more alignments could be retained from the original ordered list, if the total number of alignments does not exceed a user defined threshold (default is 1000) and if any gene in the given alignment occurred less then <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e019" xlink:type="simple"/></inline-formula> times in higher scoring alignments (gene coverage; default is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e020" xlink:type="simple"/></inline-formula>). These additional alignments would contain information about paralogous conserved syntenic regions.</p>
+<p>Within the filtering procedure, the gene-specific scoring plays a crucial role in distinguishing paralagous gene clusters of equal length. Since alignments can be ranked, correct assignments will be saved as unique alignments in the first filtering step (<xref ref-type="supplementary-material" rid="pone.0008861.s001">Figure <bold>S1</bold></xref>). Another available filter singles out alignments under a minimal length.</p>
+<p>Based on comparisons between human and mouse, we examined the effect of the gene coverage parameter on the number of aligned gene pairs. With the default value of 2 we already detect 90% of the gene pairs that may be obtained when increasing this filter parameter to 7 (<xref ref-type="supplementary-material" rid="pone.0008861.s002">Figure <bold>S2</bold></xref>).</p>
+<p>In summary, the progressive alignment procedure for multiple genome comparison, the phylogenetic adjustment of the scoring between genes, and the possibility of retaining alignments of paralogous loci at each ancestral node in the guide tree are the three major improvements over our previous software SYNTENATOR <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>.</p>
+</sec><sec id="s2d">
+<title>Simulation</title>
+<p>To evaluate the performance of different software and strategies on detecting conserved syntenic regions, we created a simple synthetic scenario of genome evolution (see <xref ref-type="fig" rid="pone-0008861-g002">Figure 2</xref>): 1) We generated a small genome with 1040 genes, which are distributed over <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e021" xlink:type="simple"/></inline-formula> chromosomes 2) We evolved this genome twenty times independently by applying <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e022" xlink:type="simple"/></inline-formula> rearrangements (inversions, translocations, duplications, and deletions of size of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e023" xlink:type="simple"/></inline-formula>) on two different copies that model descendents of the ancestral genome. We ruled out the possibility that a single gene is involved in two rearrangement events. 3) We stored information on positions and types of individual rearrangements. Genes that originate from the same common ancestor and diverged by speciation and duplications are part of the same gene family.</p>
+<fig id="pone-0008861-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.g002</object-id><label>Figure 2</label><caption>
+<title>Simulation model of speciation events.</title>
+<p>We used a naive model for speciation events to create some test sets. In this example, the ancestor genome consists of two chromosomes with genes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e024" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e025" xlink:type="simple"/></inline-formula>. We copy this genome and apply to each branch a number of independent rearrangements. Knowing the evolutionary history of the two branches we can extract all perfect colinear blocks as regions between breakpoints. According to the mapping of genes, homology data is created and passed to CYNTENATOR together with the gene annotations of the branches (see <xref ref-type="sec" rid="s2">Methods</xref>). The CYNTENATOR alignments can then be compared to the simulated blocks.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.g002" xlink:type="simple"/></fig>
+<p>Simulated data represent the only objective way of comparing different softwares. By simulating genome evolution, we know the exact evolutionary history of the synthetic genome. That is why, we are able to unambiguously assign genes to conserved syntenies.</p>
+<p>Since CYNTENATOR requires gene similarity information, we assign a bitscore of 1000 as self-similarity score and 500 for orthologous and paralogous proteins corresponding to a gene family. We evaluated the performance of CYNTENATOR, MCMuSec and OrthoCluster on the 20 simulated genome pairs. Program parameters were varied in repeated runs: CYNTENATOR gap and mismatch penalty parameters were set to 0.1, 0.5, 1, 2, 3, 5, 20, the alignment score threshold was set to 1, the minimal alignment length to 2, the maximal number of retained alignments to 1,000 and the gene coverage filter to 4. MCMuSeC was run to report gene clusters, which are shared by at least two genomes. The maxgap value was varied between 1 and 12 and could be interpreted as the number of allowed gene insertions. OrthoCluster was configured to detect all blocks of minimal size two that are conserved in terms of gene order and orientation. The in- and out-mismatch parameters were varied between different runs (1, 2, 5, 10 for both parameters). We constructed correspondance files for OrthoCluster by enumerating all tuples, having a direct BLASTP homology. We defined MCMuSeC homologous groups as all connected components in the BLASTP homology graph.</p>
+</sec><sec id="s2e">
+<title>Multiple Vertebrate Genome Alignments with CYNTENATOR</title>
+<p>We used EnsEMBL database annotations (release 50) for 17 high-coverage genomes to construct multiple gene order alignments. All BLASTP homology scores were retrieved from the EnsEMBL compara database. We used a subtree from the phylogenetic tree by Miller et al. <xref ref-type="bibr" rid="pone.0008861-Miller1">[24]</xref> as a guide tree for the progressive alignment (<xref ref-type="fig" rid="pone-0008861-g001">Figure 1</xref>). Mismatch and gap parameters were set to 0.3 and the local alignment threshold was set to 2.0 <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>. Other parameters were set as follows: maximal gene coverage to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e026" xlink:type="simple"/></inline-formula> and maximal alignment number to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e027" xlink:type="simple"/></inline-formula>.</p>
+<p>We modified our parameter choice for the comparison with amniote conserved syntenies of length <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e028" xlink:type="simple"/></inline-formula> from Larkin et al. (<xref ref-type="supplementary-material" rid="pone.0008861.s003">Figure <bold>S3</bold></xref>, <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>). To detect smaller conserved syntenies, we retained maximally 3000 alignments at each ancestral node, increased the gene coverage parameter to 4 and lowered the alignment score threshold to 1.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Effect of Parameter Choice and Comparison to Other Tools</title>
+<sec id="s3a1">
+<title>Gene ortholog recovery</title>
+<p>We have previously shown that gene ortholog assignments, as predicted by the EnsEMBL pipeline, are almost fully recovered by our gene order alignments <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref>. To this end, we lowered the alignment score threshold such that even single gene pairs were reported (alignment length <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e029" xlink:type="simple"/></inline-formula>). We could show that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e030" xlink:type="simple"/></inline-formula>% of all EnsEMBL 1∶1 human-mouse orthologs were correctly recovered. We evaluated the effect of parameter choice on ortholog recovery by computing human-zebrafish gene order alignments using various (mismatch × gap) -penalty combination and apart from that default parameters. Starting with the highest scoring alignments, we greedily extracted one-to-one gene ortholog pairs and compared them to human zebrafish one-to-one orthologs as defined in EnsEMBL release 50. In general, the length of alignments increases with decreasing gap penalty, however also the number of correctly assigned ortholog pairs rises up to 38% of all human-zebrafish EnsEMBL orthologs (<xref ref-type="supplementary-material" rid="pone.0008861.s004">Figure <bold>S4</bold></xref>). On the other hand, a variation of the mismatch penalty does not show a strong effect on ortholog assignments and alignment length. In essence, gene order is only retained for the minority of gene ortholog pairs in human-zebrafish comparison.</p>
+</sec><sec id="s3a2">
+<title>Pairwise comparisons of simulated genomes</title>
+<p>We also assessed the ability of CYNTENATOR, MCMuSeC and OrthoCluster to detect pairwise conserved syntenic regions. We chose to use simulated data (<xref ref-type="fig" rid="pone-0008861-g002">Figure 2</xref>) to provide a “gold standard” as we are able to track all rearrangement events <italic>in silico</italic>. To this end, we used a simplistic approach to simulate genome evolution for a single speciation event. We measured the sensitivity of a method by computing the proportion of simulated blocks with perfect colinearity, which are recovered in a single gene order alignment or identified gene cluster. A simulated block was counted as recovered, if all genes in the block are also found in a single gene order alignment or identified gene cluster. We measure the specificity of the predicted blocks by computing the proportion of genes from all reported alignments or clusters that are also located in simulated blocks. Both performance measures do not consider collinearity. This was done in order to compare methods like MCMuSeC, that do not explicitly test for collinearity. <xref ref-type="fig" rid="pone-0008861-g003">Figure 3</xref> shows that CYNTENATOR predictions are robust to parameter choices over a wide range of different parameter settings. Median performance values are always above 98%. A perfect prediction was obtained, if more conservative parameter settings were applied (gap penalty of 20 and mismatch between 0.5 and 20). More extreme parameter combination will force the alignment either to always introduce a gap or never. Variation of the mismatch parameter does not show a great effect (<xref ref-type="supplementary-material" rid="pone.0008861.s005">Figure <bold>S5</bold></xref>). OrthoCluster performed almost perfect under all tested parameter combinations (<xref ref-type="supplementary-material" rid="pone.0008861.s006">Figure <bold>S6</bold></xref>), whereas MCMuSeC could never identify all original blocks (<xref ref-type="supplementary-material" rid="pone.0008861.s007">Figure <bold>S7</bold></xref>).</p>
+<fig id="pone-0008861-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.g003</object-id><label>Figure 3</label><caption>
+<title>Quality of predicted blocks.</title>
+<p>We assessed the capacity of CYNTENATOR to detect conserved syntenic blocks under various gap and mismatch combinations using simulated data. Every box corresponds to a fixed gap paramter combined with 7 mismatch parameters on 20 different data sets. We computed the ratio of perfect colinear blocks for which every gene pair was also found in an alignment and the ratio of genes, predicted to be syntenic, that are also located in a simulated blocks.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.g003" xlink:type="simple"/></fig></sec><sec id="s3a3">
+<title>Multiple comparisons by 17-way gene order alignments</title>
+<p>We extended our pairwise analysis to multiple gene order comparisons. We selected 17 high-coverage vertebrate genome assemblies from the EnsEMBL database (release 50) to run multiple gene order comparisons. <xref ref-type="table" rid="pone-0008861-t002">Table 2</xref> provides an overview on some basic genome assembly parameters. <xref ref-type="fig" rid="pone-0008861-g001">Figure 1</xref> shows the phylogenetic relationship between the 17 vertebrate species <xref ref-type="bibr" rid="pone.0008861-Miller1">[24]</xref>. This tree was used to guide the alignment order of CYNTENATOR.</p>
+<table-wrap id="pone-0008861-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.t002</object-id><label>Table 2</label><caption>
+<title>Genome statistics.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008861-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Scientific Name</td>
+<td align="left" colspan="1" rowspan="1">Name</td>
+<td align="left" colspan="1" rowspan="1">Seq. Coverage</td>
+<td align="left" colspan="1" rowspan="1">Size (Gb)</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e031" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e032" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Homo sapiens</italic></td>
+<td align="left" colspan="1" rowspan="1">Human</td>
+<td align="left" colspan="1" rowspan="1">Fin.</td>
+<td align="left" colspan="1" rowspan="1">3.2</td>
+<td align="left" colspan="1" rowspan="1">85</td>
+<td align="left" colspan="1" rowspan="1">21,529</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Pan troglodytes</italic></td>
+<td align="left" colspan="1" rowspan="1">Chimp</td>
+<td align="left" colspan="1" rowspan="1">6.0<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e033" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">3.3</td>
+<td align="left" colspan="1" rowspan="1">51</td>
+<td align="left" colspan="1" rowspan="1">19,830</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Macaca mulatta</italic></td>
+<td align="left" colspan="1" rowspan="1">Rhesus</td>
+<td align="left" colspan="1" rowspan="1">5.1<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e034" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">2.9</td>
+<td align="left" colspan="1" rowspan="1">751</td>
+<td align="left" colspan="1" rowspan="1">21,906</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Mus musculus</italic></td>
+<td align="left" colspan="1" rowspan="1">Mouse</td>
+<td align="left" colspan="1" rowspan="1">Fin.</td>
+<td align="left" colspan="1" rowspan="1">2.7</td>
+<td align="left" colspan="1" rowspan="1">137</td>
+<td align="left" colspan="1" rowspan="1">23,494</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Rattus norvegicus</italic></td>
+<td align="left" colspan="1" rowspan="1">Rat</td>
+<td align="left" colspan="1" rowspan="1">7.0<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e035" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">2.7</td>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">22,504</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Bos taurus</italic></td>
+<td align="left" colspan="1" rowspan="1">Cow</td>
+<td align="left" colspan="1" rowspan="1">7.1<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e036" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">2.7</td>
+<td align="left" colspan="1" rowspan="1">1,133</td>
+<td align="left" colspan="1" rowspan="1">21,037</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Canis familiaris</italic></td>
+<td align="left" colspan="1" rowspan="1">Dog</td>
+<td align="left" colspan="1" rowspan="1">7.6<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e037" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">2.5</td>
+<td align="left" colspan="1" rowspan="1">42</td>
+<td align="left" colspan="1" rowspan="1">19,306</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Equus cabalus</italic></td>
+<td align="left" colspan="1" rowspan="1">Horse</td>
+<td align="left" colspan="1" rowspan="1">6.8<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e038" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">2.4</td>
+<td align="left" colspan="1" rowspan="1">99</td>
+<td align="left" colspan="1" rowspan="1">20,323</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Monodelphis domestica</italic></td>
+<td align="left" colspan="1" rowspan="1">Opossum</td>
+<td align="left" colspan="1" rowspan="1">6.5<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e039" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">3.6</td>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">19,472</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Ornitorhynchus anatinus</italic></td>
+<td align="left" colspan="1" rowspan="1">Platypus</td>
+<td align="left" colspan="1" rowspan="1">6.0<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e040" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">1.2</td>
+<td align="left" colspan="1" rowspan="1">8,234</td>
+<td align="left" colspan="1" rowspan="1">17,952</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Gallus gallus</italic></td>
+<td align="left" colspan="1" rowspan="1">Chicken</td>
+<td align="left" colspan="1" rowspan="1">6.6<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e041" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">1.1</td>
+<td align="left" colspan="1" rowspan="1">53</td>
+<td align="left" colspan="1" rowspan="1">16,737</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Xenopus tropicalis</italic></td>
+<td align="left" colspan="1" rowspan="1">Frog</td>
+<td align="left" colspan="1" rowspan="1">7.9<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e042" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">1.2</td>
+<td align="left" colspan="1" rowspan="1">2,544</td>
+<td align="left" colspan="1" rowspan="1">18,024</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Tetraodon nigrovirides</italic></td>
+<td align="left" colspan="1" rowspan="1">Tetraodon</td>
+<td align="left" colspan="1" rowspan="1">7.9<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e043" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.4</td>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">19,603</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Takifugu rubripes</italic></td>
+<td align="left" colspan="1" rowspan="1">Fugu</td>
+<td align="left" colspan="1" rowspan="1">8.5<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e044" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.3</td>
+<td align="left" colspan="1" rowspan="1">1,931</td>
+<td align="left" colspan="1" rowspan="1">18,524</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Gasterosteus aculeatus</italic></td>
+<td align="left" colspan="1" rowspan="1">Stickleback</td>
+<td align="left" colspan="1" rowspan="1">6.0<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e045" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.4</td>
+<td align="left" colspan="1" rowspan="1">561</td>
+<td align="left" colspan="1" rowspan="1">20,788</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Orizya latipes</italic></td>
+<td align="left" colspan="1" rowspan="1">Medaka</td>
+<td align="left" colspan="1" rowspan="1">6.7<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e046" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8</td>
+<td align="left" colspan="1" rowspan="1">887</td>
+<td align="left" colspan="1" rowspan="1">19,687</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Danio rerio</italic></td>
+<td align="left" colspan="1" rowspan="1">Zebrafish</td>
+<td align="left" colspan="1" rowspan="1">6.5<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e047" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">1.4</td>
+<td align="left" colspan="1" rowspan="1">959</td>
+<td align="left" colspan="1" rowspan="1">21,323</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label/><p>17 high coverage genome assemblies are included in our comparison. Sequence coverages have been taken from <xref ref-type="bibr" rid="pone.0008861-Miller1">[24]</xref>. Genome size, number of contigs and genes have been computed from the EnsEMBL release 50 annotations. The number of contigs for the human genome includes unplaced contigs, haplotype and mitochondrial chromosomes (NT_113917, c6_COX, MT).</p></fn></table-wrap-foot></table-wrap>
+<p>Each gene order alignment defines conserved syntenic regions over at least two or more species (CSMs = conserved synteny over multiple species). Our algorithm could identify multiple homologs of one genomic region, which are ranked by their score (<xref ref-type="supplementary-material" rid="pone.0008861.s001">Figure <bold>S1</bold></xref>). For example, the human HOXD cluster is homologous to the HOXD and HOXA clusters in chicken. Consequently, the HOXD cluster would be aligned to both loci from chicken by two overlapping local alignments.</p>
+<p>We further define a representative syntenic block (RSB) for each set of overlapping CSMs. The RSB is the one that spans the largest genomic regions of all overlapping CSMs. In short, RSBs are non-redundant, maximal representatives for a set of multiple gene order alignments. <xref ref-type="table" rid="pone-0008861-t003">Table 3</xref> gives an overview of number and sizes of RSBs at the inner nodes in the phylogenetic tree. The number of RSBs is our estimate on the number of conserved syntenic regions in the listed genome comparisons. This number is determined by the process of whole genome evolution as well as the quality of all genome assemblies.</p>
+<table-wrap id="pone-0008861-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008861.t003</object-id><label>Table 3</label><caption>
+<title>Overview of conserved synteny in 17 vertebrate genomes.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008861-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Comparison</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e048" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e049" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Mean size (Mb)</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e050" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">human chimp</td>
+<td align="left" colspan="1" rowspan="1">32</td>
+<td align="left" colspan="1" rowspan="1">20,024.0</td>
+<td align="left" colspan="1" rowspan="1">2,945.1</td>
+<td align="left" colspan="1" rowspan="1">32</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">primates</td>
+<td align="left" colspan="1" rowspan="1">45</td>
+<td align="left" colspan="1" rowspan="1">19,548.0</td>
+<td align="left" colspan="1" rowspan="1">2,767.8</td>
+<td align="left" colspan="1" rowspan="1">31</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">rodents</td>
+<td align="left" colspan="1" rowspan="1">87</td>
+<td align="left" colspan="1" rowspan="1">21,685.0</td>
+<td align="left" colspan="1" rowspan="1">2,493.0</td>
+<td align="left" colspan="1" rowspan="1">30</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">primate rodent</td>
+<td align="left" colspan="1" rowspan="1">311</td>
+<td align="left" colspan="1" rowspan="1">18,195.8</td>
+<td align="left" colspan="1" rowspan="1">2,370.2</td>
+<td align="left" colspan="1" rowspan="1">53</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">horse dog</td>
+<td align="left" colspan="1" rowspan="1">164</td>
+<td align="left" colspan="1" rowspan="1">18,888.0</td>
+<td align="left" colspan="1" rowspan="1">2,255.5</td>
+<td align="left" colspan="1" rowspan="1">76</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">laurasiatherians</td>
+<td align="left" colspan="1" rowspan="1">297</td>
+<td align="left" colspan="1" rowspan="1">17,639.3</td>
+<td align="left" colspan="1" rowspan="1">2,141.7</td>
+<td align="left" colspan="1" rowspan="1">120</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">eutherian mammals</td>
+<td align="left" colspan="1" rowspan="1">438</td>
+<td align="left" colspan="1" rowspan="1">15,530.4</td>
+<td align="left" colspan="1" rowspan="1">1,872.9</td>
+<td align="left" colspan="1" rowspan="1">77</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">including opossum</td>
+<td align="left" colspan="1" rowspan="1">699</td>
+<td align="left" colspan="1" rowspan="1">13,615.3</td>
+<td align="left" colspan="1" rowspan="1">1,750.5</td>
+<td align="left" colspan="1" rowspan="1">73</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">including platypus</td>
+<td align="left" colspan="1" rowspan="1">859</td>
+<td align="left" colspan="1" rowspan="1">6,804.6</td>
+<td align="left" colspan="1" rowspan="1">934.4</td>
+<td align="left" colspan="1" rowspan="1">480</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">amniotes</td>
+<td align="left" colspan="1" rowspan="1">769</td>
+<td align="left" colspan="1" rowspan="1">5,930.4</td>
+<td align="left" colspan="1" rowspan="1">816.9</td>
+<td align="left" colspan="1" rowspan="1">359</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">including frog</td>
+<td align="left" colspan="1" rowspan="1">694</td>
+<td align="left" colspan="1" rowspan="1">3,774.1</td>
+<td align="left" colspan="1" rowspan="1">462.1</td>
+<td align="left" colspan="1" rowspan="1">398</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17 vertebrates</td>
+<td align="left" colspan="1" rowspan="1">287</td>
+<td align="left" colspan="1" rowspan="1">928.6</td>
+<td align="left" colspan="1" rowspan="1">75.8</td>
+<td align="left" colspan="1" rowspan="1">112</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5 fish</td>
+<td align="left" colspan="1" rowspan="1">1,561</td>
+<td align="left" colspan="1" rowspan="1">7,435.8</td>
+<td align="left" colspan="1" rowspan="1">184.7</td>
+<td align="left" colspan="1" rowspan="1">293</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">stickleback medaka</td>
+<td align="left" colspan="1" rowspan="1">537</td>
+<td align="left" colspan="1" rowspan="1">16,125.5</td>
+<td align="left" colspan="1" rowspan="1">478.3</td>
+<td align="left" colspan="1" rowspan="1">170</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">tetraodon fugu</td>
+<td align="left" colspan="1" rowspan="1">803</td>
+<td align="left" colspan="1" rowspan="1">15,339.5</td>
+<td align="left" colspan="1" rowspan="1">255.6</td>
+<td align="left" colspan="1" rowspan="1">617</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label/><p>Each comparison represents an inner node in the phylogenetic tree (<xref ref-type="fig" rid="pone-0008861-g001">Figure 1</xref>). In order to remove redundancy we defined representative syntenic blocks (RSBs) as gene order alignments that have a maximum size among all overlapping alignments that might be due to duplications in one of the lineages. From the set of all RSBs, we computed the mean number of syntenic genes per species and size of the spanned genomic regions. The column ‘<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e051" xlink:type="simple"/></inline-formula>’ gives a rough estimate on how many blocks may be disrupted due to incomplete genome assemblies. It denotes the number of RSBs, in which one of the genes in the alignment is the last gene of a chromosome or contig.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3a4">
+<title>Comparison to OrthoCluster and MCMuSeC</title>
+<p>Algorithms that are based on set enumerations are not restricted to identifying colinearity. They rather identify genes, which cooccur on the same genomic regions in different species and satisfy additional constraints. This comes at the price of having to explore an exponentially growing search space in the worst case. Previous approach for multiple genome comparison have been shown to perform well on a number of bacterial genomes <xref ref-type="bibr" rid="pone.0008861-Ling1">[13]</xref>, <xref ref-type="bibr" rid="pone.0008861-Boyer1">[14]</xref>, but they are not specifically designed for vertebrates.</p>
+<p>We tested two recent approaches, OrthoCluster and MCMuSeC on their applicability to vertebrate genomes. We tried to repeat the same multiple vertebrate genome comparisons using either OrthoCluster or MCMuSec. None of the two programs could manage this problem size. For example, we applied MCMuSeC on our pairwise comparison of human and mouse with a maxgap parameter of 2. This approach did not finish after one week of computation on an Intel Xeon processor with 2.66GHz. A more elementary difficulty of MCMuSeC stems from the input data. Homologous gene groups are defined as connected components in a gene graph. This way of defining homology could result in “a giant component” and few smaller components. Shared domains between proteins and gene fusions cause this effect.</p>
+<p>For OrthoCluster we already noticed a strong increase in running times on the simulated data sets, whereby the running time increased dramatically for higher in-mismatch parameters. When applying OrthoCluster to the human mouse data set, we observed a similar trend as with MCMuSeC. We also noticed that the precomputed correspondence files from OrthoClustDB <xref ref-type="bibr" rid="pone.0008861-Ng1">[26]</xref> contain far less homologous gene pairs than the EnsEMBL database (release 50). For example, we found that the OrthoClustDB human-mouse correspondence file contains only 19,309 entries, whereas the EnsEMBL data lists 157,523 homologies. In addition OrthoCluster uses an unfavorable format for correspondence files (enumeration of all homologous tuples required), which would yield a file of more than 100GB for the 17 vertebrate data. In summary, MCMuSeC and OrthoCluster depend on a restrictive preprocessing of homology information. A priori homology assignment by methods like best-reciprocal hits, clusters of orthologous genes (COGs) <xref ref-type="bibr" rid="pone.0008861-Tatusov1">[27]</xref>, and the approaches of EnsEMBL <xref ref-type="bibr" rid="pone.0008861-Hubbard1">[28]</xref> and Inparanoid <xref ref-type="bibr" rid="pone.0008861-Ostlund1">[29]</xref> do not consider the genomic context. CYNTENATOR, as well as SYNTENATOR, integrate both signals, gene level similarity and genomic context in an elegant way.</p>
+</sec><sec id="s3a5">
+<title>Comparison to amniote homologous synteny blocks</title>
+<p>Since none of the aforementioned methods worked for our multiple gene order comparison in vertebrates, we compared CYNTENATOR CSMs to a set of multiple vertebrate species syntenic blocks defined by Larkin et al. <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>. These blocks have been constructed using pairwise comparisons of orthologous markers and radiation hybrid maps. In short, this is the only data set we found, which was constructed from gene/marker order alignments. Some of the genomes have not been sequenced with high coverage, for this reason we did not run CYNTENATOR on exactly the same species set. The species set by Larkin et al. encompasses human, chimp, macaque, rat, mouse, pig, cattle, dog, opossum, and chicken data, whereas our data set encompasses the genomes of human, chimp, macaque, rat, mouse, horse, cattle, dog, opossum, and chicken. From this species set we constructed a 10-way amniote multiple alignment and compared the human locations from the resulting CSMs to the human locations of blocks, that were defined by Larkin et al. (<xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>, <xref ref-type="supplementary-material" rid="pone.0008861.s003">Figure <bold>S3</bold></xref>).</p>
+<p>The CYNTENATOR CSMs were distributed over 1,399 regions that spanned 1798.8 Mb. 812 blocks from Larkin et al. spanned 1785.2 Mb of which 735 blocks spanning 1477.4 Mb (83%) overlapped with the CYNTENATOR blocks. This corresponds to 77 (10%) regions from Larkin et al. and 548 (39%) of CYNTENATOR region with no overlap in the other data set. <xref ref-type="supplementary-material" rid="pone.0008861.s003">Figure <bold>S3</bold></xref> shows the intersection of the two data set on a karyogram. Although there is a substantial overlap between the two data sets, some of the differences might be explained by the fact, that we exclusively used whole genome assemblies whereas Larkin et al. used radiation hybrid maps for cow and pig instead and whole genome assemblies for the remaining species.</p>
+</sec><sec id="s3a6">
+<title>Genome assembly quality affects gene order alignments</title>
+<p>Some genome sequences are distributed over more than 1000 supercontigs or scaffolds. We assessed the impact of this phenomenon on our analyzes by calculating how many alignments might end prematurely because of a contig boundary (<xref ref-type="table" rid="pone-0008861-t003">Table 3</xref>). The platypus genome is the most fragmented genome in our collection. In a multiple gene order alignment of 9 mammalian species and the platypus genome, 480 (56%) of the 859 RSBs are confined by a gene which is located at one end of a contig. This indicates that more than half of the RSBs could potentially be extended or fused if a better platypus genome assembly was available. An example is given of this is shown in <xref ref-type="supplementary-material" rid="pone.0008861.s008">Figure <bold>S8</bold></xref>.</p>
+<p>If we assume that breakpoints simply arise due to highly fragmented genome assemblies, we could even use our method to build larger genomic scaffolds by merging contigs where end genes are clearly homologous to an adjacent gene pair in a reference species. We leave a careful investigation of this application for future work.</p>
+</sec></sec><sec id="s3b">
+<title>Functional Analysis of CSMs</title>
+<p>As mentioned in the <xref ref-type="sec" rid="s1">introduction</xref>, a number of biological mechanisms is likely to play a role in the retention or breakup of gene orders. In the following analyses, we tested CSMs for an enrichment of experimentally identified enhancer regions <xref ref-type="bibr" rid="pone.0008861-Visel1">[30]</xref> and for an enrichment of bidirectional promoters. Regions outside of CSMs were scanned for the abundance of sequence features like transposable elements.</p>
+<sec id="s3b1">
+<title>P300 bound regions are enriched in conserved syntenic regions</title>
+<p>A number of studies have reported correlations between gene expression, function and gene order. Kikuta et al. <xref ref-type="bibr" rid="pone.0008861-Kikuta1">[8]</xref> report evidence for a mechanism, which could maintain long-range conserved synteny across vertebrate genomes. They found conserved chromosomal segments in human-zebrafish comparisons to be spanned by highly conserved non-coding elements, one developmental regulatory ‘target genes’, and phylogenetically and functionally unrelated ‘bystander’ genes. They coined the term genomic regulatory blocks (GRBs) for these regions. The so called ‘bystander’ genes often serve housekeeping functions <xref ref-type="bibr" rid="pone.0008861-Akalin1">[31]</xref>. The actual evolutionary constraint on the gene order is given by the association of the cis-regulatory elements to their ‘target genes’ <xref ref-type="bibr" rid="pone.0008861-Kikuta1">[8]</xref>, <xref ref-type="bibr" rid="pone.0008861-Akalin1">[31]</xref>.</p>
+<p>Since the role of highly conserved non-coding regions as enhancers, which are active during embryonic development has already been extensively characterized <xref ref-type="bibr" rid="pone.0008861-Woolfe1">[7]</xref>, we used an independent set of experimentally identified enhancers <xref ref-type="bibr" rid="pone.0008861-Visel1">[30]</xref> to test for gene order constraints in enhancer regions. These enhancers were identified by massive parallel sequencing of P300 bound regions (ChIP-Seq). The P300 gene encodes an acetyltransferase and transcriptional coactivator which constitutes a general component of enhancer-associated protein complexes and is required for embryonic development <xref ref-type="bibr" rid="pone.0008861-Eckner1">[32]</xref>, <xref ref-type="bibr" rid="pone.0008861-Arany1">[33]</xref>.</p>
+<p>Consequently, this data set has no ascertainment bias for conserved genomic regions. We used this data set to test whether enhancers are enriched in CSMs. We ran a test for enrichment based on random samples at each ancestral node in the mouse lineage of the given phylogeny (see <xref ref-type="supplementary-material" rid="pone.0008861.s009">Methods <bold>S1</bold></xref>). Our simulations demonstrate that CSMs are enriched for enhancers in all ancestral nodes (<xref ref-type="supplementary-material" rid="pone.0008861.s010">Table <bold>S1</bold></xref>).</p>
+</sec><sec id="s3b2">
+<title>Bidirectional promoters contribute to the deep conservation of gene pairs</title>
+<p>A second regulatory feature, which might constrain gene orders, consists of bidirectional promoters <xref ref-type="bibr" rid="pone.0008861-Yang1">[9]</xref>. A selective pressure on gene order could be given in this context, if the expression levels of two neighboring genes are controlled by a common promoter and these expression levels are not free to evolve <xref ref-type="bibr" rid="pone.0008861-Yang2">[34]</xref>. We call a gene pair in this configuration, a head-to-head gene pair (H2H). 1,054 head-to-head gene pairs exist in the human genome. We tested whether they are enriched in CSMs, which include the human genome. We observed a significant enrichment of H2H pairs in all CSMs that predate the primate rodent ancestor (<xref ref-type="supplementary-material" rid="pone.0008861.s011">Table <bold>S2</bold></xref>, <xref ref-type="supplementary-material" rid="pone.0008861.s009">Methods <bold>S1</bold></xref>). To clearly distinguish this observation from P300 binding, we tested all mouse H2H pairs for enrichment of P300 bound regions and did not find a significant enrichment (139 P300 bound regions in H2H pairs in comparison to an expected value 138.4, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e052" xlink:type="simple"/></inline-formula>). This indicates that the cause for the observed conservation of synteny in H2H pairs is different from the one as described by Kikuta et al <xref ref-type="bibr" rid="pone.0008861-Kikuta1">[8]</xref>.</p>
+</sec></sec><sec id="s3c">
+<title>Recent Evolutionary Breakpoint Regions Exhibit Features of Species-Specific Adaptations</title>
+<p>Ohno <xref ref-type="bibr" rid="pone.0008861-Ohno1">[35]</xref> postulated that only few regions outside of conserved syntenic region are needed for species-specific adaptation processes in evolution. Larkin et al. <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref> denote these regions as evolutionary breakpoint regions (EBRs). We performed a Gene Ontology (GO) enrichment analysis for all human genes, which were were outside of CSMs as defined by the human-chimp-macaque gene order comparison (<xref ref-type="supplementary-material" rid="pone.0008861.s009">Methods <bold>S1</bold></xref>), assuming that conserved synteny has been lost due to a rearrangement, that introduced an evolutionary breakpoint in this region. We found that immune response related terms like <italic>MHC protein complex</italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e053" xlink:type="simple"/></inline-formula>) and <italic>NF-kappaB binding</italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e054" xlink:type="simple"/></inline-formula>), as well as olfactory receptor activity (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e055" xlink:type="simple"/></inline-formula>) are enriched in such EBRs (<xref ref-type="supplementary-material" rid="pone.0008861.s012">Table <bold>S3</bold></xref> and <xref ref-type="supplementary-material" rid="pone.0008861.s013"><bold>S4</bold></xref>). Such categories are frequently found in regions that are under positive selection <xref ref-type="bibr" rid="pone.0008861-Voight1">[36]</xref> and they were also reported by Larkin et al. <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>. Larkin et al. also found enrichments of structural variants (segmental duplications, copy number variants, and indels), retrotransposed genes and zinc finger genes in EBRs that are shared among multiple species.</p>
+<p>Our results show a strong enrichment for <italic>nucleic acid binding</italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e056" xlink:type="simple"/></inline-formula>) and <italic>zinc ion binding</italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e057" xlink:type="simple"/></inline-formula>) in EBR genes for which synteny was lost at the primate rodent split (<xref ref-type="supplementary-material" rid="pone.0008861.s014">Table <bold>S5</bold></xref>). Although the results are less reliable due to the accumulated bias introduced by incomplete genome assemblies, we observed a significant enrichment for the GO term <italic>sensory perception of light stimulus</italic> in EBR genes after the platypus split from the other mammals (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e058" xlink:type="simple"/></inline-formula>) and in EBR genes (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e059" xlink:type="simple"/></inline-formula>) after the split of amniota and amphibia. We also report a mild enrichment for the GO term <italic>sensory perception of mechanical stimulus</italic> in EBR segments (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0008861.e060" xlink:type="simple"/></inline-formula>), which were formed after the split of Actinopterygii and Sarcopterygii.</p>
+<sec id="s3c1">
+<title>EBRs are enriched in a variety of transposable elements</title>
+<p>Segmental duplications and repetitive elements may contribute to the fragility of genomic regions by increasing the rate of non-allelic homologous recombination <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>, <xref ref-type="bibr" rid="pone.0008861-Murphy1">[37]</xref>. That is why, we tested EBRs at each ancestral split in the human lineage for enrichment of repetitive and transposable elements. We observed that 63 out of 1,083 annotated repeat classes are significantly enriched in EBRs. The strongest enrichment was detected for primate-specific and mammalian-specific LINE-1 elements (L1) in EBRs that originated early in the subtree of mammalian species (<xref ref-type="supplementary-material" rid="pone.0008861.s015">Table <bold>S6</bold></xref>, <xref ref-type="supplementary-material" rid="pone.0008861.s009">Methods <bold>S1</bold></xref>).</p>
+</sec></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>In this work we have extended our previous approach for detecting conserved gene orders <xref ref-type="bibr" rid="pone.0008861-Rdelsperger1">[20]</xref> to multiple species comparison of dozens of vertebrate genomes. We have recast this problem into a progressive alignment setting by implementing local profile-profile alignments of gene orders. Our new software, CYNTENATOR, computes multiple gene order alignments progressively in a bottom-up approach along a given phylogeny. CYNTENATOR determines the landscape of gene order conservation across distantly related genomes where traditional alignment concepts fail.</p>
+<p>We have used the 17-way multiple gene order alignment to define conserved syntenic regions over multiple species (CSMs) and complementary evolutionary breakpoint regions (EBRs). These regions were analyzed for different mechanisms that could preserve or disrupt synteny after species splits.</p>
+<p>We showed that regulatory elements such as experimentally identified enhancers <xref ref-type="bibr" rid="pone.0008861-Visel1">[30]</xref> are enriched in CSMs and may contribute to the conservation of synteny. We also showed that relative gene order of head-to-head gene pairs is preferentially retained. These genes are often coregulated by means of bidirectional promoters <xref ref-type="bibr" rid="pone.0008861-Yang1">[9]</xref>.</p>
+<p>Common to those two classes of conserved synteny are elements of transcriptional regulation. We just begin to understand what these elements are, how they are distributed and what their target genes are.</p>
+<p>On the other hand genes that linked to responses to external stimuli like immune response or sensory perception show elevated levels of sequence variation, segmental duplications and retrotransposition as compared to the genomic average <xref ref-type="bibr" rid="pone.0008861-Larkin1">[25]</xref>. Evolutionary adaptation takes place in evolutionary breakpoint regions, where certain gene categories and specific repetitive elements are significantly enriched. Herein, we reported a clear pattern of gene enrichment for the human lineage: Genes related to chemosensation and immunity preferentially reside in primate breakpoint regions. Genes related to nucleic acid binding and nucleic acid metabolism reside in EBRs of the primate-rodent split.</p>
+<p>Central to the CYNTENATOR algorithm is the progressive alignment methodology, which scales to dozens of vertebrate genomes. CYNTENATOR implements a phylogenetic scoring function, which weights gene pairs according to their position in the phylogenetic tree.</p>
+<p>In a comparison of CYNTENATOR to other existing methods, we found that the definition of homology is an essential aspect in terms of accuracy and speed. Programs like OrthoCluster and MCMuSeC require a restrictive preprocessing of homology data, which could result in incorrect synteny predictions. CYNTENATOR uses all-against-all gene similarity scores as input and does not require a restrictive homology assignment. It performs as good as state-of-the art programs in pairwise comparisons on simulated data sets and is the only software that could be directly applied to 17 vertebrate genomes.</p>
+<p>In summary, CYNTENATOR represents a flexible tool to study chromosome rearrangements and genome evolution.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0008861.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p>AB denotes a genomic region with genes A and B. (A) After duplication and speciation, each successor species has two copies of this cluster. (B) Similarities in terms of alignment scores between gene clusters are shown as a bipartite homology graph. (C) As long as the top ranking alignment is correctly assigned, the unique filter will discard wrong assignments (assignments that do not correspond to the more recent evolutionary event, e.g., speciation). If only binary homology data is used, no decision can be made.</p>
+<p>(0.01 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s002" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s002" xlink:type="simple"><label>Figure S2</label><caption>
+<p>Comparison of gene coverage parameters from human mouse alignments. CYNTENATOR was run on the human and mouse data with mismatch and gap penalty 0.3 and a minimum alignment score threshold of 2. The alignment number filter was set to 10000. The y-axis denotes the number of aligned gene pairs for varying gene coverage parameters.</p>
+<p>(0.00 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s003" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s003" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Comparison of amniote CSMs. We built an alignment of ten amniote species (human, chimp, macaque, mouse, rat, cow, dog, horse, opossum, and chicken) and compared the human locations from the resulting CSMs to the corresponding locations from msHSBs from Larkin et al. Although some msHSBs were identified by only one method (e.g., lower arm of chromosome 4), which may be due to different assembly qualities and species sets, both sets largely agree.</p>
+<p>(0.48 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s004" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s004" xlink:type="simple"><label>Figure S4</label><caption>
+<p>Exploration of parameter space. For various combinations of mismatch and gap penalty, we computed human zebrafish gene order alignment and greedily extracted one-to-one pairs from set of local alignment, ordered by decreasing score. We counted which percentage of the 8,001 human zebrafish one-to-one orthologs from Ensembl release 50 could be recovered. The right graph shows the total length of the alignments in genes times 1,000. Decreasing the gap penalty increases the length of the alignments; however, also, more “true” one-to-one relationships could be recovered as highest scoring pairs. This indicates that lowering of this parameter does not correlate with the assignment of false homologies. Variation of mismatch parameter does not have a large effect on both measures.</p>
+<p>(0.10 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s005" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s005" xlink:type="simple"><label>Figure S5</label><caption>
+<p>CYNTENATOR performance for various mismatch parameter settings.</p>
+<p>(0.01 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s006" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s006" xlink:type="simple"><label>Figure S6</label><caption>
+<p>OrthoCluster performance for various parameter settings.</p>
+<p>(0.01 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s007" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s007" xlink:type="simple"><label>Figure S7</label><caption>
+<p>MCMuSeC performance for various parameter settings.</p>
+<p>(0.01 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s008" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s008" xlink:type="simple"><label>Figure S8</label><caption>
+<p>Predicting Ultracontig links in the platypus assembly. A UCSC Genome Browser screenshot is shown, in which two adjacent human-platypus CYNTENATOR alignments are bounded by the end of platypus Ultracontigs 483 and 542; human-platypus net alignments are shown on the lower track. Between the two regions platypus Contig 3692 is located, containing the <italic>Rragd</italic> gene. Assuming that synteny is preserved in this region, Ultracontigs 483, Contig 3692, and Ultracontig 542 might be linked in the platypus assembly.</p>
+<p>(0.04 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s009" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s009" xlink:type="simple"><label>Methods S1</label><caption>
+<p>Detailed description of the P300 peak, head-to-head pair, gene ontology term, and transposable element enrichment analysis of CSMs and evolutionary breakpoint regions.</p>
+<p>(0.04 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s010" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s010" xlink:type="simple"><label>Table S1</label><caption>
+<p>Enrichment P300 bound regions in mouse syntenic blocks. We used mouse enhancer regions, experimentally identified by ChIP-seq of enhancer protein P300 from Visel et al., to test for enrichment in conserved syntenic blocks. We determined p values by repeatedly selecting an equal number of random genomic location of the same length and testing for overlap with the P300 bound regions.</p>
+<p>(0.03 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s011" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s011" xlink:type="simple"><label>Table S2</label><caption>
+<p>Enrichment of head-to-head (H2H) pairs in CSMs. 1,054 (5%) of 21,444 neighboring gene pairs in humans fall under the H2H category (see <xref ref-type="supplementary-material" rid="pone.0008861.s009">Methods <bold>S1</bold></xref>). With the exception of the 17 vertebrate blocks, we observed a significant enrichment of H2H pairs in all multiple species syntenic blocks predating the human rodent split. Although the 17 vertebrates shows the highest enrichment in H2H pairs, this was not found to be statistically by the Fisher's exact test with Bonferroni correction.</p>
+<p>(0.03 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s012" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s012" xlink:type="simple"><label>Table S3</label><caption>
+<p>Gene ontology analysis of human genes for which synteny was last after the human-chimp split.</p>
+<p>(0.03 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s013" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s013" xlink:type="simple"><label>Table S4</label><caption>
+<p>Gene ontology analysis of human genes for which synteny was last after the human-chimp vs. macaque split.</p>
+<p>(0.03 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s014" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s014" xlink:type="simple"><label>Table S5</label><caption>
+<p>Gene ontology analysis of human genes for which synteny was lost after the primate rodent split.</p>
+<p>(0.03 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008861.s015" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008861.s015" xlink:type="simple"><label>Table S6</label><caption>
+<p>We evaluated evolutionary breakpoint regions (EBRs) following the human path in the phylogenetic tree by counting occurrences of transposable elements in regions for which synteny was lost after a speciation event. At each node (e.g., primate rodent), node-specific EBR regions from humans were extracted and analyzed. All significantly enriched repetitive elements are marked with a cross (comparison vs. random regions, P&lt;0.001).</p>
+<p>(0.02 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors appreciate numerous discussions with other members of the Berlin Institute for Medical Systems Biology.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0008861-Gregory1"><label>1</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="editor">
+<name name-style="western"><surname>Gregory</surname><given-names>TR</given-names></name>
+</person-group>             <year>2005</year>             <source>The Evolution of the Genome.</source>             <publisher-name>Academic Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0008861-Nadeau1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nadeau</surname><given-names>JH</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>BA</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Lengths of chromosomal segments conserved since divergence of man and mouse.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>81</volume>             <fpage>814</fpage>             <lpage>818</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Blumenthal1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Blumenthal</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Evans</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Link</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Guffanti</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Lawson</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>A global analysis of caenorhabditis elegans operons.</article-title>             <source>Nature</source>             <volume>417</volume>             <fpage>851</fpage>             <lpage>854</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Satou1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Satou</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Mineta</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ogasawara</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Sasakura</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Shoguchi</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Improved genome assembly and evidence-based global gene model set for the chordate ciona intestinalis: new insight into intron and operon populations.</article-title>             <source>Genome Biol</source>             <volume>9</volume>             <fpage>R152</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Pevzner1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pevzner</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Tesler</surname><given-names>G</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Human and mouse genomic sequences reveal extensive breakpoint reuse in mammalian evolution.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>100</volume>             <fpage>7672</fpage>             <lpage>7677</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Margulies1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Margulies</surname><given-names>EH</given-names></name>
+<name name-style="western"><surname>Cooper</surname><given-names>GM</given-names></name>
+<name name-style="western"><surname>Asimenos</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Thomas</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Dewey</surname><given-names>CN</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Analyses of deep mammalian sequence alignments and constraint predictions for 1% of the human genome.</article-title>             <source>Genome Res</source>             <volume>17</volume>             <fpage>760</fpage>             <lpage>774</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Woolfe1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Woolfe</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Goodson</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Goode</surname><given-names>DK</given-names></name>
+<name name-style="western"><surname>Snell</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>McEwen</surname><given-names>GK</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Highly conserved non-coding sequences are associated with vertebrate development.</article-title>             <source>PLoS Biol</source>             <volume>3</volume>             <fpage>e7</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Kikuta1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kikuta</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Laplante</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Navratilova</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Komisarczuk</surname><given-names>AZ</given-names></name>
+<name name-style="western"><surname>Engström</surname><given-names>PG</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Genomic regulatory blocks encompass multiple neighboring genes and maintain conserved synteny in vertebrates.</article-title>             <source>Genome Res</source>             <volume>17</volume>             <fpage>545</fpage>             <lpage>555</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Yang1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yang</surname><given-names>MQ</given-names></name>
+<name name-style="western"><surname>Koehly</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Elnitski</surname><given-names>LL</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Comprehensive annotation of bidirectional promoters identifies co-regulation among breast and ovarian cancer genes.</article-title>             <source>PLoS Comput Biol</source>             <volume>3</volume>             <fpage>e72</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Luc1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luc</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Risler</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Bergeron</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Raffinot</surname><given-names>M</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Gene teams: a new formalization of gene clusters for comparative genomics.</article-title>             <source>Comput Biol Chem</source>             <volume>27</volume>             <fpage>59</fpage>             <lpage>67</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Vandepoele1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vandepoele</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Saeys</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Simillion</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Raes</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Peer</surname><given-names>YVD</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The automatic detection of homologous regions (adhore) and its application to microcolinearity between arabidopsis and rice.</article-title>             <source>Genome Res</source>             <volume>12</volume>             <fpage>1792</fpage>             <lpage>1801</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Hampson1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hampson</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>McLysaght</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Gaut</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Baldi</surname><given-names>P</given-names></name>
+</person-group>             <year>2003</year>             <article-title>LineUp: statistical detection of chromosomal homology with application to plant comparative genomics.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>999</fpage>             <lpage>1010</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Ling1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ling</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>He</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Xin</surname><given-names>D</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Detecting gene clusters under evolutionary constraint in a large number of genomes.</article-title>             <source>Bioinformatics</source>             <volume>25</volume>             <fpage>571</fpage>             <lpage>577</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Boyer1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Boyer</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Morgat</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Labarre</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Pothier</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Viari</surname><given-names>A</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Syntons, metabolons and interactons: an exact graph-theoretical approach for exploring neighbourhood between genomic and functional data.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>4209</fpage>             <lpage>4215</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Zeng1"><label>15</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zeng</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Pei</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Vergara</surname><given-names>IA</given-names></name>
+<name name-style="western"><surname>Nesbitt</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>OrthoCluster: A new tool for mining syntenic blocks and applications in comparative genomics.</article-title>             <comment>In: Proceedings of the 11th International Conferences on Extending Database Technology (EDBT'08)</comment>          </element-citation></ref>
+<ref id="pone.0008861-Wang1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Shi</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Kong</surname><given-names>L</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Statistical inference of chromosomal homology based on gene colinearity and applications to arabidopsis and rice.</article-title>             <source>BMC Bioinformatics</source>             <volume>7</volume>             <fpage>447</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Haas1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Haas</surname><given-names>BJ</given-names></name>
+<name name-style="western"><surname>Delcher</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Wortman</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name>
+</person-group>             <year>2004</year>             <article-title>DAGchainer: a tool for mining segmental genome duplications and synteny.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>3643</fpage>             <lpage>3646</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Calabrese1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Calabrese</surname><given-names>PP</given-names></name>
+<name name-style="western"><surname>Chakravarty</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Vision</surname><given-names>TJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Fast identification and statistical evaluation of segmental homologies in comparative maps.</article-title>             <source>Bioinformatics</source>             <volume>19</volume>             <supplement>Suppl 1</supplement>             <fpage>i74</fpage>             <lpage>i80</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Soderlund1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Soderlund</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Nelson</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Shoemaker</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Paterson</surname><given-names>A</given-names></name>
+</person-group>             <year>2006</year>             <article-title>SyMAP: A system for discovering and viewing syntenic regions of fpc maps.</article-title>             <source>Genome Res</source>             <volume>16</volume>             <fpage>1159</fpage>             <lpage>1168</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Rdelsperger1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rödelsperger</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Dieterich</surname><given-names>C</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Syntenator: Multiple gene order alignments with a gene-specific scoring function.</article-title>             <source>Algorithms Mol Biol</source>             <volume>3</volume>             <fpage>14</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Waterman1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Waterman</surname><given-names>MS</given-names></name>
+<name name-style="western"><surname>Eggert</surname><given-names>M</given-names></name>
+</person-group>             <year>1987</year>             <article-title>A new algorithm for best subsequence alignments with application to tRNA-rRNA comparisons.</article-title>             <source>J Mol Biol</source>             <volume>197</volume>             <fpage>723</fpage>             <lpage>728</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Altschul1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name>
+<name name-style="western"><surname>Gish</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Miller</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name>
+<name name-style="western"><surname>Lipman</surname><given-names>DJ</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Basic local alignment search tool.</article-title>             <source>J Mol Biol</source>             <volume>215</volume>             <fpage>403</fpage>             <lpage>410</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Smith1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>TF</given-names></name>
+<name name-style="western"><surname>Waterman</surname><given-names>MS</given-names></name>
+</person-group>             <year>1981</year>             <article-title>Identification of common molecular subsequences.</article-title>             <source>J Mol Biol</source>             <volume>147</volume>             <fpage>195</fpage>             <lpage>197</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Miller1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Miller</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Rosenbloom</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hardison</surname><given-names>RC</given-names></name>
+<name name-style="western"><surname>Hou</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>28-way vertebrate alignment and conservation track in the UCSC genome browser.</article-title>             <source>Genome Res</source>             <volume>17</volume>             <fpage>1797</fpage>             <lpage>1808</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Larkin1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Larkin</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Pape</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Donthu</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Auvil</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Welge</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Breakpoint regions and homologous synteny blocks in chromosomes have different evolutionary histories.</article-title>             <source>Genome Res</source>             <volume>19</volume>             <fpage>770</fpage>             <lpage>777</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Ng1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ng</surname><given-names>MP</given-names></name>
+<name name-style="western"><surname>Vergara</surname><given-names>IA</given-names></name>
+<name name-style="western"><surname>Frech</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Zeng</surname><given-names>X</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>OrthoClusterDB: an online platform for synteny blocks.</article-title>             <source>BMC Bioinformatics</source>             <volume>10</volume>             <fpage>192</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Tatusov1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tatusov</surname><given-names>RL</given-names></name>
+<name name-style="western"><surname>Fedorova</surname><given-names>ND</given-names></name>
+<name name-style="western"><surname>Jackson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Jacobs</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Kiryutin</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>The COG database: an updated version includes eukaryotes.</article-title>             <source>BMC Bioinformatics</source>             <volume>4</volume>             <fpage>41</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Hubbard1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hubbard</surname><given-names>TJP</given-names></name>
+<name name-style="western"><surname>Aken</surname><given-names>BL</given-names></name>
+<name name-style="western"><surname>Beal</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ballester</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Caccamo</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Ensembl 2007.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>D610</fpage>             <lpage>D617</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Ostlund1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ostlund</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Schmitt</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Forslund</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Köstler</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Messina</surname><given-names>DN</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Inparanoid 7: new algorithms and tools for eukaryotic orthology analysis.</article-title>             <source>Nucleic Acids Res</source>          </element-citation></ref>
+<ref id="pone.0008861-Visel1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Visel</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Blow</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Akiyama</surname><given-names>JA</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Chip-seq accurately predicts tissue-specific activity of enhancers.</article-title>             <source>Nature</source>             <volume>457</volume>             <fpage>854</fpage>             <lpage>858</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Akalin1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Akalin</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Fredman</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Arner</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Dong</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Bryne</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Transcriptional features of genomic regulatory blocks.</article-title>             <source>Genome Biol</source>             <volume>10</volume>             <fpage>R38</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Eckner1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eckner</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Ewen</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Newsome</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Gerdes</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>DeCaprio</surname><given-names>JA</given-names></name>
+<etal/></person-group>             <year>1994</year>             <article-title>Molecular cloning and functional analysis of the adenovirus e1a-associated 300-kd protein (p300) reveals a protein with properties of a transcriptional adaptor.</article-title>             <source>Genes Dev</source>             <volume>8</volume>             <fpage>869</fpage>             <lpage>884</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Arany1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Arany</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Sellers</surname><given-names>WR</given-names></name>
+<name name-style="western"><surname>Livingston</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Eckner</surname><given-names>R</given-names></name>
+</person-group>             <year>1994</year>             <article-title>E1a-associated p300 and creb-associated cbp belong to a conserved family of coactivators.</article-title>             <source>Cell</source>             <volume>77</volume>             <fpage>799</fpage>             <lpage>800</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Yang2"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yang</surname><given-names>MQ</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Elnitski</surname><given-names>L</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Comparative analyses of bidirectional promoters in vertebrates.</article-title>             <source>BMC Bioinformatics</source>             <volume>9</volume>             <supplement>Suppl 6</supplement>             <fpage>S9</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Ohno1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ohno</surname><given-names>S</given-names></name>
+</person-group>             <year>1973</year>             <article-title>Ancient linkage groups and frozen accidents.</article-title>             <source>Nature</source>             <volume>244</volume>             <fpage>259</fpage>             <lpage>262</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Voight1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Voight</surname><given-names>BF</given-names></name>
+<name name-style="western"><surname>Kudaravalli</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+</person-group>             <year>2006</year>             <article-title>A map of recent positive selection in the human genome.</article-title>             <source>PLoS Biol</source>             <volume>4</volume>             <fpage>e72</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Murphy1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Murphy</surname><given-names>WJ</given-names></name>
+<name name-style="western"><surname>Larkin</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>van der Wind</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Bourque</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Tesler</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Dynamics of mammalian chromosome evolution inferred from multispecies comparative maps.</article-title>             <source>Science</source>             <volume>309</volume>             <fpage>613</fpage>             <lpage>617</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Huson1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huson</surname><given-names>DH</given-names></name>
+<name name-style="western"><surname>Richter</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>Rausch</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Dezulian</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Franz</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Dendroscope: An interactive viewer for large phylogenetic trees.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <fpage>460</fpage>          </element-citation></ref>
+<ref id="pone.0008861-Schwartz1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schwartz</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Kent</surname><given-names>WJ</given-names></name>
+<name name-style="western"><surname>Smit</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Baertsch</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Human-mouse alignments with blastz.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>103</fpage>             <lpage>107</lpage>          </element-citation></ref>
+<ref id="pone.0008861-Sinha1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sinha</surname><given-names>AU</given-names></name>
+<name name-style="western"><surname>Meller</surname><given-names>J</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Cinteny: flexible analysis and visualization of synteny and genome rearrangements in multiple organisms.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <fpage>82</fpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

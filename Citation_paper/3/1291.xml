@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-12-31455</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0060997</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Computational biology</subject><subj-group><subject>Computational neuroscience</subject></subj-group></subj-group><subj-group><subject>Neuroscience</subject><subj-group><subject>Neuroanatomy</subject><subj-group><subject>Connectomics</subject></subj-group></subj-group><subj-group><subject>Computational neuroscience</subject><subject>Neural networks</subject><subject>Neuroimaging</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine</subject><subj-group><subject>Neurology</subject><subj-group><subject>Neuroimaging</subject></subj-group></subj-group><subj-group><subject>Radiology</subject><subj-group><subject>Diagnostic radiology</subject><subj-group><subject>Magnetic resonance imaging</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Principal Networks</article-title>
+<alt-title alt-title-type="running-head">Principal Networks</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Clayden</surname><given-names>Jonathan D.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Dayan</surname><given-names>Michael</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Clark</surname><given-names>Chris A.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Institute of Child Health, University College London, London, United Kingdom</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Neuroimaging Laboratory, Fondazione Santa Lucia, Rome, Italy</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Valdes-Sosa</surname><given-names>Pedro Antonio</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Cuban Neuroscience Center, Cuba</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">j.clayden@ucl.ac.uk</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: JDC CAC. Performed the experiments: JDC. Analyzed the data: JDC. Contributed reagents/materials/analysis tools: MD CAC. Wrote the paper: JDC MD CAC.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>22</day><month>4</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>4</issue>
+<elocation-id>e60997</elocation-id>
+<history>
+<date date-type="received"><day>12</day><month>10</month><year>2012</year></date>
+<date date-type="accepted"><day>4</day><month>3</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Clayden et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Graph representations of brain connectivity have attracted a lot of recent interest, but existing methods for dividing such graphs into connected subnetworks have a number of limitations in the context of neuroimaging. This is an important problem because most cognitive functions would be expected to involve some but not all brain regions. In this paper we outline a simple approach for decomposing graphs, which may be based on any measure of interregional association, into coherent “principal networks”. The technique is based on an eigendecomposition of the association matrix, and is closely related to principal components analysis. We demonstrate the technique using cortical thickness and diffusion tractography data, showing that the subnetworks which emerge are stable, meaningful and reproducible. Graph-theoretic measures of network cost and efficiency may be calculated separately for each principal network. Unlike some other approaches, all available connectivity information is taken into account, and vertices may appear in none or several of the subnetworks. Subject-by-subject “scores” for each principal network may also be obtained, under certain circumstances, and related to demographic or cognitive variables of interest.</p>
+</abstract>
+<funding-group><funding-statement>The study was partly supported by European Union grant FP7-ICT-2009-C 238292 (<ext-link ext-link-type="uri" xlink:href="http://cordis.europa.eu/fp7/home_en.html" xlink:type="simple">http://cordis.europa.eu/fp7/home_en.html</ext-link>), and by EPSRC grant EP/J016292/1 (<ext-link ext-link-type="uri" xlink:href="http://www.epsrc.ac.uk" xlink:type="simple">http://www.epsrc.ac.uk</ext-link>). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="12"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>There has been a substantial amount of recent interest in network representations of neural connectivity. Abstract “graphs” can be employed to represent the broad pattern of association between brain regions, using structural and functional imaging methods to obtain this information <xref ref-type="bibr" rid="pone.0060997-Bullmore1">[1]</xref>; and a great deal of theory exists regarding the characterisation and manipulation of graphs in general, dating back as far as Leonhard Euler's 18th-century solution to the now-famous “seven bridges of Königsberg” problem <xref ref-type="bibr" rid="pone.0060997-Euler1">[2]</xref>. This body of theory offers tools for describing and comparing patterns of brain interconnectivity, with potential relevance for clinical and nonclinical neuroscience. For example, one might expect that a network in which links between regions are laid out less “efficiently” would correspond to a penalty in mental processing speed—and early clinical and cognitive studies using graph theory are beginning to bear such views out (e.g. <xref ref-type="bibr" rid="pone.0060997-Bernhardt1">[3]</xref>, <xref ref-type="bibr" rid="pone.0060997-WenW1">[4]</xref>). Such characteristics are also useful in understanding the trade-offs associated with brain evolution under practical space and resource constraints <xref ref-type="bibr" rid="pone.0060997-Kaiser1">[5]</xref>; and graphs are widely used in genomics and proteomics.</p>
+<p>The abstract nature of graphs means that the same theoretical platform may be used to analyse networks generated from very different source data, and this may be seen as both an advantage and a potential source of confusion. Brain connectivity graphs have been created using measures of association such as between-subject correlations in cortical thickness <xref ref-type="bibr" rid="pone.0060997-Bernhardt1">[3]</xref>, <xref ref-type="bibr" rid="pone.0060997-He1">[6]</xref>, within-subject correlations in functional imaging time series <xref ref-type="bibr" rid="pone.0060997-Achard1">[7]</xref>, <xref ref-type="bibr" rid="pone.0060997-Fair1">[8]</xref>, or the number of reconstructed streamlines from diffusion tractography <xref ref-type="bibr" rid="pone.0060997-Hagmann1">[9]</xref>, <xref ref-type="bibr" rid="pone.0060997-IturriaMedina1">[10]</xref>. Attempts to unify the findings in these different modalities have tended to observe some similarities between the graphs, but also notable differences <xref ref-type="bibr" rid="pone.0060997-Gong1">[11]</xref>, <xref ref-type="bibr" rid="pone.0060997-Honey1">[12]</xref>. The choice of brain regions to act as the vertices of the graphs tends to be ultimately arbitrary, but may be based on a semiautomated anatomical parcellation, or else simply by creating many small cortical patches of similar size. However, the choice of vertices, as well as the exact basis for retaining or discarding the edges which connect them, will have a significant impact on the results and conclusions of a given analysis <xref ref-type="bibr" rid="pone.0060997-Zalesky1">[13]</xref>.</p>
+<p>In clinical and neuroscientific applications, the difficulties involved in reliably applying graph methods are compounded. The functional importance of the “small-world” organisation of the brain, with some regions forming highly connected hubs, is well recognised <xref ref-type="bibr" rid="pone.0060997-Hagmann1">[9]</xref>, <xref ref-type="bibr" rid="pone.0060997-vandenHeuvel1">[14]</xref>, <xref ref-type="bibr" rid="pone.0060997-Wu1">[15]</xref>, and in any given study it is reasonable to assume that only a subset of the cortical regions obtained from a full brain parcellation will be of relevance—but graph-theoretical analysis is usually performed on the whole network. The best way to identify important subnetworks is not obvious: this is a problem which has received considerable attention over several decades in the broader network analysis literature, under the general heading of “community detection” <xref ref-type="bibr" rid="pone.0060997-Fortunato1">[16]</xref>. This term generally refers to the process of analysing a graph and partitioning it into “communities” of highly interconnected vertices, often choosing the partition which maximises “modularity”, a measure which quantifies the excess within-community connectivity relative to a randomly connected graph. Modularity maximisation methods have been applied in a number of imaging studies (e.g. <xref ref-type="bibr" rid="pone.0060997-AlexanderBloch1">[17]</xref>, <xref ref-type="bibr" rid="pone.0060997-Chen1">[18]</xref>), but such methods tend to consider only whether each pair of nodes is connected, without taking the weight of each connection into account. As an alternative to modularity optimisation, some studies have performed hierarchical clustering to group strongly associated vertices into subgraphs (e.g. <xref ref-type="bibr" rid="pone.0060997-Hnggi1">[19]</xref>, <xref ref-type="bibr" rid="pone.0060997-Salvador1">[20]</xref>), a natural approach which does take advantage of the availability of a similarity measure between regions. But this technique does not directly indicate the relative importance of each subnetwork, and nor is it clear when one should stop agglomerating or dividing clusters. Finally, Iturria-Medina et al. <xref ref-type="bibr" rid="pone.0060997-IturriaMedina1">[10]</xref> identify common “motifs” in their networks, but these are limited to patterns of interconnection between very small and nonspecific groups of vertices.</p>
+<p>In this paper we introduce the concept of “principal networks”, a simple technique for identifying influential subnetworks with strong internal connectivity using a data-driven eigendecomposition approach, akin to principal components analysis (PCA). We present this framework as an alternative to graph partitioning methods, which groups together vertices with similar patterns of association and allows multiple “layers” of connectivity to be considered separately. The relative importance of different subnetworks can be easily established using this method, as can the degree of influence of each cortical region in each principal network. We demonstrate the method using cortical thickness and diffusion tractography data.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>For brevity in the presentation of these results, each cortical region segmented by Freesurfer is given a numerical index. The correspondence between region names and indices is given in <xref ref-type="table" rid="pone-0060997-t001">Table 1</xref>.</p>
+<table-wrap id="pone-0060997-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.t001</object-id><label>Table 1</label><caption>
+<title>Correspondence between region names and indices used in this paper.</title>
+</caption><alternatives><graphic id="pone-0060997-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Region name</td>
+<td align="left" rowspan="1" colspan="1">Index (left)</td>
+<td align="left" rowspan="1" colspan="1">Index (right)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">caudal anterior cingulate cortex</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">caudal middle frontal gyrus</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">34</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">cuneus</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">35</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">entorhinal cortex</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">36</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">fusiform gyrus</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">inferior parietal gyrus</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">38</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">inferior temporal gyrus</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">39</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">cingulate gyrus, isthmus</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">40</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">lateral occipital cortex</td>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">lateral orbitofrontal cortex</td>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">42</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">lingual gyrus</td>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">medial orbitofrontal gyrus</td>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1">44</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">middle temporal gyrus</td>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">45</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">parahippocampal gyrus</td>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">46</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">paracentral gyrus</td>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1">47</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">inferior frontal gyrus, pars opercularis</td>
+<td align="left" rowspan="1" colspan="1">16</td>
+<td align="left" rowspan="1" colspan="1">48</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">inferior frontal gyrus, pars orbitalis</td>
+<td align="left" rowspan="1" colspan="1">17</td>
+<td align="left" rowspan="1" colspan="1">49</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">inferior frontal gyrus, pars triangularis</td>
+<td align="left" rowspan="1" colspan="1">18</td>
+<td align="left" rowspan="1" colspan="1">50</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">pericalcarine cortex</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">51</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">postcentral gyrus</td>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="left" rowspan="1" colspan="1">52</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">posterior cingulate gyrus</td>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">53</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">precentral gyrus</td>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">54</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">precuneus</td>
+<td align="left" rowspan="1" colspan="1">23</td>
+<td align="left" rowspan="1" colspan="1">55</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">rostral anterior cingulate cortex</td>
+<td align="left" rowspan="1" colspan="1">24</td>
+<td align="left" rowspan="1" colspan="1">56</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">rostral middle frontal gyrus</td>
+<td align="left" rowspan="1" colspan="1">25</td>
+<td align="left" rowspan="1" colspan="1">57</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">superior frontal gyrus</td>
+<td align="left" rowspan="1" colspan="1">26</td>
+<td align="left" rowspan="1" colspan="1">58</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">superior parietal gyrus</td>
+<td align="left" rowspan="1" colspan="1">27</td>
+<td align="left" rowspan="1" colspan="1">59</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">superior temporal gyrus</td>
+<td align="left" rowspan="1" colspan="1">28</td>
+<td align="left" rowspan="1" colspan="1">60</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">supramarginal gyrus</td>
+<td align="left" rowspan="1" colspan="1">29</td>
+<td align="left" rowspan="1" colspan="1">61</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">frontal pole</td>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="left" rowspan="1" colspan="1">62</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">temporal pole</td>
+<td align="left" rowspan="1" colspan="1">31</td>
+<td align="left" rowspan="1" colspan="1">63</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">transverse temporal gyrus</td>
+<td align="left" rowspan="1" colspan="1">32</td>
+<td align="left" rowspan="1" colspan="1">64</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Note that each region has one index value for each of the left and right hemispheres.</p></fn></table-wrap-foot></table-wrap>
+<p>The full association matrix derived from cortical thickness data from all 28 participants is shown in <xref ref-type="fig" rid="pone-0060997-g001">Fig. 1</xref>. We observe that it is dominated by moderately strong positive correlations but, by ordering the rows and columns according to their loading in the first principal network, the matrix appears more structured.</p>
+<fig id="pone-0060997-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g001</object-id><label>Figure 1</label><caption>
+<title>Visualisation of the full association matrix derived from all cortical thickness data.</title>
+<p>The matrix is shown twice, with the gyral regions ordered either numerically by index (left), or by their loading in the first principal network (right). The scale is based on Pearson's correlation coefficient between regions, across all participants.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g001" position="float" xlink:type="simple"/></fig>
+<p>Graphs representing the most influential three principal networks (PNs) are shown in <xref ref-type="fig" rid="pone-0060997-g002">Fig. 2</xref>. Note that since the association matrix in this case is a correlation matrix, the principal networks are equivalent to principal components of the original cortical thickness data. It is immediately evident that the first PN captures a broad tendency for positive correlation in cortical thickness between the majority of the regions of interest. It includes 44 of the 64 regions, and is fully connected; i.e. every vertex is connected to every other. By contrast, the second PN includes only 28 vertices and is far more sparsely connected. It also includes a mixture of positively and negatively weighted edges. Various graph-theoretical characteristics of the original graph, as well as all PNs containing at least two vertices, are given in <xref ref-type="table" rid="pone-0060997-t002">Table 2</xref>. We note that the most strongly-connected vertex in both the full graph and PN1 is the left precuneus, an area regularly reported as being important in brain networks (see, for example, <xref ref-type="bibr" rid="pone.0060997-Hagmann1">[9]</xref>).</p>
+<fig id="pone-0060997-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g002</object-id><label>Figure 2</label><caption>
+<title>First (top), second (middle) and third (bottom) principal networks, based on all cortical thickness data.</title>
+<p>Only vertices and edges above the appropriate loading and weight thresholds are shown. The vertices are laid out regularly in a circle for visual clarity, and ordered by their loading in the appropriate PN.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g002" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0060997-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.t002</object-id><label>Table 2</label><caption>
+<title>Graph characteristics of cortical thickness networks.</title>
+</caption><alternatives><graphic id="pone-0060997-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Principal network</td>
+<td align="left" rowspan="1" colspan="1">Full network</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Eigenvalue</bold></td>
+<td align="left" rowspan="1" colspan="1">N/A</td>
+<td align="left" rowspan="1" colspan="1">21.55</td>
+<td align="left" rowspan="1" colspan="1">6.47</td>
+<td align="left" rowspan="1" colspan="1">5.16</td>
+<td align="left" rowspan="1" colspan="1">4.07</td>
+<td align="left" rowspan="1" colspan="1">3.18</td>
+<td align="left" rowspan="1" colspan="1">2.52</td>
+<td align="left" rowspan="1" colspan="1">2.40</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of connected vertices</bold></td>
+<td align="left" rowspan="1" colspan="1">64</td>
+<td align="left" rowspan="1" colspan="1">44</td>
+<td align="left" rowspan="1" colspan="1">28</td>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Most connected vertex</bold></td>
+<td align="left" rowspan="1" colspan="1">23</td>
+<td align="left" rowspan="1" colspan="1">23</td>
+<td align="left" rowspan="1" colspan="1">24</td>
+<td align="left" rowspan="1" colspan="1">63</td>
+<td align="left" rowspan="1" colspan="1">54</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">53</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of edges</bold></td>
+<td align="left" rowspan="1" colspan="1">1434</td>
+<td align="left" rowspan="1" colspan="1">990</td>
+<td align="left" rowspan="1" colspan="1">113</td>
+<td align="left" rowspan="1" colspan="1">56</td>
+<td align="left" rowspan="1" colspan="1">36</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Connection density, %</bold></td>
+<td align="left" rowspan="1" colspan="1">68.94</td>
+<td align="left" rowspan="1" colspan="1">100.00</td>
+<td align="left" rowspan="1" colspan="1">27.83</td>
+<td align="left" rowspan="1" colspan="1">24.24</td>
+<td align="left" rowspan="1" colspan="1">39.56</td>
+<td align="left" rowspan="1" colspan="1">25.00</td>
+<td align="left" rowspan="1" colspan="1">100.00</td>
+<td align="left" rowspan="1" colspan="1">83.33</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean absolute edge weight</bold></td>
+<td align="left" rowspan="1" colspan="1">0.44</td>
+<td align="left" rowspan="1" colspan="1">0.43</td>
+<td align="left" rowspan="1" colspan="1">0.25</td>
+<td align="left" rowspan="1" colspan="1">0.24</td>
+<td align="left" rowspan="1" colspan="1">0.26</td>
+<td align="left" rowspan="1" colspan="1">0.23</td>
+<td align="left" rowspan="1" colspan="1">0.23</td>
+<td align="left" rowspan="1" colspan="1">0.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean shortest path, steps</bold></td>
+<td align="left" rowspan="1" colspan="1">1.32</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.72</td>
+<td align="left" rowspan="1" colspan="1">1.76</td>
+<td align="left" rowspan="1" colspan="1">1.63</td>
+<td align="left" rowspan="1" colspan="1">1.71</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean clustering coefficient</bold></td>
+<td align="left" rowspan="1" colspan="1">0.78</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">0.89</td>
+<td align="left" rowspan="1" colspan="1">0.87</td>
+<td align="left" rowspan="1" colspan="1">0.86</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Global efficiency</bold></td>
+<td align="left" rowspan="1" colspan="1">0.84</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">0.64</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">0.69</td>
+<td align="left" rowspan="1" colspan="1">0.64</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Local efficiency</bold></td>
+<td align="left" rowspan="1" colspan="1">0.89</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">0.95</td>
+<td align="left" rowspan="1" colspan="1">0.75</td>
+<td align="left" rowspan="1" colspan="1">0.55</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Properties of the full network, plus each principal network containing more than one vertex, are given. The most connected vertex in each case is based on the sum of absolute weights of edges connected to the vertices, ignoring self-connections. Efficiency measures are calculated following Latora &amp; Marchiori <xref ref-type="bibr" rid="pone.0060997-Latora1">[41]</xref>. Unweighted versions of all measured are used, where the option exists.</p></fn></table-wrap-foot></table-wrap>
+<p>Our bootstrap analysis showed that on average, across the 1000 replicates, 84% of vertex memberships matched for the first principal network, 66% for the second, and 63% for the third. Further, the consensus first PN matched the first PN obtained from the full dataset almost perfectly, with only a single extra vertex appearing in the former.</p>
+<p>Running the Newman modularity maximisation algorithm on our cortical thickness data resulted in a partition of the graph into two groups (or “communities”) of 32 vertices, as shown in <xref ref-type="fig" rid="pone-0060997-g003">Fig. 3</xref>. Approximately half of the vertices in each group are from each hemisphere. 12 bilateral pairs appear within each of the groups, while the remaining eight, including the precuneus, straddle the partition, with the left-sided region appearing in one group and the right-sided region appearing in the other. There is very little correspondence with the main principal network: 25 of the vertices that appeared in PN1 are in one of the communities, while the other 19 are in the other.</p>
+<fig id="pone-0060997-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g003</object-id><label>Figure 3</label><caption>
+<title>Result of partitioning the thresholded cortical thickness association matrix, using a well-established modularity maximisation algorithm.</title>
+<p>Two groups of vertices, of equal size, emerge. These are delimited by horizontal and vertical black lines. Since this algorithm does not identify an ordering for vertices, they are ordered numerically within each group.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g003" position="float" xlink:type="simple"/></fig>
+<p><xref ref-type="fig" rid="pone-0060997-g004">Fig. 4</xref> shows the results of applying agglomerative hierarchical clustering to the cortical thickness data. The pair of vertices with the smallest distance (i.e. highest correlation) is the left and right superior parietal gyrus, followed by the left and right superior frontal gyrus, and then the left and right precuneus. To highlight the relationship between these results and the output of the principal networks analysis, the nodes which appear in each PN are highlighted underneath the dendrogram. We observe that in this case there is an approximate correspondence between one of the top-level clusters and the first PN, although the association is not exact. There is no clear link between clusters and the other two PNs.</p>
+<fig id="pone-0060997-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g004</object-id><label>Figure 4</label><caption>
+<title>Dendrogram showing the results of hierarchical clustering applied to the cortical thickness data, using (1-correlation) as the distance measure.</title>
+<p>“Height”, on the <italic>y</italic>-axis, refers to the maximum distance between vertices in each pair of clusters. The coloured lines at the bottom of the figure indicate which vertices appear in each of the three main PNs.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g004" position="float" xlink:type="simple"/></fig>
+<p>Scores for the first principal network, calculated according to Eq. (4), were very strongly correlated with the mean cortical thickness across all regions (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e001" xlink:type="simple"/></inline-formula>, 95% confidence interval 0.962–0.992). No such relationship existed for other major PN scores. <xref ref-type="fig" rid="pone-0060997-g005">Fig. 5</xref> shows plots of the scores for each of the first three PNs against age, by way of illustration of how these values may be used in further analysis. Linear model fits to these data showed that PN1 scores were significantly affected by age but not gender (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e002" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e003" xlink:type="simple"/></inline-formula>); PN2 scores were significantly influenced by gender but not age (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e004" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e005" xlink:type="simple"/></inline-formula> for males relative to females); and PN3 scores were not affected by either variable (both <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e006" xlink:type="simple"/></inline-formula>). We can interpret the significant effects as differences in the average cortical thickness within the regions appearing in each subnetwork, between the sexes or with age.</p>
+<fig id="pone-0060997-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g005</object-id><label>Figure 5</label><caption>
+<title>Scores for each of the three major principal networks based on cortical thickness, plotted against age.</title>
+<p>Note that the scores for each PN sum to zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g005" position="float" xlink:type="simple"/></fig>
+<p>To illustrate the results obtained subject-by-subject from the diffusion tractography data, the PNs with the largest eigenvalue for each of the two repeated scans of the two individuals with median age (both male) are shown in <xref ref-type="fig" rid="pone-0060997-g006">Fig. 6</xref>. In all cases these networks highlight the strong structural interconnectivity between subregions of cingulate cortex: the left and right caudal anterior cingulate cortex, and left and right posterior cingulate gyrus, invariably appear in all four graphs. Graph properties of PN1 in each of these cases are given in <xref ref-type="table" rid="pone-0060997-t003">Table 3</xref>. Region 33, the right caudal anterior cingulate cortex, is the most strongly connected vertex in all cases.</p>
+<fig id="pone-0060997-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g006</object-id><label>Figure 6</label><caption>
+<title>First principal network derived from diffusion data in each of two repeat scans of two subjects.</title>
+<p>The location of each vertex is based on the original segmentation, using the spatial median of the corresponding region. All four graphs emphasise the strong interconnections between subregions of cingulate cortex.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g006" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0060997-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.t003</object-id><label>Table 3</label><caption>
+<title>Graph characteristics of diffusion tractography networks.</title>
+</caption><alternatives><graphic id="pone-0060997-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Subject</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Scan</bold></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Eigenvalue</bold></td>
+<td align="left" rowspan="1" colspan="1">10.50</td>
+<td align="left" rowspan="1" colspan="1">11.01</td>
+<td align="left" rowspan="1" colspan="1">11.93</td>
+<td align="left" rowspan="1" colspan="1">12.10</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of connected vertices</bold></td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Most connected vertex</bold></td>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of edges</bold></td>
+<td align="left" rowspan="1" colspan="1">16</td>
+<td align="left" rowspan="1" colspan="1">18</td>
+<td align="left" rowspan="1" colspan="1">18</td>
+<td align="left" rowspan="1" colspan="1">14</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Connection density, %</bold></td>
+<td align="left" rowspan="1" colspan="1">76.19</td>
+<td align="left" rowspan="1" colspan="1">85.71</td>
+<td align="left" rowspan="1" colspan="1">85.71</td>
+<td align="left" rowspan="1" colspan="1">93.33</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean absolute edge weight</bold></td>
+<td align="left" rowspan="1" colspan="1">1.47</td>
+<td align="left" rowspan="1" colspan="1">1.53</td>
+<td align="left" rowspan="1" colspan="1">1.65</td>
+<td align="left" rowspan="1" colspan="1">1.99</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean shortest path, steps</bold></td>
+<td align="left" rowspan="1" colspan="1">1.20</td>
+<td align="left" rowspan="1" colspan="1">1.07</td>
+<td align="left" rowspan="1" colspan="1">1.07</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean clustering coefficient</bold></td>
+<td align="left" rowspan="1" colspan="1">0.85</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Global efficiency</bold></td>
+<td align="left" rowspan="1" colspan="1">0.90</td>
+<td align="left" rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Local efficiency</bold></td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>Properties of the first principal network are given for each of the diffusion data sets analysed. The most connected vertex in each case is based on the sum of absolute weights of edges connected to the vertices, ignoring self-connections. Efficiency measures are calculated following Latora &amp; Marchiori <xref ref-type="bibr" rid="pone.0060997-Latora1">[41]</xref>. Unweighted versions of all measured are used, where the option exists.</p></fn></table-wrap-foot></table-wrap>
+<p>Across the whole data set, the principal networks were extremely consistent between the first and second scans, with some 97% of vertex memberships agreeing across scans for the first principal network, 96% for the second, and 93% for the third. Moreover, regions of the cingulate cortex were involved in 100% of first PNs across both scans, thereby lending very substantial weight to the importance of these regions in the connectome. The 20 largest eigenvalues for each subject's first scan are shown in order in <xref ref-type="fig" rid="pone-0060997-g007">Fig. 7</xref>, and a very similar pattern of fall-off may be observed from subject to subject.</p>
+<fig id="pone-0060997-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g007</object-id><label>Figure 7</label><caption>
+<title>Eigenvalues of the first 20 principal networks derived from each subject's first diffusion MRI data set.</title>
+<p>The pattern of fall-off is very similar from subject to subject, indicating consistency in subnetwork weights across our cohort.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g007" position="float" xlink:type="simple"/></fig></sec><sec id="s3">
+<title>Discussion</title>
+<p>In this manuscript we have described a simple and general technique based on what we refer to as “principal networks”. This method allows brain connectivity networks to be decomposed into subnetworks of strongly interconnected vertices. The influence of each subnetwork in the source data, and the weight of each vertex within a subnetwork, can be obtained easily. In the case of networks based on region-to-region correlation across subjects, such as cortical thickness correlations, the method is functionally equivalent to principal components analysis, and scores for each PN can be calculated subjectwise and compared. We have demonstrated that PNs are stable, meaningful and reproducible: stable, because key aspects of the full network are preserved in major PNs (<xref ref-type="fig" rid="pone-0060997-g001">Figs 1</xref> and <xref ref-type="fig" rid="pone-0060997-g002">2</xref>, <xref ref-type="table" rid="pone-0060997-t002">Table 2</xref>); meaningful, because regions involved in major PNs are consistent with current understanding of the most connected parts of the brain (<xref ref-type="table" rid="pone-0060997-t002">Tables 2</xref> and <xref ref-type="table" rid="pone-0060997-t003">3</xref>); and reproducible, because the most important subnetwork obtained is highly consistent across scans (<xref ref-type="fig" rid="pone-0060997-g006">Fig. 6</xref> and <xref ref-type="table" rid="pone-0060997-t003">Table 3</xref>). We have also shown that principal networks can be derived from imaging data of different sorts. Although the spectral decomposition of a graph's association matrix has been well-studied in theoretical work—indeed, it is central to the subfield of spectral graph analysis <xref ref-type="bibr" rid="pone.0060997-Brouwer1">[21]</xref> —we believe that this study represents the first use of our particular approach to identify subnetworks in the context of brain connectivity analysis. Spectral graph methods have however been used in other contexts, such as in disease progression modelling <xref ref-type="bibr" rid="pone.0060997-Raj1">[22]</xref>, or in the “normalised cuts” algorithm used in image segmentation <xref ref-type="bibr" rid="pone.0060997-Shi1">[23]</xref>.</p>
+<p>In <xref ref-type="fig" rid="pone-0060997-g001">Fig. 1</xref> we demonstrated that the loadings obtained from the principal networks analysis (PNA) reflect real structure in the original association matrix. <xref ref-type="fig" rid="pone-0060997-g002">Fig. 2</xref> showed examples of how the different principal networks capture distinct aspects of the source data, with varying numbers of connected vertices. The first PN by definition represents the subnetwork with the greatest extent of internal connectivity, and as such it was seen to capture the tendency for large-scale all-to-all association in the cortical thickness data, with scores that capture essentially the same information as the overall mean cortical thickness—and correlate with age (see <xref ref-type="fig" rid="pone-0060997-g005">Fig. 5</xref>). Subsequent PNs captured more subtle characteristics, with the second PN's scores correlating with gender in this data set. <xref ref-type="fig" rid="pone-0060997-g003">Figs 3</xref> and <xref ref-type="fig" rid="pone-0060997-g004">4</xref> showed the results of modularity maximisation and hierarchical clustering on the same data for comparison. In <xref ref-type="fig" rid="pone-0060997-g006">Fig. 6</xref>, the applicability of the technique to diffusion data was demonstrated, as well as the scan–rescan reproducibility. As <xref ref-type="table" rid="pone-0060997-t002">Tables 2</xref> and <xref ref-type="table" rid="pone-0060997-t003">3</xref> highlight, graph-theoretical measures can be easily derived from all PNs.</p>
+<p>In exploratory analyses, where the set of key regions of interest may not be known in advance, and in other cases where multiple circuits may be of relevance, subnetwork analysis of the sort offered by PNA is of significant importance. The key difference between PNA and more well-established community finding approaches such as modularity maximisation is that the former does not simply attempt to partition the graph into subcomponents, but rather factorises the association matrix and constructs separate graphs from each component. This approach has the key advantages of taking all connection strengths into account and allowing different “layers” of association to be extracted. The modularity maximisation approach, by contrast, is a purely graph-based method, and does not consider how strongly vertices are associated. Modularity methods usually do not allow a vertex to belong to multiple communities either, although some recent developments offer more flexibility in this regard <xref ref-type="bibr" rid="pone.0060997-Ball1">[24]</xref>, <xref ref-type="bibr" rid="pone.0060997-Wu2">[25]</xref>. Hierarchical clustering offers another alternative approach to identifying connected subnetworks, and because it considers connection strength, it produces results more closely related to those of PNA (see <xref ref-type="fig" rid="pone-0060997-g004">Fig. 4</xref>). Nevertheless, this approach has its own limitations. Clusters are built up from pairwise associations, without reference to the rest of the association matrix. The approach requires a vertex to be either in or out of a cluster, rather than allowing for weights or degrees of uncertainty. For a given “height” threshold, every vertex will appear in exactly one subnetwork: the possibility that a vertex should be wholly disregarded, or that it is involved in several networks, does not exist. Finally, a decision has to be made on how to perform cluster agglomeration (or division), and there are several methods available, including complete linkage, used above, and single linkage, which considers the pair of vertices with the lowest distance. More closely related to the principal networks approach in terms of methodology are spectral clustering and methods based on the eigensystem of the so-called Laplacian matrix of a graph (e.g. <xref ref-type="bibr" rid="pone.0060997-Pothen1">[26]</xref>, <xref ref-type="bibr" rid="pone.0060997-Saerens1">[27]</xref>), but such methods are usually used to obtain a hard and mutually exclusive partition, tend to be applied to relatively sparse graphs, and are not currently well-used in connectomics. In the end, the best choice of approach is likely to depend on the data and the scientific question under evaluation. PNA simply offers a powerful new alternative, which additionally offers the ability to calculate scores relating to each subnetwork.</p>
+<p>The exact results of the principal networks approach will of course depend on the particular measure of interregional association used to create the original graph, and to some extent the nature of other preprocessing steps that are applied to the data. For diffusion data, in particular, a wide range of connectivity measures have been used in the literature, which may attempt to compensate for the sizes of the two regions, their distance from one another, and so on. The association measures we have used in this study are intended to create indicative results to illustrate the method of principal networks, but the method is by no means limited to these, and the choice of measure can be made according to the focus of a particular study. Association matrices which are not positive-semidefinite will produce negative or perhaps even complex eigenvalues, or else not be diagonalisable, but for the vast majority of practical cases with appropriately-chosen association measures, we would expect the method to be applicable. Where noise plays a major role it may be possible to find a positive-semidefinite matrix which closely approximates the observed association matrix <xref ref-type="bibr" rid="pone.0060997-Higham1">[28]</xref>.</p>
+<p>When performing PNA a decision must be made on how many principal networks to consider. A common approach in PCA is to retain those components which have an eigenvalue greater than the value which would be expected if the variance were divided equally amongst all components, and that approach can also be taken with principal networks, but in the graph context we have simply considered networks containing at least two vertices—since smaller networks cannot encapsulate any interesting connectivity information. Less straightforward is the decision on which vertices to include in each subnetwork. In this study we have simply used a loading threshold, the choice of which is inevitably arbitrary. More sophisticated approaches to identifying “significant” loadings have been proposed, such as using bootstrap methods <xref ref-type="bibr" rid="pone.0060997-PeresNeto1">[29]</xref>, but these introduce additional complexity, and exploration of such techniques is therefore left as future work. Nevertheless, we have shown that using a single threshold level, reproducible results can be obtained. The thresholds were chosen before the analysis began, and no tweaking or optimisation was necessary.</p>
+<p>If the analysis is carried out on separate data sets, the question arises of how to identify equivalent PNs from each set of results. Assuming that the full set of vertices is the same in each case, there are a number of ways that this may be achieved, such as by matching up the component eigenvectors to maximise their inner products, which would be computationally straightforward.</p>
+<p>One limitation of the principal networks approach laid out above is the constraint that the loading vectors for each subnetwork be orthogonal. In practice, groups of vertices which do not meet this criterion may be of significance, and future work will therefore explore the use of nonorthogonal loadings.</p>
+<p>In conclusion, “principal networks” represents a new approach to graph-based neural connectivity analysis, offering a simple and robust way to identify and analyse important subnetworks. It is applicable to a large class of connectivity graphs relevant to clinical and nonclinical neuroscience applications, and provides a platform for investigating the involvement of various neural circuits in populations of interest. A reference implementation of the method will be made available through the open-source TractoR software package <xref ref-type="bibr" rid="pone.0060997-Clayden1">[30]</xref>.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Ethics statement</title>
+<p>Informed written consent was obtained from all subjects participating in this study. Processes for consenting and image acquisition were approved by the UCL Research Ethics Committee.</p>
+</sec><sec id="s4b">
+<title>Theory</title>
+<p>In this section we outline the theoretical basis of principal networks. We begin by assuming that some kind of parcellation process has been applied to a structural image of the brain, resulting in a set of regions to be used as the full set of vertices in the connectivity graph. In addition, we assume that some measure of association has been calculated between each pair of regions, resulting in a square association matrix providing some information on the “connection” between regions. Nonsymmetric matrices correspond to “directed” graphs, while an “undirected” graph will have a symmetric association matrix.</p>
+<p>We denote the association matrix by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e007" xlink:type="simple"/></inline-formula>. Its elements, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e008" xlink:type="simple"/></inline-formula>, quantify in some sense the connection between regions <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e009" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e010" xlink:type="simple"/></inline-formula>, of which there are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e011" xlink:type="simple"/></inline-formula> in total. These elements may be binary— i.e. either 1 or 0—if appropriate. Diagonalising the association matrix, we have<disp-formula id="pone.0060997.e012"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0060997.e012" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e013" xlink:type="simple"/></inline-formula> is a diagonal matrix of eigenvalues, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e014" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e015" xlink:type="simple"/></inline-formula> is a matrix whose columns contain the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e016" xlink:type="simple"/></inline-formula> eigenvectors of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e017" xlink:type="simple"/></inline-formula>. This diagonalisation will be possible in most practical cases, and in particular will always exist for symmetric real association matrices. We note that in the specific case where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e018" xlink:type="simple"/></inline-formula> is a correlation matrix, as in cortical thickness or functional connectivity analyses, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e019" xlink:type="simple"/></inline-formula> corresponds to the loading matrix of a PCA transformation of the original data—centred and scaled to have zero mean and unit variance within each region—with the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e020" xlink:type="simple"/></inline-formula>th column of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e021" xlink:type="simple"/></inline-formula> representing the “loadings” for the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e022" xlink:type="simple"/></inline-formula>th principal component.</p>
+<p>The magnitude of each eigenvalue indicates the degree of influence which the corresponding component had in the original association matrix. However, to form a principal network, we need an association matrix specific to each of these components. We can calculate a “partial” association matrix using Eq. (1), by setting all eigenvalues except the one of interest to zero, viz.<disp-formula id="pone.0060997.e023"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0060997.e023" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>The full association matrix is then a straightforward sum of these component matrices:<disp-formula id="pone.0060997.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0060997.e024" xlink:type="simple"/><label>(3)</label></disp-formula></p>
+<p>The loading, or influence, of region <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e025" xlink:type="simple"/></inline-formula> on the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e026" xlink:type="simple"/></inline-formula>th principal network is given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e027" xlink:type="simple"/></inline-formula>, and a threshold may be applied to these values to determine which regions to retain within a given principal network. Likewise, the importance of each edge between the vertices of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e028" xlink:type="simple"/></inline-formula>th principal network is given by the appropriate element of the partial association matrix, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e029" xlink:type="simple"/></inline-formula>.</p>
+<p>Finally, in the case where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e030" xlink:type="simple"/></inline-formula> is a correlation matrix, the original <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e031" xlink:type="simple"/></inline-formula> scaled data matrix, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e032" xlink:type="simple"/></inline-formula>—where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e033" xlink:type="simple"/></inline-formula> is the number of observations, typically subjects—can be used with the eigenvector matrix to reconstruct a transformed set of “scores”, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e034" xlink:type="simple"/></inline-formula>, which represent the projection of each data point along the eigenvectors. Hence, we have<disp-formula id="pone.0060997.e035"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0060997.e035" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+<p>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e036" xlink:type="simple"/></inline-formula> can be thought of as the influence of principal network <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e037" xlink:type="simple"/></inline-formula> on observation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e038" xlink:type="simple"/></inline-formula>. These scores may be meaningfully compared between subsets of the data.</p>
+<p>An illustration of the technique applied to a simple network with five vertices is shown in <xref ref-type="fig" rid="pone-0060997-g008">Fig. 8</xref>. In this undirected graph, the odd-numbered vertices are connected together with edges of weight 0.8, and the even-numbered vertices are connected together with edges of weight 0.9. All other edges have a weight of 0.05, except for the edge between nodes 4 and 5, which has a weight of 0.2. Self-connections have a weight of unity. It has several characteristics which are typical of brain connectivity networks: its edges are weighted and it is densely connected, although several edge weights are very small.</p>
+<fig id="pone-0060997-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060997.g008</object-id><label>Figure 8</label><caption>
+<title>Illustration of the principal networks approach using a simple graph with five vertices (A).</title>
+<p>The first and second principal networks (B,C) capture the two canonical subnetworks in the graph.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060997.g008" position="float" xlink:type="simple"/></fig>
+<p>Principal networks analysis correctly decomposes this graph into the two subnetworks of even and odd vertices. The eigenvalues of the association matrix are, from largest to smallest, 2.65, 1.86, 0.25, 0.20 and 0.05, clearly indicating the presence of exactly two nontrivial eigenvectors. The first eigenvector is strongly weighted on vertices 1, 3 and 5, while the second emphasises vertices 2 and 4. The spectral decomposition of the association matrix captures this information because major eigenvectors represent linear combinations of vertices which jointly make a large contribution to the overall “amount of connectivity” in the full graph.</p>
+</sec><sec id="s4c">
+<title>Image acquisition and processing</title>
+    <p>The participants for this study were 28 healthy adults (12 female), with ages ranging from 20 to 39 yr (mean 28.5 yr, standard deviation 3.9 yr). Each participant underwent an MR imaging protocol on a Siemens Avanto 1.5 T clinical system (Siemens Healthcare, Erlangen, Germany), using a self-shielding gradient set with maximum gradient strength of 40 mT m<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e039" xlink:type="simple"/></inline-formula>, and standard twelve-channel quadrature head coil. Two <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e040" xlink:type="simple"/></inline-formula>-weighted 3D Fast Low-Angle SHot (FLASH) structural images were acquired using 176 contiguous sagittal slices, a <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e041" xlink:type="simple"/></inline-formula> mm field of view and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e042" xlink:type="simple"/></inline-formula> mm image resolution. Flip angle was 15<sup><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e043" xlink:type="simple"/></inline-formula></sup>, echo time was 4.94 ms, and repetition time was 11 ms. In addition, echo-planar diffusion-weighted images were acquired for an isotropic set of 60 noncollinear directions, using a weighting factor of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e044" xlink:type="simple"/></inline-formula> s mm<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e045" xlink:type="simple"/></inline-formula>, along with three <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e046" xlink:type="simple"/></inline-formula>-weighted (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e047" xlink:type="simple"/></inline-formula>) volumes. In this case 60 contiguous axial slices of width 2.5 mm were imaged, using a field of view of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e048" xlink:type="simple"/></inline-formula> mm and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e049" xlink:type="simple"/></inline-formula> voxel acquisition matrix, for a final image resolution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e050" xlink:type="simple"/></inline-formula> mm. Echo time was 81 ms and repetition time was 7300 ms. The diffusion protocol was performed twice per subject, to allow scan–rescan reproducibility to be assessed.</p>
+<p>The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e051" xlink:type="simple"/></inline-formula>-weighted images from each subject were converted from DICOM to MGH format using the TractoR software package <xref ref-type="bibr" rid="pone.0060997-Clayden1">[30]</xref>. They were then processed using Freesurfer version 5.1.0 to parcellate the cortical surface into 32 gyral regions per hemisphere <xref ref-type="bibr" rid="pone.0060997-Desikan1">[31]</xref>, and to estimate the cortical thickness in each region <xref ref-type="bibr" rid="pone.0060997-Fischl1">[32]</xref>.</p>
+<p>Diffusion MRI data from each subject were converted from DICOM to NIfTI-1 format, and preprocessed to remove eddy-current induced distortions. The brain was extracted from the images using the brain extraction tool from the FMRIB Software Library <xref ref-type="bibr" rid="pone.0060997-Smith1">[33]</xref>. Diffusion tensors were fitted using standard least-squares estimation, and the fractional anisotropy (FA) calculated at each voxel. A “ball-and-sticks” model, allowing for two fibre orientations per voxel, was fitted for each data set as described by Behrens et al. <xref ref-type="bibr" rid="pone.0060997-Behrens1">[34]</xref>, and whole-brain tractography was performed, initialising one streamline from each voxel with an FA of at least 0.2 to avoid seeding in deep grey matter or cerebrospinal fluid. The exact subvoxel seeding position was subject to random jitter in each case—drawing from a uniform distribution within the voxel—to move the seeds off the regular imaging grid. This allows any part of the voxel to be taken as the seed point, rather than just the centre, thereby avoiding the creation of an unnatural, grid-like streamline set.</p>
+</sec><sec id="s4d">
+<title>Principal network calculation</title>
+<p>Principal networks were calculated from cortical thickness data by calculating the cross-subject correlation matrix between average regional thicknesses, using Pearson's correlation coefficient. This correlation matrix was used directly as the association matrix in this modality, and PNs were calculated as described in the Theory section. A loading threshold of 0.1, ignoring sign, was applied to the vertices of each PN to determine whether or not to include them, and an absolute correlation threshold of 0.2 was used to threshold edges. Scores were calculated for each PN in each subject, following Eq. (4).</p>
+<p>For comparison, the well-known and efficient modularity maximisation algorithm described by Newman <xref ref-type="bibr" rid="pone.0060997-Newman1">[35]</xref> was applied to the cortical thickness data, after applying the same absolute edge weight threshold of 0.2. This algorithm partitions the graph until further subdivision would not further increase the modularity. In addition, agglomerative hierarchical clustering was performed using <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e052" xlink:type="simple"/></inline-formula> as the distance measure, with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e053" xlink:type="simple"/></inline-formula> the correlation coefficient between a pair of vertices. A “complete linkage” approach was taken, whereby the distance between clusters is taken to be the maximal distance between pairs of constituent vertices.</p>
+<p>The average <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e054" xlink:type="simple"/></inline-formula>-weighted image for each subject, as calculated by Freesurfer, was transformed into the space of the diffusion <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060997.e055" xlink:type="simple"/></inline-formula> image using nonlinear fast freeform deformation–based registration, as implemented in the the Nifty Reg package <xref ref-type="bibr" rid="pone.0060997-Modat1">[36]</xref>, using the RNiftyReg interface for R, version 1.0.1 (<ext-link ext-link-type="uri" xlink:href="http://cran.r-project.org/web/packages/RNiftyReg/" xlink:type="simple">http://cran.r-project.org/web/packages/RNiftyReg/</ext-link>). Individual cortical regions were extracted from the Freesurfer parcellation and transformed into diffusion space using the same transformation. The number of streamlines passing through each pair of regions of interest was calculated, divided by the average number of voxels in the two regions, and entered into the association matrix as a symmetric metric of connectivity. (A unit value of this metric indicates an average of one streamline per voxel passing through the two regions of interest, a density equal to that used for seeding. Values higher than this are of course possible.) Self-connection values were included so that the association matrix would be positive-definite. PNs were then calculated from this association matrix. A loading threshold of 0.1 was again applied to the vertices of each PN, and a threshold of 0.2 was applied to the connectivity metric.</p>
+<p>All analyses were performed and graphics produced using the R software environment for statistical computing <xref ref-type="bibr" rid="pone.0060997-R1">[37]</xref>, <xref ref-type="bibr" rid="pone.0060997-Tabelow1">[38]</xref>, along with the “lattice” and “ggplot2” add-on packages <xref ref-type="bibr" rid="pone.0060997-Sarkar1">[39]</xref>, <xref ref-type="bibr" rid="pone.0060997-Wickham1">[40]</xref>.</p>
+</sec><sec id="s4e">
+<title>Bootstrap analysis</title>
+<p>In order to estimate the stability of the principal network decomposition of our cortical thickness graph, we performed a bootstrap resampling analysis. For each of 1000 replicates, 28 sets of cortical thickness measurements were obtained by randomly sampling from the 28 subjects with replacement, and the decomposition was repeated. The proportion of regions whose membership in each principal network agreed with that obtained from the original data set was then calculated. A consensus first PN was also calculated by identifying those regions which appeared in the first PN for a majority of bootstrap replicates.</p>
+</sec></sec></body>
+<back>
+<ack>
+<p>The authors are grateful to Tina Banks for assistance with data acquisition, and to Susana Muñoz Maniega and Martin King for useful discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0060997-Bullmore1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bullmore</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Sporns</surname><given-names>O</given-names></name> (<year>2009</year>) <article-title>Complex brain networks: graph theoretical analysis of structural and functional systems</article-title>. <source>Nature Reviews Neuroscience</source> <volume>10</volume>: <fpage>186</fpage>–<lpage>198</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Euler1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Euler</surname><given-names>L</given-names></name> (<year>1741</year>) <article-title>Solutio problematis ad geometriam situs pertinentis</article-title>. <source>Commentarii academiae scientiarum imperialis Petropolitanae</source> <volume>8</volume>: <fpage>128</fpage>–<lpage>140</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Bernhardt1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bernhardt</surname><given-names>BC</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Evans</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Bernasconi</surname><given-names>N</given-names></name> (<year>2011</year>) <article-title>Graph-theoretical analysis reveals disrupted small-world organization of cortical thickness correlation networks in temporal lobe epilepsy</article-title>. <source>Cerebral Cortex</source> <volume>21</volume>: <fpage>2147</fpage>–<lpage>2157</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-WenW1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>WenW</surname><given-names>ZhuW</given-names></name>, <name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kochan</surname><given-names>NA</given-names></name>, <name name-style="western"><surname>Reppermund</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Discrete neuroanatomical networks are associated with specific cognitive abilities in old age</article-title>. <source>The Journal of Neuroscience</source> <volume>31</volume>: <fpage>1204</fpage>–<lpage>1212</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Kaiser1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kaiser</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Varier</surname><given-names>S</given-names></name> (<year>2011</year>) <article-title>Evolution and development of brain networks: From Caenorhabditis elegans to Homo sapiens</article-title>. <source>Network: Computation in Neural Systems</source> <volume>22</volume>: <fpage>143</fpage>–<lpage>147</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-He1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>ZJ</given-names></name>, <name name-style="western"><surname>Evans</surname><given-names>AC</given-names></name> (<year>2007</year>) <article-title>Small-world anatomical networks in the human brain revealed by cortical thickness from MRI</article-title>. <source>Cerebral Cortex</source> <volume>17</volume>: <fpage>2407</fpage>–<lpage>2419</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Achard1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Achard</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Salvador</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Whitcher</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Suckling</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bullmore</surname><given-names>E</given-names></name> (<year>2006</year>) <article-title>A resilient, low-frequency, small-world human brain functional network with highly connected association cortical hubs</article-title>. <source>The Journal of Neuroscience</source> <volume>26</volume>: <fpage>63</fpage>–<lpage>72</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Fair1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fair</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Power</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Dosenbach</surname><given-names>NUF</given-names></name>, <name name-style="western"><surname>Church</surname><given-names>JA</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Functional brain networks develop from a “local to distributed” organization</article-title>. <source>PLoS Computational Biology</source> <volume>5</volume>: <fpage>e1000381</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Hagmann1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hagmann</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Cammoun</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Gigandet</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Meuli</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Honey</surname><given-names>CJ</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Mapping the structural\ core of human cerebral cortex</article-title>. <source>PLoS Biology</source> <volume>6</volume>: <fpage>e159</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-IturriaMedina1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Iturria-Medina</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Sotero</surname><given-names>RC</given-names></name>, <name name-style="western"><surname>Canales-Rodríguez</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Alemán-Gómez</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Melie-García</surname><given-names>L</given-names></name> (<year>2008</year>) <article-title>Studying the human brain anatomical network via diffusion-weighted MRI and graph theory</article-title>. <source>NeuroImage</source> <volume>40</volume>: <fpage>1064</fpage>–<lpage>1076</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Gong1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gong</surname><given-names>G</given-names></name>, <name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>ZJ</given-names></name>, <name name-style="western"><surname>Evans</surname><given-names>AC</given-names></name> (<year>2012</year>) <article-title>Convergence and divergence of thickness correlations with diffusion connections across the human cerebral cortex</article-title>. <source>NeuroImage</source> <volume>59</volume>: <fpage>1239</fpage>–<lpage>1248</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Honey1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Honey</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Sporns</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Cammoun</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Gigandet</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Thiran</surname><given-names>JP</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Predicting human restingstate functional connectivity from structural connectivity</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>106</volume>: <fpage>2035</fpage>–<lpage>2040</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Zalesky1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zalesky</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fornito</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Harding</surname><given-names>IH</given-names></name>, <name name-style="western"><surname>Cocchi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Yücel</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Whole-brain anatomical networks: Does the choice of nodes matter?</article-title> <source>NeuroImage</source> <volume>50</volume>: <fpage>970</fpage>–<lpage>983</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-vandenHeuvel1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van den Heuvel</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Sporns</surname><given-names>O</given-names></name> (<year>2011</year>) <article-title>Rich-club organization of the human connectome</article-title>. <source>The Journal of Neuroscience</source> <volume>31</volume>: <fpage>15775</fpage>–<lpage>15786</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Wu1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Taki</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Sato</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Sassa</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Inoue</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>The overlapping community structure of structural brain network in young healthy individuals</article-title>. <source>PLoS ONE</source> <volume>6</volume>: <fpage>e19608</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Fortunato1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fortunato</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Community detection in graphs</article-title>. <source>Physics Reports</source> <volume>486</volume>: <fpage>75</fpage>–<lpage>174</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-AlexanderBloch1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alexander-Bloch</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lambiotte</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Roberts</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Giedd</surname><given-names>JN</given-names></name>, <name name-style="western"><surname>Gogtay</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>The discovery of population differences in network community structure: New methods and applications to brain functional networks in schizophrenia</article-title>. <source>NeuroImage</source> <volume>59</volume>: <fpage>3889</fpage>–<lpage>3900</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Chen1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>ZJ</given-names></name>, <name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Rosa-Neto</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Germann</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Evans</surname><given-names>AC</given-names></name> (<year>2008</year>) <article-title>Revealing modular architecture of human brain structural networks by using cortical thickness from MRI</article-title>. <source>Cerebral Cortex</source> <volume>18</volume>: <fpage>2374</fpage>–<lpage>2381</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Hnggi1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hänggi</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Wotruba</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Jäncke</surname><given-names>L</given-names></name> (<year>2011</year>) <article-title>Globally altered structural brain network topology in grapheme-color synesthesia</article-title>. <source>The Journal of Neuroscience</source> <volume>31</volume>: <fpage>5816</fpage>–<lpage>5828</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Salvador1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salvador</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Suckling</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Coleman</surname><given-names>MR</given-names></name>, <name name-style="western"><surname>Pickard</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Menon</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Neurophysiological architecture of functional magnetic resonance images of human brain</article-title>. <source>Cerebral Cortex</source> <volume>15</volume>: <fpage>1332</fpage>–<lpage>1342</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Brouwer1"><label>21</label>
+<mixed-citation publication-type="book" xlink:type="simple">Brouwer AE, Haemers WH (2012) Spectra of graphs. New York: Springer.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Raj1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raj</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kuceyeski</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Weiner</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>A network diffusion model of disease progression in dementia</article-title>. <source>Neuron</source> <volume>73</volume>: <fpage>1204</fpage>–<lpage>1215</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Shi1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shi</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Malik</surname><given-names>J</given-names></name> (<year>2000</year>) <article-title>Normalized cuts and image segmentation</article-title>. <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source> <volume>22</volume>: <fpage>888</fpage>–<lpage>905</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Ball1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ball</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Karrer</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Newman</surname><given-names>MEJ</given-names></name> (<year>2011</year>) <article-title>Efficient and principled method for detecting communities in networks</article-title>. <source>Physical Review E</source> <volume>84</volume>: <fpage>036103</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Wu2"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Jiao</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Jin</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Gong</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Overlapping community detection via network dynamics</article-title>. <source>Physical Review E</source> <volume>85</volume>: <fpage>016115</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Pothen1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pothen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>HD</given-names></name>, <name name-style="western"><surname>Liou</surname><given-names>KP</given-names></name> (<year>1990</year>) <article-title>Partitioning sparse matrices with eigenvectors of graphs</article-title>. <source>SIAM Journal on Matrix Analysis and Applications</source> <volume>11</volume>: <fpage>430</fpage>–<lpage>452</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Saerens1"><label>27</label>
+<mixed-citation publication-type="book" xlink:type="simple">Saerens M, Fouss F, Yen L, Dupont P (2004) The principal components analysis of a graph, and its relationships to spectral clustering. In: Boulicaut JF, Esposito F, Giannotti F, Pedreschi D, editors, Proceedings of the 15th European Conference on Machine Learning, Springer-Verlag, volume 3201 of Lecture Notes in Computer Science. pp. 371–383.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Higham1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Higham</surname><given-names>NJ</given-names></name> (<year>2002</year>) <article-title>Computing the nearest correlation matrix—A problem from finance</article-title>. <source>IMA Journal of Numerical Analysis</source> <volume>22</volume>: <fpage>329</fpage>–<lpage>343</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-PeresNeto1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peres-Neto</surname><given-names>PR</given-names></name>, <name name-style="western"><surname>Jackson</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Somers</surname><given-names>KM</given-names></name> (<year>2003</year>) <article-title>Giving meaningful interpretation to ordination axes: Assessing loading significance in principal component analysis</article-title>. <source>Ecology</source> <volume>84</volume>: <fpage>2347</fpage>–<lpage>2363</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Clayden1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clayden</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Muñoz Maniega</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Storkey</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>King</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Bastin</surname><given-names>ME</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>TractoR: Magnetic resonance imaging and tractography with R</article-title>. <source>Journal of Statistical Software</source> <volume>44</volume>: <fpage>1</fpage>–<lpage>18</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Desikan1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Desikan</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Ségonne</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Fischl</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Quinn</surname><given-names>BT</given-names></name>, <name name-style="western"><surname>Dickerson</surname><given-names>BC</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>An automated labeling system for subdividing the human cerebral cortex on MRI scans into gyral based regions of interest</article-title>. <source>NeuroImage</source> <volume>31</volume>: <fpage>968</fpage>–<lpage>980</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Fischl1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fischl</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Dale</surname><given-names>AM</given-names></name> (<year>2000</year>) <article-title>Measuring the thickness of the human cerebral cortex from magnetic resonance images</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>97</volume>: <fpage>11050</fpage>–<lpage>11055</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Smith1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>SM</given-names></name> (<year>2002</year>) <article-title>Fast robust automated brain extraction</article-title>. <source>Human Brain Mapping</source> <volume>17</volume>: <fpage>143</fpage>–<lpage>155</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Behrens1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Behrens</surname><given-names>TEJ</given-names></name>, <name name-style="western"><surname>Johansen-Berg</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Jbabdi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Rushworth</surname><given-names>MFS</given-names></name>, <name name-style="western"><surname>Woolrich</surname><given-names>MW</given-names></name> (<year>2007</year>) <article-title>Probabilistic diffusion tractography with multiple fibre orientations: What can we gain?</article-title> <source>NeuroImage</source> <volume>34</volume>: <fpage>144</fpage>–<lpage>155</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Newman1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Newman</surname><given-names>MEJ</given-names></name> (<year>2006</year>) <article-title>Modularity and community structure in networks</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>103</volume>: <fpage>8577</fpage>–<lpage>8582</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Modat1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Modat</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ridgway</surname><given-names>GR</given-names></name>, <name name-style="western"><surname>Taylor</surname><given-names>ZA</given-names></name>, <name name-style="western"><surname>Lehmann</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Barnes</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Fast free-form deformation using graphics processing units</article-title>. <source>Computer Methods and Programs in Biomedicine</source> <volume>98</volume>: <fpage>278</fpage>–<lpage>284</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-R1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><collab xlink:type="simple">R Core Team</collab> (<year>2012</year>) <article-title>R: A language and environment for statistical computing</article-title>. <source>R Foundation for Statistical Computing</source></mixed-citation>
+</ref>
+<ref id="pone.0060997-Tabelow1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tabelow</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Clayden</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Lafaye de Micheaux</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Polzehl</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schmid</surname><given-names>VJ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Image analysis and statistical inference in neuroimaging with R. NeuroImage</article-title>. <volume>55</volume>: <fpage>1686</fpage>–<lpage>1693</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Sarkar1"><label>39</label>
+<mixed-citation publication-type="book" xlink:type="simple">Sarkar D (2008) Lattice: Multivariate data visualization with R. New York: Springer.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Wickham1"><label>40</label>
+<mixed-citation publication-type="book" xlink:type="simple">Wickham H (2009) ggplot2: Elegant graphics for data analysis. New York: Springer.</mixed-citation>
+</ref>
+<ref id="pone.0060997-Latora1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Latora</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Marchiori</surname><given-names>M</given-names></name> (<year>2001</year>) <article-title>Efficient behavior of small-world networks</article-title>. <source>Physical Review Letters</source> <volume>87</volume>: <fpage>198701</fpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

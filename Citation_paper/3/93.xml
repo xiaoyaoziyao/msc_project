@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+	<front>
+		<journal-meta>
+    <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+    <journal-id journal-id-type="publisher-id">plos</journal-id>
+    <journal-id journal-id-type="pmc">plosone</journal-id>
+    <journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group>
+    <issn pub-type="epub">1932-6203</issn>
+    <publisher><publisher-name>Public Library of Science</publisher-name>
+    <publisher-loc>San Francisco, USA</publisher-loc></publisher>
+    </journal-meta><article-meta>
+			<article-id pub-id-type="publisher-id">PONE-D-13-15706</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0072614</article-id><article-categories><subj-group subj-group-type="heading">
+    <subject>Research Article</subject></subj-group></article-categories><title-group>
+				<article-title>DistMap: A Toolkit for Distributed Short Read Mapping on a Hadoop Cluster</article-title>
+			<alt-title alt-title-type="running-head">Distributed NGS Data Mapping</alt-title>
+      </title-group>
+			<contrib-group>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Pandey</surname>
+						<given-names>Ram Vinay</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"/>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Schlötterer</surname>
+						<given-names>Christian</given-names>
+					</name>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+					<xref ref-type="aff" rid="aff1"/>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1"><addr-line>Institut für Populationsgenetik, Vetmeduni Vienna, Vienna, Austria</addr-line></aff>
+			<contrib-group><contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Yan</surname>
+            <given-names>Wei</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+        </contrib-group><aff id="edit1"><addr-line>University of Nevada School of Medicine, United States of America</addr-line></aff><author-notes>
+				<corresp id="cor1">* E-mail: <email xlink:type="simple">christian.schloetterer@vetmeduni.ac.at</email></corresp>
+			<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn><fn fn-type="con"><p>Conceived and designed the experiments: RVP CS. Performed the experiments: RVP CS. Analyzed the data: RVP CS. Contributed reagents/materials/analysis tools: RVP CS. Wrote the manuscript: RVP CS. </p></fn></author-notes>
+			<pub-date pub-type="collection"><year>2013</year></pub-date><pub-date pub-type="epub">
+        <day>23</day>
+        <month>8</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume><issue>8</issue><elocation-id>e72614</elocation-id><history><date date-type="received">
+          <day>18</day>
+          <month>4</month>
+          <year>2013</year>
+        </date>
+        <date date-type="accepted">
+          <day>12</day>
+          <month>7</month>
+          <year>2013</year>
+        </date>
+      </history><permissions>
+    <copyright-year>2013</copyright-year><copyright-holder>Pandey et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license>
+    </permissions><abstract>
+				<p>With the rapid and steady increase of next generation sequencing data output, the mapping of short reads has become a major data analysis bottleneck. On a single computer, it can take several days to map the vast quantity of reads produced from a single Illumina HiSeq lane. In an attempt to ameliorate this bottleneck we present a new tool, DistMap - a modular, scalable and integrated workflow to map reads in the Hadoop distributed computing framework. DistMap is easy to use, currently supports nine different short read mapping tools and can be run on all Unix-based operating systems. It accepts reads in FASTQ format as input and provides mapped reads in a SAM/BAM format. DistMap supports both paired-end and single-end reads thereby allowing the mapping of read data produced by different sequencing platforms. DistMap is available from <ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/distmap/" xlink:type="simple"><underline>http://code.google.com/p/distmap/</underline></ext-link></p>
+			</abstract>
+		<funding-group><funding-statement>This work was supported by the Austrian Science Funds (FWF) grant P22834 and the ERC grant “ArchAdapt” to CS. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1" sec-type="introduction">
+			<title>Introduction</title>
+			<p>Next Generation Sequencing (NGS) technologies have revolutionized biological research by producing an unprecedented amount of data in a cost effective manner. The rapid progress in NGS technology, however, has resulted in a subsequent increase in data volume that currently outpaces advances in computational power [<xref ref-type="bibr" rid="B1">1</xref>]. Hence there is a growing need for new software solutions that minimize the impact of increasing data volume on workflow duration. The first step in nearly all NGS workflows is the mapping of short sequence reads to a reference genome. As it may take several days to map NGS read data on a single computer, mapping is a potential bottleneck for most workflows. For this reason tools and software which support distributed computing are a powerful means to expedite mapping and the subsequent workflow.</p>
+			<p>At present several tools exist which support distributed mapping, each having specificities which may limit more general usage. For instance, Crossbow [<xref ref-type="bibr" rid="B2">2</xref>], Eoulsan [<xref ref-type="bibr" rid="B3">3</xref>] and FX [<xref ref-type="bibr" rid="B4">4</xref>], are designed for specific types of analyses, do not produce mapping output in SAM/BAM [<xref ref-type="bibr" rid="B5">5</xref>] format, and only support paired-end mapping. Similarly, SEAL [<xref ref-type="bibr" rid="B6">6</xref>] only supports paired-end BWA mapping using a sinlge version (0.5.8c), and is restricted to Linux operating systems. Other virtual machine workflows include Bio-Linux [<xref ref-type="bibr" rid="B7">7</xref>], Cloud Bio-Linux [<xref ref-type="bibr" rid="B8">8</xref>] and Galaxy [<xref ref-type="bibr" rid="B9">9</xref>]. Bio-Linux and Cloud Bio-Linux include a collection of useful bioinformatics tools, and the later has integrated MapReduce tools such as Crossbow [<xref ref-type="bibr" rid="B2">2</xref>], CloudBurst [<xref ref-type="bibr" rid="B10">10</xref>], SEAL [<xref ref-type="bibr" rid="B6">6</xref>] and bcbio-nextgen [<xref ref-type="bibr" rid="B11">11</xref>] but they have restrictions on mapper version and do not produce an output in SAM/BAM format. Galaxy [<xref ref-type="bibr" rid="B9">9</xref>] is another powerful workflow system but supports only BWA and bowtie mapping and imposes version restrictions for both the mapper and the reference sequence.</p>
+			<p>Here we present a new tool, DistMap, a modular, scalable and user-friendly workflow, which facilitates the mapping of short reads on a Hadoop cluster [<xref ref-type="bibr" rid="B14">14</xref>]. DistMap supports nine different mappers – the most available in a single distributed mapping tool at present – and cover a wide range of NGS applications. Furthermore, DistMap allows mapping of paired-end and single-end reads from different sequencing platforms and produces mapping output in BAM/SAM file format, such that it can be used in conjunction with distributed downstream analytical tools such as GATK [<xref ref-type="bibr" rid="B12">12</xref>], and Hadoop-BAM [<xref ref-type="bibr" rid="B13">13</xref>]. Finally, the workflow has been developed specifically for adoption by non-expert users who wish to benefit from distributed NGS read mapping.</p>
+		</sec>
+		<sec id="s2" sec-type="results">
+			<title>Results and Discussion</title>
+			<p>DistMap provides an integrated workflow for short read mapping against a user-specified reference genome. The whole workflow can be run with a single Perl command. This workflow is equipped with various customized parameters and provides detailed guidelines for its implementation. All components of DistMap and their inputs have been summarized in <xref ref-type="fig" rid="pone-0072614-g001">Figure 1</xref>. An overview of the key features are described below.</p>
+			<fig id="pone-0072614-g001" position="float">
+				<object-id pub-id-type="doi">10.1371/journal.pone.0072614.g001</object-id><label>Figure 1</label>
+				<caption>
+					<title>The workflow of DistMap.</title><p>The DistMap workflow has 7 modules. Modul 1 is to index reference fasta file. Module 2-6 are mandetory for each new FASTQ files. The DistMap entire workflow can be executed at once and if required each module can be executed one by one.</p>
+				</caption>
+				<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0072614.g001"/>
+			</fig>
+			<sec id="s2.1">
+				<title>An integrated workflow</title>
+				<p>DistMap provides a complete workflow that includes several modules. Each module has a start and stop point (shown in <xref ref-type="fig" rid="pone-0072614-g001">Figure 1</xref>). The user is provided with the flexibility to either execute the whole workflow or to execute individual modules one after another.</p>
+			</sec>
+			<sec id="s2.2">
+				<title>Job Scheduler support</title>
+				<p>DistMap is the only workflow, which supports the different job schedulers currently available for a Hadoop cluster. It supports three schedulers 1) FIFO [<xref ref-type="bibr" rid="B14">14</xref>] 2) Fair scheduler [<xref ref-type="bibr" rid="B15">15</xref>] and 3) Capacity scheduler [<xref ref-type="bibr" rid="B16">16</xref>]. The user can specify the scheduler information with the option -- <bold><italic>hadoop-scheduler</italic></bold> within the Perl command.</p>
+			</sec>
+			<sec id="s2.3">
+				<title>Custom queue and pool support</title>
+				<p>DistMap is designed to manage the short read mapping on a large scale, whereby many custom queues and pools are available within the Hadoop cluster. Unlike other distributed mapping tools which only utilize a default queue, DistMap can also use customized queues and pools to run multiple mapping jobs in parallel. The queue assignment can be done with the option <bold><italic>–queue-name</italic></bold> to the Perl command.</p>
+			</sec>
+			<sec id="s2.4">
+				<title>Custom job prioritization support</title>
+				<p>DistMap supports a top-level job prioritization. The user can directly set job priority via the DistMap command line with the option <bold><italic>–job-priority</italic></bold>. Five priority levels are currently supported: VERY_LOW, LOW, NORMAL, HIGH and VERY_HIGH.</p>
+			</sec>
+			<sec id="s2.5">
+				<title>Mapper flexibility</title>
+				<p>The current version of DistMap (v 1.0) supports nine different mappers, covering a broad spectrum of NGS applications. <xref ref-type="table" rid="tab1">Table 1</xref> provides the corresponding version of all mapping software that has been used for testing. DistMap does not impose a version restriction for any mapper, whereby the user can download and compile any version for direct implementation within their specific workflow.</p>
+				<table-wrap id="tab1" position="float">
+					<label>Table 1</label>
+					<caption>
+						<title>List of mappers supported in current version of DistMap.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Mapper supported in DistMap</bold></th>
+								<th rowspan="1" colspan="1"><bold>Version tested</bold></th>
+								<th rowspan="1" colspan="1"><bold>Application</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">0.5.8c</td>
+								<td rowspan="1" colspan="1">Short read mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">0.12.7</td>
+								<td rowspan="1" colspan="1">Short read mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Bowtie2</td>
+								<td rowspan="1" colspan="1">2.0.6</td>
+								<td rowspan="1" colspan="1">Short read mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">2012-07-20</td>
+								<td rowspan="1" colspan="1">RNA-Seq Alignment DNA methylation</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">2.20</td>
+								<td rowspan="1" colspan="1">Short read mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">STAR</td>
+								<td rowspan="1" colspan="1">2.2.0c</td>
+								<td rowspan="1" colspan="1">RNA-Seq Alignment</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Bismark</td>
+								<td rowspan="1" colspan="1">v 0.7.7</td>
+								<td rowspan="1" colspan="1">Bisulfite mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">BSMAP</td>
+								<td rowspan="1" colspan="1">2.73</td>
+								<td rowspan="1" colspan="1">Bisulfite mapping</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">TopHat</td>
+								<td rowspan="1" colspan="1">2.0.6</td>
+								<td rowspan="1" colspan="1">RNA-Seq mapping</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn>
+							<p>Nine short read mappers for a wide range of NGS applications are supported. DistMap can use any version of these mappers.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+			</sec>
+			<sec id="s2.6">
+				<title>Flexibility and transparency</title>
+				<p>DistMap imposes no restriction on the assembly version of the reference genome for mapping. Since DistMap does genome indexing itself during the execution of the workflow it is possible to map short reads with any reference genome assembly. DistMap collects all input files and parameters from a local computer and returns the final output to a local output directory as a single SAM or BAM file. There is no need to install the DistMap source code or mapper executables on all working nodes. The entire DistMap workflow can be run at once or in step-by-step fashion, such that the user can start from any step in the workflow. DistMap supports paired-end, single-end and mixed mapping of FASTQ formatted reads produced from various sequencing platforms. DistMap archives the genome index as a *. tgz file in the local output directory such that it can be re-used in subsequent mapping and thereby avoids unnecessarily re-indexing of the same genomes.</p>
+			</sec>
+			<sec id="s2.7">
+				<title>Scalability</title>
+				<p>DistMap has no restriction on NGS data handling; it is specifically designed to map Gigabytes or Terabytes of sequencing data with a single command. The speed of DistMap scales with cluster size. Several different datasets ranging in size were used to test the scalability of the DistMap workflow on a Hadoop cluster (see <xref ref-type="table" rid="tab2">Table 2</xref>)</p>
+				<table-wrap id="tab2" position="float">
+					<label>Table 2</label>
+					<caption>
+						<title>DistMap evaluation input datasets.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Number of read pairs (million)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Size (GB)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Read length (bp)</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">2.46</td>
+								<td rowspan="1" colspan="1">100</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">24.7</td>
+								<td rowspan="1" colspan="1">100</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">100</td>
+								<td rowspan="1" colspan="1">49.4</td>
+								<td rowspan="1" colspan="1">100</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">200</td>
+								<td rowspan="1" colspan="1">98.82</td>
+								<td rowspan="1" colspan="1">100</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">500</td>
+								<td rowspan="1" colspan="1">247.04</td>
+								<td rowspan="1" colspan="1">100</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn>
+							<p>These NGS data were generated from Illumina HiSeq sequencer. 100bp paired-end reads from <italic><named-content content-type="genus-species" xlink:type="simple">Drosophila melanogaster</named-content></italic> genomes.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+			</sec>
+			<sec id="s2.8">
+				<title>DistMap evaluation</title>
+				<p>To evaluate the performance of DistMap we used paired-end genomic reads of 2x100bp from a <italic><named-content content-type="genus-species" xlink:type="simple">Drosophila melanogaster</named-content></italic> pooled sequencing project [<xref ref-type="bibr" rid="B17">17</xref>] (see <xref ref-type="table" rid="tab2">Table 2</xref> for further information). The Hadoop cluster (version 1.0.3) consisted of 13 nodes running Mac OSX 10.6.8. For each node 10 CPUs, 32 GB RAM and 1TB SATA hard disk space was made available. All computer nodes were connected via Gigabit Ethernet.</p>
+				<p>We evaluated the performance of DistMap by comparing the execution time of four different mappers (BWA, bowtie, GSNAP and SOAP) for multiple datasets ranging in size, each time using a single worker node and a fixed set of parameters (see <xref ref-type="fig" rid="pone-0072614-g002">Figure 2</xref> and <xref ref-type="table" rid="tab3">Table 3</xref>). We found that DistMap execution time scales almost linearly with increase of input size, whereas single node execution increased exponentially. In particular, as data size increases beyond 500 million reads, DistMap had between 20-fold to 80-fold reduction in processing time relative to a single computer for the mappers tested. We reason that the non-linear scaling observed for the single node results from non-parallelized steps in the mapping procedure. For example, BWA only uses a single processor for the <italic>sampe/samse</italic> module, regardless of the number of processors on that computer. In contrast, DistMap can make use of all cluster nodes and their processors by splitting the data into subsets, which are later reassembled. Thus, by distributing mapping across several computers, DistMap avoids probable workflow bottlenecks caused by mapping on a single computer.</p>
+				<fig id="pone-0072614-g002" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0072614.g002</object-id><label>Figure 2</label>
+					<caption>
+						<title>Evaluation of DistMap execution time with increase of data size.</title>
+						<p>Execution times were measured for different mappers using DistMap (red line) and compared to a single node (blue line). Datasets of different size (5, 50, 100, 200 and 500 million read pairs) from different pool-Seq experiments were used to estimate the scalability of DistMap. The hardware configuration of the single node was a Mac OSX 10.6.8 computer with 10 CPU, 32 GB RAM and 1TB Disk space available for mapping. The Hadoop cluster consists of 13 worker nodes with the same configuration. (<bold>a</bold>) BWA mapping (<bold>b</bold>) bowtie mapping, (<bold>c</bold>) GSNAP mapping, (<bold>d</bold>) mapping. All mappers were run with the same default parameters and datasets.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0072614.g002"/>
+				</fig>
+				<table-wrap id="tab3" position="float">
+					<label>Table 3</label>
+					<caption>
+						<title>Comparison of running time in hours of different mappers</title><p><bold>on a single node with 10 cores and DistMap running on 13 nodes</bold>.</p>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Number of read pairs (million)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Mapper</bold></th>
+								<th rowspan="1" colspan="1"><bold>DistMap time (hour, 13 nodes)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Mapper time (hour, 1 node)</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">0.12</td>
+								<td rowspan="1" colspan="1">0.47</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">0.70</td>
+								<td rowspan="1" colspan="1">4.22</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">100</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">1.40</td>
+								<td rowspan="1" colspan="1">8.33</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">200</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">2.78</td>
+								<td rowspan="1" colspan="1">19.35</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">500</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">6.05</td>
+								<td rowspan="1" colspan="1">82.73*</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">0.10</td>
+								<td rowspan="1" colspan="1">0.18</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">0.30</td>
+								<td rowspan="1" colspan="1">1.77</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">100</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">0.68</td>
+								<td rowspan="1" colspan="1">3.50</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">200</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">0.97</td>
+								<td rowspan="1" colspan="1">7.10</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">500</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">3.43</td>
+								<td rowspan="1" colspan="1">22.38</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">0.1</td>
+								<td rowspan="1" colspan="1">0.63</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">0.57</td>
+								<td rowspan="1" colspan="1">5.62</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">100</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">1.07</td>
+								<td rowspan="1" colspan="1">11.12</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">200</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">2.17</td>
+								<td rowspan="1" colspan="1">22.13</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">500</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">4.97</td>
+								<td rowspan="1" colspan="1">120.75*</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">0.08</td>
+								<td rowspan="1" colspan="1">0.52</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">0.47</td>
+								<td rowspan="1" colspan="1">5.48</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">100</td>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">0.87</td>
+								<td rowspan="1" colspan="1">9.2</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">200</td>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">1.68</td>
+								<td rowspan="1" colspan="1">19.63</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">500</td>
+								<td rowspan="1" colspan="1">SOAP</td>
+								<td rowspan="1" colspan="1">4.88</td>
+								<td rowspan="1" colspan="1">49.4</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+							<p>* Indicates cases where DistMap is faster than separate mapping on 13 individual nodes</p>
+					</table-wrap-foot>
+				</table-wrap>
+			</sec>
+			<sec id="s2.9">
+				<title>Reproducibility and accuracy</title>
+				<p>We estimated the reproducibility, fault tolerance and data security of DistMap by mapping 5 million read pairs multiple times for each of the BWA, bowtie, GSNAP and SOAP mappers. Fault tolerance and data security were specifically tested by randomly deactivating nodes during an active mapping job. Even with random node deactivation, however, mapping results were found to be identical across the five independent runs for each mapper. Indeed, because DistMap makes a minimum of three copies of each data block, each distributed to a different node, data loss is highly improbable.</p>
+			</sec>
+			<sec id="s2.10">
+				<title>Comparison with existing tools</title>
+				<p>DistMap can be run on any Unix system as a single Perl command and has many user-friendly features, which enable both advanced and non-expert users to map NGS reads using distributed computing. The workflow can be executed as a whole or individual modules can be executed one after another. A comparison of the most important features of DistMap to other available tools is given in <xref ref-type="table" rid="tab4">Table 4</xref>.</p>
+				<table-wrap id="tab4" position="float">
+					<label>Table 4</label>
+					<caption>
+						<title>Comparison of various features of DistMap and other tools for distributed mapping.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Features</bold></th>
+								<th rowspan="1" colspan="1"><bold>Crossbow v 1.2.0</bold></th>
+								<th rowspan="1" colspan="1"><bold>SEAL v 0.1.0</bold></th>
+								<th rowspan="1" colspan="1"><bold>Eoulsan v 1.1.6</bold></th>
+								<th rowspan="1" colspan="1"><bold>FX v 1.0.4</bold></th>
+								<th rowspan="1" colspan="1"><bold>DistMap v 1.0</bold></th>
+								<th rowspan="1" colspan="1"><bold>Galaxy</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">SAM output</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">BAM output</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Pair-end Mapping</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Single-end Mapping</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Bisulfite Mapping</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Installation required</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Dependency</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Operating system</td>
+								<td rowspan="1" colspan="1">All Unix</td>
+								<td rowspan="1" colspan="1">Only Linux</td>
+								<td rowspan="1" colspan="1">Only Linux</td>
+								<td rowspan="1" colspan="1">All OS</td>
+								<td rowspan="1" colspan="1">All Unix</td>
+								<td rowspan="1" colspan="1">All OS</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Mappers (complied)</td>
+								<td rowspan="1" colspan="1">bowtie</td>
+								<td rowspan="1" colspan="1">BWA</td>
+								<td rowspan="1" colspan="1">BWA, bowtie, SOAP, GSNAP</td>
+								<td rowspan="1" colspan="1">GSNAP</td>
+								<td rowspan="1" colspan="1">BWA, bowtie, Bowtie2, GSNAP, SOAP, STAR, TopHat, TopHat2, Bismark, BSMAP</td>
+								<td rowspan="1" colspan="1">bowtie, BWA</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Mapper version dependency</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Reference sequence version dependency</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Custom queue/pool support</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Fair scheduler and Capacity scheduler</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">no</td>
+								<td rowspan="1" colspan="1">yes</td>
+								<td rowspan="1" colspan="1">no</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+		</sec>
+		<sec id="s3" sec-type="materials|methods">
+			<title>Materials and Methods</title>
+			<sec id="s3.1">
+				<title>Implementation</title>
+				<p>The DistMap was developed in Perl 5.8.8 [<xref ref-type="bibr" rid="B18">18</xref>] to map millions of short reads produced from a single NGS experiment in a distributed manner. The mapping module of DistMap is based on the MapReduce programming algorithm [<xref ref-type="bibr" rid="B19">19</xref>], which runs on the Hadoop cluster. There is no dependency required to use DistMap except a working Hadoop cluster. The minimum input requirements to run DistMap on any Unix operating system are (1) executables of the required mapping software, (2) MergeSamFiles.jar and SortSam.jar, two jar files from PICARD [<xref ref-type="bibr" rid="B20">20</xref>], (3) access to a Hadoop cluster, (4) FASTQ formatted reads (paired-end, single end or mixed) and (5) a FASTA formatted reference genome.</p>
+			</sec>
+			<sec id="s3.2">
+				<title>Hadoop and MapReduce</title>
+				<p>Hadoop is an open source software framework, which can be installed and run on commodity computers and enables large-scale distributed data analysis. There are two components of Hadoop (1) a fault-tolerant and robust Hadoop Distributed File System (HDFS) and (2) MapReduce: a java-based API, which enables parallel computing across all nodes of a cluster.</p>
+				<p>Currently nine different mappers are supported in DistMap: BWA [<xref ref-type="bibr" rid="B21">21</xref>], bowtie [<xref ref-type="bibr" rid="B22">22</xref>], Bowtie2 [<xref ref-type="bibr" rid="B23">23</xref>], GSNAP [<xref ref-type="bibr" rid="B24">24</xref>], SOAP [<xref ref-type="bibr" rid="B25">25</xref>], STAR [<xref ref-type="bibr" rid="B26">26</xref>], Bismark [<xref ref-type="bibr" rid="B27">27</xref>], BSMAP [<xref ref-type="bibr" rid="B28">28</xref>] and TopHat [<xref ref-type="bibr" rid="B29">29</xref>], thereby supporting a wide range of biological applications (<xref ref-type="table" rid="tab1">Table 1</xref>). While TopHat could be run on DistMap, we do not recommend this since the distributed mapping interferes with the identification of splice sites by TopHat. DistMap supports two different implementations of customized queuing systems: Capacity scheduler [<xref ref-type="bibr" rid="B26">26</xref>] and pool: Fair scheduler [<xref ref-type="bibr" rid="B27">27</xref>].</p>
+			</sec>
+			<sec id="s3.3">
+				<title>DistMap components</title>
+				<p>The DistMap workflow consists of seven main modules which can be executed either end-to-end by a single command, or each module can be executed by giving appropriate command line flags. The whole workflow is summarized in <xref ref-type="fig" rid="pone-0072614-g001">Figure 1</xref>.</p>
+			</sec>
+			<sec id="s3.4">
+				<title>DistMap input and output</title>
+				<p>DistMap workflow takes the input from a local computer, performs the mapping of the reads on a Hadoop cluster, and stores the final output file on the local computer. No direct interaction between the user and the Hadoop cluster is needed. DistMap requires reference sequence data in FASTA format and short read data in FASTQ format. If the user has to map many datasets in a single DistMap run then it can be done via command line by using the option <bold><italic>–input</italic></bold> multiple times. The final output of DistMap is a single SAM or BAM file without any filtering. The user can request either a SAM or a BAM output file by using the DistMap command line option <bold><italic>–output-format</italic></bold>.</p>
+			</sec>
+			<sec id="s3.5">
+				<title>Availability, installation and usage</title>
+				<p>DistMap is an open-source tool and is freely available for all researchers. The source code of the DistMap can be downloaded from <ext-link ext-link-type="uri" xlink:href="http://distmap.googlecode.com/files/distmap_v1.0.tar.gz" xlink:type="simple"><underline>http://distmap.googlecode.com/files/DistMap_v1.0.tar.gz</underline></ext-link>.</p>
+				<p>The user manual of DistMap is available on <ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/distmap/wiki/manual" xlink:type="simple"><underline>http://code.google.com/p/distmap/wiki/Manual</underline></ext-link>.</p>
+				<p>Since DistMap was developed with easy use for non-expert researchers in mind, we provide a step-by-step guide to set up a Hadoop cluster on Linux computers <ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/distmap/wiki/setuphadooplinux" xlink:type="simple"><underline>http://code.google.com/p/distmap/wiki/SetupHadoopLinux</underline></ext-link> and on Macintosh computers <ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/distmap/wiki/setuphadoopmacintosh" xlink:type="simple"><underline>http://code.google.com/p/distmap/wiki/SetupHadoopMacintosh</underline></ext-link>.</p>
+			</sec>
+		</sec>
+		<sec id="s4">
+			<title>Conclusions</title>
+			<p>DistMap is a user-friendly, modular, and integrated workflow for distributed mapping of NGS-generated short reads on a Hadoop cluster. Since in most NGS applications mapping is an essential and highly time intensive step, we believe that DistMap will be greatly expedite this process and the subsequent workflow. In comparison to other tools, DistMap stands out for its generality and flexibility, supporting nine different mappers that facilitate a range of different NGS-based analyses. The availability of multiple mappers means that DistMap can be readily integrated into many existing workflows without having to incorporate a new mapper. Similarly, the SAM/BAM output format was chosen to be compatible with the most widely used downstream analytical tools. Furthermore, unlike other distributed read mapping tools, DistMap supports customized queuing, multiple job schedulers, and job prioritization within a queue. Finally, DistMap was built to be accessible to novice and advanced users alike, being executed via a single Perl command. To help facilitate its use an extensive user manual and the step-by-step instructions for setting up a Hadoop cluster on Macintosh or Linux computers are provided alongside the source code.</p>
+		</sec>
+	</body>
+	<back>
+		<ack>
+			<p>We are grateful to E. Versace for helpful discussions and suggestions on manuscript. We thank all members of the ‘Institut für Populationsgenetik’ for the DistMap testing and feedback. Special thanks to R. Tobler and T. Hill for revising the manuscript.</p>
+		</ack>
+		<ref-list>
+			<title>References</title>
+			<ref id="B1">
+				<label>1</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Taylor</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>An overview of the Hadoop/MapReduce/HBase framework and its current applications in bioinformatics</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume>(<supplement>Suppl 12</supplement>): <fpage>S1</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-11-S10-P1" xlink:type="simple">10.1186/1471-2105-11-S10-P1</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B2">
+				<label>2</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Langmead</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Schatz</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Pop</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name> (<year>2009</year>) <article-title>Searching for SNPs with cloud computing</article-title>. <source>Genome Biol</source> <volume>10</volume>(<issue-id>11</issue-id>): <fpage>R134</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2009-10-11-r134" xlink:type="simple">10.1186/gb-2009-10-11-r134</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19930550" xlink:type="simple">19930550</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B3">
+				<label>3</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jourdren</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Bernard</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Dillies</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Le Crom</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>Eoulsan: a cloud computing-based framework facilitating high throughput sequencing analyses</article-title>. <source>Bioinformatics</source> <volume>28</volume>(<issue-id>11</issue-id>): <fpage>1542</fpage>–<lpage>1543</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts165" xlink:type="simple">10.1093/bioinformatics/bts165</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22492314" xlink:type="simple">22492314</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B4">
+				<label>4</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hong</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Rhie</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Park</surname><given-names>SS</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ju</surname><given-names>YS</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>FX: an RNA-Seq analysis tool on the cloud</article-title>. <source>Bioinformatics</source> <volume>28</volume>(<issue-id>5</issue-id>): <fpage>721</fpage>–<lpage>723</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts023" xlink:type="simple">10.1093/bioinformatics/bts023</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22257667" xlink:type="simple">22257667</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B5">
+				<label>5</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Handsaker</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Wysoker</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fennell</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ruan</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>The sequence alignment/map (SAM) format and SAMtools</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2078</fpage>–<lpage>2079</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp352" xlink:type="simple">10.1093/bioinformatics/btp352</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19505943" xlink:type="simple">19505943</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B6">
+				<label>6</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pireddu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Leo</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zanetti</surname><given-names>G</given-names></name> (<year>2011</year>) <article-title>SEAL a distributed short read mapping and duplicate removal tool</article-title>. <source>Bioinformatics</source> <volume>27</volume>(<issue-id>15</issue-id>): <fpage>2159</fpage>–<lpage>2160</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr325" xlink:type="simple">10.1093/bioinformatics/btr325</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21697132" xlink:type="simple">21697132</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B7">
+				<label>7</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Field</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Tiwari</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Booth</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Houten</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Swan</surname><given-names>D</given-names></name> <etal>et al.</etal> (<year>2006</year>) <article-title>Open software for biologists: from famine to feast</article-title>. <source>Nat Biotechnol</source> <volume>24</volume>(<issue-id>7</issue-id>): <fpage>801</fpage>-<lpage>803</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt0706-801" xlink:type="simple">10.1038/nbt0706-801</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16841067" xlink:type="simple">16841067</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B8">
+				<label>8</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krampis</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Booth</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Chapman</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tiwari</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Bicak</surname><given-names>M</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Cloud BioLinux: pre-configured and on-demand bioinformatics computing for the genomics community</article-title>. <source>BMC Bioinformatics</source> <volume>13</volume>: <fpage>42</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-13-42" xlink:type="simple">10.1186/1471-2105-13-42</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22429538" xlink:type="simple">22429538</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B9">
+				<label>9</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goecks</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Nekrutenko</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Taylor</surname><given-names>J</given-names></name>, <collab xlink:type="simple">Galaxy Team</collab> (<year>2010</year>) <article-title>Galaxy: a comprehensive approach for supporting accessible, reproducible, and transparent computational research in the life sciences</article-title>. <source>Genome Biol</source> <volume>11</volume>(<issue-id>8</issue-id>): <fpage>R86</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2010-11-8-r86" xlink:type="simple">10.1186/gb-2010-11-8-r86</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20738864" xlink:type="simple">20738864</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B10">
+				<label>10</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schatz</surname><given-names>MC</given-names></name> (<year>2009</year>) <article-title>CloudBurst: highly sensitive read mapping with MapReduce</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>1363</fpage>-<lpage>1369</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp236" xlink:type="simple">10.1093/bioinformatics/btp236</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19357099" xlink:type="simple">19357099</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B11">
+				<label>11</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><comment>bcbio-nextgen. Available: </comment><ext-link ext-link-type="uri" xlink:href="https://github.com/chapmanb/bcbio-nextgen" xlink:type="simple">https://github.com/chapmanb/bcbio-nextgen</ext-link><comment>. Accessed 2013 Jun 14</comment></mixed-citation>
+			</ref>
+			<ref id="B12">
+				<label>12</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McKenna</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Hanna</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Banks</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Sivachenko</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Cibulskis</surname><given-names>K</given-names></name> <etal>et al.</etal> (<year>2010</year>) <article-title>The Genome Analysis Toolkit: A MapReduce framework for analyzing next-generation DNA sequencing data</article-title>. <source>Genome Res</source> <volume>20</volume>(<issue-id>9</issue-id>): <fpage>1297</fpage>–<lpage>1303</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.107524.110" xlink:type="simple">10.1101/gr.107524.110</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20644199" xlink:type="simple">20644199</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B13">
+				<label>13</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Niemenmaa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kallio</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Schumacher</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Klemelä</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Korpelainen</surname><given-names>E</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Hadoop-BAM: directly manipulating next generation sequencing data in the cloud</article-title>. <source>Bioinformatics</source> <volume>28</volume>(<issue-id>6</issue-id>): <fpage>876</fpage>–<lpage>877</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts054" xlink:type="simple">10.1093/bioinformatics/bts054</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22302568" xlink:type="simple">22302568</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B14">
+				<label>14</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><comment>Apache</comment> <comment>Hadoop. Available: </comment><ext-link ext-link-type="uri" xlink:href="http://hadoop.apache.org/" xlink:type="simple">http://hadoop.apache.org/</ext-link><comment>. Accessed 2013 Jun 14</comment></mixed-citation>
+			</ref>
+			<ref id="B15">
+				<label>15</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><comment>Capacity scheduler. Available: </comment><ext-link ext-link-type="uri" xlink:href="http://hadoop.apache.org/docs/r1.2.0/capacity_scheduler.html" xlink:type="simple">http://hadoop.apache.org/docs/r1.2.0/capacity_scheduler.html</ext-link><comment>. Accessed 2013 Jun 14</comment></mixed-citation>
+			</ref>
+			<ref id="B16">
+				<label>16</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><comment>Fair scheduler. Available: </comment><ext-link ext-link-type="uri" xlink:href="http://hadoop.apache.org/docs/r1.2.0/fair_scheduler.html" xlink:type="simple">http://hadoop.apache.org/docs/r1.2.0/fair_scheduler.html</ext-link><comment>. Accessed 2013 Jun 14</comment></mixed-citation>
+			</ref>
+			<ref id="B17">
+				<label>17</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kofler</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Orozco-terWengel</surname><given-names>P</given-names></name>, <name name-style="western"><surname>De Maio</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Pandey</surname><given-names>RV</given-names></name>, <name name-style="western"><surname>Nolte</surname><given-names>V</given-names></name> <etal>et al.</etal> (<year>2011</year>) <article-title>PoPoolation: A Toolbox for Population Genetic Analysis of Next Generation Sequencing Data from Pooled Individuals</article-title>. <source>PLOS ONE</source> <volume>6</volume>: <fpage>e15925</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0015925" xlink:type="simple">10.1371/journal.pone.0015925</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21253599" xlink:type="simple">21253599</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B18">
+				<label>18</label>
+				<mixed-citation publication-type="web" xlink:type="simple"><name name-style="western"><surname>Perl</surname></name>. <comment>Available: </comment><ext-link ext-link-type="uri" xlink:href="http://www.perl.org" xlink:type="simple"><underline>http://www.perl.org</underline></ext-link>. <comment>Accessed</comment> 2013 June 14.</mixed-citation>
+			</ref>
+			<ref id="B19">
+				<label>19</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><name name-style="western"><surname>Dean</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ghemawat</surname><given-names>S</given-names></name> (<year>2004</year>) <article-title>MapReduce: simplified data processing on large clusters. In Proceedings of the 6th Symposium on Operating Systems Design &amp; Implementation: 6-8 December 2004; San Francisco, California, USA</article-title>. <comment>Volume 6. </comment><publisher-loc>New York, NY, USA</publisher-loc>: <publisher-name>ACM</publisher-name><comment>. pp. 137-150</comment></mixed-citation>
+			</ref>
+			<ref id="B20">
+				<label>20</label>
+				<mixed-citation publication-type="web" xlink:type="simple"><collab xlink:type="simple">PICARD</collab>. <comment>Available: </comment><ext-link ext-link-type="uri" xlink:href="http://picard.sourceforge.net" xlink:type="simple"><underline>http://picard.sourceforge.net</underline></ext-link>. <comment>Accessed</comment> 2013 June 14.</mixed-citation>
+			</ref>
+			<ref id="B21">
+				<label>21</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Durbin</surname><given-names>R</given-names></name> (<year>2009</year>) <article-title>Fast and accurate short read alignment with Burrows-Wheeler transform</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>1754</fpage>–<lpage>1760</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp324" xlink:type="simple">10.1093/bioinformatics/btp324</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19451168" xlink:type="simple">19451168</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B22">
+				<label>22</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Langmead</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Trapnell</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pop</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name> (<year>2009b</year>) <article-title>Ultrafast and memory-efficient alignment of short DNA sequences to the human genome</article-title>. <source>Genome Biol</source> <volume>10</volume>(<issue-id>3</issue-id>): <fpage>R25</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2009-10-3-r25" xlink:type="simple">10.1186/gb-2009-10-3-r25</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19261174" xlink:type="simple">19261174</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B23">
+				<label>23</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Langmead</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name> (<year>2012</year>) <article-title>Fast gapped-read alignment with Bowtie 2</article-title>. <source>Nat Methods</source> <volume>9</volume>(<issue-id>4</issue-id>): <fpage>357</fpage>-<lpage>359</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.1923" xlink:type="simple">10.1038/nmeth.1923</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22388286" xlink:type="simple">22388286</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B24">
+				<label>24</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>TD</given-names></name>, <name name-style="western"><surname>Nacu</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Fast and SNP-tolerant detection of complex variants and splicing in short reads</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>873</fpage>–<lpage>881</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq057" xlink:type="simple">10.1093/bioinformatics/btq057</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20147302" xlink:type="simple">20147302</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B25">
+				<label>25</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kristiansen</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>J</given-names></name> (<year>2008</year>) <article-title>SOAP: short oligonucleotide alignment program</article-title>. <source>Bioinformatics</source> <volume>24</volume>(<issue-id>5</issue-id>): <fpage>713</fpage>–<lpage>714</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btn025" xlink:type="simple">10.1093/bioinformatics/btn025</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18227114" xlink:type="simple">18227114</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B26">
+				<label>26</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dobin</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Davis</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Schlesinger</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Drenkow</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zaleski</surname><given-names>C</given-names></name> <etal>et al.</etal> (<year>2013</year>) <article-title>STAR: ultrafast universal RNA-seq aligner</article-title>. <source>Bioinformatics</source> <volume>29</volume>(<issue-id>1</issue-id>): <fpage>15</fpage>–<lpage>21</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts635" xlink:type="simple">10.1093/bioinformatics/bts635</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/23104886" xlink:type="simple">23104886</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B27">
+				<label>27</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krueger</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Andrews</surname><given-names>SR</given-names></name> (<year>2011</year>) <article-title>Bismark: a flexible aligner and methylation caller for Bisulfite-Seq applications</article-title>. <source>Bioinformatics</source> <volume>27</volume>(<issue-id>11</issue-id>): <fpage>1571</fpage>–<lpage>1572</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr167" xlink:type="simple">10.1093/bioinformatics/btr167</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21493656" xlink:type="simple">21493656</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B28">
+				<label>28</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>W</given-names></name> (<year>2009</year>) <article-title>BSMAP: whole genome bisulfite sequence MAPping program</article-title>. <source>BMC Bioinformatics</source> <volume>10</volume>: <fpage>232</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-10-232" xlink:type="simple">10.1186/1471-2105-10-232</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19635165" xlink:type="simple">19635165</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B29">
+				<label>29</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Trapnell</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pachter</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name> (<year>2009</year>) <article-title>TopHat: discovering splice junctions with RNA-Seq</article-title>. <source>Bioinformatics</source> <volume>25</volume>(<issue-id>9</issue-id>): <fpage>1105</fpage>-<lpage>1111</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp120" xlink:type="simple">10.1093/bioinformatics/btp120</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19289445" xlink:type="simple">19289445</ext-link>.</mixed-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>

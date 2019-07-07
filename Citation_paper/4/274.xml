@@ -1,0 +1,1515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+	<front>
+		<journal-meta>
+    <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+    <journal-id journal-id-type="publisher-id">plos</journal-id>
+    <journal-id journal-id-type="pmc">plosone</journal-id>
+    <journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group>
+    <issn pub-type="epub">1932-6203</issn>
+    <publisher><publisher-name>Public Library of Science</publisher-name>
+    <publisher-loc>San Francisco, USA</publisher-loc></publisher>
+    </journal-meta><article-meta>
+			<article-id pub-id-type="publisher-id">PONE-D-13-17069</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0075505</article-id><article-categories><subj-group subj-group-type="heading">
+    <subject>Research Article</subject></subj-group></article-categories><title-group>
+				<article-title>Comparing Memory-Efficient Genome Assemblers on Stand-Alone and Cloud Infrastructures</article-title>
+			<alt-title alt-title-type="running-head">Comparing Memory-Efficient Genome Assemblers</alt-title>
+      </title-group>
+			<contrib-group>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Kleftogiannis</surname>
+						<given-names>Dimitrios</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Kalnis</surname>
+						<given-names>Panos</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Bajic</surname>
+						<given-names>Vladimir B.</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1"><label>1</label> <addr-line>Computer, Electrical and Mathematical Sciences and Engineering Division (CEMSE), King Abdullah University of Science and Technology (KAUST), Thuwal, Saudi Arabia</addr-line></aff>
+			<aff id="aff2"><label>2</label> <addr-line>Computational Bioscience Research Center (CBRC), Computer, Electrical and Mathematical Sciences and Engineering Division (CEMSE), King Abdullah University of Science and Technology (KAUST), Thuwal, Saudi Arabia</addr-line></aff>
+			<contrib-group><contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Tang</surname>
+            <given-names>Haixu</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+        </contrib-group><aff id="edit1"><addr-line>Indiana University, United States of America</addr-line></aff><author-notes>
+				<corresp id="cor1">* E-mail: <email xlink:type="simple">vladimir.bajic@kaust.edu.sa</email></corresp>
+			<fn fn-type="conflict"><p>The authors have read the journal's policy and have the following conflicts: VBB is an Academic Editor of PLOS ONE. This does not alter the authors' adherence to all the PLOS ONE policies on sharing data and materials, as detailed online in the guide for authors.</p></fn><fn fn-type="con"><p>Conceived and designed the experiments: DK PK. Performed the experiments: DK. Analyzed the data: DK PK VBB. Contributed reagents/materials/analysis tools: DK. Wrote the manuscript: DK PK VBB. </p></fn></author-notes>
+			<pub-date pub-type="collection"><year>2013</year></pub-date><pub-date pub-type="epub">
+        <day>27</day>
+        <month>9</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume><issue>9</issue><elocation-id>e75505</elocation-id><history><date date-type="received">
+          <day>27</day>
+          <month>4</month>
+          <year>2013</year>
+        </date>
+        <date date-type="accepted">
+          <day>14</day>
+          <month>8</month>
+          <year>2013</year>
+        </date>
+      </history><permissions>
+    <copyright-year>2013</copyright-year><copyright-holder>Kleftogiannis et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license>
+    </permissions><abstract>
+				<p>A fundamental problem in bioinformatics is genome assembly. Next-generation sequencing (NGS) technologies produce large volumes of fragmented genome reads, which require large amounts of memory to assemble the complete genome efficiently. With recent improvements in DNA sequencing technologies, it is expected that the memory footprint required for the assembly process will increase dramatically and will emerge as a limiting factor in processing widely available NGS-generated reads. In this report, we compare current memory-efficient techniques for genome assembly with respect to quality, memory consumption and execution time. Our experiments prove that it is possible to generate draft assemblies of reasonable quality on conventional multi-purpose computers with very limited available memory by choosing suitable assembly methods. Our study reveals the minimum memory requirements for different assembly programs even when data volume exceeds memory capacity by orders of magnitude. By combining existing methodologies, we propose two general assembly strategies that can improve short-read assembly approaches and result in reduction of the memory footprint. Finally, we discuss the possibility of utilizing cloud infrastructures for genome assembly and we comment on some findings regarding suitable computational resources for assembly.</p>
+			</abstract>
+		<funding-group><funding-statement>DK and PK are supported by the KAUST Base Research Fund of PK. VBB is supported by the KAUST Base Research Fund. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1" sec-type="introduction">
+			<title>Introduction</title>
+			<p>Genome assembly is a fundamental problem in sequence bioinformatics [<xref ref-type="bibr" rid="B1">1</xref>] and many assemblers have been developed up to now [<xref ref-type="bibr" rid="B2">2</xref>–<xref ref-type="bibr" rid="B13">13</xref>]. Today, the input for genome assembly is generated using the Next-Generation Sequencing (NGS) technologies. Current NGS technologies deliver the following significant improvements over older methods [<xref ref-type="bibr" rid="B14">14</xref>]: (i) the read length has increased to several hundreds or even thousands of base pairs for single-molecule, real-time sequencing; (ii) genome coverage has increased by orders of magnitude (depending on the genome size); (iii) the sequencing process has become much faster and much cheaper [<xref ref-type="bibr" rid="B15">15</xref>]; (iv) whole genome sequencing (WGS) for every organism has now become feasible [<xref ref-type="bibr" rid="B16">16</xref>]; (v) metagenomics assembly from environmental samples has now become possible [<xref ref-type="bibr" rid="B17">17</xref>].</p>
+			<p>A side effect of NGS is the massive amount of generated raw data that normally requires computers with very large memories for the assembly process. For example, traditional short-read assemblers require around 256 GB RAM for datasets with roughly 500 million reads [<xref ref-type="bibr" rid="B18">18</xref>]. This problem is expected to worsen in the future because the NGS data generation rate has exceeded expectations based on Moore’s law [<xref ref-type="bibr" rid="B19">19</xref>], meaning that the amount of raw data is expected to grow much faster than the capacity of available memory. Despite the practical significance of the problem, existing reviews [<xref ref-type="bibr" rid="B1">1</xref>,<xref ref-type="bibr" rid="B20">20</xref>–<xref ref-type="bibr" rid="B22">22</xref>] and comparison studies like Assemblathon [<xref ref-type="bibr" rid="B23">23</xref>] and GAGE [<xref ref-type="bibr" rid="B18">18</xref>], have focused on the quality of the assembly, but not on memory requirements.</p>
+			<p>Recently, there has been significant progress in the development of <italic>memory-efficient</italic> genome assemblers [<xref ref-type="bibr" rid="B24">24</xref>–<xref ref-type="bibr" rid="B27">27</xref>]. The term memory efficient refers to assemblers that aim to reduce the memory footprint of the process and, consequently, handle larger NGS datasets with the same amount of memory. The development of preprocessing techniques is also popular and results in lightweight processing of large NGS datasets. A method that eliminates redundant information [<xref ref-type="bibr" rid="B28">28</xref>] and a disk-based partitioning algorithm [<xref ref-type="bibr" rid="B29">29</xref>] are two promising preprocessing techniques.</p>
+			<p>In this study, we quantify the memory requirements of modern assemblers for a variety of datasets. We compare the prevalent memory-efficient techniques against a typical traditional approach (i.e., Velvet [<xref ref-type="bibr" rid="B6">6</xref>]). We compare the following programs: SparseAssembler [<xref ref-type="bibr" rid="B24">24</xref>], Gossamer [<xref ref-type="bibr" rid="B25">25</xref>], Minia [<xref ref-type="bibr" rid="B27">27</xref>] and SGA [<xref ref-type="bibr" rid="B30">30</xref>]. All of them are open-source and representative of the recent assembly trends, namely: the efficient construction of large assembly graphs with less memory and the utilization of compressed data structures. Our performance evaluation follows the gold standard of genome assembly evaluation [<xref ref-type="bibr" rid="B18">18</xref>] and is applied to four well-studied datasets with diverse complexity and sizes, ranging from a few millions to hundreds of millions of reads. We performed the experiments on systems with 4 to 196 GB RAM, corresponding to a wide range of equipment, from laptops to desktops to large servers. We report the memory requirements for each program and provide directions to researchers for choosing a suitable execution environment for their assemblies. This is the first study that offers a practical comparison of memory-efficient assemblers with respect to the trade-offs between memory requirements, quality of assembly and execution time.</p>
+			<p>We also propose two new assembly strategies that combine existing memory-efficient approaches for each stage of the execution. The first strategy is Diginorm-MSP-Assembly (<italic>DiMA</italic>), which uses two pre-processing steps: Diginorm [<xref ref-type="bibr" rid="B28">28</xref>] for data cleaning followed by MSP [<xref ref-type="bibr" rid="B29">29</xref>], which distributes the data on disk partitions. The final assembly step allows for lightweight processing and any well-known assembler can be used. Our results show that DiMA is a general strategy for reducing the memory requirements of traditional assemblers. The combination of DiMA with the Velvet assembler results in better memory utilization than that by the original Velvet program and is capable of assembling the <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content> genome using about 20 GB RAM, whereas the original Velvet program would crash because of insufficient memory on a 192 GB server. The second strategy is Zero-memory assembly (<italic>ZeMA</italic>), which has a data cleaning preprocessing phase that uses Diginorm. Afterwards, ZeMA builds a sparse de Bruijn graph using SparseAssembler. The ZeMA pipeline executed on a conventional laptop successfully assembles the <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content> genome using only 3.2 GB of RAM.</p>
+			<p>Finally, when access to local computational resources is not available, we discuss the possibility of utilizing cloud infrastructures for genome assembly. As a proof of concept, we repeated all experiments on Amazon EC2 by utilizing suitable virtual machine instances based on the reported minimum memory requirements. Based on how often genome assembly is executed, we performed a cost analysis to determine the financial benefits of running assemblies on cloud systems. We conclude that, under some constrains, it is cheaper to perform genome assembly in the cloud when local access to powerful computers is not possible. Thus, the opportunity to process large NGS data becomes available to a wide spectrum of researchers without extensive computing resources.</p>
+			<p>The contributions of our work are:</p>
+			<list list-type="simple">
+				<list-item>
+					<p>i.	A comparison of current memory-efficient assemblers.</p>
+				</list-item>
+				<list-item>
+					<p>ii.	Two novel assembly strategies that combine existing memory-efficient techniques.</p>
+				</list-item>
+				<list-item>
+					<p>iii.	Analysis of the applicability of cloud computing infrastructures to genome assembly.</p>
+				</list-item>
+			</list>
+			<p>The remainder of this paper is organized as follows: In the beginning of Materials and Methods section we survey recent memory-efficient assembly methods. Afterwards we describe our two novel assembly strategies and we present the experimental setup. In the Results and Discussion section we present the results and the outcome of the comparison. Next, we present a cost analysis on utilizing a cloud infrastructure for genome assembly. The last section provides conclusions and comments on new perspectives for the future.</p>
+		</sec>
+		<sec id="s2" sec-type="materials|methods">
+			<title>Materials and Methods</title>
+			<sec id="s2.1">
+				<title>Background on assembly methods</title>
+				<sec id="s2.1.1">
+					<title>Traditional assemblers</title>
+					<p>From the algorithmic perspective, there are two common types of assembly algorithms[<xref ref-type="bibr" rid="B1">1</xref>] (i) <italic>overlap-layout-consensus (OLC</italic>)<italic> approaches</italic>. OLC approaches build an overlap graph in which nodes represent the reads and edges correspond to overlaps between reads. Typically, overlaps are computed using pair-wise sequence alignment. The very first genome assemblers were OLC based and they targeted reads from Sanger sequencers [<xref ref-type="bibr" rid="B31">31</xref>]. Examples include the Celera assembler [<xref ref-type="bibr" rid="B32">32</xref>], PCAP [<xref ref-type="bibr" rid="B33">33</xref>], Arachne [<xref ref-type="bibr" rid="B34">34</xref>], Phrap [<xref ref-type="bibr" rid="B35">35</xref>] and CAP3 [<xref ref-type="bibr" rid="B36">36</xref>]. However, NGS technologies now generate millions of reads and computation of pair-wise alignment between millions of reads has become infeasible. For this reason, OLC-based approaches are not efficient with NGS data.(ii) <italic>de Bruijn graph (DBG</italic>)<italic> approaches</italic>. DBG-based assemblers are state of the art. In these approaches, reads are decomposed into <italic>k-mers</italic> (a k-mer is a subsequence of a fixed-length, k). Then, a DBG is built in which each node corresponds to a k-mer and edges correspond to suffix-prefix matching between them. Practical strategies for applying DBGs to NGS data are reviewed in <xref ref-type="bibr" rid="B37">37</xref>. The most popular DBG assemblers are Euler [<xref ref-type="bibr" rid="B2">2</xref>], AbySS [<xref ref-type="bibr" rid="B3">3</xref>], SOAPdenovo [<xref ref-type="bibr" rid="B4">4</xref>], ALLPATHS [<xref ref-type="bibr" rid="B5">5</xref>] and Velvet [<xref ref-type="bibr" rid="B6">6</xref>].</p>
+				</sec>
+				<sec id="s2.1.2">
+					<title>Memory-efficient techniques</title>
+					<p>Methods that reduce the memory footprint of an assembly can be divided into three categories: (i) <italic>construction of large DBG with less memory</italic>. The deep genome coverage of NGS data produces large amounts of redundant information. A promising new technique for DBG construction is based on the idea of sparseness in genome assembly [<xref ref-type="bibr" rid="B24">24</xref>]. The approach generates all possible k-mers from input reads. Then, it performs uniform k-mer sampling with a predefined sampling ratio. Based on the sampled subset of k-mers, a sparse DBG is built. Storage of the sparse DBG ensures sufficient information for accurate assembly, while simultaneously reducing the storage requirements. However, the sampling ratio has profound effects on the quality of the assembly and dominates the memory requirements ; (ii) <italic>effective indexes for identifying duplicate k-mers</italic> (or equivalently overlapping in OLC). Analysis of DBGs properties gives a lower bound for the number of bits required for representing the graph. A memory-efficient implementation can be obtained using succinct data structures (so-called entropy-compressed structures). Succinct data structures are compressed data structures that require memory space that is close to the theoretical lower bound. Following this idea, a sparse bitmap is used in [<xref ref-type="bibr" rid="B25">25</xref>] for representing a DBG. The implementation runs using a predefined amount of available RAM (fixed-memory). Fixed-memory execution is very efficient with large amounts of NGS data because memory utilization is independent of the input size. Suffix-array is another data structure used in genome assembly. Typically, suffix-arrays efficiently compute overlaps between NGS reads. FM-index [<xref ref-type="bibr" rid="B26">26</xref>] is a similar data structure that is derived from Burrows–Wheeler Transform [<xref ref-type="bibr" rid="B38">38</xref>] and allows for compressed representation of input reads and fast computation of overlaps. These ideas are incorporated in the SGA assembler, which follows the OLC algorithmic paradigm [<xref ref-type="bibr" rid="B30">30</xref>]. Probabilistic data structures are also applied in genome assembly [<xref ref-type="bibr" rid="B39">39</xref>]. The best-known fixed-memory probabilistic data structure is the Bloom Filter (BF) [<xref ref-type="bibr" rid="B40">40</xref>]. BF enables compact k-mers storage and reduces memory requirements. In addition, it facilitates partitioning of the graph to disconnected components, a property that increases the quality of metagenomic sequence assembly [<xref ref-type="bibr" rid="B41">41</xref>]. Another example of a BF-based assembler is Minia [<xref ref-type="bibr" rid="B27">27</xref>]. Minia introduces a novel algorithm for finding false nodes and false branches, allows for accurate and memory-efficient DBG traversal, and targets commodity desktops with limited computational resources; (iii) <italic>effective preprocessing techniques for NGS data</italic>. Typically, raw NGS data contain errors. During the assembly process, these errors generate spurious graph nodes and false branches that dominate RAM requirements and decrease assembly quality. Digital Normalization (Diginorm) [<xref ref-type="bibr" rid="B28">28</xref>] considers the effect of errors in the assembly process and eliminates low-quality and highly covered reads. It runs as a preprocessing step, has fixed memory and produces a dataset cleansed of errors and redundant information. The technique is general and can be combined with any assembler. It is therefore feasible to apply computationally expensive techniques, such as OLC, to NGS data. Minimum Substring Partitioning (MSP) [<xref ref-type="bibr" rid="B29">29</xref>] splits the input reads in subsequences longer than k-mers (called super k-mers) and distributes them in a way that duplicate k-mers are saved in the same disk partition. Thus, processing one disk partition at a time allows overlaps between k-mers to be found. MSP also generates a disk-based representation of DBG by saving intermediate results on the disk and by utilizing small chunks of RAM. However, to date, a complete MSP assembler has not been reported.</p>
+				</sec>
+			</sec>
+			<sec id="s2.2">
+				<title>Proposed strategies for genome assembly</title>
+				<p>Various approaches for data cleaning and efficient encoding of DBGs have been proposed. Here, we explore the case of producing an assembly by combining existing algorithms that can be used as black-box units. We explore two strategies for this purpose: (i) Diginorm-MSP-Assembly (<italic>DiMA</italic>); (ii) Zero-memory assembly (ZeMA).</p>
+				<sec id="s2.2.1">
+					<title>DiMA</title>
+					<p>DiMA is a general assembly strategy that aims to improve traditional assemblers. Without loss of generality, we target the Velvet assembler and use the <italic>velveth</italic> and <italic>velvetg</italic> programs. The pipeline is implemented as follows. Initially, Diginorm parses the raw data and eliminates errors and redundant information. The clean dataset is piped to the MSP algorithm. MSP generates super k-mers and distributes them into different disk partitions. This guarantees that duplicate k-mers reside in the same partition and hashing enables the overlaps to be found. The velveth part processes one partition at a time and generates a set of sub-graphs that can be combined linearly. Processing small data partitions requires much smaller RAM. The produced sub-graphs are merged and the final graph nodes are re-encoded. The final assembly graph is processed by the velvetg program that generates the contigs. In addition to Velvet, any traditional assembly program can be used in DiMA. DiMA is optimized for larger datasets because it eliminates redundant information and requires small RAM during MSP processing. <xref ref-type="fig" rid="pone-0075505-g001">Figure 1</xref> illustrates the Diginorm-MSP-Velvet strategy.</p>
+					<fig id="pone-0075505-g001" position="float">
+						<object-id pub-id-type="doi">10.1371/journal.pone.0075505.g001</object-id><label>Figure 1</label>
+						<caption>
+							<title>DiMA (Diginorm-MSP-Velvet) strategy.</title>
+							
+							<p>This figure depicts the DiMA assembly strategy combined with the Velvet assembler. The process begins by cleaning the original data with a three-phase Digital Normalization algorithm. The cleaned data are distributed on different disk partitions based on the MSP algorithm. Then, the <bold>velveth</bold> program runs followed by <bold>velvetg</bold> on each partition. These programs constitute the Velvet assembler’s distinct phases (overlapping computation using hashing and graph construction) and the results are stored on the disk. A merging phase creates the final assembly graph and Velvet’s traversing algorithm produces the final results.</p>
+						</caption>
+						<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0075505.g001"/>
+					</fig>
+				</sec>
+				<sec id="s2.2.2">
+					<title>ZeMA</title>
+					<p>On the other hand, ZeMA aims at further reducing the memory utilization of existing memory efficient assemblers. The idea is simple: The processing starts with Diginorm, which cleans the dataset. Then, a sparse representation of DBG based on SparseAssembler is constructed. However, the sparse representation of DBG based on an error-free dataset might eliminate significant information for accurate assembly. Although Minia can also be used in this strategy, we tested the combination of Diginorm with SparseAssembler because SparseAssembler has a good tradeoff between run-time and accuracy.</p>
+				</sec>
+			</sec>
+			<sec id="s2.3">
+				<title>Experimental setup</title>
+				<p>We compare several memory-efficient assemblers and estimate their memory requirements for generating fast draft assembly. The experiments are conducted as follows: Every program is executed initially on a conventional laptop equipped with a 1.7 GHz Intel core i5, 4 GB RAM, using the Linux operating system. In case of failure (crash or insufficient memory), a Linux server equipped with 192 GB RAM (12 Xeon CPUs at 2.67 GHz) is utilized. By using the <italic>ulimit</italic> command, we simulate different configurations, including 8, 16, 24, 32, 48, 64, 92 and 192 GB RAM. Also, we estimate the maximum memory consumption and execution time for each assembler. The total run time is measured with the <italic>time</italic> command and the maximum memory consumption is reported using a custom script available at (<ext-link ext-link-type="uri" xlink:href="http://www.cbrc.kaust.edu.sa/mega/" xlink:type="simple"><underline>http://www.cbrc.kaust.edu.sa/mega/</underline></ext-link>). Every experiment is repeated three times and the average run time is reported. The performance evaluation follows the gold standard proposed in [<xref ref-type="bibr" rid="B18">18</xref>]. We downloaded the performance evaluation scripts from the GAGE data repository (<ext-link ext-link-type="uri" xlink:href="http://gage.cbcb.umd.edu/data/index.html" xlink:type="simple"><underline>http://gage.cbcb.umd.edu/data/index.html</underline></ext-link>).</p>
+			</sec>
+			<sec id="s2.4">
+				<title>Datasets</title>
+				<p>The GAGE study provides WGS data from two bacterial genomes (<italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic> and <italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic>), the human chromosome 14 and the bumblebee (<named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>Bambus</italic></named-content><italic> <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content>). Bacterial genomes are considered small. Human chromosome 14 is a typical example of a chromosome of a complex organism. <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content> is representative of large genomes sequenced with large read coverage. <xref ref-type="table" rid="pone-0075505-t001">Table 1</xref> summarizes the details of each dataset including estimated genome size, number of reads and the average read length. Reference genomes for mapping the generated contigs were downloaded from the GAGE data repository (<ext-link ext-link-type="uri" xlink:href="http://gage.cbcb.umd.edu/data/index.html" xlink:type="simple"><underline>http://gage.cbcb.umd.edu/data/index.html</underline></ext-link>). Since the reference genome for <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content> is not well annotated, we use as reference the assembly produced by SOAPdenovo [<xref ref-type="bibr" rid="B4">4</xref>], which performs well in the original GAGE study [<xref ref-type="bibr" rid="B18">18</xref>].</p>
+				<table-wrap id="pone-0075505-t001" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t001</object-id><label>Table 1</label>
+					<caption>
+						<title>NGS data used in the experiments.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Organism</bold></th>
+								<th rowspan="1" colspan="1"><bold>Genome Size (bp)</bold>   </th>
+								<th rowspan="1" colspan="1"><bold># of Reads</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Average Length (bp)</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Data size (GB)</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic></bold></td>
+								<td rowspan="1" colspan="1">2,860,307</td>
+								<td rowspan="1" colspan="1">1,294,104</td>
+								<td rowspan="1" colspan="1">101</td>
+								<td rowspan="1" colspan="1">0.15</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic></bold></td>
+								<td rowspan="1" colspan="1">4,603,060</td>
+								<td rowspan="1" colspan="1">2,050,868</td>
+								<td rowspan="1" colspan="1">101</td>
+								<td rowspan="1" colspan="1">0.24</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>Human chr 14</italic></bold></td>
+								<td rowspan="1" colspan="1">143,819,757</td>
+								<td rowspan="1" colspan="1">36,504,800</td>
+								<td rowspan="1" colspan="1">101</td>
+								<td rowspan="1" colspan="1">4.7</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple">B</named-content>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></named-content></italic></bold></td>
+								<td rowspan="1" colspan="1">373,481,773</td>
+								<td rowspan="1" colspan="1">303,118,594</td>
+								<td rowspan="1" colspan="1">124</td>
+								<td rowspan="1" colspan="1">46.5</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+			<sec id="s2.5">
+				<title>Assemblers</title>
+				<p>From the previously presented assemblers, we exclude the probabilistic DBG constructor [<xref ref-type="bibr" rid="B39">39</xref>] because it targets reads from metagenomic samples (similar to MetaVelvet [<xref ref-type="bibr" rid="B42">42</xref>] or MOCAT [<xref ref-type="bibr" rid="B43">43</xref>]). <xref ref-type="table" rid="pone-0075505-t002">Table 2</xref> summarizes the methods used in the comparison. Here, a combination of Diginorm with the original Velvet program, called Diginorm-Velvet, is also used. The results for the original Velvet program are also reported.</p>
+				<table-wrap id="pone-0075505-t002" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t002</object-id><label>Table 2</label>
+					<caption>
+						<title>Memory-efficient techniques.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Program</bold></th>
+								<th rowspan="1" colspan="1"><bold>Assembly Method</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Characteristic</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Fixed Memory</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>WebSite</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">SparseAssembler</td>
+								<td rowspan="1" colspan="1">DBG</td>
+								<td rowspan="1" colspan="1">Exploits sparseness</td>
+								<td rowspan="1" colspan="1">No</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="https://sites.google.com/site/sparseassembler/" xlink:type="simple">https://sites.google.com/site/sparseassembler/</ext-link></underline></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Gossamer</td>
+								<td rowspan="1" colspan="1">DBG</td>
+								<td rowspan="1" colspan="1">Succinct Data Structure (Bitmap)</td>
+								<td rowspan="1" colspan="1">Yes</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="http://www.genomics.csse.unimelb.edu.au/product-gossamer.php" xlink:type="simple">http://www.genomics.csse.unimelb.edu.au/product-gossamer.php</ext-link></underline></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Minia</td>
+								<td rowspan="1" colspan="1">DBG</td>
+								<td rowspan="1" colspan="1">Probabilistic Data Structure (BF)</td>
+								<td rowspan="1" colspan="1">No</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="http://minia.genouest.org/" xlink:type="simple">http://minia.genouest.org/</ext-link></underline></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">SGA</td>
+								<td rowspan="1" colspan="1">OLC</td>
+								<td rowspan="1" colspan="1">FM-index</td>
+								<td rowspan="1" colspan="1">No</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="https://github.com/jts/sga" xlink:type="simple">https://github.com/jts/sga</ext-link></underline></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Minimum Substring Partitioning</td>
+								<td rowspan="1" colspan="1">Pre-processing</td>
+								<td rowspan="1" colspan="1">On-disk processing based on heuristics</td>
+								<td rowspan="1" colspan="1">No</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="http://grafia.cs.ucsb.edu/msp/download.html" xlink:type="simple">http://grafia.cs.ucsb.edu/msp/download.html</ext-link></underline></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Diginorm</td>
+								<td rowspan="1" colspan="1">Pre-processing</td>
+								<td rowspan="1" colspan="1">Elimination of redundant information and errors</td>
+								<td rowspan="1" colspan="1">Yes</td>
+								<td rowspan="1" colspan="1"><underline><ext-link ext-link-type="uri" xlink:href="http://khmer.readthedocs.org/" xlink:type="simple">khmer.readthedocs.org/</ext-link></underline></td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+				<p>The latest versions for each program were downloaded from the web links provided in <xref ref-type="table" rid="pone-0075505-t002">Table 2</xref>. Execution commands and scripts for preparing the datasets are available at (<ext-link ext-link-type="uri" xlink:href="http://www.cbrc.kaust.edu.sa/mega/" xlink:type="simple">http://www.cbrc.kaust.edu.sa/mega/</ext-link>). The same repository contains all the generated contigs for reproducing the results. To clarify suitable RAM configurations and to estimate the minimum memory requirements of various programs, we test the case of producing fast draft assembly using fragment read libraries. We expect that the usage of all the available read libraries, as well as the optimization of the k-mer size, will result in improved quality. All of our experiments are conducted with the k-mer size fixed to 31.</p>
+				<p>All programs are open source. The execution recipes are not optimized. We use the default values for the program parameters.</p>
+			</sec>
+			<sec id="s2.6">
+				<title>Comparison of assembly methods and ranking</title>
+				<p>The comparison includes execution time, memory consumption and nine quality metrics. Including the total number of resultant contigs, the N50 size in base-pairs (bp), the assembly size in bp, missing reference bases, chaff bases in bp, bad trim, translocation, total corrected resultant contigs and corrected N50 size. All the performance metrics are presented in the GAGE report [<xref ref-type="bibr" rid="B18">18</xref>] and explicit definitions can be found in <xref ref-type="supplementary-material" rid="pone.0075505.s001">Table S1</xref>.</p>
+				<p>To quantify the quality of the studied programs, we rank them as follows: For every quality metric, the assembler that achieves the best result obtains 7 points, the second best obtains 6 points and so on, down to 1 point. When an assembler fails to produce results, it obtains 0 points. The overall rank for each program is based on the sum of obtained points, which we call the ranking score; the maximum score is 7x9=63 points. Thus, the program with the highest score is ranked at position 1 and so on.</p>
+			</sec>
+		</sec>
+		<sec id="s3" sec-type="results">
+			<title>Results and Discussion</title>
+			<sec id="s3.1">
+				<title>Small NGS datasets</title>
+				<p>All programs are able to finish and assemble ~99% of the reference genomes of <italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic> and <italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic> (<xref ref-type="table" rid="pone-0075505-t003">Table 3 and Table 4</xref>). Regarding quality, Diginorm-Velvet produces longer N50 and corrected N50 contigs and misses the fewest reference bases. A possible reason is Velvet’s characteristics when dealing with bacterial genomes [<xref ref-type="bibr" rid="B23">23</xref>]. SparseAssembler generates slightly shorter N50 contigs and achieves comparable memory utilization and speed. However, the larger number of chaff bases and missing reference bases reveals that the sparse graph discards significant information. This is apparent in ZeMA results where there is significant quality degradation of the resulting assembly. Regarding the other programs, SGA performs quite well, but it is very slow. Gossamer performs fairly well and, overall, it has the advantage of running with fixed memory. It is fast and it assembles correctly on average 96.5% of the original genomes. Minia is the fastest assembler and requires the smallest amount of RAM. The small number of chaff bases that it produces can be attributed to the sophisticated graph traversal that discards false branches. DiMA has poorer performance compared with Diginorm-Velvet because of the intermediate phase of partitioning the original data.</p>
+				<table-wrap id="pone-0075505-t003" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t003</object-id><label>Table 3</label>
+					<caption>
+						<title>Fragment assembly results for <italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content>.</italic></title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Metric</bold></th>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>SGA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Original Velvet</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total # of resultant contigs</bold></td>
+								<td rowspan="1" colspan="1">679</td>
+								<td rowspan="1" colspan="1">914</td>
+								<td rowspan="1" colspan="1">1,039</td>
+								<td rowspan="1" colspan="1">1,009</td>
+								<td rowspan="1" colspan="1">627</td>
+								<td rowspan="1" colspan="1">1,341</td>
+								<td rowspan="1" colspan="1">2,373</td>
+								<td rowspan="1" colspan="1">467</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size in bp</bold></td>
+								<td rowspan="1" colspan="1">8,127</td>
+								<td rowspan="1" colspan="1">5,427</td>
+								<td rowspan="1" colspan="1">4,277</td>
+								<td rowspan="1" colspan="1">4,700</td>
+								<td rowspan="1" colspan="1">8,688</td>
+								<td rowspan="1" colspan="1">3,344</td>
+								<td rowspan="1" colspan="1">1,669</td>
+								<td rowspan="1" colspan="1">12,363</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Assembly Size in bp</bold></td>
+								<td rowspan="1" colspan="1">3,185,299</td>
+								<td rowspan="1" colspan="1">2,817,839</td>
+								<td rowspan="1" colspan="1">2,783,007</td>
+								<td rowspan="1" colspan="1">2,860,307</td>
+								<td rowspan="1" colspan="1">2,863,078</td>
+								<td rowspan="1" colspan="1">2,877,916</td>
+								<td rowspan="1" colspan="1">2,905,031</td>
+								<td rowspan="1" colspan="1">2,844,437</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chaff bases in bp</bold></td>
+								<td rowspan="1" colspan="1">356,537</td>
+								<td rowspan="1" colspan="1">26,709</td>
+								<td rowspan="1" colspan="1">19,703</td>
+								<td rowspan="1" colspan="1">636,820</td>
+								<td rowspan="1" colspan="1">28,179</td>
+								<td rowspan="1" colspan="1">50,827</td>
+								<td rowspan="1" colspan="1">97,791</td>
+								<td rowspan="1" colspan="1">28,997</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Missing Reference Bases</bold></td>
+								<td rowspan="1" colspan="1">9,639 (0.34%)</td>
+								<td rowspan="1" colspan="1">48,720 (1.70%)</td>
+								<td rowspan="1" colspan="1">93,467 (3.27%)</td>
+								<td rowspan="1" colspan="1">30,262 (1.06%)</td>
+								<td rowspan="1" colspan="1">8,700 (0.30%)</td>
+								<td rowspan="1" colspan="1">13,765 (0.48%)</td>
+								<td rowspan="1" colspan="1">16,230 (0.57%)</td>
+								<td rowspan="1" colspan="1">21,059 (0.74%)</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Bad Trim</bold></td>
+								<td rowspan="1" colspan="1">5,860</td>
+								<td rowspan="1" colspan="1">2,402</td>
+								<td rowspan="1" colspan="1">3,348</td>
+								<td rowspan="1" colspan="1">34,668</td>
+								<td rowspan="1" colspan="1">5,094</td>
+								<td rowspan="1" colspan="1">4,444</td>
+								<td rowspan="1" colspan="1">4,551</td>
+								<td rowspan="1" colspan="1">3,948</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Translocation</bold></td>
+								<td rowspan="1" colspan="1">28</td>
+								<td rowspan="1" colspan="1">2</td>
+								<td rowspan="1" colspan="1">9</td>
+								<td rowspan="1" colspan="1">50</td>
+								<td rowspan="1" colspan="1">30</td>
+								<td rowspan="1" colspan="1">10</td>
+								<td rowspan="1" colspan="1">42</td>
+								<td rowspan="1" colspan="1">22</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total Units Corrected</bold></td>
+								<td rowspan="1" colspan="1">674</td>
+								<td rowspan="1" colspan="1">912</td>
+								<td rowspan="1" colspan="1">1,037</td>
+								<td rowspan="1" colspan="1">981</td>
+								<td rowspan="1" colspan="1">625</td>
+								<td rowspan="1" colspan="1">1,333</td>
+								<td rowspan="1" colspan="1">2,364</td>
+								<td rowspan="1" colspan="1">476</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size Corrected</bold></td>
+								<td rowspan="1" colspan="1">8,053</td>
+								<td rowspan="1" colspan="1">5,427</td>
+								<td rowspan="1" colspan="1">4,277</td>
+								<td rowspan="1" colspan="1">4,672</td>
+								<td rowspan="1" colspan="1">8,547</td>
+								<td rowspan="1" colspan="1">3,337</td>
+								<td rowspan="1" colspan="1">1,665</td>
+								<td rowspan="1" colspan="1">11,850</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Time (min:sec)</bold></td>
+								<td rowspan="1" colspan="1">2:32</td>
+								<td rowspan="1" colspan="1">4:52</td>
+								<td rowspan="1" colspan="1">0:52</td>
+								<td rowspan="1" colspan="1">33:29</td>
+								<td rowspan="1" colspan="1">3:14</td>
+								<td rowspan="1" colspan="1">3:10</td>
+								<td rowspan="1" colspan="1">3:20</td>
+								<td rowspan="1" colspan="1">1:39</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Memory Peak (GBs)</bold></td>
+								<td rowspan="1" colspan="1">0.31</td>
+								<td rowspan="1" colspan="1">3</td>
+								<td rowspan="1" colspan="1">0.11</td>
+								<td rowspan="1" colspan="1">1.27</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">1.7</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+				<table-wrap id="pone-0075505-t004" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t004</object-id><label>Table 4</label>
+					<caption>
+						<title>Fragment assembly results for <italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content>.</italic></title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Metric</bold></th>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>SGA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold>   </th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Original Velvet</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total # of resultant contigs</bold></td>
+								<td rowspan="1" colspan="1">2,218</td>
+								<td rowspan="1" colspan="1">6,927</td>
+								<td rowspan="1" colspan="1">2,887</td>
+								<td rowspan="1" colspan="1">2,652</td>
+								<td rowspan="1" colspan="1">2,143</td>
+								<td rowspan="1" colspan="1">3,582</td>
+								<td rowspan="1" colspan="1">5,580</td>
+								<td rowspan="1" colspan="1">2,164</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size in bp</bold></td>
+								<td rowspan="1" colspan="1">3,211</td>
+								<td rowspan="1" colspan="1">607</td>
+								<td rowspan="1" colspan="1">2,246</td>
+								<td rowspan="1" colspan="1">2,275</td>
+								<td rowspan="1" colspan="1">3,369</td>
+								<td rowspan="1" colspan="1">1,822</td>
+								<td rowspan="1" colspan="1">989</td>
+								<td rowspan="1" colspan="1">3,245</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Assembly Size in bp</bold></td>
+								<td rowspan="1" colspan="1">4,985,042</td>
+								<td rowspan="1" colspan="1">4,372,958</td>
+								<td rowspan="1" colspan="1">4,502,157</td>
+								<td rowspan="1" colspan="1">4,386,839</td>
+								<td rowspan="1" colspan="1">4,580,783</td>
+								<td rowspan="1" colspan="1">4,581,634</td>
+								<td rowspan="1" colspan="1">4,676,725</td>
+								<td rowspan="1" colspan="1">4,603,060</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chaff bases in bp</bold></td>
+								<td rowspan="1" colspan="1">490,566</td>
+								<td rowspan="1" colspan="1">370,300</td>
+								<td rowspan="1" colspan="1">51,725</td>
+								<td rowspan="1" colspan="1">110,663</td>
+								<td rowspan="1" colspan="1">67,933</td>
+								<td rowspan="1" colspan="1">129,282</td>
+								<td rowspan="1" colspan="1">307,705</td>
+								<td rowspan="1" colspan="1">69,147</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Missing Reference Bases</bold></td>
+								<td rowspan="1" colspan="1">34,461 (0.76%)</td>
+								<td rowspan="1" colspan="1">236,516 (5.14%)</td>
+								<td rowspan="1" colspan="1">119,552 (2.60%)</td>
+								<td rowspan="1" colspan="1">303,703 (6.60%)</td>
+								<td rowspan="1" colspan="1">22,572 (0.49%)</td>
+								<td rowspan="1" colspan="1">49,767 (1.08%)</td>
+								<td rowspan="1" colspan="1">47,324 (1.03%)</td>
+								<td rowspan="1" colspan="1">88,863 (1.93%)</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Bad Trim</bold></td>
+								<td rowspan="1" colspan="1">2,716</td>
+								<td rowspan="1" colspan="1">3,609</td>
+								<td rowspan="1" colspan="1">3,125</td>
+								<td rowspan="1" colspan="1">1,288</td>
+								<td rowspan="1" colspan="1">6,850</td>
+								<td rowspan="1" colspan="1">6,486</td>
+								<td rowspan="1" colspan="1">3,508</td>
+								<td rowspan="1" colspan="1">11,233</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Translocation</bold></td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">5</td>
+								<td rowspan="1" colspan="1">2</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total Units Corrected</bold></td>
+								<td rowspan="1" colspan="1">2,224</td>
+								<td rowspan="1" colspan="1">6,923</td>
+								<td rowspan="1" colspan="1">2,890</td>
+								<td rowspan="1" colspan="1">2,658</td>
+								<td rowspan="1" colspan="1">2,147</td>
+								<td rowspan="1" colspan="1">3,579</td>
+								<td rowspan="1" colspan="1">5,579</td>
+								<td rowspan="1" colspan="1">2,169</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size Corrected</bold></td>
+								<td rowspan="1" colspan="1">3,201</td>
+								<td rowspan="1" colspan="1">607</td>
+								<td rowspan="1" colspan="1">2,239</td>
+								<td rowspan="1" colspan="1">2,267</td>
+								<td rowspan="1" colspan="1">3,326</td>
+								<td rowspan="1" colspan="1">1,812</td>
+								<td rowspan="1" colspan="1">988</td>
+								<td rowspan="1" colspan="1">3,232</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Time (min:sec)</bold></td>
+								<td rowspan="1" colspan="1">3:15</td>
+								<td rowspan="1" colspan="1">7:37</td>
+								<td rowspan="1" colspan="1">1:23</td>
+								<td rowspan="1" colspan="1">55:37</td>
+								<td rowspan="1" colspan="1">5:12</td>
+								<td rowspan="1" colspan="1">5:15</td>
+								<td rowspan="1" colspan="1">6:04</td>
+								<td rowspan="1" colspan="1">2:33</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Memory Peak (GBs)</bold></td>
+								<td rowspan="1" colspan="1">0.36</td>
+								<td rowspan="1" colspan="1">3</td>
+								<td rowspan="1" colspan="1">0.17</td>
+								<td rowspan="1" colspan="1">2.01</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">0.96</td>
+								<td rowspan="1" colspan="1">2.2</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+				<p>In summary, for bacterial size genomes, we can efficiently generate draft genome assemblies with less than 4 GB RAM using any of the memory-efficient programs or traditional DBG assemblers like Velvet.</p>
+			</sec>
+			<sec id="s3.2">
+				<title>Medium NGS datasets</title>
+				<p>Medium size genomes (<xref ref-type="table" rid="pone-0075505-t005">Table 5</xref>, human chromosome 14) are more naturally complex than small genomes; limited memory resources therefore restrict efficient solutions for genome assembly. Based on missing reference bases, SparseAssembler correctly assembles 53.55% of the reference chromosome by utilizing only 1.72 GB of RAM and finishes this task in 61 minutes. Gossamer correctly assembles about 50% of the reference chromosome by utilizing 3 GB of the available RAM, and it finishes this task in about 3 hours. Diginorm-Velvet takes 78 minutes to assemble about 53% of the reference chromosome by utilizing 3.34 GB RAM, whereas Minia takes 93 minutes to achieve a less accurate assembly, although it is extremely light in terms of memory utilization (0.76 GB RAM). As with the bacterial genomes, ZeMA uses relatively small memory (1.2 GB RAM) to assemble correctly 52.3% of the reference chromosome and finishes this task in 1 hour and 15 minutes. In contrast to the cases of the bacterial genomes, in which the performance is significantly degraded, the quality of the assembly produced by ZeMA is similar to that of the other assemblers. The SGA program is ineffective. It indexes the reads using 38.5 GB RAM; during the <italic>assemble</italic> phase, it crashes and is not able to produce contigs. On the other hand, due to MSP’s partitioning phase, DiMA creates a denser graph than does Diginorm-Velvet and requires 8.7 GB RAM to assemble about 53% of the reference chromosome in 81 minutes. In contrast to Velvet’s memory management bottlenecks [<xref ref-type="bibr" rid="B18">18</xref>], the combination of Diginorm with Velvet is able to finish the execution in a reasonable amount of time. Overall Diginorm-Velvet and DiMA achieve comparable results in terms of quality. Most importantly, the original Velvet program using fragment read libraries requires about 50 GB RAM, while other widely used assemblers [<xref ref-type="bibr" rid="B3">3</xref>–<xref ref-type="bibr" rid="B5">5</xref>] cannot run on commodity desktops.</p>
+				<table-wrap id="pone-0075505-t005" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t005</object-id><label>Table 5</label>
+					<caption>
+						<title>Fragment assembly results for <italic><named-content content-type="genus-species" xlink:type="simple">Homo sapiens</named-content></italic> <italic>chromosome 14<xref ref-type="table-fn" rid="ngtab5.1">*</xref></italic>.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Metric</bold></th>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold></th>
+								<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Original Velvet</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total # of resultant contigs</bold></td>
+								<td rowspan="1" colspan="1">52,785</td>
+								<td rowspan="1" colspan="1">67,160</td>
+								<td rowspan="1" colspan="1">52,926</td>
+								<td rowspan="1" colspan="1">55,002</td>
+								<td rowspan="1" colspan="1">61,039</td>
+								<td rowspan="1" colspan="1">68,253</td>
+								<td rowspan="1" colspan="1">52,085</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size in bp</bold></td>
+								<td rowspan="1" colspan="1">264</td>
+								<td rowspan="1" colspan="1">123</td>
+								<td rowspan="1" colspan="1">161</td>
+								<td rowspan="1" colspan="1">273</td>
+								<td rowspan="1" colspan="1">233</td>
+								<td rowspan="1" colspan="1">252</td>
+								<td rowspan="1" colspan="1">325</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Assembly Size in bp</bold></td>
+								<td rowspan="1" colspan="1">101,600,523</td>
+								<td rowspan="1" colspan="1">73,046,277</td>
+								<td rowspan="1" colspan="1">74,079,569</td>
+								<td rowspan="1" colspan="1">79,129,375</td>
+								<td rowspan="1" colspan="1">80,448,331</td>
+								<td rowspan="1" colspan="1">81,139,464</td>
+								<td rowspan="1" colspan="1">81,190,207</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chaff bases in bp</bold></td>
+								<td rowspan="1" colspan="1">28,034,067</td>
+								<td rowspan="1" colspan="1">3,861,802</td>
+								<td rowspan="1" colspan="1">3,318,028</td>
+								<td rowspan="1" colspan="1">5,365,076</td>
+								<td rowspan="1" colspan="1">7,803,232</td>
+								<td rowspan="1" colspan="1">7,554,603</td>
+								<td rowspan="1" colspan="1">6,844,058</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Missing Reference Bases</bold></td>
+								<td rowspan="1" colspan="1">66,811,187 (46.45%)</td>
+								<td rowspan="1" colspan="1">72,145,106 (50.16%)</td>
+								<td rowspan="1" colspan="1">71,829,430 (49.94%)</td>
+								<td rowspan="1" colspan="1">67,835,777 (47.17%)</td>
+								<td rowspan="1" colspan="1">67,535,775 (46.96%)</td>
+								<td rowspan="1" colspan="1">68,640,864 (47.73%)</td>
+								<td rowspan="1" colspan="1">66,461,819 (46.21%)</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Bad Trim</bold></td>
+								<td rowspan="1" colspan="1">1,811,908</td>
+								<td rowspan="1" colspan="1">797,409</td>
+								<td rowspan="1" colspan="1">1,256,381</td>
+								<td rowspan="1" colspan="1">1,742,555</td>
+								<td rowspan="1" colspan="1">1,644,762</td>
+								<td rowspan="1" colspan="1">1,688,868</td>
+								<td rowspan="1" colspan="1">1,506,630</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Translocation</bold></td>
+								<td rowspan="1" colspan="1">3,849</td>
+								<td rowspan="1" colspan="1">1,247</td>
+								<td rowspan="1" colspan="1">1,447</td>
+								<td rowspan="1" colspan="1">3,920</td>
+								<td rowspan="1" colspan="1">2,026</td>
+								<td rowspan="1" colspan="1">4,874</td>
+								<td rowspan="1" colspan="1">3,824</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total Units Corrected</bold></td>
+								<td rowspan="1" colspan="1">55,175</td>
+								<td rowspan="1" colspan="1">69,103</td>
+								<td rowspan="1" colspan="1">55,230</td>
+								<td rowspan="1" colspan="1">56,146</td>
+								<td rowspan="1" colspan="1">61,351</td>
+								<td rowspan="1" colspan="1">68,849</td>
+								<td rowspan="1" colspan="1">53,589</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size Corrected</bold></td>
+								<td rowspan="1" colspan="1">172</td>
+								<td rowspan="1" colspan="1">0</td>
+								<td rowspan="1" colspan="1">107</td>
+								<td rowspan="1" colspan="1">177</td>
+								<td rowspan="1" colspan="1">159</td>
+								<td rowspan="1" colspan="1">171</td>
+								<td rowspan="1" colspan="1">195</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Time (hours:min:sec)</bold></td>
+								<td rowspan="1" colspan="1">1:1:37</td>
+								<td rowspan="1" colspan="1">3:6:50</td>
+								<td rowspan="1" colspan="1">1:33:13</td>
+								<td rowspan="1" colspan="1">1:18:16</td>
+								<td rowspan="1" colspan="1">1:21:8</td>
+								<td rowspan="1" colspan="1">1:15:09</td>
+								<td rowspan="1" colspan="1">2:27:46</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Memory Peak (GBs)</bold></td>
+								<td rowspan="1" colspan="1">1.72</td>
+								<td rowspan="1" colspan="1">3</td>
+								<td rowspan="1" colspan="1">0.76</td>
+								<td rowspan="1" colspan="1">3.34</td>
+								<td rowspan="1" colspan="1">8.7</td>
+								<td rowspan="1" colspan="1">1.2</td>
+								<td rowspan="1" colspan="1">49.3</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn id="ngtab5.1">
+							<p><sup>*</sup> The SGA program failed similarly to ref [<xref ref-type="bibr" rid="B18">18</xref>].</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+			</sec>
+			<sec id="s3.3">
+				<title>Large NGS datasets</title>
+				<p>Finally, to assemble the <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content> genome (<xref ref-type="table" rid="pone-0075505-t006">Table 6</xref>), ZeMA and Minia significantly reduce the memory footprint and are able to complete the assembly on a conventional laptop. ZeMA utilizes 3.2 GB RAM and correctly assembles about 63% of the reference genome. The execution is slow and takes around 7 hours and 13 minutes. On the other hand, Minia correctly assembles about 65% of the reference genome and utilizes only 1.28 GB RAM. However, the execution is slow and takes 49 hours and 42 minutes to finish. A better estimation of the genome size may decrease the execution time, but it will increase the memory utilization without improving quality [<xref ref-type="bibr" rid="B27">27</xref>]. Regarding the programs that require larger RAM, SparseAssembler correctly assembles about 67% of the reference genome. The execution takes about 13.5 hours and the memory utilization is 17.7 GB. Diginorm-Velvet correctly assembles about 66% of the reference genome, takes 7 hours and 40 minutes and requires 21.8 GB RAM. The quality of DiMA’s results are comparable to that of Diginorm-Velvet. The execution time is 8 minutes faster than Diginorm-Velvet and the memory utilization is 19.7 GB. Gossamer crashes while writing intermediate results on the hard drive; SGA also crashes. The crashing of assemblers and incompatibility of read libraries were not specific to our experiments. These problems were also reported in the GAGE study [<xref ref-type="bibr" rid="B18">18</xref>].</p>
+				<table-wrap id="pone-0075505-t006" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t006</object-id><label>Table 6</label>
+					<caption>
+						<title>Fragment assembly results for <named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple"><italic>B</italic></named-content><italic>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></italic></named-content><xref ref-type="table-fn" rid="ngtab6.1">*</xref>.</title>
+						 
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Metric</bold></th>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total # of resultant contigs</bold></td>
+								<td rowspan="1" colspan="1">73,065</td>
+								<td rowspan="1" colspan="1">69,110</td>
+								<td rowspan="1" colspan="1">184,131</td>
+								<td rowspan="1" colspan="1">388,411</td>
+								<td rowspan="1" colspan="1">414,813</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size in bp</bold></td>
+								<td rowspan="1" colspan="1">2,318</td>
+								<td rowspan="1" colspan="1">2,312</td>
+								<td rowspan="1" colspan="1">708</td>
+								<td rowspan="1" colspan="1">260</td>
+								<td rowspan="1" colspan="1">161</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Assembly Size in bp</bold></td>
+								<td rowspan="1" colspan="1">494,097,945</td>
+								<td rowspan="1" colspan="1">227,494,682</td>
+								<td rowspan="1" colspan="1">232,965,134</td>
+								<td rowspan="1" colspan="1">228,316,538</td>
+								<td rowspan="1" colspan="1">237,258,668</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chaff bases in bp</bold></td>
+								<td rowspan="1" colspan="1">267,660,451</td>
+								<td rowspan="1" colspan="1">2,539,466</td>
+								<td rowspan="1" colspan="1">11,619,692</td>
+								<td rowspan="1" colspan="1">39,540,500</td>
+								<td rowspan="1" colspan="1">67,160,134</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Missing Reference Bases</bold></td>
+								<td rowspan="1" colspan="1">123,265,375 (33%)</td>
+								<td rowspan="1" colspan="1">129,390,711 (34.64%)</td>
+								<td rowspan="1" colspan="1">127,532,299 (34.15%)</td>
+								<td rowspan="1" colspan="1">136,372,260 (36.51%)</td>
+								<td rowspan="1" colspan="1">138,953,569 (37.20%)</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Bad Trim</bold></td>
+								<td rowspan="1" colspan="1">1,084,237</td>
+								<td rowspan="1" colspan="1">443,936</td>
+								<td rowspan="1" colspan="1">867,642</td>
+								<td rowspan="1" colspan="1">746,248</td>
+								<td rowspan="1" colspan="1">892,388</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Translocation</bold></td>
+								<td rowspan="1" colspan="1">10,566</td>
+								<td rowspan="1" colspan="1">1,709</td>
+								<td rowspan="1" colspan="1">7,945</td>
+								<td rowspan="1" colspan="1">5,696</td>
+								<td rowspan="1" colspan="1">10,101</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total Units Corrected</bold></td>
+								<td rowspan="1" colspan="1">73,842</td>
+								<td rowspan="1" colspan="1">69,523</td>
+								<td rowspan="1" colspan="1">181,952</td>
+								<td rowspan="1" colspan="1">385,691</td>
+								<td rowspan="1" colspan="1">409,935</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>N50 size Corrected</bold></td>
+								<td rowspan="1" colspan="1">2,178</td>
+								<td rowspan="1" colspan="1">2,250</td>
+								<td rowspan="1" colspan="1">696</td>
+								<td rowspan="1" colspan="1">203</td>
+								<td rowspan="1" colspan="1">155</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Time (hours:min:sec)</bold></td>
+								<td rowspan="1" colspan="1">13:30:22</td>
+								<td rowspan="1" colspan="1">48:42:50</td>
+								<td rowspan="1" colspan="1">7:40:31</td>
+								<td rowspan="1" colspan="1">7:32:41</td>
+								<td rowspan="1" colspan="1">7:13:36</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Memory Peak (GBs)</bold></td>
+								<td rowspan="1" colspan="1">17.7</td>
+								<td rowspan="1" colspan="1">1.28</td>
+								<td rowspan="1" colspan="1">21.8</td>
+								<td rowspan="1" colspan="1">19.7</td>
+								<td rowspan="1" colspan="1">3.2</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn id="ngtab6.1">
+							
+							<p><sup>*</sup> Gossamer, SGA and the original Velvet failed to produce results.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+				<p>Overall, most of the programs are able to finish the execution with less than 24 GB RAM, which is a significant improvement over typical DBG assemblers. Consequently, the speed of the assembly is enhanced and the quality is improved.</p>
+			</sec>
+		</sec>
+		<sec id="s4" sec-type="discussion">
+			<title>Discussion</title>
+			<p>The reduced memory requirements impact the accuracy of the results. Specifically, under limited RAM, the generated N50 contigs are shorter and more contigs are produced, although the total assembly size is similar and in some cases errors are fewer or comparable to traditional short-read assemblers (see [<xref ref-type="bibr" rid="B18">18</xref>]). With medium and large NGS datasets, fragment reads are not sufficient to achieve high-quality assembly. Incorporation of paired-end libraries may improve the quality, fill the gaps and reduce incorrect assemblies. We note that in our experiments the default parameters are used for all programs. Tuning the program parameters can affect the accuracy and the number of errors, but such optimizations are out of the scope of this study. <xref ref-type="table" rid="pone-0075505-t007">Table 7</xref> ranks the quality of the studied programs and reports time and memory utilization. The maximum memory utilization for each program is given in <xref ref-type="table" rid="pone-0075505-t008">Table 8</xref>. Researchers who focus on the optimization of the quality for specific genomes can take advantage of this information and select suitable computational resources. In some cases, utilizing a commodity laptop is sufficient for generating reasonable draft assemblies. For larger genomes, the utilization of desktops or workstations with memory resources ranging from 8 to 24 GB seems sufficient and most memory-efficient techniques can be further optimized. This is a significant improvement considering that in the GAGE study, the assemblers were run using 256 GB RAM.</p>
+			<table-wrap id="pone-0075505-t007" position="float">
+				<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t007</object-id><label>Table 7</label>
+				<caption>
+					<title>Ranking of memory-efficient assemblers based on the quality of the assembly.</title>
+				</caption>
+				<table>
+					<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+					<thead>
+						<tr>
+							<th rowspan="1" colspan="1"><bold>Dataset</bold></th>
+							<th rowspan="1" colspan="1"/>
+							<th rowspan="1" colspan="1"><bold>SparseAssembler</bold></th>
+							<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+							<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+							<th rowspan="1" colspan="1"><bold>SGA</bold></th>
+							<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></th>
+							<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+							<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic></td>
+							<td rowspan="1" colspan="1"><bold>Rank</bold></td>
+							<td rowspan="1" colspan="1"><bold>2<sup>nd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>3<sup>rd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>4<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>6<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>1<sup>st</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>5<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>7<sup>th</sup></bold></td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>Time(min:sec)</bold></td>
+							<td rowspan="1" colspan="1">2:32</td>
+							<td rowspan="1" colspan="1">4:52</td>
+							<td rowspan="1" colspan="1">0:52</td>
+							<td rowspan="1" colspan="1">33:29</td>
+							<td rowspan="1" colspan="1">3:14</td>
+							<td rowspan="1" colspan="1">3:10</td>
+							<td rowspan="1" colspan="1">3:20</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>RAM (GB)</bold></td>
+							<td rowspan="1" colspan="1">0.31</td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">0.11</td>
+							<td rowspan="1" colspan="1">1.27</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic></td>
+							<td rowspan="1" colspan="1"><bold>Rank</bold></td>
+							<td rowspan="1" colspan="1"><bold>2<sup>nd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>7<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>3<sup>rd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>4<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>1<sup>st</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>5<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>6<sup>th</sup></bold></td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>Time(min:sec)</bold></td>
+							<td rowspan="1" colspan="1">3:15</td>
+							<td rowspan="1" colspan="1">7:37</td>
+							<td rowspan="1" colspan="1">1:23</td>
+							<td rowspan="1" colspan="1">55:37</td>
+							<td rowspan="1" colspan="1">5:12</td>
+							<td rowspan="1" colspan="1">5:15</td>
+							<td rowspan="1" colspan="1">6:04</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>RAM (GB)</bold></td>
+							<td rowspan="1" colspan="1">0.36</td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">0.17</td>
+							<td rowspan="1" colspan="1">2.01</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><italic>Human chr 14</italic></td>
+							<td rowspan="1" colspan="1"><bold>Rank</bold></td>
+							<td rowspan="1" colspan="1"><bold>1<sup>st</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>5<sup>th</sup>-6<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>2<sup>nd</sup> -3<sup>rd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>7<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>2<sup>nd</sup> -3<sup>rd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>4<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>5<sup>th</sup>-6<sup>th</sup></bold></td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>Time(h:m:s)</bold></td>
+							<td rowspan="1" colspan="1">1:1:37</td>
+							<td rowspan="1" colspan="1">3:6:50</td>
+							<td rowspan="1" colspan="1">1:33:13</td>
+							<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+							<td rowspan="1" colspan="1">1:18:16</td>
+							<td rowspan="1" colspan="1">1:21:8</td>
+							<td rowspan="1" colspan="1">1:15:09</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>RAM (GB)</bold></td>
+							<td rowspan="1" colspan="1">1.72</td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">0.76</td>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1">3.34</td>
+							<td rowspan="1" colspan="1">8.7</td>
+							<td rowspan="1" colspan="1">1.2</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple">B</named-content>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></named-content></italic></td>
+							<td rowspan="1" colspan="1"><bold>Rank</bold></td>
+							<td rowspan="1" colspan="1"><bold>3<sup>rd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>6<sup>th</sup> -7<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>1<sup>st</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>6<sup>th</sup>-7<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>2<sup>nd</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>4<sup>th</sup></bold></td>
+							<td rowspan="1" colspan="1"><bold>3<sup>rd</sup></bold></td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>Time(h:m:s)</bold></td>
+							<td rowspan="1" colspan="1">13:30:22</td>
+							<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+							<td rowspan="1" colspan="1">48:42:50</td>
+							<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+							<td rowspan="1" colspan="1">7:40:31</td>
+							<td rowspan="1" colspan="1">7:32:41</td>
+							<td rowspan="1" colspan="1">7:13:36</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1"><bold>RAM (GB)</bold></td>
+							<td rowspan="1" colspan="1">17.7</td>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1">1.28</td>
+							<td rowspan="1" colspan="1"/>
+							<td rowspan="1" colspan="1">21.8</td>
+							<td rowspan="1" colspan="1">19.7</td>
+							<td rowspan="1" colspan="1">3.2</td>
+						</tr>
+					</tbody>
+				</table>
+			</table-wrap>
+			<table-wrap id="pone-0075505-t008" position="float">
+				<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t008</object-id><label>Table 8</label>
+				<caption>
+					<title>Maximum memory utilization for each assembler in GB<xref ref-type="table-fn" rid="ngtab8.1"><bold>*</bold></xref>.</title>
+				</caption>
+				<table>
+					<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+					<thead>
+						<tr>
+							<th rowspan="1" colspan="1"><bold>Assembler</bold></th>
+							<th rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic></bold></th>
+							<th rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic></bold></th>
+							<th rowspan="1" colspan="1"><bold><italic>Human chr 14</italic></bold></th>
+							<th rowspan="1" colspan="1"><bold><italic><named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple">B</named-content>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></named-content></italic></bold></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>SparseAssembler</bold></td>
+							<td rowspan="1" colspan="1">0.31</td>
+							<td rowspan="1" colspan="1">0.36</td>
+							<td rowspan="1" colspan="1">1.72</td>
+							<td rowspan="1" colspan="1">17.7</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>Gossamer</bold></td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">3</td>
+							<td rowspan="1" colspan="1">Failed</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>Minia</bold></td>
+							<td rowspan="1" colspan="1">0.11</td>
+							<td rowspan="1" colspan="1">0.17</td>
+							<td rowspan="1" colspan="1">0.76</td>
+							<td rowspan="1" colspan="1">1.2</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>SGA</bold></td>
+							<td rowspan="1" colspan="1">1.27</td>
+							<td rowspan="1" colspan="1">2.01</td>
+							<td rowspan="1" colspan="1">Failed</td>
+							<td rowspan="1" colspan="1">Failed</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">3.34</td>
+							<td rowspan="1" colspan="1">21.8</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>DiMA</bold></td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">8.7</td>
+							<td rowspan="1" colspan="1">19.7</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>ZeMA</bold></td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">0.96</td>
+							<td rowspan="1" colspan="1">1.2</td>
+							<td rowspan="1" colspan="1">3.2</td>
+						</tr>
+						<tr>
+							<td rowspan="1" colspan="1"><bold>Original Velvet</bold></td>
+							<td rowspan="1" colspan="1">1.7</td>
+							<td rowspan="1" colspan="1">2.4</td>
+							<td rowspan="1" colspan="1">49.3</td>
+							<td rowspan="1" colspan="1">Failed</td>
+						</tr>
+					</tbody>
+				</table>
+				<table-wrap-foot>
+					<fn id="ngtab8.1">
+						
+						
+						<p><sup>*</sup> Typically, a program that requires less than 4 GB RAM can run on a laptop; 4-8 GB RAM on a desktop; 8-32 GB RAM on a workstation; and more than 32 GB RAM on a server.</p>
+					</fn>
+				</table-wrap-foot>
+			</table-wrap>
+			<p>Our experiments suggest the following promising designing strategies for future development of memory-efficient assemblers: (i) sparse representation of the assembly graphs; (ii) utilization of probabilistic data structures for encoding graph nodes; (iii) preprocessing to remove errors and redundant information. Our results show that Diginorm-Velvet, SparseAssembler [<xref ref-type="bibr" rid="B24">24</xref>], Minia [<xref ref-type="bibr" rid="B27">27</xref>] and Diginorm [<xref ref-type="bibr" rid="B28">28</xref>] appear to be among the most useful methods under limited memory resources.</p>
+			<p>Regarding the ranking of the performance of the assemblers, we are compelled to say that the selection of the metrics and the ranking criteria were somewhat subjective and far from perfect. Thus, the ranking results that we report should be considered with caution. Based on the selected ranking procedure Diginorm-Velvet ranks first among the studied programs for two reasons: (i) Velvet is a very efficient assembler that produces high-quality results; (ii) when data size and complexity increase, Diginorm reduces the memory footprint without affecting the accuracy of the results. SparseAssembler ranks second. SparseAssembler has good trade-offs between accuracy, wrong assemblies, run-time and memory utilization. Minia ranks third in our comparison. The quality is slightly lower for smaller datasets and, surprisingly, the method is optimized for larger genomes like that of the bumblebee. Minia requires minimal memory and it can be used on conventional laptops and desktops. DiMA enhances the memory footprint of Velvet for larger datasets and ranks fourth. However, in-memory loading of a huge assembly graph remains a bottleneck and restricts the applicability of DiMA. ZeMA ranks fifth. The low quality that it achieves confirms our initial hypothesis that data cleaning and sparse creation of DBG lead to the loss of significant information. However under limited memory, the strategy is able to process large datasets and produce draft assemblies on a conventional laptop. SGA and Gossamer work only for the smaller datasets and the quality if the assemblies is lower compared to those of other programs.</p>
+			<sec id="s4.1">
+				<title>Using Cloud Infrastructures for Genome Assembly</title>
+				<p>In recent years, cloud computing has emerged as an alternative infrastructure for genome informatics [<xref ref-type="bibr" rid="B14">14</xref>]. Specifically, when access to local computational resources is not possible, cloud computing offers a variety of high-performance computers that can be rented on-demand for executing genome assembly. Up to now, Amazon EC2 is the best known provider that offers high-memory virtual machines equipped with 17.1, 34.2, 68.4 and 244 GB RAM.</p>
+				<p>We executed the previously presented experiments without problems on Amazon EC2. <xref ref-type="table" rid="pone-0075505-t008">Table 8</xref> gives guidelines for renting suitable virtual machines (so called instances) in the cloud. The execution times for assembly on Amazon EC2 cloud are given in <xref ref-type="table" rid="pone-0075505-t009">Table 9</xref>. Depending on the type of virtual machine, the execution can be slower compared with that of local machines. This artifact can be attributed to the sharing of resources among virtual machines. In particular, Amazon’s EBS network file system is typically slower than local disks. In cheaper instances like the micro free and medium instances, the execution is 2 to 10 times slower compared with local machines. More expensive instances, like the high memory one, achieve better performance.</p>
+				<table-wrap id="pone-0075505-t009" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t009</object-id><label>Table 9</label>
+					<caption>
+						<title>Executing assembly on the cloud (Amazon EC2) <xref ref-type="table-fn" rid="ngtab9.1">*</xref>.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Dataset</bold></th>
+								<th rowspan="1" colspan="1"/>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold></th>
+								<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>SGA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic></td>
+								<td rowspan="1" colspan="1"><bold>Amazon Instance/Cost ($)</bold></td>
+								<td rowspan="1" colspan="1">M1/0</td>
+								<td rowspan="1" colspan="1">M2/0.015</td>
+								<td rowspan="1" colspan="1">M1/0</td>
+								<td rowspan="1" colspan="1">M2/0.17</td>
+								<td rowspan="1" colspan="1">M2/0.008</td>
+								<td rowspan="1" colspan="1">M2/0.006</td>
+								<td rowspan="1" colspan="1">M1/0</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Amazon Time(min:sec)</bold></td>
+								<td rowspan="1" colspan="1">24:20</td>
+								<td rowspan="1" colspan="1">7:45</td>
+								<td rowspan="1" colspan="1">5:46</td>
+								<td rowspan="1" colspan="1">82:23</td>
+								<td rowspan="1" colspan="1">3:50</td>
+								<td rowspan="1" colspan="1">3:8</td>
+								<td rowspan="1" colspan="1">20:30</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Local Time (min:sec)</bold></td>
+								<td rowspan="1" colspan="1">2:32</td>
+								<td rowspan="1" colspan="1">4:52</td>
+								<td rowspan="1" colspan="1">0:52</td>
+								<td rowspan="1" colspan="1">33:29</td>
+								<td rowspan="1" colspan="1">3:14</td>
+								<td rowspan="1" colspan="1">3:10</td>
+								<td rowspan="1" colspan="1">3:20</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic></td>
+								<td rowspan="1" colspan="1"><bold>Amazon Instance / Cost ($)</bold></td>
+								<td rowspan="1" colspan="1">M1/0</td>
+								<td rowspan="1" colspan="1">M2/0.027</td>
+								<td rowspan="1" colspan="1">M1/0</td>
+								<td rowspan="1" colspan="1">M2/0.22</td>
+								<td rowspan="1" colspan="1">M2/0.011</td>
+								<td rowspan="1" colspan="1">M2/0.011</td>
+								<td rowspan="1" colspan="1">M1/0</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Amazon Time (min:sec)</bold></td>
+								<td rowspan="1" colspan="1">29:29</td>
+								<td rowspan="1" colspan="1">13:41</td>
+								<td rowspan="1" colspan="1">10:23</td>
+								<td rowspan="1" colspan="1">109:16</td>
+								<td rowspan="1" colspan="1">5:28</td>
+								<td rowspan="1" colspan="1">5:33</td>
+								<td rowspan="1" colspan="1">28:27</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Local Time (min:sec)</bold></td>
+								<td rowspan="1" colspan="1">3:15</td>
+								<td rowspan="1" colspan="1">7:37</td>
+								<td rowspan="1" colspan="1">1:24</td>
+								<td rowspan="1" colspan="1">55:37</td>
+								<td rowspan="1" colspan="1">5:12</td>
+								<td rowspan="1" colspan="1">5:15</td>
+								<td rowspan="1" colspan="1">6:4</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>Human chr 14</italic></td>
+								<td rowspan="1" colspan="1"><bold>Amazon Instance/Cost ($)</bold></td>
+								<td rowspan="1" colspan="1">M2/0.21</td>
+								<td rowspan="1" colspan="1">M2/0.59</td>
+								<td rowspan="1" colspan="1">M2/0.41</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">M2/0.16</td>
+								<td rowspan="1" colspan="1">M3/1.1</td>
+								<td rowspan="1" colspan="1">M2/0.17</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Amazon Time (h:m:s)</bold></td>
+								<td rowspan="1" colspan="1">1:45:32</td>
+								<td rowspan="1" colspan="1">4:57:12</td>
+								<td rowspan="1" colspan="1">3:22:27</td>
+								<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+								<td rowspan="1" colspan="1">1:18:21</td>
+								<td rowspan="1" colspan="1">1:23:23</td>
+								<td rowspan="1" colspan="1">1:23:22</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Local Time (h:m:s)</bold></td>
+								<td rowspan="1" colspan="1">1:1:37</td>
+								<td rowspan="1" colspan="1">3:6:50</td>
+								<td rowspan="1" colspan="1">1:33:13</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">1:18:16</td>
+								<td rowspan="1" colspan="1">1:21:8</td>
+								<td rowspan="1" colspan="1">1:15:09</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple">B</named-content>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></named-content></italic></td>
+								<td rowspan="1" colspan="1"><bold>Amazon Instance / Cost ($)</bold></td>
+								<td rowspan="1" colspan="1">M3/10.9</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">M2/7.24</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">M3/6.14</td>
+								<td rowspan="1" colspan="1">M3/6.04</td>
+								<td rowspan="1" colspan="1">M2/0.93</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Amazon Time (h:m:s)</bold></td>
+								<td rowspan="1" colspan="1">13:38:23</td>
+								<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+								<td rowspan="1" colspan="1">60:20:16</td>
+								<td rowspan="1" colspan="1"><bold>Failed</bold></td>
+								<td rowspan="1" colspan="1">7:40:16</td>
+								<td rowspan="1" colspan="1">7:33:15</td>
+								<td rowspan="1" colspan="1">7:47:42</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"><bold>Local Time (h:m:s)</bold></td>
+								<td rowspan="1" colspan="1">13:30:22</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">48:42:50</td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">7:40:31</td>
+								<td rowspan="1" colspan="1">7:32:41</td>
+								<td rowspan="1" colspan="1">7:13:36</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn id="ngtab9.1">
+							
+							
+							<p><sup>*</sup> We use the cheaper eligible instance for each combination of assembler and dataset. We report the financial cost and the time required per assembly. For comparison, we also report the execution time on local memory-equivalent machines. These comparisons should be considered with caution.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+				<p>In addition, transferring several hundreds of GBs through the network is a drawback. For instance, sending 1 GB of data with a network bandwidth 350 KB/sec takes roughly 45 minutes. Also, the lack of a graphical interface might be problematic for users who do not have prior programming or system administration experience.</p>
+				<p>To answer the question whether it is more cost effective to buy a local machine or to rent a similar instance from a cloud provider, we perform the following financial analysis: Assume that the available budget allows spending <bold><italic>C</italic></bold> dollars every three years to purchase a local machine. Also assume that when using the preferred genome assembler, the average execution time takes <bold><italic>t</italic></bold> hours (3 years = 26,280 hours). Owning a machine enables for <italic>a</italic><sub><italic>L</italic></sub>=26,280/<italic>t</italic> assemblies. If the same amount of money is spent on renting instances from a cloud web service (Amazon EC2), we use the equation
+				<disp-formula><mml:math id="m1" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mtable><mml:mtr><mml:mtd><mml:msub><mml:mi>a</mml:mi><mml:mrow><mml:mi>E</mml:mi><mml:mi>C</mml:mi><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mi>C</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>+</mml:mo><mml:mi>w</mml:mi><mml:mo>)</mml:mo><mml:mo>⋅</mml:mo><mml:mi>d</mml:mi><mml:mo>⋅</mml:mo><mml:mi>t</mml:mi></mml:mrow></mml:mfrac><mml:mn/><mml:mo/><mml:mi/><mml:mo/></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow/></mml:mtd></mml:mtr></mml:mtable></mml:semantics></mml:math><label>(1)</label></disp-formula>
+where a_EC2 is the number of assembles on the cloud, <bold>w</bold> is the overhead introduced by Amazon EC2 and network latency, <bold>d</bold> is the cost per hour and <bold>t</bold> is the execution time of the assembler. This is a simplified cost analysis and does not take into account parameters like administration costs, electricity costs, maintenance and so on.</p>
+				<p>It is obvious that if the required number of assemblies does not exceed the a_EC2 threshold, it is worth it to rent instances on the cloud. The number is bound by <bold><italic>a</italic><sub><italic>L</italic></sub></bold>, which corresponds to full utilization of a local machine. Moreover, when more than a_EC2 are required, a combination of owning a machine and executing part of the remaining workload on the cloud is suggested as the most cost effective technique.</p>
+				<p>As a proof of concept, we compute the threshold for a_EC2 based on our previous experimental results and reference prices from Amazon EC2 (June 2013). <xref ref-type="table" rid="pone-0075505-t009">Table 9</xref> presents the costs under the following assumptions: (i) <italic>M1 micro instance</italic> with 613 MB of RAM costs US$0.0001 (in practice, it is free) per hour and introduces 50% time overhead; (ii) <italic>M2 instance</italic> with 4 GB RAM and 1 virtual core costs US$0.12 per hour and introduces 20% time overhead; (iii) <italic>M3 high memory instance</italic> with 32 GB RAM and 8 virtual cores costs US$0.8 per hour and introduces 10% time overhead. All prices are from June 2013.</p>
+				<p>In addition, we assume that a new laptop equipped (M2 equivalent instance) with 4GB RAM costs US$1,200 and a workstation (M3 equivalent instance) with 32 GB RAM costs US$2,670 (these prices are indicative <ext-link ext-link-type="uri" xlink:href="http://www.dell.com/us/business/p/" xlink:type="simple"><underline>http://www.dell.com/us/business/p/</underline></ext-link>). <xref ref-type="table" rid="pone-0075505-t010">Table 10</xref> presents the number of assemblies per week that one can perform at less cost than the cost of owning an equivalent local machine.</p>
+				<table-wrap id="pone-0075505-t010" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0075505.t010</object-id><label>Table 10</label>
+					<caption>
+						<title>Cost-equivalent number of assemblies per week between local and cloud execution.<xref ref-type="table-fn" rid="ngtab10.1">*</xref></title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1">  <bold>Dataset</bold></th>
+								<th rowspan="1" colspan="1"><bold>SparseAssembler</bold></th>
+								<th rowspan="1" colspan="1"><bold>Gossamer</bold></th>
+								<th rowspan="1" colspan="1"><bold>Minia</bold></th>
+								<th rowspan="1" colspan="1"><bold>SGA</bold></th>
+								<th rowspan="1" colspan="1"><bold>Diginorm-Velvet</bold></th>
+								<th rowspan="1" colspan="1"><bold>DiMA</bold></th>
+								<th rowspan="1" colspan="1"><bold>ZeMA</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">S. aureus</named-content></italic></td>
+								<td rowspan="1" colspan="1">127,145</td>
+								<td rowspan="1" colspan="1">430</td>
+								<td rowspan="1" colspan="1">563,539</td>
+								<td rowspan="1" colspan="1">38</td>
+								<td rowspan="1" colspan="1">915</td>
+								<td rowspan="1" colspan="1">843</td>
+								<td rowspan="1" colspan="1">151,572</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">R. sphaeroides</named-content></italic></td>
+								<td rowspan="1" colspan="1">105,050</td>
+								<td rowspan="1" colspan="1">239</td>
+								<td rowspan="1" colspan="1">300,774</td>
+								<td rowspan="1" colspan="1">29</td>
+								<td rowspan="1" colspan="1">607</td>
+								<td rowspan="1" colspan="1">601</td>
+								<td rowspan="1" colspan="1">108,840</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple">H. sapiens</named-content> chr 14</italic></td>
+								<td rowspan="1" colspan="1">30</td>
+								<td rowspan="1" colspan="1">10</td>
+								<td rowspan="1" colspan="1">15</td>
+								<td rowspan="1" colspan="1">-</td>
+								<td rowspan="1" colspan="1">40</td>
+								<td rowspan="1" colspan="1">13</td>
+								<td rowspan="1" colspan="1">38</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic><named-content content-type="genus-species" xlink:type="simple"><named-content content-type="genus" xlink:type="simple">B</named-content>. <named-content content-type="species" xlink:type="simple">impatiens</named-content></named-content></italic></td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">-</td>
+								<td rowspan="1" colspan="1">1</td>
+								<td rowspan="1" colspan="1">-</td>
+								<td rowspan="1" colspan="1">2</td>
+								<td rowspan="1" colspan="1">2</td>
+								<td rowspan="1" colspan="1">6</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn id="ngtab10.1">
+							<p><sup>*</sup> Below this threshold, it is cheaper to utilize a cloud system instead of running the assembly on a local machine. Computations are based on formula (I) and use prices from Amazon EC2 (June 2013).</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+				<p>In summary, the financial analysis reveals that the assembly of bacterial genomes, which takes a few minutes, can be processed on the cloud at a very small cost. It is also possible to utilize the micro free instance and assemble such genomes at zero cost. SparseAssembler, Minia and ZeMA have smaller RAM requirements and run using micro free instance. It is also possible to start multiple instances simultaneously and optimize the assembly by setting different configurations for the parameters and the k-mer size. Assembly of medium-sized genomes costs around US$1, which is a significant improvement if we consider that a machine equipped with 32 GB RAM costs around US$2,500. The cost for assembly of more complex genomes is higher because such an operation requires more expensive virtual machines and the assembly takes several hours. The average cost is around US$10 per assembly with programs such as SparseAssembler. The ZeMA strategy, on the other hand, which has a good trade-off between memory consumption and execution time, costs only US$1 per assembly. However, ZeMA does not perform very well in terms of quality and is suitable only for draft assemblies that can be further be optimized. Overall, the combination of Diginorm with Velvet and SparseAssembler (ZeMA) allow for more assemblies per week when the datasets are large.</p>
+			</sec>
+		</sec>
+		<sec id="s5" sec-type="conclusions">
+			<title>Conclusions</title>
+			<p>Here, we focus on memory-efficient assemblers and their ability to generate genome assemblies under conditions of limited memory. It also demonstrates that ordinary laptops and commodity computers can effectively process large NGS datasets. Our results reveal that reasonably accurate assembly and a good trade-off between memory and run time can be achieved by: (i) exploiting sparse graphs; (ii) utilizing probabilistic data structures; (iii) discarding redundant information.</p>
+			<p>We propose two novel assembly strategies suitable for improving traditional assemblers or processing data under extremely low memory. These strategies are based on existing assemblers and preprocessing techniques. Finally, we explore the use of cloud infrastructures for genome assembly. Financial analyses reveal that, depending on how frequently assembly is executed, it is possible to process NGS data without having access to suitable local computers.</p>
+			<p>Several questions remain unanswered and genome assembly remains an interesting research area. For instance, there is no globally best assembler. A promising future research direction in this context is the partitioning of dense DBG, utilization of massive graph processing platforms such as Mizan [<xref ref-type="bibr" rid="B44">44</xref>], as well as cloud-based assembly frameworks.</p>
+		</sec>
+		<sec sec-type="supplementary-material">
+			<title>Supporting Information</title>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0075505.s001" xlink:href="info:doi/10.1371/journal.pone.0075505.s001" mimetype="application/msword">
+				<label>Table S1</label>
+				<caption>
+					<p><bold>Performance metrics definitions.</bold> The table contains explicit definitions for all the performance metrics used in the comparison. All the metrics were presented in the GAGE report [<xref ref-type="bibr" rid="B18">18</xref>]..</p><p>(DOC)</p></caption>
+				</supplementary-material>
+		</sec>
+	</body>
+	<back>
+		<ack>
+			<p>Authors thank Virginia A. Unkefer for proof-reading the manuscript</p>
+		</ack>
+		<ref-list>
+			<title>References</title>
+			<ref id="B1">
+				<label>1</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miller</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Koren</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sutton</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Assembly algorithms for next-generation sequencing data</article-title>. <source>Genomics</source> <volume>95</volume>: <fpage>315</fpage>-<lpage>327</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ygeno.2010.03.001" xlink:type="simple">10.1016/j.ygeno.2010.03.001</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20211242" xlink:type="simple">20211242</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B2">
+				<label>2</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chaisson</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Pevzner</surname><given-names>PA</given-names></name> (<year>2008</year>) <article-title>Short read fragment assembly of bacterial genomes</article-title>. <source>Genome Res</source> <volume>18</volume>: <fpage>324</fpage>-<lpage>330</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.7088808" xlink:type="simple">10.1101/gr.7088808</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18083777" xlink:type="simple">18083777</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B3">
+				<label>3</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Simpson</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Wong</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Jackman</surname><given-names>SD</given-names></name>, <name name-style="western"><surname>Schein</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>SJ</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>ABySS: a parallel assembler for short read sequence data</article-title>. <source>Genome Res</source> <volume>19</volume>: <fpage>1117</fpage>-<lpage>1123</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.089532.108" xlink:type="simple">10.1101/gr.089532.108</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19251739" xlink:type="simple">19251739</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B4">
+				<label>4</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Ruan</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Qian</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Fang</surname><given-names>X</given-names></name> <etal>et al.</etal> (<year>2010</year>) <article-title>De novo assembly of human genomes with massively parallel short read sequencing</article-title>. <source>Genome Res</source> <volume>20</volume>: <fpage>265</fpage>-<lpage>272</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.097261.109" xlink:type="simple">10.1101/gr.097261.109</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20019144" xlink:type="simple">20019144</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B5">
+				<label>5</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Butler</surname><given-names>J</given-names></name>, <name name-style="western"><surname>MacCallum</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Kleber</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Shlyakhter</surname><given-names>IA</given-names></name>, <name name-style="western"><surname>Belmonte</surname><given-names>MK</given-names></name> <etal>et al.</etal> (<year>2008</year>) <article-title>ALLPATHS: de novo assembly of whole-genome shotgun microreads</article-title>. <source>Genome Res</source> <volume>18</volume>: <fpage>810</fpage>-<lpage>820</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.7337908" xlink:type="simple">10.1101/gr.7337908</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18340039" xlink:type="simple">18340039</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B6">
+				<label>6</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zerbino</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Birney</surname><given-names>E</given-names></name> (<year>2008</year>) <article-title>Velvet: algorithms for de novo short read assembly using de Bruijn graphs</article-title>. <source>Genome Res</source> <volume>18</volume>: <fpage>821</fpage>-<lpage>829</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.074492.107" xlink:type="simple">10.1101/gr.074492.107</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18349386" xlink:type="simple">18349386</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B7">
+				<label>7</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miller</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Delcher</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Koren</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Venter</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Walenz</surname><given-names>BP</given-names></name> <etal>et al.</etal> (<year>2008</year>) <article-title>Aggressive assembly of pyrosequencing reads with mates</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>2818</fpage>-<lpage>2824</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btn548" xlink:type="simple">10.1093/bioinformatics/btn548</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18952627" xlink:type="simple">18952627</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B8">
+				<label>8</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Warren</surname><given-names>RL</given-names></name>, <name name-style="western"><surname>Sutton</surname><given-names>GG</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Holt</surname><given-names>RA</given-names></name> (<year>2007</year>) <article-title>Assembling millions of short DNA sequences using SSAKE</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>500</fpage>-<lpage>501</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btl629" xlink:type="simple">10.1093/bioinformatics/btl629</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17158514" xlink:type="simple">17158514</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B9">
+				<label>9</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hernandez</surname><given-names>D</given-names></name>, <name name-style="western"><surname>François</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Farinelli</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Osterås</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Schrenzel</surname><given-names>J</given-names></name> (<year>2008</year>) <article-title>De novo bacterial genome sequencing: millions of very short reads assembled on a desktop computer</article-title>. <source>Genome Res</source> <volume>18</volume>: <fpage>802</fpage>-<lpage>809</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.072033.107" xlink:type="simple">10.1101/gr.072033.107</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18332092" xlink:type="simple">18332092</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B10">
+				<label>10</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margulies</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Egholm</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Altman</surname><given-names>WE</given-names></name>, <name name-style="western"><surname>Attiya</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bader</surname><given-names>JS</given-names></name> <etal>et al.</etal> (<year>2005</year>) <article-title>Genome sequencing in microfabricated high-density picolitre reactors</article-title>. <source>Nature</source> <volume>437</volume>: <fpage>376</fpage>-<lpage>380</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16056220" xlink:type="simple">16056220</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B11">
+				<label>11</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schmidt</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Sinha</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Beresford-Smith</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Puglisi</surname><given-names>SJ</given-names></name> (<year>2009</year>) <article-title>A fast hybrid short read fragment assembly algorithm</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2279</fpage>-<lpage>2280</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp374" xlink:type="simple">10.1093/bioinformatics/btp374</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19535537" xlink:type="simple">19535537</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B12">
+				<label>12</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Schmidt</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Maskell</surname><given-names>DL</given-names></name> (<year>2011</year>) <article-title>Parallelized short read assembly of large genomes using de Bruijn graphs</article-title>. <source>BMC Bioinformatics</source> <volume>12</volume>: <fpage>354</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-12-354" xlink:type="simple">10.1186/1471-2105-12-354</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21867511" xlink:type="simple">21867511</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B13">
+				<label>13</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Diguistini</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Liao</surname><given-names>NY</given-names></name>, <name name-style="western"><surname>Platt</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Robertson</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Seidel</surname><given-names>M</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>De novo genome sequence assembly of a filamentous fungus using Sanger, 454 and Illumina sequence data</article-title>. <source>Genome Biol</source> <volume>10</volume>: <fpage>R94</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2009-10-9-r94" xlink:type="simple">10.1186/gb-2009-10-9-r94</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19747388" xlink:type="simple">19747388</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B14">
+				<label>14</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stein</surname><given-names>LD</given-names></name> (<year>2010</year>) <article-title>The case for cloud computing in genome informatics</article-title>. <source>Genome Biol</source> <volume>11</volume>: <fpage>207</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2010-11-5-207" xlink:type="simple">10.1186/gb-2010-11-5-207</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20441614" xlink:type="simple">20441614</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B15">
+				<label>15</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeFrancesco</surname><given-names>L</given-names></name> (<year>2012</year>) <article-title>Life Technologies promises $1,000 genome</article-title>. <source>Nat Biotechnol</source> <volume>30</volume>: <fpage>126</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt0212-126b" xlink:type="simple">10.1038/nbt0212-126b</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22318022" xlink:type="simple">22318022</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B16">
+				<label>16</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Fan</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Tian</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>He</surname><given-names>L</given-names></name> <etal>et al.</etal> (<year>2010</year>) <article-title>The sequence and de novo assembly of the giant panda genome</article-title>. <source>Nature</source> <volume>463</volume>: <fpage>311</fpage>-<lpage>317</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature08696" xlink:type="simple">10.1038/nature08696</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20010809" xlink:type="simple">20010809</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B17">
+				<label>17</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rusch</surname><given-names>DB</given-names></name>, <name name-style="western"><surname>Halpern</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Sutton</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Heidelberg</surname><given-names>KB</given-names></name>, <name name-style="western"><surname>Williamson</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2007</year>) <article-title>The Sorcerer II Global Ocean Sampling expedition: northwest Atlantic through eastern tropical Pacific</article-title>. <source>PLOS Biol</source> <volume>5</volume>: <fpage>e77</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0050077" xlink:type="simple">10.1371/journal.pbio.0050077</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17355176" xlink:type="simple">17355176</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B18">
+				<label>18</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name>, <name name-style="western"><surname>Phillippy</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Zimin</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Puiu</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Magoc</surname><given-names>T</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>GAGE: A critical evaluation of genome assemblies and assembly algorithms</article-title>. <source>Genome Res</source> <volume>22</volume>: <fpage>557</fpage>-<lpage>567</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.131383.111" xlink:type="simple">10.1101/gr.131383.111</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22147368" xlink:type="simple">22147368</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B19">
+				<label>19</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jackman</surname><given-names>SD</given-names></name>, <name name-style="western"><surname>Birol</surname><given-names>I</given-names></name> (<year>2010</year>) <article-title>Assembling genomes using short-read sequencing technology</article-title>. <source>Genome Biol</source>, vol. <volume>11</volume>, No. <issue-id>1</issue-id>: <fpage>202</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2010-11-1-202" xlink:type="simple">10.1186/gb-2010-11-1-202</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20128932" xlink:type="simple">20128932</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B20">
+				<label>20</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schatz</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Delcher</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>SL</given-names></name> (<year>2010</year>) <article-title>Assembly of large genomes using second-generation sequencing</article-title>. <source>Genome Res</source> <volume>20</volume>: <fpage>1165</fpage>-<lpage>1173</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.101360.109" xlink:type="simple">10.1101/gr.101360.109</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20508146" xlink:type="simple">20508146</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B21">
+				<label>21</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Shang</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2011</year>) <article-title>A practical comparison of de novo genome assembly software tools for next-generation sequencing technologies</article-title>. <source>PLOS ONE</source> <volume>6</volume>: <fpage>e17915</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0017915" xlink:type="simple">10.1371/journal.pone.0017915</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21423806" xlink:type="simple">21423806</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B22">
+				<label>22</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Paszkiewicz</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Studholme</surname><given-names>DJ</given-names></name> (<year>2010</year>) <article-title>De novo assembly of short sequence reads</article-title>. <source>Brief Bioinform</source> <volume>11</volume>: <fpage>457</fpage>-<lpage>472</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bib/bbq020" xlink:type="simple">10.1093/bib/bbq020</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20724458" xlink:type="simple">20724458</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B23">
+				<label>23</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Earl</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Bradnam</surname><given-names>K</given-names></name>, <name name-style="western"><surname>St John</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Darling</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>D</given-names></name> <etal>et al.</etal> (<year>2011</year>) <article-title>Assemblathon 1: a competitive assessment of de novo short read assembly methods</article-title>. <source>Genome Res</source> <volume>21</volume>: <fpage>2224</fpage>-<lpage>2241</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.126599.111" xlink:type="simple">10.1101/gr.126599.111</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21926179" xlink:type="simple">21926179</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B24">
+				<label>24</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ye</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>ZS</given-names></name>, <name name-style="western"><surname>Cannon</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Pop</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>DW</given-names></name> (<year>2012</year>) <article-title>Exploiting sparseness in de novo genome assembly</article-title>. <source>BMC Bioinformatics</source> <volume>13</volume> <supplement>Suppl 6</supplement>: <fpage>S1</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-13-S15-S1" xlink:type="simple">10.1186/1471-2105-13-S15-S1</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22537038" xlink:type="simple">22537038</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B25">
+				<label>25</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Conway</surname><given-names>TC</given-names></name>, <name name-style="western"><surname>Bromage</surname><given-names>AJ</given-names></name> (<year>2011</year>) <article-title>Succinct data structures for assembling large genomes</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>479</fpage>-<lpage>486</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq697" xlink:type="simple">10.1093/bioinformatics/btq697</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21245053" xlink:type="simple">21245053</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B26">
+				<label>26</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Simpson</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Durbin</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Efficient construction of an assembly string graph using the FM-index</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>i367</fpage>-<lpage>i373</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq217" xlink:type="simple">10.1093/bioinformatics/btq217</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20529929" xlink:type="simple">20529929</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B27">
+				<label>27</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><name name-style="western"><surname>Chikhi</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Rizk</surname><given-names>G</given-names></name> <comment>(2012). Space-efficient and exact de Bruijn Graph representation based on a Bloom Filter. WABI, Lecture notes in computer. Springer</comment><publisher-name>: Science and Publishing House</publisher-name>.</mixed-citation>
+			</ref>
+			<ref id="B28">
+				<label>28</label>
+				<mixed-citation publication-type="web" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>CT</given-names></name>, <name name-style="western"><surname>Howe</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Pyrkosz</surname><given-names>AB</given-names></name>, <name name-style="western"><surname>Brom</surname><given-names>TH</given-names></name> (<year>2012</year>) <article-title>A Reference-free algorithm for computational normalization of shotgun sequencing data</article-title>. <comment>Available: </comment><ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1203.4802" xlink:type="simple">arXiv:1203.4802</ext-link>. <comment>Accessed</comment> 2013 June 25.</mixed-citation>
+			</ref>
+			<ref id="B29">
+				<label>29</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kamousi</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Han</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Yan</surname><given-names>X</given-names></name> <etal>et al.</etal> (<year>2013</year>) <article-title>Memory Efficient minimum substring partitioning</article-title>. <comment>To appear in VLDB Conference in Trento, Italy.</comment></mixed-citation>
+			</ref>
+			<ref id="B30">
+				<label>30</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Simpson</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Durbin</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>Efficient de novo assembly of large genomes using compressed data structures</article-title>. <source>Genome Res</source> <volume>22</volume>: <fpage>549</fpage>-<lpage>556</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.126953.111" xlink:type="simple">10.1101/gr.126953.111</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22156294" xlink:type="simple">22156294</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B31">
+				<label>31</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sanger</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Coulson</surname><given-names>AR</given-names></name> (<year>1977</year>) <article-title>A rapid method for determining sequences in DNA by primed synthesis with DNA polymerase</article-title>. <source>J Mol Biol</source> <volume>25</volume>;<issue-id>94 (3)</issue-id>: <fpage>441</fpage>-<lpage>448</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B32">
+				<label>32</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name>, <name name-style="western"><surname>Sutton</surname><given-names>GG</given-names></name>, <name name-style="western"><surname>Delcher</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Dew</surname><given-names>IM</given-names></name>, <name name-style="western"><surname>Fasulo</surname><given-names>DP</given-names></name> <etal>et al.</etal> (<year>2000</year>) <article-title>A whole-genome assembly of Drosophila</article-title>. <source>Science</source> <volume>287</volume>: <fpage>2196</fpage>-<lpage>2204</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.287.5461.2196" xlink:type="simple">10.1126/science.287.5461.2196</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/10731133" xlink:type="simple">10731133</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B33">
+				<label>33</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Aluru</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>SP</given-names></name>, <name name-style="western"><surname>Hillier</surname><given-names>L</given-names></name> (<year>2003</year>) <article-title>PCAP: a whole-genome assembly program</article-title>. <source>Genome Res</source> <volume>13</volume>: <fpage>2164</fpage>-<lpage>2170</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.1390403" xlink:type="simple">10.1101/gr.1390403</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12952883" xlink:type="simple">12952883</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B34">
+				<label>34</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Batzoglou</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Jaffe</surname><given-names>DB</given-names></name>, <name name-style="western"><surname>Stanley</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Butler</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gnerre</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2002</year>) <article-title>ARACHNE: a whole-genome shotgun assembler</article-title>. <source>Genome Res</source> <volume>12</volume>: <fpage>177</fpage>-<lpage>189</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.208902" xlink:type="simple">10.1101/gr.208902</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/11779843" xlink:type="simple">11779843</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B35">
+				<label>35</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de la Bastide</surname><given-names>M</given-names></name>, <name name-style="western"><surname>McCombie</surname><given-names>WR</given-names></name> (<year>2007</year>) <article-title>Assembling genomic DNA sequences with PHRAP</article-title>. <source>Curr Protoc Bioinformatics</source> <comment>Chapter 11: Unit11</comment> <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/14" xlink:type="simple">14</ext-link>. PubMed: <comment>18428783</comment></mixed-citation>
+			</ref>
+			<ref id="B36">
+				<label>36</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Madan</surname><given-names>A</given-names></name> (<year>1999</year>) <article-title>CAP3: A DNA sequence assembly program</article-title>. <source>Genome Res</source> <volume>9</volume>: <fpage>868</fpage>-<lpage>877</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.9.9.868" xlink:type="simple">10.1101/gr.9.9.868</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/10508846" xlink:type="simple">10508846</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B37">
+				<label>37</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Compeau</surname><given-names>PE</given-names></name>, <name name-style="western"><surname>Pevzner</surname><given-names>PA</given-names></name>, <name name-style="western"><surname>Tesler</surname><given-names>G</given-names></name> (<year>2011</year>) <article-title>How to apply de Bruijn graphs to genome assembly</article-title>. <source>Nat Biotechnol</source> <volume>29</volume>: <fpage>987</fpage>-<lpage>991</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.2023" xlink:type="simple">10.1038/nbt.2023</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22068540" xlink:type="simple">22068540</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B38">
+				<label>38</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><name name-style="western"><surname>Burrows</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Wheeler</surname><given-names>D</given-names></name> (<year>1994</year>) <gov>A block sorting lossless data compression algorithm</gov>, <comment>Technical Report 124</comment>, <comment>digital Equipment Corporation</comment></mixed-citation>
+			</ref>
+			<ref id="B39">
+				<label>39</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pell</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hintze</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Canino-Koning</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Howe</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Tiedje</surname><given-names>JM</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Scaling metagenome sequence assembly with probabilistic de Bruijn graphs</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>109</volume>: <fpage>13272</fpage>-<lpage>13277</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1121464109" xlink:type="simple">10.1073/pnas.1121464109</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22847406" xlink:type="simple">22847406</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B40">
+				<label>40</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Knuth</surname><given-names>D</given-names></name> (<year>1997</year>) <source>The Art of Computer Programming, Volume 2</source> (<edition>3rd</edition> Ed.): <comment>Semi numerical algorithms. </comment><publisher-loc>Boston, MA, USA</publisher-loc>: <publisher-name>Addison-Wesley Longman Publishing Co., Inc</publisher-name>..</mixed-citation>
+			</ref>
+			<ref id="B41">
+				<label>41</label>
+				<mixed-citation publication-type="web" xlink:type="simple"><name name-style="western"><surname>Howe</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pell</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Canino-Koning</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Mackelprang</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Tringe</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Illumina sequencing artifacts revealed by connectivity analysis of metagenomic datasets</article-title>. <comment>Available: </comment><ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1212.0159" xlink:type="simple">arXiv:1212.0159</ext-link>. <comment>Accessed</comment> 2013 June 25.</mixed-citation>
+			</ref>
+			<ref id="B42">
+				<label>42</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Namiki</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hachiya</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tanaka</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Sakakibara</surname><given-names>Y</given-names></name> (<year>2012</year>) <article-title>MetaVelvet: an extension of Velvet assembler to de novo metagenome assembly from short sequence reads</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>e155</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gks678" xlink:type="simple">10.1093/nar/gks678</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22821567" xlink:type="simple">22821567</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B43">
+				<label>43</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kultima</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Sunagawa</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>MOCAT: a metagenomics assembly and gene prediction toolkit</article-title>. <source>PLOS ONE</source> <volume>7</volume>: <fpage>e47656</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0047656" xlink:type="simple">10.1371/journal.pone.0047656</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/23082188" xlink:type="simple">23082188</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B44">
+				<label>44</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Khayyat</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Awara</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Alonazi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Jamjoom</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Williams</surname><given-names>D</given-names></name> <etal>et al.</etal> (<year>2013</year>) <article-title>Mizan: A system for dynamic load balancing in large-scale graph processing</article-title>. <source>In proceeding of EuroSys 2013 Conference, Prague, Chech Republic.</source></mixed-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>

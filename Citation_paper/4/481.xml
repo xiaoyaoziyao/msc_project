@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-11521R2</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0008230</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Metagenomics</subject><subject>Microbiology/Environmental Microbiology</subject></subj-group></article-categories><title-group><article-title>A High-Throughput DNA Sequence Aligner for Microbial Ecology Studies</article-title><alt-title alt-title-type="running-head">DNA Sequence Aligner</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schloss</surname><given-names>Patrick D.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Microbiology, University of Massachusetts, Amherst, Massachusetts, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Microbiology and Immunology, University of Michigan, Ann Arbor, Michigan, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Quackenbush</surname><given-names>John</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Dana-Farber Cancer Institute, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">pschloss@umich.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: PS. Performed the experiments: PS. Analyzed the data: PS. Contributed reagents/materials/analysis tools: PS. Wrote the paper: PS.</p></fn>
+<fn fn-type="conflict"><p>The author has declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2009</year></pub-date><pub-date pub-type="epub"><day>14</day><month>12</month><year>2009</year></pub-date><volume>4</volume><issue>12</issue><elocation-id>e8230</elocation-id><history>
+<date date-type="received"><day>8</day><month>7</month><year>2009</year></date>
+<date date-type="accepted"><day>12</day><month>11</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Schloss</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>As the scope of microbial surveys expands with the parallel growth in sequencing capacity, a significant bottleneck in data analysis is the ability to generate a biologically meaningful multiple sequence alignment. The most commonly used aligners have varying alignment quality and speed, tend to depend on a specific reference alignment, or lack a complete description of the underlying algorithm. The purpose of this study was to create and validate an aligner with the goal of quickly generating a high quality alignment and having the flexibility to use any reference alignment. Using the simple nearest alignment space termination algorithm, the resulting aligner operates in linear time, requires a small memory footprint, and generates a high quality alignment. In addition, the alignments generated for variable regions were of as high a quality as the alignment of full-length sequences. As implemented, the method was able to align 18 full-length 16S rRNA gene sequences and 58 V2 region sequences per second to the 50,000-column SILVA reference alignment. Most importantly, the resulting alignments were of a quality equal to SILVA-generated alignments. The aligner described in this study will enable scientists to rapidly generate robust multiple sequences alignments that are implicitly based upon the predicted secondary structure of the 16S rRNA molecule. Furthermore, because the implementation is not connected to a specific database it is easy to generalize the method to reference alignments for any DNA sequence.</p>
+</abstract><funding-group><funding-statement>This project was funded by the College of Natural Resources and the Environment at the University of Massachusetts, the School of Medicine at the University of Michigan, a grant from the Sloan Foundation, and a grant from the National Science Foundation (award #0743432). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Recent advances in traditional Sanger sequencing and pyrosequencing technologies have facilitated the ability to design studies where 10<sup>2</sup>−10<sup>7</sup> 16S rRNA gene sequences ranging in length between 60 and 1500 bp are generated to address interesting ecological questions <xref ref-type="bibr" rid="pone.0008230-Schloss1">[1]</xref>–<xref ref-type="bibr" rid="pone.0008230-Turnbaugh1">[4]</xref>. This data gush has forced computational microbial ecologists to re-factor software tools to make the analysis of these datasets feasible. A significant bottleneck in the analysis of these sequences is the generation of a robust multiple sequence alignment (MSA). An MSA is critical to generating phylogenies and calculating meaningful pairwise genetic distances that can be used to assign sequences to operationally-defined taxonomic units <xref ref-type="bibr" rid="pone.0008230-Schloss2">[OTUs, 5]</xref>. Because of the difficulty inherent in MSA calculations, investigators have bypassed OTU-based approaches in preference for phylotype-based approaches <xref ref-type="bibr" rid="pone.0008230-Sogin1">[3]</xref>, <xref ref-type="bibr" rid="pone.0008230-Fierer1">[6]</xref>. In such approaches, sequences are assigned to bins based on similarity to a curated database. This has the limitation that sequences in the same phylotype may be only marginally similar to each other or unknown sequences may not affiliate to a pre-existing taxonomy. Therefore, there is a significant need to reassess alignment techniques with regard to their speed, memory requirements, and accuracy.</p>
+<p>For generic sequencing alignments, popular aligners have included ClustalW <xref ref-type="bibr" rid="pone.0008230-Chenna1">[7]</xref>, MAFFT <xref ref-type="bibr" rid="pone.0008230-Katoh1">[8]</xref>, and MUSCLE <xref ref-type="bibr" rid="pone.0008230-Edgar1">[9]</xref>. Several recent pyrosequencing studies of the V6 16S rRNA region (ca. 60 bp long) have used MUSCLE to generate MSAs for up to 20,000 sequences <xref ref-type="bibr" rid="pone.0008230-Sogin1">[3]</xref>, <xref ref-type="bibr" rid="pone.0008230-Huber1">[10]</xref>, <xref ref-type="bibr" rid="pone.0008230-Antonopoulos1">[11]</xref>. These techniques scale at least quadratically in space and time for sequence length and quadratically in space and to the third power in time for the number of sequences. Thus, as the number of sequences in a dataset surpasses their length, the memory required to double the number of sequences in an alignment increases at least four-fold and the time required increases at least eight-fold. Because these limitations are compounded in typical implementations by storing all of the data in RAM, it is not possible to align more than 5,000 full-length sequences on a typical desktop computer. Alternatively, some have proposed calculating genetic distances using only pairwise alignments <xref ref-type="bibr" rid="pone.0008230-Sun1">[12]</xref>. The time requirements of such an approach scale quadratically with the number of sequences and makes it impossible to insure positional homology. An additional limitation of the generic sequence aligners is that the alignments do not incorporate the predicted secondary structure of the 16S rRNA molecule and therefore it is impossible to compare datasets without re-aligning all of the sequences.</p>
+<p>The secondary structure is an important feature to consider in generating the alignment because it increases the likelihood that the alignment conserves positional homology between sequences <xref ref-type="bibr" rid="pone.0008230-Gardner1">[13]</xref>. Without such a consideration, the alignment is more sensitive to user-supplied parameters such as match and mismatch scores, and gap opening and extension penalties. There are currently four profile-based aligners that are used to generate 16S rRNA-specific alignments that each at least implicitly considers the secondary structure. Each of these methods is associated with well-established 16S rRNA gene databases and reference MSAs, which each have strengths and weaknesses. A general advantage of each of these methods is that rather than generating alignments de novo, they perform profile-based alignments and their complexity scales linearly in time and have a minimal memory footprint. In deciding upon an aligner it is important to consider the alignment quality, ability to align large datasets, speed, dependence on a specific database, cost, and openness of the algorithm.</p>
+<p>The RDP (<ext-link ext-link-type="uri" xlink:href="http://rdp.cme.msu.edu" xlink:type="simple">http://rdp.cme.msu.edu</ext-link>) aligner uses 16S rRNA secondary structure models to generate and apply hidden Markov models within Infernal <xref ref-type="bibr" rid="pone.0008230-Nawrocki1">[14]</xref>, <xref ref-type="bibr" rid="pone.0008230-Cole1">[15]</xref>. Although this has the strength of directly incorporating the secondary structure of the 16S rRNA molecule, the number of available models is limited, which causes variable regions to not be aligned. Furthermore, while the aligner scales linearly in time (i.e. doubling the number of sequences doubles the time required to construct the MSA), the alignment process is relatively slow compared to other methods. Finally, the length and structure of the RDP alignment changes as new reference models are included. This requires users to re-align their data each time they acquire new sequences. The strengths of the RDP aligner are that it is free, open source, and can be run on a user's local computer.</p>
+<p>The popular software package, ARB <xref ref-type="bibr" rid="pone.0008230-Ludwig1">[16]</xref>, has a built-in aligner that has yet to be fully described in the literature. Although specific details are lacking, the aligner uses a suffix tree to find related reference sequences and that the actual alignment step uses multiple reference sequences and secondary structure information to carryout the alignment. Perhaps the most significant limitation in the ARB implementation is that suffix tree server has become practically unusable to most users as the number of full-length sequences has increased. As an alternative, the ARB developers have spun-off the SILVA database project (<ext-link ext-link-type="uri" xlink:href="http://www.arb-silva.de" xlink:type="simple">http://www.arb-silva.de</ext-link>). SILVA serves as a repository for aligned rRNA sequences and the SINA aligner <xref ref-type="bibr" rid="pone.0008230-Pruesse1">[17]</xref>. This implementation of the ARB aligner is more convenient, but also has yet to be described in the literature. Complicating matters is that the website limits users to aligning 300 sequences at a time; aligning additional sequences is available on a pay-for-use basis. Although the MSA length and structure is stable, it is an unwieldy 50,000 columns long.</p>
+<p>The aligner available through the greengenes website (<ext-link ext-link-type="uri" xlink:href="http://greengenes.lbl.gov" xlink:type="simple">http://greengenes.lbl.gov</ext-link>) is not explicitly dependent on secondary structure models; however, the generation of the reference database alignment does take into account the secondary structure (<xref ref-type="fig" rid="pone-0008230-g001">Fig. 1</xref>) <xref ref-type="bibr" rid="pone.0008230-DeSantis1">[18]</xref>, <xref ref-type="bibr" rid="pone.0008230-DeSantis2">[19]</xref>. The reference alignment is considerably shorter than the SILVA alignment (7,682 columns). Although the source code for the greengenes aligner is not open, the algorithm has been published <xref ref-type="bibr" rid="pone.0008230-DeSantis2">[19]</xref>. The original implementation used kmer searching with 7-mers to identify the closest template sequence in the reference database. The current implementation uses blastn <xref ref-type="bibr" rid="pone.0008230-Altschul1">[20]</xref> to identify the longest template sequence among the top-ten matches (TZ DeSantis, personal communication). In the second step, the algorithm uses blastn to generate pairwise alignments between the unaligned candidate and template sequences; in the current greengenes implementation the same blastn alignment generated in the first step is used for the second step. Finally, gap positions are introduced to the candidate sequence so that the final alignment is the same length as the reference database and positional homology is maintained using the nearest alignment space termination (NAST) algorithm. The speed of the aligner scales linearly with the number of candidate sequences so that doubling the number of candidate sequences would double the time requirement. The only significant memory requirement is what is required to store the reference alignment. A challenge in each of these profile-based methods is the creation of a high-quality reference alignment because the alignments that are generated will only be as good as the reference. Assuming that one has a good reference alignment, the greengenes aligner appears to have the most potential for quickly generating a high quality sequence alignment.</p>
+<fig id="pone-0008230-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.g001</object-id><label>Figure 1</label><caption>
+<title>Flowchart describing the alignment algorithm.</title>
+<p>The published and current greengenes aligner algorithm is shown in black and the modifications that were tested in this study are shown in blue.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.g001" xlink:type="simple"/></fig>
+<p>In the present study I used several simulations to assess how various permutations of the alignment algorithm effect alignment quality and speed. Specifically, I tested various methods of identifying the best template sequence and completing the pairwise alignments (<xref ref-type="fig" rid="pone-0008230-g001">Fig. 1</xref>). I was also interested in determining how well these results generalized to various regions within the 16S rRNA gene sequence commonly used in recently published surveys. This study enabled me to produce an aligner that rapidly produced high-quality alignments, robust to analysis of sequence fragments, could be generalized to genes other than 16S rRNA, and made independent of a specific database.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Comparison of Database Quality</title>
+<p>I identified 200,433 unique, high-quality, aligned 16S rRNA gene sequences that were shared by the SILVA, greengenes, and RDP databases. ARB databases provided by SILVA and greengenes include helical mapping data that indicate which bases pair with each other within the predicted 16S rRNA secondary structure. For example, using the SILVA alignment, the 1,542 bp <italic>E. coli</italic> 16S rRNA secondary structure consists of 1,028 bases that are expected to form pairs. Of these, 808 form normal Watson-Crick base pairs (i.e. AT, GC; marked with a ‘∼’ in ARB), 202 form weak pairs (i.e. GA, TT, GT; marked ‘−’, ‘ = ’, or ‘+’), and 18 do not pair (i.e. AA, AC, CC, CT, GG; marked ‘#’). Although sequences naturally have non-pairing bases within the paring regions of the secondary structure, an excessive number of these is an indicator of poor sequence alignment (e.g. <xref ref-type="fig" rid="pone-0008230-g002">Fig. 2</xref>). With this in mind, I compared the number of non-paring bases in each sequence from the SILVA and greengenes databases. On average, each sequence alignment had 18.0 more non-paring bases (sd = 16.0) in the greengenes alignment than in the SILVA alignment; only 5.8% of the greengenes aligned sequences had fewer non-pairs than the SILVA aligned sequences. It was not possible to perform a similar analysis with the RDP alignment because similar helical mapping data are not available. Rather, I counted the number of unaligned bases in each sequence, which they indicate in a lower case typeface to characterize the RDP alignment (<xref ref-type="fig" rid="pone-0008230-g002">Fig. 2</xref>). On average, 7.6% of each sequence's bases were unaligned (sd = 1.5%) and within the variable regions targeted by pyrosequencing the percentage was higher. Based on these analyses, I decided to use the SILVA MSA to evaluate the new aligner.</p>
+<fig id="pone-0008230-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.g002</object-id><label>Figure 2</label><caption>
+<title>Comparison of alignments generated by the RDP, greengenes, and SILVA databases.</title>
+<p>Alignments were taken between positions 60 and 113 of the E. coli 16S rRNA gene sequence for <italic>E. coli</italic> and four <italic>Enteroccocus</italic> spp. The alignment generated for these sequences within this region using 8-mers and the Needleman-Wunsch algorithm was identical to that found in the SILVA alignment. The lower-case bases in the RDP alignment indicate unaligned positions. For the greengenes and SILVA alignments, yellow-highlighting represents bases that are predicted to form traditional Watson-Crick base-pairs in the secondary structure, gray-highlighting represents weak base-pairs, black-highlighting represents bases that will not form base-pairs, and a lack of highlighting represents bases that are predicted to be in loop structures.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.g002" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Database Searching Methods</title>
+<p>The first step in the alignment algorithm is to find the most similar template sequence for each unaligned candidate sequence. The ARB aligner uses a suffix tree search method and the greengenes aligner has used either a kmer searching method or blastn. Suffix tree and kmer searching have the advantage that they are alignment independent techniques, which could make them considerably faster than using the alignment-based blastn approach. The extent of the speed-up and the effect on accuracy were unknown. To assess the accuracy, I calculated the similarity between each SILVA-aligned candidate sequence and each of the template sequences. These similarities were used to assess how well each method identified the best match and resulting alignment quality.</p>
+<p>Regardless of the region within the 16S rRNA gene, kmer searching outperformed both blastn and suffix tree searching in its ability to find the best template (<xref ref-type="table" rid="pone-0008230-t001">Tables 1</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s001">S1</xref>). When searching against full-length templates, 7 to 9-mers provided the closest matches. Across the 10 regions that I tested, between 68 and 77% of the candidates found their true best template match. With the exception of the V6 region, the average candidate sequence found a template sequence that was between 3.7 and 7.5% different from the optimal template when using kmer searching; the V6 candidates averaged a difference of 12.5% from their optimal template. A difference of 10% between V6 fragments is comparable to a 3% difference over the full length of the gene (unpublished data); therefore a 12.5% difference is not out of line. The suffix tree searches only found the best template sequence for 25–62% of the candidate sequences. With the exception of the V6 region, the average candidate sequence found a template sequence that was between 7 and 17% different from the optimal template when using suffix tree searching; the V6 candidates averaged a difference of 37% from their optimal template. Using blastn, I found that for every region except the V14 and V19, many candidate sequences could not find a significant match to the template database (<xref ref-type="table" rid="pone-0008230-t002">Table 2</xref>). For example, 106 (0.06%) of the V2 and 64,389 (35%) of the V6 candidates could not find a significant match. Although this may be due to the use of a large blastn word size, more sensitive searches with smaller word sizes became to slow to be practical. The blastn approach found the best template for between 17 and 63% of the candidate sequences in each region.</p>
+<table-wrap id="pone-0008230-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.t001</object-id><label>Table 1</label><caption>
+<title>Comparison of search methods when using the V2 and V19 candidate sequences and full-length template sequences. <xref ref-type="table-fn" rid="nt101">a</xref></title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008230-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Region</td>
+<td align="left" colspan="1" rowspan="1">Method</td>
+<td align="left" colspan="1" rowspan="1">Speed (seqs/s)</td>
+<td align="left" colspan="1" rowspan="1">% Correct template</td>
+<td align="left" colspan="1" rowspan="1">% Δsimilarity (sd)<xref ref-type="table-fn" rid="nt102">b</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">V2</td>
+<td align="left" colspan="1" rowspan="1">5-mers</td>
+<td align="left" colspan="1" rowspan="1">118</td>
+<td align="left" colspan="1" rowspan="1">50.6</td>
+<td align="left" colspan="1" rowspan="1">11.7 (12.8)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">6-mers</td>
+<td align="left" colspan="1" rowspan="1">180</td>
+<td align="left" colspan="1" rowspan="1">68.3</td>
+<td align="left" colspan="1" rowspan="1">7.2 (11.2)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">7-mers</td>
+<td align="left" colspan="1" rowspan="1">280</td>
+<td align="left" colspan="1" rowspan="1">72.6</td>
+<td align="left" colspan="1" rowspan="1">6.1 (10.6)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">8-mers</td>
+<td align="left" colspan="1" rowspan="1">225</td>
+<td align="left" colspan="1" rowspan="1">72.7</td>
+<td align="left" colspan="1" rowspan="1">6.1 (10.5)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">9-mers</td>
+<td align="left" colspan="1" rowspan="1">202</td>
+<td align="left" colspan="1" rowspan="1">72.4</td>
+<td align="left" colspan="1" rowspan="1">6.1 (10.5)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">10-mers</td>
+<td align="left" colspan="1" rowspan="1">104</td>
+<td align="left" colspan="1" rowspan="1">71.7</td>
+<td align="left" colspan="1" rowspan="1">6.3 (10.6)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Suffix tree</td>
+<td align="left" colspan="1" rowspan="1">5.5</td>
+<td align="left" colspan="1" rowspan="1">39.4</td>
+<td align="left" colspan="1" rowspan="1">15.3 (13.6)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">blastn</td>
+<td align="left" colspan="1" rowspan="1">8.8</td>
+<td align="left" colspan="1" rowspan="1">49.0</td>
+<td align="left" colspan="1" rowspan="1">13.0 (13.8)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V19</td>
+<td align="left" colspan="1" rowspan="1">5-mers</td>
+<td align="left" colspan="1" rowspan="1">37</td>
+<td align="left" colspan="1" rowspan="1">54.9</td>
+<td align="left" colspan="1" rowspan="1">8.3 (10.0)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">6-mers</td>
+<td align="left" colspan="1" rowspan="1">34</td>
+<td align="left" colspan="1" rowspan="1">72.0</td>
+<td align="left" colspan="1" rowspan="1">5.0 (8.5)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">7-mers</td>
+<td align="left" colspan="1" rowspan="1">41</td>
+<td align="left" colspan="1" rowspan="1">74.6</td>
+<td align="left" colspan="1" rowspan="1">4.5 (8.2)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">8-mers</td>
+<td align="left" colspan="1" rowspan="1">49</td>
+<td align="left" colspan="1" rowspan="1">74.6</td>
+<td align="left" colspan="1" rowspan="1">4.5 (8.2)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">9-mers</td>
+<td align="left" colspan="1" rowspan="1">52</td>
+<td align="left" colspan="1" rowspan="1">74.1</td>
+<td align="left" colspan="1" rowspan="1">4.6 (8.3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">10-mers</td>
+<td align="left" colspan="1" rowspan="1">43</td>
+<td align="left" colspan="1" rowspan="1">73.4</td>
+<td align="left" colspan="1" rowspan="1">4.7 (8.4)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Suffix tree</td>
+<td align="left" colspan="1" rowspan="1">1.9</td>
+<td align="left" colspan="1" rowspan="1">62.3</td>
+<td align="left" colspan="1" rowspan="1">7.2 (9.9)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">blastn</td>
+<td align="left" colspan="1" rowspan="1">0.7</td>
+<td align="left" colspan="1" rowspan="1">63.4</td>
+<td align="left" colspan="1" rowspan="1">6.8 (9.6)</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>a</label><p>Data for the other regions and comparisons to region specific template sequences are provided in <xref ref-type="supplementary-material" rid="pone.0008230.s001">Tables S1</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s002">S2</xref>.</p></fn><fn id="nt102"><label>b</label><p>The average percentage difference in similarity between the correct template and the actual template returned by the search method for each candidate sequence. Smaller values indicate that more similar sequences were identified. Values in parentheses represent the standard deviation.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0008230-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.t002</object-id><label>Table 2</label><caption>
+<title>Number of candidate sequences that did not yield a significant blast match against the full-length or region-specific template databases.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008230-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Region</td>
+<td align="left" colspan="1" rowspan="1">Total Candidate Seqs.</td>
+<td align="left" colspan="1" rowspan="1">Template type</td>
+<td align="left" colspan="1" rowspan="1">Count</td>
+<td align="left" colspan="1" rowspan="1">%</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">V19</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V14</td>
+<td align="left" colspan="1" rowspan="1">139,987</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V12</td>
+<td align="left" colspan="1" rowspan="1">139,987</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V2</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">106</td>
+<td align="left" colspan="1" rowspan="1">0.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">105</td>
+<td align="left" colspan="1" rowspan="1">0.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V23</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V3</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">432</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">432</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V4</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">548</td>
+<td align="left" colspan="1" rowspan="1">0.29</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">546</td>
+<td align="left" colspan="1" rowspan="1">0.29</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V6</td>
+<td align="left" colspan="1" rowspan="1">186,206</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">64,389</td>
+<td align="left" colspan="1" rowspan="1">34.6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">64,089</td>
+<td align="left" colspan="1" rowspan="1">34.4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V89</td>
+<td align="left" colspan="1" rowspan="1">77,685</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V9</td>
+<td align="left" colspan="1" rowspan="1">77,685</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>With respect to the time required for each approach, kmer searching outperformed the other methods regardless of the region being investigated (<xref ref-type="table" rid="pone-0008230-t001">Table 1</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s001">S1</xref>). In general kmer sizes of 7 or 8 were typically the fastest. Also, speed scaled with the candidate sequence length. For example, approximately 1,490 V6, 192 V23, and 52 V19 candidates sequences could be searched per second. Suffix tree searching required between 25 and 65 times longer than kmer searching. Blastn searches required between 25 and 70 times longer than kmer searching. While these speeds are implementation-dependent, the stark differences in speed and quality indicate that kmer searching was superior to other methods. While slight improvements are possible by tailoring the kmer size to the region or specific gene of interest, in general, 8-mers provided the best and fastest alignments for 16S rRNA gene fragment sequences.</p>
+<p>I also investigated the effect of using template sequences that corresponded to the region being aligned on whether there was an improvement in accuracy or speed (<xref ref-type="supplementary-material" rid="pone.0008230.s002">Table S2</xref>). There were no significant improvements in accuracy for any of the methods when using the customized template sequences. The most noticeable effects of shorter templates were the optimal kmer size and speed. For all regions the optimal kmer size decreased from 7 to 9-mers to 5 to 7-mers. Using region-specific template sequences increased the search speed by up to 56%.</p>
+</sec><sec id="s2c">
+<title>Pairwise Alignment Methods</title>
+<p>I investigated the accuracy and speed of the various alignment methods when the true best template sequence was selected for each candidate sequence (<xref ref-type="table" rid="pone-0008230-t003">Tables 3</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s003">S3</xref>). I tested the Needleman-Wunsch and Gotoh global alignment algorithms, which only differ in the number of parameters they use to penalize gaps. It was expected that Gotoh would be slower, but more accurate than the Needleman-Wunch algorithm because it uses an extra parameter. I also tested blastn, a local alignment method that approximates the Smith-Waterman algorithm <xref ref-type="bibr" rid="pone.0008230-Altschul1">[20]</xref>. The greengenes aligner currently implements blastn to carryout pairwise alignments. This approach was expected to be the fastest, but perhaps least accurate of the three methods. Furthermore, because it is a local alignment approach, it was expected to trim the ends of sequences that were sufficiently different from their template.</p>
+<table-wrap id="pone-0008230-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.t003</object-id><label>Table 3</label><caption>
+<title>Summary of alignment improvement for V19 candidate sequences using the blastn, Gotoh, or Needleman-Wunsch pairwise alignment algorithms when the best template was selected for each candidate sequence. <xref ref-type="table-fn" rid="nt103">a</xref></title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008230-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Alignment method</td>
+<td align="left" colspan="1" rowspan="1">Speed (seq/s)</td>
+<td align="left" colspan="1" rowspan="1">Gap opening</td>
+<td align="left" colspan="1" rowspan="1">Gap extension</td>
+<td align="left" colspan="1" rowspan="1">% Δsimilarity (sd)<xref ref-type="table-fn" rid="nt104">b</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">blastn</td>
+<td align="left" colspan="1" rowspan="1">10–12</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.42 (0.89)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.41 (0.87)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.42 (0.87)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.41 (0.82)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.43 (0.78)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.68)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.36 (0.68)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.39 (0.69)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gotoh</td>
+<td align="left" colspan="1" rowspan="1">15–17</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.23 (0.44)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.24 (0.45)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.27 (0.48)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.49)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.55)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.25 (0.45)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.49)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.32 (0.52)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.41 (0.61)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Needleman-Wunsch</td>
+<td align="left" colspan="1" rowspan="1">21–24</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">0.27 (0.49)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">0.30 (0.51)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.55)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">0.42 (0.62)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">0.38 (0.60)</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label>a</label><p>Data for the other regions and comparisons to region specific template sequences are provided in <xref ref-type="supplementary-material" rid="pone.0008230.s003">Tables S3</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s004">S4</xref>.</p></fn><fn id="nt104"><label>b</label><p>The average percentage difference in similarity between the template sequence and the SILVA aligned candidate sequence and the difference in similarity between the template sequence and the candidate sequence aligned by the different implementations. Positive values indicate the candidate alignment is more similar to the template sequence and negative values are less similar. Values in parentheses indicate the standard deviation.</p></fn><fn id="nt105"><label>b</label><p>blastn does not permit these gap penalties when using a match reward and mismatch penalty of 1 and the Needleman-Wunsch algorithm only takes one gap penalty parameter.</p></fn></table-wrap-foot></table-wrap>
+<p>I rewarded matches and penalized mismatches with one point each and varied the gap opening and extension penalties to identify the best alignment conditions. Surprisingly, there was little variation in alignment quality regardless of the algorithm or conditions selected (<xref ref-type="table" rid="pone-0008230-t003">Tables 3</xref> and <xref ref-type="supplementary-material" rid="pone.0008230.s003">S3</xref>). With the exception of the V6 region, the realigned candidate sequences were, on average, 0.04–0.66 percentage points more similar to the template sequence than the SILVA-aligned candidate sequences regardless of the algorithm or penalties employed. For the V6 region, blastn produced alignments that were 1.64–1.85 percentage points worse; however the Needleman-Wunsch and Gotoh algorithms produced alignments that were 0.30 to 0.63 percentage points better. Although the effects of the different penalty schemes were minimal, the best alignments were produced using the Needleman-Wunsch algorithm with a gap penalty of 2 for all regions except the V6, which had an optimal gap penalty of 1. As expected, the blastn algorithm tended to truncate the candidate sequence alignment more frequently than the global alignment algorithms. For example, the optimal alignment conditions for the V6 region aligned each of the candidate sequences completely. In contrast, the optimal blastn condition aligned an average of 95.4% of each sequence (s.d. = 18.7%).</p>
+<p>Universally, the Needleman-Wunsch algorithm was the fastest of the three methods followed by the Gotoh and blastn approaches. My implementation of the Needleman-Wunsch algorithm aligned between 21 and 73 sequences per second. Similar to the kmer searching implementation, these speeds were affected by candidate sequence length. Using region specific template sequences had no significant effect on alignment quality but increased the pairwise alignment speed by up to 116% (<xref ref-type="supplementary-material" rid="pone.0008230.s004">Table S4</xref>).</p>
+</sec><sec id="s2d">
+<title>Assessing the Overall Algorithm</title>
+<p>The data in <xref ref-type="table" rid="pone-0008230-t001">Tables 1</xref>, <xref ref-type="supplementary-material" rid="pone.0008230.s001">S1</xref>, and <xref ref-type="supplementary-material" rid="pone.0008230.s002">S2</xref> indicated that the various search methods did not necessarily identify the best template sequence. Yet in the second set of simulations, I used the true best template to investigate the various alignment options and found that the alignments were as good as the SILVA alignments (<xref ref-type="table" rid="pone-0008230-t002">Tables 2</xref>, <xref ref-type="supplementary-material" rid="pone.0008230.s003">S3</xref>, and <xref ref-type="supplementary-material" rid="pone.0008230.s004">S4</xref>). In the next set of simulations, I selected the best kmer size and alignment parameters for each region to evaluate the overall process (<xref ref-type="table" rid="pone-0008230-t004">Table 4</xref>). On average the resulting alignments were between 0.61% worse and 0.34% better than the alignments generated by SILVA when using full-length template sequences. Although speed was affected by candidate sequence length, between 18 and 78 sequences were aligned per second. When using the region-specific template sequences, the alignments were between 0.07% worse and 0.40% better than the alignments generated by SILVA. The region-specific templates increased the overall alignment speed so that between 37 and 145 sequences were aligned per second.</p>
+<table-wrap id="pone-0008230-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.t004</object-id><label>Table 4</label><caption>
+<title>Analysis of optimal alignment settings for each variable region when using full-length, region specific, and vertical-gap filtered full-length template sequences.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008230-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Region</td>
+<td align="left" colspan="1" rowspan="1">Template sequences</td>
+<td align="left" colspan="1" rowspan="1">Speed (seqs/s)</td>
+<td align="left" colspan="1" rowspan="1">% Δsimilarity (sd)<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1">% Trimmed<xref ref-type="table-fn" rid="nt107">b</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">V19</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.64)</td>
+<td align="left" colspan="1" rowspan="1">0.17</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">22</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.65)</td>
+<td align="left" colspan="1" rowspan="1">0.17</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V14</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">31</td>
+<td align="left" colspan="1" rowspan="1">0.30 (0.84)</td>
+<td align="left" colspan="1" rowspan="1">0.20</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">37</td>
+<td align="left" colspan="1" rowspan="1">0.31 (0.83)</td>
+<td align="left" colspan="1" rowspan="1">0.20</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">41</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.84)</td>
+<td align="left" colspan="1" rowspan="1">0.20</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V12</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">51</td>
+<td align="left" colspan="1" rowspan="1">0.29 (1.59)</td>
+<td align="left" colspan="1" rowspan="1">0.29</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">79</td>
+<td align="left" colspan="1" rowspan="1">0.40 (1.52)</td>
+<td align="left" colspan="1" rowspan="1">0.26</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">88</td>
+<td align="left" colspan="1" rowspan="1">0.32 (1.57)</td>
+<td align="left" colspan="1" rowspan="1">0.27</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V2</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">58</td>
+<td align="left" colspan="1" rowspan="1">−0.09 (1.23)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">−0.01 (1.16)</td>
+<td align="left" colspan="1" rowspan="1">0.10</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">105</td>
+<td align="left" colspan="1" rowspan="1">−0.09 (1.23)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V23</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">43</td>
+<td align="left" colspan="1" rowspan="1">0.07 (0.91)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">64</td>
+<td align="left" colspan="1" rowspan="1">0.14 (0.86)</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">65</td>
+<td align="left" colspan="1" rowspan="1">0.07 (0.91)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V3</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">69</td>
+<td align="left" colspan="1" rowspan="1">−0.18 (1.50)</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">122</td>
+<td align="left" colspan="1" rowspan="1">−0.06 (1.35)</td>
+<td align="left" colspan="1" rowspan="1">0.27</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">151</td>
+<td align="left" colspan="1" rowspan="1">−0.16 (1.49)</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V4</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">61</td>
+<td align="left" colspan="1" rowspan="1">−0.19 (1.00)</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">−0.07 (0.75)</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">109</td>
+<td align="left" colspan="1" rowspan="1">−0.19 (1.00)</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V6</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">78</td>
+<td align="left" colspan="1" rowspan="1">−0.61 (3.63)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">145</td>
+<td align="left" colspan="1" rowspan="1">−0.02 (2.92)</td>
+<td align="left" colspan="1" rowspan="1">0.44</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">204</td>
+<td align="left" colspan="1" rowspan="1">−0.64 (3.66)</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V89</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">45</td>
+<td align="left" colspan="1" rowspan="1">0.09 (0.78)</td>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">70</td>
+<td align="left" colspan="1" rowspan="1">0.12 (0.75)</td>
+<td align="left" colspan="1" rowspan="1">0.12</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">64</td>
+<td align="left" colspan="1" rowspan="1">0.09 (0.78)</td>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V9</td>
+<td align="left" colspan="1" rowspan="1">Full-length</td>
+<td align="left" colspan="1" rowspan="1">61</td>
+<td align="left" colspan="1" rowspan="1">0.01 (1.24)</td>
+<td align="left" colspan="1" rowspan="1">0.21</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Region-specific</td>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">0.08 (1.14)</td>
+<td align="left" colspan="1" rowspan="1">0.17</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Vertical-gap filtered</td>
+<td align="left" colspan="1" rowspan="1">102</td>
+<td align="left" colspan="1" rowspan="1">0.01 (1.24)</td>
+<td align="left" colspan="1" rowspan="1">0.21</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><label>a</label><p>See description for <xref ref-type="table" rid="pone-0008230-t003">Table 3</xref>.</p></fn><fn id="nt107"><label>b</label><p>The percentage of sequences where less than 95% of the bases were aligned to the template sequence.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2e">
+<title>Effect of Full-Length Alignment Length</title>
+<p>This study used a 50,000-column MSA alignment for a gene that is approximately 1,500-bp long. In comparison, the greengenes alignment has 7,682 columns. The extended SILVA alignment has been justified by a desire to include archaeal 16S rRNA and eukaryotic 18S rRNA gene sequences as well as to provide sufficient padding for new sequences that may have long insertions. To simulate a greengenes-like alignment, I removed any column from the SILVA alignment only contained gap characters. This produced a 6,806-column alignment. Using the transformed template alignment sequences, I found that the alignment quality did not vary considerably from the results obtained with the 50,000-column MSA (<xref ref-type="table" rid="pone-0008230-t004">Table 4</xref>). Furthermore, although the same number of bases were represented in each sequence, the speeds observed using vertical gap-filtered MSA were up to 160% faster than using the full 50,000 character alignment.</p>
+</sec><sec id="s2f">
+<title>Comparison to the Greengenes Implementations</title>
+<p>I implemented the approaches that have been used by greengenes to assess the sensitivity of the overall algorithm. Using the original approach of employing 7-mer searching combined with blast alignments I found that with the exception of the V6 region, the alignments were between 0.19% worse and 0.36% better than the SILVA alignments (<xref ref-type="table" rid="pone-0008230-t005">Table 5</xref>). These values are somewhat deceiving as I found that, with the exception of the V6 region, between 0.8 and 4.8% of the sequence in each region had less than 95% of its bases aligned. This version of the algorithm aligned between 15 and 25 sequences per second. Although this is considerably slower than what I observed using with the optimal conditions it is considerably faster than the 10 sequences per minute (i.e. 0.17 sequences per second) that was described previously <xref ref-type="bibr" rid="pone.0008230-DeSantis2">[19]</xref>. To mimic the current greengenes implementation, I used blastn to find the closest match. This slightly improved the overall alignments over the original greengenes implementation so that, with the exception of the V6 region, the average alignment was between 0.27% worse and 0.69% better than the SILVA alignments. Again, these values are deceiving, as between 1.1 and 5.4% of the sequences had fewer than 95% of their bases aligned in each sequence. The greengenes aligner approach suffered when aligning the V6 region because of is dependence on blastn. When using 7-mers and blastn the candidate sequences averaged 4.6% (s.d. = 19.5%) worse than the SILVA candidate sequences and more than 18.0% of the sequences had less than 95% of its bases aligned. Considering 35% of the V6 candidate sequences could not be matched to a template via blastn, the current greengenes implementation was ineffective.</p>
+<table-wrap id="pone-0008230-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0008230.t005</object-id><label>Table 5</label><caption>
+<title>Analysis of two versions of the greengenes aligner when aligning various regions to full-length SILVA-aligned template sequences.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0008230-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.t005" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Region</td>
+<td align="left" colspan="1" rowspan="1">greengenes version</td>
+<td align="left" colspan="1" rowspan="1">Speed (seqs/s)</td>
+<td align="left" colspan="1" rowspan="1">% Δsimilarity (sd)<sup>a</sup></td>
+<td align="left" colspan="1" rowspan="1">% Trimmed<sup>b</sup></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">V19</td>
+<td align="left" colspan="1" rowspan="1">Original<xref ref-type="table-fn" rid="nt109">c</xref></td>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">0.31 (0.83)</td>
+<td align="left" colspan="1" rowspan="1">3.09</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current<xref ref-type="table-fn" rid="nt110">d</xref></td>
+<td align="left" colspan="1" rowspan="1">0.6</td>
+<td align="left" colspan="1" rowspan="1">0.37 (0.82)</td>
+<td align="left" colspan="1" rowspan="1">3.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V14</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">0.26 (1.19)</td>
+<td align="left" colspan="1" rowspan="1">4.82</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">1.5</td>
+<td align="left" colspan="1" rowspan="1">0.39 (1.14)</td>
+<td align="left" colspan="1" rowspan="1">4.27</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V12</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">0.36 (4.51)</td>
+<td align="left" colspan="1" rowspan="1">4.51</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">4.5</td>
+<td align="left" colspan="1" rowspan="1">0.69 (2.73)</td>
+<td align="left" colspan="1" rowspan="1">5.40</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V2</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">−0.09 (0.91)</td>
+<td align="left" colspan="1" rowspan="1">0.91</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">5.0</td>
+<td align="left" colspan="1" rowspan="1">0.27 (2.77)</td>
+<td align="left" colspan="1" rowspan="1">2.04</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V23</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">0.07 (1.15)</td>
+<td align="left" colspan="1" rowspan="1">2.16</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">2.2</td>
+<td align="left" colspan="1" rowspan="1">0.25 (1.27)</td>
+<td align="left" colspan="1" rowspan="1">2.08</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V3</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">−0.02 (1.85)</td>
+<td align="left" colspan="1" rowspan="1">2.18</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">7.3</td>
+<td align="left" colspan="1" rowspan="1">0.00 (4.41)</td>
+<td align="left" colspan="1" rowspan="1">2.52</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V4</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">−0.19 (1.03)</td>
+<td align="left" colspan="1" rowspan="1">0.77</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">5.9</td>
+<td align="left" colspan="1" rowspan="1">−0.27 (4.44)</td>
+<td align="left" colspan="1" rowspan="1">1.10</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V6</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">26</td>
+<td align="left" colspan="1" rowspan="1">−4.58 (19.5)</td>
+<td align="left" colspan="1" rowspan="1">18.0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">−28.4 (39.9)</td>
+<td align="left" colspan="1" rowspan="1">37.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V89</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">0.14 (1.07)</td>
+<td align="left" colspan="1" rowspan="1">1.99</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">2.0</td>
+<td align="left" colspan="1" rowspan="1">0.27 (1.08)</td>
+<td align="left" colspan="1" rowspan="1">1.96</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">V9</td>
+<td align="left" colspan="1" rowspan="1">Original</td>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">0.16 (1.76)</td>
+<td align="left" colspan="1" rowspan="1">2.09</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Current</td>
+<td align="left" colspan="1" rowspan="1">3.0</td>
+<td align="left" colspan="1" rowspan="1">0.29 (1.99)</td>
+<td align="left" colspan="1" rowspan="1">1.82</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt108"><label>a, b</label><p>See descriptions for <xref ref-type="table" rid="pone-0008230-t004">Table 4</xref>.</p></fn><fn id="nt109"><label>c</label><p>Searching with 7-mers and using blastn to align.</p></fn><fn id="nt110"><label>d</label><p>Searching and aligning with blastn.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>A critical step in analyzing DNA sequences generated from community surveys is generating a MSA. Here I described and validated a variation of the greengenes and SILVA aligners and showed that this aligner quickly generates a high-quality alignment. Also, although investigators are encouraged to perform similar types of experiments to optimize the alignment conditions for their region of interest, the kmer search and Needlema-Wunsch alignment approach was robust to perturbations in their settings. Interestingly, whereas other aligners appear to use multiple template sequences to align one candidate sequence, this alignment algorithm only requires one reference sequence per candidate sequence and does require explicit knowledge of the 16S rRNA secondary structure.</p>
+<p>An important consideration in selecting a reference alignment is its underlying quality, yet manually curating a reference alignment is a tedious and painstaking process. It is a common practice to mask hypervariable regions when generating a deep-level phylogeny <xref ref-type="bibr" rid="pone.0008230-Lane1">[21]</xref>. Such a practice enables one to ignore the alignment of the masked out regions, which is typically where the problematic areas are located. However, when assigning sequences to OTUs or using phylogenies for community-based hypothesis tests, the fine level of detail contained within these variable regions is significant and should not be removed. The original Lane mask removes, on average, 14% of the bases from a full-length sequence alignment of <italic>E. coli</italic>'s full-length 16S rRNA gene <xref ref-type="bibr" rid="pone.0008230-Lane1">[21]</xref>. Considering the typical pyrosequencing-based study focuses on these variable regions and the sequence reads generated by pyrosequencing tend to be shorter than 250 bp, it is important that these regions not be discarded. While some have mistakenly used such masks prior to performing other analyses <xref ref-type="bibr" rid="pone.0008230-Turnbaugh1">[4]</xref>, <xref ref-type="bibr" rid="pone.0008230-Fierer1">[6]</xref>, <xref ref-type="bibr" rid="pone.0008230-Jones1">[22]</xref>–<xref ref-type="bibr" rid="pone.0008230-Crawford1">[25]</xref>, a better practice would be to manually curate the reference alignment in these regions and to include all of the data. Ultimately, the quality of an alignment will only be as good as reference alignment, regardless of the algorithm.</p>
+<p>Because this aligner is not tied to a particular database alignment, this aligner can be used with any reference aligner whether the DNA represent rRNA genes or protein coding genes <xref ref-type="bibr" rid="pone.0008230-Schellenberg1">[e.g. 26]</xref>. The first step in such an analysis is to generate a <italic>de novo</italic> multiple sequence alignment using software such as Clustal, MUSCLE, or MAFFT. Second, the new reference alignment should be curated to insure positional homology across the alignment. Third, unaligned sequences could then be aligned to the reference alignment using a variety of parameters. Finally, manual inspection of the newly aligned sequences should reveal the optimal parameters. Considering the general lack of sensitivity of the method to variations in the various parameters it is likely that the parameters described here will work for other genes.</p>
+<p>As microbial ecologists continue to generate massive data sets, it is important to continually refine and validate every step in the analysis pipeline. Central to this ideal is the availability of open source software and peer-reviewed methods. The combined generation of a fast, parallelized, open source, and flexible aligner with the simulations performed in this study demonstrate that this tool will be a valuable contribution to future investigations.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Selection of Sequences Used in Analysis</title>
+<p>I obtained the SSURef (Release 96) alignment from the SILVA database on October 14, 2008, which contained 271,543 bacterial 16S rRNA gene sequences longer than 1,200 bp. Aligned sequences were downloaded from the greengene and RDP databases on November 16, 2008. The SILVA database was selected because it was the longest and visual inspection of the alignment suggested that it had the highest overall quality (<xref ref-type="fig" rid="pone-0008230-g002">Fig. 2</xref>). Using ARB, I removed any sequence that affiliated with mitochondria or chloroplasts or were flagged as being of poor alignments, having more than five ambiguous bases, or appearing chimeric. This screen resulted in a collection of 243,472 high-quality aligned sequences. I dereplicated these sequences to obtain 222,086 unique sequences. Finally, I cross-matched accessions between the SILVA, greengenes, and RDP databases to obtain a collection of 200,433 sequences.</p>
+<p>Because the SILVA reference alignment (i.e. the SEED) is not publicly available, I attempted to replicate the SEED database. First, I parsed the 200,433 sequences to identify those sequences that had an alignment quality score (i.e. ARB database field ‘align_quality_slv’) of 100. Next, I identified those sequences in this pool that started by <italic>E. coli</italic> position 28 and ended after position 1491. Sequences beginning before or ending after these coordinates were trimmed. The resulting collection of 14,227 sequences represented my full-length template database. The other 186,206 sequences represented the candidate sequence collection.</p>
+</sec><sec id="s4b">
+<title>Generation of Region Specific Datasets</title>
+<p>I selected 10 regions within the 16S rRNA gene for my simulations. While maintaining the overall 50,000-character alignment, I excised regions V19 (<italic>E. coli</italic> positions 28–1491), V12 (28–337), V14 (28–784), V2 (100–337), V23 (100–514), V3 (357–514), V4 (578–784), V6 (986–1045), V89 (1100–1491), and V9 (1300–1491). There were 186,206 candidate sequences for analyzing the V19, V2, V23, V3, V4, and V6 datasets. Because not all sequences extended through the first and ninth variable regions, I further screened these sequences to generate a collection of 139,987 candidate sequences for analyzing the V12 and V14 datasets and a collection of 77,685 sequences for the V89 and V9 datasets. These regions were selected because they are tractable by Sanger (V19, V14), 454 GS-FLX (V2, V3, V4, V6, V9), 454 Titanium (V12, V23, V89), and Illumina (V3, V6) sequencing technologies. Many of these regions have also been used in published studies: V19 <xref ref-type="bibr" rid="pone.0008230-Eckburg1">[e.g. 2]</xref>, V14 <xref ref-type="bibr" rid="pone.0008230-Schloss1">[e.g. 1]</xref>, V2 <xref ref-type="bibr" rid="pone.0008230-Turnbaugh1">[e.g. 4]</xref>, V3 <xref ref-type="bibr" rid="pone.0008230-Dethlefsen1">[e.g. 27]</xref>, V4 <xref ref-type="bibr" rid="pone.0008230-Cole1">[15]</xref>, V6 <xref ref-type="bibr" rid="pone.0008230-Sogin1">[e.g. 3]</xref>, and V9 <xref ref-type="bibr" rid="pone.0008230-Roesch1">[e.g. 28]</xref>. Considering there are myriad permutations of these regions, these provided a generous coverage of the 16S rRNA gene.</p>
+</sec><sec id="s4c">
+<title>Permutations of the Greengenes Search Step</title>
+<p>I tested three search options: blastn, kmer searching, and suffix tree searching (<xref ref-type="fig" rid="pone-0008230-g001">Fig. 1</xref>). First, I used blastn as made available from NCBI with a word size of 28, match reward of 1, mismatch penalty of -1. These settings are comparable to those used in megablast and were needed to make the search times competitive with the other methods. Other parameters used for the blast included returning one result in the tabular format (–b 1 –m 8). Second, I used kmer searching with word sizes ranging between 5 and 10; smaller and larger words did not improve the searches and were considerably slower. The kmer-searching algorithm involved generating a lookup table where the keys in the table corresponded to all possible 4<sup>K</sup> kmers. These keys pointed to a list of template sequence identifiers. Next, the software identified all possible kmers for a candidate sequence and counts the number of kmers each template sequence shares with the candidate sequence. An analogous procedure is used in the initial steps of the MUSCLE algorithm <xref ref-type="bibr" rid="pone.0008230-Edgar1">[9]</xref>. The template with the most kmers in common was then used for further analysis. Third, I generated a suffix tree for each template sequence <xref ref-type="bibr" rid="pone.0008230-Ukkonen1">[29]</xref>. Using the string-to-string block-move algorithm I identified the template suffix tree that broke the candidate sequence into the fewest suffix sequences <xref ref-type="bibr" rid="pone.0008230-Tichy1">[30]</xref>.</p>
+</sec><sec id="s4d">
+<title>Permutations of the Greengenes Pairwise Alignment Step</title>
+<p>I tested three pairwise alignment methods: blastn <xref ref-type="bibr" rid="pone.0008230-Altschul1">[20]</xref> and the Needleman-Wunsch <xref ref-type="bibr" rid="pone.0008230-Needleman1">[31]</xref> and Gotoh <xref ref-type="bibr" rid="pone.0008230-Myers1">[32]</xref>, <xref ref-type="bibr" rid="pone.0008230-Gotoh1">[33]</xref> global alignment algorithms (<xref ref-type="fig" rid="pone-0008230-g001">Fig. 1</xref>). While my implementation of the aligner permits changing the match and mismatch scores, I chose to use +1 and -1 in all simulations. I used combinations of gap opening penalties of 5, 4, 3, 2, and 1 with gap extension penalties of 2 and 1. These values were selected to overlap as much as possible with the combinations that are implemented in the nucleotide-based BLAST program. The bl2seq BLAST program was used to obtain pairwise alignments using BLAST with the default word size of 11 (-W 11). To improve the Needleman-Wunsch and Gotoh alignments at the ends of sequences that do not fully overlap, I followed the end-space free variant algorithm described by Gusfield <xref ref-type="bibr" rid="pone.0008230-Gusfield1">[34]</xref>.</p>
+</sec><sec id="s4e">
+<title>Benchmarking of Methods</title>
+<p>To assess the ability of each method to properly identify the correct reference sequence, I calculated the raw similarity between each candidate sequence and all template sequences. In these similarity calculations, the comparison of a gap with a base is counted as a mismatch and the comparison between a pair of gaps does not factor into the calculation. These similarity scores were calculated for each region under consideration because the template for a candidate fragment would not necessarily be the same as the template for the full-length candidate sequence. The template sequence that was most similar to the candidate sequence was considered the true best template sequence.</p>
+<p>All simulations were run on a MacPro computer with 9 GB 667 MHz DDR2 RAM and 2×3 GHz Dual-Core Intel Xenon processors. To insure that each analysis was running at optimal speed, I only used 3 processors at a time and each analysis only used one processor. At no time did RAM utilization approach 9 GB. All source code was written in C++ and compiled using the –O3 compiler optimization flag.</p>
+</sec><sec id="s4f">
+<title>Availability of Software</title>
+<p>The aligner described here is freely available and provided within the mothur software package as source code or as a Windows executable (<ext-link ext-link-type="uri" xlink:href="http://www.mothur.org" xlink:type="simple">http://www.mothur.org</ext-link>) <xref ref-type="bibr" rid="pone.0008230-Schloss3">[35]</xref>. The defaults within mothur include using kmer searching with a word size of 8 and using the Needleman-Wunsch algorithm for pairwise alignments with a gap penalty of −2; however, all of the methods can be selected by users with the ability to modify any of the match and mismatch scores and gap penalties. Although not used in this study, the mothur implementation enables users to use multiple processors to accelerate the alignment. The mothur implementation requires that the user input FASTA-formatted files containing their candidate sequences and template database. Example template databases, including the one used in this study, are available from the mothur website.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0008230.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.s001" xlink:type="simple"><label>Table S1</label><caption>
+<p>Comparison of search methods when using various regions extracted from candidate sequences and full-length template sequences.</p>
+<p>(0.07 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008230.s002" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.s002" xlink:type="simple"><label>Table S2</label><caption>
+<p>Comparison of search methods when using various regions extracted from candidate sequences and region-specific template sequences.</p>
+<p>(0.06 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008230.s003" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.s003" xlink:type="simple"><label>Table S3</label><caption>
+<p>Summary of alignment improvement for various regions extracted from candidate sequences using the blastn, Gotoh, or Needleman-Wunsch pairwise alignment algorithms when the best full-length template was selected for each candidate sequence.</p>
+<p>(0.11 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0008230.s004" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0008230.s004" xlink:type="simple"><label>Table S4</label><caption>
+<p>Summary of alignment improvement for various regions extracted from candidate sequences using the blastn, Gotoh, or Needleman-Wunsch pairwise alignment algorithms when the best region-specific template was selected for each candidate sequence.</p>
+<p>(0.10 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>I thank Sarah Westcott for helping to incorporate my original source code for the aligner into mothur and the numerous mothur users who have helped to test the aligner software.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0008230-Schloss1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name>
+<name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Toward a census of bacteria in soil.</article-title>             <source>PLoS Comp Biol</source>             <volume>2</volume>             <fpage>e92</fpage>          </element-citation></ref>
+<ref id="pone.0008230-Eckburg1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eckburg</surname><given-names>PB</given-names></name>
+<name name-style="western"><surname>Bik</surname><given-names>EM</given-names></name>
+<name name-style="western"><surname>Bernstein</surname><given-names>CN</given-names></name>
+<name name-style="western"><surname>Purdom</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Dethlefsen</surname><given-names>L</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Diversity of the human intestinal microbial flora.</article-title>             <source>Science</source>             <volume>308</volume>             <fpage>1635</fpage>             <lpage>1638</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Sogin1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>
+<name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Microbial diversity in the deep sea and the underexplored “rare biosphere”.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>103</volume>             <fpage>12115</fpage>             <lpage>12120</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Turnbaugh1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Turnbaugh</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Yatsunenko</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Cantarel</surname><given-names>BL</given-names></name>
+<name name-style="western"><surname>Duncan</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>A core gut microbiome in obese and lean twins.</article-title>             <source>Nature</source>             <volume>457</volume>             <fpage>480</fpage>             <lpage>484</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Schloss2"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name>
+<name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Introducing DOTUR, a computer program for defining operational taxonomic units and estimating species richness.</article-title>             <source>Appl Environ Microbiol</source>             <volume>71</volume>             <fpage>1501</fpage>             <lpage>1506</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Fierer1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fierer</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Knight</surname><given-names>R</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The influence of sex, handedness, and washing on the diversity of hand surface bacteria.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>105</volume>             <fpage>17994</fpage>             <lpage>17999</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Chenna1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chenna</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Sugawara</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Koike</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Lopez</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Gibson</surname><given-names>TJ</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Multiple sequence alignment with the Clustal series of programs.</article-title>             <source>Nucleic Acids Res</source>             <volume>31</volume>             <fpage>3497</fpage>             <lpage>3500</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Katoh1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Katoh</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Asimenos</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Toh</surname><given-names>H</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Multiple alignment of DNA sequences with MAFFT.</article-title>             <source>Methods Mol Biol</source>             <volume>537</volume>             <fpage>39</fpage>             <lpage>64</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Edgar1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Edgar</surname><given-names>RC</given-names></name>
+</person-group>             <year>2004</year>             <article-title>MUSCLE: a multiple sequence alignment method with reduced time and space complexity.</article-title>             <source>BMC Bioinformatics</source>             <volume>5</volume>             <fpage>113</fpage>          </element-citation></ref>
+<ref id="pone.0008230-Huber1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Mark Welch</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>
+<name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Neal</surname><given-names>PR</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Microbial population structures in the deep marine biosphere.</article-title>             <source>Science</source>             <volume>318</volume>             <fpage>97</fpage>             <lpage>100</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Antonopoulos1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Antonopoulos</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>
+<name name-style="western"><surname>Schmidt</surname><given-names>TM</given-names></name>
+<name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Reproducible community dynamics of the gastrointestinal microbiota following antibiotic perturbation.</article-title>             <source>Infect Immun</source>             <volume>77</volume>             <fpage>2367</fpage>             <lpage>2375</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Sun1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sun</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Cai</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Yu</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Farrell</surname><given-names>ML</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>ESPRIT: estimating species richness using large collections of 16S rRNA pyrosequences.</article-title>             <source>Nucleic Acids Res</source>             <volume>37</volume>             <fpage>e76</fpage>          </element-citation></ref>
+<ref id="pone.0008230-Gardner1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gardner</surname><given-names>PP</given-names></name>
+<name name-style="western"><surname>Wilm</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Washietl</surname><given-names>S</given-names></name>
+</person-group>             <year>2005</year>             <article-title>A benchmark of multiple sequence alignment programs upon structural RNAs.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>2433</fpage>             <lpage>2439</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Nawrocki1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nawrocki</surname><given-names>EP</given-names></name>
+<name name-style="western"><surname>Kolbe</surname><given-names>DL</given-names></name>
+<name name-style="western"><surname>Eddy</surname><given-names>SR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Infernal 1.0: inference of RNA alignments.</article-title>             <source>Bioinformatics</source>             <volume>25</volume>             <fpage>1335</fpage>             <lpage>1337</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Cole1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cole</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Cardenas</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Fish</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Chai</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>The Ribosomal Database Project: improved alignments and new tools for rRNA analysis.</article-title>             <source>Nucleic Acids Res</source>             <volume>37</volume>             <fpage>D141</fpage>             <lpage>145</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Ludwig1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ludwig</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Strunk</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Westram</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Richter</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Meier</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>ARB: A software environment for sequence data.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>1363</fpage>             <lpage>1371</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Pruesse1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pruesse</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Quast</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Knittel</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Fuchs</surname><given-names>BM</given-names></name>
+<name name-style="western"><surname>Ludwig</surname><given-names>W</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>SILVA: a comprehensive online resource for quality checked and aligned ribosomal RNA sequence data compatible with ARB.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>7188</fpage>             <lpage>7196</lpage>          </element-citation></ref>
+<ref id="pone.0008230-DeSantis1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names></name>
+<name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Larsen</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Rojas</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Brodie</surname><given-names>EL</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB.</article-title>             <source>Appl Environ Microbiol</source>             <volume>72</volume>             <fpage>5069</fpage>             <lpage>5072</lpage>          </element-citation></ref>
+<ref id="pone.0008230-DeSantis2"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names><suffix>Jr</suffix></name>
+<name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Keller</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Brodie</surname><given-names>EL</given-names></name>
+<name name-style="western"><surname>Larsen</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>NAST: a multiple sequence alignment server for comparative analysis of 16S rRNA genes.</article-title>             <source>Nucleic Acids Res</source>             <volume>34</volume>             <fpage>W394</fpage>             <lpage>399</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Altschul1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name>
+<name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name>
+<name name-style="western"><surname>Schaffer</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name>
+<etal/></person-group>             <year>1997</year>             <article-title>Gapped BLAST and PSI-BLAST: a new generation of protein database search programs.</article-title>             <source>Nucleic Acids Res</source>             <volume>25</volume>             <fpage>3389</fpage>             <lpage>3402</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Lane1"><label>21</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lane</surname><given-names>DJ</given-names></name>
+</person-group>             <year>1991</year>             <article-title>16S/23S rRNA sequencing.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Stackebrandt</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Goodfellow</surname><given-names>M,</given-names></name>
+</person-group>             <source>Nucleic Acid Techniques in Bacterial Systematics</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Wiley</publisher-name>             <fpage>115</fpage>             <lpage>175</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Jones1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jones</surname><given-names>RT</given-names></name>
+<name name-style="western"><surname>Robeson</surname><given-names>MS</given-names></name>
+<name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Knight</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>A comprehensive survey of soil acidobacterial diversity using pyrosequencing and clone library analyses.</article-title>             <source>ISME J</source>             <volume>3</volume>             <fpage>442</fpage>             <lpage>453</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Lauber1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Knight</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Fierer</surname><given-names>N</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Pyrosequencing-based assessment of soil pH as a predictor of soil bacterial community structure at the continental scale.</article-title>             <source>Appl Environ Microbiol</source>             <volume>75</volume>             <fpage>5111</fpage>             <lpage>5120</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Bowers1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bowers</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Wiedinmyer</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Hallar</surname><given-names>AG</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Characterization of airborne microbial communities at a high elevation site and their potential to act as atmospheric ice nuclei.</article-title>             <source>Appl Environ Microbiol</source>             <volume>75</volume>             <fpage>5121</fpage>             <lpage>5130</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Crawford1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Crawford</surname><given-names>PA</given-names></name>
+<name name-style="western"><surname>Crowley</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Sambandam</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Muegge</surname><given-names>BD</given-names></name>
+<name name-style="western"><surname>Costello</surname><given-names>EK</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Regulation of myocardial ketone body metabolism by the gut microbiota during nutrient deprivation.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>106</volume>             <fpage>11276</fpage>             <lpage>11281</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Schellenberg1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schellenberg</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Links</surname><given-names>MG</given-names></name>
+<name name-style="western"><surname>Hill</surname><given-names>JE</given-names></name>
+<name name-style="western"><surname>Dumonceaux</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Peters</surname><given-names>GA</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Pyrosequencing of the chaperonin-60 universal target as a tool for determining microbial community composition.</article-title>             <source>Appl Environ Microbiol</source>             <volume>75</volume>             <fpage>2889</fpage>             <lpage>2898</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Dethlefsen1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dethlefsen</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Huse</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Relman</surname><given-names>DA</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The pervasive effects of an antibiotic on the human gut microbiota, as revealed by deep 16S rRNA sequencing.</article-title>             <source>PLoS Biol</source>             <volume>6</volume>             <fpage>e280</fpage>          </element-citation></ref>
+<ref id="pone.0008230-Roesch1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roesch</surname><given-names>LFW</given-names></name>
+<name name-style="western"><surname>Fulthorpe</surname><given-names>RR</given-names></name>
+<name name-style="western"><surname>Riva</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Casella</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Hadwin</surname><given-names>AKM</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Pyrosequencing enumerates and contrasts soil microbial diversity.</article-title>             <source>ISME J</source>             <volume>1</volume>             <fpage>283</fpage>             <lpage>290</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Ukkonen1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ukkonen</surname><given-names>E</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Online construction of suffix trees.</article-title>             <source>Algorithmica</source>             <volume>14</volume>             <fpage>249</fpage>             <lpage>260</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Tichy1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tichy</surname><given-names>WF</given-names></name>
+</person-group>             <year>1984</year>             <article-title>The string-to-string correction problem with block moves.</article-title>             <source>ACM Trans Comput Syst</source>             <volume>2</volume>             <fpage>309</fpage>             <lpage>321</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Needleman1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Needleman</surname><given-names>SB</given-names></name>
+<name name-style="western"><surname>Wunsch</surname><given-names>CD</given-names></name>
+</person-group>             <year>1970</year>             <article-title>A general method applicable to the search for similarities in the amino acid sequence of two proteins.</article-title>             <source>J Mol Biol</source>             <volume>48</volume>             <fpage>443</fpage>             <lpage>453</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Myers1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name>
+<name name-style="western"><surname>Miller</surname><given-names>W</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Optimal alignments in linear space.</article-title>             <source>Comput Appl Biosci</source>             <volume>4</volume>             <fpage>11</fpage>             <lpage>17</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Gotoh1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gotoh</surname><given-names>O</given-names></name>
+</person-group>             <year>1982</year>             <article-title>An improved algorithm for matching biological sequences.</article-title>             <source>J Mol Biol</source>             <volume>162</volume>             <fpage>705</fpage>             <lpage>708</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Gusfield1"><label>34</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gusfield</surname><given-names>D</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Algorithms on strings, trees, and sequences: computer science and computational biology.</article-title>             <publisher-loc>New York</publisher-loc>             <publisher-name>Cambridge University Press</publisher-name>             <fpage>228</fpage>             <lpage>229</lpage>          </element-citation></ref>
+<ref id="pone.0008230-Schloss3"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name>
+<name name-style="western"><surname>Westcott</surname><given-names>SL</given-names></name>
+<name name-style="western"><surname>Ryabin</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Hall</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Hartmann</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Introducing mothur: Open source, platform-independent, community-supported software for describing and comparing microbial communities.</article-title>             <source>Appl Environ Microbiol</source>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AEM.01541-09" xlink:type="simple">10.1128/AEM.01541-09</ext-link></comment>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

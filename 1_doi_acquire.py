@@ -32,8 +32,8 @@ def DOI_find_highpaper(collection,file,num):
         f = f.readlines()
         i = 0
         for line in f:
-            y = re.search("(?<=PY ).*$", line)
-            t = re.search("(?<=TI ).*$", line)
+            y = re.search("(?<=^PY ).*$", line)
+            t = re.search("(?<=^TI ).*$", line)
             if t:
                 if(f[i+1].startswith('SO')):
                     title = t.group()
@@ -49,30 +49,19 @@ def DOI_find_highpaper(collection,file,num):
 '''
 Main function
 '''
-client = pymongo.MongoClient('localhost:27017',connect = True)
-db = client['msc_project']
-collection = db['citations']
-
-files = file_list("WOS_list\\1")
-num = 0
-for file in files:
-    if "(" in file and ")" in file:
-        DOI_find(collection,file,num)
-    else:
-        DOI_find_highpaper(collection,file,num)
-
-files = file_list("WOS_list\\2")
-num = 10
-for file in files:
-    if "(" in file and ")" in file:
-        DOI_find(collection,file,num)
-    else:
-        DOI_find_highpaper(collection,file,num)
-client.close()    
-
-
-
-
-
-
-
+def main_function(i):
+    client = pymongo.MongoClient('localhost:27017',connect = True)
+    db = client['msc_project']
+    collection = db['citations']    
+    files = file_list("WOS_list\\"+str(i))
+    num = (i-1)*10
+    for file in files:
+        if "(" in file and ")" in file:
+            DOI_find(collection,file,num)
+        else:
+            DOI_find_highpaper(collection,file,num)
+    client.close()
+    
+main_function(3)
+main_function(4)
+main_function(5)

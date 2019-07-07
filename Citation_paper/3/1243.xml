@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-28118</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0129074</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Making Large-Scale Networks from fMRI Data</article-title>
+<alt-title alt-title-type="running-head">Large-Scale fMRI Networks</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Schmittmann</surname> <given-names>Verena D.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Jahfari</surname> <given-names>Sara</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Borsboom</surname> <given-names>Denny</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Savi</surname> <given-names>Alexander O.</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Waldorp</surname> <given-names>Lourens J.</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Methodology and Statistics/Social and Behavioral Sciences, Tilburg University, Tilburg, the Netherlands</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Department of Cognitive Psychology, Vrije Universiteit, Amsterdam, the Netherlands</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Psychological Methods/Social and Behavioral Sciences, University of Amsterdam, Amsterdam, the Netherlands</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Doesburg</surname> <given-names>Sam</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Hospital for Sick Children, CANADA</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: LJW VDS SJ DB. Performed the experiments: LJW VDS SJ AOS. Analyzed the data: VDS SJ. Wrote the paper: VDS LJW SJ DB.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">v.d.schmittmann@uvt.nl</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>1</day>
+<month>9</month>
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>9</issue>
+<elocation-id>e0129074</elocation-id>
+<history>
+<date date-type="received">
+<day>30</day>
+<month>6</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>4</day>
+<month>5</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Schmittmann et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0129074" xlink:type="simple"/>
+<abstract>
+<p>Pairwise correlations are currently a popular way to estimate a large-scale network (&gt; 1000 nodes) from functional magnetic resonance imaging data. However, this approach generally results in a poor representation of the true underlying network. The reason is that pairwise correlations cannot distinguish between direct and indirect connectivity. As a result, pairwise correlation networks can lead to fallacious conclusions; for example, one may conclude that a network is a small-world when it is not. In a simulation study and an application to resting-state fMRI data, we compare the performance of pairwise correlations in large-scale networks (2000 nodes) against three other methods that are designed to filter out indirect connections. Recovery methods are evaluated in four simulated network topologies (small world or not, scale-free or not) in scenarios where the number of observations is very small compared to the number of nodes. Simulations clearly show that pairwise correlation networks are fragmented into separate unconnected components with excessive connectedness within components. This often leads to erroneous estimates of network metrics, like small-world structures or low betweenness centrality, and produces too many low-degree nodes. We conclude that using partial correlations, informed by a sparseness penalty, results in more accurate networks and corresponding metrics than pairwise correlation networks. However, even with these methods, the presence of hubs in the generating network can be problematic if the number of observations is too small. Additionally, we show for resting-state fMRI that partial correlations are more robust than correlations to different parcellation sets and to different lengths of time-series.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by innovational research grant no. 451-03-068 (VDS and DB) from the Netherlands Organization for Scientific Research (NWO), and by Mosaic grant no 017.005.107 (SJ) from the Netherlands Organization for Scientific Research (NWO). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="21"/>
+<table-count count="1"/>
+<page-count count="32"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All datasets are deposited at Data Archiving and Networked Services - DANS - <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://persistent-identifier.nl/?identifier=urn:nbn:nl:ui:13-okb6-1d">http://persistent-identifier.nl/?identifier=urn:nbn:nl:ui:13-okb6-1d</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>In recent years, the use of network science for investigating connectivity in the brain from functional magnetic resonance imaging (fMRI) has brought about some amazing results [<xref ref-type="bibr" rid="pone.0129074.ref001">1</xref>–<xref ref-type="bibr" rid="pone.0129074.ref003">3</xref>]. For instance, the functional brain network appears to have a scale-free connectivity structure [<xref ref-type="bibr" rid="pone.0129074.ref004">4</xref>], which implies the existence of a small number of hubs (i.e., nodes with disproportionally numerous connections); intelligence seems to correlate negatively with average pathlength (i.e., average number of steps of shortest paths between each node pair) in the functional brain network [<xref ref-type="bibr" rid="pone.0129074.ref005">5</xref>]; and children and young-adults have similar small-world brains [<xref ref-type="bibr" rid="pone.0129074.ref006">6</xref>]. Small-world networks exhibit high local clustering (i.e., interconnectedness in neighborhoods of nodes) and low average pathlengths compared to equidimensional random networks [<xref ref-type="bibr" rid="pone.0129074.ref007">7</xref>].</p>
+<p>Functional brain networks are frequently inferred from pairwise correlations, assuming they identify true functional connectivity if they pass some threshold [<xref ref-type="bibr" rid="pone.0129074.ref002">2</xref>–<xref ref-type="bibr" rid="pone.0129074.ref004">4</xref>, <xref ref-type="bibr" rid="pone.0129074.ref008">8</xref>, <xref ref-type="bibr" rid="pone.0129074.ref009">9</xref>]. A pairwise correlation that exceeds this threshold may arise from a direct connection; however, it may also be spurious. As illustrated in <xref ref-type="fig" rid="pone.0129074.g001">Fig 1</xref>, correlations may result from indirect connections. This may lead to an excess of triangles (completely connected triples of nodes) in the network (e.g., [<xref ref-type="bibr" rid="pone.0129074.ref010">10</xref>, <xref ref-type="bibr" rid="pone.0129074.ref011">11</xref>]). This observation has important ramifications for the validity of network analyses in fMRI data, because triangles of connected nodes feature in network metrics, such as small-worldness. If using pairwise correlations leads to spurious relationships, these may negatively affect subsequent network analyses and substantive conclusions (e.g., erroneously concluding that the network has a small-world topology, or that its connectivity structure is scale-free when it is not).</p>
+<fig id="pone.0129074.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Illustration of pairwise vs partial correlation networks.</title>
+<p>Thicker edges represent stronger absolute correlations. Left: true network of partial correlations (blue), with 8 connections, no triangles. Middle: associated pairwise correlation network, with erroneous direct connections (red) that form 84 triangles. Right: pruned network of 8 strongest pairwise correlations, with two isolated nodes (yellow) and two erroneous connections (red) that form 2 triangles (2-3-8 and 3-7-8). Comparing the true partial correlation network on the left with the pruned pairwise correlation network on the right, which consists of the same number of edges as the underlying network, three differences stand out. Firstly, indirect connections may appear as direct connections (i.e., nodes 2–8 and nodes 3–7). This results in an excessive number of triangles, affecting network measures such as small-worldness. Secondly, while the true network is connected (i.e., there exists a path between each pair of nodes), pruned pairwise correlation networks tend to consist of isolated (groups of) nodes (i.e., nodes 1 and 9). Thirdly, the number of connections of a node may differ from the true number of connections (e.g., node 3 has four instead of three edges). In larger networks, hub nodes may emerge erroneously.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g001"/>
+</fig>
+<p>The correlation (or the unscaled version, the covariance) can be considered as a function of the partial correlations (partial covariances). Consider the network in <xref ref-type="fig" rid="pone.0129074.g002">Fig 2</xref> and suppose that this is the true underlying network. Here is a path from 1 to 5 as 1 − 2 − 3 − 4 − 5. For Gaussian variables the covariance is a function of the product of partial covariances <italic>γ</italic><sub>12</sub> <italic>γ</italic><sub>23</sub> <italic>γ</italic><sub>34</sub> <italic>γ</italic><sub>45</sub> [<xref ref-type="bibr" rid="pone.0129074.ref012">12</xref>, <xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]. Because of this the correlation between nodes 1 and 5 is nonzero. It also follows that partialling out (i.e., conditioning on) any or all of the nodes in the path is sufficient to obtain the correct interpretation that there is no direct connection between nodes 1 and 5. In general, there is no knowledge of which paths there are, and so it seems best to condition on all other nodes.</p>
+<fig id="pone.0129074.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Exemplary network with path from node 1 to 5, showing partial covariances <italic>γ</italic><sub><italic>ij</italic></sub>.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g002"/>
+</fig>
+<p>For networks with small (up to 50) numbers of regions, several inference methods have been proposed and compared in small-world-type networks, suggesting superior performance of methods that involve the estimation of partial correlations [<xref ref-type="bibr" rid="pone.0129074.ref014">14</xref>]. Pairwise correlation performed a little less well in typical scenario’s, which was attributed to the ability of partial correlation methods to distinguish direct connections [<xref ref-type="bibr" rid="pone.0129074.ref014">14</xref>]. In all scenario’s that were investigated in [<xref ref-type="bibr" rid="pone.0129074.ref014">14</xref>], the number of observations <italic>n</italic> (at least 50 observations) was equal to or larger than the number of regions <italic>p</italic> (at most 50 regions). Also for the case in which the number of observations <italic>n</italic> is larger than the number of regions <italic>p</italic> (i.e., <italic>p</italic> &lt; <italic>n</italic>), novel modeling and inference methods to obtain a network connectivity structure have been proposed in recent studies [<xref ref-type="bibr" rid="pone.0129074.ref015">15</xref>–<xref ref-type="bibr" rid="pone.0129074.ref020">20</xref>]. This case thus receives considerable attention in the literature. In contrast, the question of how the methods fare in the case where the number of regions is large (thousands of regions), yet the number of observations is smaller than the number of regions (i.e., <italic>n</italic> &lt; <italic>p</italic>) has not been systematically addressed so far in the context of brain networks. Nevertheless, pairwise correlation is commonly being used to infer large-scale fMRI networks from small sample sizes [<xref ref-type="bibr" rid="pone.0129074.ref002">2</xref>–<xref ref-type="bibr" rid="pone.0129074.ref004">4</xref>, <xref ref-type="bibr" rid="pone.0129074.ref008">8</xref>, <xref ref-type="bibr" rid="pone.0129074.ref009">9</xref>]. In this paper we address the need of a systematic comparison of the performance of methods to determine a large-scale functional brain network. We consider partial correlations as an alternative to pairwise correlation [<xref ref-type="bibr" rid="pone.0129074.ref021">21</xref>]. Computing partial correlations directly requires more observations than number of regions, which is not feasible for large-scale networks. Therefore, we consider three different estimators for partial correlations, the graphical lasso [<xref ref-type="bibr" rid="pone.0129074.ref022">22</xref>], ridge regression [<xref ref-type="bibr" rid="pone.0129074.ref023">23</xref>], and the shrinkage estimator [<xref ref-type="bibr" rid="pone.0129074.ref024">24</xref>, <xref ref-type="bibr" rid="pone.0129074.ref025">25</xref>]. Additional methods that were considered by [<xref ref-type="bibr" rid="pone.0129074.ref014">14</xref>] and developed for the <italic>p</italic> &lt; <italic>n</italic> case, like causal inference methods, are not included here, because they are not suitable if the number of nodes exceeds the number of observations.</p>
+<p>To investigate the accuracy of pairwise and partial correlation estimators on large-scale networks we created four different network topologies: a random network [<xref ref-type="bibr" rid="pone.0129074.ref026">26</xref>], a small-world network [<xref ref-type="bibr" rid="pone.0129074.ref007">7</xref>], a network with hubs [<xref ref-type="bibr" rid="pone.0129074.ref027">27</xref>], and a small-world network with hubs [<xref ref-type="bibr" rid="pone.0129074.ref028">28</xref>]. We hypothesize that using pairwise correlations results in a poor representation of the true network, i.e., metrics, like small-worldness, betweenness centrality, and other metrics will be inaccurate. Furthermore, we hypothesize that partial correlations will provide a reasonable representation of the true large-scale network, and consequently many network metrics will be accurate. Additionally, we compare networks based on pairwise and partial correlations from fMRI resting-state data of different sample sizes and spatial resolutions.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>In this paper, we analyzed simulated data and fMRI resting-state data (deposited at Data Archiving and Networked Services—DANS, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://persistent-identifier.nl/?identifier=urn:nbn:nl:ui:13-okb6-1d">http://persistent-identifier.nl/?identifier=urn:nbn:nl:ui:13-okb6-1d</ext-link>). We generated and analyzed all networks using R [<xref ref-type="bibr" rid="pone.0129074.ref029">29</xref>]. As explained in the following sections, we used partial and pairwise correlations in order to generate the data, and again in the subsequent inference of the network topologies. This might evoke the impression that we adapted the data generation process to one of the inference methods. However, the opposite is true. We generated the data based on network theory. In particular, the connections in a network can be described as a set of conditional independence relations. For Gaussian data, these independence relations are represented in the partial correlation matrix of a network, while the observed correlations between activity of pairs of nodes are captured in the correlation matrix of a network [<xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]. Our choice of the inference methods includes the commonly used method of pairwise correlations, and three other partial correlation methods, which are more suitable based on network theory.</p>
+<sec id="sec003">
+<title>Inference of Networks</title>
+<p>To infer a network structure, that is, to determine the connections in the network, we require an estimate of the values of the edges. Such an estimate can be obtained by computing pairwise correlations or partial correlations. Pairwise correlations can always be computed for Gaussian data. This is, however, not true for the partial correlations.</p>
+<p>If the number of observations is larger than the number of regions (nodes) in the required network (i.e., <italic>p</italic> &lt; <italic>n</italic>), then the sample covariance matrix can be used to compute the partial correlations [<xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]. Let <italic>Y</italic><sub><italic>i</italic></sub> denote the <italic>p</italic>-variate vector for all regions of volume (time point) <italic>i</italic> = 1,2,…,<italic>n</italic>, and let <inline-formula id="pone.0129074.e001"><alternatives><graphic id="pone.0129074.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e001"/><mml:math id="M1" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mi>Y</mml:mi> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula> denote the average over the time points. Then the sample covariance matrix <italic>S</italic>, from which the correlations and partial correlations are computed, equals [<xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]
+<disp-formula id="pone.0129074.e002"><alternatives><graphic id="pone.0129074.e002g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e002"/><mml:math id="M2" display="block" overflow="scroll"><mml:mrow><mml:mi>S</mml:mi> <mml:mo>=</mml:mo> <mml:mstyle scriptlevel="0" displaystyle="true"><mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>n</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac></mml:mstyle> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>n</mml:mi></mml:munderover> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>Y</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mover accent="true"><mml:mi>Y</mml:mi> <mml:mo>¯</mml:mo></mml:mover> <mml:mo>)</mml:mo></mml:mrow> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>Y</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mover accent="true"><mml:mi>Y</mml:mi> <mml:mo>¯</mml:mo></mml:mover> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>′</mml:mo></mml:msup></mml:mrow></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>The partial variances, covariances, and correlations can be obtained from the concentration matrix Γ, which is the inverse of <italic>S</italic>. The partial correlations are computed by multiplying the off-diagonal elements of Γ with −1 and dividing by the square root of the respective diagonal elements of Γ, that is, the partial correlation between nodes <italic>i</italic> and <italic>j</italic> equals
+<disp-formula id="pone.0129074.e003"><alternatives><graphic id="pone.0129074.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mrow><mml:mstyle scriptlevel="0" displaystyle="true"><mml:mfrac><mml:mrow><mml:mo>-</mml:mo> <mml:msub><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow> <mml:msqrt><mml:mrow><mml:msub><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>j</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:msqrt></mml:mfrac></mml:mstyle> <mml:mo>.</mml:mo></mml:mrow></mml:math></alternatives> <label>(2)</label></disp-formula>
+The step of inverting matrix <italic>S</italic> requires that the matrix <italic>S</italic> be positive definite, that is, that the rank of the space implied by <italic>S</italic> is the same as its dimension <italic>p</italic>, which holds if <italic>n</italic> &gt; <italic>p</italic> [<xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]. If, however, the number of time points <italic>n</italic> is smaller than the number of regions <italic>p</italic>, <italic>n</italic> &lt; <italic>p</italic>, then we cannot use <italic>S</italic> directly and we need to add information about the structure of Σ, the true covariance matrix representing the network. The methods to compute partial correlations when <italic>p</italic> &lt; <italic>n</italic> commonly impose information about the sparsity (low number of edges) in the network. We selected the following three different methods to do so.</p>
+<sec id="sec004">
+<title>Partial Correlation by Shrinkage Estimation</title>
+<p>The shrinkage estimator <inline-formula id="pone.0129074.e004"><alternatives><graphic id="pone.0129074.e004g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e004"/><mml:math id="M4" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover><mml:mo>Σ</mml:mo> <mml:mo accent="true">^</mml:mo></mml:mover> <mml:mi>S</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula> is obtained by a linear combination of the maximum likelihood (ML) estimate <italic>S</italic> of the covariance matrix and a specified target matrix <italic>T</italic>, as follows
+<disp-formula id="pone.0129074.e005"><alternatives><graphic id="pone.0129074.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mo>Σ</mml:mo> <mml:mo>^</mml:mo></mml:mover> <mml:mi>S</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>λ</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>S</mml:mi> <mml:mo>+</mml:mo> <mml:msub><mml:mi>λ</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mi>T</mml:mi></mml:mrow></mml:math></alternatives> <label>(3)</label></disp-formula> <italic>T</italic> here is a matrix with the variances in <italic>S</italic> on the diagonal and 0 on the off-diagonal. The parameter 0 ≤ <italic>λ</italic><sub><italic>s</italic></sub> ≤ 1 is estimated from the data. See Schäfer and Strimmer [<xref ref-type="bibr" rid="pone.0129074.ref024">24</xref>] for more details, also for the function <italic>pcor.shrink</italic> in R to compute the shrinkage estimate.</p>
+</sec>
+<sec id="sec005">
+<title>Partial Correlations by Moore-Penrose Inverse (Ridge Regression)</title>
+<p>A Moore-Penrose inverse of a covariance matrix <italic>S</italic> is defined by [<xref ref-type="bibr" rid="pone.0129074.ref030">30</xref>]
+<disp-formula id="pone.0129074.e006"><alternatives><graphic id="pone.0129074.e006g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e006"/><mml:math id="M6" display="block" overflow="scroll"><mml:mrow><mml:msup><mml:mi>S</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:munder><mml:mo movablelimits="true" form="prefix">lim</mml:mo> <mml:mrow><mml:mi>λ</mml:mi> <mml:mo>→</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:munder> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>S</mml:mi> <mml:mo>′</mml:mo></mml:msup> <mml:mi>S</mml:mi> <mml:mo>+</mml:mo> <mml:msub><mml:mi>λ</mml:mi> <mml:mi>r</mml:mi></mml:msub> <mml:mi>I</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:msup><mml:mi>S</mml:mi> <mml:mo>′</mml:mo></mml:msup></mml:mrow></mml:math></alternatives> <label>(4)</label></disp-formula>
+where <italic>I</italic> is the identity matrix, and <italic>λ</italic><sub><italic>r</italic></sub> ≥ 0 is the regularization parameter. We used the function <italic>ginv</italic> in R to calculate the Moore-Penrose inverse. The equivalent ridge regression version which also includes adjusted degrees of freedom can be found in Hoerl and Kennard [<xref ref-type="bibr" rid="pone.0129074.ref023">23</xref>].</p>
+</sec>
+<sec id="sec006">
+<title>Partial Correlations by Graphical Lasso Inverse</title>
+<p>The graphical lasso estimate of the inverse covariance matrix Σ<sup>−1</sup> is defined as the maximum of the penalized log-likelihood function
+<disp-formula id="pone.0129074.e007"><alternatives><graphic id="pone.0129074.e007g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e007"/><mml:math id="M7" display="block" overflow="scroll"><mml:mrow><mml:mrow><mml:mo form="prefix">log</mml:mo> <mml:mo>|</mml:mo></mml:mrow> <mml:msup><mml:mo>Σ</mml:mo> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mrow><mml:mo>|</mml:mo> <mml:mo>-</mml:mo> <mml:mtext>tr</mml:mtext></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>S</mml:mi> <mml:msup><mml:mo>Σ</mml:mo> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msub><mml:mi>λ</mml:mi> <mml:mi>l</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo> <mml:mo>|</mml:mo></mml:mrow> <mml:msup><mml:mo>Σ</mml:mo> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:msub><mml:mrow><mml:mo>|</mml:mo> <mml:mo>|</mml:mo></mml:mrow> <mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:math></alternatives> <label>(5)</label></disp-formula>
+where <italic>S</italic> is the sample covariance matrix, ∣<italic>A</italic>∣ is the determinant of matrix <italic>A</italic>, tr denotes the trace of a matrix, and ∣∣<italic>A</italic>∣∣<sub>1</sub> = ∑<sub><italic>ij</italic></sub>∣<italic>a</italic><sub><italic>ij</italic></sub>∣ is the sum of the absolute values of the matrix <italic>A</italic> [<xref ref-type="bibr" rid="pone.0129074.ref022">22</xref>]. Maximization is performed among symmetric, positive definite matrices. We used the R-package <italic>glasso</italic> [<xref ref-type="bibr" rid="pone.0129074.ref031">31</xref>] to estimate the partial correlations. For each data-set, the parameter <italic>λ</italic><sub><italic>l</italic></sub> ≥ 0 was determined separately in such a way that the method resulted in networks with a predefined set of proportion of edges, as described in the next section.</p>
+</sec>
+</sec>
+<sec id="sec007">
+<title>Selection of Connections</title>
+<p>The four methods above result in full networks, in which each possible connection has a certain estimated weight (strength). From these full networks, we selected the connections with the largest absolute weights, and other connections were removed (i.e., their weight was set to 0). From each of the full networks, we arrived at three pruned networks, differing in the number of selected connections: (a) a network with the same proportion of edges as the generating network (e.g., if the generating network consisted of 10000 edges, we selected the 10000 connections with the strongest absolute estimated weights), (b) a network with 20% too few connections (e.g., if the generating network consisted of 10000 edges, we selected the 8000 connections with the strongest absolute estimated weights), and (c) a network with 20% too many connections (e.g., if the generating network consisted of 10000 edges, we selected the 12000 connections with the strongest absolute estimated weights). This procedure ensures that comparing connectivity for each of the four methods is based only on differences in the estimators and is not confounded by selection procedures.</p>
+</sec>
+<sec id="sec008">
+<title>Network Characteristics</title>
+<p>R and the contributed packages <italic>igraph</italic> [<xref ref-type="bibr" rid="pone.0129074.ref032">32</xref>] and <italic>qgraph</italic> [<xref ref-type="bibr" rid="pone.0129074.ref033">33</xref>] were used to calculate the following network characteristics of interest and to graphically display networks. Average path length, that is, the average number of steps of the shortest paths between each node pair, was calculated with function <italic>average.path.length</italic> in <italic>igraph</italic>. Average degree is simply the average number of connections of a node in the network.</p>
+<p>The global clustering coefficient [<xref ref-type="bibr" rid="pone.0129074.ref034">34</xref>] we employed, considered the degree, to which the nodes’ neighbors (i.e., the nodes to which a node is directly connected) are also interconnected. It reflects the proportion of triangles in the network, ranging from 0 (i.e., if the network does not contain triangles) to 1 (i.e., if each two neighbors of all nodes are directly connected as well). The clustering coefficient was calculated with function <italic>transitivity(, type = “global”)</italic> in <italic>igraph</italic>. Local transitivity, reflecting the proportion of triangles around individual nodes, was determined for ROIs in the resting-state fMRI data using function <italic>transitivity(, type = “local”)</italic> in <italic>igraph</italic>.</p>
+<p>The small-worldness index, as proposed by Humphries and Gurney [<xref ref-type="bibr" rid="pone.0129074.ref035">35</xref>], is based on a trade-off of high clustering and short average path lengths, each in relation to a random network of the same size. It is calculated as the ratio of the clustering coefficient of the network divided by the expected clustering coefficient of a random network, and the average path length of the network divided by the expected average path length of a random network. By definition, random networks have an index close to 1, and the higher the index, the more pronounced the small-worldness structure of the network.</p>
+<p>The networks from which we generated the data all consisted of a single component, that is, every node is either directly or indirectly connected to any other node in the network. This is not necessarily the case in the estimated networks, where different sets of nodes may turn out to be unconnected to another. The number and size of the components (i.e., connected sets of nodes) were determined using function <italic>clusters</italic> in <italic>igraph</italic>.</p>
+<p>Finally, average betweenness centrality was calculated as the average of the number of shortest paths on which a node lies, which was obtained using function <italic>betweenness</italic> in <italic>igraph</italic>.</p>
+</sec>
+<sec id="sec009">
+<title>Data Simulation</title>
+<p>In order to compare the inference methods in different relevant scenario’s, we generated four network topologies of 2000 nodes each that differed in the degree distribution and small-worldness [<xref ref-type="bibr" rid="pone.0129074.ref034">34</xref>]. Black lines in <xref ref-type="fig" rid="pone.0129074.g003">Fig 3</xref> show the degree distributions of these network topologies. These four different network topologies featured a small-world structure (SW) or not (<inline-formula id="pone.0129074.e008"><alternatives><graphic id="pone.0129074.e008g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e008"/><mml:math id="M8" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>, random network), and contained hubs (H) or not (<inline-formula id="pone.0129074.e009"><alternatives><graphic id="pone.0129074.e009g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e009"/><mml:math id="M9" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>). In order to match empirically found brain network densities (i.e., proportion of edges), these networks were designed to be sparse (around 3% of possible edges; as found by [<xref ref-type="bibr" rid="pone.0129074.ref036">36</xref>]) or very sparse (around 0.3% of possible edges; similar to [<xref ref-type="bibr" rid="pone.0129074.ref037">37</xref>]). Nevertheless, due to the huge number of possible edges in a network with <italic>p</italic> = 2000 nodes (<italic>p</italic> × (<italic>p</italic> − 1)/2 = 1999000), this corresponded to approximately 54000 and 6800 edges for the sparse and very sparse networks, respectively.</p>
+<fig id="pone.0129074.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Recovery of degree distributions based on 500 observations.</title>
+<p>Densities of the true (black) and recovered node degrees of shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and of pairwise correlations (red). NB: x-axis cut off.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g003"/>
+</fig>
+<p>As explained in detail below, an autoregressive time-series of length 500, 1000, 3000, and 10000 was produced for each node in each network. In covariance estimation, a ratio of observations <italic>n</italic> to the number of variables <italic>p</italic> of about 15 is typically desirable, but here we have a much smaller ratio, indicating the <italic>n</italic> ≪ <italic>p</italic> scenario. With <italic>p</italic> of 2000 nodes, and <italic>n</italic> of 500, 1000, 3000, or 10000 observations, the <italic>n</italic>/<italic>p</italic> ratio would range between.25 to 5. However, due to the autocorrelation of the time-series, these observations were not independent of each other. This implies that the effective number of observations was even smaller. Correcting for the autocorrelation in the time-series <italic>ρ</italic>, we arrive at the effective numbers of observations <inline-formula id="pone.0129074.e010"><alternatives><graphic id="pone.0129074.e010g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e010"/><mml:math id="M10" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mi>n</mml:mi> <mml:mo>′</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:mi>n</mml:mi> <mml:mo>×</mml:mo> <mml:mfrac><mml:mrow><mml:mn>1</mml:mn> <mml:mo>−</mml:mo> <mml:mi>ρ</mml:mi></mml:mrow> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mi>ρ</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula> of 166.7, 333.3, 1000, and 3333.3 [<xref ref-type="bibr" rid="pone.0129074.ref038">38</xref>]. The effective <italic>n</italic>′/<italic>p</italic> ratio is thus lower, ranging from 0.083 to 1.667.</p>
+<p>Data simulation consisted of three steps: First, we generated network topologies that differed according to degree distribution and small-worldness. Secondly, we sampled weighted networks for each of these network topologies. Thirdly, we sampled time-series data for each of the weighted networks. In the next subsections, these steps are described in detail.</p>
+<p>Step 1: Generation of Network Topologies</p>
+<p>Two small-world networks were built using an algorithm from social networks [<xref ref-type="bibr" rid="pone.0129074.ref028">28</xref>], which, in each iteration adds certain connections, and with probability <italic>p</italic><sub><italic>d</italic></sub> removes certain connections, and which, depending on the value of <italic>p</italic><sub><italic>d</italic></sub>, will lead to small-world networks with or without hubs. The exact algorithm is described in detail by Davidsen et al. [<xref ref-type="bibr" rid="pone.0129074.ref028">28</xref>]. We employed the algorithm with 2000 nodes, using 1250000 iterations to build each network. To obtain a small-world network with hubs SW-H and one without hubs <inline-formula id="pone.0129074.e011"><alternatives><graphic id="pone.0129074.e011g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e011"/><mml:math id="M11" display="inline" overflow="scroll"><mml:mrow><mml:mtext>SW</mml:mtext><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>, parameter <italic>p</italic><sub><italic>d</italic></sub> of the algorithm was set to.008 and.1, respectively. These parameter values were chosen, because they produced networks with the desired properties. The next network, containing hubs without small-world structure <inline-formula id="pone.0129074.e012"><alternatives><graphic id="pone.0129074.e012g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e012"/><mml:math id="M12" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>, was generated using a linear preferential attachment algorithm discussed by [<xref ref-type="bibr" rid="pone.0129074.ref027">27</xref>], as implemented in the function <italic>barabasi.game</italic> in Rpackage <italic>igraph</italic> [<xref ref-type="bibr" rid="pone.0129074.ref032">32</xref>]. As this algorithm could result in networks with more than one edge between two nodes, and with an edge from a node to itself, such improper connections were then removed with the <italic>simplify</italic> function in <italic>igraph</italic> to arrive at a viable network. The number of nodes was set to 2000, and the number of edges to add in each time step, <italic>m</italic>, was set to 29. This value of <italic>m</italic> was chosen, because it resulted in a network comparable to SW-H with respect to density. A random network without small-world structure and without hubs <inline-formula id="pone.0129074.e013"><alternatives><graphic id="pone.0129074.e013g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e013"/><mml:math id="M13" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula> was generated with 2000 nodes and density .003 by random sampling of edges, in which each possible edge had the same probability of .003 of being present. For post hoc comparison, a complementary random network with density.03 and 2000 nodes was generated analogously <inline-formula id="pone.0129074.e014"><alternatives><graphic id="pone.0129074.e014g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e014"/><mml:math id="M14" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>. To ensure connectedness of all networks, a few isolated nodes were removed. To arrive at representative network topologies, we generated 100 networks for each network type, and selected the network that had the smallest or next-to-smallest normalized Euclidian distance from the respective group mean of transitivity, average path length, average degree, variance of degrees, average betweenness centrality, and small-worldness. The resulting network sizes and other network characteristics of interest are shown in <xref ref-type="table" rid="pone.0129074.t001">Table 1</xref>. Each generated network topology was represented as an adjacency matrix, in which the presence of a connection between a row-node and a column-node is indicated by entry 1, and the absence of this connection is indicated by entry 0. From these adjacency matrices, we generated weighted networks as follows.</p>
+<table-wrap id="pone.0129074.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Characteristics of simulated networks.</title>
+</caption>
+<alternatives>
+<graphic id="pone.0129074.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.t001"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="right" rowspan="1" colspan="1"/>
+<th align="right" rowspan="1" colspan="1">
+<inline-formula id="pone.0129074.e015"><alternatives><graphic id="pone.0129074.e015g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e015"/><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="bold">SW</mml:mtext></mml:mrow><mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="bold">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula></th>
+<th align="right" rowspan="1" colspan="1"><inline-formula id="pone.0129074.e016"><alternatives><graphic id="pone.0129074.e016g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e016"/><mml:math id="M16" display="inline" overflow="scroll"><mml:mrow><mml:mtext>SW</mml:mtext><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="bold">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula></th>
+<th align="right" rowspan="1" colspan="1">SW-H</th>
+<th align="right" rowspan="1" colspan="1">
+<inline-formula id="pone.0129074.e017"><alternatives><graphic id="pone.0129074.e017g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e017"/><mml:math id="M17" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="bold">SW</mml:mtext></mml:mrow><mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula></th>
+<th align="right" rowspan="1" colspan="1">
+<inline-formula id="pone.0129074.e018"><alternatives><graphic id="pone.0129074.e018g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e018"/><mml:math id="M18" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="bold">SW</mml:mtext></mml:mrow><mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="bold">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right" rowspan="1" colspan="1">Number of nodes <italic>p</italic></td>
+<td align="right" rowspan="1" colspan="1">1998</td>
+<td align="right" rowspan="1" colspan="1">1982</td>
+<td align="right" rowspan="1" colspan="1">2000</td>
+<td align="right" rowspan="1" colspan="1">2000</td>
+<td align="right" rowspan="1" colspan="1">2000</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Number of edges</td>
+<td align="right" rowspan="1" colspan="1">6843</td>
+<td align="right" rowspan="1" colspan="1">6744</td>
+<td align="right" rowspan="1" colspan="1">53748</td>
+<td align="right" rowspan="1" colspan="1">54720</td>
+<td align="right" rowspan="1" colspan="1">53581</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Prop. of edges</td>
+<td align="right" rowspan="1" colspan="1">0.003</td>
+<td align="right" rowspan="1" colspan="1">0.003</td>
+<td align="right" rowspan="1" colspan="1">0.03</td>
+<td align="right" rowspan="1" colspan="1">0.03</td>
+<td align="right" rowspan="1" colspan="1">0.03</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Avg. path length</td>
+<td align="right" rowspan="1" colspan="1">4.17</td>
+<td align="right" rowspan="1" colspan="1">4.16</td>
+<td align="right" rowspan="1" colspan="1">2.48</td>
+<td align="right" rowspan="1" colspan="1">2.11</td>
+<td align="right" rowspan="1" colspan="1">2.21</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Clustering coefficient</td>
+<td align="right" rowspan="1" colspan="1">0.00</td>
+<td align="right" rowspan="1" colspan="1">0.16</td>
+<td align="right" rowspan="1" colspan="1">0.29</td>
+<td align="right" rowspan="1" colspan="1">0.07</td>
+<td align="right" rowspan="1" colspan="1">0.03</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Small-worldness</td>
+<td align="right" rowspan="1" colspan="1">1.02</td>
+<td align="right" rowspan="1" colspan="1">45.86</td>
+<td align="right" rowspan="1" colspan="1">10.02</td>
+<td align="right" rowspan="1" colspan="1">2.79</td>
+<td align="right" rowspan="1" colspan="1">1.03</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Avg. degree</td>
+<td align="right" rowspan="1" colspan="1">6.85</td>
+<td align="right" rowspan="1" colspan="1">6.80</td>
+<td align="right" rowspan="1" colspan="1">53.75</td>
+<td align="right" rowspan="1" colspan="1">54.72</td>
+<td align="right" rowspan="1" colspan="1">53.58</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Min. degree</td>
+<td align="right" rowspan="1" colspan="1">1</td>
+<td align="right" rowspan="1" colspan="1">1</td>
+<td align="right" rowspan="1" colspan="1">1</td>
+<td align="right" rowspan="1" colspan="1">26</td>
+<td align="right" rowspan="1" colspan="1">31</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Max. degree</td>
+<td align="right" rowspan="1" colspan="1">16</td>
+<td align="right" rowspan="1" colspan="1">72</td>
+<td align="right" rowspan="1" colspan="1">573</td>
+<td align="right" rowspan="1" colspan="1">886</td>
+<td align="right" rowspan="1" colspan="1">78</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Avg. betweenness</td>
+<td align="right" rowspan="1" colspan="1">3161</td>
+<td align="right" rowspan="1" colspan="1">3135</td>
+<td align="right" rowspan="1" colspan="1">1475</td>
+<td align="right" rowspan="1" colspan="1">1111</td>
+<td align="right" rowspan="1" colspan="1">1204</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">Avg. strength</td>
+<td align="right" rowspan="1" colspan="1">2.06</td>
+<td align="right" rowspan="1" colspan="1">1.60</td>
+<td align="right" rowspan="1" colspan="1">2.59</td>
+<td align="right" rowspan="1" colspan="1">2.58</td>
+<td align="right" rowspan="1" colspan="1">4.28</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Step 2: Generation of Weighted Networks</p>
+<p>The weighted networks we use can be represented as a partial correlation matrix, where each zero represents conditional independence [<xref ref-type="bibr" rid="pone.0129074.ref013">13</xref>]. We constructed a partial correlation matrix <italic>R</italic> by drawing values from the uniform distribution <italic>U</italic>([−1,−.01]∪[.01,1]), one for each edge, to arrive at the (possibly singular) partial correlation matrix <italic>R</italic><sub><italic>s</italic></sub>, which has ones on the diagonal, and sampled values on those off-diagonal positions where the adjacency matrix equals 1. We then regularized <italic>R</italic><sub><italic>s</italic></sub> to have the matrix represent a distribution with dimension 2000 (i.e., the resulting matrix is positive definite), and reset those off-diagonal elements, where the respective adjacency matrix equals 0, to 0 to ensure that weights of absent edges are exactly zero. If this step is ignored, the resulting matrix <italic>R</italic> is not a proper representation of the true network. The resulting matrix is the partial correlation matrix <italic>R</italic>. The partial correlation matrix contains the weights of the connections on the off-diagonal. <xref ref-type="table" rid="pone.0129074.t001">Table 1</xref> shows the average strength (weighted degree) [<xref ref-type="bibr" rid="pone.0129074.ref039">39</xref>] of the nodes in the weighted networks. For all four partial correlation matrices we calculated a correlation matrix <italic>C</italic> by multiplying the off-diagonal elements of <italic>R</italic> with −1, and then calculating the pseudo-inverse using the function <italic>pcor2cor</italic> of the R-package <italic>corpcor</italic> [<xref ref-type="bibr" rid="pone.0129074.ref040">40</xref>]. We then multiplied the correlation matrix <italic>C</italic> by a uniform variance of 2, to arrive at a positive definite covariance matrix Σ for each of the four different networks.</p>
+<p>Step 3: Generation of Time-Series Data</p>
+<p>From the covariance matrices Σ, we generated time-series data with an AR(1) temporal structure, which is an appropriate lag for preprocessed fMRI data [<xref ref-type="bibr" rid="pone.0129074.ref041">41</xref>] [<xref ref-type="bibr" rid="pone.0129074.ref042">42</xref>, <xref ref-type="bibr" rid="pone.0129074.ref043">43</xref>]. The time-series data of length 10000 were constructed by first sampling 10000 random values for each node from a standard normal distribution with mean zero and variance 1, collected in <italic>Z</italic> (<italic>N</italic> × 10000-dim. matrix). We then pre-multiplied <italic>Z</italic> with the transpose of the Cholesky decomposition of Σ, and post-multiplied the resulting matrix with the Cholesky decomposition of the Toeplitz matrix of an AR(1) process with autoregressive parameter <italic>ρ</italic> = .5. From each of the resulting full data matrices, we built 4 (nested) datasets: the first 500 timepoints, the first 1000 timepoints, the first 3000 timepoints and all 10000 timepoints.</p>
+</sec>
+<sec id="sec010">
+<title>Magnetic Resonance Imaging Scanning Procedure</title>
+<p>The fMRI resting-state data were acquired in a single scanning session on a 3T scanner (Philips). For the resting-state protocol participants were instructed to stay alert and focus on a white fixation cross; presented on a black-projection screen that was viewed via a mirror system attached to the magnetic resonance imaging (MRI) head coil. In total, 240 T2*-weighted echoplanar images (EPIs) (2202 mm FOV; 962 in plane resolution; 3.3 mm slice thickness; 0 mm slice spacing; TR 2000 ms; TE 28 ms; FA 90o, ascending orientation) were scanned. For registration purposes, a three-dimensional T1 scan was acquired before functional runs of an independent fMRI study (T1; TFE 218x226 mm FOV; 2562 in plane resolution; 182 slices, 1.2 mm slice thickness, TR 9.56 ms, TE 4.6 ms, FA 8, coronal orientation).</p>
+</sec>
+<sec id="sec011">
+<title>Preprocessing of Resting-State fMRI Data</title>
+<p>Preprocessing of the resting-state fMRI data was carried out using FEAT (FMRI Expert Analysis Tool) Version 5.98, part of FSL (FMRIB’s Software Library, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.fmrib.ox.ac.uk/fsl">www.fmrib.ox.ac.uk/fsl</ext-link>). The following pre-processing steps were applied; motion correction using MCFLIRT [<xref ref-type="bibr" rid="pone.0129074.ref044">44</xref>]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [<xref ref-type="bibr" rid="pone.0129074.ref045">45</xref>]; grand-mean intensity normalization of the entire 4D dataset by a single multiplicative factor; highpass temporal filtering (Gaussian-weighted least-squares straight line fitting, with sigma = 50.0s).</p>
+</sec>
+<sec id="sec012">
+<title>Parcellations of Resting-State fMRI Data</title>
+<p>The parcellation procedure relied on a recently published structural segmentation procedure using the Desikan labeled mesh in freesurfer [<xref ref-type="bibr" rid="pone.0129074.ref046">46</xref>], [<xref ref-type="bibr" rid="pone.0129074.ref047">47</xref>]. More specifically, the Lausance 2008 parcellation within the Connectome viewer toolkit (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.cmtk.org">http://www.cmtk.org</ext-link>) was used to create the 5 embedded hierarchical cortical parcellations within Freesurfer [<xref ref-type="bibr" rid="pone.0129074.ref036">36</xref>, <xref ref-type="bibr" rid="pone.0129074.ref046">46</xref>, <xref ref-type="bibr" rid="pone.0129074.ref048">48</xref>, <xref ref-type="bibr" rid="pone.0129074.ref049">49</xref>]. This means that for each subject, the T1-weighted image is first segmented into 68 atlas based cortical parcels, using the freesurfer Desikan labled mesh from an average brain [<xref ref-type="bibr" rid="pone.0129074.ref047">47</xref>]. With the use of the Lausanne 2008 template (available in the connectome viewer toolkit), each parcel is then subdivided into smaller ROIs of approximately 1.5 cm<sup>2</sup> to obtain the high resolution parcellations of 1000 ROIs. The 1000 cortical ROIs are then grouped into bigger ROIs to arrive at 5 separate parcellations with respectively 68, 114, 219, 448, and 1000 ROIs [<xref ref-type="bibr" rid="pone.0129074.ref046">46</xref>].</p>
+</sec>
+<sec id="sec013">
+<title>Extraction of Time-Series of Resting-State fMRI Data</title>
+<p>For each individual, all segmentations were transformed and registered onto the fMRI resting-state images. To obtain, the most refined transformation matrix, EPI images were first registered onto the individual T1 scan. The inverse of this matrix, per subject, was then used to register all T1 mapped segmentations into epi space. Consequently, the averaged times series across voxels was extracted per ROI, for each segmentation. Prior to the computations of networks, for each segmentation, the mean cerebral fluid and white matter signals were regressed from each time series. Note that, all time series were extracted from ROIs registered to individual EPI space.</p>
+</sec>
+<sec id="sec014">
+<title>Participants</title>
+<p>Data was collected from five healthy adults (mean age 24.8 years, range 21–32 years; 4 females). In accordance with the declaration of Helsinki, all participants provided written consent before the scanning session. The ethics committee of the Department of Developmental Psychology of the University of Amsterdam approved the experiment (approval number 2010-DP-1131) and all procedures complied with relevant laws and institutional guidelines. All participants were right handed and had normal or corrected-to-normal vision. A small part of the resting state fMRI data have been used for illustrative purposes in a different paper on model selection [<xref ref-type="bibr" rid="pone.0129074.ref050">50</xref>].</p>
+</sec>
+</sec>
+<sec id="sec015" sec-type="results">
+<title>Results</title>
+<p>To give a complete picture of how the estimated networks differ by the four methods, we provide a combination of several network characteristics, and false and true positive rates (i.e., the probability of inferring an edge where there is none and the probability of recovering an existing edge, respectively). We first present the results of the following four networks: small-world structure with hubs (SW-H), small-world structure without hubs (<inline-formula id="pone.0129074.e019"><alternatives><graphic id="pone.0129074.e019g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e019"/><mml:math id="M19" display="inline" overflow="scroll"><mml:mrow><mml:mtext>SW</mml:mtext><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>), hub network without small-world structure (<inline-formula id="pone.0129074.e020"><alternatives><graphic id="pone.0129074.e020g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e020"/><mml:math id="M20" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>, and the sparser random network without small-world structure and without hubs (<inline-formula id="pone.0129074.e021"><alternatives><graphic id="pone.0129074.e021g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e021"/><mml:math id="M21" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>). The results of the complementary random network (<inline-formula id="pone.0129074.e022"><alternatives><graphic id="pone.0129074.e022g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e022"/><mml:math id="M22" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>) are presented in a post hoc comparison, as the results of the two random networks were comparable.</p>
+<p>As mentioned above, we evaluate performance of the methods in the scenarios with the correct number of edges and nodes [<xref ref-type="bibr" rid="pone.0129074.ref051">51</xref>]. Also, we investigate performance when up to 20% below or above the true number of edges are selected. Fixing the number of connections to a certain number (fixed density) is directly related to choosing a certain cutoff threshold in estimated values or significance level [<xref ref-type="bibr" rid="pone.0129074.ref008">8</xref>]. This ensures that comparing connectivity for each of the four methods is based only on how a connection is made. That is, if a connection is judged to be present according to the pairwise correlation method, but absent according to the partial correlation method, this difference is exclusively due to the difference in estimators.</p>
+<sec id="sec016">
+<title>Small-Worldness and Related Network Characteristics</title>
+<p>As mentioned above, small-world networks are characterized by short average pathlengths and high clustering. This implies a high connectivity in each neighborhood of nodes [<xref ref-type="bibr" rid="pone.0129074.ref007">7</xref>, <xref ref-type="bibr" rid="pone.0129074.ref035">35</xref>, <xref ref-type="bibr" rid="pone.0129074.ref051">51</xref>]. Formally, the small-worldness index can be defined by the ratio of the clustering coefficient and the average pathlength relative to a random network of the same dimensions [<xref ref-type="bibr" rid="pone.0129074.ref035">35</xref>]. The small-worldness index of a network depends heavily on the number of triangles, since the clustering coefficient is the percentage of triangles out of the number of triplets (three nodes with two edges) [<xref ref-type="bibr" rid="pone.0129074.ref034">34</xref>, <xref ref-type="bibr" rid="pone.0129074.ref035">35</xref>]. It is known that triangles are often erroneously obtained using pairwise correlations [<xref ref-type="bibr" rid="pone.0129074.ref011">11</xref>]. In the simulations, this problem can be observed in each of the four network topologies (see <xref ref-type="fig" rid="pone.0129074.g004">Fig 4</xref>). When using pairwise correlations to determine the connections in the network (red curve), the small-worldness index is much higher than the true value for each of the networks (dashed line), whether they are small-worlds or not. It even appears that, for pairwise correlations, the index increases as the numbers of observations increases. The shrinkage (blue curve) and lasso (green curve) estimates appear to be the most accurate in general. Thus, as expected, due to overestimation of the prevalence of triangles, the pairwise correlation method clearly inflates the clustering coefficient (<xref ref-type="fig" rid="pone.0129074.g005">Fig 5</xref>). When considering only pairs of regions, the number of triangles will be high when the correlations in the indirect connection are high [<xref ref-type="bibr" rid="pone.0129074.ref052">52</xref>]. <xref ref-type="fig" rid="pone.0129074.g004">Fig 4</xref> also shows that obtaining too many connections (20%) results in lower estimates of small-worldness, but this is mainly due to the ensuing underestimation of the average pathlength (<xref ref-type="fig" rid="pone.0129074.g005">Fig 5</xref>), since the clustering coefficient hardly changes (<xref ref-type="fig" rid="pone.0129074.g005">Fig 5</xref>).</p>
+<fig id="pone.0129074.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>The small-worldness index for the four networks and the four estimation methods pairwise correlations (red), lasso (green), ridge (orange), and shrinkage (blue), compared to the true value −− (black).</title>
+<p>The thickness of the line represents the number of selected edges. Pairwise correlation networks always overestimate the small-worldness.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g004"/>
+</fig>
+<fig id="pone.0129074.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Clustering coefficient (upper) and average pathlength (lower) for the four networks and estimation methods.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g005"/>
+</fig>
+</sec>
+<sec id="sec017">
+<title>Fragmentation and Connectedness</title>
+<p>In the true networks each pair of nodes is directly or indirectly connected, which implies that there are no isolated (groups of) nodes. However, a network obtained by using pairwise correlations is fragmented into many smaller ‘islands’, that is, isolated components, up to as many as 1000 in the network with hubs (<xref ref-type="fig" rid="pone.0129074.g006">Fig 6</xref>). Of course this is accompanied by components of smaller size. The size of the largest component is smaller up to a factor of 2 than for a component in the partial correlation network (<xref ref-type="fig" rid="pone.0129074.g006">Fig 6</xref>). Partial correlation methods, in particular the ridge regression and shrinkage methods, result in less fragmented and actually connected networks.</p>
+<fig id="pone.0129074.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>The number of components (upper) and the size of the largest component (lower) obtained for the four networks and estimation methods.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g006"/>
+</fig>
+</sec>
+<sec id="sec018">
+<title>Betweenness Centrality</title>
+<p>The average betweenness centrality of the estimated networks, that is the average of the number of shortest paths on which each node lies, is also affected by the use of pairwise correlations. In particular, in those networks, in which using pairwise correlations resulted in strong fragmentation of the network (<inline-formula id="pone.0129074.e023"><alternatives><graphic id="pone.0129074.e023g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e023"/><mml:math id="M23" display="inline" overflow="scroll"><mml:mrow><mml:mtext>SW</mml:mtext><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>, SW-H, <inline-formula id="pone.0129074.e024"><alternatives><graphic id="pone.0129074.e024g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e024"/><mml:math id="M24" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>), the average betweenness centrality is substantially underestimated, as the total number of shortest paths is reduced in the pairwise correlation networks (<xref ref-type="fig" rid="pone.0129074.g007">Fig 7</xref>).</p>
+<fig id="pone.0129074.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>The mean betweenness centrality of the four networks and estimation methods.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g007"/>
+</fig>
+</sec>
+<sec id="sec019">
+<title>Degree Distribution</title>
+<p>As mentioned above, the degree of a node refers to the number of connections it has with other nodes. The degree distribution of a network is important, as it has been connected with properties like preferential attachment (“the rich get richer”; [<xref ref-type="bibr" rid="pone.0129074.ref027">27</xref>]). We investigated whether estimates of the networks in the simulation scenarios provided a good representation of the degree distribution. The true and recovered degree distributions of the four networks are shown in <xref ref-type="fig" rid="pone.0129074.g003">Fig 3</xref>. A network obtained with pairwise correlations tends to have too many nodes with low degree, as the mode is too low, whereas most networks obtained with partial correlations are closer to the true distribution (see <xref ref-type="fig" rid="pone.0129074.g003">Fig 3</xref>).</p>
+<p>Correctly reproducing the underlying distribution of degrees does not necessarily imply that the nodes with low degrees indeed have low degrees and the nodes with high degrees indeed have high degrees, that is, that the degrees of the individual nodes are reproduced faithfully. Therefore, we compared the recovered degrees of the nodes to their true degrees. This comparison showed that pairwise correlation networks have a tendency to contain several nodes with much higher degree than the true network (<xref ref-type="fig" rid="pone.0129074.g008">Fig 8</xref>). In contrast, the partial correlation networks tend to underestimate the true degrees, but in general are closer to the degree distribution than the pairwise correlation network. Furthermore, the misfit between recovered and true degrees decreases for the partial correlation networks with longer time-series, but not so for the pairwise correlation networks (<xref ref-type="fig" rid="pone.0129074.g009">Fig 9</xref>). Weighted degrees (strengths) of the network nodes were in all conditions better estimated by partial correlation methods than by pairwise correlation (<xref ref-type="fig" rid="pone.0129074.g009">Fig 9</xref>).</p>
+<fig id="pone.0129074.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Recovery of node degrees based on 10000 observations.</title>
+<p>Scatter plots of true (x-axis) vs recovered (y-axis) node degrees of shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and of pairwise correlations (red).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g008"/>
+</fig>
+<fig id="pone.0129074.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Overview of absolute differences between true and recovered network characteristics of shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and of pairwise correlations (red), in the condition where the correct number of edges is selected.</title>
+<p>For node characteristics (i.e., degree, strength, and betweenness), sums of absolute differences of linearly transformed variables <italic>x</italic>* are shown (<inline-formula id="pone.0129074.e025"><alternatives><graphic id="pone.0129074.e025g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e025"/><mml:math id="M25" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mi>x</mml:mi> <mml:mo>*</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>−</mml:mo> <mml:mi>M</mml:mi> <mml:mi>i</mml:mi> <mml:mi>n</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>t</mml:mi> <mml:mi>r</mml:mi> <mml:mi>u</mml:mi> <mml:mi>e</mml:mi> <mml:mi>v</mml:mi> <mml:mi>a</mml:mi> <mml:mi>r</mml:mi> <mml:mi>i</mml:mi> <mml:mi>a</mml:mi> <mml:mi>b</mml:mi> <mml:mi>l</mml:mi> <mml:mi>e</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">)</mml:mo></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>M</mml:mi> <mml:mi>a</mml:mi> <mml:mi>x</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>t</mml:mi> <mml:mi>r</mml:mi> <mml:mi>u</mml:mi> <mml:mi>e</mml:mi> <mml:mi>v</mml:mi> <mml:mi>a</mml:mi> <mml:mi>r</mml:mi> <mml:mi>i</mml:mi> <mml:mi>a</mml:mi> <mml:mi>b</mml:mi> <mml:mi>l</mml:mi> <mml:mi>e</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>−</mml:mo> <mml:mi>M</mml:mi> <mml:mi>i</mml:mi> <mml:mi>n</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>t</mml:mi> <mml:mi>r</mml:mi> <mml:mi>u</mml:mi> <mml:mi>e</mml:mi> <mml:mi>v</mml:mi> <mml:mi>a</mml:mi> <mml:mi>r</mml:mi> <mml:mi>i</mml:mi> <mml:mi>a</mml:mi> <mml:mi>b</mml:mi> <mml:mi>l</mml:mi> <mml:mi>e</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>; i.e., 0 was mapped on the minimum of the <italic>true</italic> variable, and 1 was mapped on the maximum of the <italic>true</italic> value). SWI = Small-worldness index, CC = Clustering coefficient, APL = Average path length, #Comp = Number of components, n = Number of observations. NB: x-axis on logarithmic scale; if absolute difference is zero, the method’s symbol is not shown.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g009"/>
+</fig>
+</sec>
+<sec id="sec020">
+<title>Summary of Network Characteristics</title>
+<p>The previous sections addressed in detail the method’s biases, including over- or underestimation, in the recovery of network characteristics at different edge selection criteria. Summarizing, <xref ref-type="fig" rid="pone.0129074.g009">Fig 9</xref> shows an overview of the absolute differences between true and recovered network characteristics of the four networks. Overall, partial correlation methods tend to be closer to the true network characteristics, that is, the recovered network is more representative of the true network with respect to the network characteristics than the network recovered by pairwise correlations. Furthermore, partial correlation methods in most cases improve with increasing time-series length, while this is not the case for pairwise correlations. Naturally, even if a recovered network has similar network characteristics as the true network, this does not imply that the recovered connections between nodes represent true connections in the network, which is addressed in the next section.</p>
+</sec>
+<sec id="sec021">
+<title>Correct Connections</title>
+<p>To consider to what extent connections were correctly identified, we examine the false positive rate (FPR), that is, the probability of deciding that there is a connection given that there is no true connection, and the true positive rate (TPR), that is, the probability of deciding that there is a connection given that there actually is one. The FPRs of the methods, shown in <xref ref-type="fig" rid="pone.0129074.g010">Fig 10</xref>, may seem small considering their absolute values. However, as the networks were sparse, the number of erroneously inferred edges is divided by a very large number of non-existent connections. In order to set FPRs into perspective, the proportion of edges in the true network is indicated as well (dotted line). The FPR of the pairwise correlation networks is nearly always higher than that of the lasso and shrinkage based partial correlation networks (<xref ref-type="fig" rid="pone.0129074.g010">Fig 10</xref>). Ridge regression partial correlation networks have an unacceptably large FPR if the number of observations is smaller than the number of nodes, as expected. In most cases, the FPR is lower than the proportion of edges in the true network (dotted line). However, this result does not occur in the presence of hubs.</p>
+<fig id="pone.0129074.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>The false positive rate for the four networks and estimation methods.</title>
+<p>The dotted line ⋯ shows the level of the false positive rate above which the absolute number of false positive edges even exceeds the absolute number of edges in the true network.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g010"/>
+</fig>
+<p>The TPR in <xref ref-type="fig" rid="pone.0129074.g011">Fig 11</xref> also shows that pairwise correlation networks are inaccurate in most cases, and that ridge regression partial correlation networks estimated from small numbers of observations are inaccurate. Strikingly, the pairwise correlation networks show almost no improvement with increasing numbers of observations. This indicates that pairwise correlation networks are in general inappropriate for inferring underlying connectivity. In contrast, ridge regression partial correlation networks do improve with increasing numbers of observations, reaching TPR and FPR values comparable to lasso and shrinkage based networks with 10000 observations. Note that the TPR is not particularly high for any type of method; however, for partial correlation networks it increases strongly with increasing number of observations. Recall that with 2000 nodes a total of nearly two million possible edges are estimated with 10000 observations, which is a poor ratio of observations to possible edges (parameters). To summarize, <xref ref-type="fig" rid="pone.0129074.g012">Fig 12</xref> gives an overview of TPRs, and a function of FPRs (such that a higher value is associated with a better FPR) for the four methods and the four networks topologies. While partial correlation methods reach average TPRs larger than.75 in the two networks without hubs with sufficient numbers of observations, the average TPR in the two hub networks remains very low (&lt; .5) for all methods at the numbers of observations considered in our simulations.</p>
+<fig id="pone.0129074.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>The true positive rate for the four networks and estimation methods.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g011"/>
+</fig>
+<fig id="pone.0129074.g012" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g012</object-id>
+<label>Fig 12</label>
+<caption>
+<title>Overview of TPR and of 1 − <italic>f</italic>(FPR) for shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and for pairwise correlations (red), averaged over all three selection criteria (i.e., correct number of edges, 20% less edges, and 20% more edges).</title>
+<p><italic>f</italic>(FPR) = exp(−10<sup>2</sup>*FPR); <italic>n</italic> = Number of observations.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g012"/>
+</fig>
+<p>We also examined whether the identification of a true connection depends on the degrees of the two nodes that are connected by it (e.g., are connections between nodes with two degrees more easily identified than connections between a hub node and a node with two degrees?). For this purpose, we calculated the TPR and the FPR as a function of the true degrees of each pair of connected nodes. <xref ref-type="fig" rid="pone.0129074.g013">Fig 13</xref> shows that the TPR is higher in the partial correlation networks than in the pairwise correlation networks for almost all degree pairings. Pairwise correlation networks have a very low TPR for connections between lowest to larger degree nodes. Merely for connections involving largest and hub nodes does the TPR of pairwise correlation networks approach or exceed the TPRs of the partial correlation networks. However, in exactly these cases, the FPR of the pairwise correlation networks are inacceptably large (<xref ref-type="fig" rid="pone.0129074.g014">Fig 14</xref>). The graphical lasso networks have somewhat elevated FPRs and TPRs for connections between hub nodes. In contrast, the FPR of the other two partial correlation networks remains relatively small across low, medium, large degree and hub nodes, while their TPRs are in general the highest (&gt; .75 for networks without hubs, and ranging between .25 and .5 for networks with hubs) and relatively stable across the whole range of lowest degree to hub nodes.</p>
+<fig id="pone.0129074.g013" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g013</object-id>
+<label>Fig 13</label>
+<caption>
+<title>True positive rate as a function of node degree (given 10000 observations) of shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and of pairwise correlations (red).</title>
+<p>For each network, nodes were divided into 6 bins according to degree: 5 equally-sized bins, and a 6th bin containing the 50 nodes with the highest degree (i.e., the hubs in the hub networks). TPR is shown for each pairing of degree bins (e.g., sixteenth pair <inline-formula id="pone.0129074.e026"><alternatives><graphic id="pone.0129074.e026g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e026"/><mml:math id="M26" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>6</mml:mn></mml:mfrac> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula> refers to edges between the nodes with lowest degrees and the nodes with highest degrees; rightmost pair <inline-formula id="pone.0129074.e027"><alternatives><graphic id="pone.0129074.e027g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e027"/><mml:math id="M27" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mfrac><mml:mn>6</mml:mn> <mml:mn>6</mml:mn></mml:mfrac> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula> refers to edges between the nodes with highest degrees).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g013"/>
+</fig>
+<fig id="pone.0129074.g014" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g014</object-id>
+<label>Fig 14</label>
+<caption>
+<title>False positive rate as a function of node degree (given 10000 observations) of shrinkage (blue), ridge (orange), and lasso (green) estimated partial correlations, and of pairwise correlations (red).</title>
+<p>For each network, nodes were divided into 6 bins according to degree: 5 equally-sized bins, and a 6th bin containing the 50 nodes with the highest degree (i.e., the hubs in the hub networks). FPR is shown for each pairing of degree bins (e.g., eleventh pair (1,6) refers to edges between the nodes with lowest degrees and the nodes with highest degrees; rightmost pair (6,6) refers to edges between the nodes with highest degrees).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g014"/>
+</fig>
+</sec>
+<sec id="sec022">
+<title>Effect of Hubs</title>
+<p>As shown above, in the two networks with hubs, all methods perform worse. In these networks, the maximum degree is much larger than in the networks without hubs (see <xref ref-type="table" rid="pone.0129074.t001">Table 1</xref>). However, these two networks also have a larger number of edges (density of 3%), in order to make a network with large-degree nodes and still be connected, than the networks without hubs (density of 0.3%). To separate the effects of density and hubs, we analyzed the complementary random network (i.e., without hubs) with a density of 3% (<inline-formula id="pone.0129074.e028"><alternatives><graphic id="pone.0129074.e028g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e028"/><mml:math id="M28" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula>). The results support the hypothesis that the presence of hubs causes the decrease in perfomance, rather than the lower density of the network. The true positive and false positive rates of network <inline-formula id="pone.0129074.e029"><alternatives><graphic id="pone.0129074.e029g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e029"/><mml:math id="M29" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula> (<xref ref-type="fig" rid="pone.0129074.g015">Fig 15</xref>) show much better performance of the partial correlation networks than the pairwise correlation networks with hubs (<inline-formula id="pone.0129074.e030"><alternatives><graphic id="pone.0129074.e030g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e030"/><mml:math id="M30" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula> and SW-H, Figs <xref ref-type="fig" rid="pone.0129074.g010">10</xref> and <xref ref-type="fig" rid="pone.0129074.g011">11</xref>), but also, slightly worse performance than in the sparser random network <inline-formula id="pone.0129074.e031"><alternatives><graphic id="pone.0129074.e031g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e031"/><mml:math id="M31" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+<fig id="pone.0129074.g015" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g015</object-id>
+<label>Fig 15</label>
+<caption>
+<title>Recovery results of the four estimation methods for additional random network <inline-formula id="pone.0129074.e032"><alternatives><graphic id="pone.0129074.e032g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e032"/><mml:math id="M32" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula> (with the high density of 3%).</title>
+<p>True −− network metrics indicated where appropriate. The dotted line ⋯ shows the level of the false positive rate, above which the absolute number of false positive edges even exceeds the absolute number of edges in the true network.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g015"/>
+</fig>
+<p>In all cases, pairwise correlations perform badly, as in the sparser random network <inline-formula id="pone.0129074.e033"><alternatives><graphic id="pone.0129074.e033g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e033"/><mml:math id="M33" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>. For this reason, and on the basis of the recovery of the other characteristics of network <inline-formula id="pone.0129074.e034"><alternatives><graphic id="pone.0129074.e034g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e034"/><mml:math id="M34" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>c</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula> by the four methods (<xref ref-type="fig" rid="pone.0129074.g015">Fig 15</xref>), the large difference in recovery between networks <inline-formula id="pone.0129074.e035"><alternatives><graphic id="pone.0129074.e035g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e035"/><mml:math id="M35" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula> and <inline-formula id="pone.0129074.e036"><alternatives><graphic id="pone.0129074.e036g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e036"/><mml:math id="M36" display="inline" overflow="scroll"><mml:mrow><mml:mtext>SW</mml:mtext><mml:mo>-</mml:mo><mml:mover><mml:mtext mathvariant="normal">H</mml:mtext> <mml:mo accent="true">¯</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula> vs SW-H and <inline-formula id="pone.0129074.e037"><alternatives><graphic id="pone.0129074.e037g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0129074.e037"/><mml:math id="M37" display="inline" overflow="scroll"><mml:mrow><mml:mover><mml:mrow><mml:mtext mathvariant="normal">SW</mml:mtext></mml:mrow> <mml:mo accent="true">¯</mml:mo></mml:mover><mml:mo>-</mml:mo><mml:mtext>H</mml:mtext></mml:mrow></mml:math></alternatives></inline-formula> can indeed be attributed to the presence of hubs.</p>
+</sec>
+</sec>
+<sec id="sec023">
+<title>Results of Application to Resting-State Data</title>
+<p>To illustrate how these results affect the analysis of actual neuroimaging data, we applied pairwise and partial correlation methods to time series of BOLD resting-state data, obtained from 5 individuals, similar in terms of genetic makeup. Resting-state functional connectivity maps were constructed through the hierarchical decomposition of the cortical surface into 5 embedded cortical parcellations with number of ROIs (nodes) <italic>n</italic> of 68, 114, 219, 448, and 1000 [<xref ref-type="bibr" rid="pone.0129074.ref036">36</xref>, <xref ref-type="bibr" rid="pone.0129074.ref046">46</xref>, <xref ref-type="bibr" rid="pone.0129074.ref048">48</xref>, <xref ref-type="bibr" rid="pone.0129074.ref049">49</xref>]. To compare the methods, the resting-state time series obtained from each parcellation was analyzed with both pairwise correlations and partial correlations. We chose to obtain partial correlations by optimal shrinkage estimation, as it was in our simulations in general preferrable above ridge regression, and although quite similar to the lasso, seemed slightly better than the lasso, as judged by the TPRs. For each participant, we calculated pairwise correlation and partial correlation networks consisting of the 3% strongest (pairwise or partial) correlations for each of the parcellations (resulting in 68, 193, 716, 3003, and 14985 edges, respectively). We focus on three issues: a) the difference between correlation and partial correlation networks, b) the consistency of the networks with respect to different parcellations (i.e., with the increasing number of ROIs), and c) the consistency of the estimated networks with varying numbers of observations (i.e., lengths of the time series).</p>
+<sec id="sec024">
+<title>Pairwise Correlation vs Partial Correlation Networks</title>
+<p>
+<xref ref-type="fig" rid="pone.0129074.g016">Fig 16</xref> shows the obtained networks of the 3% strongest partial or pairwise correlations in the five participants. Both in the pairwise and in the partial correlation networks of all participants, those areas commonly reported as associated with resting-state activity (i.e., we considered precuneus, medialfrontal, inferior parietal, medial temporal lobe, primary sensorimotor, primary visual, extrastriate visual, bilateral temporal, insular, anterior cingulate cortex, superior parietal, superior frontal, posterior cingulate cortex, in line with [<xref ref-type="bibr" rid="pone.0129074.ref053">53</xref>–<xref ref-type="bibr" rid="pone.0129074.ref057">57</xref>]) had a larger average degree and a larger average betweenness than the remaining areas. However, the amount of overlap between pairwise and partial correlation networks was 62% at most, and decreased further with increasing number of ROIs or decreasing number of observations in each participant (see dashed black lines in Figs <xref ref-type="fig" rid="pone.0129074.g017">17</xref> and <xref ref-type="fig" rid="pone.0129074.g018">18</xref>, respectively). As expected, network characteristics that depend on the inferred network topology differ substantially depending on the method used. <xref ref-type="fig" rid="pone.0129074.g019">Fig 19</xref> shows network metrics of interest for the five participants over different parcellations and methods. As in the simulation study, the use of pairwise correlations results in more fragmented networks with a higher amount of clustering and a higher small-worldness index.</p>
+<fig id="pone.0129074.g016" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g016</object-id>
+<label>Fig 16</label>
+<caption>
+<title>Networks of 68 ROIs based on 3% strongest partial correlations (blue) and pairwise correlations (red) of all 5 participants.</title>
+<p>Left hemisphere is on left side. ROIs with larger nodes have higher betweenness centralities. Networks are superimposed on transverse MNI152 T1 template for illustration purposes (Copyright (C) 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University). Figure prepared with the R-package <italic>qgraph</italic>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g016"/>
+</fig>
+<fig id="pone.0129074.g017" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g017</object-id>
+<label>Fig 17</label>
+<caption>
+<title>Overlap between networks at different numbers of ROIss (parcellations).</title>
+<p>Dashed black lines −− show the proportion of edges that were present both in the pairwise and in the partial correlation network of a given parcellation. Separate lines for each participant (numbered 1–5). Blue (or red) lines show the comparison of the base-line 68-ROI parcellation with higher-resolution parcellations for pairwise correlation (red) networks (or partial correlation (blue) networks). Plain blue (or red) lines − show the proportion of areas of low-resolution parcellation that were internally connected by at least one edge in the higher-resolution parcellations, given that the area was split (within-area connectivity). Dotted blue (or red) lines … show the proportion of areas that were inter-connected in the low-resolution parcellation, that were also inter-connected by at least one edge in the higher-resolution parcellations (between-area connectivity).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g017"/>
+</fig>
+<fig id="pone.0129074.g018" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g018</object-id>
+<label>Fig 18</label>
+<caption>
+<title>Overlap between networks at different numbers of volumes (i.e., time-series lengths).</title>
+<p>Shown is the proportion of identical edges present in two respective networks. Black lines −− show overlap between the pairwise correlation network and the partial correlation network of a participant, based on a given number of volumes (i.e., time-series length). Separate lines for each participant (numbered 1 − 5). Red (or blue) lines indicate overlap between the pairwise correlation (red) (or partial correlation (blue)) network based on the full time-series of 240 volumes and the pairwise correlation (red) (or partial correlation (blue)) network based on smaller numbers of volumes (i.e., shorter time-series length.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g018"/>
+</fig>
+<fig id="pone.0129074.g019" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g019</object-id>
+<label>Fig 19</label>
+<caption>
+<title>Global network metrics of interest of pairwise correlation (red) and partial correlation (blue) networks for different numbers of ROIs (parcellations).</title>
+<p>Numbered lines for participants 1 to 5.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g019"/>
+</fig>
+<p>As shown in <xref ref-type="fig" rid="pone.0129074.g020">Fig 20</xref>, the local transitivity of most ROIs is larger in the pairwise correlation network than in the partial correlation network. This is in line with the expectations based on theory and our simulation results.</p>
+<fig id="pone.0129074.g020" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g020</object-id>
+<label>Fig 20</label>
+<caption>
+<title>Local transitivity of left (L) and right (R) hemisphere ROIs in pairwise correlation (red) and partial correlation (blue) networks with 68 ROIs, averaged over participants.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g020"/>
+</fig>
+<p>Betweenness centralities of each ROI are shown in <xref ref-type="fig" rid="pone.0129074.g021">Fig 21</xref>. In line with our simulation results, in which pairwise correlation networks resulted in a severe underestimation of mean betweenness centrality if the number of observations was sufficiently large, the average betweenness centrality of the pairwise correlation networks (red line) is much smaller than the average betweenness centrality of the partial correlation networks. This is the case for almost all ROIs.</p>
+<fig id="pone.0129074.g021" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0129074.g021</object-id>
+<label>Fig 21</label>
+<caption>
+<title>Betweenness centrality of left (L) and right (R) hemisphere ROIs in pairwise correlation (red) and partial correlation (blue) networks with 68 ROIs, averaged over participants.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0129074.g021"/>
+</fig>
+</sec>
+<sec id="sec025">
+<title>Network Consistency Across Different Parcellations</title>
+<p>To examine the overlap between networks of low-resolution and higher-resolution parcellations, we focussed on within-area connectivity and between-area connectivity (<xref ref-type="fig" rid="pone.0129074.g017">Fig 17</xref>). Between-area connectivity (given a connection in the 68 ROI parcellation) is high in pairwise and in partial correlations networks. However, within-area connectivity is higher in partial correlation networks than in pairwise correlation networks.</p>
+</sec>
+<sec id="sec026">
+<title>Network Consistency Across Varying Time-Series Lengths</title>
+<p>From each participant, we prepared 16 embedded data-sets with consecutively shorter length of the time-series, starting with the full series of 240 volumes down to a minimum of 15 volumes. For each data set, we calculated two networks as above, consisting of the edges with the 3% strongest (pairwise or partial) correlations. To assess the overlap of a partial (or pairwise) correlation network based on a given number of volumes with the respective partial (or pairwise) reference network based on 240 volumes, we calculated the proportion of overlapping edges. The proportion of overlapping edges was calculated as the number of individual edges that are present in both networks (i.e., the size of the intersection of the edges in the two networks) divided by the total number of edges in a network (i.e., the 3% of all possible edges that were selected). An overlap of 100% implies that exactly the same edges are present in the two networks, while an overlap of 0% implies that completely different edges are present in the two networks. Partial correlation networks show a 100% overlap between the 240 volumes and consecutively smaller numbers of volumes, down to 90 or 60 volumes (see blue lines in <xref ref-type="fig" rid="pone.0129074.g018">Fig 18</xref>). With fewer observations, the overlap decreases. The amount of overlap of the pairwise correlation networks at different time-series lengths is in general lower than or equal to the overlap of the partial correlation networks at different time-series lengths (see red lines below blue lines in <xref ref-type="fig" rid="pone.0129074.g018">Fig 18</xref>).</p>
+</sec>
+</sec>
+<sec id="sec027" sec-type="conclusions">
+<title>Discussion</title>
+<p>The current study clearly shows that pairwise correlations should not be used to estimate connectivity from functional MRI data, because pairwise correlation networks are generally very poor representations of the true network. Ad-hoc solutions, like tweaking the cutoff threshold for the correlation coefficients, is not a solution because the problem is inherent in the pairwise correlation methodology itself. Pairwise correlations are problematic, because they cannot distinguish between direct and indirect connections, and overestimate the proportion of triangles. We showed that this methodology always results in a small-world network with more components than in the true network, regardless of the true network topology. Additionally, the degree distribution is poorly represented. Logically, in order to correctly infer such network characteristics, a high true positive rate (TPR) and a low false positive rate (FPR) in edge detection are crucial. However, in pairwise correlation networks the TPR is low and does not increase with additional observations (longer time-series), and the FPR of the pairwise correlation networks is nearly always higher than that of the lasso and shrinkage based partial correlation networks.</p>
+<p>Small-worldness, degree distribution, betweenness centrality, and number of components are better estimated using the shrinkage or lasso method to obtain partial correlations for large-scale networks. The presence of hubs limited the efficiency of these methods. This is caused by several factors. First, the presence of hubs means that variance explained by a hub node will eliminate other, small signal connections, which leads to lower TPRs. Second, in a network with hubs, the number of small signal connections is relatively large. The reason is that the network (partial covariance matrix) has to represent a proper (non degenerate) distribution, which requires many small signal connections when hubs are present. And the third and final reason is that the maximum number of observations we used is still relatively low compared to the number of parameters (0.005 observations per possible edge, or parameter) [<xref ref-type="bibr" rid="pone.0129074.ref058">58</xref>]. These conditions resulted in the rather poor TPRs for the recovery methods when hubs were present. Thus, the higher the maximum degree in the network, the more independent observations are needed. Naturally, if the sample size is too small, all methods fail. Based on our simulations, we caution against the derivation of brain networks of size 2000 with 500 or less observations. With 500 observations, the TPR of the best methods in a random network is below.75, which is not particularly high. TPR drops dramatically to.25 or below if the network has a more complex structure (small-world networks, and/or networks contains hubs). In this case, clearly, more observations are needed to reasonably infer underlying networks of this size. If obtaining more observations is not possible, networks of smaller size should be considered (i.e., working with less fine-grained parcellations). It should be kept in mind that the simulated datasets contained temporal dependence, as is common in fMRI data and other time-series. As mentioned above, the effective number of observations was thus lower than the actual number of observations [<xref ref-type="bibr" rid="pone.0129074.ref038">38</xref>]. It may be beneficial to use kernel covariance estimators, which are shown to be consistent for time dependent data [<xref ref-type="bibr" rid="pone.0129074.ref059">59</xref>].</p>
+<p>While [<xref ref-type="bibr" rid="pone.0129074.ref011">11</xref>] concluded that pairwise correlation can and should be used to measure connectivity in combination with adapted null models, our simulation results suggest otherwise for large-scale networks. The true positive rate and false positive rate of pairwise correlation networks are not acceptable. This also holds for ridge regression partial correlations, but only if sample sizes are smaller than the number of nodes.</p>
+<p>In an early simulation study focusing on the recovery of small-world networks with sparse multivariate autoregression (≤ 100 nodes) ridge regression was found to be optimal, with no significant difference between lasso and ridge regression [<xref ref-type="bibr" rid="pone.0129074.ref041">41</xref>]. Their simulations did not include a comparison to correlation networks, nor were there different topologies investigated, which clearly has a large impact on the results. In recent years, generalizations and variants of the lasso have been developed, among which the graphical lasso (the one in [<xref ref-type="bibr" rid="pone.0129074.ref041">41</xref>] is an approximation to the graphical lasso used here), which, together with the shrinkage estimator, turned out particularly suitable for large-scale network recovery in the present simulation scenario.</p>
+<p>Our application to resting-state fMRI illustrated that partial correlation networks are more consistent and reliable than networks obtained from pairwise correlations. The inappropriateness of pairwise correlations to infer connectivity networks also holds for other areas of research, such as genetics [<xref ref-type="bibr" rid="pone.0129074.ref024">24</xref>]. Thus, we recommend the use of partial correlations obtained with the graphical lasso or shrinkage estimator to build large-scale networks.</p>
+</sec>
+</body>
+<back>
+<ack>
+<p>This work was supported by innovational research grant no. 451-03-068 (VS and DB), and by Mosaic grant no 017.005.107 (SJ) from the Netherlands Organization for Scientific Research (NWO). We thank Conor Dolan for his advice concerning the simulation study. The authors declare no competing financial interests.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0129074.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Behrens</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>Human connectomics</article-title>. <source>Curr Opin Neurobiol</source>. <year>2012</year>;<volume>22</volume>:<fpage>144</fpage>–<lpage>153</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.conb.2011.08.005" xlink:type="simple">10.1016/j.conb.2011.08.005</ext-link></comment> <object-id pub-id-type="pmid">21908183</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>The human connectome: a complex network</article-title>. <source>Ann N Y Acad Sci</source>. <year>2011</year>;<volume>1224</volume>(<issue>1</issue>):<fpage>109</fpage>–<lpage>125</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1749-6632.2010.05888.x" xlink:type="simple">10.1111/j.1749-6632.2010.05888.x</ext-link></comment> <object-id pub-id-type="pmid">21251014</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bullmore</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>Complex brain networks: graph theoretical analysis of structural and functional systems</article-title>. <source>Nat Rev Neurosci</source>. <year>2009</year>;<volume>10</volume>(<issue>3</issue>):<fpage>186</fpage>–<lpage>198</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrn2575" xlink:type="simple">10.1038/nrn2575</ext-link></comment> <object-id pub-id-type="pmid">19190637</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>van den Heuvel</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Stam</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Boersma</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hulshoff Pol</surname> <given-names>HE</given-names></name>. <article-title>Small-world and scale-free organization of voxel-based resting-state functional connectivity in the human brain</article-title>. <source>NeuroImage</source>. <year>2008</year>;<volume>43</volume>:<fpage>528</fpage>–<lpage>539</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2008.08.010" xlink:type="simple">10.1016/j.neuroimage.2008.08.010</ext-link></comment> <object-id pub-id-type="pmid">18786642</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>van den Heuvel</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Stam</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Kahn</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Hulshoff Pol</surname> <given-names>HE</given-names></name>. <article-title>Efficiency of Functional Brain Networks and Intellectual Performance</article-title>. <source>J Neurosci</source>. <year>2009</year>;<volume>29</volume>(<issue>23</issue>):<fpage>7619</fpage>–<lpage>7624</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.1443-09.2009" xlink:type="simple">10.1523/JNEUROSCI.1443-09.2009</ext-link></comment> <object-id pub-id-type="pmid">19515930</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Supekar</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Musen</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Menon</surname> <given-names>V</given-names></name>. <article-title>Development of Large-Scale Functional Brain Networks in Children</article-title>. <source>PLoS Biol</source>. <year>2009</year> <day>07</day>;<volume>7</volume>(<issue>7</issue>):<fpage>e1000157</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1000157" xlink:type="simple">10.1371/journal.pbio.1000157</ext-link></comment> <object-id pub-id-type="pmid">19621066</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Watts</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Strogatz</surname> <given-names>SH</given-names></name>. <article-title>Collective dynamics of ‘small-world’ networks</article-title>. <source>Nature</source>. <year>1998</year>;<volume>393</volume>:<fpage>440</fpage>–<lpage>442</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/30918" xlink:type="simple">10.1038/30918</ext-link></comment> <object-id pub-id-type="pmid">9623998</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Telesford</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Simpson</surname> <given-names>SL</given-names></name>, <name name-style="western"><surname>Burdette</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Hayasaka</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Laurienti</surname> <given-names>PJ</given-names></name>. <article-title>The brain as a complex system: using network science as a tool for understanding the brain</article-title>. <source>Brain Connect</source>. <year>2011</year>;<volume>1</volume>(<issue>4</issue>):<fpage>295</fpage>–<lpage>308</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1089/brain.2011.0055" xlink:type="simple">10.1089/brain.2011.0055</ext-link></comment> <object-id pub-id-type="pmid">22432419</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Itahashi</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Yamada</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Watanabe</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Nakamura</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Jimbo</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Shioda</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>Altered Network Topologies and Hub Organization in Adults with Autism: A Resting-State fMRI Study</article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>(<issue>4</issue>):<fpage>e94115</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0094115" xlink:type="simple">10.1371/journal.pone.0094115</ext-link></comment> <object-id pub-id-type="pmid">24714805</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Marrelec</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Krainik</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Duffau</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Pélégrini-Issac</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lehéricy</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Doyon</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Partial correlation for functional brain interactivity investigation in functional MRI</article-title>. <source>NeuroImage</source>. <year>2006</year>;<volume>32</volume>:<fpage>228</fpage>–<lpage>237</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2005.12.057" xlink:type="simple">10.1016/j.neuroimage.2005.12.057</ext-link></comment> <object-id pub-id-type="pmid">16777436</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zalesky</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fornito</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bullmore</surname> <given-names>E</given-names></name>. <article-title>On the use of correlation as a measure of network connectivity</article-title>. <source>NeuroImage</source>. <year>2012</year>;<volume>60</volume>:<fpage>2096</fpage>–<lpage>2106</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.02.001" xlink:type="simple">10.1016/j.neuroimage.2012.02.001</ext-link></comment> <object-id pub-id-type="pmid">22343126</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jones</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>West</surname> <given-names>M</given-names></name>. <article-title>Covariance decomposition in undirected Gaussian graphical models</article-title>. <source>Biometrika</source>. <year>2005</year>;<volume>92</volume>(<issue>4</issue>):<fpage>779</fpage>–<lpage>786</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/biomet/92.4.779" xlink:type="simple">10.1093/biomet/92.4.779</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Lauritzen</surname> <given-names>S</given-names></name>. <source>Graphical Models</source>. <publisher-name>Oxford University Press</publisher-name>; <year>1996</year>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Smith</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>KL</given-names></name>, <name name-style="western"><surname>Salimi-Khorshidi</surname> <given-names>M G Webster</given-names></name>, <name name-style="western"><surname>Beckmann</surname> <given-names>CF</given-names></name>, <name name-style="western"><surname>Nichols</surname> <given-names>TE</given-names></name>, <name name-style="western"><surname>Ramsey</surname> <given-names>JD</given-names></name>, <etal>et al</etal>. <article-title>Network modeling methods for fMRI</article-title>. <source>NeuroImage</source>. <year>2011</year>;<volume>54</volume>:<fpage>875</fpage>–<lpage>891</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2010.08.063" xlink:type="simple">10.1016/j.neuroimage.2010.08.063</ext-link></comment> <object-id pub-id-type="pmid">20817103</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cribben</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Haraldsdottir</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Atlas</surname> <given-names>LY</given-names></name>, <name name-style="western"><surname>Wager</surname> <given-names>TD</given-names></name>, <name name-style="western"><surname>Lindquist</surname> <given-names>MA</given-names></name>. <article-title>Dynamic connectivity regression: Determining state-related changes in brain connectivity</article-title>. <source>NeuroImage</source>. <year>2012</year>;<volume>61</volume>(<issue>4</issue>):<fpage>907</fpage>–<lpage>920</lpage>. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.sciencedirect.com/science/article/pii/S1053811912003515">http://www.sciencedirect.com/science/article/pii/S1053811912003515</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.03.070" xlink:type="simple">10.1016/j.neuroimage.2012.03.070</ext-link></comment> <object-id pub-id-type="pmid">22484408</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Drton</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Perlman</surname> <given-names>MD</given-names></name>. <article-title>A SINful approach to Gaussian graphical model selection</article-title>. <source>Journal of Statistical Planning and Inference</source>. <year>2008</year>;<volume>138</volume>(<issue>4</issue>):<fpage>1179</fpage>–<lpage>1200</lpage>. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.sciencedirect.com/science/article/pii/S0378375807002303">http://www.sciencedirect.com/science/article/pii/S0378375807002303</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jspi.2007.05.035" xlink:type="simple">10.1016/j.jspi.2007.05.035</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gates</surname> <given-names>KM</given-names></name>, <name name-style="western"><surname>Molenaar</surname> <given-names>PCM</given-names></name>. <article-title>Group search algorithm recovers effective connectivity maps for individuals in homogeneous and heterogeneous samples</article-title>. <source>NeuroImage</source>. <year>2012</year>;<volume>63</volume>(<issue>1</issue>):<fpage>310</fpage>–<lpage>319</lpage>. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.sciencedirect.com/science/article/pii/S1053811912006404">http://www.sciencedirect.com/science/article/pii/S1053811912006404</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.06.026" xlink:type="simple">10.1016/j.neuroimage.2012.06.026</ext-link></comment> <object-id pub-id-type="pmid">22732562</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Iyer</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Shafran</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Grayson</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Gates</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Nigg</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Fair</surname> <given-names>DA</given-names></name>. <article-title>Inferring functional connectivity in MRI using Bayesian network structure learning with a modified {PC} algorithm</article-title>. <source>NeuroImage</source>. <year>2013</year>;<volume>75</volume>(<issue>0</issue>):<fpage>165</fpage>–<lpage>175</lpage>. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.sciencedirect.com/science/article/pii/S1053811913001997">http://www.sciencedirect.com/science/article/pii/S1053811913001997</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2013.02.054" xlink:type="simple">10.1016/j.neuroimage.2013.02.054</ext-link></comment> <object-id pub-id-type="pmid">23501054</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Varoquaux</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Gramfort</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Poline</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Thirion</surname> <given-names>B</given-names></name>. <article-title>Brain covariance selection: better individual functional connectivity models using population prior</article-title>. <source>NIPS</source>. <year>2010</year>;<volume>10</volume>:<fpage>2334</fpage>–<lpage>2342</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Varoquaux</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Craddock</surname> <given-names>RC</given-names></name>. <article-title>Learning and comparing functional connectomes across subjects</article-title>. <source>NeuroImage</source>. <year>2013</year>;<volume>80</volume>:<fpage>405</fpage>–<lpage>415</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2013.04.007" xlink:type="simple">10.1016/j.neuroimage.2013.04.007</ext-link></comment> <object-id pub-id-type="pmid">23583357</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Salvador</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Suckling</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Coleman</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Pickard</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Menon</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Bullmore</surname> <given-names>ED</given-names></name>. <article-title>Neurophysiological architecture of functional magnetic resonance images of human brain</article-title>. <source>Cereb Cortex</source>. <year>2005</year>;<volume>15</volume>(<issue>9</issue>):<fpage>1332</fpage>–<lpage>1342</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhi016" xlink:type="simple">10.1093/cercor/bhi016</ext-link></comment> <object-id pub-id-type="pmid">15635061</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Friedman</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hastie</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Tibshirani</surname> <given-names>R</given-names></name>. <article-title>Sparse inverse covariance estimation with the graphical lasso</article-title>. <source>Biostatistics</source>. <year>2008</year>;<volume>9</volume>(<issue>3</issue>):<fpage>432</fpage>–<lpage>441</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/biostatistics/kxm045" xlink:type="simple">10.1093/biostatistics/kxm045</ext-link></comment> <object-id pub-id-type="pmid">18079126</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hoerl</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Kennard</surname> <given-names>RW</given-names></name>. <article-title>Ridge regression: Biased estimation for nonorthogonal problems</article-title>. <source>Technometrics</source>. <year>1970</year>;<volume>12</volume>(<issue>1</issue>):<fpage>55</fpage>–<lpage>67</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/00401706.1970.10488634" xlink:type="simple">10.1080/00401706.1970.10488634</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schäfer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Strimmer</surname> <given-names>K</given-names></name>. <article-title>A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics</article-title>. <source>Stat Appl Genet Mol Biol</source>. <year>2005</year>;<volume>4</volume>:<fpage>e32</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Opgen-Rhein</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Strimmer</surname> <given-names>K</given-names></name>. <article-title>From correlation to causation networks: a simple approximate learning algorithm and its application to high-dimensional plant gene expression data</article-title>. <source>BMC Syst Biol</source>. <year>2007</year> <month>AUG</month> <day>6</day>;<volume>1</volume>:<fpage>e37</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1752-0509-1-37" xlink:type="simple">10.1186/1752-0509-1-37</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Bollobás</surname> <given-names>B</given-names></name>. <source>Modern graph theory</source>. <volume>vol. 184</volume>. <publisher-name>Springer</publisher-name>; <year>1998</year>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Barabási</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Albert</surname> <given-names>R</given-names></name>. <article-title>Emergence of scaling in random networks</article-title>. <source>Science</source>. <year>1999</year>;<volume>286</volume>(<issue>5439</issue>):<fpage>509</fpage>–<lpage>512</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.286.5439.509" xlink:type="simple">10.1126/science.286.5439.509</ext-link></comment> <object-id pub-id-type="pmid">10521342</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Davidsen</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ebel</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Bornholdt</surname> <given-names>S</given-names></name>. <article-title>Emergence of a small world from local interactions: modeling acquaintance networks</article-title>. <source>Phys Rev Lett</source>. <year>2002</year>;<volume>88</volume>(<issue>12</issue>):<fpage>1287011</fpage>–<lpage>1287014</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.88.128701" xlink:type="simple">10.1103/PhysRevLett.88.128701</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<collab xlink:type="simple">R Core Team</collab>. <source>R: A Language and Environment for Statistical Computing</source>. <publisher-loc>Vienna, Austria</publisher-loc>. URL <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.R-project.org/">http://www.R-project.org/</ext-link>; <year>2012</year>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Ben-Israel</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Greville</surname> <given-names>TNE</given-names></name>. <source>Generalized inverses: theory and applications</source>. <volume>vol. 15</volume>. <publisher-name>Springer</publisher-name>; <year>2003</year>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="other">Friedman J, Hastie T, Tibshirani R. glasso: Graphical lasso-estimation of Gaussian graphical models; 2011. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://statweb.stanford.edu/~tibs/glasso/">http://statweb.stanford.edu/~tibs/glasso/</ext-link>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Csárdi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Nepusz</surname> <given-names>T</given-names></name>. <article-title>The igraph software package for complex network research</article-title>. <source>InterJournal, Complex Systems</source>. <year>2006</year>;<volume>1695</volume>. URL <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://igraph.sf.net:e38">http://igraph.sf.net:e38</ext-link>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Epskamp</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Cramer</surname> <given-names>AOJ</given-names></name>, <name name-style="western"><surname>Waldorp</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Schmittmann</surname> <given-names>VD</given-names></name>, <name name-style="western"><surname>Borsboom</surname> <given-names>D</given-names></name>. <article-title>qgraph: network visualizations of relationships in psychometric data</article-title>. <source>J Stat Softw</source>. <year>2012</year>;<volume>48</volume>(<issue>4</issue>):<fpage>1</fpage>–<lpage>18</lpage>. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.jstatsoft.org/v48/i04/">http://www.jstatsoft.org/v48/i04/</ext-link>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Newman</surname> <given-names>MEJ</given-names></name>. <article-title>The structure and function of complex networks</article-title>. <source>SIAM Rev Soc Ind Appl Math</source>. <year>2003</year>;<volume>45</volume>(<issue>2</issue>):<fpage>167</fpage>–<lpage>256</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Humphries</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Gurney</surname> <given-names>K</given-names></name>. <article-title>Network ‘small-world-ness’: A quantitative method for determining canonical network equivalence</article-title>. <source>PLoS ONE</source>. <year>2008</year>;<volume>3</volume>(<issue>4</issue>):<fpage>e0002051</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0002051" xlink:type="simple">10.1371/journal.pone.0002051</ext-link></comment> <object-id pub-id-type="pmid">18446219</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hagmann</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cammoun</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gigandet</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Meuli</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Honey</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>Mapping the structural core of human cerebral cortex</article-title>. <source>PLoS Biol</source>. <year>2008</year>;<volume>6</volume>(<issue>7</issue>):<fpage>1479</fpage>–<lpage>1493</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0060159" xlink:type="simple">10.1371/journal.pbio.0060159</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Meunier</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lambiotte</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Fornito</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ersche</surname> <given-names>KD</given-names></name>, <name name-style="western"><surname>Bullmore</surname> <given-names>ET</given-names></name>. <article-title>Hierarchical modularity in human brain functional networks</article-title>. <source>Front Neuroinformatics</source>. <year>2009</year>;<volume>3</volume>(<issue>37</issue>).</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lemoine</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Besnier</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Drissi</surname> <given-names>M</given-names></name>. <article-title>Estimating the effective sample size to select independent measurements in a reverberation chamber</article-title>. <source>IEEE T Electromagn C</source>. <year>2008</year>;<volume>50</volume>(<issue>2</issue>):<fpage>227</fpage>–<lpage>236</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TEMC.2008.919037" xlink:type="simple">10.1109/TEMC.2008.919037</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Opsahl</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Panzarasa</surname> <given-names>P</given-names></name>. <article-title>Clustering in weighted networks</article-title>. <source>Soc networks</source>. <year>2009</year>;<volume>31</volume>(<issue>2</issue>):<fpage>155</fpage>–<lpage>163</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.socnet.2009.02.002" xlink:type="simple">10.1016/j.socnet.2009.02.002</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="other">Schäfer J, Opgen-Rhein R, Zuber V, Ahdesmäki M, Silva APD, Strimmer K. corpcor: Efficient Estimation of Covariance and (Partial) Correlation; 2012. Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://CRAN.R-project.org/package = corpcor">http://CRAN.R-project.org/package = corpcor</ext-link>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Valdés-Sosa</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Sánchez-Bornot</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Lage-Castellanos</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vega-Hernándes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bosch-Bayard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Melie-García</surname> <given-names>L</given-names></name>, <etal>et al</etal>. <article-title>Estimating brain functional connectivity with sparse multivariate autoregression</article-title>. <source>Phil Trans R Soc B</source>. <year>2005</year>;360:<fpage>969</fpage>–<lpage>981</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rstb.2005.1654" xlink:type="simple">10.1098/rstb.2005.1654</ext-link></comment> <object-id pub-id-type="pmid">16087441</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Worsley</surname> <given-names>KJ</given-names></name>. <chapter-title>Statistical analysis of activation images</chapter-title>. In: <source>Functional MRI: An introduction to methods</source>. <publisher-name>Oxford University Press</publisher-name>; <year>2001</year>. p. <fpage>251</fpage>–<lpage>270</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Friston</surname> <given-names>KJ</given-names></name>, <name name-style="western"><surname>Josephs</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Zarahn</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Holmes</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Rouquette</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Poline</surname> <given-names>JB</given-names></name>. <article-title>To smooth or not to smooth?</article-title> <source>NeuroImage</source>. <year>2000</year>;<volume>12</volume>:<fpage>196</fpage>–<lpage>208</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1006/nimg.2000.0609" xlink:type="simple">10.1006/nimg.2000.0609</ext-link></comment> <object-id pub-id-type="pmid">10913325</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jenkinson</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bannister</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Brady</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>S</given-names></name>. <article-title>Improved optimization for the robust and accurate linear registration and motion correction of brain images</article-title>. <source>NeuroImage</source>. <year>2002</year>;<volume>17</volume>(<issue>2</issue>):<fpage>825</fpage>–<lpage>841</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1006/nimg.2002.1132" xlink:type="simple">10.1006/nimg.2002.1132</ext-link></comment> <object-id pub-id-type="pmid">12377157</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Smith</surname> <given-names>SM</given-names></name>. <article-title>Fast robust automated brain extraction</article-title>. <source>Hum Brain Mapp</source>. <year>2002</year>;<volume>17</volume>(<issue>3</issue>):<fpage>143</fpage>–<lpage>155</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.10062" xlink:type="simple">10.1002/hbm.10062</ext-link></comment> <object-id pub-id-type="pmid">12391568</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cammoun</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gigandet</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Meskaldji</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Thiran</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Do</surname> <given-names>KQ</given-names></name>, <etal>et al</etal>. <article-title>Mapping the human connectome at multiple scales with diffusion spectrum MRI</article-title>. <source>J Neurosci Methods</source>. <year>2012</year>;<volume>203</volume>:<fpage>386</fpage>–<lpage>397</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jneumeth.2011.09.031" xlink:type="simple">10.1016/j.jneumeth.2011.09.031</ext-link></comment> <object-id pub-id-type="pmid">22001222</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Desikan</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Ségonne</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Fischl</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Quinn</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Dickerson</surname> <given-names>BC</given-names></name>, <name name-style="western"><surname>Blacker</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>An automated labeling system for subdividing the human cerebral cortex on MRI scans into gyral based regions of interest</article-title>. <source>NeuroImage</source>. <year>2006</year>;<volume>31</volume>(<issue>3</issue>):<fpage>968</fpage>–<lpage>980</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2006.01.021" xlink:type="simple">10.1016/j.neuroimage.2006.01.021</ext-link></comment> <object-id pub-id-type="pmid">16530430</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gerhard</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Daducci</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lemkaddem</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Meuli</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Thiran</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Hagmann</surname> <given-names>P</given-names></name>. <article-title>The Connectome Viewer Toolkit: an open source framework to manage, analyze, and visualize connectomes</article-title>. <source>Front Neuroinform</source>. <year>2011</year>;<volume>5</volume>:<fpage>e3</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Honey</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Cammoun</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gigandet</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Thiran</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Meuli</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>Predicting human resting-state functional connectivity from structural connectivity</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2009</year>;<volume>106</volume>(<issue>6</issue>):<fpage>2035</fpage>–<lpage>2040</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0811168106" xlink:type="simple">10.1073/pnas.0811168106</ext-link></comment> <object-id pub-id-type="pmid">19188601</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="other">Pircalabelu E, Claeskens G, Jahfari S, Waldorp LJ. Focused Information Criterion for Graphical Models in fMRI connectivity with high-dimensonal data. Ann Appl Stat. under revision;.</mixed-citation>
+</ref>
+<ref id="pone.0129074.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bullmore</surname> <given-names>ET</given-names></name>, <name name-style="western"><surname>Bassett</surname> <given-names>DS</given-names></name>. <article-title>Brain graphs: graphical models of the human brain connectome</article-title>. <source>Annu Rev Clin Psychol</source>. <year>2011</year>;<volume>7</volume>:<fpage>113</fpage>–<lpage>140</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev-clinpsy-040510-143934" xlink:type="simple">10.1146/annurev-clinpsy-040510-143934</ext-link></comment> <object-id pub-id-type="pmid">21128784</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Langford</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Schwertman</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Owens</surname> <given-names>M</given-names></name>. <article-title>Is the property of being positively correlated transitive?</article-title> <source>Am Stat</source>. <year>2001</year>;<volume>55</volume>(<issue>4</issue>):<fpage>322</fpage>–<lpage>325</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1198/000313001753272286" xlink:type="simple">10.1198/000313001753272286</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Buckner</surname> <given-names>RL</given-names></name>, <name name-style="western"><surname>Vincent</surname> <given-names>JL</given-names></name>. <article-title>Unrest at rest: Default activity and spontaneous network correlations</article-title>. <source>NeuroImage</source>. <year>2007</year>;<volume>37</volume>(<issue>4</issue>):<fpage>1091</fpage>—<lpage>1096</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2007.01.010" xlink:type="simple">10.1016/j.neuroimage.2007.01.010</ext-link></comment> <object-id pub-id-type="pmid">17368915</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Damoiseaux</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Rombouts</surname> <given-names>SARB</given-names></name>, <name name-style="western"><surname>Barkhof</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Scheltens</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Stam</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>SM</given-names></name>, <etal>et al</etal>. <article-title>Consistent resting-state networks across healthy subjects</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2006</year>;<volume>103</volume>:<fpage>13848</fpage>–<lpage>13853</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0601417103" xlink:type="simple">10.1073/pnas.0601417103</ext-link></comment> <object-id pub-id-type="pmid">16945915</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref055">
+<label>55</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Greicius</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Supekar</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Menon</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Dougherty</surname> <given-names>RF</given-names></name>. <article-title>Resting-State Functional Connectivity Reflects Structural Connectivity in the Default Mode Network</article-title>. <source>Cerebral Cortex</source>. <year>2009</year>;<volume>19</volume>(<issue>1</issue>):<fpage>72</fpage>–<lpage>78</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhn059" xlink:type="simple">10.1093/cercor/bhn059</ext-link></comment> <object-id pub-id-type="pmid">18403396</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref056">
+<label>56</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>van den Heuvel</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Mandl</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Kahn</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Pol</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Hilleke</surname> <given-names>E</given-names></name>. <article-title>Functionally linked resting-state networks reflect the underlying structural connectivity architecture of the human brain</article-title>. <source>Human brain mapping</source>. <year>2009</year>;<volume>30</volume>(<issue>10</issue>):<fpage>3127</fpage>–<lpage>3141</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.20737" xlink:type="simple">10.1002/hbm.20737</ext-link></comment> <object-id pub-id-type="pmid">19235882</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref057">
+<label>57</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Van Den Heuvel</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Hulshoff Pol</surname> <given-names>HE</given-names></name>. <article-title>Exploring the brain network: a review on resting-state fMRI functional connectivity</article-title>. <source>European Neuropsychopharmacology</source>. <year>2010</year>;<volume>20</volume>(<issue>8</issue>):<fpage>519</fpage>–<lpage>534</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.euroneuro.2010.03.008" xlink:type="simple">10.1016/j.euroneuro.2010.03.008</ext-link></comment> <object-id pub-id-type="pmid">20471808</object-id></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref058">
+<label>58</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Meinshausen</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Bühlmann</surname> <given-names>P</given-names></name>. <article-title>High-dimensional graphs and variable selection with the lasso</article-title>. <source>Ann Stat</source>. <year>2006</year>;<volume>34</volume>(<issue>3</issue>):<fpage>1436</fpage>–<lpage>1462</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/009053606000000281" xlink:type="simple">10.1214/009053606000000281</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0129074.ref059">
+<label>59</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>de Jong</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Davidson</surname> <given-names>J</given-names></name>. <article-title>Consistency of kernel estimators of heteroscedastic and autocorrelated covariance matrices</article-title>. <source>Econometrica</source>. <year>2000</year>;<volume>68</volume>(<issue>2</issue>):<fpage>407</fpage>–<lpage>423</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/1468-0262.00115" xlink:type="simple">10.1111/1468-0262.00115</ext-link></comment></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

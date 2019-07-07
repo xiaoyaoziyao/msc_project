@@ -1,0 +1,1225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-49866</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0094249</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Computational biology</subject></subj-group><subj-group><subject>Ecology</subject><subj-group><subject>Community ecology</subject><subj-group><subject>Community structure</subject></subj-group></subj-group><subj-group><subject>Biodiversity</subject><subject>Microbial ecology</subject></subj-group></subj-group><subj-group><subject>Genetics</subject><subj-group><subject>Genomics</subject><subj-group><subject>Metagenomics</subject></subj-group></subj-group></subj-group><subj-group><subject>Microbiology</subject></subj-group><subj-group><subject>Molecular biology</subject><subj-group><subject>Molecular biology techniques</subject><subj-group><subject>Sequencing techniques</subject><subj-group><subject>Genome sequencing</subject><subject>Sequence analysis</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Ecology and environmental sciences</subject></subj-group></article-categories>
+<title-group>
+<article-title>Analysis, Optimization and Verification of Illumina-Generated 16S rRNA Gene Amplicon Surveys</article-title>
+<alt-title alt-title-type="running-head">Testing Congruence of 454 and Illumina 16S Surveys</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nelson</surname><given-names>Michael C.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Morrison</surname><given-names>Hilary G.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Benjamino</surname><given-names>Jacquelynn</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Grim</surname><given-names>Sharon L.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Graf</surname><given-names>Joerg</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Department of Molecular and Cell Biology, University of Connecticut, Storrs, Connecticut, United States of America</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Josephine Bay Paul Center, Marine Biological Laboratory, Woods Hole, Massachusetts, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Heimesaat</surname><given-names>Markus M.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Charité, Campus Benjamin Franklin, Germany</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">joerg.graf@uconn.edu</email></corresp>
+<fn fn-type="conflict"><p>The authors declare that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: MCN HGM JG. Performed the experiments: MCN JB SLG. Analyzed the data: MCN JB. Wrote the paper: MCN HGM JB JG.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>10</day><month>4</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>4</issue>
+<elocation-id>e94249</elocation-id>
+<history>
+<date date-type="received"><day>4</day><month>12</month><year>2013</year></date>
+<date date-type="accepted"><day>12</day><month>3</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Nelson et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>The exploration of microbial communities by sequencing 16S rRNA genes has expanded with low-cost, high-throughput sequencing instruments. Illumina-based 16S rRNA gene sequencing has recently gained popularity over 454 pyrosequencing due to its lower costs, higher accuracy and greater throughput. Although recent reports suggest that Illumina and 454 pyrosequencing provide similar beta diversity measures, it remains to be demonstrated that pre-existing 454 pyrosequencing workflows can transfer directly from 454 to Illumina MiSeq sequencing by simply changing the sequencing adapters of the primers. In this study, we modified 454 pyrosequencing primers targeting the V4-V5 hyper-variable regions of the 16S rRNA gene to be compatible with Illumina sequencers. Microbial communities from cows, humans, leeches, mice, sewage, and termites and a mock community were analyzed by 454 and MiSeq sequencing of the V4-V5 region and MiSeq sequencing of the V4 region. Our analysis revealed that reference-based OTU clustering alone introduced biases compared to <italic>de novo</italic> clustering, preventing certain taxa from being observed in some samples. Based on this we devised and recommend an analysis pipeline that includes read merging, contaminant filtering, and reference-based clustering followed by <italic>de novo</italic> OTU clustering, which produces diversity measures consistent with <italic>de novo</italic> OTU clustering analysis. Low levels of dataset contamination with Illumina sequencing were discovered that could affect analyses that require highly sensitive approaches. While moving to Illumina-based sequencing platforms promises to provide deeper insights into the breadth and function of microbial diversity, our results show that care must be taken to ensure that sequencing and processing artifacts do not obscure true microbial diversity.</p>
+</abstract>
+<funding-group><funding-statement>This work was partially funded by an Emerging Frontiers in Research and Innovation – Multicellular and Inter-kingdom Signaling (EFRI-MIKS) grant awarded by the US National Science Foundation to Joerg Graf and NIH RO1 GM095390 to JG and HGM. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="14"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The field of microbial ecology relies on knowledge about the structure and composition of microbial communities as a foundation for understanding their role and function. Culture-independent analyses, which allow the identification of species that are recalcitrant to cultivation, continue to have a large impact on our understanding of microbial communities since the first studies of 5S rRNA sequences by Stahl et al. in the mid 1980s <xref ref-type="bibr" rid="pone.0094249-Stahl1">[1]</xref>, <xref ref-type="bibr" rid="pone.0094249-Stahl2">[2]</xref>. While many consider full length sequences generated by Sanger sequencing of 16S rRNA clone libraries to be the gold standard for phylogenetic analysis, even the largest studies typically analyzed no more than a few hundred to a thousand sequences for each sample due to the costly and labor intensive process this method entails <xref ref-type="bibr" rid="pone.0094249-Rivire1">[3]</xref>–<xref ref-type="bibr" rid="pone.0094249-Ley1">[5]</xref>. In the early 2000s, the development and commercial availability of high-throughput sequencing platforms capable of producing hundreds of thousands to millions of sequences per run at a significantly lower cost than Sanger sequencing led to a revolution in the field of microbial ecology.</p>
+<p>Microbial ecologists quickly adopted high-throughput pyrosequencing instruments produced by Roche 454 Life Sciences for sequencing 16S rRNA genes, which led to the discovery of what has been termed the “rare biosphere” and provided a deeper and more thorough view of the composition of a vast number of microbial communities from a wide range of habitats <xref ref-type="bibr" rid="pone.0094249-Costello1">[6]</xref>–<xref ref-type="bibr" rid="pone.0094249-Human1">[10]</xref>. Since its introduction, most investigators have preferred 454 pyrosequencing for microbial diversity projects due to the longer read lengths that the 454 pyrosequencing platform provided relative to competing sequencing instruments from Illumina and others. While capable of producing longer reads lengths than competing technologies, 454 pyrosequencing produces datasets that exhibit characteristic errors associated with insertions/deletions (indels) in stretches of identical nucleotides (homopolymers) <xref ref-type="bibr" rid="pone.0094249-Huse1">[11]</xref>. These systematic errors must be removed or corrected using time consuming and computationally intensive software packages prior to further analysis <xref ref-type="bibr" rid="pone.0094249-Huse2">[12]</xref>–<xref ref-type="bibr" rid="pone.0094249-Reeder1">[14]</xref>.</p>
+<p>Compared to 454 pyrosequencing, the Illumina sequencing-by-synthesis (SBS) methodology has a lower per-base error rate and is not as susceptible to indel errors in homopolymer stretches <xref ref-type="bibr" rid="pone.0094249-Loman1">[15]</xref>, <xref ref-type="bibr" rid="pone.0094249-Jnemann1">[16]</xref>. The significantly higher sequence quality of Illumina generated sequences, combined with a much lower cost per sequence compared to 454 pyrosequencing, has spurred a number of researchers to develop strategies to sequence 16S rRNA gene amplicons using Illumina systems <xref ref-type="bibr" rid="pone.0094249-Bartram1">[17]</xref>–<xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref>. Although initial studies suggested that Illumina-based 16S sequencing produced data of lower quality than 454 pyrosequencing <xref ref-type="bibr" rid="pone.0094249-Degnan1">[19]</xref>, adjustments to the library preparation and sequencing protocols have produced datasets with significantly higher quality than 454 pyrosequencing <xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref>, <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref>. While Illumina instruments historically generated short sequences of 30–100 bp, increases in the maximum read length on the Illumina MiSeq platform [2×300 bp paired end sequencing as of this writing) allow the sequencing of amplicons of similar length to those traditionally used in 454 pyrosequencing studies. Additionally, the length and quality of Illumina sequenced amplicons can be increased by aligning and combining each set of paired end reads into a single contig, a process generally referred to as read merging. This allows researchers using the Illumina MiSeq to produce merged sequences with an average length similar to those generated by 454 pyrosequencing but of significantly higher quality and at a lower cost per sequence <xref ref-type="bibr" rid="pone.0094249-Bartram1">[17]</xref>, <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref>, <xref ref-type="bibr" rid="pone.0094249-Eren1">[23]</xref>.</p>
+<p>While some previous studies have compared the results of 454 pyrosequencing and Illumina sequencing for both metagenomic libraries and 16S amplicons <xref ref-type="bibr" rid="pone.0094249-Caporaso2">[24]</xref>–<xref ref-type="bibr" rid="pone.0094249-Luo1">[26]</xref>, these studies mostly focused on comparing beta diversity measures to see if the two sequencing technologies produced similar comparisons between different samples. As such, finer details concerning whether Illumina-based 16S sequencing can serve as a replacement for users currently using 454 pyrosequencing have yet to be fully explored. In this study we generated amplicon libraries of the V4-V5 hyper-variable regions of the 16S rRNA gene for 6 natural microbial communities and a synthetic mock community using the same 16S rRNA gene template primers, which were sequenced using either a 454 GS FLX or Illumina MiSeq. Additionally, libraries for the V4 hyper-variable region alone were generated and sequenced on the MiSeq using the protocol described by Caporaso et al. <xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref> We examined multiple combinations of data processing methods involving OTU clustering and chimera detection to identify a combination that provides both processing efficiency and accuracy. Using this processing method we analyzed the resulting datasets and compared the results of alpha and beta diversity analyses to evaluate whether the choice of sequencing platform led to significant differences that could bias the interpretation of the results.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Sample descriptions</title>
+<p>We chose five samples, representing diverse host-associated microbial communities, for analysis: stool from an adult human (sample Human), contents of the intestinum of the medicinal leech <italic>Hirudo verbana</italic> (sample Leech), contents from the small intestine of a healthy mouse (sample Mouse), the non-adherent microbial fraction obtained from rumen contents of a dairy cow (sample Rumen) and the hindgut contents from the eastern subterranean termite <italic>Reticulitermes flavipes</italic> (sample Termite). Mixed liquor from the municipal waste water treatment facility located on the University of Connecticut, Storrs campus (sample Sewage) was included as a complex, high-diversity environmental microbial community. We also included a synthetic mock community (sample Mock) which was developed by the Human Microbiome Project (HMP) and includes the following 20 bacterial species in equal concentration according to ribosomal copy number: <italic>Acinetobacter baumannii</italic> str. 5377, <italic>Actinomyces odontolyticus</italic> str. 1A.21, <italic>Bacillus cereus</italic> str. NRS 248, <italic>Bacteroides vulgatus</italic> str. NCTC 11154, <italic>Clostridium beijerinckii</italic> str. NCIMB 8052, <italic>Deinococcus radiodurans</italic> str. R1 (smooth), <italic>Enterococcus faecalis</italic> str. OG1RF, <italic>Escherichia coli</italic> str. K12 substr. MG1655, <italic>Helicobacter pylori</italic> str. 26695, <italic>Lactobacillus gasseri</italic> str. 63 AM, <italic>Listeria monocytogenes</italic> str. EGDe, <italic>Neisseria meningitidis</italic> str. MC58, <italic>Propionibacterium acnes</italic> str. KPA171202, <italic>Pseudomonas aeruginosa</italic> str. PAO1-LAC, <italic>Rhodobacter sphaeroides</italic> str. ATH 2.4.1, <italic>Staphylococcus aureus</italic> TCH1516, <italic>Staphylococcus epidermidis</italic> FDA str. PCI 1200, <italic>Streptococcus agalactiae</italic> str. 2603 V/R, <italic>Streptococcus mutans</italic> str. UA159, and <italic>Streptococcus pneumoniae</italic> str. TIGR4. For the 454 library, an earlier version of the HMP mock community was used that comprised the same 20 species plus <italic>Porphyromonas gingivalis</italic> str. 2561. The RBB+C protocol described by Yu and Morrison <xref ref-type="bibr" rid="pone.0094249-Yu1">[27]</xref> was used to isolate high quality genomic DNA from all samples except the human stool and mock community. The mock community DNA was obtained from BEI Resources (catalog number HM-276D, Genomic DNA from Microbial Mock Community B, even concentration).</p>
+<p>Vincent Young (University of Michigan) generously provided the human stool DNA from an anonymous female donor. The University of Connecticut (UConn) IRB committee determined that our research did not require IRB approval for our use of this sample as it was previously collected under an IRB approved protocol and the donor gave consent for its use in subsequent studies such as ours. The rumen and mouse samples were collected as part of IACUC approved studies being conducted at the University of Connecticut that are not a part of this current study. The UConn IACUC committee determined that this study did not require separate approval for the use of these samples as they were collected under approved protocols as part of ongoing research programs and not at the specific request of the authors. Leeches were purchased from Leeches USA, an approved supplier of medicinal leeches and termites were purchased from CT Valley Biological Supply. No specific permits or permissions were required for the acquisition of the sewage sample.</p>
+</sec><sec id="s2b">
+<title>Library preparation</title>
+<p>We used primers previously designed to amplify the V4-V5 hyper-variable regions of the 16S rRNA gene to generate the 454 and Illumina libraries using fusion primer designs appropriate for the respective sequencing platforms (<xref ref-type="table" rid="pone-0094249-t001">Table 1</xref>) <xref ref-type="bibr" rid="pone.0094249-Marteinsson1">[28]</xref>. The 16S template binding sequence was identical between both sets of fusion primers, with the 454 fusion primers following the standard format used by the Marine Biological Laboratory (MBL) and the Illumina fusion primers using the format described by Bartram et al. <xref ref-type="bibr" rid="pone.0094249-Bartram1">[17]</xref>. Libraries for all seven samples were prepared and sequenced by 454 pyrosequencing at the MBL's Josephine Bay Paul Center according to their standard protocols on a GS FLX using Titanium sequencing chemistry <xref ref-type="bibr" rid="pone.0094249-Marteinsson1">[28]</xref>.</p>
+<table-wrap id="pone-0094249-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.t001</object-id><label>Table 1</label><caption>
+<title>Library construction primer sequences.</title>
+</caption><alternatives><graphic id="pone-0094249-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sequencing Instrument</td>
+<td align="left" rowspan="1" colspan="1">16S Variable Region(s)</td>
+<td align="left" rowspan="1" colspan="1">Name</td>
+<td align="left" rowspan="1" colspan="1">Primer Sequence 5'-3'<xref ref-type="table-fn" rid="nt101">A</xref></td>
+<td align="left" rowspan="1" colspan="1">Length</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Roche 454</td>
+<td align="left" rowspan="1" colspan="1">V4-V5</td>
+<td align="left" rowspan="1" colspan="1">454-518F</td>
+<td align="left" rowspan="1" colspan="1"><underline>GCCTCCCTCGCGCCATCAG</underline>XXXXX<bold>CCAGCAGCYGCGGTA</bold>AN</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GS FLX</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">454-926R-1</td>
+<td align="left" rowspan="1" colspan="1"><underline>GCCTTGCCAGCCCGCTCAG</underline><bold>CCGTCAATTCNTTTRAGT</bold></td>
+<td align="left" rowspan="1" colspan="1">37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">454-926R-3</td>
+<td align="left" rowspan="1" colspan="1"><underline><named-content content-type="gene" xlink:type="simple">GCCTTGCCAGCCCGCTCAG</named-content></underline><named-content content-type="gene" xlink:type="simple"><bold>CCGTCAATTTCTTTGAGT</bold></named-content></td>
+<td align="left" rowspan="1" colspan="1">37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">454-926R-4</td>
+<td align="left" rowspan="1" colspan="1"><underline>GCCTTGCCAGCCCGCTCAG</underline><bold>CCGTCTATTCCTTTGANT</bold></td>
+<td align="left" rowspan="1" colspan="1">37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Illumina</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Iv4v5-518F</td>
+<td align="left" rowspan="1" colspan="1"><underline>CAAGCAGAAGACGGCATACGAGATXXXXXXGTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT</underline><bold>CCAGCAGCYGCGG</bold>TAAN</td>
+<td align="left" rowspan="1" colspan="1">81</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">MiSeq</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Iv4v5-926R-1</td>
+<td align="left" rowspan="1" colspan="1"><underline>AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT</underline><italic>NNNN</italic><bold>CCGTCAATTCNTTTRAGT</bold></td>
+<td align="left" rowspan="1" colspan="1">80</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Iv4v5-926R-3</td>
+<td align="left" rowspan="1" colspan="1"><underline>AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT</underline><italic>NNNN</italic><bold>CCGTCAATTTCTTTGAGT</bold></td>
+<td align="left" rowspan="1" colspan="1">80</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Iv4v5-926R-4</td>
+<td align="left" rowspan="1" colspan="1"><underline>AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT</underline><italic>NNNN</italic><bold>CCGTCTATTCCTTTGANT</bold></td>
+<td align="left" rowspan="1" colspan="1">80</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">V4</td>
+<td align="left" rowspan="1" colspan="1">Iv4-515f</td>
+<td align="left" rowspan="1" colspan="1"><underline>AATGATACGGCGACCACCGAGATCTACAC</underline>TATGGTAATTGT<bold>GTGCCAGCMGCCGCGGTAA</bold></td>
+<td align="left" rowspan="1" colspan="1">60</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Iv4-806r</td>
+<td align="left" rowspan="1" colspan="1"><underline>CAAGCAGAAGACGGCATACGAGAT</underline>XXXXXXXXXXXXAGTCAGTCAGCC<bold>GGACTACHVGGGTWTCTAAT</bold></td>
+<td align="left" rowspan="1" colspan="1">68</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label>A</label><p>For all primers sets, the 16S template specific sequences are given in bold. For the 454 primers, the Xs in the forward represent the 5 bp run-key defined by the MBL with the underlined portion representing the 454 Lib A (forward primer) or Lib B (reverse primers) adapter sequence. Underlined portions of the Illumina primers represent the full TruSeq adapter sequence (V4-V5 primers) or a truncated version (V4). The N-bases in italics for the V4-V5 primers represent the 4 base ambiguous mix in between the TruSeq adapter sequence and the 16S template sequence. The Xs in the V4-V5 forward primer represent the sequence of one of the 6 bp TruSeq indices defined by Illumina while in the V4 forward primer they represent the 12 base Golay encoding barcode as defined by Caporaso et al.</p></fn></table-wrap-foot></table-wrap>
+<p>The Illumina sequencing libraries were all prepared and sequenced at the University of Connecticut. We prepared two sets of V4-V5 Illumina libraries for the six natural community samples at two separate times. The first set of libraries was prepared following the same protocol used for the 454 pyrosequencing libraries, with the PCR product for each sample gel purified prior to pooling and sequencing. The PCR products for the second set of V4-V5 Illumina libraries and the mock community libraries were purified using a 0.6X PCR volume of AMPure XP magnetic beads following the manufacturer's instructions. Additionally, we prepared libraries for the V4 hyper-variable region according to the protocol described by Caporaso et al. <xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref>. The Illumina libraries were sequenced on separate runs of a MiSeq using a 2×250 bp paired end protocol.</p>
+</sec><sec id="s2c">
+<title>Sequence pre-processing</title>
+<p>The V4-V5 454 pyrosequencing datasets were pre-processed prior to QIIME analysis in accordance with the in-house processing pipeline used by the MBL for 454 pyrosequencing analysis. Sequences had to possess the full index and forward primer sequence with no errors present in either, have zero ambiguous bases over the entire length of the read, and be longer than 300 bp after trimming of the index and forward primer sequences in order to be retained after demultiplexing with QIIME <xref ref-type="bibr" rid="pone.0094249-Caporaso3">[29]</xref>. After demultiplexing, the 454 sequences were denoised using the QIIME Denoiser according to the QIIME standard protocol. The V4-V5 Illumina datasets were initially demultiplexed using MiSeq Reporter v2.0. The sequences corresponding to the forward and reverse primers were trimmed from the demultiplexed reads using cutadapt (<ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/cutadapt/" xlink:type="simple">http://code.google.com/p/cutadapt/</ext-link>) using similar stringency settings to those used for the 454 sequences. The trimmed read pairs were then merged into single contigs using SeqPrep (<ext-link ext-link-type="uri" xlink:href="https://github.com/jstjohn/SeqPrep" xlink:type="simple">https://github.com/jstjohn/SeqPrep</ext-link>) followed by a length-filtering step prior to analysis with QIIME. The Illumina V4 read pairs were merged and length filtered in a similar manner as the V4-V5 reads to form single contigs prior to being demultiplexed with QIIME. Reads from all datasets were quality filtered using a <italic>Q</italic>20 minimum value during demultiplexing. In order to ensure an even treatment and comparison of all sequence datasets for the seven sample sources, the demultiplexed sequences for all datasets were combined and processed as a single bulk dataset for QIIME analyses.</p>
+</sec><sec id="s2d">
+<title>QIIME analysis</title>
+<p>We used QIIME versions 1.6 and 1.7 to perform OTU clustering and alpha and beta diversity analyses <xref ref-type="bibr" rid="pone.0094249-Caporaso3">[29]</xref>. Reference-based OTU clustering was done using the parallel uclust_ref method while <italic>de novo</italic> OTU clustering was done with standard uclust, using the default options as implemented in QIIME for both methods at the 97% similarity level. For reference OTU clustering and <italic>de novo</italic> OTU alignment we used the V4-V5 section of the 97% clustered Greengenes reference OTU NAST alignment <xref ref-type="bibr" rid="pone.0094249-DeSantis1">[30]</xref>, <xref ref-type="bibr" rid="pone.0094249-McDonald1">[31]</xref>. The 2012–10 Greengenes database release was used initially as this was the current version when analysis began. After the 2013–08 release became available, all processing was re-run with the new release, allowing us to examine the effect of the reference itself on data analysis and interpretation. Taxonomy assignments were made using the RDP Classifier after retraining against the above mentioned Greengenes reference sequences and their respective taxonomy files as recommended by Werner et al <xref ref-type="bibr" rid="pone.0094249-Werner1">[32]</xref>. Chimera checking was performed using ChimeraSlayer with standard options as implemented in QIIME against the V4-V5 region of the Greengenes reference alignment.</p>
+<p>A more detailed description of our creation of the V4-V5 specific Greengenes reference files and the different QIIME processing methods used is provided in the supplementary methods (<xref ref-type="supplementary-material" rid="pone.0094249.s005">File S1</xref>). The scripts (denovo.sh, Ref.sh, RDS.sh) used for QIIME analysis are also included the supplementary material (<xref ref-type="supplementary-material" rid="pone.0094249.s006">File S2</xref>).</p>
+</sec><sec id="s2e">
+<title>Data availability</title>
+<p>The sequence data generated and used in this study were deposited in the European Nucleotide Archive SRA under project ID PRJEB4688.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>We conducted a comparison of 454 pyrosequencing and Illumina sequencing of 16S amplicons by analyzing four different sequencing libraries for six different natural microbial community samples: the V4 hyper-variable region sequenced on an Illumina MiSeq (V4.I), a V4-V5 Illumina library that was gel-purified (V4V5.Ia), a second V4-V5 Illumina library that was AMPure purified (V4V5.Ib), and a V4-V5 454 pyrosequencing library (V4V5.454). We also analyzed one V4-V5 454 library and two replicate V4 and V4-V5 Illumina libraries for a synthetic mock community. As one of the stated advantages of Illumina sequencing is a lower error rate compared to 454 pyrosequencing <xref ref-type="bibr" rid="pone.0094249-Loman1">[15]</xref>, <xref ref-type="bibr" rid="pone.0094249-Jnemann1">[16]</xref>, we first compared the overall quality of the sequences generated from each sequencing run. While these values represent predicted rather than absolute error rates, they are the most commonly used proxy for examining sequence quality and thus one of the primary metrics used in data pre-processing. The median PHRED quality score (<italic>Q</italic>-score) for each base over the length of a read had an average value of <italic>Q</italic>39 in the V4V5.454 datasets (<xref ref-type="fig" rid="pone-0094249-g001">Figure 1</xref>) and represented the standard to which the Illumina datasets were compared. As the error rate of Illumina sequences increases at the 3′ ends of each read, as indicated by a drop in <italic>Q</italic>-scores, we merged the paired Illumina reads to form a single consensus contig prior to quality and QIIME analysis. This process serves to minimize the effects of sequencing errors by forming a consensus sequence from the overlapping ends of the reads as previously demonstrated <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref>. The median <italic>Q</italic>-score for each base of the consensus contig after read merging was similar to or greater than that of the 454 dataset (<xref ref-type="fig" rid="pone-0094249-g001">Figure 1</xref>), demonstrating that by merging the paired Illumina sequencing reads we could produce single contigs of similar length as 454 pyrosequencing but of higher average quality. Additionally, improvements to Illumina's Real Time Analysis (RTA) base-calling software that occurred during this study have resulted in significantly higher <italic>Q</italic>-scores for bases later in a read, which correspond to greater confidence in base-calling. This improvement can be seen in the reads from the V4V5.Ib dataset, which have higher median <italic>Q</italic>-scores for bases in the overlap region than the V4V5.Ia dataset, which was sequenced using an earlier version of the RTA software (<xref ref-type="fig" rid="pone-0094249-g001">Figure 1</xref>). Additional improvements from Illumina regarding MiSeq read lengths and on-instrument data analysis now suggest that merging paired reads from longer amplicons, such as those covering the V1-V3 regions are now feasible. Overall, after read merging a greater proportion of reads from the Illumina sequencing runs was retained after demultiplexing compared to the V4V5.454 data when using the same quality threshold of <italic>Q</italic>20 (data not shown).</p>
+<fig id="pone-0094249-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.g001</object-id><label>Figure 1</label><caption>
+<title>Comparison of 454 and Illumina sequence quality.</title>
+<p>Plot depicting the median per base PHRED quality scores (<italic>Q</italic> score) for the full length 454 and merged Illumina reads from the six natural community samples. The V4 data is shown in orange, the first V4-V5 Illumina run (V4V5.Ia) is in light green, the second run (V4V5.Ib) is in dark green, and the 454 data is in blue. The size and over-lapping regions of the V4 and V4-V5 Illumina amplicons is shown in black below the quality plots. Illumina sequencing read 1 is depicted as a solid line while read 2 is dashed, with arrow heads depicting the direction of the read in reference to the <italic>E. coli</italic> base position given along the X axis.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.g001" position="float" xlink:type="simple"/></fig><sec id="s3a">
+<title>Low-levels of dataset contamination occur in Illumina sequencing</title>
+<p>While we observed that overall read quality was higher in the Illumina datasets compared to the 454 pyrosequencing dataset, during our analyses we identified a small percentage of reads in the Illumina datasets that did not belong in the demultiplexed dataset for a given sample, a result that we did not observe in any of the 454 datasets. The source of these reads could be assigned to two separate issues that are particular to Illumina sequencing systems and especially for the MiSeq. The first source of these incorrect reads was the carry-over of samples from a previous sequencing run into the subsequent sequencing run. This occurs when samples from a previous run persist in the fluidics lines of the system and become mixed with new samples in subsequent sequencing runs <xref ref-type="bibr" rid="pone.0094249-Illumina1">[33]</xref>. If identical indices are used in consecutive sequencing runs, then the carry-over of reads from a previous library can artificially suggest the presence of low abundance OTUs that are not truly present in a subsequent sample.</p>
+<p>The second source of incorrect reads that we identified was from other libraries that were sequenced during the same sequencing run. This was most noticeable for the V4V5.Ib datasets, which we sequenced at the same time as amplicon libraries created for non-ribosomal genes. Both the 16S V4V5.Ib and non-ribosomal libraries featured different six base TruSeq indices and we determined that ∼0.06% of reads in the 16S libraries were sequences from the non-ribosomal amplicon libraries. This was the first time that the non-ribosomal libraries were sequenced, thus the contamination could not have been due to carry-over contamination of the fluidics lines from a previous run as noted above. In addition, the 16S and non-ribosomal libraries were prepared completely independently of each other and were only pooled immediately before loading into the MiSeq, eliminating the chances of contamination during library preparation. After consultation with Illumina representatives, we assume that this result is due to sequencing and/or image analysis errors during the index sequencing phase of the MiSeq run, which occurs as a separate step in the sequencing process, and likely caused a small number of amplicons from one library to be incorrectly assigned an index corresponding to another library. While we could adequately identify the contaminating non-ribosomal sequences and remove them from our 16S datasets before proceeding with downstream analyses, this finding suggests that a similar level of index misassignment could occur between different 16S libraries when sequenced on the same run, which will artificially inflate alpha diversity measures and bias the interpretation of results when investigating low abundance OTUs.</p>
+<p>In addition to index misassignment and/or sample carryover of similarly indexed libraries, we also identified reads from the ΦX174 (phiX) genome in all of the raw Illumina datasets. These reads originated from the unindexed phiX control library that is added to Illumina sequencing runs as an inline control library and could not have resulted from contamination during library construction. Formerly, the sequencing of 16S amplicons on the MiSeq required phiX to comprise 50–90% of the run's throughput, as was done when we sequenced the V4.I and V4V5.Ia libraries. Upgrades to the MiSeq's RTA base-calling software (since version 2.2) have reduced the amount of phiX that is recommended to be added to amplicon sequencing runs to only 2–5%, however phiX reads were still observed in the raw V4V5.Ib datasets which we sequenced with the upgraded RTA software and only 2.5% phiX. In order to prevent the presence of phiX reads in the Illumina datasets from biasing our downstream analyses, we incorporated a step in our Illumina pre-processing pipelines to identify and remove these reads prior to analysis with QIIME.</p>
+</sec><sec id="s3b">
+<title>Determining optimal OTU clustering method</title>
+<p>As Illumina sequencing with the MiSeq generally produces at least 10 times more sequences than 454 pyrosequencing, recent publications discussing Illumina 16S amplicon sequencing have used and recommended reference-based OTU clustering methods to enable users to quickly process their data <xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref>. While reference OTU clustering has been used for the analysis of 454 data, many investigators still choose <italic>de novo</italic> OTU clustering methods for 454 data analysis as this method recovers OTUs not found in reference datasets. Thus we examined what effect these two clustering methods had on data analysis and the interpretation of the results. We performed <italic>de novo</italic> OTU clustering of the bulk dataset using standard QIIME methods for processing pyrosequencing data with uclust used for OTU clustering and chimera checking performed with ChimeraSlayer, while reference OTU clustering was performed with the parallel version of uclust_ref against the Greengenes 2012–10 reference as that was the current Greengenes release at the time. These two clustering methods yielded very different results, with the number of OTUs observed and the number of sequences assigned to an OTU being lower when performing reference-based clustering than <italic>de novo</italic> clustering for the same dataset (<xref ref-type="supplementary-material" rid="pone.0094249.s003">Table S1</xref>, <xref ref-type="fig" rid="pone-0094249-g002">Figure 2a</xref>).</p>
+<fig id="pone-0094249-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.g002</object-id><label>Figure 2</label><caption>
+<title>The RDS processing method replicates <italic>de novo</italic> OTU clustering better than reference-based clustering.</title>
+<p>The correlation between OTU clustering methods is shown by plotting the number of raw (a) and filtered (b) OTUs observed when using <italic>de novo</italic> OTU clustering versus reference or the RDS method. The reference-based OTU clustering results are depicted with squares while the RDS OTU clustering results are depicted with circles. Open markers indicate samples where the Greengenes 2012 reference was used while closed markers indicate samples where the Greengenes 2013 reference was used. <italic>De novo</italic> results are depicted as gray diamonds. Linear regression lines are shown for the reference and RDS datasets, with dash lines fitted to datasets processed using the Greengenes 2012–10 reference and solid lines fitted to datasets processed using the Greengenes 2013–08 reference.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.g002" position="float" xlink:type="simple"/></fig>
+<p>One of the factors that contributed to the difference between the two clustering methods was that a large number of sequences failed to be assigned to a reference OTU (<xref ref-type="supplementary-material" rid="pone.0094249.s003">Table S1</xref>). On average, only 65% of the reads for a given dataset were assigned to a reference OTU, although the scale of this effect varied dramatically between the different samples. For example, over 90% of reads from each of the human stool datasets were assigned to a reference OTU, while for the termite sample only between 30% to 40% of reads from the V4-V5 datasets were assigned to a reference OTU (<xref ref-type="supplementary-material" rid="pone.0094249.s003">Table S1</xref>). As the Greengenes 2013 release occurred as we were performing our data analyses, we repeated the reference OTU clustering using this newer reference as the 2013 release includes a greater number of reference sequences than the 2012 release. When using the Greengenes 2013 release for reference OTU clustering, we observed that a greater number of sequences were assigned to a reference OTU and a greater number of OTUs per sample observed compared to using the 2012 version. Even with this improvement over the 2012 reference, we still did not observe the same number of OTUs as in the <italic>de novo</italic> clustered datasets (<xref ref-type="supplementary-material" rid="pone.0094249.s003">Table S1</xref>, <xref ref-type="fig" rid="pone-0094249-g002">Figure 2a</xref>). This difference in the number of OTUs based on reference or <italic>de novo</italic> OTU clustering carried over into the calculation of alpha diversity measures, although beta diversity analyses, particularly those using the phylogenetic tree based weighted UniFrac metric were less affected (data not shown).</p>
+</sec><sec id="s3c">
+<title>Reference plus <italic>de novo</italic> OTU clustering with chimera checking</title>
+<p>In order to more closely replicate the results of <italic>de novo</italic> OTU clustering while retaining the processing efficiency of reference OTU clustering, we developed an analysis pipeline that first performs parallel reference OTU clustering using the 97% Greengenes OTUs as reference, followed by <italic>de novo</italic> OTU clustering and chimera checking with ChimeraSlayer of the sequences that failed to be assigned to a reference OTU. As discussed below, this reference plus <italic>de novo</italic> OTU clustering with ChimeraSlayer pipeline, which we call RDS, produced similar alpha diversity measures, taxonomic composition, and beta diversity comparison as the chimera checked <italic>de novo</italic> OTU clustering method. Unlike the similar open reference clustering method of uclust_ref implemented in QIIME, which can only run on a single processing core, this split implementation takes advantage of the ability to perform reference OTU clustering across multiple processing cores, reducing the total time for analysis and thus is more amenable to processing large Illumina datasets.</p>
+<p>We compared the number of observed OTUs and the Simpson (<italic>D</italic>), Shannon (<italic>H</italic>′) and phylogenetic distance (PD) alpha diversity metrics generated by the RDS method using each of the Greengenes references to those obtained using <italic>de novo</italic> and reference OTU clustering. Using either Greengenes reference, the number of OTUs generated using the RDS method was more similar to the number of OTUs obtained by <italic>de novo</italic> clustering than for reference OTU clustering alone (<xref ref-type="table" rid="pone-0094249-t002">Table 2</xref>, <xref ref-type="fig" rid="pone-0094249-g002">Figure 2</xref>). While the magnitude of the difference in the number of OTUs between processing methods varied for each dataset, on average the results of reference-based processing were 23.7% different from <italic>de novo</italic> while RDS processing was 12% different. When analyzed by ANOVA, the number of reference-clustered OTUs was significantly different from the results of <italic>de novo</italic> OTU clustering (p&lt;0.01) but there was no statistical difference between the RDS method and <italic>de novo</italic> (p&gt;0.05). Compared to <italic>de novo</italic> OTU clustering, the alpha diversity measures generated using the RDS clustering method had Pearson correlation coefficients closer to 1 and greater linear curve fits than the reference-clustered measures, indicating that the RDS method reproduces the results of <italic>de novo</italic> OTU clustering better than reference-based OTU clustering alone.</p>
+<table-wrap id="pone-0094249-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.t002</object-id><label>Table 2</label><caption>
+<title>Comparisons of alpha diversity metrics produced from different processing methods.</title>
+</caption><alternatives><graphic id="pone-0094249-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1"><italic>de novo</italic></td>
+<td colspan="4" align="left" rowspan="1">Reference</td>
+<td colspan="4" align="left" rowspan="1">RDS</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sample Source</td>
+<td align="left" rowspan="1" colspan="1">Library</td>
+<td align="left" rowspan="1" colspan="1">Input # Seqs</td>
+<td align="left" rowspan="1" colspan="1"># OTUs</td>
+<td align="left" rowspan="1" colspan="1"><italic>D</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>H'</italic></td>
+<td align="left" rowspan="1" colspan="1">PD</td>
+<td align="left" rowspan="1" colspan="1"># OTUs</td>
+<td align="left" rowspan="1" colspan="1"><italic>D</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>H'</italic></td>
+<td align="left" rowspan="1" colspan="1">PD</td>
+<td align="left" rowspan="1" colspan="1"># OTUs</td>
+<td align="left" rowspan="1" colspan="1"><italic>D</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>H'</italic></td>
+<td align="left" rowspan="1" colspan="1">PD</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Human stool</td>
+<td align="left" rowspan="1" colspan="1">H.v4.I</td>
+<td align="left" rowspan="1" colspan="1">93769</td>
+<td align="left" rowspan="1" colspan="1">96</td>
+<td align="left" rowspan="1" colspan="1">0.778</td>
+<td align="left" rowspan="1" colspan="1">3.098</td>
+<td align="left" rowspan="1" colspan="1">18.35</td>
+<td align="left" rowspan="1" colspan="1">73</td>
+<td align="left" rowspan="1" colspan="1">0.786</td>
+<td align="left" rowspan="1" colspan="1">3.057</td>
+<td align="left" rowspan="1" colspan="1">9.72</td>
+<td align="left" rowspan="1" colspan="1">75</td>
+<td align="left" rowspan="1" colspan="1">0.784</td>
+<td align="left" rowspan="1" colspan="1">3.030</td>
+<td align="left" rowspan="1" colspan="1">13.08</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">32506</td>
+<td align="left" rowspan="1" colspan="1">70</td>
+<td align="left" rowspan="1" colspan="1">0.788</td>
+<td align="left" rowspan="1" colspan="1">3.099</td>
+<td align="left" rowspan="1" colspan="1">11.73</td>
+<td align="left" rowspan="1" colspan="1">84</td>
+<td align="left" rowspan="1" colspan="1">0.793</td>
+<td align="left" rowspan="1" colspan="1">3.224</td>
+<td align="left" rowspan="1" colspan="1">7.58</td>
+<td align="left" rowspan="1" colspan="1">83</td>
+<td align="left" rowspan="1" colspan="1">0.793</td>
+<td align="left" rowspan="1" colspan="1">3.216</td>
+<td align="left" rowspan="1" colspan="1">10.34</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1">153159</td>
+<td align="left" rowspan="1" colspan="1">97</td>
+<td align="left" rowspan="1" colspan="1">0.754</td>
+<td align="left" rowspan="1" colspan="1">2.922</td>
+<td align="left" rowspan="1" colspan="1">19.89</td>
+<td align="left" rowspan="1" colspan="1">104</td>
+<td align="left" rowspan="1" colspan="1">0.757</td>
+<td align="left" rowspan="1" colspan="1">3.033</td>
+<td align="left" rowspan="1" colspan="1">10.61</td>
+<td align="left" rowspan="1" colspan="1">103</td>
+<td align="left" rowspan="1" colspan="1">0.756</td>
+<td align="left" rowspan="1" colspan="1">3.015</td>
+<td align="left" rowspan="1" colspan="1">16.35</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">7882</td>
+<td align="left" rowspan="1" colspan="1">51</td>
+<td align="left" rowspan="1" colspan="1">0.775</td>
+<td align="left" rowspan="1" colspan="1">2.689</td>
+<td align="left" rowspan="1" colspan="1">11.70</td>
+<td align="left" rowspan="1" colspan="1">42</td>
+<td align="left" rowspan="1" colspan="1">0.772</td>
+<td align="left" rowspan="1" colspan="1">2.624</td>
+<td align="left" rowspan="1" colspan="1">6.98</td>
+<td align="left" rowspan="1" colspan="1">44</td>
+<td align="left" rowspan="1" colspan="1">0.773</td>
+<td align="left" rowspan="1" colspan="1">2.640</td>
+<td align="left" rowspan="1" colspan="1">8.75</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Leech intestinum</td>
+<td align="left" rowspan="1" colspan="1">L.v4.I</td>
+<td align="left" rowspan="1" colspan="1">118954</td>
+<td align="left" rowspan="1" colspan="1">56</td>
+<td align="left" rowspan="1" colspan="1">0.750</td>
+<td align="left" rowspan="1" colspan="1">2.836</td>
+<td align="left" rowspan="1" colspan="1">12.47</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">0.611</td>
+<td align="left" rowspan="1" colspan="1">1.903</td>
+<td align="left" rowspan="1" colspan="1">5.56</td>
+<td align="left" rowspan="1" colspan="1">37</td>
+<td align="left" rowspan="1" colspan="1">0.634</td>
+<td align="left" rowspan="1" colspan="1">2.068</td>
+<td align="left" rowspan="1" colspan="1">9.11</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">44230</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+<td align="left" rowspan="1" colspan="1">0.580</td>
+<td align="left" rowspan="1" colspan="1">1.801</td>
+<td align="left" rowspan="1" colspan="1">7.97</td>
+<td align="left" rowspan="1" colspan="1">25</td>
+<td align="left" rowspan="1" colspan="1">0.509</td>
+<td align="left" rowspan="1" colspan="1">1.377</td>
+<td align="left" rowspan="1" colspan="1">3.88</td>
+<td align="left" rowspan="1" colspan="1">37</td>
+<td align="left" rowspan="1" colspan="1">0.578</td>
+<td align="left" rowspan="1" colspan="1">1.788</td>
+<td align="left" rowspan="1" colspan="1">6.93</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.b6</td>
+<td align="left" rowspan="1" colspan="1">191369</td>
+<td align="left" rowspan="1" colspan="1">105</td>
+<td align="left" rowspan="1" colspan="1">0.623</td>
+<td align="left" rowspan="1" colspan="1">2.076</td>
+<td align="left" rowspan="1" colspan="1">21.13</td>
+<td align="left" rowspan="1" colspan="1">78</td>
+<td align="left" rowspan="1" colspan="1">0.549</td>
+<td align="left" rowspan="1" colspan="1">1.626</td>
+<td align="left" rowspan="1" colspan="1">10.23</td>
+<td align="left" rowspan="1" colspan="1">95</td>
+<td align="left" rowspan="1" colspan="1">0.620</td>
+<td align="left" rowspan="1" colspan="1">2.049</td>
+<td align="left" rowspan="1" colspan="1">18.07</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.b11</td>
+<td align="left" rowspan="1" colspan="1">171969</td>
+<td align="left" rowspan="1" colspan="1">90</td>
+<td align="left" rowspan="1" colspan="1">0.615</td>
+<td align="left" rowspan="1" colspan="1">2.006</td>
+<td align="left" rowspan="1" colspan="1">20.77</td>
+<td align="left" rowspan="1" colspan="1">63</td>
+<td align="left" rowspan="1" colspan="1">0.550</td>
+<td align="left" rowspan="1" colspan="1">1.628</td>
+<td align="left" rowspan="1" colspan="1">10.33</td>
+<td align="left" rowspan="1" colspan="1">78</td>
+<td align="left" rowspan="1" colspan="1">0.613</td>
+<td align="left" rowspan="1" colspan="1">1.986</td>
+<td align="left" rowspan="1" colspan="1">16.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">10229</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">0.697</td>
+<td align="left" rowspan="1" colspan="1">2.240</td>
+<td align="left" rowspan="1" colspan="1">6.09</td>
+<td align="left" rowspan="1" colspan="1">17</td>
+<td align="left" rowspan="1" colspan="1">0.676</td>
+<td align="left" rowspan="1" colspan="1">2.085</td>
+<td align="left" rowspan="1" colspan="1">3.04</td>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">0.697</td>
+<td align="left" rowspan="1" colspan="1">2.255</td>
+<td align="left" rowspan="1" colspan="1">5.14</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HMP Mock Even</td>
+<td align="left" rowspan="1" colspan="1">Mock.v4.I.1</td>
+<td align="left" rowspan="1" colspan="1">213043</td>
+<td align="left" rowspan="1" colspan="1">141</td>
+<td align="left" rowspan="1" colspan="1">0.932</td>
+<td align="left" rowspan="1" colspan="1">4.436</td>
+<td align="left" rowspan="1" colspan="1">15.19</td>
+<td align="left" rowspan="1" colspan="1">107</td>
+<td align="left" rowspan="1" colspan="1">0.932</td>
+<td align="left" rowspan="1" colspan="1">4.353</td>
+<td align="left" rowspan="1" colspan="1">6.65</td>
+<td align="left" rowspan="1" colspan="1">176</td>
+<td align="left" rowspan="1" colspan="1">0.937</td>
+<td align="left" rowspan="1" colspan="1">4.635</td>
+<td align="left" rowspan="1" colspan="1">16.51</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4.I.105</td>
+<td align="left" rowspan="1" colspan="1">240682</td>
+<td align="left" rowspan="1" colspan="1">143</td>
+<td align="left" rowspan="1" colspan="1">0.936</td>
+<td align="left" rowspan="1" colspan="1">4.574</td>
+<td align="left" rowspan="1" colspan="1">16.43</td>
+<td align="left" rowspan="1" colspan="1">103</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+<td align="left" rowspan="1" colspan="1">4.434</td>
+<td align="left" rowspan="1" colspan="1">6.75</td>
+<td align="left" rowspan="1" colspan="1">171</td>
+<td align="left" rowspan="1" colspan="1">0.941</td>
+<td align="left" rowspan="1" colspan="1">4.777</td>
+<td align="left" rowspan="1" colspan="1">16.19</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4v5.I.1</td>
+<td align="left" rowspan="1" colspan="1">2484</td>
+<td align="left" rowspan="1" colspan="1">99</td>
+<td align="left" rowspan="1" colspan="1">0.932</td>
+<td align="left" rowspan="1" colspan="1">4.588</td>
+<td align="left" rowspan="1" colspan="1">12.16</td>
+<td align="left" rowspan="1" colspan="1">66</td>
+<td align="left" rowspan="1" colspan="1">0.930</td>
+<td align="left" rowspan="1" colspan="1">4.487</td>
+<td align="left" rowspan="1" colspan="1">5.53</td>
+<td align="left" rowspan="1" colspan="1">125</td>
+<td align="left" rowspan="1" colspan="1">0.946</td>
+<td align="left" rowspan="1" colspan="1">5.140</td>
+<td align="left" rowspan="1" colspan="1">13.09</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4v5.I.11</td>
+<td align="left" rowspan="1" colspan="1">90126</td>
+<td align="left" rowspan="1" colspan="1">138</td>
+<td align="left" rowspan="1" colspan="1">0.941</td>
+<td align="left" rowspan="1" colspan="1">4.848</td>
+<td align="left" rowspan="1" colspan="1">14.25</td>
+<td align="left" rowspan="1" colspan="1">83</td>
+<td align="left" rowspan="1" colspan="1">0.943</td>
+<td align="left" rowspan="1" colspan="1">4.672</td>
+<td align="left" rowspan="1" colspan="1">5.96</td>
+<td align="left" rowspan="1" colspan="1">172</td>
+<td align="left" rowspan="1" colspan="1">0.958</td>
+<td align="left" rowspan="1" colspan="1">5.419</td>
+<td align="left" rowspan="1" colspan="1">15.93</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">7386</td>
+<td align="left" rowspan="1" colspan="1">36</td>
+<td align="left" rowspan="1" colspan="1">0.930</td>
+<td align="left" rowspan="1" colspan="1">4.073</td>
+<td align="left" rowspan="1" colspan="1">8.80</td>
+<td align="left" rowspan="1" colspan="1">28</td>
+<td align="left" rowspan="1" colspan="1">0.930</td>
+<td align="left" rowspan="1" colspan="1">4.059</td>
+<td align="left" rowspan="1" colspan="1">5.15</td>
+<td align="left" rowspan="1" colspan="1">39</td>
+<td align="left" rowspan="1" colspan="1">0.931</td>
+<td align="left" rowspan="1" colspan="1">4.106</td>
+<td align="left" rowspan="1" colspan="1">8.07</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Mouse small intestine</td>
+<td align="left" rowspan="1" colspan="1">M.v4.I</td>
+<td align="left" rowspan="1" colspan="1">45411</td>
+<td align="left" rowspan="1" colspan="1">61</td>
+<td align="left" rowspan="1" colspan="1">0.743</td>
+<td align="left" rowspan="1" colspan="1">2.620</td>
+<td align="left" rowspan="1" colspan="1">12.59</td>
+<td align="left" rowspan="1" colspan="1">40</td>
+<td align="left" rowspan="1" colspan="1">0.643</td>
+<td align="left" rowspan="1" colspan="1">1.890</td>
+<td align="left" rowspan="1" colspan="1">7.19</td>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="left" rowspan="1" colspan="1">0.653</td>
+<td align="left" rowspan="1" colspan="1">2.010</td>
+<td align="left" rowspan="1" colspan="1">9.60</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">24061</td>
+<td align="left" rowspan="1" colspan="1">47</td>
+<td align="left" rowspan="1" colspan="1">0.766</td>
+<td align="left" rowspan="1" colspan="1">2.739</td>
+<td align="left" rowspan="1" colspan="1">9.01</td>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">0.711</td>
+<td align="left" rowspan="1" colspan="1">2.159</td>
+<td align="left" rowspan="1" colspan="1">4.28</td>
+<td align="left" rowspan="1" colspan="1">47</td>
+<td align="left" rowspan="1" colspan="1">0.772</td>
+<td align="left" rowspan="1" colspan="1">2.859</td>
+<td align="left" rowspan="1" colspan="1">7.16</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1">155976</td>
+<td align="left" rowspan="1" colspan="1">178</td>
+<td align="left" rowspan="1" colspan="1">0.811</td>
+<td align="left" rowspan="1" colspan="1">3.042</td>
+<td align="left" rowspan="1" colspan="1">39.03</td>
+<td align="left" rowspan="1" colspan="1">132</td>
+<td align="left" rowspan="1" colspan="1">0.764</td>
+<td align="left" rowspan="1" colspan="1">2.469</td>
+<td align="left" rowspan="1" colspan="1">17.87</td>
+<td align="left" rowspan="1" colspan="1">180</td>
+<td align="left" rowspan="1" colspan="1">0.816</td>
+<td align="left" rowspan="1" colspan="1">3.204</td>
+<td align="left" rowspan="1" colspan="1">35.37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">10453</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+<td align="left" rowspan="1" colspan="1">0.761</td>
+<td align="left" rowspan="1" colspan="1">2.432</td>
+<td align="left" rowspan="1" colspan="1">9.02</td>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">0.749</td>
+<td align="left" rowspan="1" colspan="1">2.255</td>
+<td align="left" rowspan="1" colspan="1">5.49</td>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="left" rowspan="1" colspan="1">0.761</td>
+<td align="left" rowspan="1" colspan="1">2.431</td>
+<td align="left" rowspan="1" colspan="1">7.21</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Rumen content</td>
+<td align="left" rowspan="1" colspan="1">R.v4.I</td>
+<td align="left" rowspan="1" colspan="1">93881</td>
+<td align="left" rowspan="1" colspan="1">402</td>
+<td align="left" rowspan="1" colspan="1">0.986</td>
+<td align="left" rowspan="1" colspan="1">7.292</td>
+<td align="left" rowspan="1" colspan="1">67.79</td>
+<td align="left" rowspan="1" colspan="1">390</td>
+<td align="left" rowspan="1" colspan="1">0.988</td>
+<td align="left" rowspan="1" colspan="1">7.297</td>
+<td align="left" rowspan="1" colspan="1">29.91</td>
+<td align="left" rowspan="1" colspan="1">399</td>
+<td align="left" rowspan="1" colspan="1">0.987</td>
+<td align="left" rowspan="1" colspan="1">7.282</td>
+<td align="left" rowspan="1" colspan="1">57.91</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">44431</td>
+<td align="left" rowspan="1" colspan="1">372</td>
+<td align="left" rowspan="1" colspan="1">0.984</td>
+<td align="left" rowspan="1" colspan="1">7.176</td>
+<td align="left" rowspan="1" colspan="1">58.58</td>
+<td align="left" rowspan="1" colspan="1">408</td>
+<td align="left" rowspan="1" colspan="1">0.991</td>
+<td align="left" rowspan="1" colspan="1">7.586</td>
+<td align="left" rowspan="1" colspan="1">25.27</td>
+<td align="left" rowspan="1" colspan="1">420</td>
+<td align="left" rowspan="1" colspan="1">0.991</td>
+<td align="left" rowspan="1" colspan="1">7.650</td>
+<td align="left" rowspan="1" colspan="1">50.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1">217371</td>
+<td align="left" rowspan="1" colspan="1">417</td>
+<td align="left" rowspan="1" colspan="1">0.985</td>
+<td align="left" rowspan="1" colspan="1">7.284</td>
+<td align="left" rowspan="1" colspan="1">68.63</td>
+<td align="left" rowspan="1" colspan="1">440</td>
+<td align="left" rowspan="1" colspan="1">0.992</td>
+<td align="left" rowspan="1" colspan="1">7.721</td>
+<td align="left" rowspan="1" colspan="1">29.59</td>
+<td align="left" rowspan="1" colspan="1">456</td>
+<td align="left" rowspan="1" colspan="1">0.992</td>
+<td align="left" rowspan="1" colspan="1">7.776</td>
+<td align="left" rowspan="1" colspan="1">59.21</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">35527</td>
+<td align="left" rowspan="1" colspan="1">323</td>
+<td align="left" rowspan="1" colspan="1">0.985</td>
+<td align="left" rowspan="1" colspan="1">7.161</td>
+<td align="left" rowspan="1" colspan="1">59.15</td>
+<td align="left" rowspan="1" colspan="1">287</td>
+<td align="left" rowspan="1" colspan="1">0.985</td>
+<td align="left" rowspan="1" colspan="1">7.089</td>
+<td align="left" rowspan="1" colspan="1">26.56</td>
+<td align="left" rowspan="1" colspan="1">310</td>
+<td align="left" rowspan="1" colspan="1">0.986</td>
+<td align="left" rowspan="1" colspan="1">7.209</td>
+<td align="left" rowspan="1" colspan="1">51.04</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Municipal sewage</td>
+<td align="left" rowspan="1" colspan="1">S.v4.I</td>
+<td align="left" rowspan="1" colspan="1">117562</td>
+<td align="left" rowspan="1" colspan="1">375</td>
+<td align="left" rowspan="1" colspan="1">0.955</td>
+<td align="left" rowspan="1" colspan="1">6.389</td>
+<td align="left" rowspan="1" colspan="1">75.57</td>
+<td align="left" rowspan="1" colspan="1">299</td>
+<td align="left" rowspan="1" colspan="1">0.977</td>
+<td align="left" rowspan="1" colspan="1">6.561</td>
+<td align="left" rowspan="1" colspan="1">30.39</td>
+<td align="left" rowspan="1" colspan="1">343</td>
+<td align="left" rowspan="1" colspan="1">0.952</td>
+<td align="left" rowspan="1" colspan="1">6.247</td>
+<td align="left" rowspan="1" colspan="1">58.70</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">28971</td>
+<td align="left" rowspan="1" colspan="1">346</td>
+<td align="left" rowspan="1" colspan="1">0.973</td>
+<td align="left" rowspan="1" colspan="1">6.814</td>
+<td align="left" rowspan="1" colspan="1">69.85</td>
+<td align="left" rowspan="1" colspan="1">295</td>
+<td align="left" rowspan="1" colspan="1">0.982</td>
+<td align="left" rowspan="1" colspan="1">6.831</td>
+<td align="left" rowspan="1" colspan="1">28.80</td>
+<td align="left" rowspan="1" colspan="1">343</td>
+<td align="left" rowspan="1" colspan="1">0.973</td>
+<td align="left" rowspan="1" colspan="1">6.827</td>
+<td align="left" rowspan="1" colspan="1">57.48</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1">160654</td>
+<td align="left" rowspan="1" colspan="1">403</td>
+<td align="left" rowspan="1" colspan="1">0.975</td>
+<td align="left" rowspan="1" colspan="1">6.925</td>
+<td align="left" rowspan="1" colspan="1">80.75</td>
+<td align="left" rowspan="1" colspan="1">354</td>
+<td align="left" rowspan="1" colspan="1">0.984</td>
+<td align="left" rowspan="1" colspan="1">6.982</td>
+<td align="left" rowspan="1" colspan="1">34.40</td>
+<td align="left" rowspan="1" colspan="1">402</td>
+<td align="left" rowspan="1" colspan="1">0.975</td>
+<td align="left" rowspan="1" colspan="1">6.968</td>
+<td align="left" rowspan="1" colspan="1">66.40</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">38227</td>
+<td align="left" rowspan="1" colspan="1">343</td>
+<td align="left" rowspan="1" colspan="1">0.979</td>
+<td align="left" rowspan="1" colspan="1">6.884</td>
+<td align="left" rowspan="1" colspan="1">73.67</td>
+<td align="left" rowspan="1" colspan="1">257</td>
+<td align="left" rowspan="1" colspan="1">0.985</td>
+<td align="left" rowspan="1" colspan="1">6.811</td>
+<td align="left" rowspan="1" colspan="1">31.30</td>
+<td align="left" rowspan="1" colspan="1">312</td>
+<td align="left" rowspan="1" colspan="1">0.979</td>
+<td align="left" rowspan="1" colspan="1">6.876</td>
+<td align="left" rowspan="1" colspan="1">59.17</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Termite hindgut</td>
+<td align="left" rowspan="1" colspan="1">T.v4.I</td>
+<td align="left" rowspan="1" colspan="1">124664</td>
+<td align="left" rowspan="1" colspan="1">182</td>
+<td align="left" rowspan="1" colspan="1">0.941</td>
+<td align="left" rowspan="1" colspan="1">5.107</td>
+<td align="left" rowspan="1" colspan="1">30.63</td>
+<td align="left" rowspan="1" colspan="1">132</td>
+<td align="left" rowspan="1" colspan="1">0.926</td>
+<td align="left" rowspan="1" colspan="1">4.619</td>
+<td align="left" rowspan="1" colspan="1">13.84</td>
+<td align="left" rowspan="1" colspan="1">163</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+<td align="left" rowspan="1" colspan="1">4.925</td>
+<td align="left" rowspan="1" colspan="1">23.31</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1">31220</td>
+<td align="left" rowspan="1" colspan="1">170</td>
+<td align="left" rowspan="1" colspan="1">0.946</td>
+<td align="left" rowspan="1" colspan="1">5.311</td>
+<td align="left" rowspan="1" colspan="1">27.41</td>
+<td align="left" rowspan="1" colspan="1">119</td>
+<td align="left" rowspan="1" colspan="1">0.937</td>
+<td align="left" rowspan="1" colspan="1">4.968</td>
+<td align="left" rowspan="1" colspan="1">12.95</td>
+<td align="left" rowspan="1" colspan="1">149</td>
+<td align="left" rowspan="1" colspan="1">0.947</td>
+<td align="left" rowspan="1" colspan="1">5.286</td>
+<td align="left" rowspan="1" colspan="1">22.19</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1">164780</td>
+<td align="left" rowspan="1" colspan="1">198</td>
+<td align="left" rowspan="1" colspan="1">0.915</td>
+<td align="left" rowspan="1" colspan="1">4.921</td>
+<td align="left" rowspan="1" colspan="1">33.24</td>
+<td align="left" rowspan="1" colspan="1">147</td>
+<td align="left" rowspan="1" colspan="1">0.904</td>
+<td align="left" rowspan="1" colspan="1">4.606</td>
+<td align="left" rowspan="1" colspan="1">16.74</td>
+<td align="left" rowspan="1" colspan="1">180</td>
+<td align="left" rowspan="1" colspan="1">0.918</td>
+<td align="left" rowspan="1" colspan="1">4.947</td>
+<td align="left" rowspan="1" colspan="1">27.57</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1">7146</td>
+<td align="left" rowspan="1" colspan="1">126</td>
+<td align="left" rowspan="1" colspan="1">0.928</td>
+<td align="left" rowspan="1" colspan="1">4.933</td>
+<td align="left" rowspan="1" colspan="1">25.38</td>
+<td align="left" rowspan="1" colspan="1">104</td>
+<td align="left" rowspan="1" colspan="1">0.920</td>
+<td align="left" rowspan="1" colspan="1">4.679</td>
+<td align="left" rowspan="1" colspan="1">14.06</td>
+<td align="left" rowspan="1" colspan="1">120</td>
+<td align="left" rowspan="1" colspan="1">0.929</td>
+<td align="left" rowspan="1" colspan="1">4.945</td>
+<td align="left" rowspan="1" colspan="1">21.73</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>Even though the RDS processing method reproduced the results of <italic>de novo</italic> OTU clustering better than reference-based OTU clustering according to the alpha and beta diversity measurements we examined, there were a greater number of OTUs in nearly all of the Illumina datasets than has been reported for similar samples in the literature. In particular, the Illumina datasets of the mock community had between 25 to 125 times as many OTUs as expected based on an analysis of the available reference genome sequences. One factor contributing to this increase could be the above mentioned dataset contamination, which can be partially addressed using OTU filtering strategies to remove OTUs that account for a low percentage of the total reads as recommended for Illumina datasets by Bokulich et al. <xref ref-type="bibr" rid="pone.0094249-Bokulich1">[34]</xref> An analysis of different filtering methods and cutoffs showed that no single filtering value worked equally well across all samples, as cutoffs that reduced the number of OTUs in the mock community samples to reasonable numbers were overly restrictive for other samples (<xref ref-type="supplementary-material" rid="pone.0094249.s004">Table S2</xref>). Manual examination of the representative OTU sequences from the Illumina mock community datasets showed that a large proportion of them represented chimeras between two or more species from the community. Because the highly synthetic nature of the mock community is not very representative of the richness and evenness of natural samples, we chose to remove single and doubleton OTUs from the full OTU table as spurious reads, followed by filtering of OTUs representing fewer than 0.005% of all sequences as was recommended by Bokulich et al. <xref ref-type="bibr" rid="pone.0094249-Bokulich1">[34]</xref> While the number of OTUs observed with reference clustering against the Greengenes 2013 reference was more similar to <italic>de novo</italic> after implementing the OTU filtering step, linear regression analysis showed that the RDS method still produced results more reflective of <italic>de novo</italic> OTU clustering (<xref ref-type="fig" rid="pone-0094249-g002">Figure 2b</xref>).</p>
+<p>After processing the datasets using the RDS method and incorporating the OTU filtering step, the alpha diversity metrics for each of the Illumina datasets had more OTUs and a larger phylogenetic distance (PD) than the corresponding 454 dataset (<xref ref-type="table" rid="pone-0094249-t002">Table 2</xref>). We observed a similar result when performing <italic>de novo</italic> OTU clustering of the datasets with the OTU filtering step. Except for one of the mock community datasets, all of the Illumina datasets for a sample had a greater number of input sequences than the corresponding 454 dataset. To prevent differences in sequencing depth from biasing our comparisons of 454 and Illumina sequencing, we normalized the number of sequences in the datasets for a sample by rarefying each dataset to the number of reads in the corresponding 454 dataset. The smallest mock community Illumina dataset was excluded from this analysis. After rarefication, the number of OTUs observed in the Illumina datasets was still greater than in the corresponding 454 dataset (<xref ref-type="table" rid="pone-0094249-t003">Table 3</xref>) although the degree of difference was smaller for the higher diversity samples (rumen, sewage, termite) than the low diversity samples (human stool, leech, mouse).</p>
+<table-wrap id="pone-0094249-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.t003</object-id><label>Table 3</label><caption>
+<title>Alpha diversity measures of RDS processed samples after normalization.</title>
+</caption><alternatives><graphic id="pone-0094249-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sample Source</td>
+<td align="left" rowspan="1" colspan="1">Library</td>
+<td align="left" rowspan="1" colspan="1">Normalized Seqs<xref ref-type="table-fn" rid="nt102">A</xref></td>
+<td align="left" rowspan="1" colspan="1"># OTUs</td>
+<td align="left" rowspan="1" colspan="1"><italic>D</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>H'</italic></td>
+<td align="left" rowspan="1" colspan="1">PD</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Human stool</td>
+<td align="left" rowspan="1" colspan="1">H.v4.I</td>
+<td align="left" rowspan="1" colspan="1">7737</td>
+<td align="left" rowspan="1" colspan="1">56</td>
+<td align="left" rowspan="1" colspan="1">0.785</td>
+<td align="left" rowspan="1" colspan="1">2.999</td>
+<td align="left" rowspan="1" colspan="1">9.13</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">72</td>
+<td align="left" rowspan="1" colspan="1">0.793</td>
+<td align="left" rowspan="1" colspan="1">3.232</td>
+<td align="left" rowspan="1" colspan="1">8.95</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">72</td>
+<td align="left" rowspan="1" colspan="1">0.756</td>
+<td align="left" rowspan="1" colspan="1">3.006</td>
+<td align="left" rowspan="1" colspan="1">9.23</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">H.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">44</td>
+<td align="left" rowspan="1" colspan="1">0.773</td>
+<td align="left" rowspan="1" colspan="1">2.640</td>
+<td align="left" rowspan="1" colspan="1">8.75</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Leech intestinum</td>
+<td align="left" rowspan="1" colspan="1">L.v4.I</td>
+<td align="left" rowspan="1" colspan="1">10213</td>
+<td align="left" rowspan="1" colspan="1">26</td>
+<td align="left" rowspan="1" colspan="1">0.628</td>
+<td align="left" rowspan="1" colspan="1">2.055</td>
+<td align="left" rowspan="1" colspan="1">6.21</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">28</td>
+<td align="left" rowspan="1" colspan="1">0.575</td>
+<td align="left" rowspan="1" colspan="1">1.767</td>
+<td align="left" rowspan="1" colspan="1">5.40</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.b6</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">38</td>
+<td align="left" rowspan="1" colspan="1">0.624</td>
+<td align="left" rowspan="1" colspan="1">2.057</td>
+<td align="left" rowspan="1" colspan="1">7.65</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.I.b11</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">34</td>
+<td align="left" rowspan="1" colspan="1">0.613</td>
+<td align="left" rowspan="1" colspan="1">1.981</td>
+<td align="left" rowspan="1" colspan="1">6.31</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">L.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">0.697</td>
+<td align="left" rowspan="1" colspan="1">2.255</td>
+<td align="left" rowspan="1" colspan="1">5.14</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HMP Mock Even</td>
+<td align="left" rowspan="1" colspan="1">Mock.v4.I.1</td>
+<td align="left" rowspan="1" colspan="1">7331</td>
+<td align="left" rowspan="1" colspan="1">146</td>
+<td align="left" rowspan="1" colspan="1">0.936</td>
+<td align="left" rowspan="1" colspan="1">4.606</td>
+<td align="left" rowspan="1" colspan="1">14.29</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4.I.105</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">153</td>
+<td align="left" rowspan="1" colspan="1">0.941</td>
+<td align="left" rowspan="1" colspan="1">4.762</td>
+<td align="left" rowspan="1" colspan="1">14.97</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4v5.I.11</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">154</td>
+<td align="left" rowspan="1" colspan="1">0.959</td>
+<td align="left" rowspan="1" colspan="1">5.431</td>
+<td align="left" rowspan="1" colspan="1">15.31</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mock.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">39</td>
+<td align="left" rowspan="1" colspan="1">0.931</td>
+<td align="left" rowspan="1" colspan="1">4.106</td>
+<td align="left" rowspan="1" colspan="1">8.07</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Mouse small intestine</td>
+<td align="left" rowspan="1" colspan="1">M.v4.I</td>
+<td align="left" rowspan="1" colspan="1">10350</td>
+<td align="left" rowspan="1" colspan="1">34</td>
+<td align="left" rowspan="1" colspan="1">0.650</td>
+<td align="left" rowspan="1" colspan="1">1.993</td>
+<td align="left" rowspan="1" colspan="1">6.37</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">46</td>
+<td align="left" rowspan="1" colspan="1">0.769</td>
+<td align="left" rowspan="1" colspan="1">2.838</td>
+<td align="left" rowspan="1" colspan="1">7.14</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">55</td>
+<td align="left" rowspan="1" colspan="1">0.815</td>
+<td align="left" rowspan="1" colspan="1">3.196</td>
+<td align="left" rowspan="1" colspan="1">10.30</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">M.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="left" rowspan="1" colspan="1">0.761</td>
+<td align="left" rowspan="1" colspan="1">2.431</td>
+<td align="left" rowspan="1" colspan="1">7.21</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Rumen content</td>
+<td align="left" rowspan="1" colspan="1">R.v4.I</td>
+<td align="left" rowspan="1" colspan="1">27672</td>
+<td align="left" rowspan="1" colspan="1">386</td>
+<td align="left" rowspan="1" colspan="1">0.987</td>
+<td align="left" rowspan="1" colspan="1">7.275</td>
+<td align="left" rowspan="1" colspan="1">55.75</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">420</td>
+<td align="left" rowspan="1" colspan="1">0.991</td>
+<td align="left" rowspan="1" colspan="1">7.650</td>
+<td align="left" rowspan="1" colspan="1">50.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">426</td>
+<td align="left" rowspan="1" colspan="1">0.992</td>
+<td align="left" rowspan="1" colspan="1">7.751</td>
+<td align="left" rowspan="1" colspan="1">53.03</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">310</td>
+<td align="left" rowspan="1" colspan="1">0.986</td>
+<td align="left" rowspan="1" colspan="1">7.210</td>
+<td align="left" rowspan="1" colspan="1">51.04</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Municipal sewage</td>
+<td align="left" rowspan="1" colspan="1">S.v4.I</td>
+<td align="left" rowspan="1" colspan="1">19354</td>
+<td align="left" rowspan="1" colspan="1">311</td>
+<td align="left" rowspan="1" colspan="1">0.953</td>
+<td align="left" rowspan="1" colspan="1">6.253</td>
+<td align="left" rowspan="1" colspan="1">52.53</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">343</td>
+<td align="left" rowspan="1" colspan="1">0.973</td>
+<td align="left" rowspan="1" colspan="1">6.827</td>
+<td align="left" rowspan="1" colspan="1">57.48</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">349</td>
+<td align="left" rowspan="1" colspan="1">0.975</td>
+<td align="left" rowspan="1" colspan="1">6.951</td>
+<td align="left" rowspan="1" colspan="1">58.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">302</td>
+<td align="left" rowspan="1" colspan="1">0.979</td>
+<td align="left" rowspan="1" colspan="1">6.869</td>
+<td align="left" rowspan="1" colspan="1">58.15</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Termite hindgut</td>
+<td align="left" rowspan="1" colspan="1">T.v4.I</td>
+<td align="left" rowspan="1" colspan="1">6850</td>
+<td align="left" rowspan="1" colspan="1">127</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+<td align="left" rowspan="1" colspan="1">4.897</td>
+<td align="left" rowspan="1" colspan="1">18.68</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.I.a</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">136</td>
+<td align="left" rowspan="1" colspan="1">0.949</td>
+<td align="left" rowspan="1" colspan="1">5.338</td>
+<td align="left" rowspan="1" colspan="1">20.10</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.I.b</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">139</td>
+<td align="left" rowspan="1" colspan="1">0.916</td>
+<td align="left" rowspan="1" colspan="1">4.909</td>
+<td align="left" rowspan="1" colspan="1">19.90</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">T.v4v5.454</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">120</td>
+<td align="left" rowspan="1" colspan="1">0.929</td>
+<td align="left" rowspan="1" colspan="1">4.945</td>
+<td align="left" rowspan="1" colspan="1">21.73</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label>A</label><p>The normalized number of sequences represents the number of sequences that each dataset of a given sample were normalized to by rarefaction to allow for intra-sample comparisons of the datasets.</p></fn></table-wrap-foot></table-wrap>
+<p>When we compared the number of OTUs between the V4 and V4-V5 Illumina datasets of each sample, the V4 dataset consistently had fewer OTUs than for the corresponding V4-V5 Illumina datasets. Compared to the V4-V5 amplicons, the V4 amplicons are ∼100bp shorter and cover only a single hyper-variable region. The greater number of OTUs for the Illumina V4-V5 datasets compared to the V4 after rarefaction suggests that the increased sequence information available for analysis by including the V5 hyper-variable region allowed for the discrimination of new OTUs that could not be differentiated based on the V4 region alone.</p>
+</sec><sec id="s3d">
+<title>Beta diversity analysis</title>
+<p>Beta diversity analysis of all datasets showed that each sample source represented a distinct microbiome irrespective of the processing method used. Each of the individual datasets clustered together on the basis of their original sample source as determined by principal coordinates analysis of the Bray-Curtis and UniFrac distances between each dataset (<xref ref-type="fig" rid="pone-0094249-g003">Figure 3</xref>). This clustering was independent of the hyper-variable regions chosen for sequencing, V4 or V4-V5, or the sequencing platform used, GS FLX or MiSeq, indicating that these factors had no obvious effect on the interpretation of beta diversity analyses when comparing the diverse group of samples we used in this study. While the RDS method did not produce beta diversity results identical to those generated when using <italic>de novo</italic> OTU clustering, the overall interpretation of results was similar between the two methods. The primary difference that we observed was that when using the Bray-Curtis metric the human, mouse, and mock community samples were shown to be more similar to each other when the data was processed using the RDS method compared to using <italic>de novo</italic> OTU clustering. This result was similar to what we observed when performing reference OTU clustering only, and suggests that these three samples shared a greater percentage of OTUs as a result of the reference OTU clustering step of the RDS method than we observed with <italic>de novo</italic> clustering (<xref ref-type="supplementary-material" rid="pone.0094249.s001">Figure S1</xref>).</p>
+<fig id="pone-0094249-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.g003</object-id><label>Figure 3</label><caption>
+<title>Beta diversity analysis of all datasets.</title>
+<p>Three dimensional principal coordinates analysis plots showing the relatedness of datasets using either the Bray-Curtis (A) and weighted UniFrac (B) metric. Individual datasets are represented at spheres which are colored according to their sample source as follows: human stool – brown, leech intestinum – purple, mouse small intestine – orange, mock community – blue, non-adherent rumen contents – red, mixed liquor – green, termite hindgut – gold.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.g003" position="float" xlink:type="simple"/></fig>
+<p>Because of the large overall dissimilarities between the seven samples as determined by principal coordinate analysis, we also performed beta diversity analyses of the datasets for each sample independently. In each case, the V4 Illumina dataset was consistently more different from the corresponding V4-V5 datasets than the V4-V5 datasets were from each other, indicating that choice of hyper-variable region had a greater effect on beta diversity than the choice of sequencing technology (<xref ref-type="supplementary-material" rid="pone.0094249.s002">Figure S2</xref>).</p>
+</sec><sec id="s3e">
+<title>Effects of hyper-variable region and OTU clustering method on observed taxonomic diversity</title>
+<p>While alpha and beta diversity measures provide important insights into the structure and relationship of microbial communities, a key aspect of generating hypotheses about the functional and physiological aspects of a microbial community is knowing its taxonomic composition. We determined the effect of the hyper-variable region chosen for sequencing and of the OTU clustering method used for analysis on the taxonomic composition of a sample by comparing the taxonomy summaries for each dataset when processed using <italic>de novo</italic>, reference-based, and the RDS OTU clustering methods. These comparisons revealed that for some samples there was a large effect on the observed taxonomic composition of the choice of hyper-variable regions sequenced or OTU clustering method used.</p>
+<p>We tested the three processing pipelines using control DNA from a synthetic mock community created as part of the Human Microbiome Project (HMP) to determine if processing method alone introduced a source of bias <xref ref-type="bibr" rid="pone.0094249-Jumpstart1">[7]</xref>. The mock community DNA used for the Illumina libraries comprised 20 cultured bacterial species, while the DNA used for the 454 library also included <italic>Porphyromona gingivalis</italic>. None of the resulting datasets showed a taxonomic composition that was identical to the known composition of the mock community, however each of the three processing methods (<italic>de novo</italic>, reference, RDS) yielded a similar taxonomic composition for each of the three types of libraries (V4.I, V4V5.I, and V4V5.454, <xref ref-type="fig" rid="pone-0094249-g004">Figure 4</xref>).</p>
+<fig id="pone-0094249-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.g004</object-id><label>Figure 4</label><caption>
+<title>Effect of processing method on the taxonomic composition of the mock community datasets.</title>
+<p>Plot comparing the taxonomic composition of the mock community sample for the three different library types sequenced when processed three different ways. The replicate V4 and V4-V5 Illumina datasets were combined into one representative dataset for each library type. All taxonomic assignments were made using the RDP Classifier after retraining with the 2013-08 Greengenes reference. Taxonomic ranks are noted by letters preceding the taxon name as follows: genus – g, family – f, order – o.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.g004" position="float" xlink:type="simple"/></fig>
+<p>The abundance of some taxa was affected dramatically by the type of library that was created and the processing method. In the V4 Illumina libraries, the genus <italic>Propionibacterium</italic> was almost completely absent while in the V4-V5 libraries it represented ∼1.5% of the 454 dataset and 2.4–2.9% in the Illumina datasets. This result was likely due to primer specificity of the V4 primers compared to the V4-V5 primers, as there is a single base pair difference between the V4 forward primer and the annealing site based on the <italic>P. acnes</italic> reference genome. Across all three library types, we consistently observed that the genus <italic>Listeria</italic> was only identified when using <italic>de novo</italic> OTU clustering, whereas the family <italic>Listeriaceae</italic> was instead observed when using the reference or RDS processing methods. Similarly, the genus <italic>Escherichia</italic> was only marginally identified in any of the datasets regardless of processing, with the family <italic>Enterobacteriaceae</italic> instead being the predominant taxonomic assignment for these OTUs. It is interesting to note that this result only occurred when the Greengenes 2013 release was used for taxonomy assignment, as OTUs were correctly classified as <italic>Escherichia</italic> when we used the 2012 version of the reference.</p>
+<p>While the taxonomic composition of the mock community datasets showed little to no specific bias associated with the choice of hyper-variable regions sequenced or data processing method used, we did observe some distinct differences in the six natural microbial community samples that we analyzed. During our initial analyses using the Greengenes 2012 reference for OTU clustering and taxonomic assignment we observed that for certain samples the use of reference clustering alone often missed entire taxa. The most dramatic example of this was with the V4-V5 libraries for the termite sample, for which the class <italic>Endomicrobia</italic> was almost completely absent from the reference clustered datasets but comprised nearly 30% of the community when using <italic>de novo</italic> or the RDS processing methods (<xref ref-type="fig" rid="pone-0094249-g005">Figure 5</xref>). While this issue was largely resolved with the Greengenes 2013 release, the taxonomic composition of the RDS processed datasets were more similar to the <italic>de novo</italic> OTU clustered datasets than the reference clustered datasets were. The termite sample was also where differences between the V4 and V4-V5 libraries were the most apparent. While the V4-V5 Illumina and 454 libraries were not statistically different from each other, the V4 library was significantly different from both V4-V5 libraries (data not shown). In the V4-V5 libraries the genus <italic>Treponema</italic> comprised ∼45% of the community but nearly 75% in the V4 library regardless of processing method (<xref ref-type="fig" rid="pone-0094249-g005">Figure 5</xref>). While we could not determine the exact cause of this discrepancy from the data, it is possible that primer amplification bias contributed to this result.</p>
+<fig id="pone-0094249-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094249.g005</object-id><label>Figure 5</label><caption>
+<title>Effects of processing method and Greengenes database version on the taxonomic composition of the termite datasets.</title>
+<p>Plot comparing the taxonomic composition of the termite hindgut sample for the three different library types sequenced when processed using three different methods. The replicate V4 and V4-V5 Illumina datasets were combined into one representative dataset for each library type. Taxonomic assignments were made using the RDP Classifier after retraining with either the 2012–10 or 2013–08 Greengenes references. Taxonomic ranks are noted by letters preceding the taxon name as follows: genus – g, family – f, order – o, class – c, phylum – p, domain – d.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094249.g005" position="float" xlink:type="simple"/></fig>
+<p>In the human stool sample datasets, the abundance of the two most abundant genera, <italic>Bacteroides</italic> and <italic>Escherichia</italic>, differed greatly between each of the three library types (<xref ref-type="supplementary-material" rid="pone.0094249.s002">Figure S2</xref>). While the differences between the V4 and V4-V5 libraries are likely due to the choice of different primers, the genus <italic>Bacteroides</italic> was more abundant in the V4-V5 Illumina libraries compared to the 454 (∼65% vs. 55%), while <italic>Escherichia</italic> was much less abundant (∼10% vs. ∼28%). This difference in abundance between the two V4-V5 library types was observed even after normalization of the datasets by rarefaction, and thus does not directly represent a sampling depth bias. As noted above for the mock community datasets, the genus <italic>Escherichia</italic> was only identified in datasets processed using the Greengenes 2012 reference for taxonomy assignment, with a single exception of the V4-V5 Illumina datasets processed using the RDS method. In this case, the genus <italic>Escherichia</italic> was observed when using the 2013 reference but not at the same level as when using the 2012 (<xref ref-type="supplementary-material" rid="pone.0094249.s002">Figure S2</xref>). We observed similar differences in taxonomic composition of the sample corresponding to library type for the other five natural community samples that we analyzed, although these differences were minor for the rumen and sewage datasets which had the highest overall taxonomic diversity of the seven samples we analyzed.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<sec id="s4a">
+<title>Illumina sequencing can faithfully supplant 454 pyrosequencing</title>
+<p>The primary goal of this study was to examine how well Illumina sequencing could serve as a direct replacement for 454 pyrosequencing while using existing 16S sequencing primers and analysis workflows. To determine this we analyzed six natural microbial communities and a mock community by using both 454 pyrosequencing and Illumina sequencing of the V4-V5 hyper-variable region of the 16S rRNA gene. We additionally performed Illumina sequencing of the V4 region using the protocol developed by Caporaso et al. <xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref>, which has been adopted as the standard protocol for Illumina 16S sequencing by researchers participating in the Earth Microbiome Project. Because the individual reads generated with the MiSeq are shorter than the single reads generated by the GS FLX, and previous studies <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref> and our own analysis found that error rates increased towards the 3′ end of the reads, we utilized read merging of the paired Illumina reads to create single consensus Illumina reads with similar length to those generated by 454 sequencing. This pre-processing step for the Illumina datasets yielded merged reads that had a higher average quality than for the reads generated by 454 pyrosequencing (<xref ref-type="fig" rid="pone-0094249-g001">Figure 1</xref>), along with a greater number of reads per sample (<xref ref-type="table" rid="pone-0094249-t002">Table 2</xref>).</p>
+<p>When analyzing all of the datasets from the samples <italic>en masse</italic> we observed small differences in alpha diversity measures between the pyrosequencing and Illumina datasets for the high diversity samples while larger differences were observed for low diversity samples. Conversely, PCoA plots of beta diversity analyses showed that there was little to no apparent effect of the sequencing method used (454 or Illumina) or variable regions chosen (V4 or V4-V5), as each dataset from a given sample clustered together (<xref ref-type="fig" rid="pone-0094249-g003">Figure 3</xref>). Analysis of the individual datasets for each sample, however, did reveal that the V4 dataset was consistently more different from the V4-V5 datasets than the V4-V5 datasets were from each other (<xref ref-type="supplementary-material" rid="pone.0094249.s002">Figure S2</xref>). Part of this difference stems from the use of primers that anneal to different regions of the 16S rRNA gene for library creation, which likely have different amplification biases and template specificity <xref ref-type="bibr" rid="pone.0094249-Reysenbach1">[35]</xref>, <xref ref-type="bibr" rid="pone.0094249-Bergmann1">[36]</xref>. This bias was apparent in examining the taxonomic composition of the mock community datasets which all had slightly different abundances for each taxon across the three library types we examined and the genus <italic>Propionibacterium</italic> nearly absent from the V4 libraries. While we did observe differences between the V4-V5 454 and V4-V5 Illumina datasets, these differences did not significantly affect the overall interpretation of beta-diversity analyses, although their effect on taxonomic composition varied according to sample. On the basis of our overall findings, we can conclude that researchers who wish to switch to Illumina sequencing from 454 pyrosequencing should be able to modify their existing primers by simply replacing the 454 adaptor sequences with Illumina TruSeq adaptor sequences. An additional option for researchers who do not need or wish to adapt a pre-established 454 workflow is to use one of the published V4 sequencing formats developed for Illumina sequencing by Caporaso et al. or Kozich et al.<xref ref-type="bibr" rid="pone.0094249-Caporaso1">[18]</xref>, <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref> While choosing a different hyper-variable region for analysis did affect the results in a sample-dependent manner, our analyses show that overall the V4 amplicons produced similar alpha and beta diversity measures as the V4-V5 amplicons.</p>
+<p>One of the major differences between the Roche 454 GS FLX and Illumina MiSeq instruments is that the MiSeq is currently capable of generating well over 10 times as many sequence reads as the GS FLX in a single sequencing run. Combined with much lower operating costs, Illumina sequencing on the MiSeq provides researchers with the opportunity to sequence individual samples to a greater sampling depth than is feasible with the GS FLX and/or to include more samples in a single sequencing run through increased multiplexing of barcoded libraries. As sequencing depth increases however, a greater number of erroneous sequences can be incorporated into the resulting dataset, which will artificially bias estimates of alpha diversity through the generation of spurious OTUs. These erroneous sequences often arise due to chimera formation and PCR errors during library preparation, or are the result of sequencing errors that were not identified and removed during data processing. Protocols have been developed for 454 pyrosequencing to minimize the presence and effects of illegitimate sequences/OTUs on diversity analyses, and we incorporated these protocols as appropriate into our library preparation and data processing and analysis methods <xref ref-type="bibr" rid="pone.0094249-Edgar1">[37]</xref>–<xref ref-type="bibr" rid="pone.0094249-Haas1">[39]</xref>.</p>
+<p>To minimize the effects of sequencing errors we first merged the paired Illumina reads to form a single consensus sequence prior to OTU clustering. This step results in a higher confidence that the base calls for the merged region are correct and thus reduces sequencing associated errors in the Illumina datasets (<xref ref-type="fig" rid="pone-0094249-g001">Figure 1</xref>). We also incorporated chimera checking with ChimeraSlayer as part of our RDS analysis pipeline. However, as demonstrated with the Illumina-sequenced mock community samples, not all chimeric OTUs were correctly identified and removed. One reason for this is that the chimera checking process typically depends on comparing differences in the sequence similarity of the two ends of a query sequence to two or more reference sequences derived either from a reference database such as Greengenes or chosen from within the dataset itself. This method poses a problem in detection as chimeras present in short sequences from closely related organisms are more difficult to identify than in longer sequences. Additionally, chimeric sequences originating from three or more parent sequences, such as those observed in the Illumina mock community datasets, may not be identified as chimeric but as novel sequences instead.</p>
+</sec><sec id="s4b">
+<title>Reference OTU clustering can bias observed diversity</title>
+<p>As the volume of sequence data generated by Illumina instruments is orders of magnitude greater than for the GS FLX, processing and analysis pipelines that were designed to handle pyrosequencing datasets have had to be modified to process Illumina data more efficiently. One such modification has been a shift from using <italic>de novo</italic> generation of OTUs for large sequencing datasets to the use of reference OTUs such as those from the Greengenes <xref ref-type="bibr" rid="pone.0094249-DeSantis1">[30]</xref>, <xref ref-type="bibr" rid="pone.0094249-McDonald1">[31]</xref> or Silva <xref ref-type="bibr" rid="pone.0094249-Pruesse1">[40]</xref> reference databases. The principal advantage of reference OTU clustering is that it is significantly faster than <italic>de novo</italic> OTU generation as it can be run in parallel across multiple processing cores, and the availability of reference datasets with pre-constructed phylogenetic trees and taxonomies allows for a simplified and more efficient analysis pipeline. However, with reference-based OTU clustering alone the observed microbial diversity of a sample can only be as diverse as the reference set itself, which can artificially limit the observed diversity for highly diverse or exotic environments whose microbial populations have few representative sequences in reference databases.</p>
+<p>In this study we found that performing reference-based OTU clustering using either the Greengenes 2012 or 2013 references resulted in a reduction in the number of observed OTUs compared to <italic>de novo</italic> OTU clustering (<xref ref-type="table" rid="pone-0094249-t002">Tables 2</xref> and <xref ref-type="supplementary-material" rid="pone.0094249.s003">S1</xref>, <xref ref-type="fig" rid="pone-0094249-g002">Figure 2</xref>). The use of reference-based OTU clustering alone also had large effects on the observed taxonomy some samples, with certain taxa completely missing or misidentified when reference clustering was used compared to <italic>de novo</italic> (<xref ref-type="fig" rid="pone-0094249-g005">Figure 5</xref>). While the curators of the Greengenes database have made great efforts to expand their reference datasets to include more sequences from highly diverse and complex microbial communities, our results suggest that additional improvements are needed to provide better coverage for many non-human associated microbial environments. This is of particular importance as a greater number of researchers take advantage of the low cost of Illumina sequencing to characterize the microbial communities in many new and diverse environments that may not be well represented in current reference databases.</p>
+<p>As we demonstrated, one option that researchers have is to perform reference OTU clustering and then to analyze the reduced number of sequences that did not match the reference data set using <italic>de novo</italic> OTU clustering, which we described above as the reference plus <italic>de novo</italic> with ChimeraSlayer, or RDS method. Our results demonstrated that the RDS method produces alpha (<xref ref-type="table" rid="pone-0094249-t002">Table 2</xref>) and beta (<xref ref-type="fig" rid="pone-0094249-g002">Figure 2</xref>) diversity metrics and taxonomy summaries (<xref ref-type="fig" rid="pone-0094249-g003">Figure 3</xref>) that are more similar to <italic>de novo</italic> OTU clustering than reference-based clustering alone. While the current open reference picking implementation of uclust_ref allows for the creation of <italic>de novo</italic> OTUs from reads not assigned to a reference sequence, this process is limited to running on a single processing core. Our implementation of two separate steps for reference and <italic>de novo</italic> OTU clustering in the RDS method allows for reference clustering to be performed across multiple processing cores. This hybrid analysis method allows researchers to efficiently analyze large sequencing datasets generated with Illumina sequencing platforms while retaining the ability to identify novel OTUs that are not currently present in reference datasets.</p>
+</sec><sec id="s4c">
+<title>Limitations of reference databases for taxonomy assignment</title>
+<p>While not always feasible, <italic>a priori</italic> knowledge of the general composition of a microbial community can provide important checks for validating the results of high-throughput 16S sequencing surveys. Our inclusion of the mock community developed by the Human Microbiome Project partially served as such a control to identify potential issues with our library construction, sequencing and data analysis workflows. When using the Greengenes 2012 reference that was available when we began this study, we found that the taxonomic composition of the mock datasets differed greatly from expected, with many OTUs not being classified to the genus level but to higher taxonomic ranks instead. The release of the 2013–08 Greengenes reference database resolved many of these assignment issues, however the genus <italic>Escherichia</italic> was still not correctly identified when performing taxonomic assignment of OTUs with the Greengenes 2013 reference and the genus <italic>Listeria</italic> was only identified in the <italic>de novo</italic> processed datasets.</p>
+<p>During our initial analysis of the leech intestinum samples using the Greengenes 2012 reference no OTUs were assigned to the genus <italic>Aeromonas</italic> for any of the datasets regardless of processing method, a finding inconsistent with previous culture and non-culture based studies we conducted of the leech intestinum <xref ref-type="bibr" rid="pone.0094249-Worthen1">[41]</xref>, <xref ref-type="bibr" rid="pone.0094249-Laufer1">[42]</xref>. We subsequently determined that this was due to a lack of any sequences in the Greengenes reference being annotated to the genus <italic>Aeromonas</italic>, with the lowest taxonomic rank being the family <italic>Aeromonadaceae</italic>. After communicating this and other findings to the Greengenes curators, an updated reference taxonomy was released (Greengenes 2013–08) that included additional genus and species level annotations compared to the previous release. However, even after performing taxonomic classifications with this updated reference only one OTU, representing less than 0.2% of all sequences in the V4-V5 datasets, was classified as <italic>Aeromonas</italic> when using the RDS method while all other OTUs were classified as <italic>Aeromonadaceae</italic> (data not shown). It is important to note that while this classification is not technically incorrect, it is less informative about the composition of the community and can potentially lead to inaccurate conclusions in situations where <italic>a priori</italic> knowledge of a microbial community is unknown.</p>
+<p>This example also highlights the need for wider community efforts to ensure the highest possible accuracy of large reference datasets such as Greengenes. As the current version of the Greengenes database comprises over 1 million individual sequences, it is extremely challenging for the manual and automated curation steps to successfully identify and remove all potential chimeric sequences and ensure accurate taxonomic assignments for all sequences in the database. While this had a noticeable effect on the taxonomic composition of the leech intestinum, it appeared to have little to no effect on the composition of the human stool, rumen and sewage samples. Our findings suggest that researchers who rely on a reference dataset, such as for OTU clustering or taxonomy assignment as we do with the RDS processing method, should take caution in the interpretation of their results.</p>
+</sec><sec id="s4d">
+<title>Low levels of cross-contamination in Illumina datasets</title>
+<p>While our results show that overall Illumina and 454 pyrosequencing produced similar alpha and beta diversity results, we did observe cases of dataset contamination that appear to be specific to Illumina of 16S amplicons. For libraries sequenced at the same time, we also observed instances of index misassignment that resulted in a small percentage of reads from one library being incorrectly assigned an index sequence corresponding to a different library. This was most apparent when we sequenced the V4-V5.Ib libraries at the same time as non-ribosomal amplicon libraries. The source of index misassignment likely arises from image analysis errors during the index sequencing phase of the run, which may be addressed by future upgrades to the MiSeq software, hardware, or reagent kits. Reducing the target cluster density for amplicon libraries below Illumina's recommended values may reduce the occurrence of this error, while also improving read quality as previously discussed by Kozich et al. <xref ref-type="bibr" rid="pone.0094249-Kozich1">[22]</xref>. The use of dual indexing formats where indices are present at both ends of the amplicon being sequenced would likely decrease the occurrence of index misassignment, as errors would need to occur in both indices in order for a read to be assigned to the incorrect sample. We also observed a low percentage of reads from the phiX control library in all of the raw Illumina datasets we used in this study. While updates to the MiSeq's RTA base-calling software have reduced the potential for phiX reads to be incorrectly assigned a valid index sequence they did not eliminate it. We removed phiX reads from the datasets prior to QIIME analysis by applying the pre-processing methods detailed above. An additional concern with Illumina sequencing that we did not directly quantify with our datasets is low-levels of carryover contamination that occurs between consecutive MiSeq runs. This issue was acknowledged in a technical bulletin from Illumina which quantified the level of carryover contamination as typically being less than 0.1% of reads for a run being carried over into and contaminating a subsequent run <xref ref-type="bibr" rid="pone.0094249-Illumina1">[33]</xref>.</p>
+<p>The combination of index misassignment occurring at a rate of ∼0.06% and carryover contamination between MiSeq runs of less than 0.1% can provide a baseline value that serves as a threshold to help distinguish which results stem from true biological signal and which may be due to noise. In order to mitigate index misassignment and sample carryover contamination for experiments that require high levels of sensitivity, we have begun to include one or more indexed control samples to more accurately quantify this occurrence. These control libraries can be created from a synthetic template, pure culture, or mock community and serve as inline controls for determining the level of index misassignment that occurs between different samples within a run and carryover contamination across separate sequencing runs. It is also recommended to alternate the indices used between runs to further reduce potential carryover contamination in high-sensitivity experiments. While researchers who are primarily concerned with identifying broad changes in microbial composition will typically not be affected by index misassignment and carry-over contamination, implementing the above listed suggestions will improve the quality and accuracy of amplicon sequencing datasets produced on Illumina instruments. Researchers focused on examining the “rare biosphere” or the role of low abundant organisms in a community may need to implement additional precautions.</p>
+<p>Our analysis shows that primers designed for Roche 454 instruments can be readily modified for use on Illumina instruments and produce consistent results. When we utilized the same template primers, the Illumina-produced datasets were more similar to the 454-produced datasets than when different template primers were used. The consistency between platforms was further improved by using the RDS processing pipeline, maximizing the quality of the sequences by merging of the paired Illumina reads, and minimizing artifacts due to the use of reference datasets and the inclusion of chimera checking. To account for and reduce the low levels of index misassignment and carryover contamination that we observed, we recommend the use of control libraries and alternating indices between consecutive sequencing runs when using the MiSeq. Overall our results show that Illumina sequencing of 16S rRNA genes is a cost effective approach that can readily supplant 454 pyrosequencing as the new standard analysis method for microbial populations.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0094249.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0094249.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Effects of processing method on PCoA analysis using the Bray-Curtis metric.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0094249.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0094249.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>Effect of processing method and Greengenes reference on taxonomic composition of the human stool sample.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0094249.s003" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0094249.s003" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Comparison of the number of OTUs and retained reads using different processing methods.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0094249.s004" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0094249.s004" position="float" xlink:type="simple"><label>Table S2</label><caption>
+<p><bold>Comparison of OTU filtering cut-off values.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0094249.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0094249.s005" position="float" xlink:type="simple"><label>File S1</label><caption>
+<p><bold>Supplementary QIIME processing methods.</bold></p>
+<p>(DOCX)</p>
+</caption></supplementary-material><supplementary-material id="pone.0094249.s006" mimetype="application/zip" xlink:href="info:doi/10.1371/journal.pone.0094249.s006" position="float" xlink:type="simple"><label>File S2</label><caption>
+<p><bold>Archive containing the processing scripts used in for this study.</bold></p>
+<p>(ZIP)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors wish to thank Vince Young for providing the human stool DNA and Urs Boelsterli for providing the mouse intestinal contents for analysis.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0094249-Stahl1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stahl</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Lane</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Olsen</surname><given-names>GJ</given-names></name>, <name name-style="western"><surname>Pace</surname><given-names>NR</given-names></name> (<year>1984</year>) <article-title>Analysis of hydrothermal vent-associated symbionts by ribosomal RNA sequences</article-title>. <source>Science</source> <volume>224</volume>: <fpage>409</fpage>–<lpage>411</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Stahl2"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stahl</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Lane</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Olsen</surname><given-names>GJ</given-names></name>, <name name-style="western"><surname>Pace</surname><given-names>NR</given-names></name> (<year>1985</year>) <article-title>Characterization of a Yellowstone hot spring microbial community by 5S rRNA sequences</article-title>. <source>Appl Environ Microbiol</source> <volume>49</volume>: <fpage>1379</fpage>–<lpage>1384</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Rivire1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rivière</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Desvignes</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Pelletier</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Chaussonnerie</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Guermazi</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Towards the definition of a core of microorganisms involved in anaerobic digestion of sludge</article-title>. <source>ISME J</source> <volume>3</volume>: <fpage>700</fpage>–<lpage>714</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Nelson1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nelson</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>Z</given-names></name> (<year>2011</year>) <article-title>A meta-analysis of the microbial diversity observed in anaerobic digesters</article-title>. <source>Bioresour Technol</source> <volume>102</volume>: <fpage>3730</fpage>–<lpage>3739</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Ley1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ley</surname><given-names>RE</given-names></name>, <name name-style="western"><surname>Bäckhed</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Turnbaugh</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Lozupone</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Knight</surname><given-names>RD</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Obesity alters gut microbial ecology</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>102</volume>: <fpage>11070</fpage>–<lpage>11075</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Costello1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Costello</surname><given-names>EK</given-names></name>, <name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Fierer</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Gordon</surname><given-names>JI</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Bacterial community variation in human body habitats across space and time</article-title>. <source>Science</source> <volume>326</volume>: <fpage>1694</fpage>–<lpage>1697</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Jumpstart1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><collab xlink:type="simple">Jumpstart Consortium Human Microbiome Project Data Generation Working Group</collab> (<year>2012</year>) <article-title>Evaluation of 16S rDNA-based community profiling for human microbiome research</article-title>. <source>PLoS ONE</source> <volume>7</volume>: <fpage>e39315</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Sogin1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>, <name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Microbial diversity in the deep sea and the underexplored “rare biosphere.”</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>103</volume>: <fpage>12115</fpage>–<lpage>12120</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Turnbaugh1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Turnbaugh</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Hamady</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yatsunenko</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Cantarel</surname><given-names>BL</given-names></name>, <name name-style="western"><surname>Duncan</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>A core gut microbiome in obese and lean twins</article-title>. <source>Nature</source> <volume>457</volume>: <fpage>480</fpage>–<lpage>484</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Human1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><collab xlink:type="simple">Human Microbiome Project Consortium</collab> (<year>2012</year>) <article-title>A framework for human microbiome research</article-title>. <source>Nature</source> <volume>486</volume>: <fpage>215</fpage>–<lpage>221</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Huse1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>, <name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name> (<year>2007</year>) <article-title>Accuracy and quality of massively parallel DNA pyrosequencing</article-title>. <source>Genome Biol</source> <volume>8</volume>: <fpage>R143</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Huse2"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>, <name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name> (<year>2010</year>) <article-title>Ironing out the wrinkles in the rare biosphere through improved OTU clustering</article-title>. <source>Environ Microbiol</source> <volume>12</volume>: <fpage>1889</fpage>–<lpage>1898</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Quince1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quince</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lanzén</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Curtis</surname><given-names>TP</given-names></name>, <name name-style="western"><surname>Davenport</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Hall</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Accurate determination of microbial diversity from 454 pyrosequencing data</article-title>. <source>Nat Methods</source> <volume>6</volume>: <fpage>639</fpage>–<lpage>641</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Reeder1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reeder</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Knight</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Rapidly denoising pyrosequencing amplicon reads by exploiting rank-abundance distributions</article-title>. <source>Nat Methods</source> <volume>7</volume>: <fpage>668</fpage>–<lpage>669</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Loman1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Loman</surname><given-names>NJ</given-names></name>, <name name-style="western"><surname>Misra</surname><given-names>RV</given-names></name>, <name name-style="western"><surname>Dallman</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Constantinidou</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gharbia</surname><given-names>SE</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Performance comparison of benchtop high-throughput sequencing platforms</article-title>. <source>Nat Biotechnol</source> <volume>30</volume>: <fpage>434</fpage>–<lpage>439</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Jnemann1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jünemann</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sedlazeck</surname><given-names>FJ</given-names></name>, <name name-style="western"><surname>Prior</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Albersmeier</surname><given-names>A</given-names></name>, <name name-style="western"><surname>John</surname><given-names>U</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Updating benchtop sequencing performance comparison</article-title>. <source>Nat Biotechnol</source> <volume>31</volume>: <fpage>294</fpage>–<lpage>296</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Bartram1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bartram</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Lynch</surname><given-names>MDJ</given-names></name>, <name name-style="western"><surname>Stearns</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Moreno-Hagelsieb</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Neufeld</surname><given-names>JD</given-names></name> (<year>2011</year>) <article-title>Generation of Multimillion-Sequence 16S rRNA Gene Libraries from Complex Microbial Communities by Assembling Paired-End Illumina Reads</article-title>. <source>Appl Environ Microbiol</source> <volume>77</volume>: <fpage>3846</fpage>–<lpage>3852</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Caporaso1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Caporaso</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Walters</surname><given-names>WA</given-names></name>, <name name-style="western"><surname>Berg-Lyons</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Huntley</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Ultra-high-throughput microbial community analysis on the Illumina HiSeq and MiSeq platforms</article-title>. <source>ISME J</source> <volume>6</volume>: <fpage>1621</fpage>–<lpage>1624</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Degnan1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Degnan</surname><given-names>PH</given-names></name>, <name name-style="western"><surname>Ochman</surname><given-names>H</given-names></name> (<year>2011</year>) <article-title>Illumina-based analysis of microbial community diversity</article-title>. <source>ISME J</source> <volume>6</volume>: <fpage>183</fpage>–<lpage>194</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Gloor1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gloor</surname><given-names>GB</given-names></name>, <name name-style="western"><surname>Hummelen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Macklaim</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Dickson</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Fernandes</surname><given-names>AD</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Microbiome profiling by illumina sequencing of combinatorial sequence-tagged PCR products</article-title>. <source>PLoS ONE</source> <volume>5</volume>: <fpage>e15406</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Ram1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ram</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Karim</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Sendler</surname><given-names>ED</given-names></name>, <name name-style="western"><surname>Kato</surname><given-names>I</given-names></name> (<year>2011</year>) <article-title>Strategy for microbiome analysis using 16S rRNA gene sequence analysis on the Illumina sequencing platform</article-title>. <source>Syst Biol Reprod Med</source> <volume>57</volume>: <fpage>162</fpage>–<lpage>170</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Kozich1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kozich</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Westcott</surname><given-names>SL</given-names></name>, <name name-style="western"><surname>Baxter</surname><given-names>NT</given-names></name>, <name name-style="western"><surname>Highlander</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name> (<year>2013</year>) <article-title>Development of a Dual-Index Sequencing Strategy and Curation Pipeline for Analyzing Amplicon Sequence Data on the MiSeq Illumina Sequencing Platform</article-title>. <source>Appl Environ Microbiol</source> <volume>79</volume>: <fpage>5112</fpage>–<lpage>5120</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Eren1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eren</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Vineis</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name>, <name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name> (<year>2013</year>) <article-title>A filtering method to generate high quality short reads using illumina paired-end technology</article-title>. <source>PLoS ONE</source> <volume>8</volume>: <fpage>e66643</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Caporaso2"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Caporaso</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Walters</surname><given-names>WA</given-names></name>, <name name-style="western"><surname>Berg-Lyons</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lozupone</surname><given-names>CA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Global patterns of 16S rRNA diversity at a depth of millions of sequences per sample</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>108</volume> Suppl 1<fpage>4516</fpage>–<lpage>4522</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Claesson1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Claesson</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>O'Sullivan</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Greene-Diniz</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Cole</surname><given-names>JR</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Comparison of two next-generation sequencing technologies for resolving highly complex microbiota composition using tandem variable 16S rRNA gene regions</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>e200</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Luo1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Luo</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Tsementzi</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Kyrpides</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Read</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Konstantinidis</surname><given-names>KT</given-names></name> (<year>2012</year>) <article-title>Direct Comparisons of Illumina vs. Roche 454 Sequencing Technologies on the Same Microbial Community DNA Sample</article-title>. <source>PLoS ONE</source> <volume>7</volume>: <fpage>e30087</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Yu1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>M</given-names></name> (<year>2004</year>) <article-title>Improved extraction of PCR-quality community DNA from digesta and fecal samples</article-title>. <source>BioTechniques</source> <volume>36</volume>: <fpage>808</fpage>–<lpage>812</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Marteinsson1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marteinsson</surname><given-names>VT</given-names></name>, <name name-style="western"><surname>Rúnarsson</surname><given-names>Á</given-names></name>, <name name-style="western"><surname>Stefánsson</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Thorsteinsson</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Jóhannesson</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Microbial communities in the subglacial waters of the Vatnajökull ice cap, Iceland</article-title>. <source>ISME J</source> <volume>7</volume>: <fpage>427</fpage>–<lpage>437</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Caporaso3"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Caporaso</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Kuczynski</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Stombaugh</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bittinger</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Bushman</surname><given-names>FD</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>QIIME allows analysis of high-throughput community sequencing data</article-title>. <source>Nat Methods</source> <volume>7</volume>: <fpage>335</fpage>–<lpage>336</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-DeSantis1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names></name>, <name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Larsen</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Rojas</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Brodie</surname><given-names>EL</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB</article-title>. <source>Appl Environ Microbiol</source> <volume>72</volume>: <fpage>5069</fpage>–<lpage>5072</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-McDonald1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McDonald</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Price</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Goodrich</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Nawrocki</surname><given-names>EP</given-names></name>, <name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>An improved Greengenes taxonomy with explicit ranks for ecological and evolutionary analyses of bacteria and archaea</article-title>. <source>ISME J</source> <volume>6</volume>: <fpage>610</fpage>–<lpage>618</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Werner1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Werner</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Koren</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>, <name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names></name>, <name name-style="western"><surname>Walters</surname><given-names>WA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Impact of training sets on classification of high-throughput bacterial 16s rRNA gene surveys</article-title>. <source>ISME J</source> <volume>6</volume>: <fpage>94</fpage>–<lpage>103</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Illumina1"><label>33</label>
+<mixed-citation publication-type="other" xlink:type="simple">Illumina (2013) Best Practices for High Sensitivity Applications: Minimizing Sample Carryover. Available: <ext-link ext-link-type="uri" xlink:href="https://my.illumina.com/MyIllumina/Bulletin/DVzvSUldoEqh4oUyPaxoXA/best-practices-for-high-sensitivity-applications-m" xlink:type="simple">https://my.illumina.com/MyIllumina/Bulletin/DVzvSUldoEqh4oUyPaxoXA/best-practices-for-high-sensitivity-applications-m</ext-link>. Accessed 2014 Mar 18.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Bokulich1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bokulich</surname><given-names>NA</given-names></name>, <name name-style="western"><surname>Subramanian</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Gevers</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Gordon</surname><given-names>JI</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Quality-filtering vastly improves diversity estimates from Illumina amplicon sequencing</article-title>. <source>Nat Methods</source> <volume>10</volume>: <fpage>57</fpage>–<lpage>59</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Reysenbach1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reysenbach</surname><given-names>A-L</given-names></name>, <name name-style="western"><surname>Giver</surname><given-names>LJ</given-names></name>, <name name-style="western"><surname>Wickham</surname><given-names>GS</given-names></name>, <name name-style="western"><surname>Pace</surname><given-names>NR</given-names></name> (<year>1992</year>) <article-title>Differential amplification of rRNA genes by polymerase chain reaction</article-title>. <source>Appl Environ Microbiol</source> <volume>58</volume>: <fpage>3417</fpage>–<lpage>3418</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Bergmann1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bergmann</surname><given-names>GT</given-names></name>, <name name-style="western"><surname>Bates</surname><given-names>ST</given-names></name>, <name name-style="western"><surname>Eilers</surname><given-names>KG</given-names></name>, <name name-style="western"><surname>Lauber</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Caporaso</surname><given-names>JG</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>The under-recognized dominance of Verrucomicrobia in soil bacterial communities</article-title>. <source>Soil Biol Biochem</source> <volume>43</volume>: <fpage>1450</fpage>–<lpage>1455</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Edgar1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edgar</surname><given-names>RC</given-names></name>, <name name-style="western"><surname>Haas</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Clemente</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Quince</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Knight</surname><given-names>R</given-names></name> (<year>2011</year>) <article-title>UCHIME improves sensitivity and speed of chimera detection</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2194</fpage>–<lpage>2200</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Engelbrektson1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Engelbrektson</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kunin</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Wrighton</surname><given-names>KC</given-names></name>, <name name-style="western"><surname>Zvenigorodsky</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>F</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Experimental factors affecting PCR-based estimates of microbial species richness and evenness</article-title>. <source>ISME J</source> <volume>4</volume>: <fpage>642</fpage>–<lpage>647</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Haas1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Haas</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Gevers</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Earl</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Feldgarden</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ward</surname><given-names>DV</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Chimeric 16S rRNA sequence formation and detection in Sanger and 454-pyrosequenced PCR amplicons</article-title>. <source>Genome Res</source> <volume>21</volume>: <fpage>494</fpage>–<lpage>504</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Pruesse1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pruesse</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Quast</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Knittel</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Fuchs</surname><given-names>BM</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>W</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>SILVA: a comprehensive online resource for quality checked and aligned ribosomal RNA sequence data compatible with ARB</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>7188</fpage>–<lpage>7196</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Worthen1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Worthen</surname><given-names>PL</given-names></name>, <name name-style="western"><surname>Gode</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Graf</surname><given-names>J</given-names></name> (<year>2006</year>) <article-title>Culture-independent characterization of the digestive-tract microbiota of the medicinal leech reveals a tripartite symbiosis</article-title>. <source>Appl Environ Microbiol</source> <volume>72</volume>: <fpage>4775</fpage>–<lpage>4781</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094249-Laufer1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Laufer</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Siddall</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Graf</surname><given-names>J</given-names></name> (<year>2008</year>) <article-title>Characterization of the digestive-tract microbiota of Hirudo orientalis, a european medicinal leech</article-title>. <source>Appl Environ Microbiol</source> <volume>74</volume>: <fpage>6151</fpage>–<lpage>6154</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

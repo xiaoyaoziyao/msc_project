@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0131274</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-15-06388</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>PhenStat: A Tool Kit for Standardized Analysis of High Throughput Phenotypic Data</article-title>
+<alt-title alt-title-type="running-head">PhenStat: R Package for Phenotyping Data</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Kurbatova</surname>
+<given-names>Natalja</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Mason</surname>
+<given-names>Jeremy C.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Morgan</surname>
+<given-names>Hugh</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Meehan</surname>
+<given-names>Terrence F.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Karp</surname>
+<given-names>Natasha A.</given-names>
+</name>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>The EMBL—European Bioinformatics Institute, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, United Kingdom</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Medical Research Council Harwell, Harwell, Oxfordshire, United Kingdom</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Mouse Informatics Group, Wellcome Trust Sanger Institute, Hinxton, Cambridgeshire, United Kingdom</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Dalby</surname>
+<given-names>Andrew R.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Westminster, UNITED KINGDOM</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Analyzed the data: NK NAK JCM HM. Contributed reagents/materials/analysis tools: NK NAK. Wrote the paper: NK NAK JCM TFM HM.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">natalja@ebi.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>6</day>
+<month>7</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>7</issue>
+<elocation-id>e0131274</elocation-id>
+<history>
+<date date-type="received">
+<day>11</day>
+<month>2</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>6</day>
+<month>5</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Kurbatova et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0131274" xlink:type="simple"/>
+<abstract>
+<p>The lack of reproducibility with animal phenotyping experiments is a growing concern among the biomedical community. One contributing factor is the inadequate description of statistical analysis methods that prevents researchers from replicating results even when the original data are provided. Here we present PhenStat – a freely available R package that provides a variety of statistical methods for the identification of phenotypic associations. The methods have been developed for high throughput phenotyping pipelines implemented across various experimental designs with an emphasis on managing temporal variation. PhenStat is targeted to two user groups: small-scale users who wish to interact and test data from large resources and large-scale users who require an automated statistical analysis pipeline. The software provides guidance to the user for selecting appropriate analysis methods based on the dataset and is designed to allow for additions and modifications as needed. The package was tested on mouse and rat data and is used by the International Mouse Phenotyping Consortium (IMPC). By providing raw data and the version of PhenStat used, resources like the IMPC give users the ability to replicate and explore results within their own computing environment.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by the Wellcome Trust (grant number: WT098051, <ext-link ext-link-type="uri" xlink:href="http://www.wellcome.ac.uk/Funding/index.htm" xlink:type="simple">http://www.wellcome.ac.uk/Funding/index.htm</ext-link>) and the National Institutes of Health (grant number: 1 U54 HG006370-01, <ext-link ext-link-type="uri" xlink:href="http://grants.nih.gov/grants/oer.htm" xlink:type="simple">http://grants.nih.gov/grants/oer.htm</ext-link>).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="9"/>
+<table-count count="2"/>
+<page-count count="16"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>PhenStat package is available in Bioconductor starting from version 2.14: <ext-link ext-link-type="uri" xlink:href="http://www.bioconductor.org/packages/release/bioc/html/PhenStat.html" xlink:type="simple">http://www.bioconductor.org/packages/release/bioc/html/PhenStat.html</ext-link>. The up-to-date development version of the package is stored at GitHub repository: <ext-link ext-link-type="uri" xlink:href="https://github.com/mpi2/stats_working_group" xlink:type="simple">https://github.com/mpi2/stats_working_group</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Irreproducibility of animal research is slowing advancement in understanding disease mechanisms, squandering resources on unproductive avenues of research and contributing to the cost of development of new drugs [<xref rid="pone.0131274.ref001" ref-type="bibr">1</xref>]. Funding bodies and scientific journals are addressing these concerns by forming policies that require transparent reporting of experimental design and data analysis [<xref rid="pone.0131274.ref002" ref-type="bibr">2</xref>]. The Animal Research: Reporting of In Vivo Experiments (ARRIVE) guidelines were published to aid authors in transparent reporting of biomedical animal studies [<xref rid="pone.0131274.ref003" ref-type="bibr">3</xref>]. The guidelines consist of twenty elements including clear statement of the goals of the animal study, the procedures used, the experimental design, and the analysis. The guidelines require the results of statistical analysis to be reproducible by being well documented and easily accessible.</p>
+<p>Phenotyping, the assessment of the observable physical or biochemical characteristics of an organism, is an active area of research to understand the interaction between genotype and phenotype. A recent publication considering how to address shortcomings in phenotyping data and studies made a call for transparent reproducible phenotype associations [<xref rid="pone.0131274.ref004" ref-type="bibr">4</xref>]. Several high-throughput animal phenotyping projects are underway. The International Mouse Phenotyping Consortium (IMPC) aims to phenotype knockouts for all protein coding genes in the mouse genome, building on the large collection of targeted alleles in C57BL/6N embryonic stem cells available from the International Knockout Mouse Consortium [<xref rid="pone.0131274.ref005" ref-type="bibr">5</xref>–<xref rid="pone.0131274.ref007" ref-type="bibr">7</xref>]. Large-scale phenotyping is not restricted to those associated with IMPC, for example there are other institutes conducting high throughput phenotyping such as the Australian Phenomics Facility (<ext-link ext-link-type="uri" xlink:href="http://www.apf.edu.au/" xlink:type="simple">http://www.apf.edu.au</ext-link>) or the Mutagenetix project at the University of Texas SouthWestern Medical Center (<ext-link ext-link-type="uri" xlink:href="http://mutagenetix.utsouthwestern.edu/" xlink:type="simple">http://mutagenetix.utsouthwestern.edu/</ext-link>) and projects focused on other species for example rats (<ext-link ext-link-type="uri" xlink:href="http://rgd.mcw.edu/wg/physiology" xlink:type="simple">http://rgd.mcw.edu/wg/physiology</ext-link>), dogs (<ext-link ext-link-type="uri" xlink:href="http://www.caninephenome.org/" xlink:type="simple">http://www.caninephenome.org</ext-link>), zebrafish [<xref rid="pone.0131274.ref008" ref-type="bibr">8</xref>] and Xenopus (<ext-link ext-link-type="uri" xlink:href="http://www.sanger.ac.uk/research/projects/vertebratedevelopment/xtpp.html" xlink:type="simple">http://www.sanger.ac.uk/research/projects/vertebratedevelopment/xtpp.html</ext-link>).</p>
+<p>In large-scale model organism screens, a suite of statistical tests is required to accurately associate the interaction between genotype and phenotype. A phenotyping pipeline can be defined as a sequence of phenotyping procedures carried out at specific development stages or time points. Standardised protocols defining collection of data are necessary but not sufficient to identify the best statistical test to apply. The workflow–the practical implementation of a pipeline–must also be considered, as implementation varies over time and between centres. Each workflow is a balance of resources, the local specific goals, and throughput requirements. Differences in the number and frequency of controls, whether controls are measured concurrently with experimental animals, and blinding methodologies are common variables in workflows that influence which statistical test should be used. Batch in particular (defined here as those readings collected on the same day) is a significant source of variation [<xref rid="pone.0131274.ref009" ref-type="bibr">9</xref>] that is critical in determining how data from a pipeline should be analysed [<xref rid="pone.0131274.ref010" ref-type="bibr">10</xref>]. Other complicating factors include low number of animals and the influence of shared microbiome between cage mates [<xref rid="pone.0131274.ref011" ref-type="bibr">11</xref>]. High-throughput methods ensure large volumes of phenotype data continue to be collected, thus, an automated statistical method selection process and analysis platform is required. To promote reproducibility, the selection process and statistical methods must be available to outside researchers so results may be duplicated and further explored.</p>
+<p>We propose that packages of tools prepared using the R environment [<xref rid="pone.0131274.ref012" ref-type="bibr">12</xref>] and made available via the Bioconductor package repository [<xref rid="pone.0131274.ref013" ref-type="bibr">13</xref>] are one of the best solutions to achieve these goals as R is widely used by the bioinformatics community and is freely available. Thus we have developed PhenStat, an R package of tools for the identification of phenotypic associations with an emphasis on statistical tools for high-throughput experiments that is made freely available from the Bioconductor repository. To encourage use and take up by the biological community, PhenStat provides an easy to use three-step process, regardless of the analysis method implemented. The first step is to perform dataset checks to ensure the analysis is appropriate and, in interactive mode, provides clear feedback about the steps taken and any issues identified. Furthermore, we have developed a function that suggests a suitable analysis method depending on the dataset characteristics. All methods output a statistical significance measure, an effect size measure, model diagnostics (when appropriate), and graphical visualisation of the genotype effect. There has been a recent call to ensure <italic>in-vivo</italic> experiments investigate both sexes due to the importance of understanding potential sexual dimorphic phenotypes [<xref rid="pone.0131274.ref014" ref-type="bibr">14</xref>]. To support this, where possible, the analysis tests whether the genotype effect has sexual dimorphism and then classifies the effect (for example: male only). Depending on the user needs, the statistical analysis output can either be interactive where the user views the graphical output and analysis summaries, or for a database implementation where the output consists of data vectors and saved graphical files.</p>
+<p>The PhenStat package has been tested and demonstrated with an application of 420 lines of mouse phenotyping data from the <ext-link ext-link-type="uri" xlink:href="http://www.sanger.ac.uk/mouseportal/" xlink:type="simple">http://www.sanger.ac.uk/mouseportal/</ext-link> Sanger Mouse Genetics Project [<xref rid="pone.0131274.ref015" ref-type="bibr">15</xref>] and <ext-link ext-link-type="uri" xlink:href="http://www.eumodic.org/" xlink:type="simple">http://www.eumodic.org/</ext-link> EUMODIC project [<xref rid="pone.0131274.ref016" ref-type="bibr">16</xref>] and on rat phenotyping datasets from PhysGen resource (<ext-link ext-link-type="uri" xlink:href="http://pga.mcw.edu/" xlink:type="simple">http://pga.mcw.edu</ext-link>) [<xref rid="pone.0131274.ref017" ref-type="bibr">17</xref>]. The package run time depends on a variety of factors including dataset size, computational resources, etc. Average analysis run time of the test datasets in our local environment was 1.34 seconds. The PhenStat is used as the main statistical software at the European Bioinformatics Institute (EBI) for the analysis of quality controlled data in the IMPC database available through the <ext-link ext-link-type="uri" xlink:href="http://www.mousephenotype.org/" xlink:type="simple">http://www.mousephenotype.org</ext-link> [<xref rid="pone.0131274.ref018" ref-type="bibr">18</xref>]. The package is also implemented at MRC Harwell for preliminary IMPC data analysis. The usage of PhenStat enables these analyses to be automated and version controlled.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Methods</title>
+<p>Phenotyping data collected at the Wellcome Trust Sanger Institute was approved by the Animal Welfare and Ethical review Board (AWERB) resulting in the approval licence: PPL 80/2076 Valid 27th Nov 2006—3rd Jan 2012; PPL 80/2485 valid 22nd Dev 2011—3rd Jan 2017. All efforts were made to minimize suffering by considerate housing and husbandry. Animal welfare was assessed routinely for all mice involved. Adult mice were killed by terminal anaesthesia followed by exsanguination and either cervical dislocation or removal of the heart.</p>
+<p>In this work we present PhenStat, a novel software package of R, which identifies phenotypic associations from high throughput phenotyping experiments. The package depends on R and a number of other R packages listed in the usage section. Once R is installed the package by itself is operating system independent. Test data are provided in Supplementary Information: <xref rid="pone.0131274.s003" ref-type="supplementary-material">S1 Dataset</xref> and <xref rid="pone.0131274.s004" ref-type="supplementary-material">S2 Dataset</xref>.</p>
+<sec id="sec003">
+<title>Structure of the package</title>
+<p>For ease of use, the package consists of three layers as shown in <xref rid="pone.0131274.g001" ref-type="fig">Fig 1</xref>.</p>
+<fig id="pone.0131274.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>The PhenStat package's three-layer structure.</title>
+<p>The PhenStat package is designed with a three layer structure: dataset processing, analysis and result. In addition, there is a layer with graphical output.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>The first step, dataset checking and cleaning, prepares the data for analysis and is managed by the <italic>PhenList</italic> function and creates a <italic>PhenList</italic> object. Critical to this is a terminology unification procedure, necessary as different laboratories use different terms to describe the same object (e.g. “sex” versus “gender” in describing an animal’s sex). This step also includes a number of checking and cleaning processes to ensure the data are ready for downstream analysis. Any data cleaning steps performed (e.g. the removal of data) are reported.</p>
+<p>Example of dataset processing:</p>
+<p specific-use="line">&gt; dataset_csv &lt;- read.csv("myPhenDataset.csv")</p>
+<p specific-use="line">&gt; test &lt;- PhenList(dataset_csv, testGenotype = "Sparc/Sparc",dataset.clean = TRUE)</p>
+<p>The second step, statistical analysis, is managed by the <italic>testDataset</italic> function. This works as a manager for different statistical analyses methods and the “method” argument defines which method to use as discussed in the manuscript in “Statistical Methods Available”. The <italic>testDataset</italic> function performs basic checks that ensure the selected statistical analysis will be appropriate and successful: dependent variable presence, data variability checks, etc. If issues are identified, clear guidance is returned to the user. Results are stored in the <italic>PhenTestResult</italic> object regardless of the statistical method used. For all frameworks implemented, the statistical significance is assessed, the biological significance through an effect size is estimated and finally the genotype effect is classified e.g. "both sexes equally".</p>
+<p>Example showing a test object obtained from the first step being analysed with the method ‘MM’ (Mixed Models method):</p>
+<p specific-use="line">&gt; result &lt;- testDataset(test, depVariable = "Lean.Mass", method = "MM")</p>
+<p>The final step, viewing the results, is provided by two functions depending on user needs. As shown in <xref rid="pone.0131274.g001" ref-type="fig">Fig 1</xref>, two functions, <italic>summaryOutput</italic> and <italic>vectorOutput</italic>, present numeric results to the user. These output formats were generated for differing user’s needs: <italic>summaryOutput</italic> for the interactive analysis of data and <italic>vectorOutput</italic> for large-scale application where automatic implementation would be required. The output vector is strictly defined and independent of analysis method that has been used.</p>
+<p>Multiple graphical functions have been generated for visualization of the genotype effect and model diagnostics to assess quality of model estimations (e.g. the <italic>qqplotGenotype</italic> assesses the normality of the residuals). Further details on these functions, examples and interpretation can be found in the “Usage Example” section.</p>
+<p>Examples of output functions:</p>
+<p specific-use="line">&gt; boxplotSexGenotype(test,"Weight","Body Weight")</p>
+<p specific-use="line">&gt; summaryOutput(result)</p>
+<p specific-use="line">&gt; qqplotGenotype(result)</p>
+</sec>
+<sec id="sec004">
+<title>Statistical methods available</title>
+<p>The selection of the statistical method is an important step in the process of phenotype data analysis and is dependent on the goal of the project, the experimental implementation, and the variable characteristics (e.g. continuous or categorical). Below we present the various methods we have implemented and explain for which workflows they are appropriate.</p>
+<sec id="sec005">
+<title>Categorical data—Fisher Exact Test method</title>
+<p>The majority of categorical variables monitored in phenotyping studies are rare event classifications. For example: skull shape could be classified as normal or abnormal. With these small studies, it is critical that the abnormality is a rare event to give enough sensitivity to statistically detect differences between controls and treatment animals when a low number of treatment animals are phenotyped. To improve sensitivity, PhenStat uses all control data to assess the abnormality rate in the control population and takes no consideration of batch. Currently PhenStat uses the Fisher Exact Test [<xref rid="pone.0131274.ref019" ref-type="bibr">19</xref>], to assess for a statistically significant difference in the proportions observed between the knockout and control group for each sex.</p>
+</sec>
+<sec id="sec006">
+<title>Continuous data</title>
+<p>Previous studies have found that sex, weight and batch were a significant source of variation for continuous variables [<xref rid="pone.0131274.ref010" ref-type="bibr">10</xref>,<xref rid="pone.0131274.ref020" ref-type="bibr">20</xref>] with batch encompassing other sources of variation, for example litter, cage and operator. While we could attempt to model all variation sources, we are limited by the number of covariates that can be included in a statistical model when the number of treatment animals is low (typically 3–7 animals for high-throughput pipelines). As such we have included differing methods in PhenStat to account for the most significant sources of variation when a model method is used.</p>
+</sec>
+<sec id="sec007">
+<title>Time as Fixed Effect method</title>
+<p>Time as Fixed Effect (TF) approach is a regression method that models continuous data treating batch as a fixed effect. The method starts by deciding whether the user wish to include body weight (or other covariate representing weight e.g. body width, heart weight etc.) (<xref rid="pone.0131274.e002" ref-type="disp-formula">Eq 2</xref>) or exclude (<xref rid="pone.0131274.e001" ref-type="disp-formula">Eq 1</xref>) as a covariate in the starting model. The model is then optimised following an iterative top down mixed modelling strategy prior to assessing for a genotype effect. If batch is found to be significant, then the model estimates each batch effect to separate it from the potential genotype effect.
+<disp-formula id="pone.0131274.e001">
+<alternatives>
+<graphic id="pone.0131274.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi>V</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>a</mml:mi><mml:mi>b</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>+</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>*</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>B</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>c</mml:mi><mml:mi>h</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>Eq 1</label>
+</disp-formula>
+<disp-formula id="pone.0131274.e002">
+<alternatives>
+<graphic id="pone.0131274.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mi>V</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>a</mml:mi><mml:mi>b</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>+</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>*</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>W</mml:mi><mml:mi>e</mml:mi><mml:mi>i</mml:mi><mml:mi>g</mml:mi><mml:mi>h</mml:mi><mml:mi>t</mml:mi><mml:mo>+</mml:mo><mml:mi>B</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>c</mml:mi><mml:mi>h</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>Eq 2</label>
+</disp-formula>
+</p>
+<p>This framework can be used in cases when there are up to five batches of treatment animals (e.g. knockout animals) and concurrent controls have been collected (<xref rid="pone.0131274.g002" ref-type="fig">Fig 2</xref>). Typically in high throughput studies the number of treated animals is limited in a concurrent design. That is why in the construct of the framework we limited the number of batches considered. The analysis requires removal of records that are not concurrent with treatment records or if treatment records lack concurrent controls. This is achieved by the <italic>TFDataset</italic> function, which will also report the data cleaning outcome impact on the data.</p>
+<fig id="pone.0131274.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Graphical representation of a typical Time Fixed Effect data structure.</title>
+<p>The Time as a Fixed Effect analysis requires a data structure where there are multiple batches but each batch has concurrent controls.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g002" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec008">
+<title>Mixed Model method</title>
+<p>In the Mixed Model (MM) method, linear mixed models are used to describe the data with batch. Batch is treated as a random effect adding variation to the data that is assumed to be normally distributed. As with the TFE, an iterative top down mixed modelling strategy has been implemented to optimise the model prior to assessing for a genotype effect. Details of the implementation, including decision tree and models descriptions, are available in the PhenStat package user's guide (<ext-link ext-link-type="uri" xlink:href="http://goo.gl/tfbA5k" xlink:type="simple">http://goo.gl/tfbA5k</ext-link>), and described in the literature [<xref rid="pone.0131274.ref010" ref-type="bibr">10</xref>,<xref rid="pone.0131274.ref021" ref-type="bibr">21</xref>]. There are two possible start models, depending on whether weight is included as a covariate (see <xref rid="pone.0131274.e003" ref-type="disp-formula">Eq 3</xref> and <xref rid="pone.0131274.e004" ref-type="disp-formula">Eq 4</xref>).
+<disp-formula id="pone.0131274.e003">
+<alternatives>
+<graphic id="pone.0131274.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:mi>V</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>a</mml:mi><mml:mi>b</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>+</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>*</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="false">|</mml:mo><mml:mi>B</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>c</mml:mi><mml:mi>h</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>Eq 3</label>
+</disp-formula>
+<disp-formula id="pone.0131274.e004">
+<alternatives>
+<graphic id="pone.0131274.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:mi>V</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>a</mml:mi><mml:mi>b</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>+</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>G</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mi>y</mml:mi><mml:mi>p</mml:mi><mml:mi>e</mml:mi><mml:mo>*</mml:mo><mml:mi>S</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>W</mml:mi><mml:mi>e</mml:mi><mml:mi>i</mml:mi><mml:mi>g</mml:mi><mml:mi>h</mml:mi><mml:mi>t</mml:mi><mml:mo>+</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="false">|</mml:mo><mml:mi>B</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>c</mml:mi><mml:mi>h</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>Eq 4</label>
+</disp-formula>
+</p>
+<p>If batch is not significant in explaining the variation, then the model optimisation results in a linear model being fitted to the data.</p>
+<p>This framework can be used in cases where both controls and treatment (e.g. knockout mice) are measured over multiple batches. The treatment animals do not have to be concurrent with controls (<xref rid="pone.0131274.g003" ref-type="fig">Fig 3</xref>).</p>
+<fig id="pone.0131274.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Graphical representation of a typical Mixed Model data structure.</title>
+<p>The Mixed Model analysis requires a data structure where there are multiple batches of knockout animals and regular batches of control animals. The analysis does not require concurrent controls.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g003" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec009">
+<title>Reference Range Plus method</title>
+<p>The "Reference Range Plus" (RR) method is an intuitive, simple, conservative method based on the concept that a significant phenotype can be called when the majority of animals lie outside the natural variation seen in the control animals within particular institute. A similar concept was used in the large scale study of knockout data from the Wellcome Trust Sanger Institute Mouse Genetics Project [<xref rid="pone.0131274.ref015" ref-type="bibr">15</xref>] and the ENU-mutagenesis project [<xref rid="pone.0131274.ref022" ref-type="bibr">22</xref>]. It is also comparable to medical investigations for humans where measurements are compared to baseline readings. Our implementation is based on classifying the analysable variable values as high, normal, low based on the natural variation seen within the control data and comparing the proportions seen with a Fisher Exact Test (<xref rid="pone.0131274.g004" ref-type="fig">Fig 4</xref>).</p>
+<fig id="pone.0131274.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>The Reference Range Plus method.</title>
+<p><bold>a)</bold> Determining the thresholds for classifying the measures as low, normal or high based on the natural variation seen in the control data. <bold>b)</bold> Formation of a 2x2 count table following the classification of the measured animals. <bold>c)</bold> The observed proportions seen in tables (b) are compared with a Fisher Exact Test and effect quantified by calculating a change in penetrance in classification.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g004" position="float" xlink:type="simple"/>
+</fig>
+<p>This framework can be used in studies where the other analysis pipelines are not suitable, for example in a study where it is a one batch design without concurrent controls, where the number of measures is low or where it has been difficult to design the experiment and as such there are significant variables beyond sex, batch and genotype that are varying.</p>
+</sec>
+</sec>
+<sec id="sec010">
+<title>Assessing which method to use</title>
+<p>Each analysis method has its own set of requirements and appropriate checks. Within the analysis step (<italic>testDataset</italic>), clear guidance is returned if analysis cannot be completed with the method selected. The <italic>recommendMethod</italic> function can be called prior to statistical analysis. It runs all the checks required by different methods and advises which analysis pipelines could be used.</p>
+<p specific-use="line">&gt; file &lt;- system.file("extdata", "test1.csv", package = "PhenStat")</p>
+<p specific-use="line">&gt; test &lt;- PhenList(dataset = read.csv(file),</p>
+<p specific-use="line">testGenotype = "Sparc/Sparc")</p>
+<p specific-use="line">&gt; recommendMethod(test, depVariable = "Lean.Mass")</p>
+<p specific-use="line">[<styled-content><xref rid="pone.0131274.ref001" ref-type="bibr">1</xref></styled-content>] "MM and RR"</p>
+<p>As you can see from the example usage above, there are two methods suitable for this dataset/dependent variable combination: "Mixed Models" approach (MM) and "Reference Range Plus" approach (RR).</p>
+</sec>
+</sec>
+<sec id="sec011">
+<title>Usage</title>
+<p>The PhenStat package is a part of Bioconductor R package repository. The current release of Bioconductor is version 3.0; includes the latest version of PhenStat that is 2.0.1 and works with R version 3.1.1.</p>
+<p>Installation steps:
+<list list-type="order">
+<list-item><p>First install the latest version of R</p></list-item>
+<list-item><p>Download the latest version of PhenStat package from Bioconductor by starting R and entering the commands:</p></list-item>
+</list></p>
+<p specific-use="line">&gt;source(“<ext-link ext-link-type="uri" xlink:href="http://bioconductor.org/biocLite.R" xlink:type="simple">http://bioconductor.org/biocLite.R</ext-link>”)</p>
+<p specific-use="line">&gt;biocLite(“PhenStat”)
+<list list-type="order">
+<list-item><p>Load PhenStat package:</p></list-item>
+</list></p>
+<p specific-use="line">&gt;libary(“PhenStat”)</p>
+<p>An alternative to step 2, is to download the PhenStat tarball containing the source of the package directly from the GitHub repository where the latest development version of package is stored (<ext-link ext-link-type="uri" xlink:href="http://goo.gl/8LV4VB" xlink:type="simple">http://goo.gl/8LV4VB</ext-link>) and to use the <italic>install</italic>.<italic>package</italic> command from R console:</p>
+<p specific-use="line">&gt;install.packages(&lt;downloaded_file&gt;, repos = NULL, type =“source”)</p>
+<p>Please note, when installing an R package from source, any package dependencies have to be manually loaded. PhenStat depends on the following packages: “limma”, “methods”, “car”, “nlme”, “nortest”, “vcd”.</p>
+<p>As input, the PhenStat requires a dataset presented as a data frame that can be stored in csv or txt file. PhenStat requires columns with information about genotypes and sexes to be present in the data frame in addition to the variable of interest. Columns with assay day (batch) and body weight data are desirable but not required.</p>
+<sec id="sec012">
+<title>Usage example</title>
+<p>We present a worked example using rat phenotyping data from the PhysGen phenotyping database (<ext-link ext-link-type="uri" xlink:href="http://pga.mcw.edu/" xlink:type="simple">http://pga.mcw.edu/</ext-link>). This database contains both phenotyping data from various ENU strains and from a consomic project. In the consomic project, strains are compared where lines differ by one complete chromosome pair [<xref rid="pone.0131274.ref023" ref-type="bibr">23</xref>]. In this usage example, we will focus the analysis comparing the SS (Dahl Salt-Sensitive; SS/JrHsdMcwi) parent strain vs consomic strain SS-3<sup>BN</sup>/Mcwi (SS genomic background with a BN chromosome 3 introgressed) for the variable “peak contracture pressure”, which is one of the measurements of ischemic phenotypes from the cardiac protocol described in detail on the PhysGen web site. The goal is to detect an increase in intracavity pressure of 4 mmHg above end-diastolic values during an ischemic episode. <xref rid="pone.0131274.t001" ref-type="table">Table 1</xref> details the dataset and highlights the multi-batch nature common to high throughput phenotyping.</p>
+<table-wrap id="pone.0131274.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.t001</object-id>
+<label>Table 1</label> <caption><title>Rat dataset characteristics for the peak contracture pressure variable of the cardiac study comparing SS and SS-3<sup>BN</sup>/Mcwi strains.</title></caption>
+<alternatives>
+<graphic id="pone.0131274.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Genotype</th>
+<th align="left" rowspan="1" colspan="1">Sex</th>
+<th align="left" rowspan="1" colspan="1">Number of rats</th>
+<th align="left" rowspan="1" colspan="1">Number of batches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="2" align="left" colspan="1">SS (control)</td>
+<td align="left" rowspan="1" colspan="1">Male</td>
+<td align="left" rowspan="1" colspan="1">235</td>
+<td align="left" rowspan="1" colspan="1">86</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Female</td>
+<td align="left" rowspan="1" colspan="1">58</td>
+<td align="left" rowspan="1" colspan="1">9</td>
+</tr>
+<tr>
+<td rowspan="2" align="left" colspan="1">SS-3<sup>BN</sup>/Mcwi (treated)</td>
+<td align="left" rowspan="1" colspan="1">Male</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Female</td>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>The dataset (<xref rid="pone.0131274.s003" ref-type="supplementary-material">S1 Dataset</xref>) was processed using PhenStat V2.0.1 and the code available in the Supplementary Information (<xref rid="pone.0131274.s001" ref-type="supplementary-material">S1 Code</xref>). Exploration of raw data (<xref rid="pone.0131274.g005" ref-type="fig">Fig 5</xref> and <xref rid="pone.0131274.g006" ref-type="fig">Fig 6</xref>) highlights a visual difference in the variable of interest that could potentially be attributed to the genotype change.</p>
+<fig id="pone.0131274.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Example output of the PhenStat <italic>boxplotGenotypeSex</italic> function.</title>
+<p>Shown is the output from the <italic>boxplotGenotypeSex</italic> function obtained for the ischemic peak contracture pressure from a study on rats comparing SS strain to SS-3BN/Mcwi strain. Graphic highlights a visual difference in the variable of interest that could potentially be attributed to the genotype change.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g005" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pone.0131274.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Example output of the PhenStat <italic>scatterplotGenotypeSexBatch</italic> function.</title>
+<p>Shown is the variation with batch in the peak contracture pressure readings for rats from SS strain (coloured in black) compared to the SS-3BN/Mcwi strain (coloured in red) visualised using the <italic>scatterplotGenotypeSexBatch</italic> function. This plot allows the user to visualize the batch variation and assess how the treatment effect compares to the observed batch variation. It is important to note that as dates can be entered in many forms, the batches are not ordered with time.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g006" position="float" xlink:type="simple"/>
+</fig>
+<p>The <italic>recommendMethod</italic> function indicates that that the data could be processed with the Mixed Model Method or the Reference Range Plus Method. Looking first at the conservative simple Reference Range Plus method, the analysis found a highly significant genotype effect as a high proportion of the rats were classified as low (<xref rid="pone.0131274.t002" ref-type="table">Table 2</xref>) (male dataset, <italic>p</italic> value = 4.75e-6 with a 43% change in classification and female dataset <italic>p</italic> value = 4.64e-3 with a 26% change in classification).</p>
+<table-wrap id="pone.0131274.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.t002</object-id>
+<label>Table 2</label> <caption><title>Reclassification of records from the rat dataset as low, normal and high relative to the natural variation (95%) in the control data.</title></caption>
+<alternatives>
+<graphic id="pone.0131274.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Genotype</th>
+<th align="left" rowspan="1" colspan="1">Sex</th>
+<th align="left" rowspan="1" colspan="1">Low</th>
+<th align="left" rowspan="1" colspan="1">Normal</th>
+<th align="left" rowspan="1" colspan="1">High</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="2" align="left" colspan="1">SS</td>
+<td align="left" rowspan="1" colspan="1">Males</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">204</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Female</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">48</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td rowspan="2" align="left" colspan="1">SS-3<sup>BN</sup>/Mcwi</td>
+<td align="left" rowspan="1" colspan="1">Males</td>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Female</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Processing the same data using the Mixed Model method and excluding weight (<xref rid="pone.0131274.e003" ref-type="disp-formula">Eq 3</xref>) completed a model optimization process and for this dataset, batch was not found to be significant source of variation, variance was found to be homogenous and the genotype effect was found to be sexual dimorphic as it depended on the sex of the animals. The final optimized model was used and it was found that there was a statistically significant genotype effect (p value = 9.92e-6) classified as sexual dimorphic as the effect was larger in the males (-26.65±2.44mmHg) than the females (-16.53±2.88 mmHg). A variety of diagnostics can be run to assess the model fit, for example <xref rid="pone.0131274.g007" ref-type="fig">Fig 7</xref> assesses the residuals (differences between the measured and fitted) for normality.</p>
+<fig id="pone.0131274.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Example output of the PhenStat <italic>qqplotGenotype</italic> function.</title>
+<p>Data shown is the output from the <italic>qqplotGenotype</italic> function during the analysis of the ischemic peak contracture pressure from a study on rats comparing SS strain to SS-3BN/Mcwi strain when fitted with the Mixed Model method including body weight. This function allows an assessment of the model by examining the behaviour of the residuals, which is the difference between the measures and the model estimated values. A good model will have a normal distribution of residuals and the plot allows this to be assessed for each group being compared. Looking at the example, the residuals for both groups show no systematic deviations from the line indicating the model is fitting this data well.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g007" position="float" xlink:type="simple"/>
+</fig>
+<p>Alternatively, the Mixed Model method can be run to include a covariate to adjust for the animals’ weight (<xref rid="pone.0131274.e004" ref-type="disp-formula">Eq 4</xref>). This is critical in phenotyping experiments, as body weight has been found to be a common phenotype with genotype alterations [<xref rid="pone.0131274.ref024" ref-type="bibr">24</xref>] and body size is a significant source of variation for many phenotyping variables [<xref rid="pone.0131274.ref010" ref-type="bibr">10</xref>,<xref rid="pone.0131274.ref025" ref-type="bibr">25</xref>]. Including a covariate for body weight can therefore increase the sensitivity of the study by accounting for more variation, or it can remove a confounding effect where the difference is arising solely from a body weight difference. Including body weight in the analysis, gives a model where batch was significant, the variances were heterogeneous across the genotype groups, and there was no evidence of sexual dimorphism. The final optimized model was used and it was found that there was no longer a statistically significant genotype effect (<italic>p</italic> value = 0.0959), the genotype differences was estimated at -6.23±3.73mmHg as the variation was now associated with body weight (<italic>p</italic> value = 4.08e-12). Looking at the body weight (<xref rid="pone.0131274.g008" ref-type="fig">Fig 8</xref>) we can see a large body weight phenotype particularly amongst the male rats, furthermore we can see that body weight correlates strongly with the variable of interest (<xref rid="pone.0131274.g009" ref-type="fig">Fig 9</xref>).</p>
+<fig id="pone.0131274.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>An example body weight phenotype.</title>
+<p>A graphically visualising of the body weight phenotyping observed in a study of the ischemic peak contracture pressure on rats comparing SS strain to SS-3BN/Mcwi strain.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g008" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pone.0131274.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0131274.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Example output of the PhenStat <italic>scatterplotGenotypeWeight</italic> function.</title>
+<p>Data shown is the output from the <italic>scatterplotGenotypeWeight</italic> function during analysis of the ischemic peak contracture pressure from a study on rats comparing SS strain to SS-3BN/Mcwi strain. Both a regression line and a loess line (locally weighted line) fitted for each genotype.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0131274.g009" position="float" xlink:type="simple"/>
+</fig>
+<p>A further example usage with a mouse dataset from the IMPC project is shown in Supplementary Information <xref rid="pone.0131274.s002" ref-type="supplementary-material">S2 Code</xref>.</p>
+</sec>
+<sec id="sec013">
+<title>Future work</title>
+<p>We are testing a Biased Reduction Logistic Regression method [<xref rid="pone.0131274.ref026" ref-type="bibr">26</xref>] for inclusion in future releases of the PhenStat package which will add an assessment of sexual dimorphism for the categorical data.</p>
+<p>We are also testing a transformation routine of continuous data based on Box-Cox power transform [<xref rid="pone.0131274.ref027" ref-type="bibr">27</xref>] to improve the model fit quality.</p>
+</sec>
+</sec>
+<sec id="sec014" sec-type="conclusions">
+<title>Conclusion</title>
+<p>Applying the appropriate statistical analysis is a challenge in assessing biological data [<xref rid="pone.0131274.ref028" ref-type="bibr">28</xref>–<xref rid="pone.0131274.ref030" ref-type="bibr">30</xref>] and is an area of active research for high throughput phenotyping [<xref rid="pone.0131274.ref010" ref-type="bibr">10</xref>,<xref rid="pone.0131274.ref020" ref-type="bibr">20</xref>]. There is a need for accessible, freely available statistical tools that support the community in choosing the best analysis, especially when complex statistical methods are involved. This supports reproducibility of results by other parties, which is important for all research, particularly for <italic>in-vivo</italic> studies.</p>
+<p>PhenStat, an R package, has a variety of statistical analysis tools that have been developed based on known variation in experimental workflow and design of phenotyping pipelines used to identify phenotypic associations. PhenStat consists of many easy to use functions to perform and display statistical analysis of phenotyping data. The package provides a dataset processing function, statistical analysis processing which is easily adjustable for the different types of the analyses, and output functions that suit both interactive data analysis and large-scale database application.</p>
+<p>The package requires minimal to no manual intervention, can be easily automated and hence can delivers a robust implementation of phenotype data processing. Additionally, PhenStat is the only R package to our knowledge that provides comprehensive Linear Mixed Models and Reference Range Plus implementation developed for the identification of phenotypic associations.</p>
+<p>In comparison with the freely available InVivoStat [<xref rid="pone.0131274.ref031" ref-type="bibr">31</xref>] which focuses on traditional statistical approaches for animal experiments, PhenStat provides statistical methods specifically developed for high throughput phenotyping which are not available in InVivoStat (e.g. Linear Mixed Model method and Reference Range Plus method). The alternatives to PhenStat would be to use R directly, which would require deeper knowledge of R, and would lose the benefits of the version controlled analysis with known data cleaning steps.</p>
+<p>PhenStat is a versioned package which can include new methods for the statistical analysis and output format by request. Full description of the PhenStat objects and functions, statistical analysis details, and usage examples, including cluster usage, are available in the PhenStat package user's guide (<ext-link ext-link-type="uri" xlink:href="http://goo.gl/mKlX99" xlink:type="simple">http://goo.gl/mKlX99</ext-link>).</p>
+</sec>
+<sec id="sec015">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0131274.s001" xlink:href="info:doi/10.1371/journal.pone.0131274.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Code</label>
+<caption>
+<title>PhenStat demonstration on rat data (<xref rid="pone.0131274.s003" ref-type="supplementary-material">S1 Dataset</xref>).</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0131274.s002" xlink:href="info:doi/10.1371/journal.pone.0131274.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S2 Code</label>
+<caption>
+<title>PhenStat demonstration on mouse data (<xref rid="pone.0131274.s004" ref-type="supplementary-material">S2 Dataset</xref>).</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0131274.s003" xlink:href="info:doi/10.1371/journal.pone.0131274.s003" mimetype="text/csv" position="float" xlink:type="simple">
+<label>S1 Dataset</label>
+<caption>
+<title>Dataset containing rat phenotypic data.</title>
+<p>(CSV)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0131274.s004" xlink:href="info:doi/10.1371/journal.pone.0131274.s004" mimetype="text/csv" position="float" xlink:type="simple">
+<label>S2 Dataset</label>
+<caption>
+<title>Dataset containing mouse phenotypic data.</title>
+<p>(CSV)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The work builds on the knowledge that has been gained working with the international mouse phenotyping community through the numerous collaborations and includes EUMODIC (<ext-link ext-link-type="uri" xlink:href="http://www.eumodic.org/" xlink:type="simple">www.eumodic.org</ext-link>), International Mouse Phenotyping Consortium (<ext-link ext-link-type="uri" xlink:href="http://www.mousephenotype.org/" xlink:type="simple">www.mousephenotype.org</ext-link>) and the Sanger Mouse Genetics Project (<ext-link ext-link-type="uri" xlink:href="http://www.sanger.ac.uk/mouseportal" xlink:type="simple">www.sanger.ac.uk/mouseportal</ext-link>). Without the datasets that have been made freely available via these portals we would not have been able to develop and assess PhenStat package.</p>
+<p>We would like to thank the IMPC Statistical Working Group for the suggestions and insight to this work. We would also like to thank Dr. Helen Parkinson and Dr. Gautier Koscielny for their guidance.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0131274.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prinz</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Schlange</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Asadullah</surname> <given-names>K</given-names></name>. <article-title>Believe it or not: how much can we rely on published data on potential drug targets?</article-title> <source>Nat Rev Drug Discov</source>. <year>2011</year>;<volume>10</volume>: <fpage>712</fpage>–<lpage>712</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrd3439-c1" xlink:type="simple">10.1038/nrd3439-c1</ext-link></comment> <object-id pub-id-type="pmid">21892149</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Collins</surname> <given-names>FS</given-names></name>, <name name-style="western"><surname>Tabak</surname> <given-names>LA</given-names></name>. <article-title>Policy: NIH plans to enhance reproducibility</article-title>. <source>Nature</source>. <year>2014</year>;<volume>505</volume>: <fpage>612</fpage>–<lpage>613</lpage>. <object-id pub-id-type="pmid">24482835</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kilkenny</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Browne</surname> <given-names>WJ</given-names></name>, <name name-style="western"><surname>Cuthill</surname> <given-names>IC</given-names></name>, <name name-style="western"><surname>Emerson</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Altman</surname> <given-names>DG</given-names></name>. <article-title>Improving bioscience research reporting: the ARRIVE guidelines for reporting animal research</article-title>. <source>PLoS Biol</source>. <year>2010</year>;<volume>8</volume>: <fpage>e1000412</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1000412" xlink:type="simple">10.1371/journal.pbio.1000412</ext-link></comment> <object-id pub-id-type="pmid">20613859</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Deans</surname> <given-names>AR</given-names></name>, <name name-style="western"><surname>Lewis</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Huala</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Anzaldo</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>Ashburner</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Balhoff</surname> <given-names>JP</given-names></name>, <etal>et al</etal>. <article-title>Finding Our Way through Phenotypes</article-title>. <source>PLoS Biol</source>. <year>2015</year>;<volume>13</volume>: <fpage>e1002033</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1002033" xlink:type="simple">10.1371/journal.pbio.1002033</ext-link></comment> <object-id pub-id-type="pmid">25562316</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pettitt</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Liang</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Rairdan</surname> <given-names>XY</given-names></name>, <name name-style="western"><surname>Moran</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Prosser</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Beier</surname> <given-names>DR</given-names></name>, <etal>et al</etal>. <article-title>Agouti C57BL/6N embryonic stem cells for mouse genetic resources</article-title>. <source>Nat Methods</source>. <year>2009</year>;<volume>6</volume>: <fpage>493</fpage>–<lpage>495</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.1342" xlink:type="simple">10.1038/nmeth.1342</ext-link></comment> <object-id pub-id-type="pmid">19525957</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Simon</surname> <given-names>MM</given-names></name>, <name name-style="western"><surname>Greenaway</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>White</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Fuchs</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Gailus-Durner</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Wells</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>A comparative phenotypic and genomic analysis of C57BL/6J and C57BL/6N mouse strains</article-title>. <source>Genome Biol</source>. <year>2013</year>;<volume>14</volume>: <fpage>R82</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2013-14-7-r82" xlink:type="simple">10.1186/gb-2013-14-7-r82</ext-link></comment> <object-id pub-id-type="pmid">23902802</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ringwald</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Iyer</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Mason</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Stone</surname> <given-names>KR</given-names></name>, <name name-style="western"><surname>Tadepally</surname> <given-names>HD</given-names></name>, <name name-style="western"><surname>Kadin</surname> <given-names>JA</given-names></name>, <etal>et al</etal>. <article-title>The IKMC web portal: a central point of entry to data and resources from the International Knockout Mouse Consortium</article-title>. <source>Nucleic Acids Res</source>. <year>2011</year>;<volume>39</volume>: <fpage>D849</fpage>–<lpage>855</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq879" xlink:type="simple">10.1093/nar/gkq879</ext-link></comment> <object-id pub-id-type="pmid">20929875</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kettleborough</surname> <given-names>RNW</given-names></name>, <name name-style="western"><surname>Busch-Nentwich</surname> <given-names>EM</given-names></name>, <name name-style="western"><surname>Harvey</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Dooley</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>de Bruijn</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>van Eeden</surname> <given-names>F</given-names></name>, <etal>et al</etal>. <article-title>A systematic genome-wide analysis of zebrafish protein-coding gene function</article-title>. <source>Nature</source>. <year>2013</year>;<volume>496</volume>: <fpage>494</fpage>–<lpage>497</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11992" xlink:type="simple">10.1038/nature11992</ext-link></comment> <object-id pub-id-type="pmid">23594742</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname> <given-names>SDM</given-names></name>, <name name-style="western"><surname>Moore</surname> <given-names>MW</given-names></name>. <article-title>The International Mouse Phenotyping Consortium: past and future perspectives on mouse phenotyping</article-title>. <source>Mamm Genome Off J Int Mamm Genome Soc</source>. <year>2012</year>;<volume>23</volume>: <fpage>632</fpage>–<lpage>640</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00335-012-9427-x" xlink:type="simple">10.1007/s00335-012-9427-x</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Karp</surname> <given-names>NA</given-names></name>, <name name-style="western"><surname>Melvin</surname> <given-names>D</given-names></name>, <collab xlink:type="simple">Sanger Mouse Genetics Project</collab>, <name name-style="western"><surname>Mott</surname> <given-names>RF</given-names></name>. <article-title>Robust and sensitive analysis of mouse knockout phenotypes</article-title>. <source>PLoS ONE</source>. <year>2012</year>;<volume>7</volume>: <fpage>e52410</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0052410" xlink:type="simple">10.1371/journal.pone.0052410</ext-link></comment> <object-id pub-id-type="pmid">23300663</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lees</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Swann</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Poucher</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Nicholson</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Holmes</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Wilson</surname> <given-names>ID</given-names></name>, <etal>et al</etal>. <article-title>Age and Microenvironment Outweigh Genetic Influence on the Zucker Rat Microbiome</article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>: <fpage>e100916</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0100916" xlink:type="simple">10.1371/journal.pone.0100916</ext-link></comment> <object-id pub-id-type="pmid">25232735</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref012"><label>12</label><mixed-citation publication-type="book" xlink:type="simple"><collab xlink:type="simple">R Development Core Team</collab>. <chapter-title>R: A language and environment for statistical computing [Internet]</chapter-title>. <publisher-name>R Foundation for Statistical Computing</publisher-name>, <publisher-loc>Vienna, Austria</publisher-loc>; Available: <ext-link ext-link-type="uri" xlink:href="http://www.R-project.org" xlink:type="simple">http://www.R-project.org</ext-link></mixed-citation></ref>
+<ref id="pone.0131274.ref013"><label>13</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Hahne</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Gentleman</surname> <given-names>R</given-names></name>. <source>Bioconductor Case Studies</source>. <edition>2008 edition</edition>. <publisher-loc>New York, NY</publisher-loc>: <publisher-name>Springer</publisher-name>; <year>2008</year>.</mixed-citation></ref>
+<ref id="pone.0131274.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Flanagan</surname> <given-names>KL</given-names></name>. <article-title>Sexual dimorphism in biomedical research: a call to analyse by sex</article-title>. <source>Trans R Soc Trop Med Hyg</source>. <year>2014</year>;<volume>108</volume>: <fpage>385</fpage>–<lpage>387</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/trstmh/tru079" xlink:type="simple">10.1093/trstmh/tru079</ext-link></comment> <object-id pub-id-type="pmid">24934286</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>White</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Gerdin</surname> <given-names>A-K</given-names></name>, <name name-style="western"><surname>Karp</surname> <given-names>NA</given-names></name>, <name name-style="western"><surname>Ryder</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Buljan</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bussell</surname> <given-names>JN</given-names></name>, <etal>et al</etal>. <article-title>Genome-wide Generation and Systematic Phenotyping of Knockout Mice Reveals New Roles for Many Genes</article-title>. <source>Cell</source>. <year>2013</year>;<volume>154</volume>: <fpage>452</fpage>–<lpage>464</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2013.06.022" xlink:type="simple">10.1016/j.cell.2013.06.022</ext-link></comment> <object-id pub-id-type="pmid">23870131</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ayadi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Birling</surname> <given-names>M-C</given-names></name>, <name name-style="western"><surname>Bottomley</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bussell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fuchs</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fray</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Mouse large-scale phenotyping initiatives: overview of the European Mouse Disease Clinic (EUMODIC) and of the Wellcome Trust Sanger Institute Mouse Genetics Project</article-title>. <source>Mamm Genome Off J Int Mamm Genome Soc</source>. <year>2012</year>;<volume>23</volume>: <fpage>600</fpage>–<lpage>610</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00335-012-9418-y" xlink:type="simple">10.1007/s00335-012-9418-y</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aitman</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Critser</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Cuppen</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Dominiczak</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fernandez-Suarez</surname> <given-names>XM</given-names></name>, <name name-style="western"><surname>Flint</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Progress and prospects in rat genetics: a community view</article-title>. <source>Nat Genet</source>. <year>2008</year>;<volume>40</volume>: <fpage>516</fpage>–<lpage>522</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.147" xlink:type="simple">10.1038/ng.147</ext-link></comment> <object-id pub-id-type="pmid">18443588</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koscielny</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Yaikhom</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Iyer</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Meehan</surname> <given-names>TF</given-names></name>, <name name-style="western"><surname>Morgan</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Atienza-Herrero</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>The International Mouse Phenotyping Consortium Web Portal, a unified point of access for knockout mice and related phenotyping data</article-title>. <source>Nucleic Acids Res</source>. <year>2014</year>;<volume>42</volume>: <fpage>D802</fpage>–<lpage>D809</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkt977" xlink:type="simple">10.1093/nar/gkt977</ext-link></comment> <object-id pub-id-type="pmid">24194600</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fisher</surname> <given-names>RA</given-names></name>. <article-title>On the Interpretation of χ2 from Contingency Tables, and the Calculation of P</article-title>. <source>J R Stat Soc</source>. <year>1922</year>;<volume>85</volume>: <fpage>87</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2340521" xlink:type="simple">10.2307/2340521</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Karp</surname> <given-names>NA</given-names></name>, <name name-style="western"><surname>Speak</surname> <given-names>AO</given-names></name>, <name name-style="western"><surname>White</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Adams</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Hrabé de Angelis</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hérault</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Impact of Temporal Variation on Design and Analysis of Mouse Knockout Phenotyping Studies</article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>: <fpage>e111239</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0111239" xlink:type="simple">10.1371/journal.pone.0111239</ext-link></comment> <object-id pub-id-type="pmid">25343444</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref021"><label>21</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>West</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Welch</surname> <given-names>KB</given-names></name>, <name name-style="western"><surname>Galecki</surname> <given-names>AT</given-names></name>. <source>Linear Mixed Models: A Practical Guide Using Statistical Software, Second Edition</source>. <edition>2 edition</edition>. <publisher-loc>Boca Raton</publisher-loc>: <publisher-name>Chapman and Hall/CRC</publisher-name>; <year>2014</year>.</mixed-citation></ref>
+<ref id="pone.0131274.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cook</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Dunning</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Wiley</surname> <given-names>RG</given-names></name>, <name name-style="western"><surname>Chesler</surname> <given-names>EJ</given-names></name>, <name name-style="western"><surname>Johnson</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>DR</given-names></name>, <etal>et al</etal>. <article-title>Neurobehavioral mutants identified in an ENU-mutagenesis project</article-title>. <source>Mamm Genome Off J Int Mamm Genome Soc</source>. <year>2007</year>;<volume>18</volume>: <fpage>559</fpage>–<lpage>572</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00335-007-9035-3" xlink:type="simple">10.1007/s00335-007-9035-3</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jacob</surname> <given-names>HJ</given-names></name>, <name name-style="western"><surname>Kwitek</surname> <given-names>AE</given-names></name>. <article-title>Rat genetics: attachign physiology and pharmacology to the genome</article-title>. <source>Nat Rev Genet</source>. <year>2002</year>;<volume>3</volume>: <fpage>33</fpage>–<lpage>42</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg702" xlink:type="simple">10.1038/nrg702</ext-link></comment> <object-id pub-id-type="pmid">11823789</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reed</surname> <given-names>DR</given-names></name>, <name name-style="western"><surname>Lawler</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Tordoff</surname> <given-names>MG</given-names></name>. <article-title>Reduced body weight is a common effect of gene knockout in mice</article-title>. <source>BMC Genet</source>. <year>2008</year>;<volume>9</volume>: <fpage>4</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2156-9-4" xlink:type="simple">10.1186/1471-2156-9-4</ext-link></comment> <object-id pub-id-type="pmid">18182103</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Valdar</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Solberg</surname> <given-names>LC</given-names></name>, <name name-style="western"><surname>Gauguier</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Cookson</surname> <given-names>WO</given-names></name>, <name name-style="western"><surname>Rawlins</surname> <given-names>JNP</given-names></name>, <name name-style="western"><surname>Mott</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>Genetic and environmental effects on complex traits in mice</article-title>. <source>Genetics</source>. <year>2006</year>;<volume>174</volume>: <fpage>959</fpage>–<lpage>984</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.106.060004" xlink:type="simple">10.1534/genetics.106.060004</ext-link></comment> <object-id pub-id-type="pmid">16888333</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Firth</surname> <given-names>D</given-names></name>. <article-title>Bias reduction of maximum likelihood estimates</article-title>. <source>Biometrika</source>. <year>1993</year>;<volume>80</volume>: <fpage>27</fpage>–<lpage>38</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/biomet/80.1.27" xlink:type="simple">10.1093/biomet/80.1.27</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Box</surname> <given-names>GEP</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>DR</given-names></name>. <article-title>An Analysis of Transformations</article-title>. <source>J R Stat Soc Ser B Methodol</source>. <year>1964</year>;<volume>26</volume>: <fpage>211</fpage>–<lpage>252</lpage>.</mixed-citation></ref>
+<ref id="pone.0131274.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Begley</surname> <given-names>CG</given-names></name>, <name name-style="western"><surname>Ellis</surname> <given-names>LM</given-names></name>. <article-title>Drug development: Raise standards for preclinical cancer research</article-title>. <source>Nature</source>. <year>2012</year>;<volume>483</volume>: <fpage>531</fpage>–<lpage>533</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/483531a" xlink:type="simple">10.1038/483531a</ext-link></comment> <object-id pub-id-type="pmid">22460880</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><article-title>Must try harder</article-title>. <source>Nature</source>. <year>2012</year>;<volume>483</volume>: <fpage>509</fpage>–<lpage>509</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/483509a" xlink:type="simple">10.1038/483509a</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0131274.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lidster</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Sottomayor</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Amor</surname> <given-names>S</given-names></name>. <article-title>Two Years Later: Journals Are Not Yet Enforcing the ARRIVE Guidelines on Reporting Standards for Pre-Clinical Animal Studies. Eisen JA, editor</article-title>. <source>PLoS Biol</source>. <year>2014</year>;<volume>12</volume>: <fpage>e1001756</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1001756" xlink:type="simple">10.1371/journal.pbio.1001756</ext-link></comment> <object-id pub-id-type="pmid">24409096</object-id></mixed-citation></ref>
+<ref id="pone.0131274.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clark</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Shoaib</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hewitt</surname> <given-names>KN</given-names></name>, <name name-style="western"><surname>Stanford</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Bate</surname> <given-names>ST</given-names></name>. <article-title>A comparison of InVivoStat with other statistical software packages for analysis of data generated from animal experiments</article-title>. <source>J Psychopharmacol Oxf Engl</source>. <year>2012</year>;<volume>26</volume>: <fpage>1136</fpage>–<lpage>1142</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1177/0269881111420313" xlink:type="simple">10.1177/0269881111420313</ext-link></comment></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PONE-RA-05909R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0003373</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Evolutionary Modeling</subject><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Metagenomics</subject></subj-group></article-categories><title-group><article-title>MetaSim—A Sequencing Simulator for Genomics and Metagenomics</article-title><alt-title alt-title-type="running-head">MetaSim</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Richter</surname><given-names>Daniel C.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Ott</surname><given-names>Felix</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Auch</surname><given-names>Alexander F.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schmid</surname><given-names>Ramona</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Huson</surname><given-names>Daniel H.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>ZBIT- Center for Bioinformatics Tübingen, University of Tübingen, Tübingen, Germany</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Boehringer Ingelheim Pharma GmbH &amp; Co. KG, Biberach, Germany</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Field</surname><given-names>Dawn</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">NERC Centre for Ecology and Hydrology, United Kingdom</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">drichter@informatik.uni-tuebingen.de</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: DCR AFA. Wrote the paper: DCR AFA DHH. Contributed to the implementation of the software: FO AFA RS DHH.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2008</year></pub-date><pub-date pub-type="epub"><day>8</day><month>10</month><year>2008</year></pub-date><volume>3</volume><issue>10</issue><elocation-id>e3373</elocation-id><history>
+<date date-type="received"><day>11</day><month>8</month><year>2008</year></date>
+<date date-type="accepted"><day>16</day><month>9</month><year>2008</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Richter et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract><sec>
+<title>Background</title>
+<p>The new research field of metagenomics is providing exciting insights into various, previously unclassified ecological systems. Next-generation sequencing technologies are producing a rapid increase of environmental data in public databases. There is great need for specialized software solutions and statistical methods for dealing with complex metagenome data sets.</p>
+</sec><sec>
+<title>Methodology/Principal Findings</title>
+<p>To facilitate the development and improvement of metagenomic tools and the planning of metagenomic projects, we introduce a sequencing simulator called MetaSim. Our software can be used to generate collections of synthetic reads that reflect the diverse taxonomical composition of typical metagenome data sets. Based on a database of given genomes, the program allows the user to design a metagenome by specifying the number of genomes present at different levels of the NCBI taxonomy, and then to collect reads from the metagenome using a simulation of a number of different sequencing technologies. A population sampler optionally produces evolved sequences based on source genomes and a given evolutionary tree.</p>
+</sec><sec>
+<title>Conclusions/Significance</title>
+<p>MetaSim allows the user to simulate individual read datasets that can be used as standardized test scenarios for planning sequencing projects or for benchmarking metagenomic software.</p>
+</sec></abstract><funding-group><funding-statement>The authors have no support or funding to report.</funding-statement></funding-group><counts><page-count count="12"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Metagenomics is based on the isolation and characterization of DNA from environmental samples without the need for prior cultivation of microorganisms. In contrast to single genome studies, analyses are applied to entire communities of microbes instead of only few isolated organisms. It has already led to exciting insights into the ecology of different habitats such as ocean <xref ref-type="bibr" rid="pone.0003373-Rusch1">[1]</xref>, soil <xref ref-type="bibr" rid="pone.0003373-Tringe1">[2]</xref>, acid mine <xref ref-type="bibr" rid="pone.0003373-Tyson1">[3]</xref>, human and mouse gut <xref ref-type="bibr" rid="pone.0003373-Gill1">[4]</xref>, <xref ref-type="bibr" rid="pone.0003373-Turnbaugh1">[5]</xref> and even into ancient DNA <xref ref-type="bibr" rid="pone.0003373-Poinar1">[6]</xref>.</p>
+<p>The research field of Metagenomics is spurred by the recent development and improvement of next-generation sequencing technologies like Roche's 454 pyrosequencing <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref>. Although these high through-put technologies promise faster and relatively inexpensive generation of reads, Sanger sequencing still has been used in environmental genome projects <xref ref-type="bibr" rid="pone.0003373-Turnbaugh1">[5]</xref> to avoid the drawbacks of shorter read lengths.</p>
+<p>In general, studies show that algorithms developed for single-genome assembly are only suitable for environmental sequences under special conditions, for example in low complexity populations <xref ref-type="bibr" rid="pone.0003373-Tringe1">[2]</xref>, <xref ref-type="bibr" rid="pone.0003373-Pachter1">[8]</xref>. In particular, it is very difficult to assemble reads from highly diverse ecologic systems <xref ref-type="bibr" rid="pone.0003373-Mavromatis1">[9]</xref>. The problem is that the arrangement of reads into contigs fails or is misleading because contigs are put together from reads from many different genomes.</p>
+<p>Currently, the primary goals of metagenomic studies are the investigation of the phylogenetic composition of the sample (taxonomical binning, “Who is out there”), the quantitive analysis (“How many are there?”) and the prediction of genes and their functions (functional binning, “What are they doing”). Since the amount of comparable environmental data is rapidly growing, comparative studies of multiple metagenomic data sets are of great interest as wells. As of September 2008, 44 metagenome studies have already been conducted whereas 86 projects still are on-going <xref ref-type="bibr" rid="pone.0003373-Bernal1">[10]</xref>.</p>
+<p>Common strategies for taxonomical binning are for example: (1) detecting phylogenetic markers like <italic>rRNA</italic>, <italic>RecA</italic>, heat shock protein (<italic>HSP70</italic>) and elongation factors (<italic>EF-Tu, EF-G</italic>) <xref ref-type="bibr" rid="pone.0003373-Venter1">[11]</xref>, (2) comparing reads against a reference database such as NCBI-nr <xref ref-type="bibr" rid="pone.0003373-Benson1">[12]</xref> and then analyzing the matches to place the reads in the NCBI taxonomy <xref ref-type="bibr" rid="pone.0003373-Huson1">[13]</xref> and (3) measuring the oligonucleotide frequency caused by codon usage or restriction-site frequency <xref ref-type="bibr" rid="pone.0003373-Karlin1">[14]</xref>–<xref ref-type="bibr" rid="pone.0003373-Chatterji1">[18]</xref>.</p>
+<p>When it comes to functional binning, sequences are compared to known protein functions, families and pathways provided by several databases, for example COG, KEGG, PFAM, SEED, STRING and TIGRFAM <xref ref-type="bibr" rid="pone.0003373-Tatusov1">[19]</xref>–<xref ref-type="bibr" rid="pone.0003373-Haft1">[24]</xref>. A <italic>de novo</italic> search for (unknown) functional units is only feasible if either long reads or contigs are available for the detection of open reading frames.</p>
+<p>Another challenge in metagenomic studies is the development of robust statistical techniques <xref ref-type="bibr" rid="pone.0003373-RodriguezBrito1">[25]</xref>. Particularly with regard to comparative metagenomics dealing with highly variable data, these techniques are considered as indispensable for a well-founded analysis.</p>
+<p>Despite the enormous amount of sequence data that was generated and analyzed in the past few years, the number of publicly available software specialized in metagenomic data analysis is surprisingly low. Hence, many studies still make use of classic methods, software or web services that originally were not intended for metagenomic data analysis and have to be adapted or pipelined to produce the desired results <xref ref-type="bibr" rid="pone.0003373-Pachter1">[8]</xref>.</p>
+<p>Thus, there is a great demand for specialized metagenomic software supporting the analysis process. Because of the complexity of metagenomic data, it is crucial to benchmark new and existing software with standardized test cases using simulated and verifiable data. A first study <xref ref-type="bibr" rid="pone.0003373-Mavromatis1">[9]</xref> provides three data sets with varying complexity by selecting original sequence reads from 113 isolated genomes. In their paper, the authors anticipate that these data sets will be used as standard test cases for software testing.</p>
+<p>Some other publications already applied the software ReadSim (pre-version of MetaSim, <italic>unpublished</italic>) to generate simulated read data sets for testing their software <xref ref-type="bibr" rid="pone.0003373-Chatterji1">[18]</xref>, <xref ref-type="bibr" rid="pone.0003373-Krause1">[26]</xref>.</p>
+<sec id="s1a">
+<title>Description of MetaSim</title>
+<p>MetaSim takes as input a set of known genome sequences and an abundance profile. This profile determines which genome sequences are selected for the simulation and the relative abundance of each genome sequence in the dataset.</p>
+<p>MetaSim integrates an ”induced tree view” of the NCBI taxonomy <xref ref-type="bibr" rid="pone.0003373-Wheeler1">[27]</xref> that can be used to interactively select taxa and inner nodes of the taxonomy to configure their relative abundances. Additionally, the user is able to simulate an ”evolved” population of a single genome sequence, using a population simulator. This feature is aimed at simulating the common real world situation that many different, but closely related strains of a lineage coexist in the same habitat.</p>
+<p>Finally, for the construction of a realistic read data set, MetaSim includes a versatile read sequencing simulator. The user is able to choose from different (adaptable) error models of current sequencing technologies (e.g. Sanger <xref ref-type="bibr" rid="pone.0003373-Meldrum1">[28]</xref>, <xref ref-type="bibr" rid="pone.0003373-Meldrum2">[29]</xref>, Roche's 454 <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref> and Illumina (former Solexa) <xref ref-type="bibr" rid="pone.0003373-Bentley1">[30]</xref>).</p>
+<p>MetaSim allows one to construct verifiable read data sets, and additionally, metagenomes variable in size, taxonomical composition and abundance to reflect the diverse and complex output of real metagenomic studies. The resulting data sets can be used to plan and design metagenomic studies and for evaluation and improvement of metagenomics software tools, statistical methods or assembly algorithms.</p>
+</sec><sec id="s1b">
+<title>Availability</title>
+<p>MetaSim is written in Java and can be run with a graphical user interface or in command line mode. Installers for Linux/Unix, MacOS X and Windows are freely available from our website at: <ext-link ext-link-type="uri" xlink:href="http://www-ab.informatik.uni-tuebingen.de/software/metasim" xlink:type="simple">http://www-ab.informatik.uni-tuebingen.de/software/metasim</ext-link>.</p>
+</sec></sec><sec id="s2">
+<title>Methods</title>
+<p>MetaSim's processing pipeline consists of several phases:</p>
+<list list-type="order"><list-item>
+<p>Selection of source genome sequences from the internal database</p>
+</list-item><list-item>
+<p>Configuration of the species abundance profile by setting the relative copy number of the genome sequences</p>
+</list-item><list-item>
+<p>Sampling sequencing of fragments according to the species abundance profiles</p>
+</list-item><list-item>
+<p>Application of technology-specific error models to the fragments to create sequencing reads</p>
+</list-item></list>
+<sec id="s2a">
+<title>Configuration of Species Abundance Profiles</title>
+<p>At the beginning, whole genome sequences available from public database can be stored locally as source sequences in an integrated database. The user specifies the relative abundance of each genome sequence in a text-based profile file. An interesting feature of MetaSim is the possibility of assigning frequency values not only at the species level but also at higher taxonomical levels. For example, if the genus Escherichia is assigned a certain amount of genome copies, this amount is split and applied uniformly to all descendant species whose sequences are available from the internal database.</p>
+<p>To facilitate this data composition process in GUI mode, MetaSim provides an interactive <italic>taxonomy editor</italic> that visualizes the <italic>induced</italic> NCBI taxonomy, i.e. the genome sequences listed in the profile file are displayed as nodes in a rooted tree (<xref ref-type="fig" rid="pone-0003373-g001">Figure 1</xref>). Node sizes reflect the relative number of genome copies for each given taxon.</p>
+<fig id="pone-0003373-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g001</object-id><label>Figure 1</label><caption>
+<title>Taxonomy Editor.</title>
+<p>A clipping of the taxonomy editor view is shown. Three taxa are assigned an abundance value (number in parenthesis). These settings can be either determined in a text-based abundance profile file or directly in the taxonomy editor by right-clicking on a node.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g001" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Population sampling</title>
+<p>The current genome databases reflect only a small part of earth's still unexplored microbial diversity. Thus, a simulated metagenome only based on known genome sequences does not adequately reflect the complexity of realistic data sets.</p>
+<p>MetaSim therefore includes a population sampler that optionally generates a set of evolved (mutated) offsprings derived from single source genomes, using a given evolutionary tree. This tree describes how the offspring sequences descend from the source sequence. By default, a random pyholgenetic tree is generated under the Yule-Harding model <xref ref-type="bibr" rid="pone.0003373-Yule1">[31]</xref>, <xref ref-type="bibr" rid="pone.0003373-Harding1">[32]</xref>, but alternatively, user-defined trees can also be loaded. As a simple model of DNA evolution, the Jukes-Cantor formula <xref ref-type="bibr" rid="pone.0003373-Jukes1">[33]</xref> is applied to estimate a probability of change for each base pair, with a customizable transition rate α (0.001 by default) and time <italic>t</italic> based on the edge weights. MetaSim then generates the designated number of evolved genomes and then adds them to the internal genome database. As an example, a fragment recruitment plot (according to <xref ref-type="bibr" rid="pone.0003373-Rusch1">[1]</xref>) shows 10000 sampled Sanger reads of 100 evolved offspring sequences (α = 0.004) mapped to the source genome (<italic>Escherichia coli K-12 substr. MG1655</italic>) using <italic>blastn</italic> (<xref ref-type="fig" rid="pone-0003373-g002">Figure 2</xref>). Read sequences sampled directly from the source genome show a significantly higher identity compared to the mutated sequencing reads.</p>
+<fig id="pone-0003373-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g002</object-id><label>Figure 2</label><caption>
+<title>Fragment Recruitment Plot.</title>
+<p>Black dots represent 10,000 sequencing reads (Sanger technology, ≈800 bp) drawn from 100 evolved offsprings (α = 0.004) of the source genome Escherichia coli K-12 substr. MG1655. Their sequence identity is lower compared to the mapped reads sampled directly form the source genome (red dots).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g002" xlink:type="simple"/></fig></sec><sec id="s2c">
+<title>Read sampling</title>
+<p>MetaSim simulates both Sanger sequencing and Roche's 454 (sequencing-by-synthesis) approach. Additionally, it provides a flexible, empirical error model usable to simulate Illumina's ultra-short reads.</p>
+<p>For the simulation of read sequences, statistical approaches are adopted to simulate the distribution of read lengths, its frequency rate and the use of error models depending on the chosen sequencing technology.</p>
+<p>To be able to model mate-pairs as well, MetaSim first extracts large fragments called <italic>clones</italic> from the set of genomes with normally or uniformly distributed lengths. For example, clones with a length of 1000 bp and a standard deviation of 100 bp are modelled with a normal distribution <italic>N</italic>(1000,100) (<xref ref-type="fig" rid="pone-0003373-g003">Figure 3</xref>). The overall number of clones is determined by the number of reads or mate-pairs the user desires to generate.</p>
+<fig id="pone-0003373-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g003</object-id><label>Figure 3</label><caption>
+<title>Frequency distribution of clone lengths.</title>
+<p>As an example, 250,000 clones with mean length 1000 bp and standard deviation of 100 bp were modelled with a normal distribution.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g003" xlink:type="simple"/></fig>
+<p>If only one source genome is present in the given profile, the clones are randomly extracted from this single sequence. In contrast, in a typical metagenome simulation, the clones have to be sampled from many genomes of varying length, copy number (e.g. to model the abundance of plasmids versus the organsim genomes) and abundancies.</p>
+<p>So, each genome sequence <italic>s</italic> is assigned a weight<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.e001" xlink:type="simple"/><label>(1)</label></disp-formula>where <italic>l<sub>s</sub></italic> is the length, <italic>c<sub>s</sub></italic> is the copy number and <italic>a<sub>s</sub></italic> is the specified relative abundance of the genome sequence <italic>s</italic> as determined in the profile.</p>
+<p>For each length of the clone length distribution, the weights of all sequences are summed up to receive the summarized weight <italic>w<sub>sum</sub></italic> that is used to compute a sequence probability <italic>p<sub>s</sub></italic> = <italic>w<sub>s</sub></italic>/<italic>w<sub>sum</sub></italic>. Considering the overall lengths distribution, a frequency value for each source sequence is then obtained.</p>
+<p>After the clone sampling, the ends of the clones are the basis for the subsequent sampling of the reads or mate-pairs, respectively. Again, read lengths can be either uniformly or normally distributed. Finally, read sequences are processed and modified by applying the selected error model.</p>
+</sec><sec id="s2d">
+<title>Simulation of Sanger sequencing</title>
+<p>A widely-used approach to sequencing large DNA molecules is Sanger sequencing, using a shotgun approach that involves cloning small pieces (or inserts) of DNA and then determining their sequence using fluorescent dideoxynucleotides for termination and capillary electrophoresis.</p>
+<p>To simulate Sanger sequencing, we closely followed the implementation of celsim reported in <xref ref-type="bibr" rid="pone.0003373-Myers1">[34]</xref>. Each read is subjected to a linearly increasing error rate. We model fixed percentages of deletion errors, insertion errors and substitutions. Further, the simulator is capable of modeling mate-pairs and one can specify the length distribution of inserts.</p>
+</sec><sec id="s2e">
+<title>Simulation of sequencing-by-synthesis</title>
+<p>In pyrosequencing, the intensity of emitted light is used to estimate the length of <italic>homopolymers</italic>, i.e. runs of identical nucleotides in a sequence. During sequencing, the four DNA composing nucleotides are periodically <italic>flowed</italic> over the inserts to be sequenced. Within each flow, the intensity of the signal emitted (which is linear up to 8 bp) reflects the number of nucleotides incorporated. Thus, the addition of a single base or even homopolymer stretches of multiple bases in a single flow can be detected.. For chemical and technical reasons, this signal is subject to fluctuations that lead to sequencing errors. In <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref>, an error rate of about 3% is reported.</p>
+<p>Let <italic>r</italic> denote the length of a given homopolymer. We model the emitted light intensity using a normal distribution <italic>N</italic>(<italic>μ</italic>, <italic>σ</italic>), with mean <italic>μ</italic> = <italic>r</italic> and standard deviation <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003373.e002" xlink:type="simple"/></inline-formula>, where <italic>k</italic> is a fixed proportionality factor. Following <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref>, by default we use <italic>k</italic> = 0.15. Although basic statistics implies that the standard deviation should grow with the square root of <italic>r</italic>, in <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref> the standard deviation of the light intensity emitted during 454-sequencing is reported to be <italic>σ</italic> = <italic>k</italic>·<italic>r</italic>. Both variants of the calculation are implemented in our software.</p>
+<p>A <italic>negative flow</italic> is a flow of nucleotides in which the sequence to synthesize is not elongated. Light intensities of negative flows follow a lognormal distribution, with mean <italic>μ</italic> = 0.23, and standard deviation <italic>σ</italic> = 0.15, see <xref ref-type="bibr" rid="pone.0003373-Margulies1">[7]</xref>. A random variable <italic>X</italic> is said to be lognormally distributed, if the random variable ln(<italic>X</italic>) is normally distributed.</p>
+<p>We simulate base-calling intensities of negative flows and model the misinterpretation of null-mers as homopolymers of length = 1 (insertion). Our algorithm takes the order of the sequencing flows into account. Since the nucleotides are cyclically flowed in the order T,A,C,G, after a given base only two specific negative flows in a specific order are allowed.</p>
+<p>During base-calling the algorithm looks at each homopolymer, generates a <italic>N</italic>(<italic>μ</italic>, <italic>σ</italic>) distributed random variable and, according to this variable, decides which length to set for the observed homopolymer.</p>
+<p>The signal intensity space is separated into disjoint intervals by probability density functions of all homopolymer signals. The intersections of the density functions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003373.e003" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003373.e004" xlink:type="simple"/></inline-formula> of the normal distributions for different homopolymer lengths <italic>r</italic><sub>1</sub> and <italic>r</italic><sub>2</sub> are calculated and stored. In each interval one probability density function is maximized. These values are used to decide which homopolymer length is called given a certain signal intensity.</p>
+</sec><sec id="s2f">
+<title>Simulation of reads with empirical models</title>
+<p>As an additional feature, MetaSim includes an empirical error model that allows the incorporation of user-defined error statistics.</p>
+<p>The probability of an occurrence of a sequencing error often depends on the position of the erroneous base and its surrounding bases. The program GenFrag <xref ref-type="bibr" rid="pone.0003373-Engle1">[35]</xref> originally developed an error model which incorporates different error types (deletion, insertion, substitution) at certain positions with empirical error probabilities.</p>
+<p>MetaSim adopts this general approach. The error model is based on mappings (error curves) that assign error rates to specific base positions. Each mapping has three parameters (the last two are optional):</p>
+<list list-type="bullet"><list-item>
+<p>type of error,</p>
+</list-item><list-item>
+<p>base at the position where the error occurs and</p>
+</list-item><list-item>
+<p>base preceding the position where the error occurs.</p>
+</list-item></list>
+<p>In this way, 48 independent mappings can be individually determined. In addition, in case of a substitution error the user can specify the probability of integrating a particular base depending on the type of the base at the error position and the preceding base.</p>
+<p>Using empirical data, MetaSim provides an error model for the short reads of the Illumina technology.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>MetaSim can be controlled either by a graphical user interface (<xref ref-type="fig" rid="pone-0003373-g004">Figure 4</xref>) or by command line. The command line mode provides access to most of the functions needed for automatic simulation runs. A simulation run generating 400,000 454 reads of length ≈250 bp (a total of 100 Mbp) takes less than 80 seconds on a 2,13 GHz single processor computer.</p>
+<fig id="pone-0003373-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g004</object-id><label>Figure 4</label><caption>
+<title>The graphical user interface of MetaSim is divided into three panels: a project tree on the left containing all simulation settings and taxon profiles, an overview and edit panel on the right and a message panel at the bottom.</title>
+<p>Additionally, a configuration window is shown.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g004" xlink:type="simple"/></fig>
+<p>To show the utility of this simulation software, for example, in the benchmarking of new software, we generated 9 data sets using a range of parameters and used them to test how well the MEGAN software succeeded in successfully binning sequences based on taxonomic classification by homology.</p>
+<sec id="s3a">
+<title>Simulation study</title>
+<p>MetaSim was used to generate three simulated data sets of different species compositions. These data sets were designed and named simLC, simMC and simHC representing low, medium and high complexity communities, respectively (in correspondence to Mavromatis <italic>et al.</italic> <xref ref-type="bibr" rid="pone.0003373-Mavromatis1">[9]</xref>). For each data set, three runs were conducted with different sequencing error models and read lengths. Also, each resulting read data set comprises of approximately 15 Mbp, so the number of reads differ accordingly: for the 454 sequencing technology with read length ≈100 bp (≈250 bp), 150,000 (60,000) read sequences were generated. The third data set consists of Sanger reads (≈800 bp) and consisted of 18,750 reads. For a list with all simulation parameters of MetaSim see Supplementary Information <xref ref-type="supplementary-material" rid="pone.0003373.s001">Text S1</xref>.</p>
+<p><xref ref-type="table" rid="pone-0003373-t001">Table 1</xref>–<xref ref-type="table" rid="pone-0003373-t002"/><xref ref-type="table" rid="pone-0003373-t003">3</xref> show the relative abundancies and the resulting number of sampled reads for each selected taxon. The simLC data set (<xref ref-type="table" rid="pone-0003373-t001">Table 1</xref>) consists of two taxonomically distant microbes whose relative abundance values differ significantly. The simMC data set (<xref ref-type="table" rid="pone-0003373-t002">Table 2</xref>) is composed of nine microbial species (all from the phylum γ-Proteobacteria) with two dominant populations. The simHC data set (<xref ref-type="table" rid="pone-0003373-t003">Table 3</xref>) consists of 11 diverse microbial species covering several phyla from the superkingdom bacteria. All species in the simHC data set are sampled with the same relative abundance.</p>
+<table-wrap id="pone-0003373-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.t001</object-id><label>Table 1</label><caption>
+<title>Species abundance and percentage of sampled reads of the simLC dataset.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003373-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Abdce</td>
+<td align="left" colspan="1" rowspan="1">Species</td>
+<td align="left" colspan="1" rowspan="1">Mbp</td>
+<td align="left" colspan="1" rowspan="1">454-100<xref ref-type="table-fn" rid="nt101">a</xref></td>
+<td align="left" colspan="1" rowspan="1">454-250<xref ref-type="table-fn" rid="nt102">b</xref></td>
+<td align="left" colspan="1" rowspan="1">S-800<xref ref-type="table-fn" rid="nt103">c</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>90</bold></td>
+<td align="left" colspan="1" rowspan="1">Methanoculleus marisnigri JR1</td>
+<td align="left" colspan="1" rowspan="1">2.5</td>
+<td align="left" colspan="1" rowspan="1">82,70</td>
+<td align="left" colspan="1" rowspan="1">82,61</td>
+<td align="left" colspan="1" rowspan="1">82,71</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>10</bold></td>
+<td align="left" colspan="1" rowspan="1">Escherichia coli str. K-12 substr. MG1655</td>
+<td align="left" colspan="1" rowspan="1">4.6</td>
+<td align="left" colspan="1" rowspan="1">17,30</td>
+<td align="left" colspan="1" rowspan="1">17,39</td>
+<td align="left" colspan="1" rowspan="1">17,29</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>a</label><p>454 technology, 150000 reads (length: 100 bp).</p></fn><fn id="nt102"><label>b</label><p>454 technology, 60000 reads, (length: 250 bp).</p></fn><fn id="nt103"><label>c</label><p>Sanger technology, 18750 reads, (length: 800 bp).</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0003373-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.t002</object-id><label>Table 2</label><caption>
+<title>Species abundance and percentage of sampled reads of the simMC dataset.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003373-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Abdce</td>
+<td align="left" colspan="1" rowspan="1">Species</td>
+<td align="left" colspan="1" rowspan="1">Mbp<xref ref-type="table-fn" rid="nt104">a</xref></td>
+<td align="left" colspan="1" rowspan="1">454-100<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" colspan="1" rowspan="1">454-250<xref ref-type="table-fn" rid="nt106">c</xref></td>
+<td align="left" colspan="1" rowspan="1">S-800<xref ref-type="table-fn" rid="nt107">d</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Pseudomonas fluorescens PfO-1</td>
+<td align="left" colspan="1" rowspan="1">6.4</td>
+<td align="left" colspan="1" rowspan="1">38,42</td>
+<td align="left" colspan="1" rowspan="1">38,39</td>
+<td align="left" colspan="1" rowspan="1">38,13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Shigella dysenteriae Sd197</td>
+<td align="left" colspan="1" rowspan="1">4.6</td>
+<td align="left" colspan="1" rowspan="1">27,07</td>
+<td align="left" colspan="1" rowspan="1">27,47</td>
+<td align="left" colspan="1" rowspan="1">27,25</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>80</bold></td>
+<td align="left" colspan="1" rowspan="1">Pasteurella multocida subsp. multocida str. Pm70</td>
+<td align="left" colspan="1" rowspan="1">2.3</td>
+<td align="left" colspan="1" rowspan="1">10,82</td>
+<td align="left" colspan="1" rowspan="1">10,87</td>
+<td align="left" colspan="1" rowspan="1">10,81</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>50</bold></td>
+<td align="left" colspan="1" rowspan="1">Buchnera aphidicola str. APS</td>
+<td align="left" colspan="1" rowspan="1">6.6</td>
+<td align="left" colspan="1" rowspan="1">1,97</td>
+<td align="left" colspan="1" rowspan="1">1,94</td>
+<td align="left" colspan="1" rowspan="1">1,78</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>50</bold></td>
+<td align="left" colspan="1" rowspan="1">Francisella tularensis subsp. tularensis Schu 4</td>
+<td align="left" colspan="1" rowspan="1">1.9</td>
+<td align="left" colspan="1" rowspan="1">5,69</td>
+<td align="left" colspan="1" rowspan="1">5,60</td>
+<td align="left" colspan="1" rowspan="1">5,56</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>25</bold></td>
+<td align="left" colspan="1" rowspan="1">Alcanivorax borkumensis SK2</td>
+<td align="left" colspan="1" rowspan="1">3.1</td>
+<td align="left" colspan="1" rowspan="1">4,68</td>
+<td align="left" colspan="1" rowspan="1">4,57</td>
+<td align="left" colspan="1" rowspan="1">4,60</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>25</bold></td>
+<td align="left" colspan="1" rowspan="1">Candidatus Blochmannia floridanus</td>
+<td align="left" colspan="1" rowspan="1">7.1</td>
+<td align="left" colspan="1" rowspan="1">1,03</td>
+<td align="left" colspan="1" rowspan="1">1,08</td>
+<td align="left" colspan="1" rowspan="1">1,21</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>25</bold></td>
+<td align="left" colspan="1" rowspan="1">Pseudomonas entomophila L48</td>
+<td align="left" colspan="1" rowspan="1">5.9</td>
+<td align="left" colspan="1" rowspan="1">8,89</td>
+<td align="left" colspan="1" rowspan="1">8,65</td>
+<td align="left" colspan="1" rowspan="1">9,26</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1">Escherichia coli str. K-12 substr. MG1655</td>
+<td align="left" colspan="1" rowspan="1">4.6</td>
+<td align="left" colspan="1" rowspan="1">1,43</td>
+<td align="left" colspan="1" rowspan="1">1,43</td>
+<td align="left" colspan="1" rowspan="1">1,40</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt104"><label>a</label><p>The length of plasmids is considered as well.</p></fn><fn id="nt105"><label>b</label><p>454 technology, 150,000 reads (length: 100 bp).</p></fn><fn id="nt106"><label>c</label><p>454 technology, 60,000 reads, (length: 250 bp).</p></fn><fn id="nt107"><label>d</label><p>Sanger technology, 18,750 reads, (length: 800 bp).</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0003373-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.t003</object-id><label>Table 3</label><caption>
+<title>Species abundance and percentage of sampled reads of the simHC dataset.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003373-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Abdce</td>
+<td align="left" colspan="1" rowspan="1">Species</td>
+<td align="left" colspan="1" rowspan="1">Mbp<xref ref-type="table-fn" rid="nt108">a</xref></td>
+<td align="left" colspan="1" rowspan="1">454-100<xref ref-type="table-fn" rid="nt109">b</xref></td>
+<td align="left" colspan="1" rowspan="1">454-250<xref ref-type="table-fn" rid="nt110">c</xref></td>
+<td align="left" colspan="1" rowspan="1">S-800<xref ref-type="table-fn" rid="nt111">d</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Agrobacterium tumefaciens str. C58</td>
+<td align="left" colspan="1" rowspan="1">5.7</td>
+<td align="left" colspan="1" rowspan="1">11,7</td>
+<td align="left" colspan="1" rowspan="1">11,7</td>
+<td align="left" colspan="1" rowspan="1">11,3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Anabaena variabilis ATCC 29413</td>
+<td align="left" colspan="1" rowspan="1">7.1</td>
+<td align="left" colspan="1" rowspan="1">14,7</td>
+<td align="left" colspan="1" rowspan="1">14,9</td>
+<td align="left" colspan="1" rowspan="1">14,6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Archaeoglobus fulgidus DSM 4304</td>
+<td align="left" colspan="1" rowspan="1">2.2</td>
+<td align="left" colspan="1" rowspan="1">4,54</td>
+<td align="left" colspan="1" rowspan="1">4,41</td>
+<td align="left" colspan="1" rowspan="1">4,55</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Bdellovibrio bacteriovorus HD100</td>
+<td align="left" colspan="1" rowspan="1">3.8</td>
+<td align="left" colspan="1" rowspan="1">7,84</td>
+<td align="left" colspan="1" rowspan="1">7,79</td>
+<td align="left" colspan="1" rowspan="1">7,83</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Campylobacter jejuni subsp. jejuni 81-176</td>
+<td align="left" colspan="1" rowspan="1">1.7</td>
+<td align="left" colspan="1" rowspan="1">3,52</td>
+<td align="left" colspan="1" rowspan="1">3,6</td>
+<td align="left" colspan="1" rowspan="1">3,57</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Clostridium acetobutylicum ATCC 824</td>
+<td align="left" colspan="1" rowspan="1">4.1</td>
+<td align="left" colspan="1" rowspan="1">8,6</td>
+<td align="left" colspan="1" rowspan="1">8,56</td>
+<td align="left" colspan="1" rowspan="1">8,49</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Lactococcus lactis subsp. cremoris SK11</td>
+<td align="left" colspan="1" rowspan="1">2.6</td>
+<td align="left" colspan="1" rowspan="1">5,38</td>
+<td align="left" colspan="1" rowspan="1">5,32</td>
+<td align="left" colspan="1" rowspan="1">5,54</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Nitrosomonas europaea ATCC 19718</td>
+<td align="left" colspan="1" rowspan="1">2.8</td>
+<td align="left" colspan="1" rowspan="1">5,81</td>
+<td align="left" colspan="1" rowspan="1">5,66</td>
+<td align="left" colspan="1" rowspan="1">5,59</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Pseudomonas aeruginosa PA7</td>
+<td align="left" colspan="1" rowspan="1">6.6</td>
+<td align="left" colspan="1" rowspan="1">13,6</td>
+<td align="left" colspan="1" rowspan="1">13,6</td>
+<td align="left" colspan="1" rowspan="1">14</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Streptomyces coelicolor A3(2)</td>
+<td align="left" colspan="1" rowspan="1">9.1</td>
+<td align="left" colspan="1" rowspan="1">18,7</td>
+<td align="left" colspan="1" rowspan="1">18,9</td>
+<td align="left" colspan="1" rowspan="1">18,9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>100</bold></td>
+<td align="left" colspan="1" rowspan="1">Sulfolobus tokodaii str. 7</td>
+<td align="left" colspan="1" rowspan="1">2.7</td>
+<td align="left" colspan="1" rowspan="1">5,64</td>
+<td align="left" colspan="1" rowspan="1">5,59</td>
+<td align="left" colspan="1" rowspan="1">5,6</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt108"><label>a</label><p>The length of plasmids is considered as well.</p></fn><fn id="nt109"><label>b</label><p>454 technology, 150,000 reads (length: 100 bp).</p></fn><fn id="nt110"><label>c</label><p>454 technology, 60,000 reads, (length: 250 bp).</p></fn><fn id="nt111"><label>d</label><p>Sanger technology, 18,750 reads, (length: 800 bp).</p></fn></table-wrap-foot></table-wrap>
+<p>Obviously, the amount and ratio of sampled reads in each simulation result reflects the configured abundances and genome sizes. For example, in the simHC data set both <italic>Campylobacter jejuni subsp. jejuni 81-176</italic> and <italic>Streptomyces coelicolor A3(2)</italic> are assigned the same relative abundance of 100. The percentage of sampled reads differs about 15% which can be explained by the difference in genome size (length of contained plasmids are considered as well). Considering all simulations runs, the ratio of sampled reads is almost equal for each species. For example in <xref ref-type="table" rid="pone-0003373-t001">Table 1</xref>, 17,30%, 17,39% and 17,29% reads were sampled for <italic>Escherichia coli str. K12 substr. MG1655</italic> when simulating 454 sequencing technology with read length 100 bp and 250 bp and Sanger sequencing with read length of 800 bp, respectively.</p>
+</sec><sec id="s3b">
+<title>Taxonomical classification using MEGAN</title>
+<p>Following the generation of the nine data sets, a taxonomical assignment of the reads with the MEGAN software was conducted to test its binning functionality. Therefore, all generated read sets were blasted against the NCBI-nr database (downloaded March 2008). MEGAN then assigns these reads to taxa in such a way that the taxonomical level of the assigned taxon reflects the level of conservation of the sampled sequence (Parameter settings of MEGAN: minscore: 0.0, toppercent: 1.0, minsupport: 2, winscore: 0.0).</p>
+<p>The result for each simulation run is shown in <xref ref-type="fig" rid="pone-0003373-g005">Figure 5A–C</xref>. (For a list of all results see Supplementary Information, <xref ref-type="supplementary-material" rid="pone.0003373.s002">Table S1</xref>.) Summarizing all simulations, one observation can be made: The amount of total assignments of reads to taxa correlates with the read length. The longer the read sequence, the more assignments for a taxon are found. This is also true for the correct assignments (true positives) (Supplementary Information <xref ref-type="supplementary-material" rid="pone.0003373.s002">Table S1</xref>).</p>
+<fig id="pone-0003373-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g005</object-id><label>Figure 5</label><caption>
+<title>Assignment curves of reads taxonomically classified by MEGAN.</title>
+<p>The precentage values refer to the number of sampled reads generated for each organism. (A) The simLC dataset consists of only two organisms. The number of assigned reads to M. marisnigri JR1 almost equals the number of its sampled reads whereas E. coli str. K-12 substr. MG1655 has only few assignmentss. (B) In the simMC dataset, the number of assigned reads increases significantly with longer read lengths (except for Shigella dysenteriae Sd197, Francisella tularensis subsp. tularensis Schu 4 and E. coli str. K12 substr. MG1655). (C) In the simHC dataset, the fraction of assigned reads to Campylobacter jejuni subsp. jejuni 81-176, Lactococcus lactis subsp. cremoris SK11 and Pseudomonas aeruginosa PA7 is rather low compared to the other organisms.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g005" xlink:type="simple"/></fig>
+<p>Accordingly, the fraction of reads that did not match anything in the NCBI-nr database (% no hits) (<xref ref-type="table" rid="pone-0003373-t004">Table 4</xref>) decreases significantly in case of longer read sequences. These findings were expected since longer read sequences generally give rise to more significant high scoring pairs using BLAST.</p>
+<table-wrap id="pone-0003373-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.t004</object-id><label>Table 4</label><caption>
+<title>Percentage of assigned, unassigned and “No Hits” reads for all simulation runs.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003373-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Total Reads</td>
+<td align="left" colspan="1" rowspan="1">%Assigned Reads</td>
+<td align="left" colspan="1" rowspan="1">%Unassigned Reads</td>
+<td align="left" colspan="1" rowspan="1">%No Hits<xref ref-type="table-fn" rid="nt112">a</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simLC-454-100</bold></td>
+<td align="left" colspan="1" rowspan="1">150000</td>
+<td align="left" colspan="1" rowspan="1"><bold>83,14</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,46</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>16,40</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simLC-454-250</bold></td>
+<td align="left" colspan="1" rowspan="1">60000</td>
+<td align="left" colspan="1" rowspan="1"><bold>98,58</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,85</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,57</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simLC-S-800</bold></td>
+<td align="left" colspan="1" rowspan="1">18750</td>
+<td align="left" colspan="1" rowspan="1"><bold>99,45</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,55</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,00</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simMC-454-100</bold></td>
+<td align="left" colspan="1" rowspan="1">150000</td>
+<td align="left" colspan="1" rowspan="1"><bold>81,71</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,52</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>17,76</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simMC-454-250</bold></td>
+<td align="left" colspan="1" rowspan="1">60000</td>
+<td align="left" colspan="1" rowspan="1"><bold>98,08</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1,02</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,91</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simMC-S-800</bold></td>
+<td align="left" colspan="1" rowspan="1">18750</td>
+<td align="left" colspan="1" rowspan="1"><bold>99,28</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,71</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,01</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simHC-454-100</bold></td>
+<td align="left" colspan="1" rowspan="1">150000</td>
+<td align="left" colspan="1" rowspan="1"><bold>81,68</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,51</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>17,81</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simHC-454-250</bold></td>
+<td align="left" colspan="1" rowspan="1">60000</td>
+<td align="left" colspan="1" rowspan="1"><bold>97,55</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,93</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1,52</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>simHC-S-800</bold></td>
+<td align="left" colspan="1" rowspan="1">18750</td>
+<td align="left" colspan="1" rowspan="1"><bold>99,08</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,87</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0,05</bold></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt112"><label>a</label><p>Reads that did not match anything in the NCBI-nr database.</p></fn></table-wrap-foot></table-wrap>
+<p>Independent of the read length, MEGAN is able to assign reads with a high true positive rate. Except for <italic>E. coli str. K12 substr. MG1655</italic> and <italic>Shigella dysenteriae Sd197</italic> in simMC, virtually all reads (98–100%) are correctly classified.</p>
+<p>It is important to mention that the composition of the simulated data sets was explicitly intended as an example for a benchmarking study, not for modelling real ecological environments. Thus, simLC consists of only two microbial species that derive from two distinct superkingdoms of the taxonomy (Bacteria and Archae) (<xref ref-type="table" rid="pone-0003373-t001">Table 1</xref> and <xref ref-type="fig" rid="pone-0003373-g005">Figure 5A</xref>). The majority of the sampled reads of <italic>E.coli str. K12 substr. MG1655</italic> were assigned to other taxa and clades in the subtree of Bacteria (<xref ref-type="fig" rid="pone-0003373-g006">Figure 6</xref>) leading to false positive hits in MEGAN. However, many closely related strains in the subtree of genus Escherichia were hit supporting the evidence that a high number of genetic functions are shared among them.</p>
+<fig id="pone-0003373-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g006</object-id><label>Figure 6</label><caption>
+<title>MEGAN visualization of the simLC data set (Sanger technology, read length ≈800 bp).</title>
+<p>Two arrows point out the two source genomes of the simulation run. The number of assigned reads to E.coli K12 (192) is rather small compared to the number of sampled reads from the genome of E. coli str. K12 substr. MG1655 (192 assigned vs. 3214 sampled reads). Many reads have BLAST hits in multiple strains and clades, so that MEGAN assigns them to an high-order level in the tree e.g. node Bacteria (3157 reads). M. marisnigri JR1 has only few related strains. In this case, the assignment of reads is more specific (15,366 assigned vs. 15,509 sampled reads).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g006" xlink:type="simple"/></fig>
+<p>A similar problem can be observed in the simMC data set (<xref ref-type="fig" rid="pone-0003373-g005">Figure 5B</xref>). To complicate the distinct classification of the reads, all species were taken from the class γ-Proteobacteria. In this example, reads of <italic>S. dysenteriae Sd197</italic>, <italic>Francisella tularensis subsp. tularensis Schu 4</italic> and <italic>E. coli str. K12 substr. MG1655</italic> could not be completely assigned to the correct taxa. However, the high assignment accuracy (correct hits, %TP (Supplementary Information <xref ref-type="supplementary-material" rid="pone.0003373.s002">Table S1</xref>)) means that practically all assigned reads were correctly classified by MEGAN.</p>
+<p>Data set simHC contains sequences of many phyla assigned with the same relative abundance of 100 (<xref ref-type="table" rid="pone-0003373-t003">Table 3</xref>). This implies that the amount of sampled reads depends mainly on the length of the source genome sequences. At first sight, the fraction of assigned reads for the three genomes <italic>Campylobacter jejuni subsp. jejuni 81-176</italic>, <italic>Lactococcus lactis subsp. cremoris SK11</italic> and <italic>Pseudomonas aeruginosa PA7</italic> is quite low (10.15%, 43.93% and 63.62% for 800 bp Sanger reads, respectively) (<xref ref-type="fig" rid="pone-0003373-g005">Figure 5C</xref>). Though, in the taxonomic tree at genus level (Campylobacter, Lactococcus and Pseudomonas), the number of assigned reads virtually equals the number of sampled reads (<xref ref-type="fig" rid="pone-0003373-g007">Figure 7</xref>). This is due to the fact that closely related organisms from the same genus share a lot of genes. Again, the number of correct assignments is almost optimal.</p>
+<fig id="pone-0003373-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003373.g007</object-id><label>Figure 7</label><caption>
+<title>MEGAN visualization of the simHC data set (Sanger technology, read length ≈800 bp).</title>
+<p>Arrows point out three of the 11 source genomes of the simulation run that show only few assigned reads at species level compared to the number of originally sampled reads. Due to the fact that C. jejuni subsp. jejuni 81-176, L. lactis subsp. cremoris SK11 and P. aeruginosa PA7 share genes with many closely related strains, most of the sampled reads were assigned by MEGAN to an high-order level in the tree (e.g. genus).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.g007" xlink:type="simple"/></fig></sec><sec id="s3c">
+<title>Summary of MEGAN results</title>
+<p>The analysis of the nine artifical data sets help to reveal the pros and cons of taxonomical binning based on homology as done by MEGAN. All simulation runs indicated that MEGAN generally is capable of binning the majority of all generated reads correctly. Additionally, the number of unassigned reads i.e. reads that actually hit sequences in the database but could not be assigned due to MEGAN's parameter settings, is very low. However, reads having many homologous sequences in the database due to high conservation among microbial families and lineages, lead to a rather ”diffuse”, but still correct read assignment: due to gene sharing, MEGAN assigns these reads to high-order taxa closer to the root (e.g. at genus level), thus avoiding probable false-positive assignments (MEGAN uses an LCA-based algorithm <xref ref-type="bibr" rid="pone.0003373-Huson1">[13]</xref>.). This means that MEGAN classifies those reads rather ”generally” but the assignment still is adequate for interpreting metagenomic data in sufficiency.</p>
+<p>Another observation is that the amount of assigned reads correlates strongly with the read length. Obviously, with reads produced by Sanger sequencing (800 bp), taxonomical binning becomes easier compared to short reads (100–250 bp). This oberservation confirms the findings in <xref ref-type="bibr" rid="pone.0003373-Huson1">[13]</xref>. Moreover, the positive effect of better assignment and classification of long reads comes with higher costs and workload in the sequencing phase.</p>
+<p>The expense for sequencing with Sanger technology is about $500/Mbp (800 bp reads), whereas e.g. pyrosequencing with Roche's 454 technology is only about $100/Mbp (250 bp reads) yielding many more base pairs per run at the same time. On top of the positive cost factor, compared to the Sanger technology, next-generation sequencers do not suffer from cloning bias.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>The appearance of next-generation sequencers on the market has boosted the number and scope of (meta-)genomic sequencing projects. A lot of data can be generated in less time demanding fast and precise analysis algorithms and software. However, especially in the field of metagenomics, the problem of producing individual, simulated test cases for benchmarking is open.</p>
+<p>We try to fill this gap with MetaSim, a flexible tool for producing simulated read data sets, useful for designing metagenome projects and for testing and comparing metagenomic or assembly software. A lot of parameters can be adapted to generate user defined sequence sets that can serve as verified example data. Currently, the Sanger and Roche's 454 sequencing error model can be selected, as well as the Illumina error model which is based on empirical data. The empirical error model can easily be configured and adapted to other sequencing technologies or error probabilities.</p>
+<p>Given this flexibility of the read simulator, it is possible to construct many kinds of individual fragments like, for example reads, contigs or expressed sequence tags (ESTs) derived from existing sequences. We plan to integrate further error models of upcoming sequencers. In addition, future version of MetaSim will extend the population sampler by using more sophisticated models for sequence evolution like HKY <xref ref-type="bibr" rid="pone.0003373-Hasegawa1">[36]</xref>, as, e.g., already implemented in Seq-Gen <xref ref-type="bibr" rid="pone.0003373-Rambaut1">[37]</xref>.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0003373.s001" mimetype="text/plain" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>Parameter settings of MetaSim. For each of the three each simulation runs, the simulation settings are listed.</p>
+<p>(0.00 MB TXT)</p>
+</caption></supplementary-material><supplementary-material id="pone.0003373.s002" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pone.0003373.s002" xlink:type="simple"><label>Table S1</label><caption>
+<p>Complete list of simulation results. A complete list of all results of the nine conducted simulation runs evaluated with MEGAN.</p>
+<p>(0.04 MB XLS)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We would like to thank Korbinian Schneeberger and Stephan Ossowski for providing the empirical error models for the Illumina sequencing.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0003373-Rusch1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rusch</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Halpern</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Sutton</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Heidelberg</surname><given-names>KB</given-names></name>
+<name name-style="western"><surname>Williamson</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The Sorcerer II Global Ocean Sampling expedition: northwest Atlantic through eastern tropical Pacific.</article-title>             <source>PLoS Biol</source>             <volume>5</volume>             <fpage>e77</fpage>          </element-citation></ref>
+<ref id="pone.0003373-Tringe1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tringe</surname><given-names>SG</given-names></name>
+<name name-style="western"><surname>von Mering</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Kobayashi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Salamov</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Comparative Metagenomics of Microbial Communities.</article-title>             <source>Science</source>             <volume>308</volume>             <fpage>554</fpage>             <lpage>557</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Tyson1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tyson</surname><given-names>GW</given-names></name>
+<name name-style="western"><surname>Chapman</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Allen</surname><given-names>EE</given-names></name>
+<name name-style="western"><surname>Ram</surname><given-names>RJ</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Community structure and metabolism through reconstruction of microbial genomes from the environment.</article-title>             <source>Nature</source>             <volume>428</volume>             <fpage>37</fpage>             <lpage>43</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Gill1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gill</surname><given-names>SR</given-names></name>
+<name name-style="western"><surname>Pop</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Deboy</surname><given-names>RT</given-names></name>
+<name name-style="western"><surname>Eckburg</surname><given-names>PB</given-names></name>
+<name name-style="western"><surname>Turnbaugh</surname><given-names>PJ</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Metagenomic analysis of the human distal gut microbiome.</article-title>             <source>Science</source>             <volume>312</volume>             <fpage>1355</fpage>             <lpage>1359</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Turnbaugh1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Turnbaugh</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>RE</given-names></name>
+<name name-style="western"><surname>Mahowald</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Magrini</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Mardis</surname><given-names>ER</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>An obesity-associated gut microbiome with increased capacity for energy harvest.</article-title>             <source>Nature</source>             <volume>444</volume>             <fpage>1027</fpage>             <lpage>1031</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Poinar1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Poinar</surname><given-names>HN</given-names></name>
+<name name-style="western"><surname>Schwarz</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Qi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Shapiro</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Macphee</surname><given-names>RDE</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Metagenomics to paleogenomics: large-scale sequencing of mammoth DNA.</article-title>             <source>Science</source>             <volume>311</volume>             <fpage>392</fpage>             <lpage>394</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Margulies1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Margulies</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Egholm</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Altman</surname><given-names>WE</given-names></name>
+<name name-style="western"><surname>Attiya</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Bader</surname><given-names>JS</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Genome sequencing in microfabricated high-density picolitre reactors.</article-title>             <source>Nature</source>             <volume>437</volume>             <fpage>376</fpage>             <lpage>380</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Pachter1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pachter</surname><given-names>L</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Interpreting the unculturable majority.</article-title>             <source>Nat Methods</source>             <volume>4</volume>             <fpage>479</fpage>             <lpage>480</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Mavromatis1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mavromatis</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ivanova</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Barry</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Shapiro</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Goltsman</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Use of simulated data sets to evaluate the fidelity of metagenomic processing methods.</article-title>             <source>Nat Methods</source>             <volume>4</volume>             <fpage>495</fpage>             <lpage>500</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Bernal1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bernal</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ear</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Kyrpidesa</surname><given-names>N</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Genomes OnLine Database (GOLD): a monitor of genome projects world-wide.</article-title>             <source>Nucleic Acids Res</source>             <volume>29</volume>             <fpage>126</fpage>             <lpage>127</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Venter1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Venter</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Remington</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Heidelberg</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Halpern</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Rusch</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Environmental Genome Shotgun Sequencing of the Sargasso Sea.</article-title>             <source>Science</source>             <volume>304</volume>             <fpage>66</fpage>             <lpage>74</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Benson1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Benson</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Karsch-Mizrachi</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Lipman</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Ostell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wheeler</surname><given-names>DL</given-names></name>
+</person-group>             <year>2005</year>             <article-title>GenBank.</article-title>             <source>Nucleic Acids Res</source>             <volume>1</volume>             <fpage>D34</fpage>             <lpage>38</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Huson1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huson</surname><given-names>DH</given-names></name>
+<name name-style="western"><surname>Auch</surname><given-names>AF</given-names></name>
+<name name-style="western"><surname>Qi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Schuster</surname><given-names>SC</given-names></name>
+</person-group>             <year>2007</year>             <article-title>MEGAN analysis of metagenomic data.</article-title>             <source>Genome Res</source>             <volume>17</volume>             <fpage>377</fpage>             <lpage>386</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Karlin1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Karlin</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Burge</surname><given-names>C</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Dinucleotide relative abundance extremes: a genomic signature.</article-title>             <source>Trends Genet</source>             <volume>11</volume>             <fpage>283</fpage>             <lpage>290</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Deschavanne1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Deschavanne</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Giron</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Vilain</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Fagot</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Fertil</surname><given-names>B</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Genomic signature: characterization and classification of species assessed by chaos game representation of sequences.</article-title>             <source>Mol Biol Evol</source>             <volume>16</volume>             <fpage>1391</fpage>             <lpage>1399</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Teeling1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Teeling</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Waldmann</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lombardot</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Bauer</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Glšckner</surname><given-names>FO</given-names></name>
+</person-group>             <year>2004</year>             <article-title>TETRA: a web-service and a stand-alone program for the analysis and comparison of tetranucleotide usage patterns in DNA sequences.</article-title>             <source>BMC Bioinformatics</source>             <volume>5</volume>             <fpage>163</fpage>          </element-citation></ref>
+<ref id="pone.0003373-McHardy1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McHardy</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Mart'n</surname><given-names>HGa</given-names></name>
+<name name-style="western"><surname>Tsirigos</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Rigoutsos</surname><given-names>I</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Accurate phylogenetic classification of variable-length DNA fragments.</article-title>             <source>Nat Methods</source>             <volume>4</volume>             <fpage>63</fpage>             <lpage>72</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Chatterji1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chatterji</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Yamazaki</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Bai</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Eisen</surname><given-names>JA</given-names></name>
+</person-group>             <year>2008</year>             <article-title>CompostBin: A DNA composition-based algorithm for binning environmental shotgun reads.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Vingron</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Wong</surname><given-names>L</given-names></name>
+</person-group>             <source>Lecture Notes in Computer Science</source>             <publisher-name>Springer</publisher-name>             <fpage>17</fpage>             <lpage>28</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Tatusov1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tatusov</surname><given-names>RL</given-names></name>
+<name name-style="western"><surname>Koonin</surname><given-names>EV</given-names></name>
+<name name-style="western"><surname>Lipman</surname><given-names>DJ</given-names></name>
+</person-group>             <year>1997</year>             <article-title>A genomic perspective on protein families.</article-title>             <source>Science</source>             <volume>278</volume>             <fpage>631</fpage>             <lpage>637</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Kanehisa1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Goto</surname><given-names>S</given-names></name>
+</person-group>             <year>2000</year>             <article-title>KEGG: kyoto encyclopedia of genes and genomes.</article-title>             <source>Nucleic Acids Res</source>             <volume>28</volume>             <fpage>27</fpage>             <lpage>30</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Finn1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Finn</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>Tate</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mistry</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Coggill</surname><given-names>PC</given-names></name>
+<name name-style="western"><surname>Sammut</surname><given-names>SJ</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>The Pfam protein families database.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D281</fpage>             <lpage>D288</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Overbeek1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Overbeek</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Begley</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Butler</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Choudhuri</surname><given-names>JV</given-names></name>
+<name name-style="western"><surname>Chuang</surname><given-names>H-Y</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>The subsystems approach to genome annotation and its use in the project to annotate 1000 genomes.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>5691</fpage>             <lpage>5702</lpage>          </element-citation></ref>
+<ref id="pone.0003373-vonMering1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>von Mering</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Jensen</surname><given-names>LJ</given-names></name>
+<name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Hooper</surname><given-names>SD</given-names></name>
+<name name-style="western"><surname>Krupp</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>STRING: known and predicted protein-protein associations, integrated and transferred across organisms.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>D433</fpage>             <lpage>D437</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Haft1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Haft</surname><given-names>DH</given-names></name>
+<name name-style="western"><surname>Selengut</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>White</surname><given-names>O</given-names></name>
+</person-group>             <year>2003</year>             <article-title>The TIGRFAMs database of protein families.</article-title>             <source>Nucleic Acids Res</source>             <volume>31</volume>             <fpage>371</fpage>             <lpage>373</lpage>          </element-citation></ref>
+<ref id="pone.0003373-RodriguezBrito1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rodriguez-Brito</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Rohwer</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Edwards</surname><given-names>RA</given-names></name>
+</person-group>             <year>2006</year>             <article-title>An application of statistics to comparative metagenomics.</article-title>             <source>BMC Bioinformatics</source>             <volume>7</volume>             <fpage>162</fpage>          </element-citation></ref>
+<ref id="pone.0003373-Krause1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Krause</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Diaz</surname><given-names>NN</given-names></name>
+<name name-style="western"><surname>Goesmann</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kelley</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Nattkemper</surname><given-names>TW</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Phylogenetic classification of short environmental DNA fragments.</article-title>             <source>Nucleic Acids Res</source>             <volume>36(7)</volume>             <fpage>2230</fpage>             <lpage>2239</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Wheeler1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wheeler</surname><given-names>DL</given-names></name>
+<name name-style="western"><surname>Barrett</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Benson</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Bryant</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Canese</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Database resources of the National Center for Biotechnology Information.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D13</fpage>             <lpage>D21</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Meldrum1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meldrum</surname><given-names>D</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Automation for Genomics, Part one: Preparation for Sequencing.</article-title>             <source>Genome Research</source>             <volume>10</volume>             <fpage>1081</fpage>             <lpage>1092</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Meldrum2"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meldrum</surname><given-names>D</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Automation for Genomics, Part two: Sequencers, Microarrays, and Future trends.</article-title>             <source>Genome Research</source>             <volume>10</volume>             <fpage>1288</fpage>             <lpage>1303</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Bentley1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bentley</surname><given-names>DR</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Whole-genome re-sequencing.</article-title>             <source>Current Opinion in Genetics &amp; Development</source>             <volume>16</volume>             <fpage>545</fpage>             <lpage>552</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Yule1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yule</surname><given-names>GU</given-names></name>
+</person-group>             <year>1925</year>             <article-title>A mathematical theory of evolution, based on the conclusions of Dr. J.C. Willis.</article-title>             <source>Philosophical Transactions of the Royal Society of London Ser B, Biol Sci</source>             <volume>213</volume>             <fpage>21</fpage>             <lpage>87</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Harding1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harding</surname><given-names>EF</given-names></name>
+</person-group>             <year>1971</year>             <article-title>The Probabilities of Rooted Tree-Shapes Generated by Random Bifurcation.</article-title>             <source>Advances in Applied Probability</source>             <volume>3</volume>             <fpage>44</fpage>             <lpage>77</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Jukes1"><label>33</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jukes</surname><given-names>TH</given-names></name>
+<name name-style="western"><surname>Cantor</surname><given-names>CR</given-names></name>
+</person-group>             <year>1969</year>             <article-title>Evolution of Protein Molecules.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Munro</surname><given-names>HN</given-names></name>
+</person-group>             <source>Mammalian Protein Metabolism</source>             <publisher-loc>New York, NY</publisher-loc>             <publisher-name>Academic Press</publisher-name>             <fpage>21</fpage>             <lpage>132</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Myers1"><label>34</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Myers</surname><given-names>G</given-names></name>
+</person-group>             <year>1999</year>             <article-title>A dataset generator for whole genome shotgun sequencing</article-title>             <fpage>202</fpage>             <lpage>210</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Engle1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Engle</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Burks</surname><given-names>C</given-names></name>
+</person-group>             <year>1994</year>             <article-title>GenFrag 2.1: new features for more robust fragment assembly benchmarks.</article-title>             <source>Comput Appl Biosci</source>             <volume>10</volume>             <fpage>567</fpage>             <lpage>568</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Hasegawa1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hasegawa</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Kishino</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Yano</surname><given-names>T</given-names></name>
+</person-group>             <year>1985</year>             <article-title>Dating of the human-ape splitting by a molecular clock of mitochondrial DNA.</article-title>             <source>J Mol Evol</source>             <volume>22</volume>             <fpage>160</fpage>             <lpage>174</lpage>          </element-citation></ref>
+<ref id="pone.0003373-Rambaut1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rambaut</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Grassly</surname><given-names>NC</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Seq-Gen: an application for the Monte Carlo simulation of DNA sequence evolution along phylogenetic trees.</article-title>             <source>Comput Appl Biosci</source>             <volume>13</volume>             <fpage>235</fpage>             <lpage>238</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-47275</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0087126</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Nucleic acids</subject><subj-group><subject>RNA</subject></subj-group></subj-group></subj-group><subj-group><subject>Computational biology</subject></subj-group><subj-group><subject>Ecology</subject><subj-group><subject>Community ecology</subject><subject>Ecosystems</subject></subj-group></subj-group><subj-group><subject>Genomics</subject><subj-group><subject>Metagenomics</subject></subj-group></subj-group><subj-group><subject>Microbiology</subject><subj-group><subject>Microbial ecology</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Computer science</subject><subj-group><subject>Information technology</subject><subj-group><subject>Databases</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>MetaMetaDB: A Database and Analytic System for Investigating Microbial Habitability</article-title>
+<alt-title alt-title-type="running-head">MetaMetaDB for Revealing Microbial Habitability</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Yang</surname><given-names>Ching-chia</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Iwasaki</surname><given-names>Wataru</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><addr-line>Atmosphere and Ocean Research Institute, the University of Tokyo, Kashiwa, Chiba, Japan</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Kanai</surname><given-names>Akio</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Keio University, Japan</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">chia@aori.u-tokyo.ac.jp</email> (CY); <email xlink:type="simple">iwasaki@aori.u-tokyo.ac.jp</email> (WI)</corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: CY WI. Performed the experiments: CY. Analyzed the data: CY WI. Wrote the paper: CY WI.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>27</day><month>1</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>1</issue>
+<elocation-id>e87126</elocation-id>
+<history>
+<date date-type="received"><day>10</day><month>11</month><year>2013</year></date>
+<date date-type="accepted"><day>23</day><month>12</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Yang, Iwasaki</copyright-holder><license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>MetaMetaDB (<ext-link ext-link-type="uri" xlink:href="http://mmdb.aori.u-tokyo.ac.jp/" xlink:type="simple">http://mmdb.aori.u-tokyo.ac.jp/</ext-link>) is a database and analytic system for investigating microbial habitability, i.e., how a prokaryotic group can inhabit different environments. The interaction between prokaryotes and the environment is a key issue in microbiology because distinct prokaryotic communities maintain distinct ecosystems. Because 16S ribosomal RNA (rRNA) sequences play pivotal roles in identifying prokaryotic species, a system that comprehensively links diverse environments to 16S rRNA sequences of the inhabitant prokaryotes is necessary for the systematic understanding of the microbial habitability. However, existing databases are biased to culturable prokaryotes and exhibit limitations in the comprehensiveness of the data because most prokaryotes are unculturable. Recently, metagenomic and 16S rRNA amplicon sequencing approaches have generated abundant 16S rRNA sequence data that encompass unculturable prokaryotes across diverse environments; however, these data are usually buried in large databases and are difficult to access. In this study, we developed MetaMetaDB (<underline>Meta</underline>-<underline>Meta</underline>genomic <underline>D</underline>ata<underline>B</underline>ase), which comprehensively and compactly covers 16S rRNA sequences retrieved from public datasets. Using MetaMetaDB, users can quickly generate hypotheses regarding the types of environments a prokaryotic group may be adapted to. We anticipate that MetaMetaDB will improve our understanding of the diversity and evolution of prokaryotes.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported by the CREST Program from the Japan Science and Technology Agency and Grant-in-Aid for Young Scientists (B) [grant number 23710231] from the Japan Society for the Promotion of Science. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="7"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>—<italic>Everything is everywhere, but, the environment selects.</italic> (Baas-Becking, 1934)</p>
+<p>Prokaryotes are the most numerous and diverse organisms on the planet, and distinct prokaryotic communities maintain and characterize distinct ecosystems <xref ref-type="bibr" rid="pone.0087126-Kirchman1">[1]</xref>. Therefore, investigating how prokaryotes adapt to each environment (a primary question in the field of microbial ecology) is pivotal in delineating our biosphere and its dynamics. To answer the question of <italic>microbial habitability</italic>, it is necessary to identify comprehensively the types of environments in which any group of prokaryotes exists. With this aim, a general method to identify prokaryotic species in natural environments is to obtain the 16S ribosomal RNA (rRNA) sequences of those species, which are essential and highly conserved in all prokaryotes and are ideal for the taxonomical assignment of prokaryotes. However, individual efforts to culture prokaryotic strains or sample 16S rRNA sequences exhibit limitations in uncovering the diversity of the environments that any group of prokaryotes can live in. In other words, to understand systematically microbial habitability, it is necessary to collect and analyze 16S rRNA data from as many environments as possible.</p>
+<p>There are several existing 16S rRNA data collections, such as Greengenes <xref ref-type="bibr" rid="pone.0087126-DeSantis1">[2]</xref>, the Ribosomal Database Project <xref ref-type="bibr" rid="pone.0087126-Cole1">[3]</xref>, and SILVA <xref ref-type="bibr" rid="pone.0087126-Quast1">[4]</xref>, which contain thousands of 16S rRNA sequences from a wide range of prokaryotes. These 16S rRNA sequences are well annotated in taxonomy; however, the information regarding the environments these prokaryotes are found in is lacking in these databases, and the prokaryote-environment interactions cannot be readily analyzed. Moreover, although the 16S rRNA sequences of uncultured prokaryotes are also included in the databases, the collections are biased to culturable species. This issue cannot be ignored because it is estimated that over 99% of prokaryotes are unculturable <xref ref-type="bibr" rid="pone.0087126-Amann1">[5]</xref>–<xref ref-type="bibr" rid="pone.0087126-Ferrer1">[7]</xref>.</p>
+<p>Because many prokaryotes cannot be cultured in the laboratory, whole-genome shotgun metagenomic and 16S rRNA amplicon sequencing studies that acquire the genetic information of entire microbial communities directly from environmental samples have become popular <xref ref-type="bibr" rid="pone.0087126-Handelsman2">[8]</xref>, <xref ref-type="bibr" rid="pone.0087126-Riesenfeld1">[9]</xref>. In recent years, the rapid advancements in deep sequencing technologies in particular have dramatically decreased the cost of sequencing, and sequencing speed has increased by several orders of magnitude <xref ref-type="bibr" rid="pone.0087126-Metzker1">[10]</xref>, <xref ref-type="bibr" rid="pone.0087126-Mardis1">[11]</xref>. Thanks to these new technologies, we now have billions of prokaryotic genetic sequences from diverse environments; however, these data are buried in large databases and are difficult to access. Although a number of analytic systems incorporate metagenomic data, such as MEGAN <xref ref-type="bibr" rid="pone.0087126-Huson1">[12]</xref>, MG-RAST <xref ref-type="bibr" rid="pone.0087126-Meyer1">[13]</xref>, and IMG/M <xref ref-type="bibr" rid="pone.0087126-Markowitz1">[14]</xref>, these systems do not provide a compact dataset of 16S rRNA sequences with environmental information.</p>
+<p>In this study, we developed MetaMetaDB, a comprehensive (“meta-”) and compact database that collects 16S rRNA sequences from a large number of datasets. To ease the difficulties of analyzing a large amount of data, we strategically extracted the genetic information and made a comprehensive but compact collection of 16S rRNA sequences that are associated with diverse environments. By submitting the 16S rRNA sequences of certain prokaryotes to MetaMetaDB, users can easily investigate the microbial habitability for analyzing the ecology and evolution of prokaryotes.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Data source</title>
+<p>To create a comprehensive 16S rRNA dataset that covers both whole-genome shotgun metagenomic and 16S rRNA amplicon sequencing projects, we first downloaded all the sequence data whose study type was <italic>metagenomics</italic> from the DDBJ Sequence Read Archive (DRA) <xref ref-type="bibr" rid="pone.0087126-Kodama1">[15]</xref> (<xref ref-type="supplementary-material" rid="pone.0087126.s003">Table S1</xref>) on January 11, 2013. The principal sequencing platforms for these datasets were Illumina and 454; however, the data derived from the Illumina platforms were extremely biased to a specific environment (e.g., the human gut) and contained sequences that were too short for taxonomic identification. Therefore, we extracted only data derived from the 454 platform, which has been used by a wide range of projects covering diverse environments. The resulting 4,606 files, containing 181,416,932 sequences, were used as raw data. Next, every sequence was linked to an <italic>environmental category</italic>, which was retrieved from the <italic>scientific name</italic> metadata of the associated sequencing project entries in DRA. We adopted this metadata because these data were based on the NCBI Taxonomy hierarchy <xref ref-type="bibr" rid="pone.0087126-Sayers1">[16]</xref>, which contains terms of environmental classifications and species taxonomic classifications and could therefore be used as a controlled vocabulary in the database. The list of the environmental categories used in our database is shown in <xref ref-type="table" rid="pone-0087126-t001">Table 1</xref>.</p>
+<table-wrap id="pone-0087126-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0087126.t001</object-id><label>Table 1</label>
+            <caption>
+               <title>The number of representative 16S rRNA sequences in each environmental category.</title>
+            </caption><alternatives><graphic id="pone-0087126-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0087126.t001" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">Environment</td>
+                     <td align="left" rowspan="1" colspan="1">Number of files</td>
+                     <td align="left" rowspan="1" colspan="1">16S rRNA sequences</td>
+                     <td align="left" rowspan="1" colspan="1">representative 16S rRNA sequences</td>
+                     <td align="left" rowspan="1" colspan="1">Average (bp)</td>
+                     <td align="left" rowspan="1" colspan="1">Min (bp)</td>
+                     <td align="left" rowspan="1" colspan="1">Max(bp)</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">ant fungus garden</td>
+                     <td align="left" rowspan="1" colspan="1">127</td>
+                     <td align="left" rowspan="1" colspan="1">68,118</td>
+                     <td align="left" rowspan="1" colspan="1">11,556</td>
+                     <td align="left" rowspan="1" colspan="1">393.07</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">576</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">ant</td>
+                     <td align="left" rowspan="1" colspan="1">9</td>
+                     <td align="left" rowspan="1" colspan="1">10,915</td>
+                     <td align="left" rowspan="1" colspan="1">3,436</td>
+                     <td align="left" rowspan="1" colspan="1">377.50</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">583</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">beach sand</td>
+                     <td align="left" rowspan="1" colspan="1">4</td>
+                     <td align="left" rowspan="1" colspan="1">2,038</td>
+                     <td align="left" rowspan="1" colspan="1">1,234</td>
+                     <td align="left" rowspan="1" colspan="1">357.52</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">538</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">beetle</td>
+                     <td align="left" rowspan="1" colspan="1">19</td>
+                     <td align="left" rowspan="1" colspan="1">11,895</td>
+                     <td align="left" rowspan="1" colspan="1">1,708</td>
+                     <td align="left" rowspan="1" colspan="1">397.53</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">561</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">biofilm</td>
+                     <td align="left" rowspan="1" colspan="1">29</td>
+                     <td align="left" rowspan="1" colspan="1">24,317</td>
+                     <td align="left" rowspan="1" colspan="1">3,723</td>
+                     <td align="left" rowspan="1" colspan="1">449.99</td>
+                     <td align="left" rowspan="1" colspan="1">204</td>
+                     <td align="left" rowspan="1" colspan="1">806</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">bioreactor</td>
+                     <td align="left" rowspan="1" colspan="1">39</td>
+                     <td align="left" rowspan="1" colspan="1">181,862</td>
+                     <td align="left" rowspan="1" colspan="1">33,591</td>
+                     <td align="left" rowspan="1" colspan="1">436.26</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">620</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">bioreactor sludge</td>
+                     <td align="left" rowspan="1" colspan="1">226</td>
+                     <td align="left" rowspan="1" colspan="1">286,831</td>
+                     <td align="left" rowspan="1" colspan="1">50,666</td>
+                     <td align="left" rowspan="1" colspan="1">242.91</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">541</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">bovine gut</td>
+                     <td align="left" rowspan="1" colspan="1">16</td>
+                     <td align="left" rowspan="1" colspan="1">319,384</td>
+                     <td align="left" rowspan="1" colspan="1">59,564</td>
+                     <td align="left" rowspan="1" colspan="1">362.20</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">655</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">chicken gut</td>
+                     <td align="left" rowspan="1" colspan="1">5</td>
+                     <td align="left" rowspan="1" colspan="1">3,579</td>
+                     <td align="left" rowspan="1" colspan="1">1,496</td>
+                     <td align="left" rowspan="1" colspan="1">265.18</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">406</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">compost</td>
+                     <td align="left" rowspan="1" colspan="1">24</td>
+                     <td align="left" rowspan="1" colspan="1">14,914</td>
+                     <td align="left" rowspan="1" colspan="1">2,195</td>
+                     <td align="left" rowspan="1" colspan="1">381.07</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">599</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">coral</td>
+                     <td align="left" rowspan="1" colspan="1">14</td>
+                     <td align="left" rowspan="1" colspan="1">589</td>
+                     <td align="left" rowspan="1" colspan="1">192</td>
+                     <td align="left" rowspan="1" colspan="1">289.62</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">467</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">fish</td>
+                     <td align="left" rowspan="1" colspan="1">26</td>
+                     <td align="left" rowspan="1" colspan="1">87,742</td>
+                     <td align="left" rowspan="1" colspan="1">49,706</td>
+                     <td align="left" rowspan="1" colspan="1">420.24</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">861</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">food fermentation</td>
+                     <td align="left" rowspan="1" colspan="1">1</td>
+                     <td align="left" rowspan="1" colspan="1">90,024</td>
+                     <td align="left" rowspan="1" colspan="1">51,908</td>
+                     <td align="left" rowspan="1" colspan="1">380.78</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">673</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">food</td>
+                     <td align="left" rowspan="1" colspan="1">15</td>
+                     <td align="left" rowspan="1" colspan="1">79,971</td>
+                     <td align="left" rowspan="1" colspan="1">37,250</td>
+                     <td align="left" rowspan="1" colspan="1">399.89</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">915</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">freshwater</td>
+                     <td align="left" rowspan="1" colspan="1">34</td>
+                     <td align="left" rowspan="1" colspan="1">102,460</td>
+                     <td align="left" rowspan="1" colspan="1">35,880</td>
+                     <td align="left" rowspan="1" colspan="1">351.29</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">797</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">freshwater sediment</td>
+                     <td align="left" rowspan="1" colspan="1">2</td>
+                     <td align="left" rowspan="1" colspan="1">9,368</td>
+                     <td align="left" rowspan="1" colspan="1">7,128</td>
+                     <td align="left" rowspan="1" colspan="1">404.95</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">803</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">groundwater</td>
+                     <td align="left" rowspan="1" colspan="1">1</td>
+                     <td align="left" rowspan="1" colspan="1">4,524</td>
+                     <td align="left" rowspan="1" colspan="1">1,296</td>
+                     <td align="left" rowspan="1" colspan="1">365.04</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">550</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">gut</td>
+                     <td align="left" rowspan="1" colspan="1">90</td>
+                     <td align="left" rowspan="1" colspan="1">299,036</td>
+                     <td align="left" rowspan="1" colspan="1">43,670</td>
+                     <td align="left" rowspan="1" colspan="1">288.22</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">621</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">honeybee</td>
+                     <td align="left" rowspan="1" colspan="1">2</td>
+                     <td align="left" rowspan="1" colspan="1">34,323</td>
+                     <td align="left" rowspan="1" colspan="1">23,479</td>
+                     <td align="left" rowspan="1" colspan="1">377.10</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">820</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">hot springs</td>
+                     <td align="left" rowspan="1" colspan="1">13</td>
+                     <td align="left" rowspan="1" colspan="1">10,312</td>
+                     <td align="left" rowspan="1" colspan="1">2,646</td>
+                     <td align="left" rowspan="1" colspan="1">375.05</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">572</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">human gut</td>
+                     <td align="left" rowspan="1" colspan="1">247</td>
+                     <td align="left" rowspan="1" colspan="1">216,566</td>
+                     <td align="left" rowspan="1" colspan="1">64,787</td>
+                     <td align="left" rowspan="1" colspan="1">252.06</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">592</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">human</td>
+                     <td align="left" rowspan="1" colspan="1">1,272</td>
+                     <td align="left" rowspan="1" colspan="1">311,651</td>
+                     <td align="left" rowspan="1" colspan="1">53,834</td>
+                     <td align="left" rowspan="1" colspan="1">365.09</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">842</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">human oral</td>
+                     <td align="left" rowspan="1" colspan="1">257</td>
+                     <td align="left" rowspan="1" colspan="1">242,633</td>
+                     <td align="left" rowspan="1" colspan="1">11,574</td>
+                     <td align="left" rowspan="1" colspan="1">287.97</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">547</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">human skin</td>
+                     <td align="left" rowspan="1" colspan="1">173</td>
+                     <td align="left" rowspan="1" colspan="1">55,863</td>
+                     <td align="left" rowspan="1" colspan="1">22,114</td>
+                     <td align="left" rowspan="1" colspan="1">362.43</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">866</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">hydrocarbon</td>
+                     <td align="left" rowspan="1" colspan="1">506</td>
+                     <td align="left" rowspan="1" colspan="1">413,879</td>
+                     <td align="left" rowspan="1" colspan="1">46,431</td>
+                     <td align="left" rowspan="1" colspan="1">413.31</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">704</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">hydrothermal vent</td>
+                     <td align="left" rowspan="1" colspan="1">1</td>
+                     <td align="left" rowspan="1" colspan="1">739</td>
+                     <td align="left" rowspan="1" colspan="1">235</td>
+                     <td align="left" rowspan="1" colspan="1">251.52</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">296</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">hypersaline lake</td>
+                     <td align="left" rowspan="1" colspan="1">5</td>
+                     <td align="left" rowspan="1" colspan="1">6,957</td>
+                     <td align="left" rowspan="1" colspan="1">2,474</td>
+                     <td align="left" rowspan="1" colspan="1">399.30</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">548</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">ice</td>
+                     <td align="left" rowspan="1" colspan="1">3</td>
+                     <td align="left" rowspan="1" colspan="1">456</td>
+                     <td align="left" rowspan="1" colspan="1">421</td>
+                     <td align="left" rowspan="1" colspan="1">249.59</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">312</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">marine</td>
+                     <td align="left" rowspan="1" colspan="1">823</td>
+                     <td align="left" rowspan="1" colspan="1">79,871</td>
+                     <td align="left" rowspan="1" colspan="1">27,447</td>
+                     <td align="left" rowspan="1" colspan="1">294.65</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">582</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">marine sediment</td>
+                     <td align="left" rowspan="1" colspan="1">80</td>
+                     <td align="left" rowspan="1" colspan="1">21,155</td>
+                     <td align="left" rowspan="1" colspan="1">9,393</td>
+                     <td align="left" rowspan="1" colspan="1">342.97</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">680</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">microbial mat</td>
+                     <td align="left" rowspan="1" colspan="1">4</td>
+                     <td align="left" rowspan="1" colspan="1">4,561</td>
+                     <td align="left" rowspan="1" colspan="1">1,930</td>
+                     <td align="left" rowspan="1" colspan="1">247.02</td>
+                     <td align="left" rowspan="1" colspan="1">201</td>
+                     <td align="left" rowspan="1" colspan="1">313</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">mine drainage</td>
+                     <td align="left" rowspan="1" colspan="1">4</td>
+                     <td align="left" rowspan="1" colspan="1">1,217</td>
+                     <td align="left" rowspan="1" colspan="1">674</td>
+                     <td align="left" rowspan="1" colspan="1">357.20</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">553</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">mosquito</td>
+                     <td align="left" rowspan="1" colspan="1">24</td>
+                     <td align="left" rowspan="1" colspan="1">46,888</td>
+                     <td align="left" rowspan="1" colspan="1">4,324</td>
+                     <td align="left" rowspan="1" colspan="1">375.05</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">563</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">mouse gut</td>
+                     <td align="left" rowspan="1" colspan="1">20</td>
+                     <td align="left" rowspan="1" colspan="1">37,536</td>
+                     <td align="left" rowspan="1" colspan="1">11,021</td>
+                     <td align="left" rowspan="1" colspan="1">247.95</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">512</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">oil production facility</td>
+                     <td align="left" rowspan="1" colspan="1">17</td>
+                     <td align="left" rowspan="1" colspan="1">4,893</td>
+                     <td align="left" rowspan="1" colspan="1">1,691</td>
+                     <td align="left" rowspan="1" colspan="1">232.90</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">523</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">phyllosphere</td>
+                     <td align="left" rowspan="1" colspan="1">35</td>
+                     <td align="left" rowspan="1" colspan="1">2,108</td>
+                     <td align="left" rowspan="1" colspan="1">1,199</td>
+                     <td align="left" rowspan="1" colspan="1">263.95</td>
+                     <td align="left" rowspan="1" colspan="1">201</td>
+                     <td align="left" rowspan="1" colspan="1">583</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">rhizosphere</td>
+                     <td align="left" rowspan="1" colspan="1">13</td>
+                     <td align="left" rowspan="1" colspan="1">67,371</td>
+                     <td align="left" rowspan="1" colspan="1">17,514</td>
+                     <td align="left" rowspan="1" colspan="1">374.79</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">565</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">root</td>
+                     <td align="left" rowspan="1" colspan="1">2</td>
+                     <td align="left" rowspan="1" colspan="1">7,260</td>
+                     <td align="left" rowspan="1" colspan="1">1,590</td>
+                     <td align="left" rowspan="1" colspan="1">377.01</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">512</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">saltern</td>
+                     <td align="left" rowspan="1" colspan="1">15</td>
+                     <td align="left" rowspan="1" colspan="1">2,309</td>
+                     <td align="left" rowspan="1" colspan="1">651</td>
+                     <td align="left" rowspan="1" colspan="1">393.71</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">570</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">sediment</td>
+                     <td align="left" rowspan="1" colspan="1">89</td>
+                     <td align="left" rowspan="1" colspan="1">137,175</td>
+                     <td align="left" rowspan="1" colspan="1">37,739</td>
+                     <td align="left" rowspan="1" colspan="1">387.37</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">772</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">soil</td>
+                     <td align="left" rowspan="1" colspan="1">257</td>
+                     <td align="left" rowspan="1" colspan="1">1,775,170</td>
+                     <td align="left" rowspan="1" colspan="1">490,776</td>
+                     <td align="left" rowspan="1" colspan="1">341.19</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">806</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">stromatolite</td>
+                     <td align="left" rowspan="1" colspan="1">7</td>
+                     <td align="left" rowspan="1" colspan="1">17,441</td>
+                     <td align="left" rowspan="1" colspan="1">2,633</td>
+                     <td align="left" rowspan="1" colspan="1">246.28</td>
+                     <td align="left" rowspan="1" colspan="1">202</td>
+                     <td align="left" rowspan="1" colspan="1">266</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">termite gut<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                     <td align="left" rowspan="1" colspan="1">1</td>
+                     <td align="left" rowspan="1" colspan="1">-</td>
+                     <td align="left" rowspan="1" colspan="1">-</td>
+                     <td align="left" rowspan="1" colspan="1">-</td>
+                     <td align="left" rowspan="1" colspan="1">-</td>
+                     <td align="left" rowspan="1" colspan="1">-</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">termite</td>
+                     <td align="left" rowspan="1" colspan="1">8</td>
+                     <td align="left" rowspan="1" colspan="1">12636</td>
+                     <td align="left" rowspan="1" colspan="1">1557</td>
+                     <td align="left" rowspan="1" colspan="1">388.31</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">732</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">wasp</td>
+                     <td align="left" rowspan="1" colspan="1">7</td>
+                     <td align="left" rowspan="1" colspan="1">8602</td>
+                     <td align="left" rowspan="1" colspan="1">616</td>
+                     <td align="left" rowspan="1" colspan="1">369.08</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">565</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">wastewater</td>
+                     <td align="left" rowspan="1" colspan="1">40</td>
+                     <td align="left" rowspan="1" colspan="1">20373</td>
+                     <td align="left" rowspan="1" colspan="1">6264</td>
+                     <td align="left" rowspan="1" colspan="1">373.78</td>
+                     <td align="left" rowspan="1" colspan="1">200</td>
+                     <td align="left" rowspan="1" colspan="1">526</td>
+                  </tr>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1"><bold>Total</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>4,606</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>5,137,512</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>1,241,213</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>346.82</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>200</bold></td>
+                     <td align="left" rowspan="1" colspan="1"><bold>915</bold></td>
+                  </tr>
+               </tbody>
+            </table></alternatives>
+
+            <table-wrap-foot>
+               <fn id="nt101">
+                  <label>*</label>
+                  <p>All the reads from the termite gut were shorter than 200 bp, and the average length was not calculated.</p>
+               </fn>
+               <fn id="nt102">
+                  <label/>
+                  <p>“Average” represents the average length, whereas “Min” and “Max” represent the lengths of the shortest and the longest sequences.</p>
+               </fn>
+            </table-wrap-foot>
+         </table-wrap></sec><sec id="s2b">
+<title>Data processing</title>
+<p>A fundamental challenge of data processing lies in compressing a large number of metagenomic sequences into a small collection without losing much information. Although simply running a sequence similarity search against the above raw data might provide information regarding the environmental categories where a given prokaryotic group can inhabit, the data should be processed in advance to serve as a ready-to-use system for microbiologists. First, the raw data contained non-16S rRNA sequences derived not only from the whole-genome shotgun metagenomes but also from the 16S rRNA amplicon sequencing data. Second, the raw data contained many redundant sequences of identical or highly similar prokaryotes because of the quantitative nature of the metagenomic sequencing, repetitive samplings in similar environments, and artificial sequence duplications generated during the sample preparation steps. All these factors made the data size too large for the rapid return of the search results, and the search results occupied by similar sequences from the same environmental category masked the true habitat diversity of the prokaryotic group of interest. It should be also noted that, although the numbers of 16S rRNA sequences would reflect volumes of prokaryotic groups in a single metagenomic study, these numbers cannot be directly used in meta-analysis because volumes of studies in each environmental category do not reflect volumes of prokaryotic groups in each environmental category on the planet. Therefore, we performed several steps, which are summarized in <xref ref-type="fig" rid="pone-0087126-g001">Figure 1</xref>, to generate a compact 16S rRNA sequence collection for inferring microbial habitability.</p>
+<fig id="pone-0087126-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0087126.g001</object-id><label>Figure 1</label><caption>
+<title>Flowchart for generating the MetaMetaDB content.</title>
+<p>A large amount of data was effectively condensed into a small number of representative 16S rRNA sequences. The asterisks indicate the processes done by NGS QC Toolkit. The numbers in the parentheses represent the numbers of sequences. The tool used in each step is described in the parentheses of that step.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0087126.g001" position="float" xlink:type="simple"/></fig>
+<p>First, low-quality nucleotides with Phred-equivalent quality scores under 20 were trimmed using TrimmingReads.pl of NGS QC Toolkit <xref ref-type="bibr" rid="pone.0087126-Patel1">[17]</xref>, and then Cutadapt (version 1.1) <xref ref-type="bibr" rid="pone.0087126-Martin1">[18]</xref> was performed to remove the adaptor sequences (Steps 1 and 2 in <xref ref-type="fig" rid="pone-0087126-g001">Figure 1</xref>). We removed sequences with ambiguous nucleotides by AmbiguityFiltering.pl and trimmed homopolymers that are 5 bp or longer by HomopolymerTrimming.pl of NGS QC Toolkit, respectively (Steps 3 and 4 in <xref ref-type="fig" rid="pone-0087126-g001">Figure 1</xref>). Sequences without Phred scores were removed from the dataset. We used CD-HIT-454 <xref ref-type="bibr" rid="pone.0087126-Niu1">[19]</xref> to remove possible artificial duplicates that were generated in sequencing processes, especially those from 16S rRNA amplicon sequencing <xref ref-type="bibr" rid="pone.0087126-Schloss1">[20]</xref>. The identity for using CD-HIT-454 was 99% for tolerating sequencing errors. In each of the trimming steps, we removed sequences that were shorter than 200 bp. Generally, sequence similarity searches against these short sequences result in low bit scores; therefore, these sequences rarely appear in search results and have little effect. However, these rarely matched sequences could cause a bias in the normalization process that would lead to a long computation time for the search. In addition, a 16S rRNA sequence includes variable and conserved regions, and only the variable regions are informative <xref ref-type="bibr" rid="pone.0087126-VandePeer1">[21]</xref>; therefore, a 16S rRNA sequence fragment containing only conserved regions would be assigned to many species and lead to an incorrect inference. Because conserved regions are usually shorter than 200 bp <xref ref-type="bibr" rid="pone.0087126-Ashelford1">[22]</xref>, the sequences containing only conserved regions would be excluded from the dataset in this step. Second, we predicted possible 16S rRNA sequences using SortMeRNA (version 1.8) <xref ref-type="bibr" rid="pone.0087126-Kopylova1">[23]</xref> with the non-redundant reference database from SILVA (release 115) <xref ref-type="bibr" rid="pone.0087126-Quast1">[4]</xref>, which includes 418,497 bacterial and 17,530 archaeal 16S rRNA sequences. In total, 5,541,192 16S rRNA sequences were obtained. Third, we remove the chimera sequences by UCHIME <xref ref-type="bibr" rid="pone.0087126-Edgar1">[24]</xref> with the suggested reference database because the chimera sequences account for 5 to 45% of 16S amplicon sequences <xref ref-type="bibr" rid="pone.0087126-Schloss1">[20]</xref>, <xref ref-type="bibr" rid="pone.0087126-Haas1">[25]</xref>, which may cause erroneous results in sequence comparison. After this step, we acquired 5,137,512 16S rRNA sequences without possible experimental bias. Fourth, to remove the redundant sequences, we applied CD-HIT <xref ref-type="bibr" rid="pone.0087126-Fu1">[26]</xref> to cluster our 16S rRNA sequences with 97% identity within each environmental category as 97% identity is the accepted boundary for prokaryotic species <xref ref-type="bibr" rid="pone.0087126-Stackebrandt1">[27]</xref>. Because the raw data contained sequences of different 16S rRNA regions derived from the whole-genome shotgun metagenomes and 16S rRNA amplicon sequencing using different PCR primers, the 97% threshold can still keep multiple sequences of the same species in each environmental category. Finally, we obtained a compact “meta-metagenomic” dataset with 1,241,213 rRNA sequences that were each marked by one of the 45 environmental categories (<xref ref-type="table" rid="pone-0087126-t001">Table 1</xref>). Taxonomic information of the 16S rRNA sequences was obtained by Ribosomal Database Project (RDP) Classifier (version 2.5) <xref ref-type="bibr" rid="pone.0087126-Wang1">[28]</xref> with the cutoff of 50%, the output format of “filterbyconf”, and the default training datasets.</p>
+</sec><sec id="s2c">
+<title>Calculation of the Microbial Habitability Index</title>
+<p>We designed the usage of MetaMetaDB to be intuitive; users simply submit a 16S rRNA sequence from a prokaryote of interest to obtain the results. MetaMetaDB receives the query sequence, runs a BLASTN (BLAST+ version 2.2.26) <xref ref-type="bibr" rid="pone.0087126-Camacho1">[29]</xref> search against the meta-metagenomic 16S rRNA dataset with the e-value of 1e-10, and generates a list of hits. Because BLAST does not provide an option to sort outputs by identity, MetaMetaDB receives at most 10,000 significant hits (in terms of e-value) from the list of BLASTN hits and sorts the hits by the ratio of the number of aligned nucleotides to the summation of the length of the hit sequence and gap(s) that appear in the hit sequence. Thus, the query sequence should be longer than the hit sequences, and we recommend more than 500 bp for the present version of the database. Because the sequences in MetaMetaDB are marked by environmental categories, the significant hits suggest environmental categories in which the taxonomically related prokaryotes inhabit. Accordingly, MetaMetaDB calculates the Microbial Habitability Indices (MHIs) as a set of (normalized) ratios of environmental categories among the significant hits. It is intrinsically difficult to set one threshold on the identity because the identity depends on the evolutionary distance between the prokaryotic groups that the users want to take into account. Therefore, MetaMetaDB chooses the hits exhibiting above 97%, 95%, 90%, 85%, and 80% identity from the search result list, which correspond approximately to the taxonomic levels of species, genus, family, order, and class <xref ref-type="bibr" rid="pone.0087126-Kirchman1">[1]</xref>, respectively, and calculates the ratios of the environmental categories in each identity level. Because the numbers of 16S rRNA sequences in the entire meta-metagenomic dataset are different between the environmental categories (<xref ref-type="table" rid="pone-0087126-t001">Table 1</xref>), the categories with more sequences are expected to appear more frequently in those lists by chance. Therefore, we adopted a logarithmic weighting factor that resembles the inverse document frequency. The inverse document frequency is widely used in the text mining fields, where terms that frequently occur in document collections are assigned less weight. Mathematically, the MHI for each environmental category <italic>e</italic> with an identity threshold <italic>c</italic> is defined by<disp-formula id="pone.0087126.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0087126.e001" xlink:type="simple"/></disp-formula></p>
+<p>where <italic>N</italic><sub>c</sub>(<italic>e</italic>) is the number of hits that are marked by <italic>e</italic> and above identity <italic>c</italic>, <italic>R<sub>total</sub></italic> is the total number of sequences in the database (1,241,213 in the current version of the database), and <italic>R</italic>(<italic>e</italic>) is the total number of sequences marked by <italic>e</italic> in the database. Larger MHI(<italic>e</italic>) reflects larger possibility to be found in the environment <italic>e</italic>; however, note that it is not the exact probability that can be directly compared with other MHIs by its value.</p>
+<p>Users can also submit multiple intact 16S rRNA sequences to MetaMetaDB. In this case, users can analyze these sequences either individually or collectively. In the former case, MHIs are calculated for each query sequence. In the latter case, the number of hits that are marked by <italic>e</italic> and above identity <italic>c</italic> from each query sequence is summed up to be <italic>N</italic><sub>c</sub>(<italic>e</italic>) used in the fore-mentioned MHI calculation. MHIs are averaged across all query sequences to infer the habitability as a group of prokaryotes or summarize results for multiple 16S rRNA sequences from the same species.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Usage Example</title>
+<p>Users can submit sequences to MetaMetaDB using a text area in the homepage. After the BLASTN search and the MHI calculations are performed, a webpage presenting the results appears as shown in <xref ref-type="fig" rid="pone-0087126-g002">Figure 2</xref> (the sample query was the <italic>Helicobacter pylori</italic> 26695 16S rRNA sequence obtained from its genome <xref ref-type="bibr" rid="pone.0087126-Tomb1">[30]</xref>). A typical waiting time is approximately 15 seconds if one 1,500-bp 16S rRNA sequence is queried, thus the system can be readily utilized for quick analyses. In the bar-plot figure, the <italic>y</italic>-axis shows the MHI of each environmental category listed at the bottom of the figure. The columns labeled <italic>97%</italic>, <italic>95%</italic>, <italic>90%</italic>, <italic>85%</italic>, and <italic>80%</italic> represent the thresholds of identities used in the calculation. The summation is 100% for all columns by definition. The environments with MHIs that are less than 1% in each column are summarized and are labeled as <italic>other</italic>. If there is no hit above any identity threshold, then the corresponding column does not appear. In addition to the bar-plot figure, users can also obtain numeric data below the figure or by clicking <italic>Statistics</italic> (for example, the MHI based on the hits with greater than 95% identity in gut-associated environments were 81.93%). In the case of <italic>H. pylori</italic>, a human pathogen that causes gastric inflammation and peptic ulcer disease <xref ref-type="bibr" rid="pone.0087126-Tomb1">[30]</xref>, based on a comprehensive metagenomic dataset, the MHI bar-plots confidently suggest that gut-associated environments are where this prokaryotic group is uniquely found. These data are consistent with the data from the pre-deep-sequencing era demonstrating that <italic>H. pylori</italic> rarely exists outside human gastrointestinal tracts <xref ref-type="bibr" rid="pone.0087126-Antonello1">[31]</xref>. At the family level (90%), this figure also shows different environmental category of ant fungus gardens, suggesting possible habitat of related groups of <italic>H. pylori</italic>. An example of the collective analysis of multiple query sequences is given in <xref ref-type="supplementary-material" rid="pone.0087126.s001">Figure S1</xref> in which two 16S rRNA sequences of <italic>Helicobacter pylori</italic> 26695 were queried. The interpretation of the output was the same as the outputs generated for each query sequence.</p>
+<fig id="pone-0087126-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0087126.g002</object-id><label>Figure 2</label><caption>
+<title>Screen image of a sample results page.</title>
+<p>MetaMetaDB produces one figure and one statistical description for each query sequence and provides a link to download all of the figures and text files. The y-axis represents the MHIs, and the columns show the MHIs calculated by the hits above the different identities. The MHIs and the number of hit(s) used for the calculation are listed under the figure.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0087126.g002" position="float" xlink:type="simple"/></fig>
+<p>For users who wish to analyze data on personal servers, we allow the users to download the meta-metagenomic data in the conventional FASTA format by providing a compressed FASTA file that contains all of the reads marked by the environmental categories. The reads for each environmental category E are labeled as E.1, E.2, E.3, etc. In addition, for users who are interested in further taxonomic information of the hit sequences, we provide a tab-delimited text file of taxonomic descriptions for all the sequences for downloading. We also provide pre-calculated MHIs of 16S rRNA sequences from the All-Species Living Tree project <xref ref-type="bibr" rid="pone.0087126-Yarza1">[32]</xref> (release 111) of SILVA for users link microbial habitability to the species that are well-characterized in taxonomy.</p>
+</sec><sec id="s3b">
+<title>Evaluation of MetaMetaDB</title>
+<p>We examined four well-studied species to evaluate the microbial habitability inferred by MetaMetaDB. We chose <italic>Methanothermobacter thermautotrophicus</italic> str. Delta H <xref ref-type="bibr" rid="pone.0087126-Smith1">[33]</xref>, <italic>Bacillus subtilis</italic> 168 <xref ref-type="bibr" rid="pone.0087126-Kunst1">[34]</xref>, <italic>Escherichia coli</italic> str. K-12 substr. MG1655 <xref ref-type="bibr" rid="pone.0087126-Blattner1">[35]</xref>, and <italic>Vibrio cholerae</italic> El Tor N16961 <xref ref-type="bibr" rid="pone.0087126-Heidelberg1">[36]</xref>, which are well-known archaeal and bacterial species with genomic sequences that were determined in the early stages of the genomic era. All the full-length 16S rRNA genes encoded in each genome were submitted to MetaMetaDB to collectively calculate the MHIs. The MHIs and the known habitats of the species are summarized in <xref ref-type="table" rid="pone-0087126-t002">Table 2</xref> and <xref ref-type="supplementary-material" rid="pone.0087126.s002">Figure S2</xref>. The MHIs and the known habitats were largely consistent in these species. <italic>M</italic>. <italic>thermautotrophicus</italic> was isolated from sewage sludge <xref ref-type="bibr" rid="pone.0087126-Zeikus1">[37]</xref>, which is consistent with the high MHI of the wastewater and compost category (<xref ref-type="supplementary-material" rid="pone.0087126.s002">Figure S2A</xref>). Interestingly, the human skin category also appears in the bar plots, which may imply a relationship with human. <italic>B</italic>. <italic>subtilis</italic> can be found in the soil, water sources and in association with plants <xref ref-type="bibr" rid="pone.0087126-Kunst1">[34]</xref>, and <italic>E. coli</italic> colonizes the lower gut of animals and can survive in the natural environment, which allows for widespread dissemination to new hosts <xref ref-type="bibr" rid="pone.0087126-Blattner1">[35]</xref>. The MHIs of <italic>B</italic>. <italic>subtilis</italic> (<xref ref-type="supplementary-material" rid="pone.0087126.s002">Figure S2B</xref>) and <italic>E. coli</italic> (<xref ref-type="supplementary-material" rid="pone.0087126.s002">Figure S2C</xref>) suggest that these species may occupy wide ranges of natural and animal-associated environments. <italic>V. cholerae</italic> has been known to inhabit in aqua environments <xref ref-type="bibr" rid="pone.0087126-Heidelberg1">[36]</xref>, where MHIs precisely show marine and freshwater environments (<xref ref-type="supplementary-material" rid="pone.0087126.s002">Figure S2D</xref>).</p>
+<table-wrap id="pone-0087126-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0087126.t002</object-id><label>Table 2</label><caption>
+<title>Habitats and MHIs inferred by MetaMetaDB.</title>
+</caption><alternatives><graphic id="pone-0087126-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0087126.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Domain</td>
+<td align="left" rowspan="1" colspan="1">Species</td>
+<td align="left" rowspan="1" colspan="1">Habitat<xref ref-type="table-fn" rid="nt103">*</xref></td>
+<td align="left" rowspan="1" colspan="1">Number of 16S rRNA</td>
+<td align="left" rowspan="1" colspan="1">MHI<xref ref-type="table-fn" rid="nt104">**</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Archaea</td>
+<td align="left" rowspan="1" colspan="1"><italic>Methanothermobacter thermautotrophicus</italic></td>
+<td align="left" rowspan="1" colspan="1">Wastewater, Sludge</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">(97%, 14 hits) wastewater: 59.12%; compost: 17.71%; rhizosphere: 11.91%; human skin: 11.26%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bacteria</td>
+<td align="left" rowspan="1" colspan="1"><italic>Bacillus subtilis</italic></td>
+<td align="left" rowspan="1" colspan="1">Soil</td>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">(97%, 164 hits) hydrocarbon: 23.68%; wastewater: 19.89%; root: 10.44%; compost: 8.94%; ant fungus garden: 7.33%; rhizosphere: 6.68%; food: 5.49%; sediment: 5.47%; fish: 5.04%; gut: 4.72%; soil: 2.33%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bacteria</td>
+<td align="left" rowspan="1" colspan="1"><italic>Escherichia coli</italic></td>
+<td align="left" rowspan="1" colspan="1">Human intestinal microflora, Host</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">(97%, 1,032 hits) hydrothermal vent: 33.66%; termite: 14.31%; freshwater: 8.16%; other: 7.52%; ant fungus garden: 5.17%; marine: 4.63%; microbial mat: 4.50%; gut: 4.42%; beetle: 4.12%; human gut: 3.48%; phyllosphere: 3.10%; ant: 2.31%; wastewater: 1.79%; hydrocarbon: 1.47%; sediment: 1.37%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bacteria</td>
+<td align="left" rowspan="1" colspan="1"><italic>Vibrio cholerae</italic></td>
+<td align="left" rowspan="1" colspan="1">Wastewater, Intestinal microflora, Host, Fresh water</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">(97%, 36 hits) freshwater: 88.15%; marine: 11.85%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bacteria</td>
+<td align="left" rowspan="1" colspan="1"><italic>Helicobacter pylori</italic> 26695</td>
+<td align="left" rowspan="1" colspan="1">Human stomach, Host</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">(97%, 3 hits) human gut: 63.82%; gut: 36.18%</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label>*</label><p>The habitats were retrieved from the Genomes OnLine Database (GOLD) <xref ref-type="bibr" rid="pone.0087126-Pagani1">[40]</xref>.</p></fn><fn id="nt104"><label>**</label><p>Only MHIs that were calculated by hits above highest identity threshold are listed.</p></fn></table-wrap-foot></table-wrap>
+<p>These four examples and the <italic>H. pylori</italic> sample demonstrated that MetaMetaDB not only reflects the habitats of prokaryotes but also provides further directions for the investigation of microbial ecology and evolution. For example, future studies could include the isolation of similar prokaryotic strains from different environments to reveal the genetic bases for new habitat adaptation. Additionally, we can extend our understanding of microbial ecology to a wider scale as we can input multiple query sequences of a higher taxonomic group (genus, family, etc.) or a given microbial community.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>Metagenomic studies have become routine in the field of microbiology, and novel resources to extract efficiently as much knowledge as possible from the large datasets would provide new ways to deepen our understanding of the microbial world. To date, metagenomic data have been analyzed from the perspective of the components of each microbial community; however, MetaMetaDB provides a reverse perspective of the environments in which each prokaryotic group exists, opening the door to the investigation of “meta-metagenomics”.</p>
+<p>MetaMetaDB uses 45 categories that describe the sampling environments, mainly because there was no alternative consistent terminology that is linked to all sequence data in DRA. We assumed that this number of categories would be effective for evaluating the overall tendencies of prokaryotic habitat preferences; however, this number may be insufficient for analyzing microbial ecologies on finer scales. For example, the composition of the microbes in the Sargasso Sea is different from that in the Arctic Ocean <xref ref-type="bibr" rid="pone.0087126-Pommier1">[38]</xref> but these environments are clustered in the <italic>marine</italic> category in MetaMetaDB. Another possible issue is that one sample could be assigned to several scientific names in DRA; for example, a sample classified as <italic>marine sediment</italic> can also be assigned to <italic>marine</italic> or <italic>sediment</italic>, depending on the data submitter. In the future, we plan to adopt a determinate vocabulary for environments to connect precisely and unambiguously the microbial communities and the environmental features that shaped these communities. For example, MIGS/MIMS <xref ref-type="bibr" rid="pone.0087126-Field1">[39]</xref>, EnvO (<ext-link ext-link-type="uri" xlink:href="http://environmentontology.org/home" xlink:type="simple">http://environmentontology.org/home</ext-link>), and Metagenome/Microbes Environment Ontology (MEO, <ext-link ext-link-type="uri" xlink:href="http://mdb.bio.titech.ac.jp/meo" xlink:type="simple">http://mdb.bio.titech.ac.jp/meo</ext-link>) are candidate vocabulary resources that generate clear definitions of environmental terms and the structured relationships between these terms.</p>
+<p>Future changes could also be applied in the data-processing steps. We used 16S rRNA sequences longer than 200 bp in the current database to increase the coverage as much as possible; however, a longer threshold may be preferable to identify prokaryotes with more accuracy. In addition, limiting regions of the 16S rRNA sequences could effectively avoid the effects from different sequence conservation patterns across different regions. In this case, a substantial obstacle is that limiting the regions can make the data coverage much smaller because there are many universal PCR primer sets for 16S rRNA amplicon sequencing. Additionally, 16S rRNA sequences from the same sample can be assembled before incorporation into the database. In this study, we skipped the assembly process because the aim of MetaMetaDB is not to precisely identify closely related species, which usually requires long 16S rRNA sequences. As technical advancements provide longer and more abundant metagenomic sequences, we plan to update the database every six months for better and more precise usage.</p>
+<p>Several future perspectives are envisioned based on the present study. First, the evolution of microbial habitability is of great interest because prokaryotes are known to change habitats frequently. Second, the relationship between the genome and microbial habitability is also to be investigated because this relationship will provide answers to why specific groups of prokaryotes can adapt to more diverse environments than other groups of prokaryotes. Third, increased knowledge of microbial habitability could contribute to the applications of agricultural, industrial, medical, and environmental sciences. We anticipate increased efforts in the development of analytic tools for this “meta-metagenomics” field.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0087126.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0087126.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>A screen shot of analysis process for multiple sequences.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0087126.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0087126.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>MHIs of four selected examples.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0087126.s003" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0087126.s003" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Accession numbers of sequence run files used in MetaMetaDB.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Asako Machiyama, Shotaro Hirase, Haruka Ozaki, and Suguru Nishijima for their help with collecting datasets and suggestions for improving the website interface. The data parsing processes were performed using the super computer system provided by the Research Organization of Information and Systems (ROIS), National Institute of Genetics (NIG), Japan.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0087126-Kirchman1"><label>1</label>
+<mixed-citation publication-type="other" xlink:type="simple">Kirchman DL (2012) Processes in Microbial Ecology. New York: Oxford University Press Inc.</mixed-citation>
+</ref>
+<ref id="pone.0087126-DeSantis1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeSantis</surname><given-names>TZ</given-names></name>, <name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Larsen</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Rojas</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Brodie</surname><given-names>EL</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB</article-title>. <source>Appl Environ Microbiol</source> <volume>72</volume>: <fpage>5069</fpage>–<lpage>5072</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Cole1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cole</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Cardenas</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Fish</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Chai</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The Ribosomal Database Project: improved alignments and new tools for rRNA analysis</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>D141</fpage>–<lpage>145</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Quast1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quast</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pruesse</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Yilmaz</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Gerken</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schweer</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>The SILVA ribosomal RNA gene database project: improved data processing and web-based tools</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>D590</fpage>–<lpage>596</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Amann1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Amann</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Schleifer</surname><given-names>K</given-names></name> (<year>1995</year>) <article-title>Phylogenetic identification and in situ detection of individual microbial cells without cultivation</article-title>. <source>Microbiol Rev</source> <volume>59</volume>: <fpage>143</fpage>–<lpage>169</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Handelsman1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Metagenomics: application of genomics to uncultured microorganisms</article-title>. <source>Microbiol Mol Biol Rev</source> <volume>68</volume>: <fpage>669</fpage>–<lpage>685</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Ferrer1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ferrer</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Martínez-Abarca</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Golyshin</surname><given-names>PN</given-names></name> (<year>2005</year>) <article-title>Mining genomes and “metagenomes” for novel catalysts</article-title>. <source>Curr Opin Biotechnol</source> <volume>16</volume>: <fpage>588</fpage>–<lpage>593</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Handelsman2"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Rondon</surname><given-names>MR</given-names></name>, <name name-style="western"><surname>Brady</surname><given-names>SF</given-names></name>, <name name-style="western"><surname>Clardy</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Goodman</surname><given-names>RM</given-names></name> (<year>1998</year>) <article-title>Molecular biological access to the chemistry of unknown soil microbes: a new frontier for natural products</article-title>. <source>Chem Biol</source> <volume>5</volume>: <fpage>R245</fpage>–<lpage>R249</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Riesenfeld1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Riesenfeld</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name>, <name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Metagenomics: genomic analysis of microbial communities</article-title>. <source>Annu Rev Genet</source> <volume>38</volume>: <fpage>525</fpage>–<lpage>552</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Metzker1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Metzker</surname><given-names>ML</given-names></name> (<year>2010</year>) <article-title>Sequencing technologies - the next generation</article-title>. <source>Nat Rev Genet</source> <volume>11</volume>: <fpage>31</fpage>–<lpage>46</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Mardis1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mardis</surname><given-names>ER</given-names></name> (<year>2011</year>) <article-title>A decade's perspective on DNA sequencing technology</article-title>. <source>Nature</source> <volume>470</volume>: <fpage>198</fpage>–<lpage>203</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Huson1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huson</surname><given-names>DH</given-names></name>, <name name-style="western"><surname>Auch</surname><given-names>AF</given-names></name>, <name name-style="western"><surname>Qi</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schuster</surname><given-names>SC</given-names></name> (<year>2007</year>) <article-title>MEGAN analysis of metagenomic data</article-title>. <source>Genome Res</source> <volume>17</volume>: <fpage>377</fpage>–<lpage>386</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Meyer1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Meyer</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Paarmann</surname><given-names>D</given-names></name>, <name name-style="western"><surname>D'Souza</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Olson</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Glass</surname><given-names>EM</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The metagenomics RAST server - a public resource for the automatic phylogenetic and functional analysis of metagenomes</article-title>. <source>BMC Bioinformatics</source> <volume>9</volume>: <fpage>386</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Markowitz1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Markowitz</surname><given-names>VM</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>I-MA</given-names></name>, <name name-style="western"><surname>Chu</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Szeto</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Palaniappan</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>IMG/M: the integrated metagenome data management and comparative analysis system</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D123</fpage>–<lpage>129</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Kodama1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kodama</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Shumway</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Leinonen</surname><given-names>R</given-names></name> (<year>2012</year>) <collab xlink:type="simple">International Nucleotide Sequence Database Collaboration</collab> (<year>2012</year>) <article-title>The Sequence Read Archive: explosive growth of sequencing data</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D54</fpage>–<lpage>56</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Sayers1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sayers</surname><given-names>EW</given-names></name>, <name name-style="western"><surname>Barrett</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Benson</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Bryant</surname><given-names>SH</given-names></name>, <name name-style="western"><surname>Canese</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Database resources of the National Center for Biotechnology Information</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>D5</fpage>–<lpage>15</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Patel1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patel</surname><given-names>RK</given-names></name>, <name name-style="western"><surname>Jain</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>NGS QC Toolkit: a toolkit for quality control of next generation sequencing data</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e30619</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Martin1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martin</surname><given-names>M</given-names></name> (<year>2011</year>) <article-title>Cutadapt removes adapter sequences from high-throughput sequencing reads</article-title>. <source>EMBnet.journal</source> <volume>17</volume>: <fpage>10</fpage>–<lpage>12</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Niu1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Niu</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Fu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Sun</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>W</given-names></name> (<year>2010</year>) <article-title>Artificial and natural duplicates in pyrosequencing reads of metagenomic data</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume>: <fpage>187</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Schloss1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name>, <name name-style="western"><surname>Gevers</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Westcott</surname><given-names>SL</given-names></name> (<year>2011</year>) <article-title>Reducing the effects of PCR amplification and sequencing artifacts on 16S rRNA-based studies</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e27310</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-VandePeer1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van de Peer</surname><given-names>Yves</given-names></name>, <name name-style="western"><surname>Chapelle</surname><given-names>Sabine</given-names></name>, <name name-style="western"><surname>De</surname><given-names>Rupert</given-names></name> (<year>1996</year>) <article-title>A quantitative map of nucleotide substitution rates in bacterial rRNA</article-title>. <source>Nucleic Acids Res</source> <volume>24</volume>: <fpage>3381</fpage>–<lpage>3391</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Ashelford1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ashelford</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Chuzhanova</surname><given-names>NA</given-names></name>, <name name-style="western"><surname>Fry</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Weightman</surname><given-names>AJ</given-names></name> (<year>2005</year>) <article-title>At least 1 in 20 16S rRNA sequence records currently held in public repositories is estimated to contain substantial anomalies</article-title>. <source>Appl Environ Microbiol</source> <volume>71</volume>: <fpage>7724</fpage>–<lpage>7736</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Kopylova1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kopylova</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Noé</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Touzet</surname><given-names>H</given-names></name> (<year>2012</year>) <article-title>SortMeRNA: fast and accurate filtering of ribosomal RNAs in metatranscriptomic data</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>3211</fpage>–<lpage>3217</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Edgar1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edgar</surname><given-names>RC</given-names></name>, <name name-style="western"><surname>Haas</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Clemente</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Quince</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Knight</surname><given-names>R</given-names></name> (<year>2011</year>) <article-title>UCHIME improves sensitivity and speed of chimera detection</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2194</fpage>–<lpage>2200</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Haas1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Haas</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Gevers</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Earl</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Feldgarden</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ward D</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Chimeric 16S rRNA sequence formation and detection in Sanger and 454-pyrosequenced PCR amplicons</article-title>. <source>Genome Res</source> <volume>21</volume>: <fpage>494</fpage>–<lpage>504</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Fu1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Niu</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Wu</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>W</given-names></name> (<year>2012</year>) <article-title>CD-HIT: accelerated for clustering the next-generation sequencing data</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>3150</fpage>–<lpage>3152</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Stackebrandt1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stackebrandt</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Goebel</surname><given-names>BM</given-names></name> (<year>1994</year>) <article-title>Taxonomic Note: A Place for DNA-DNA Reassociation and 16S rRNA Sequence Analysis in the Present Species Definition in Bacteriology</article-title>. <source>Int J Syst Bacteriol</source> <volume>44</volume>: <fpage>846</fpage>–<lpage>849</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Wang1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Garrity</surname><given-names>GM</given-names></name>, <name name-style="western"><surname>Tiedje</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Cole</surname><given-names>JR</given-names></name> (<year>2007</year>) <article-title>Naive Bayesian classifier for rapid assignment of rRNA sequences into the new bacterial taxonomy</article-title>. <source>Appl Environ Microbiol</source> <volume>73</volume>: <fpage>5261</fpage>–<lpage>5267</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Camacho1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Camacho</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Coulouris</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Avagyan</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Papadopoulos</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>BLAST+: architecture and applications</article-title>. <source>BMC Bioinformatics</source> <volume>10</volume>: <fpage>421</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Tomb1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tomb</surname><given-names>J-F</given-names></name>, <name name-style="western"><surname>White</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Kerlavage</surname><given-names>AR</given-names></name>, <name name-style="western"><surname>Clayton</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Sutton</surname><given-names>GG</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>The complete genome sequence of the gastric pathogen <italic>Helicobacter pylori</italic></article-title>. <source>Nature</source> <volume>388</volume>: <fpage>539</fpage>–<lpage>547</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Antonello1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Covacci</surname><given-names>Antonello</given-names></name>, <name name-style="western"><surname>Telford</surname><given-names>John L</given-names></name>, <name name-style="western"><surname>Del Giudice</surname><given-names>Giuseppe</given-names></name>, <name name-style="western"><surname>Parsonne</surname><given-names>Julie</given-names></name>, <name name-style="western"><surname>Rappuoli</surname><given-names>Rino</given-names></name> (<year>1999</year>) <article-title><italic>Helicobacter pylori</italic> Virulence and Genetic Geography</article-title>. <source>Science</source> <volume>284</volume>: <fpage>1328</fpage>–<lpage>1333</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Yarza1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yarza</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Richter</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Peplies</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Euzeby</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Amann</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The All-Species Living Tree project: a 16S rRNA-based phylogenetic tree of all sequenced type strains</article-title>. <source>Syst Appl Microbiol</source> <volume>31</volume>: <fpage>241</fpage>–<lpage>250</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Smith1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Doucette-Stamm</surname><given-names>LA</given-names></name>, <name name-style="western"><surname>Deloughery</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Dubois</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Complete genome sequence of <italic>Methanobacterium thermoautotrophicum</italic> deltaH: functional analysis and comparative genomics</article-title>. <source>J Bacteriol</source> <volume>179</volume>: <fpage>7135</fpage>–<lpage>7155</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Kunst1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kunst</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Ogasawara</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Moszer</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Albertini</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Alloni</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>The complete genome sequence of the gram-positive bacterium <italic>Bacillus subtilis</italic></article-title>. <source>Nature</source> <volume>390</volume>: <fpage>249</fpage>–<lpage>256</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Blattner1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blattner</surname><given-names>FR</given-names></name>, <name name-style="western"><surname>Plunkett</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Bloch</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Perna</surname><given-names>NT</given-names></name>, <name name-style="western"><surname>Burland</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>The complete genome sequence of <italic>Escherichia coli</italic> K-12</article-title>. <source>Science</source> <volume>277</volume>: <fpage>1453</fpage>–<lpage>1462</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Heidelberg1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heidelberg</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Eisen</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Nelson</surname><given-names>WC</given-names></name>, <name name-style="western"><surname>Clayton</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Gwinn</surname><given-names>ML</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>DNA sequence of both chromosomes of the cholera pathogen <italic>Vibrio cholerae</italic></article-title>. <source>Nature</source> <volume>406</volume>: <fpage>477</fpage>–<lpage>483</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Zeikus1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zeikus</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Wolfe</surname><given-names>RS</given-names></name> (<year>1972</year>) <article-title><italic>Methanobacterium thermoautotrophicus</italic> sp. n., an anaerobic, autotrophic, extreme thermophile</article-title>. <source>J Bacteriol</source> <volume>109</volume>: <fpage>707</fpage>–<lpage>715</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Pommier1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pommier</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Canbäck</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Riemann</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Boström</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Simu</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Global patterns of diversity and community structure in marine bacterioplankton</article-title>. <source>Mol Ecol</source> <volume>16</volume>: <fpage>867</fpage>–<lpage>880</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Field1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Field</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Garrity</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Gray</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Morrison</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Selengut</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The minimum information about a genome sequence (MIGS) specification</article-title>. <source>Nat Biotechnol</source> <volume>26</volume>: <fpage>541</fpage>–<lpage>547</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0087126-Pagani1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pagani</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Liolios</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Jansson</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>I-MA</given-names></name>, <name name-style="western"><surname>Smirnova</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>The Genomes OnLine Database (GOLD) v.4: status of genomic and metagenomic projects and their associated metadata</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D571</fpage>–<lpage>579</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>
