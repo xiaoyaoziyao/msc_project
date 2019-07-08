@@ -134,12 +134,15 @@ def main_function(i):
     client = pymongo.MongoClient('localhost:27017',connect = True)
     db = client['msc_project']
     collection = db['citations']        
-#    xml_find_loc(collection,i)
+    xml_find_loc(collection,i)
     standard_loc(collection,i)
     client.close() 
 
-main_function(3)
-main_function(4)
-main_function(5)
- 
-#print(collection.find({"location_num":None}).count())
+#main_function(6)
+#main_function(7)
+
+    
+#client = pymongo.MongoClient('localhost:27017',connect = True)
+#db = client['msc_project']
+#collection = db['citations'] 
+print(collection.find({"cited_no":{"$gt":20},"location_num":{"$exists":True}}).count())

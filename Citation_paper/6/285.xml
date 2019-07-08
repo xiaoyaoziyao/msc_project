@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PONE-RA-17627R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0012912</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Systems Biology</subject><subject>Computational Biology/Transcriptional Regulation</subject></subj-group></article-categories><title-group><article-title>From Knockouts to Networks: Establishing Direct Cause-Effect Relationships through Graph Analysis</article-title><alt-title alt-title-type="running-head">From Knockouts to Networks</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Pinna</surname><given-names>Andrea</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Soranzo</surname><given-names>Nicola</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>de la Fuente</surname><given-names>Alberto</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Center for Advanced Studies, Research and Development (CRS4) Bioinformatica, Pula, Italy</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Isalan</surname><given-names>Mark</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Center for Genomic Regulation, Spain</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">alf@crs4.it</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: AdlF. Performed the experiments: AP. Analyzed the data: AP NS. Contributed reagents/materials/analysis tools: AP NS. Wrote the paper: AP NS AdlF.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>11</day><month>10</month><year>2010</year></pub-date><volume>5</volume><issue>10</issue><elocation-id>e12912</elocation-id><history>
+<date date-type="received"><day>2</day><month>4</month><year>2010</year></date>
+<date date-type="accepted"><day>29</day><month>7</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Pinna et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract><sec>
+<title>Background</title>
+<p>Reverse-engineering gene networks from expression profiles is a difficult problem for which a multitude of techniques have been developed over the last decade. The yearly organized DREAM challenges allow for a fair evaluation and unbiased comparison of these methods.</p>
+</sec><sec>
+<title>Results</title>
+<p>We propose an inference algorithm that combines confidence matrices, computed as the standard scores from single-gene knockout data, with the down-ranking of feed-forward edges. Substantial improvements on the predictions can be obtained after the execution of this second step.</p>
+</sec><sec>
+<title>Conclusions</title>
+<p>Our algorithm was awarded the best overall performance at the DREAM4 In Silico 100-gene network sub-challenge, proving to be effective in inferring medium-size gene regulatory networks. This success demonstrates once again the decisive importance of gene expression data obtained after systematic gene perturbations and highlights the usefulness of graph analysis to increase the reliability of inference.</p>
+</sec></abstract><funding-group><funding-statement>This work was partly supported by The Regional Authorities of Sardinia (<ext-link ext-link-type="uri" xlink:href="http://www.sardegnaricerche.it/" xlink:type="simple">http://www.sardegnaricerche.it/</ext-link>). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="8"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Reverse engineering is an interesting area of research currently receiving a lot of attentions from the Systems Biology community. In fact, reconstructed biomolecular networks may allow researchers to understand the molecular basis of complex traits and diseases <xref ref-type="bibr" rid="pone.0012912-Schadt1">[1]</xref>, as well as the discovery of direct drug targets <xref ref-type="bibr" rid="pone.0012912-diBernardo1">[2]</xref>.</p>
+<p>Gene expression data have been prevailing over protein and metabolite activity data, because of the relative ease and unified way to measure RNA levels, and this disproportion will be further increased due to the appearance of gene expression measurements techniques based on novel sequencing technologies, e.g. <xref ref-type="bibr" rid="pone.0012912-Wang1">[3]</xref>. Therefore, the concept of gene network (GN) is of high importance for the purpose of describing the regulatory networks inside living cells. GNs are abstract models of gene communication with nodes representing the gene activities (gene expression levels, mRNA concentrations), and directed edges representing causal influences <xref ref-type="bibr" rid="pone.0012912-Brazhnik1">[4]</xref>, <xref ref-type="bibr" rid="pone.0012912-delaFuente1">[5]</xref>. The causal influence of gene A on gene B could be due to the transcription activation of gene B by the protein product of gene A upon binding to gene B's promoter sequence (as in a transcription factor–target relationship), but also be due to more complicated processes, such as gene A encoding a metabolic enzyme producing a metabolite which in turn regulates the transcription of gene B. These detailed biochemical events are hidden to the observed set of variables (gene expression levels) and their effects will merely result in an observable causal effect A<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e001" xlink:type="simple"/></inline-formula>B. Undirected edges in GNs are present due to unmeasured confounding variables. GNs are context specific: the regulatory structure among genes depends on the developmental stage, cell type, environment, genotype and disease state. For a comprehensive discussion on the nature of GNs please refer to <xref ref-type="bibr" rid="pone.0012912-delaFuente1">[5]</xref>.</p>
+<p>As a precise definition of GNs is missing in current literature we here provide (one possible) formal definition.</p>
+<sec id="s1a">
+<title>Definition</title>
+<p>A <italic>gene network</italic> is a mixed graph <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e002" xlink:type="simple"/></inline-formula> over a set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e003" xlink:type="simple"/></inline-formula> of nodes, corresponding to gene activities, with unordered pairs <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e004" xlink:type="simple"/></inline-formula>, the undirected edges, and ordered pairs <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e005" xlink:type="simple"/></inline-formula>, the directed edges. A directed edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e006" xlink:type="simple"/></inline-formula> from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e007" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e008" xlink:type="simple"/></inline-formula> is present if and only if a causal effect runs from node <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e009" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e010" xlink:type="simple"/></inline-formula> and there exist no nodes or subsets of nodes in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e011" xlink:type="simple"/></inline-formula> that are intermediating the causal influence (it may be mediated by hidden variables, i.e. variables not in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e012" xlink:type="simple"/></inline-formula>). An undirected edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e013" xlink:type="simple"/></inline-formula> between nodes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e014" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e015" xlink:type="simple"/></inline-formula> is present if and only if gene activities <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e016" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e017" xlink:type="simple"/></inline-formula> are associated by other means than a direct causal influence, and there exist no nodes or subsets of nodes in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e018" xlink:type="simple"/></inline-formula> that explain that association (i.e. it is caused by a variable hidden to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e019" xlink:type="simple"/></inline-formula>).</p>
+<p>Depending on the available measurements, different inference techniques can be employed. In case of experiments without targeted perturbations (“observational studies”, such as gene expression data collected over a group of similar individuals, typically done in the context of a disease) the expression profiles can be analyzed to build a undirected graph whose nodes are the genes, and whose edges represent the presence of significant associations. Without targeted perturbations it is not generally possible to infer directions of the edges. A wide variety of techniques for constructing such undirected co-expression networks has been proposed, typically based on marginal associations <xref ref-type="bibr" rid="pone.0012912-Butte1">[6]</xref>, conditional associations <xref ref-type="bibr" rid="pone.0012912-delaFuente2">[7]</xref>–<xref ref-type="bibr" rid="pone.0012912-Schfer1">[9]</xref> or information theory <xref ref-type="bibr" rid="pone.0012912-Margolin1">[10]</xref>. Under some assumptions it is theoretically possible to decide the orientation of the edges using this type of data <xref ref-type="bibr" rid="pone.0012912-OpgenRhein1">[11]</xref>, <xref ref-type="bibr" rid="pone.0012912-Spirtes1">[12]</xref>, but unfortunately these assumptions (such as acyclicity of the network and absence of confounding factors) are very unlikely to be met in the present context.</p>
+<p>On the other hand, targeted perturbations (e.g. systematic single-gene gene knockouts, overexpressions) are needed to enable causal inference, and the reconstruction of the directed structure of GNs. Many techniques for constructing GNs have been proposed of which the most popular techniques are based on ordinary differential equations <xref ref-type="bibr" rid="pone.0012912-Dhaeseleer1">[13]</xref>–<xref ref-type="bibr" rid="pone.0012912-Gardner1">[15]</xref> or Bayesian networks <xref ref-type="bibr" rid="pone.0012912-Friedman1">[16]</xref>.</p>
+<p>The performance of these techniques needs to be evaluated and compared <xref ref-type="bibr" rid="pone.0012912-Stolovitzky1">[17]</xref>, <xref ref-type="bibr" rid="pone.0012912-Stolovitzky2">[18]</xref>, and this can be accomplished by applying different inference methods to the data obtained from biomolecular networks of which the structure is assumed to be known <italic>a priori</italic>, i.e. “gold standard networks” <xref ref-type="bibr" rid="pone.0012912-Bansal1">[19]</xref>–<xref ref-type="bibr" rid="pone.0012912-Faith1">[21]</xref>. However, real world biomolecular networks are mostly unknown. Even the most studied biomolecular networks are not only plagued by false positives, but suffer even worse from false negatives: they are largely incomplete <xref ref-type="bibr" rid="pone.0012912-Stumpf1">[22]</xref>. Consequently such networks cannot be deemed as totally reliable benchmarks to compare inference algorithms. Therefore, it has been suggested to use data simulated with dynamical models of GNs, i.e. <italic>in silico</italic> data. In this case the underlying networks are precisely known and thus allow for thorough evaluation and comparison of reverse-engineering algorithms <xref ref-type="bibr" rid="pone.0012912-Mendes1">[23]</xref>, <xref ref-type="bibr" rid="pone.0012912-Prill1">[24]</xref>. Obviously, the relevance of evaluations on <italic>in silico</italic> data strongly depends on the realism of the simulation system, e.g. the network topology, the type of mathematical model, the type of kinetic functions, the noise model, etc.</p>
+<p>The outline of the paper is the following: we first describe the DREAM4 <italic>In Silico</italic> Network challenges, then explain the inference algorithm we devised and applied to the DREAM 4 data, followed by a description of the GN simulator we developed to generate additional synthetic networks and data. Then, we show the evaluations of variants of our algorithm on both the DREAM3 <italic>In Silico</italic> benchmarks and the additional simulated datasets. We also present the results of re-analysis of the DREAM4 <italic>In Silico</italic> benchmarks, which we were able to perform after the gold standard networks were released. We conclude with a discussion of the method, data and future steps to be made.</p>
+</sec><sec id="s1b">
+<title>DREAM4 <italic>In Silico</italic> Network challenge</title>
+<p>The Dialogue for Reverse Engineering Assessments and <xref ref-type="sec" rid="s2">Methods</xref> (DREAM) is an international initiative with the aim of evaluating methods for biomolecular network inference in an unbiased way <xref ref-type="bibr" rid="pone.0012912-Stolovitzky1">[17]</xref>, <xref ref-type="bibr" rid="pone.0012912-Stolovitzky2">[18]</xref>. Evaluations proceed through organized competitions on a yearly basis in which teams from all over the world participate. For the 4th edition of DREAM in 2009, the organizers proposed three different challenges. Our team participated in the second one, the <italic>In Silico</italic> Network challenge, which asked to infer directed GNs from simulated data. The challenge was, in turn, divided into three sub-challenges, respectively named <italic>InSilico_Size10</italic>, <italic>InSilico_Size100</italic>, and <italic>InSilico_Size100_Multifactorial</italic>.</p>
+<p>These sub-challenges differed, as their names suggest, in the network size and the type of data provided. In the first sub-challenge the partecipants had to predict the topology of five 10-gene networks, and were provided with steady state gene expression levels from wild-type, knockouts, knockdowns, multifactorial perturbations, and time series data. The second sub-challenge concerned instead five 100-gene networks, with the same type of available data except the multifactorial perturbations. The third sub-challenge involved five other 100-gene networks provided with multifactorial perturbations data only. The contestants were challenged to predict the network structures underlying the above data, i.e. assigning a level of confidence for the presence of each possible edge.</p>
+<p>We here provide a brief description of the available data provided to the DREAM 4 partecipants. The number of genes in the network is denoted by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e020" xlink:type="simple"/></inline-formula>. The <italic>wild-type</italic> file contained the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e021" xlink:type="simple"/></inline-formula> steady-state levels of the unperturbed network. The <italic>knockout</italic> data (see an example in <xref ref-type="table" rid="pone-0012912-t001">Table 1</xref>) consisted of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e022" xlink:type="simple"/></inline-formula> rows with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e023" xlink:type="simple"/></inline-formula> steady-state values, each obtained after deleting one of the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e024" xlink:type="simple"/></inline-formula> genes. The <italic>knockdown</italic> data were similar to the above, but were obtained by halving the transcription rate constant of one gene at a time instead of setting it to zero. The <italic>multifactorial perturbations</italic> data consisted of steady-state levels of small fluctuations of the values of all transcription rate constants simultaneously. The <italic>time series</italic> file contained trajectories of gene activity levels starting from the wild-type steady state to a perturbed state, and from the perturbed state back to the wild-type state upon removing the perturbations.</p>
+<table-wrap id="pone-0012912-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t001</object-id><label>Table 1</label><caption>
+<title>Sample of knockout data.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e025" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e026" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e027" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e028" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e029" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e030" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.14</td>
+<td align="left" colspan="1" rowspan="1">0.89</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+<td align="left" colspan="1" rowspan="1">0.87</td>
+<td align="left" colspan="1" rowspan="1">0.14</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e031" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.96</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.86</td>
+<td align="left" colspan="1" rowspan="1">0.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e032" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.68</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+<td align="left" colspan="1" rowspan="1">0.90</td>
+<td align="left" colspan="1" rowspan="1">0.05</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e033" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.17</td>
+<td align="left" colspan="1" rowspan="1">0.86</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.88</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e034" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+<td align="left" colspan="1" rowspan="1">0.86</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.09</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e035" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.12</td>
+<td align="left" colspan="1" rowspan="1">0.78</td>
+<td align="left" colspan="1" rowspan="1">0.09</td>
+<td align="left" colspan="1" rowspan="1">0.91</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>This is an example of the provided knockout data, related to an example 5-gene network. The first row contains the ‘wild-type’ (unperturbed) gene activities, while the others contain the gene activities due to the knockout of the gene indicated on the left. A knocked-out gene has null expression. Data are affected by noise, but certain relationships are apparent: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e036" xlink:type="simple"/></inline-formula> is likely to be regulated by (or at least downstream of) <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e037" xlink:type="simple"/></inline-formula>, since the steady state value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e038" xlink:type="simple"/></inline-formula> responds strongly to perturbing <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e039" xlink:type="simple"/></inline-formula>: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e040" xlink:type="simple"/></inline-formula> noticeably differs from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e041" xlink:type="simple"/></inline-formula>.</p></fn></table-wrap-foot></table-wrap>
+<p>The network topologies to be inferred were generated by the organizers by extracting 10- or 100-node subnetworks from transcriptional regulatory networks of <italic>E. coli</italic> and <italic>S. cerevisiae</italic>, with preferential selection of parts containing cycles (but no self-interactions).</p>
+<p>The challenge description mentioned also that the data was simulated through a dynamical model describing both independent and synergistic gene regulation, which included both gene and protein expression (but only the gene expression data was provided to the partecipants). Internal noise was modeled through stochastic (Langevin) differential equations, and measurement noise was added to the simulated gene expression levels. Networks and data were generated by the <italic>GeneNetWeaver 2.0</italic> software <xref ref-type="bibr" rid="pone.0012912-Marbach1">[25]</xref>, which was published only after the DREAM4 conclusion.</p>
+</sec></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Algorithm</title>
+<p>The aim of these challenges was the prediction of the (directed and unsigned) network structures. How can we infer such gene regulatory networks? While the time-series data could be used for this purpose, the lack of protein measurements would make it difficult to infer relationships between gene activities from time dynamics: the protein dynamics causes delays between the gene expression dynamics. Therefore, we resorted to the steady state levels, in particular to the knockout datasets, where the perturbations and the relative responses were stronger.</p>
+<p>From this kind of data it is very easy to infer a so-called causal influence network: genes whose steady state values change as a result of a single-gene knockout are likely to be downstream of the perturbed gene <xref ref-type="bibr" rid="pone.0012912-Wagner1">[26]</xref>, <xref ref-type="bibr" rid="pone.0012912-Scheinine1">[27]</xref>. Most causal relationships (both activating and inhibiting) due to the knocked-out gene could be immediately recognized from the data table (e.g. <xref ref-type="table" rid="pone-0012912-t001">Table 1</xref>), unless the influence is particularly weak and then overwhelmed by noise, or its effect is mitigated by other connections. This approach will not infer spurious relationships between co-regulated genes, which is instead a well-known problem of algorithms based on expression similarity (e.g. correlation) <xref ref-type="bibr" rid="pone.0012912-delaFuente2">[7]</xref>.</p>
+<p>However, some of the edges of a causal influence network may be indirect, i.e. mediated by other (measured) gene activities <xref ref-type="bibr" rid="pone.0012912-Wagner1">[26]</xref>. The remaining task is thus to distinguish direct from indirect relationships. To accomplish this, we developed an algorithm consisting of two main steps: through statistical measures, a first estimate of the confidence of each possible edge is obtained directly from the available knockout data; then, by down-ranking the feed-forward edges, a refined prediction is given.</p>
+<p>In the first step we quantify the importance of the responses of the gene activities toward single-gene perturbations and so how likely it is for each gene to be downstream of the perturbed genes. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e042" xlink:type="simple"/></inline-formula> be the vector of wild-type gene expression, and let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e043" xlink:type="simple"/></inline-formula> be the vector of gene activity steady-states obtained by knocking out gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e044" xlink:type="simple"/></inline-formula>. To obtain the initial predictions, we evaluated four possible different confidence matrices W in which elements <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e045" xlink:type="simple"/></inline-formula> reflects the confidence in the existence of the edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e046" xlink:type="simple"/></inline-formula>:</p>
+<sec id="s2a1">
+<title>Deviation matrix, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e047" xlink:type="simple"/></inline-formula></title>
+<p>The confidence of edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e048" xlink:type="simple"/></inline-formula> is simply estimated by the absolute value of the deviation from wild type of the expression of gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e049" xlink:type="simple"/></inline-formula> after the knockout of gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e050" xlink:type="simple"/></inline-formula>: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e051" xlink:type="simple"/></inline-formula>. The larger the deviation the higher the confidence we have that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e052" xlink:type="simple"/></inline-formula> is downstream of the perturbed <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e053" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s2a2">
+<title>Normalized deviation matrix, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e054" xlink:type="simple"/></inline-formula></title>
+<p>As the absolute values of the steady state gene activities vary drastically (e.g. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e055" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e056" xlink:type="simple"/></inline-formula> in <xref ref-type="table" rid="pone-0012912-t001">Table 1</xref>) it might be more appropriate to consider the relative deviations. Each column of the deviation matrix is normalized by the corresponding wild type: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e057" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s2a3">
+<title>Z-score on deviation matrix, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e058" xlink:type="simple"/></inline-formula></title>
+<p>A more statistically motivated measure is the z-score, which indicates how many standard deviations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e059" xlink:type="simple"/></inline-formula> an observation is far from the mean <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e060" xlink:type="simple"/></inline-formula> of a whole set of measurements. In this case, for each gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e061" xlink:type="simple"/></inline-formula> we calculate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e062" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e063" xlink:type="simple"/></inline-formula> using the deviations from wild type after each knockout (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e064" xlink:type="simple"/></inline-formula>):<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.e065" xlink:type="simple"/></disp-formula></p>
+</sec><sec id="s2a4">
+<title>Z-score on raw data matrix, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e066" xlink:type="simple"/></inline-formula></title>
+<p>As both <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e067" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e068" xlink:type="simple"/></inline-formula> are noisy values, it may be better to consider raw expression values rather than deviations from the steady state values (subtracting a noisy value from another noisy value results in a even noisier value). Therefore, for each gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e069" xlink:type="simple"/></inline-formula> we calculate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e070" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e071" xlink:type="simple"/></inline-formula> using the steady-state values after each knockout (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e072" xlink:type="simple"/></inline-formula>):<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.e073" xlink:type="simple"/></disp-formula></p>
+<p>Once a first prediction of the network has been calculated with one of the above methods, the second step of the inference algorithm comes into play. The logic behind this second step is also plain and simple. First, based on a threshold value on the derived confidence matrix, a network is obtained. This network contains edges which represent causal influences between the genes, which may be direct or indirect. The “true” network is thus embedded in this initial causal influence network and could be derived by removing edges (edges can not be added as they create causal influences not supported by the perturbation experiments). We recognize that certain edges can be removed without removing the causal influences: the edge from gene A to gene C could be removed if there is at least one additional path from gene A to C in the network <xref ref-type="bibr" rid="pone.0012912-Wagner1">[26]</xref>. The additional path(s) could explain the causal effect of gene A on C and therefore we have reduced confidence in the existence of the direct edge from A to C. <xref ref-type="fig" rid="pone-0012912-g001">Figure 1</xref> provides an example of a feed-forward loop from which an edge could be removed.</p>
+<fig id="pone-0012912-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.g001</object-id><label>Figure 1</label><caption>
+<title>Feed-forward loop.</title>
+<p>The edge between gene A and gene C might be erroneously predicted as the causal effect of gene A on gene C could in principle be explained by the indirect path through gene B.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.g001" xlink:type="simple"/></fig>
+<p>Our down-ranking algorithm systematically checks for paths through the initial networks and recognizes which edges can be removed (potentially indirect) and which edges can not be removed (these must be direct as removing them would result in a network missing one or more of the observed causal influences). Note that cyclic components in the networks are fully connected, as each gene in a cycle has a causal influence on all other genes in the cycle. Determining which edges in a cyclic component can be removed without removing causal paths depends on the order in which the edges are removed. Therefore, we decided not to touch any of the edges in cyclic components. We emphasize that we do not believe that the sparsest network possible is most biologically realistic. In fact, it is widely recognized that biomolecular networks are enriched in feed-forward loops <xref ref-type="bibr" rid="pone.0012912-Milo1">[28]</xref>. However the absolute frequencies of their occurrence in the networks is much lower than that of the linear path motif (A<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e074" xlink:type="simple"/></inline-formula>B<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e075" xlink:type="simple"/></inline-formula>C). Therefore, it is reasonable to assume that down-ranking these edges improves the reliability of the network inference.</p>
+<p>The second step of our algorithm proceeds in the following way (<xref ref-type="fig" rid="pone-0012912-g002">Figure 2</xref>):</p>
+<list list-type="order"><list-item>
+<p>Use a threshold value <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e076" xlink:type="simple"/></inline-formula> for the edge confidence (selected after several test simulations, as explained in the <xref ref-type="sec" rid="s3">Results</xref> section) to extract a directed network <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e077" xlink:type="simple"/></inline-formula> from one of the above mentioned matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e078" xlink:type="simple"/></inline-formula>.</p>
+</list-item><list-item>
+<p>Calculate the condensation of network <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e079" xlink:type="simple"/></inline-formula>, i.e. the acyclic network formed by contracting each strongly connected component of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e080" xlink:type="simple"/></inline-formula> into a single vertex.</p>
+</list-item><list-item>
+<p>Obtain the subnetwork <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e081" xlink:type="simple"/></inline-formula> from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e082" xlink:type="simple"/></inline-formula> by deleting any edge such that:                       <list list-type="bullet"><list-item>
+<p>its endpoints belong to two different strongly connected components <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e083" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e084" xlink:type="simple"/></inline-formula>, and</p>
+</list-item><list-item>
+<p>there is a path of length at least 2 between <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e085" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e086" xlink:type="simple"/></inline-formula> in the condensation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e087" xlink:type="simple"/></inline-formula>.</p>
+</list-item></list>                   </p>
+</list-item><list-item>
+<p>For all the remaining edges in network <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e088" xlink:type="simple"/></inline-formula>, increase their corresponding weight by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e089" xlink:type="simple"/></inline-formula>, in order to ensure them a ranking higher than all the unessential edges, i.e. the edges in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e090" xlink:type="simple"/></inline-formula>.</p>
+</list-item></list>
+<fig id="pone-0012912-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.g002</object-id><label>Figure 2</label><caption>
+<title>Down-ranking of unnecessary feed-forward edges.</title>
+<p>The thick rings highlight the strongly connected components of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e091" xlink:type="simple"/></inline-formula>. The dashed edge is <italic>removed</italic> from the network.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.g002" xlink:type="simple"/></fig></sec></sec><sec id="s2b">
+<title><italic>In silico</italic> data simulation</title>
+<p>To be able to thoroughly evaluate and fine-tune the parameters of our algorithm we generated <italic>in silico</italic> data using our simulator developed in MATLAB.</p>
+<p>In our model, the following nonlinear ordinary differential equation describes the evolution of the gene expression <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e092" xlink:type="simple"/></inline-formula>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.e093" xlink:type="simple"/></disp-formula><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e094" xlink:type="simple"/></inline-formula> is the gene activity (gene expression level, mRNA concentration) of gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e095" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e096" xlink:type="simple"/></inline-formula> is its basal transcription rate, while <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e097" xlink:type="simple"/></inline-formula> is its degradation rate constant. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e098" xlink:type="simple"/></inline-formula> is the interaction strength of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e099" xlink:type="simple"/></inline-formula> on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e100" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e101" xlink:type="simple"/></inline-formula> is the Hill cooperativity coefficient, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e102" xlink:type="simple"/></inline-formula> is an element of the matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e103" xlink:type="simple"/></inline-formula> encoding the signed network structure (a positive sign corresponds to an activating regulation, while a negative one to an inhibition). Finally, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e104" xlink:type="simple"/></inline-formula> represents the biological variance (sampled from a normal distribution with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e105" xlink:type="simple"/></inline-formula> and standard deviation <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e106" xlink:type="simple"/></inline-formula>), while <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e107" xlink:type="simple"/></inline-formula> is responsible for eventually knocking-out gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e108" xlink:type="simple"/></inline-formula>. In our simulations, random networks were generated by the Erdős-Rényi (ER) algorithm <xref ref-type="bibr" rid="pone.0012912-Erds1">[29]</xref>, with various average degrees. Edge directions and signs were assigned randomly with uniform probability. Parameters <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e109" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e110" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e111" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e112" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e113" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e114" xlink:type="simple"/></inline-formula> were all set equal to 1. We then calculated the <italic>wild-type</italic> steady state. To simulate the single-gene knockout experiments we initialize <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e115" xlink:type="simple"/></inline-formula> = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e116" xlink:type="simple"/></inline-formula> and set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e117" xlink:type="simple"/></inline-formula> in the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e118" xlink:type="simple"/></inline-formula>-th perturbed experiment in order to simulate the knockout of gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e119" xlink:type="simple"/></inline-formula>; obviously <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e120" xlink:type="simple"/></inline-formula> since we only simulated single-gene knockout experiments. These simulations resulted in data sets similar to the ones provided in the DREAM 4 challenges.</p>
+</sec><sec id="s2c">
+<title>Evaluation</title>
+<p>Method effectiveness was evaluated through the calculations of the Area Under the Receiver Operating Characteristic Curve (AUC(ROC)) and the Area Under the Precision versus Recall Curve (AUC(PvsR)) <xref ref-type="bibr" rid="pone.0012912-Soranzo1">[20]</xref>, <xref ref-type="bibr" rid="pone.0012912-Prill1">[24]</xref>, in the same way as was done by the DREAM organizers to evaluate the submitted networks.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Practice on the DREAM3 benchmarks</title>
+<p>In order to make informed decisions on the choice of the weight matrices to use and to fine-tune the threshold value for the second step of our algorithm, we practiced first on the DREAM3 benchmarks <xref ref-type="bibr" rid="pone.0012912-Marbach1">[25]</xref>. The DREAM3 <italic>In Silico</italic> Network challenge in 2008 was very similar to the DREAM4 one. Here too GNs of different sizes (10, 50, and 100 genes) had to be inferred using steady states from wild-type, knockdown and knockout perturbations, and time series data. The kinetic equations were also similar, though in DREAM3 a deterministic model was used while in DREAM4 a stochastic one.</p>
+<p>In order to choose which, amongst the confidence matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e121" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e122" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e123" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e124" xlink:type="simple"/></inline-formula>, gives the most reliable initial network prediction, tests were performed on the DREAM3 benchmarks.</p>
+<p>We initially considered both the knockout and knockdown data, but since our algorithm consistently gave better results on the knockouts (data not shown), we will here further consider only the knockout steady states.</p>
+<p>By applying the aforementioned inferring techniques on these data, the matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e125" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e126" xlink:type="simple"/></inline-formula> yielded the best results for the 50- and 100-gene networks, respectively for the AUC(PvsR) and for the AUC(ROC). On the other hand, a simple ordering of the edges based on the deviation from the wild type (i.e. matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e127" xlink:type="simple"/></inline-formula>) gave the best results for the small 10-gene networks for both the evaluation measures AUC(ROC) and AUC(PvsR). The results are shown in <xref ref-type="table" rid="pone-0012912-t002">Table 2</xref>.</p>
+<table-wrap id="pone-0012912-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t002</object-id><label>Table 2</label><caption>
+<title>Performances of the four considered confidence matrices on the DREAM3 networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">N. genes</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e128" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e129" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e130" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e131" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(ROC)</td>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8194</bold></td>
+<td align="left" colspan="1" rowspan="1">0.7741</td>
+<td align="left" colspan="1" rowspan="1">0.7837</td>
+<td align="left" colspan="1" rowspan="1">0.7901</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">50</td>
+<td align="left" colspan="1" rowspan="1">0.8444</td>
+<td align="left" colspan="1" rowspan="1">0.8389</td>
+<td align="left" colspan="1" rowspan="1">0.8769</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8875</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">0.8515</td>
+<td align="left" colspan="1" rowspan="1">0.8454</td>
+<td align="left" colspan="1" rowspan="1">0.8736</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8799</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(PvsR)</td>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.7028</bold></td>
+<td align="left" colspan="1" rowspan="1">0.5619</td>
+<td align="left" colspan="1" rowspan="1">0.5991</td>
+<td align="left" colspan="1" rowspan="1">0.6732</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">50</td>
+<td align="left" colspan="1" rowspan="1">0.5396</td>
+<td align="left" colspan="1" rowspan="1">0.4579</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.6224</bold></td>
+<td align="left" colspan="1" rowspan="1">0.6160</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">0.5637</td>
+<td align="left" colspan="1" rowspan="1">0.4616</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.6200</bold></td>
+<td align="left" colspan="1" rowspan="1">0.6143</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label/><p>Average AUC(ROC) and AUC(PvsR) for the five networks of three different sizes from the DREAM3 <italic>In Silico</italic> benchmarks, calculated through the confidence matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e132" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e133" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e134" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e135" xlink:type="simple"/></inline-formula>. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap>
+<p>Then, given the confidence matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e136" xlink:type="simple"/></inline-formula>, the down-ranking algorithm produces the modified matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e137" xlink:type="simple"/></inline-formula> as described in the <xref ref-type="sec" rid="s2">Methods</xref> section. The result of this down-ranking step depends on the chosen value for the threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e138" xlink:type="simple"/></inline-formula>. Therefore, we performed test runs at different values of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e139" xlink:type="simple"/></inline-formula> to establish the value for which the best AUCs were obtained (<xref ref-type="table" rid="pone-0012912-t003">Table 3</xref>). We here report only the results on the larger networks as the down-ranking step had almost no effect on the reliability of the small networks. This indicates that our down-ranking approach is beneficial only for larger networks.</p>
+<table-wrap id="pone-0012912-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t003</object-id><label>Table 3</label><caption>
+<title>Effect of the down-ranking algorithm on larger DREAM3 networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e140" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e141" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e142" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e143" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e144" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e145" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e146" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e147" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e148" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e149" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(ROC)</td>
+<td align="left" colspan="1" rowspan="1">50</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e150" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8769</td>
+<td align="left" colspan="1" rowspan="1">0.8769</td>
+<td align="left" colspan="1" rowspan="1">0.8766</td>
+<td align="left" colspan="1" rowspan="1">0.8767</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e151" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8773</td>
+<td align="left" colspan="1" rowspan="1">0.8772</td>
+<td align="left" colspan="1" rowspan="1">0.8770</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e152" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8875</td>
+<td align="left" colspan="1" rowspan="1">0.8853</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e153" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8884</td>
+<td align="left" colspan="1" rowspan="1">0.8881</td>
+<td align="left" colspan="1" rowspan="1">0.8878</td>
+<td align="left" colspan="1" rowspan="1">0.8877</td>
+<td align="left" colspan="1" rowspan="1">0.8875</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e154" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8736</td>
+<td align="left" colspan="1" rowspan="1">0.8736</td>
+<td align="left" colspan="1" rowspan="1">0.8735</td>
+<td align="left" colspan="1" rowspan="1">0.8733</td>
+<td align="left" colspan="1" rowspan="1">0.8735</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e155" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8738</td>
+<td align="left" colspan="1" rowspan="1">0.8737</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e156" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8799</td>
+<td align="left" colspan="1" rowspan="1">0.8799</td>
+<td align="left" colspan="1" rowspan="1">0.8793</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e157" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.8804</td>
+<td align="left" colspan="1" rowspan="1">0.8802</td>
+<td align="left" colspan="1" rowspan="1">0.8801</td>
+<td align="left" colspan="1" rowspan="1">0.8800</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(PvsR)</td>
+<td align="left" colspan="1" rowspan="1">50</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e158" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6224</td>
+<td align="left" colspan="1" rowspan="1">0.6224</td>
+<td align="left" colspan="1" rowspan="1">0.6176</td>
+<td align="left" colspan="1" rowspan="1">0.6175</td>
+<td align="left" colspan="1" rowspan="1">0.6411</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e159" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6377</td>
+<td align="left" colspan="1" rowspan="1">0.6303</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e160" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6160</td>
+<td align="left" colspan="1" rowspan="1">0.5835</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e161" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6666</td>
+<td align="left" colspan="1" rowspan="1">0.6555</td>
+<td align="left" colspan="1" rowspan="1">0.6461</td>
+<td align="left" colspan="1" rowspan="1">63.5244</td>
+<td align="left" colspan="1" rowspan="1">0.6259</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e162" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6200</td>
+<td align="left" colspan="1" rowspan="1">0.6200</td>
+<td align="left" colspan="1" rowspan="1">0.6181</td>
+<td align="left" colspan="1" rowspan="1">61.1130</td>
+<td align="left" colspan="1" rowspan="1">0.6222</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e163" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6456</td>
+<td align="left" colspan="1" rowspan="1">0.6387</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e164" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6143</td>
+<td align="left" colspan="1" rowspan="1">0.6143</td>
+<td align="left" colspan="1" rowspan="1">0.6039</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e165" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.6603</td>
+<td align="left" colspan="1" rowspan="1">0.6502</td>
+<td align="left" colspan="1" rowspan="1">0.6410</td>
+<td align="left" colspan="1" rowspan="1">0.6326</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label/><p>Average AUCs for the 50- and 100-gene networks from the DREAM3 <italic>In Silico</italic> challenge after the application of the down-ranking algorithm on matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e166" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e167" xlink:type="simple"/></inline-formula> with 8 different thresholds <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e168" xlink:type="simple"/></inline-formula>. Setting <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e169" xlink:type="simple"/></inline-formula> corresponds to not applying the down-ranking. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap>
+<p>Negligible differences in the AUC(ROC), but more substantial improvements in the AUC(PvsR) measures were obtained for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e170" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e171" xlink:type="simple"/></inline-formula>, with the latter slightly exceeding the former performances. In particular, the AUCs peak for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e172" xlink:type="simple"/></inline-formula> while down-ranking <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e173" xlink:type="simple"/></inline-formula>, and for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e174" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e175" xlink:type="simple"/></inline-formula> (100-gene networks). These tests suggested that using either matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e176" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e177" xlink:type="simple"/></inline-formula> in combination with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e178" xlink:type="simple"/></inline-formula> are the best choice.</p>
+</sec><sec id="s3b">
+<title>Practice on additional <italic>in silico</italic> data</title>
+<p>While the DREAM3 benchmarks were of great value, there were some notable differences between the DREAM3 and DREAM4 networks and data. All the networks in DREAM3 were acyclic, while the networks considered in DREAM4 do contain cycles. Furthermore, the variance in the DREAM3 knockout data drastically differed from those in the DREAM4 knockout data. In the previous edition the mean deviation in each gene was uniform, while in the DREAM4 data it seemed proportional to the gene activity wild-type level (<xref ref-type="fig" rid="pone-0012912-g003">Figure 3</xref>). The same pattern can be observed in our self generated <italic>in silico</italic> data (<xref ref-type="fig" rid="pone-0012912-g003">Figure 3</xref>).</p>
+<fig id="pone-0012912-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.g003</object-id><label>Figure 3</label><caption>
+<title>Distribution of the mean absolute deviation for three knockout datasets.</title>
+<p>Each point is the mean absolute deviation of the expression of a gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e179" xlink:type="simple"/></inline-formula> with respect to its wild type <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e180" xlink:type="simple"/></inline-formula>, calculated as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e181" xlink:type="simple"/></inline-formula>, obviously excluding the knockout of gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e182" xlink:type="simple"/></inline-formula> from the averaged values. Our <italic>in silico</italic> knockout data (right) qualitatively resembles the distribution of the five DREAM4 <italic>InSilico_Size100</italic> knockout datasets (middle), in contrast to those from the five DREAM3 <italic>InSilicoSize100</italic> knockout datasets (left).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.g003" xlink:type="simple"/></fig>
+<p>So, we decided to verify the previous choices for the confidence matrix and the threshold value on a much larger number of datasets than the DREAM3 benchmark (thus preventing overtraining), and on data which should be more similar to the DREAM4 ones.</p>
+<p>By using our simulator, we generated 1000 100-gene networks with ER topology and average degree <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e183" xlink:type="simple"/></inline-formula> (DREAM3 100-gene networks had <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e184" xlink:type="simple"/></inline-formula> ranging from 1.2 to 5.5), and corresponding knockout datasets. The AUCs for the various confidence matrices are shown in <xref ref-type="table" rid="pone-0012912-t004">Table 4</xref>, emphasizing that the z-score applied on the raw data (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e185" xlink:type="simple"/></inline-formula>) clearly appears to be the most effective method to obtain a first prediction of the network from knockout data. This choice is also supported by the test on the DREAM3 benchmarks.</p>
+<table-wrap id="pone-0012912-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t004</object-id><label>Table 4</label><caption>
+<title>Performance of the four confidence matrices on additional <italic>in silico</italic> data.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e186" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e187" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e188" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e189" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e190" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(ROC)</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.8763</td>
+<td align="left" colspan="1" rowspan="1">0.8829</td>
+<td align="left" colspan="1" rowspan="1">0.9276</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.9328</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0.8223</td>
+<td align="left" colspan="1" rowspan="1">0.8449</td>
+<td align="left" colspan="1" rowspan="1">0.8910</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8972</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0.7325</td>
+<td align="left" colspan="1" rowspan="1">0.7751</td>
+<td align="left" colspan="1" rowspan="1">0.8155</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8209</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(PvsR)</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.3055</td>
+<td align="left" colspan="1" rowspan="1">0.3839</td>
+<td align="left" colspan="1" rowspan="1">0.5909</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.6041</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0.2602</td>
+<td align="left" colspan="1" rowspan="1">0.3809</td>
+<td align="left" colspan="1" rowspan="1">0.5383</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.5519</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0.2119</td>
+<td align="left" colspan="1" rowspan="1">0.3513</td>
+<td align="left" colspan="1" rowspan="1">0.4500</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.4588</bold></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt104"><label/><p>Average AUCs for 1000 100-gene ER networks with average degree <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e191" xlink:type="simple"/></inline-formula> calculated through the confidence matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e192" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e193" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e194" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e195" xlink:type="simple"/></inline-formula>. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap>
+<p>In a similar fashion, we applied the down-ranking algorithm on matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e196" xlink:type="simple"/></inline-formula>, showing that a small improvement on the AUCs (especially with the PvsR one) can be obtained with threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e197" xlink:type="simple"/></inline-formula> (<xref ref-type="table" rid="pone-0012912-t005">Table 5</xref>), again in concordance with what we observed for the DREAM3 benchmarks.</p>
+<table-wrap id="pone-0012912-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t005</object-id><label>Table 5</label><caption>
+<title>Effect of the down-ranking algorithm on additional <italic>in silico</italic> data.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t005" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="justify" colspan="1" rowspan="1"/>
+<td align="justify" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e198" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e199" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e200" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e201" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e202" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e203" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e204" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify" colspan="1" rowspan="1">AUC(ROC)</td>
+<td align="justify" colspan="1" rowspan="1">0.8317</td>
+<td align="justify" colspan="1" rowspan="1">0.8315</td>
+<td align="justify" colspan="1" rowspan="1">0.8317</td>
+<td align="justify" colspan="1" rowspan="1"><bold>0.8317</bold></td>
+<td align="justify" colspan="1" rowspan="1">0.8317</td>
+<td align="justify" colspan="1" rowspan="1">0.8317</td>
+</tr>
+<tr>
+<td align="justify" colspan="1" rowspan="1">AUC(PvsR)</td>
+<td align="justify" colspan="1" rowspan="1">0.5913</td>
+<td align="justify" colspan="1" rowspan="1">0.5793</td>
+<td align="justify" colspan="1" rowspan="1">0.5892</td>
+<td align="justify" colspan="1" rowspan="1"><bold>0.5962</bold></td>
+<td align="justify" colspan="1" rowspan="1">0.5954</td>
+<td align="justify" colspan="1" rowspan="1">0.5948</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt105"><label/><p>Average AUCs for 1000 100-node ER networks, generated with average degree <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e205" xlink:type="simple"/></inline-formula>, after the application of the down-ranking algorithm on matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e206" xlink:type="simple"/></inline-formula> with 6 different thresholds <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e207" xlink:type="simple"/></inline-formula>. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>DREAM4</title>
+<p>After the extensive tests described above, we decided to base our predictions for the DREAM4 <italic>In Silico</italic> Network challenge on the z-score on raw data confidence matrix (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e208" xlink:type="simple"/></inline-formula>), post-processed with the down-ranking algorithm using threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e209" xlink:type="simple"/></inline-formula>. Our submission as Team ALF was the best performer at the sub-challenge 2 (100-gene networks), ranking first among 19 participants. Interestingly, now that the gold standard networks have been published, we discovered that our choice for the confidence matrix was in fact good (see <xref ref-type="table" rid="pone-0012912-t006">Table 6</xref>), but even better predictions would have been obtained by selecting <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e210" xlink:type="simple"/></inline-formula> as the threshold for the down-ranking algorithm. Nevertheless, the improvement in the AUC(PvsR) obtained with the selected <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e211" xlink:type="simple"/></inline-formula> has been considerable for networks 1 and 5, as shown in <xref ref-type="fig" rid="pone-0012912-g004">Figure 4</xref> and in <xref ref-type="table" rid="pone-0012912-t007">Table 7</xref>, compared to those from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e212" xlink:type="simple"/></inline-formula>.</p>
+<fig id="pone-0012912-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.g004</object-id><label>Figure 4</label><caption>
+<title>Effect of the down-ranking algorithm on DREAM4 networks.</title>
+<p>In each of the five plots, the bars show the values of the AUC(PvsR) for one of 100-gene networks from DREAM4 after the application of the down-ranking algorithm on matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e213" xlink:type="simple"/></inline-formula> with 5 different threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e214" xlink:type="simple"/></inline-formula>. In the small boxes the most significant percentage differences with respect to the threshold 0 are shown.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.g004" xlink:type="simple"/></fig><table-wrap id="pone-0012912-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t006</object-id><label>Table 6</label><caption>
+<title>Performances of the four confidence matrices on the DREAM4 networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t006-6" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t006" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e215" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e216" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e217" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e218" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(ROC)</td>
+<td align="left" colspan="1" rowspan="1">0.7844</td>
+<td align="left" colspan="1" rowspan="1">0.7927</td>
+<td align="left" colspan="1" rowspan="1">0.8275</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.8297</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUC(PvsR)</td>
+<td align="left" colspan="1" rowspan="1">0.2610</td>
+<td align="left" colspan="1" rowspan="1">0.2786</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.3710</bold></td>
+<td align="left" colspan="1" rowspan="1">0.3602</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><label/><p>Average AUC(ROC) and AUC(PvsR) for the five 100-gene networks from the DREAM4 <italic>In Silico</italic> benchmarks, calculated through the confidence matrices <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e219" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e220" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e221" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e222" xlink:type="simple"/></inline-formula>. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0012912-t007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012912.t007</object-id><label>Table 7</label><caption>
+<title>Effect of the down-ranking algorithm on DREAM4 100-gene networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012912-t007-7" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012912.t007" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e223" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e224" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e225" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e226" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e227" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e228" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e229" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e230" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e231" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network 1</td>
+<td align="left" colspan="1" rowspan="1">0.4928</td>
+<td align="left" colspan="1" rowspan="1">0.4928</td>
+<td align="left" colspan="1" rowspan="1">0.4847</td>
+<td align="left" colspan="1" rowspan="1">0.5361</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.6590</bold></td>
+<td align="left" colspan="1" rowspan="1">0.6428</td>
+<td align="left" colspan="1" rowspan="1">0.6225</td>
+<td align="left" colspan="1" rowspan="1">0.5715</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network 2</td>
+<td align="left" colspan="1" rowspan="1">0.3880</td>
+<td align="left" colspan="1" rowspan="1">0.3880</td>
+<td align="left" colspan="1" rowspan="1">0.3880</td>
+<td align="left" colspan="1" rowspan="1">0.3771</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.4144</bold></td>
+<td align="left" colspan="1" rowspan="1">0.4125</td>
+<td align="left" colspan="1" rowspan="1">0.4052</td>
+<td align="left" colspan="1" rowspan="1">0.3886</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network 3</td>
+<td align="left" colspan="1" rowspan="1">0.3816</td>
+<td align="left" colspan="1" rowspan="1">0.3816</td>
+<td align="left" colspan="1" rowspan="1">0.3834</td>
+<td align="left" colspan="1" rowspan="1">0.3898</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.4115</bold></td>
+<td align="left" colspan="1" rowspan="1">0.4048</td>
+<td align="left" colspan="1" rowspan="1">0.3939</td>
+<td align="left" colspan="1" rowspan="1">0.3895</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network 4</td>
+<td align="left" colspan="1" rowspan="1">0.3684</td>
+<td align="left" colspan="1" rowspan="1">0.3684</td>
+<td align="left" colspan="1" rowspan="1">0.3684</td>
+<td align="left" colspan="1" rowspan="1">0.3494</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.4433</bold></td>
+<td align="left" colspan="1" rowspan="1">0.4338</td>
+<td align="left" colspan="1" rowspan="1">0.4144</td>
+<td align="left" colspan="1" rowspan="1">0.3841</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network 5</td>
+<td align="left" colspan="1" rowspan="1">0.1703</td>
+<td align="left" colspan="1" rowspan="1">0.1703</td>
+<td align="left" colspan="1" rowspan="1">0.1697</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.2133</bold></td>
+<td align="left" colspan="1" rowspan="1">0.2008</td>
+<td align="left" colspan="1" rowspan="1">0.1902</td>
+<td align="left" colspan="1" rowspan="1">0.1782</td>
+<td align="left" colspan="1" rowspan="1">0.1845</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt107"><label/><p>Average AUC(PvsR) values for the 100-gene networks from DREAM4 <italic>In Silico</italic> challenge after the application of the down-ranking algorithm on matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e232" xlink:type="simple"/></inline-formula> with 8 different thresholds <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e233" xlink:type="simple"/></inline-formula>. The best value of each row is bolded.</p></fn></table-wrap-foot></table-wrap>
+<p>It should also be noticed that the the average node degrees in the DREAM4 networks are smaller (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e234" xlink:type="simple"/></inline-formula>) than those in DREAM3 and our simulated networks: a better estimation of the optimal threshold might have been obtained if our test networks had an average degree in the same range of the DREAM4 networks. Furthermore, we simulated data with networks generated with the ER algorithm, which have significantly different topology than those used in DREAM4. Also, note that the performances on the DREAM4 benchmarks are much more sensitive to the value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e235" xlink:type="simple"/></inline-formula> then we observed in the tests of our <italic>in silico</italic> data. Obviously this is due to the fact that we used a large ensemble (1000 networks) over which the performances were averaged, but it also indicates that the DREAM4 benchmarks consist of a set of networks with widely varying topologies.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>We described an algorithm to infer gene regulatory networks from expression data, that proved to be effective by best performing at the DREAM4 <italic>In Silico</italic> Network challenge in the 100-gene networks sub-challenge. The proposed technique combines the advantages of the standard score in highlighting the deviation from the mean after a gene knockout, with the down-ranking algorithm that reduces the confidence initially predicted to unnecessary feed-forward edges.</p>
+<p>Our algorithm is substantially different from the techniques used by the best performer teams of previous DREAM <italic>In Silico</italic> Network challenges. In particular, for DREAM2 the winning approach was fitting ordinary differential equation (ODE) models <xref ref-type="bibr" rid="pone.0012912-Scheinine1">[27]</xref>, <xref ref-type="bibr" rid="pone.0012912-Gustafsson1">[30]</xref>; for DREAM3, instead, the best method was based mainly on finding significant deviations from wild type in knockout data (so using the same primary source of information of our algorithm), but also applied ODE models on the time series for additional predictions <xref ref-type="bibr" rid="pone.0012912-Yip1">[31]</xref>.</p>
+<p>To see how methods based on ODEs would perform on the DREAM4 data, we analyzed them with one of the best performer algorithm <xref ref-type="bibr" rid="pone.0012912-Scheinine1">[27]</xref> for the DREAM2 <italic>In Silico</italic> Network challenges. The predictions of this algorithm on the DREAM4 100-gene networks was very poor (average AUC(ROC) = 0.5722, AUC(PvsR) = 0.0313). Note that in DREAM2 there was no noise added to the <italic>in silico</italic> data, while for DREAM4 both biological and experimental noise were present. Since the internal noise is propagated through gene relationships, its effect on large networks make sophisticated models (like ODEs) much less reliable than our method based on simple cause-effect logic and graph inspection.</p>
+<p>Further increases of the performance of our algorithm may be obtained by studying the possible relationships between the selected threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e236" xlink:type="simple"/></inline-formula> and other parameters, like the network average degree and size, the noise on the knockout data, and so on. Moreover, while the second step of our algorithm improves the inference of the so-called cascade motif <xref ref-type="bibr" rid="pone.0012912-Marbach2">[32]</xref>, it should be possible to reduce also the systematic errors in the prediction of other network motifs (e.g. the fan-in and fan-out errors <xref ref-type="bibr" rid="pone.0012912-Marbach2">[32]</xref>). Finally, also the rest of the available data from the DREAM challenges (knockdowns, time series, multifactorial) may be used to refine the network prediction, but the gain would probably be small, as already shown by the DREAM3 best performer <xref ref-type="bibr" rid="pone.0012912-Yip1">[31]</xref>.</p>
+<p>It has become unambiguously clear that systematic perturbations (e.g. experimental gene knockouts) are needed to establish the directed structure of GNs. However, systematic single-gene knockouts imply experimental requirements which are unrealistic and these experiments infeasible (and unethical) for many organisms. It is unlikely that data such as considered here will become available from real experiments. Fortunately, “systems genetics” experiments may provide an alternative. In systems genetics experiments a population under study is genotyped and gene expression profiled are simultaneously collected (possibly even including metabolomics and proteomics data <xref ref-type="bibr" rid="pone.0012912-Fu1">[33]</xref>). It has been demonstrated that causal links in GNs can be elucidated based on these data (see <xref ref-type="bibr" rid="pone.0012912-Liu1">[34]</xref>, <xref ref-type="bibr" rid="pone.0012912-Rockman1">[35]</xref> for reviews). Genetic polymorphisms, naturally present in the populations, act as genetic perturbations: if the gene activity of a gene B is affected by a polymorphism inside another gene A, this is highly indicative for a causal effect A<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012912.e237" xlink:type="simple"/></inline-formula>B. In fact Liu <italic>et al.</italic> <xref ref-type="bibr" rid="pone.0012912-Liu1">[34]</xref> proposed a very similar strategy as the one outlined in this paper: first creating a causal influence network (but based on systems genetics data instead of knockout data like is done here) and subsequent sparsification of this network to retain only the edges corresponding to direct causal influences. In that approach each edge in the initial network was statistically tested for being supported by the data, while we were here not able to do so based on the data considered here. Down-ranking edges based on our simple graphical inspection is very useful in the context of systems genetics data as it will provide the sparsest network supporting the causal influences. This then allows methods like the one of Liu <italic>et al.</italic> approach to statistically identify the networks best supported by the data by adding edges, rather than removing edges from the causal influence network. Heuristic model search algorithms are strongly dependent on a good initial guess in the network space: we argue that networks which result from the algorithm described in this paper will provide a better initial guess than the initial causal influence network, as GNs are known to be sparse. In this sense, the resulting networks from our approach here should not be seen as the final prediction, but rather as inputs to more sophisticated methods involving thorough statistical testing. Nevertheless, as evidenced by its winning performance over 18 other participating teams in the DREAM4, this method can be considered state-of-the-art on its own.</p>
+</sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pone.0012912-Schadt1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Molecular networks as sensors and drivers of common human diseases.</article-title>             <source>Nature</source>             <volume>461</volume>             <fpage>218</fpage>             <lpage>223</lpage>          </element-citation></ref>
+<ref id="pone.0012912-diBernardo1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Thompson</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>
+<name name-style="western"><surname>Chobot</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>Eastwood</surname><given-names>EL</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Chemogenomic profiling on a genome-wide scale using reverse-engineered gene networks.</article-title>             <source>Nat Biotechnol</source>             <volume>23</volume>             <fpage>377</fpage>             <lpage>383</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Wang1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Snyder</surname><given-names>M</given-names></name>
+</person-group>             <year>2009</year>             <article-title>RNA-Seq: a revolutionary tool for transcriptomics.</article-title>             <source>Nat Rev Genet</source>             <volume>10</volume>             <fpage>57</fpage>             <lpage>63</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Brazhnik1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brazhnik</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Mendes</surname><given-names>P</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Gene networks: how to put the function in genomics.</article-title>             <source>Trends Biotechnol</source>             <volume>20</volume>             <fpage>467</fpage>             <lpage>472</lpage>          </element-citation></ref>
+<ref id="pone.0012912-delaFuente1"><label>5</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>
+</person-group>             <year>2010</year>             <article-title>What are gene regulatory networks?</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Das</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Caragea</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Welch</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Hsu</surname><given-names>W</given-names></name>
+</person-group>             <source>Handbook of Research on Computational Methodologies in Gene Regulatory Networks</source>             <publisher-loc>Hershey, PA, USA</publisher-loc>             <publisher-name>IGI Global</publisher-name>             <fpage>1</fpage>             <lpage>27</lpage>             <comment>chapter 1</comment>          </element-citation></ref>
+<ref id="pone.0012912-Butte1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Kohane</surname><given-names>IS</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Mutual information relevance networks: functional genomic clustering using pairwise entropy measurements.</article-title>             <source>Pac Symp Biocomput</source>             <volume>5</volume>             <fpage>418</fpage>             <lpage>429</lpage>          </element-citation></ref>
+<ref id="pone.0012912-delaFuente2"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bing</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Hoeschele</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Mendes</surname><given-names>P</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Discovery of meaningful associations in genomic data using partial correlation coefficients.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>3565</fpage>             <lpage>3574</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Rice1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rice</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Tu</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Reconstructing biological networks using conditional correlation analysis.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>765</fpage>             <lpage>773</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Schfer1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schäfer</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Strimmer</surname><given-names>K</given-names></name>
+</person-group>             <year>2005</year>             <article-title>An empirical Bayes approach to inferring large-scale gene association networks.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>754</fpage>             <lpage>764</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Margolin1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Basso</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Wiggins</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>ARACNE: An algorithm for the reconstruction of gene regulatory networks in a mammalian cellular context.</article-title>             <source>BMC Bioinformatics</source>             <volume>7</volume>             <fpage>S7</fpage>          </element-citation></ref>
+<ref id="pone.0012912-OpgenRhein1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Opgen-Rhein</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Strimmer</surname><given-names>K</given-names></name>
+</person-group>             <year>2007</year>             <article-title>From correlation to causation networks: a simple approximate learning algorithm and its application to high-dimensional plant gene expression data.</article-title>             <source>BMC Syst Biol</source>             <volume>1</volume>             <fpage>37</fpage>          </element-citation></ref>
+<ref id="pone.0012912-Spirtes1"><label>12</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Spirtes</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Glymour</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Scheines</surname><given-names>R</given-names></name>
+</person-group>             <year>2000</year>             <source>Causation, Prediction, and Search, 2nd edition</source>             <publisher-loc>Cambridge, MA, USA</publisher-loc>             <publisher-name>MIT Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0012912-Dhaeseleer1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>D'haeseleer</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Fuhrman</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Somogyi</surname><given-names>R</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Linear modeling of mRNA expression levels during CNS development and injury.</article-title>             <source>Pac Symp Biocomput</source>             <volume>4</volume>             <fpage>41</fpage>             <lpage>52</lpage>          </element-citation></ref>
+<ref id="pone.0012912-delaFuente3"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Brazhnik</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Mendes</surname><given-names>P</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Linking the genes: inferring quantitative gene networks from microarray data.</article-title>             <source>Trends Genet</source>             <volume>18</volume>             <fpage>395</fpage>             <lpage>398</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Gardner1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>
+<name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Lorenz</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Inferring genetic networks and identifying compound mode of action via expression profiling.</article-title>             <source>Science</source>             <volume>301</volume>             <fpage>102</fpage>             <lpage>105</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Friedman1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Inferring cellular networks using probabilistic graphical models.</article-title>             <source>Science</source>             <volume>303</volume>             <fpage>799</fpage>             <lpage>805</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Stolovitzky1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Monroe</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Califano</surname><given-names>A</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Dialogue on reverse-engineering assessment and methods.</article-title>             <source>Ann N Y Acad Sci</source>             <volume>1115</volume>             <fpage>1</fpage>             <lpage>22</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Stolovitzky2"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Kahlem</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Califano</surname><given-names>A</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Preface.</article-title>             <source>Ann N Y Acad Sci</source>             <volume>1158</volume>             <fpage>ix</fpage>             <lpage>xii</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Bansal1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bansal</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Belcastro</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Ambesi-Impiombato</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>
+</person-group>             <year>2007</year>             <article-title>How to infer gene networks from expression profiles.</article-title>             <source>Mol Syst Biol</source>             <volume>3</volume>          </element-citation></ref>
+<ref id="pone.0012912-Soranzo1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Soranzo</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Bianconi</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Altafini</surname><given-names>C</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Comparing association network algorithms for reverse engineering of large-scale gene regulatory networks: synthetic versus real data.</article-title>             <source>Bioinformatics</source>             <volume>23</volume>             <fpage>1640</fpage>             <lpage>1647</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Faith1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Large-scale mapping and validation of <italic>Escherichia coli</italic> transcriptional regulation from a compendium of expression profiles.</article-title>             <source>PLoS Biol</source>             <volume>5</volume>             <fpage>e8</fpage>          </element-citation></ref>
+<ref id="pone.0012912-Stumpf1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stumpf</surname><given-names>MPH</given-names></name>
+<name name-style="western"><surname>Thorne</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>de Silva</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Stewart</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>An</surname><given-names>HJ</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Estimating the size of the human interactome.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>105</volume>             <fpage>6959</fpage>             <lpage>6964</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Mendes1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mendes</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Sha</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Ye</surname><given-names>K</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Artificial gene networks for objective comparison of analysis algorithms.</article-title>             <source>Bioinformatics</source>             <volume>19</volume>             <fpage>ii122</fpage>             <lpage>ii129</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Prill1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Saez-Rodriguez</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Sorger</surname><given-names>PK</given-names></name>
+<name name-style="western"><surname>Alexopoulos</surname><given-names>LG</given-names></name>
+<etal/></person-group>             <year>2010</year>             <article-title>Towards a rigorous assessment of systems biology models: The DREAM3 challenges.</article-title>             <source>PLoS ONE</source>             <volume>5</volume>             <fpage>e9202</fpage>          </element-citation></ref>
+<ref id="pone.0012912-Marbach1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Schaffter</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Mattiussi</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Generating realistic <italic>in silico</italic> gene networks for performance assessment of reverse engineering methods.</article-title>             <source>J Comput Biol</source>             <volume>16</volume>             <fpage>229</fpage>             <lpage>239</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Wagner1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wagner</surname><given-names>A</given-names></name>
+</person-group>             <year>2001</year>             <article-title>How to reconstruct a large genetic network from <italic>n</italic> gene perturbations in fewer than <italic>n</italic><sup>2</sup> easy steps.</article-title>             <source>Bioinformatics</source>             <volume>17</volume>             <fpage>1183</fpage>             <lpage>1197</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Scheinine1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Scheinine</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Mentzen</surname><given-names>WI</given-names></name>
+<name name-style="western"><surname>Fotia</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Pieroni</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Maggio</surname><given-names>F</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Inferring Gene Networks: Dream or Nightmare?</article-title>             <source>Ann N Y Acad Sci</source>             <volume>1158</volume>             <fpage>287</fpage>             <lpage>301</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Milo1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Milo</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Kashtan</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Levitt</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Shen-Orr</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Superfamilies of evolved and designed networks.</article-title>             <source>Science</source>             <volume>303</volume>             <fpage>1538</fpage>             <lpage>1542</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Erds1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Erdös</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Rényi</surname><given-names>A</given-names></name>
+</person-group>             <year>1959</year>             <article-title>On random graphs.</article-title>             <source>Publ Math Debrecen</source>             <volume>6</volume>             <fpage>290</fpage>             <lpage>297</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Gustafsson1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gustafsson</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Hörnquist</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lundström</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Björkegren</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Tegnér</surname><given-names>J</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Reverse engineering of gene networks with LASSO and nonlinear basis functions.</article-title>             <source>Ann N Y Acad Sci</source>             <volume>1158</volume>             <fpage>265</fpage>             <lpage>275</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Yip1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yip</surname><given-names>KY</given-names></name>
+<name name-style="western"><surname>Alexander</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Yan</surname><given-names>KK</given-names></name>
+<name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>
+</person-group>             <year>2010</year>             <article-title>Improved reconstruction of <italic>in silico</italic> gene regulatory networks by integrating knockout and perturbation data.</article-title>             <source>PLoS ONE</source>             <volume>5</volume>             <fpage>e8121</fpage>          </element-citation></ref>
+<ref id="pone.0012912-Marbach2"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Schaffter</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Mattiussi</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2010</year>             <article-title>Revealing strengths and weaknesses of methods for gene network inference.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>107</volume>             <fpage>6286</fpage>             <lpage>6291</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Fu1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Keurentjes</surname><given-names>JJB</given-names></name>
+<name name-style="western"><surname>Bouwmeester</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>America</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Verstappen</surname><given-names>FWA</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>System-wide molecular evidence for phenotypic buffering in <italic>Arabidopsis</italic>.</article-title>             <source>Nat Genet</source>             <volume>41</volume>             <fpage>166</fpage>             <lpage>167</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Liu1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Hoeschele</surname><given-names>I</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Gene network inference via structural equation modeling in genetical genomics experiments.</article-title>             <source>Genetics</source>             <volume>178</volume>             <fpage>1763</fpage>             <lpage>1776</lpage>          </element-citation></ref>
+<ref id="pone.0012912-Rockman1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rockman</surname><given-names>MV</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Reverse engineering the genotype-phenotype map with natural genetic variation.</article-title>             <source>Nature</source>             <volume>456</volume>             <fpage>738</fpage>             <lpage>744</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

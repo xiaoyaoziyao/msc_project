@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PONE-RA-04538R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0004495</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Genetics and Genomics</subject><subject>Computational Biology/Genomics</subject><subject>Genetics and Genomics/Bioinformatics</subject><subject>Genetics and Genomics/Functional Genomics</subject><subject>Genetics and Genomics/Gene Expression</subject><subject>Genetics and Genomics/Genomics</subject></subj-group></article-categories><title-group><article-title>Query Large Scale Microarray Compendium Datasets Using a Model-Based Bayesian Approach with Variable Selection</article-title><alt-title alt-title-type="running-head">Querying Microarray Datasets</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Hu</surname><given-names>Ming</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Qin</surname><given-names>Zhaohui S.</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Center for Statistical Genetics, Department of Biostatistics, School of Public Health, University of Michigan, Ann Arbor, Michigan, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Hall</surname><given-names>Neil</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Liverpool, United Kingdom</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">qin@umich.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: MH ZQ. Performed the experiments: MH. Analyzed the data: MH. Contributed reagents/materials/analysis tools: MH. Wrote the paper: MH ZQ.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2009</year></pub-date><pub-date pub-type="epub"><day>13</day><month>2</month><year>2009</year></pub-date><volume>4</volume><issue>2</issue><elocation-id>e4495</elocation-id><history>
+<date date-type="received"><day>1</day><month>5</month><year>2008</year></date>
+<date date-type="accepted"><day>6</day><month>12</month><year>2008</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Hu et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>In microarray gene expression data analysis, it is often of interest to identify genes that share similar expression profiles with a particular gene such as a key regulatory protein. Multiple studies have been conducted using various correlation measures to identify co-expressed genes. While working well for small datasets, the heterogeneity introduced from increased sample size inevitably reduces the sensitivity and specificity of these approaches. This is because most co-expression relationships do not extend to all experimental conditions. With the rapid increase in the size of microarray datasets, identifying functionally related genes from large and diverse microarray gene expression datasets is a key challenge. We develop a model-based gene expression query algorithm built under the Bayesian model selection framework. It is capable of detecting co-expression profiles under a <italic>subset</italic> of samples/experimental conditions. In addition, it allows linearly transformed expression patterns to be recognized and is robust against sporadic outliers in the data. Both features are critically important for increasing the power of identifying co-expressed genes in large scale gene expression datasets. Our simulation studies suggest that this method outperforms existing correlation coefficients or mutual information-based query tools. When we apply this new method to the <italic>Escherichia coli</italic> microarray compendium data, it identifies a majority of known regulons as well as novel potential target genes of numerous key transcription factors.</p>
+</abstract><funding-group><funding-statement>This work is partially supported by a University of Michigan CCMB pilot grant, a spring/summer research grant from the University of Michigan Rackham Graduate School and the Richard G. Cornell Fellowship from the Department of Biostatistics at the University of Michigan. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Genome-wide expression analysis with DNA microarray technology <xref ref-type="bibr" rid="pone.0004495-Schena1">[1]</xref>, <xref ref-type="bibr" rid="pone.0004495-Lockhart1">[2]</xref>. has become an indispensable tool in genomics research <xref ref-type="bibr" rid="pone.0004495-Brown1">[3]</xref>. Increased accessibility, lowered cost and improved technology result in more comprehensive studies, under more diverse conditions and a rapid expansion of available gene expression data. This presents an important resource for mining biological information. A particular example is the so-called microarray compendium in which gene expression profiles were surveyed in hundreds of samples which were treated under diverse biological conditions <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>–<xref ref-type="bibr" rid="pone.0004495-Kim1">[6]</xref>. Data generated from such studies is highly informative. However, due to heterogeneity, finding biological insight from such datasets proves a major challenge. Scalable and effective mining tools capable of extracting knowledge from diverse and noisy information sources are critically needed <xref ref-type="bibr" rid="pone.0004495-Hibbs1">[7]</xref>.</p>
+<p>An effective data mining tool for gene expression microarray data is to infer relatedness among genes based on their expression profile, a tactic referred to as the “guilt by association” (GBA) principle <xref ref-type="bibr" rid="pone.0004495-Eisen1">[8]</xref>–<xref ref-type="bibr" rid="pone.0004495-Wolfe1">[12]</xref>. The underlying hypothesis is that functionally related genes, such as transcription factor (TF) and its regulated genes—regulon —tend to display correlated gene expression patterns. For example, Mootha et al. <xref ref-type="bibr" rid="pone.0004495-Mootha1">[13]</xref> proposed the “neighborhood analysis algorithm” to identify “neighboring” genes that share correlated expression profiles with genes of interest. Various measurements such as Pearson correlation, Spearman's rank correlation, Kendall's <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e001" xlink:type="simple"/></inline-formula> and mutual information <xref ref-type="bibr" rid="pone.0004495-Butte1">[14]</xref> have been used to assess the strength of the correlation. Recently, much interest has been generated on genome-wide regulatory network inference <xref ref-type="bibr" rid="pone.0004495-Margolin1">[15]</xref>, where pairwise regulatory relationships among genes need to be predicted. As an example, Faith et al. <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref> developed the context likelihood of relatedness (CLR) algorithm to identify regulatory interactions.</p>
+<p>Although successful in analyzing small datasets, the above mentioned correlation or distance measures will be less helpful for searching large datasets, such as microarray compendium data. This is because for most functionally related genes, tight correlation only occurs under specific experimental conditions. Therefore global correlation measures taken across diverse experimental conditions will be significantly reduced, and thus undermine its ability to recognize functional related genes. Given the microarray compendium scenario, we hypothesized that statistically significant correlation can still be detected using microarray, but strong correlation will be confined to a subset of samples/experimental conditions. Under this hypothesis, it is highly desirable to develop a query tool that can automatically recognize a subset of conditions under which the query gene and its targets share tightly correlated expression profiles.</p>
+<p>In this manuscript, we design a model-based query algorithm capable of detecting significantly correlated expression patterns that are restricted to a subset of experimental conditions. See <xref ref-type="fig" rid="pone-0004495-g001">Figure 1</xref> for an illustration of our scheme. This approach not only predicts functionally related genes, it also allows one to discover under which experimental conditions such co-expression occurs. The proposed query tool will provide researchers with a much needed device to explore the rich resources of vast microarray databases available. This model is inspired by the Bayesian Partition with Pattern Selection (BPPS) model designed to identify functionally related proteins <xref ref-type="bibr" rid="pone.0004495-Neuwald1">[16]</xref>. Our proposed method is related to bi-clustering <xref ref-type="bibr" rid="pone.0004495-Tanay1">[17]</xref>–<xref ref-type="bibr" rid="pone.0004495-Madeira1">[21]</xref> since we consider both genes and samples/experimental conditions. However, bi-clustering is unsupervised, which is different from the supervised pattern matching procedure we propose. Qian et al. <xref ref-type="bibr" rid="pone.0004495-Qian1">[22]</xref> introduced a pairwise query algorithm for gene expression data based on a Smith-Waterman type local alignment algorithm <xref ref-type="bibr" rid="pone.0004495-Smith1">[23]</xref>. However, that algorithm is designed for querying time-course gene expression data only, and is generally not applicable to datasets where the experimental conditions are unrelated. Dhollander et al. <xref ref-type="bibr" rid="pone.0004495-Dhollander1">[24]</xref> introduced a model-based query-driven module discovery tool—QDB, but it is aimed at performing informed bi-clustering instead of pattern matching, and it does not take into account the complex correlation patterns such as inverse patterns. Owen et al. <xref ref-type="bibr" rid="pone.0004495-Owen1">[25]</xref> proposed a score-based search algorithm called gene recommender (GR) to find genes that are co-expressed with a given set of genes using data from large microarray datasets. GR first selects a subset of experiments in which the query genes are most strongly co-regulated. Hence multiple query genes are required.</p>
+<fig id="pone-0004495-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.g001</object-id><label>Figure 1</label><caption>
+<title>Illustration of the model-based gene expression query algorithm.</title>
+<p>Each row represents a gene, and each column represents a sample/experimental condition. The query gene is at the bottom. The Blue boxes indicate the collection of genes and experimental conditions in which co-expression with the query gene is observed.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.g001" xlink:type="simple"/></fig></sec><sec id="s2">
+<title>Methods</title>
+<sec id="s2a">
+<title>1. Statistics model</title>
+<p>We propose a model-based query tool for gene expression data. The goal is to identify genes that share correlated expression profiles with a particular gene such as a key TF.</p>
+<p>The entire microarray compendium can be represented as a matrix, where each row represents a gene and each column represents an experimental condition. We are hoping to identify a subset of rows (genes) and a subset of columns (conditions) such that these genes show co-expression with the query gene under the selected conditions. This procedure is similar to placing binary labels on all rows and columns. Finding the maximum likelihood estimator is often a good solution to such a statistical inference problem. However, the large number of rows and columns make it impossible for us to enumerate all possible combinations. We therefore employ the Markov chain Monte Carlo strategy to guide us for a more efficient search. The statistical model and computational algorithm is as follows (more details can be found in the supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s002">Material S1</xref>).</p>
+<p>Suppose there is a database containing expression levels of <italic>N</italic> genes across <italic>M</italic> different experimental conditions. Each gene is represented by an expression vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e002" xlink:type="simple"/></inline-formula> that can be summarized as a data matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e003" xlink:type="simple"/></inline-formula>. Given a particular query expression profile <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e004" xlink:type="simple"/></inline-formula>, we want to identify all genes that share similar expression patterns across a subset of experimental conditions. To do this, we define a difference vector as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e005" xlink:type="simple"/></inline-formula>, and use <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e006" xlink:type="simple"/></inline-formula> as the input data for our inference. We introduce a row indicator vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e007" xlink:type="simple"/></inline-formula> and a column indicator vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e008" xlink:type="simple"/></inline-formula>, <italic>r<sub>i</sub></italic> = 1 indicates that gene <italic>i</italic> in the database is functionally related to the query gene and 0 otherwise. <italic>e<sub>j</sub></italic> = 1 indicates that co-expression occurs at the <italic>j</italic><sup>th</sup> experimental condition (foreground) and 0 otherwise (background). We assume that the differences between a related gene and the query gene at the foreground columns follow normal distributions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e009" xlink:type="simple"/></inline-formula>. The remainder of <italic>Z</italic> is assumed to follow background normal distributions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e010" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e011" xlink:type="simple"/></inline-formula>. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e012" xlink:type="simple"/></inline-formula> represents the probability density function of normal distribution with mean <italic>μ</italic> and variance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e013" xlink:type="simple"/></inline-formula>. The overall likelihood can be expressed as:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.e014" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e015" xlink:type="simple"/></inline-formula>. We adopt standard conjugate priors for these model parameters <xref ref-type="bibr" rid="pone.0004495-Gelman1">[26]</xref>.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.e016" xlink:type="simple"/></disp-formula></p>
+<p>Specification of these prior distributions can be found in the Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s002">Material S1</xref>.</p>
+<p>Parameters of interest are the two indicator vectors <italic>R</italic> and <italic>E</italic>. <italic>Θ</italic> is regarded as the nuisance parameter and is integrated out to simplify the computation <xref ref-type="bibr" rid="pone.0004495-Chen1">[27]</xref>. We use the Gibbs sampler <xref ref-type="bibr" rid="pone.0004495-Gelfand1">[28]</xref>, <xref ref-type="bibr" rid="pone.0004495-Liu1">[29]</xref> to sample <italic>R</italic> and <italic>E</italic> from the posterior distributions. To be specific, our algorithm will cycle through all rows and columns sequentially, flip the indicator variables of each row or column, and then decide whether to accept the change based on the Bayes factor calculated. The joint distributions can be derived as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.e017" xlink:type="simple"/></disp-formula></p>
+<p>After integrating out nuisance parameters, we get full conditional distributions of <italic>R</italic> and <italic>E</italic>, which are Bernoulli distributions. The details can be found in Formula 1 in the Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s001">Formula S1</xref> document.</p>
+<p>The detailed procedure of our algorithm is as follows.</p>
+<list list-type="order"><list-item>
+<p>Initialization: randomly assign row and column indicators to be either one or zero. Calculate the differences <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e018" xlink:type="simple"/></inline-formula>.</p>
+</list-item><list-item>
+<p>Cycle through all rows and columns sequentially 50 times. At each cycle, draw the indicator for each row and column from the full conditional distributions. The result with the highest log likelihood during the 50 cycles is recorded.</p>
+</list-item><list-item>
+<p>Repeat the cycle ten times, and report the result with the highest log likelihood from all runs.</p>
+</list-item></list>
+<p>In the initialization step, the row and column indicators can be assigned randomly. In practice, one can simply assign 1 to the top half of rows and to the first half of columns and 0 to the rest of rows and columns. If there is additional information suggesting certain genes (rows) are targets (or non-targets) of the TF, it is recommended that the indicator 1 (or 0) be assigned to those genes and the same for the experimental conditions.</p>
+</sec><sec id="s2b">
+<title>2. Add linear factor</title>
+<p>In the previous model, we require that the target genes and the query gene share similar expression levels in selected experimental conditions. This is restrictive since functionally related genes may display the same expression pattern but differ in absolute quantity. To capture this, we extend our model to allow the expression levels of the target gene and the query gene to differ by a constant factor. That is, their expression profiles are proportional to each other: <italic>y<sub>ij</sub></italic> = <italic>a<sub>i</sub> x<sub>j</sub></italic>. Here <italic>a<sub>i</sub></italic> is a linear transformation factor for gene <italic>i</italic>. <italic>a<sub>i</sub></italic> can be either positive or negative indicating positive or negative correlation respectively. After normalization, we estimate the linear transformation factor <italic>a<sub>i</sub></italic> using least square without intercept. To keep our model simple and avoid over-fitting, we restrict the linear factor to be significantly different from 0 and 1. The estimation step is made at the beginning of each cycle based on the most recently updated column indicators.</p>
+</sec><sec id="s2c">
+<title>3. Allow cell-level noise</title>
+<p>In the aforementioned models, genes selected are mandated to have similar expression profiles up to a constant factor under a subset of experimental conditions. Hence the chosen rows and columns in the original data matrix form a solid block when combined. This may still be too restrictive because a few sporadic cells in the block may deviate from the corresponding values in the query profile. Possible reasons that may cause such discrepancy are experimental artifacts, measurement errors, or substructures in the co-expression pattern. To account for this, we introduce an additional binary indicator variable, <italic>c<sub>ij</sub></italic>, for each cell in this block to indicate whether this particular gene/experimental condition combination should be treated as background. This additional step allows us to identify significant but imperfect patterns. Adding this additional parameter, the overall likelihood is modified as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.e019" xlink:type="simple"/></disp-formula></p>
+<p>We use a Bernoulli distribution as the prior for <italic>c<sub>ij</sub></italic>,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.e020" xlink:type="simple"/></disp-formula></p>
+<p>The prior for this new indicator variable will be set such that only a small fraction of cells is allowed to be treated as background.</p>
+<p>After integrating out nuisance parameters, the full conditional distributions of all model parameters can be obtained similarly as before. The details can be found in formula 2 in the Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s001">Formula S1</xref> document.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>The aforementioned algorithm has been implemented in a C++ program named BEST (Bayesian Expression Search Tool). To test its performance, we applied it to a series of synthetic datasets as well as to the real <italic>Escherichia coli</italic> microarray compendium dataset <xref ref-type="bibr" rid="pone.0004495-Faith2">[30]</xref>. In addition to BEST, we also tested well-established query tools based on Pearson, Spearman correlation coefficients, Kendall's <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0004495.e021" xlink:type="simple"/></inline-formula>, mutual information <xref ref-type="bibr" rid="pone.0004495-Butte1">[14]</xref> and the model-based query-driven module discovery tool—QDB <xref ref-type="bibr" rid="pone.0004495-Dhollander1">[24]</xref>.</p>
+<sec id="s3a">
+<title>1. Synthetic datasets</title>
+<p>All simulated data contained 100 rows (genes) and 50 columns (experimental conditions). Around 20% of the 100 genes were randomly assigned as the “target” genes. Let <italic>T</italic> represent the total number of target genes in a dataset. To mimic the scenarios that gene expression correlation only presents in a subset of experimental conditions, we separated the 50 columns into foreground and background and require that correlated expression profiles between the query gene and the target genes can only be observed among foreground columns. To assess the impact of the proportion of foreground columns on the effectiveness of identifying target genes, we tested four different settings: 100%, 75%, 50% and 25% of columns were selected as foreground. At each foreground column, the expression profiles of the query gene and <italic>T</italic> target genes were generated from a <italic>T</italic>+1 dimensional multivariate normal distribution with mean zero and variance-covariance matrix Σ. The correlation coefficient between the query gene and each target gene was set to be 0.95.</p>
+<p>The remaining expression profiles were generated independently from a uniform distribution between −4 and 4. To mimic the noisy nature of the microarray data, we included the following additional settings: randomly add linear transformations to 50% of the target genes (the linear transformation factors were randomly picked from (−2, −1, −0.5, 0.5, 2); randomly add additional noise (±5) to 10% of the expression values of target genes in foreground columns to mimic outliers caused by experimental artifacts. We also considered settings in which neither or both of these two complications were present. The combination of these four scenarios with the four different proportions of foreground columns mentioned above resulted in 16 different testing cases. We generated 50 simulated datasets for each of the 16 cases, and tested all query methods on each dataset to identify target genes. To compare performance, we sorted the 100 genes using the relatedness measures adopted in each method and found the proportions of true positives among the top <italic>T</italic> genes. The means and standard deviations of these proportions were summarized in <xref ref-type="table" rid="pone-0004495-t001">Table 1</xref>. We also produced Receiver Operating Characteristic (ROC) curves for all methods under all simulation settings. ROC curves obtained from the most challenging scenario, where only 25% of the columns are foreground, are shown in <xref ref-type="fig" rid="pone-0004495-g002">Figure 2</xref>. ROC curves obtained from other simulation settings can be found in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s013">Figures S1</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s014">S2</xref>, and <xref ref-type="supplementary-material" rid="pone.0004495.s015">S3</xref>. The areas under the curve (AUC) of these ROC curves were summarized in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s003">Table S1</xref>.</p>
+<fig id="pone-0004495-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.g002</object-id><label>Figure 2</label><caption>
+<title>ROC curves for various query methods when applying to synthetic datasets simulated under different settings and when there are 25% foreground columns.</title>
+<p>BEST A default setting; BEST B allowing exclusion of individual cells from the foreground; BEST C fixing the indicator variables of five true target genes and five true experimental conditions as 1. A. No linear transformation nor cell-level noise. B. With linear transformation only. C. With cell-level noise only. D. With both linear transformation and cell-level noise.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.g002" xlink:type="simple"/></fig><table-wrap id="pone-0004495-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.t001</object-id><label>Table 1</label><caption>
+<title>Performance<xref ref-type="table-fn" rid="nt101">1</xref> comparison among various methods for querying simulated microarray gene expression dataset. Best results are displayed in bold.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0004495-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Case</td>
+<td align="left" colspan="1" rowspan="1">Sub-case<xref ref-type="table-fn" rid="nt102">*</xref></td>
+<td align="left" colspan="1" rowspan="1">Pearson<xref ref-type="table-fn" rid="nt107">a</xref></td>
+<td align="left" colspan="1" rowspan="1">Spearman<xref ref-type="table-fn" rid="nt108">b</xref></td>
+<td align="left" colspan="1" rowspan="1">Kendall<xref ref-type="table-fn" rid="nt109">c</xref></td>
+<td align="left" colspan="1" rowspan="1">QDB<xref ref-type="table-fn" rid="nt110">d</xref></td>
+<td align="left" colspan="1" rowspan="1">Mutual<xref ref-type="table-fn" rid="nt111">e</xref></td>
+<td align="left" colspan="1" rowspan="1">BEST A<xref ref-type="table-fn" rid="nt112">f</xref></td>
+<td align="left" colspan="1" rowspan="1">BEST B<xref ref-type="table-fn" rid="nt113">g</xref></td>
+<td align="left" colspan="1" rowspan="1">BEST C<xref ref-type="table-fn" rid="nt114">h</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Case 1:</td>
+<td align="left" colspan="1" rowspan="1">I</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">100%</td>
+<td align="left" colspan="1" rowspan="1">II</td>
+<td align="left" colspan="1" rowspan="1">0.67 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.68 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.68 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.59 (0.13)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0.01)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">foreground</td>
+<td align="left" colspan="1" rowspan="1">III</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IV</td>
+<td align="left" colspan="1" rowspan="1">0.62 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.51 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.78 (0.08)</td>
+<td align="left" colspan="1" rowspan="1">0.97 (0.04)</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.98 (0.03)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0.98 (0.03)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Case 2:</td>
+<td align="left" colspan="1" rowspan="1">I</td>
+<td align="left" colspan="1" rowspan="1">0.89 (0.10)</td>
+<td align="left" colspan="1" rowspan="1">0.96 (0.05)</td>
+<td align="left" colspan="1" rowspan="1">0.99 (0.03)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1">0.87 (0.09)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">75%</td>
+<td align="left" colspan="1" rowspan="1">II</td>
+<td align="left" colspan="1" rowspan="1">0.66 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.71 (0.10)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.10)</td>
+<td align="left" colspan="1" rowspan="1">0.81 (0.09)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">foreground</td>
+<td align="left" colspan="1" rowspan="1">III</td>
+<td align="left" colspan="1" rowspan="1">0.91 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.97 (0.04)</td>
+<td align="left" colspan="1" rowspan="1">0.99 (0.03)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1">0.87 (0.09)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IV</td>
+<td align="left" colspan="1" rowspan="1">0.61 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.68 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.53 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.11)</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.97 (0.04)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0.97 (0.04)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>0.97 (0.04)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Case 3:</td>
+<td align="left" colspan="1" rowspan="1">I</td>
+<td align="left" colspan="1" rowspan="1">0.66 (0.17)</td>
+<td align="left" colspan="1" rowspan="1">0.73 (0.14)</td>
+<td align="left" colspan="1" rowspan="1">0.80 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.97 (0.16)</td>
+<td align="left" colspan="1" rowspan="1">0.61 (0.14)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">50%</td>
+<td align="left" colspan="1" rowspan="1">II</td>
+<td align="left" colspan="1" rowspan="1">0.51 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.59 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.62 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.71 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.52 (0.13)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">foreground</td>
+<td align="left" colspan="1" rowspan="1">III</td>
+<td align="left" colspan="1" rowspan="1">0.63 (0.14)</td>
+<td align="left" colspan="1" rowspan="1">0.70 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.77 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.91 (0.25)</td>
+<td align="left" colspan="1" rowspan="1">0.59 (0.15)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IV</td>
+<td align="left" colspan="1" rowspan="1">0.42 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.49 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.53 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.53 (0.17)</td>
+<td align="left" colspan="1" rowspan="1">0.43 (0.16)</td>
+<td align="left" colspan="1" rowspan="1">0.92 (0.06)</td>
+<td align="left" colspan="1" rowspan="1">0.92 (0.06)</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.93 (0.05)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Case 4:</td>
+<td align="left" colspan="1" rowspan="1">I</td>
+<td align="left" colspan="1" rowspan="1">0.36 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.38 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.40 (0.12)</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.29)</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.79 (0.34)</td>
+<td align="left" colspan="1" rowspan="1">0.95 (0.15)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25%</td>
+<td align="left" colspan="1" rowspan="1">II</td>
+<td align="left" colspan="1" rowspan="1">0.25 (0.10)</td>
+<td align="left" colspan="1" rowspan="1">0.26 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.28 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.19 (0.08)</td>
+<td align="left" colspan="1" rowspan="1">0.27 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.73 (0.36)</td>
+<td align="left" colspan="1" rowspan="1">0.86 (0.28)</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.99 (0.02)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">foreground</td>
+<td align="left" colspan="1" rowspan="1">III</td>
+<td align="left" colspan="1" rowspan="1">0.34 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.36 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.38 (0.09)</td>
+<td align="left" colspan="1" rowspan="1">0.21 (0.14)</td>
+<td align="left" colspan="1" rowspan="1">0.29 (0.10)</td>
+<td align="left" colspan="1" rowspan="1">0.85 (0.29)</td>
+<td align="left" colspan="1" rowspan="1">0.95 (0.17)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1 (0)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IV</td>
+<td align="left" colspan="1" rowspan="1">0.25 (0.08)</td>
+<td align="left" colspan="1" rowspan="1">0.26 (0.07)</td>
+<td align="left" colspan="1" rowspan="1">0.26 (0.07)</td>
+<td align="left" colspan="1" rowspan="1">0.22 (0.13)</td>
+<td align="left" colspan="1" rowspan="1">0.22 (0.11)</td>
+<td align="left" colspan="1" rowspan="1">0.57 (0.28)</td>
+<td align="left" colspan="1" rowspan="1">0.66 (0.25)</td>
+<td align="left" colspan="1" rowspan="1"><bold>0.73 (0.22)</bold></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>1</label><p>Performance was measured by the proportions of true positives among the top <italic>T</italic> genes. <italic>T</italic> is the number of true positives in each simulated dataset. The mean and standard deviation of these proportions in the 50 simulated datasets were reported.</p></fn><fn id="nt102"><label>*</label><p>There are four sub-cases in each of the simulated cases with the same amount of foreground columns.</p></fn><fn id="nt103"><p>Sub case I: no linear transformation, no cell-level noise;</p></fn><fn id="nt104"><p>Sub case II: only add linear transformation;</p></fn><fn id="nt105"><p>Sub case III: only add cell-level noise;</p></fn><fn id="nt106"><p>Sub case IV: add both linear transformation and cell-level noise.</p></fn><fn id="nt107"><label>a</label><p>Query method using Pearson correlation coefficient.</p></fn><fn id="nt108"><label>b</label><p>Query method using Spearman correlation coefficient.</p></fn><fn id="nt109"><label>c</label><p>Query method using Kendall’s <italic>τ</italic>.</p></fn><fn id="nt110"><label>d</label><p>Query method using QDB.</p></fn><fn id="nt111"><label>e</label><p>Query method using mutual information.</p></fn><fn id="nt112"><label>f</label><p>Query method using BEST.</p></fn><fn id="nt113"><label>g</label><p>Query method using BEST allowing exclusion of individual cells from the foreground.</p></fn><fn id="nt114"><label>h</label><p>Query method using BEST when fixing the indicator variables of five true target genes and five true experimental conditions as 1.</p></fn></table-wrap-foot></table-wrap>
+<p>From the simulation results, we see that all methods performed perfectly when all columns were foreground and no complicated correlation was present. In subsequent cases, the performances of all methods deteriorated with the inclusion of background columns, linear transformation and additional cell level noise. We observed that BEST is robust against added noise and complications and performed the best overall. Even in the most challenging case, in which the co-expression only occurred in 25% of the 50 columns, and half of the co-expressed genes were linearly transformed plus 10% additional cell-level noise, BEST still found 57% true co-expressed genes, and the AUC was 0.79. The simulation results also indicated that the version of BEST that allows cell-level noise has 5.4% to 8.2% higher AUCs compared to the version that does not consider cell-level noise. To evaluate the impact of incorporating existing knowledge into the model, we tested another version of BEST in which we fixed the indicator variables of five real target genes and five true foreground experimental conditions as 1. We found that in the most challenging case, AUCs further increased 1.0% to 7.6% compared to the version that considers cell-level noise. The superior performance of BEST in these synthetic datasets suggested that our algorithm worked well in the context of highly heterogeneous microarray data and was robust against moderately distorted data and sporadic outliers. Our model naturally accommodates existing biological knowledge which often results in further improvement in prediction accuracy. Among others, sophisticated methods such as QDB and the method based on mutual information performed better than the rest as expected. We acknowledge that our simulation scheme do not fit QDB well since it is a model-based bi-clustering algorithm not designed for the purpose of “querying <italic>per se</italic>”.</p>
+</sec><sec id="s3b">
+<title>2. Escherichia coli dataset</title>
+<p>This dataset originally came from the study reported in <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. The authors conducted a comprehensive survey of gene expression profiles of all <italic>E. coli</italic> genes using 612 Affymetrix GeneChip arrays treated with 305 different experimental conditions. The goal of that study was to construct regulatory networks and determine the relative merits of different network inference algorithms on experimental data. RMA normalized data <xref ref-type="bibr" rid="pone.0004495-Faith2">[30]</xref> was used in this study. This dataset consisted of 4,217 genes and 305 samples. We started with TF Leucine-responsive Regulatory Protein (Lrp) as the query gene. Faith et al. <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref> listed Lrp as one of three TFs that show substantial connectivity in the network mapped by CLR and recommended by the authors as an ideal test case. The <italic>E. coli</italic> Lrp is the best-studied member of the Lrp family, a global regulator in <italic>E. coli</italic> affecting the expression of many genes and operons <xref ref-type="bibr" rid="pone.0004495-Brinkman1">[31]</xref>. According to RegulonDB <xref ref-type="bibr" rid="pone.0004495-Salgado1">[32]</xref>, Lrp has 61 experimentally verified transcription targets. We refer to the collection of these genes as the RegulonDB target set. Faith et al. <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref> predicted potential transcription targets of Lrp using CLR, a mutual information-based algorithm. There were 43 genes predicted as Lrp targets at 60% precision and one gene was predicted as a Lrp target at 80% precision.</p>
+</sec><sec id="s3c">
+<title>2.1 Query result from 100-gene test set</title>
+<p>We tested BEST on this dataset to see if it could identify known target genes of Lrp. The 61 genes in the RegulonDB target set were included as positive genes. We also included 39 <italic>E. coli</italic> genes which displayed the most variation across the 305 experiments and not in the RegulonDB target set as negative genes. We used the 100-gene test set to compare performance of our algorithm with other query methods based on Pearson, Spearman and Kendall correlation coefficients, mutual information and QDB. Using the default setting, BEST identified 28 target genes; 27 of them (96%) were in the RegulonDB target set (highly significant for enrichment with p-value of 1.27×10<sup>−6</sup>). BEST also identified 143 experimental conditions (47%) as foreground. The log-likelihood trace plot suggested rapid convergence (Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s016">Figure S4</xref>). To compare the performance of our method with others, we plotted ROC curves (<xref ref-type="fig" rid="pone-0004495-g003">Figure 3</xref>). BEST achieved an AUC of 0.87, which was significantly higher than others (≤0.70). We also randomly selected 28 genes as targets for comparison, which showed an AUC of 0.52.</p>
+<fig id="pone-0004495-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.g003</object-id><label>Figure 3</label><caption>
+<title>ROC curves for various query methods applying to the 100-gene test set selected from the <italic>E. coli</italic> microarray compendium.</title>
+<p>The area under the curves (AUC) are: Pearson correlation: 0.69; Spearman correlation: 0.69; Kendall's τ: 0.66; QDB: 0.70; Mutual information: 0.56; BEST: 0.87; Random control: 0.52.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.g003" xlink:type="simple"/></fig>
+<p>Among the 28 genes BEST identified (Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s004">Table S2</xref>), only one gene, gcvB, was not in the RegulonDB target set. gcvB is a regulatory RNA. It represses oppA, dppA, gltI and livJ expression and is regulated by gcvA and gcvR <xref ref-type="bibr" rid="pone.0004495-Urbanowski1">[33]</xref>. Until now there has been no evidence to suggest gcvB is regulated by Lrp. However, the trace plot (<xref ref-type="fig" rid="pone-0004495-g004">Figure 4</xref>) showed that its expression profile, after inversion, is very close to the expression profile of Lrp. Its expression profile is also very close to that of three genes found in the RegulonDB target set, lysU, kbl and tdh (<xref ref-type="table" rid="pone-0004495-t002">Table 2</xref> and <xref ref-type="fig" rid="pone-0004495-g004">Figure 4</xref>). Furthermore, the scan of Lrp motif pattern (<xref ref-type="supplementary-material" rid="pone.0004495.s017">Figure S5</xref>) indicates that there is a putative Lrp motif located in the intergenic region upstream of gcvB. Therefore we hypothesize that gcvB is also a target gene of Lrp (repressed by it).</p>
+<fig id="pone-0004495-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.g004</object-id><label>Figure 4</label><caption>
+<title>The original (blue line) and inverted (red line) expression profiles of gcvB, lysU, kbl and tdh compared to query gene Lrp.</title>
+<p>Black lines indicate the query gene—Lrp. Only the 143 foreground experimental conditions identified by BEST were shown in these plots. Results are from the 100-gene test set selected from the <italic>E. coli</italic> microarray compendium.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.g004" xlink:type="simple"/></fig><table-wrap id="pone-0004495-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0004495.t002</object-id><label>Table 2</label><caption>
+<title>Information of the four genes showing inverse correlation patterns with Lrp identified by BEST when applied to the 100-gene test set selected from the <italic>E. coli</italic> microarray compendium.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0004495-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Rank</td>
+<td align="left" colspan="1" rowspan="1">Gene Name<xref ref-type="table-fn" rid="nt116">a</xref></td>
+<td align="left" colspan="1" rowspan="1">Log Bayes Ratio</td>
+<td align="left" colspan="1" rowspan="1">positive/negative<xref ref-type="table-fn" rid="nt117">b</xref></td>
+<td align="left" colspan="1" rowspan="1">RegulonDB<xref ref-type="table-fn" rid="nt118">c</xref></td>
+<td align="left" colspan="1" rowspan="1">CLR<xref ref-type="table-fn" rid="nt119">d</xref></td>
+<td align="left" colspan="1" rowspan="1">motif distance<xref ref-type="table-fn" rid="nt120">e</xref></td>
+<td align="left" colspan="1" rowspan="1">Empirical p-value<xref ref-type="table-fn" rid="nt121">f</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">gcvB</td>
+<td align="left" colspan="1" rowspan="1">107.8</td>
+<td align="left" colspan="1" rowspan="1">negative</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">414</td>
+<td align="left" colspan="1" rowspan="1">0.0047</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">lysU</td>
+<td align="left" colspan="1" rowspan="1">84.52</td>
+<td align="left" colspan="1" rowspan="1">negative</td>
+<td align="left" colspan="1" rowspan="1">X</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">138</td>
+<td align="left" colspan="1" rowspan="1">0.0044</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">24</td>
+<td align="left" colspan="1" rowspan="1">kbl</td>
+<td align="left" colspan="1" rowspan="1">81.47</td>
+<td align="left" colspan="1" rowspan="1">negative</td>
+<td align="left" colspan="1" rowspan="1">X</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">33</td>
+<td align="left" colspan="1" rowspan="1">0.0019</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25</td>
+<td align="left" colspan="1" rowspan="1">tdh</td>
+<td align="left" colspan="1" rowspan="1">80.09</td>
+<td align="left" colspan="1" rowspan="1">negative</td>
+<td align="left" colspan="1" rowspan="1">X</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt115"><p>All but the first one, gcvB, are in the RegulonDB target set.</p></fn><fn id="nt116"><label>a</label><p>Genes displayed here are sorted by the Log Bayes ratio (target gene versus non-target gene).</p></fn><fn id="nt117"><label>b</label><p>Blank indicates that the target gene shows the same pattern as the query gene. Negative indicates that the target gene shows the inversed pattern as the query gene.</p></fn><fn id="nt118"><label>c</label><p>“X” indicates that the predicted gene is in the RegulonDB target set.</p></fn><fn id="nt119"><label>d</label><p>“X” indicates that the gene is predicted by CLR as a target gene.</p></fn><fn id="nt120"><label>e</label><p>Motif distance is defined as the distance between the start position of the gene and the closest motif in the intergenic region upstream.</p></fn><fn id="nt121"><label>f</label><p>Empirical p-value indicates the significance of conservation in the current motif, which is calculated as proportion of all possible motif locations in the complete <italic>E. coli</italic> genome that have likelihood ratios comparing between Lrp motif and background higher than that of the current motif.</p></fn></table-wrap-foot></table-wrap>
+<p>Results from BEST also suggested that Lrp is likely to actively carry out most of its regulatory role under about half of all the 305 experimental conditions tested. To verify this hypothesis, we separately calculated Pearson correlation coefficients between the expression profiles of Lrp and genes in the RegulonDB target set in the 143 foreground conditions as well as the 162 background conditions. We found that the Pearson correlation coefficient in the foreground subset was indeed significantly higher than that of the background subset. A paired t-test comparing the two sets of correlation coefficients returned a p-value of 0.0079. When restricted to the 28 genes BEST identified as targets, the difference in the matched correlation coefficients became even more significant (p-value of 1.948×10<sup>−12</sup>). Side-by-side box plots are shown in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s018">Figure S6</xref>. The 305 experimental conditions were listed in <xref ref-type="supplementary-material" rid="pone.0004495.s005">Table S3</xref> which was sorted by log Bayes ratio (larger values correspond to foreground). We found that many of the experimental conditions listed in the top portion are related to minimum media or stress which is consistent to what Faith et al.<xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref> found that including minimum media conditions will help identify Lrp targets.</p>
+<p>The core of our model is the two-component Gaussian mixture for the expression levels obtained under the foreground experimental conditions. To verify this assumption, we plotted histograms of expression levels obtained under ten different experimental conditions, the top and bottom five when sorted by the Bayes ratio comparing whether an experimental condition is foreground or background. The histograms are shown in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s019">Figure S7</xref>. As expected, we observed that the histograms from the top five experimental conditions show strong bi-modal shapes while those from the bottom five do not.</p>
+</sec><sec id="s3d">
+<title>2.2 Query result from 300-gene test set</title>
+<p>To evaluate whether increased number of genes being queried and change in the proportion of negative genes affect BEST's performance, we added an additional 200 negative genes that showed high overall variations in all experiments to form a 300-gene test set.</p>
+<p>Using the default setting in BEST, we identified 57 target genes (Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s006">Table S4</xref>) and 139 experimental conditions as foreground. Thirty-three of the target genes (58%) were in the RegulonDB target set (highly significant for enrichment with a p-value of 9.48×10<sup>−13</sup>). A recent microarray analysis suggested that Lrp may affect transcription of as much as 10% of all <italic>E. coli</italic> genes <xref ref-type="bibr" rid="pone.0004495-Tani1">[34]</xref>. Therefore it is highly likely that many genes that are not in the RegulonDB target set are indeed regulated by Lrp. Trace plots of the 24 hypothetical Lrp target genes are shown in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s020">Figures S8</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s021">S9</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s022">S10</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s023">S11</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s024">S12</xref>, and <xref ref-type="supplementary-material" rid="pone.0004495.s025">S13</xref>.</p>
+<p>We next compared our result to the 43 genes CLR predicted as Lrp targets in <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. The 239 negative genes we selected actually contain four genes that are on the 43 CLR predicted target gene list but not in the RegulonDB target set. Three of them, metE, ompT and yagU were also identified by BEST as Lrp target genes. In fact, they ranked first, second and sixth in the 24 hypothetical Lrp targets genes listed in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s004">Table S2</xref>. Interestingly, two of them, ompT and yagU have been confirmed to be bound by Lrp <italic>in vivo</italic> using ChIP-qPCR <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. Furthermore, the scan of Lrp motif indicates that all three genes contain a putative Lrp motif in their intergenic regions upstream.</p>
+<p>We also plotted the histograms of expression levels obtained from the top and bottom five experimental conditions sorted by the Bayes ratio comparing whether an experimental condition is foreground or background (Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s026">Figure S14</xref>). We again observe strong bi-modal shapes in the histograms representing the top five experimental conditions but not in the histograms representing the bottom five.</p>
+</sec><sec id="s3e">
+<title>2.3 Query result from other TFs</title>
+<p>In addition to Lrp, we also ran BEST on six other TFs (PdhR, FecI, LexA, FlhC, FlhD and FliA) to test its performance. Among them, LexA, a major regulator of DNA repair, is known to have a single well-conserved DNA binding motif. It is one of the best-perturbed regulators in the microarray compendium due to the compendium's emphasis on DNA-damaging conditions <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. Other TFs either regulate a large number of genes or have substantial connectivity in the network mapped by the CLR Algorithm <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. For each TF, we built a test set including all its target genes listed in regulonDB, together with genes predicted by CLR as target. We also included ∼100 genes which displayed the most variation across the 305 experimental conditions as negative signals. The complete results are summarized in the Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s002">Material S1</xref> and all BEST predicted target genes are listed in Supplementary <xref ref-type="supplementary-material" rid="pone.0004495.s007">Tables S5</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s008">S6</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s009">S7</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s010">S8</xref>, <xref ref-type="supplementary-material" rid="pone.0004495.s011">S9</xref>, and <xref ref-type="supplementary-material" rid="pone.0004495.s012">S10</xref>. From these lists, we see that except for PdhR, the majority of target genes listed in regulonDB were identified by BEST. For example, all six FecI target genes, 29 out of 30 FlhC target genes and 41 out of 42 FliA target genes were identified. Furthermore, BEST identified all CLR predicted target genes at 60% precision and numerous additional known target genes.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>In summary, we developed a model-based query algorithm based on the Bayesian model selection framework. BEST, a computer program implements this algorithm, is able to query large and heterogeneous microarray gene expression databases for regulon discovery. The query operation considered here can be viewed as a classification procedure where genes sharing similar expression profiles with the query gene belong to one group and the rest belong to the other. Therefore, we considered BEST a supervised learning tool. The key feature of BEST is its ability to recognize co-expression under only a subset of experimental conditions.</p>
+<p>In microarray experiments with only a few sample/experimental conditions, the GBA principle has been successfully applied to identify regulons of key TFs <xref ref-type="bibr" rid="pone.0004495-Roth1">[35]</xref>. When the experimental conditions are abundant and heterogeneous such as in the case of microarray compendium, the previous strategy will not be as successful since most TFs are only active under certain specific conditions and beyond those conditions no tight correlation is expected between TF and its regulons. BEST is built under the hypothesis that the correlation between TF and its regulon only hold in a subset of conditions. The objective of BEST is to simultaneously predict regulon of a TF and the experimental conditions associated with them. Tests conducted on simulated as well as real datasets indicated that the new algorithm works well and outperforms methods based on global correlation measures, especially when there is substantial noise and moderate distortion in the data.</p>
+<p>We are encouraged that when applying BEST to the real <italic>E. coli</italic> compendium data, the majority of genes predicted by BEST as Lrp targets are known target genes of the TF. Interestingly, numerous genes identified show inversed correlation pattern with Lrp. <xref ref-type="table" rid="pone-0004495-t002">Table 2</xref> lists four such genes, three of them are known to be regulated by Lrp, and the other one showed a very similar pattern with the three known ones. None of these four genes is predicted by CLR. We also believe that many of the “false positive” genes are likely to be real Lrp target genes as well since as many as 10% of all <italic>E. coli</italic> genes are believed to be regulated by Lrp <xref ref-type="bibr" rid="pone.0004495-Tani1">[34]</xref> which is significantly larger than the size of the current RegulonDB target set. We also tested major TFs whose target set is larger than ten. Querying these TFs showed that BEST is able to identify the majority of their known target genes. These results suggested that the hypothesis BEST assumed is reasonable. Using microarray compendium data, we are able to generate high confidence and testable hypothesis on TF-regulon relationships.</p>
+<p>On the other hand, there are numerous genes in the RegulonDB target sets that were not identified by BEST. Visual inspection of these gene expression trace plots confirms that their expression profiles do not resemble the TF that is supposed to regulate them. This observation suggests that there are limitations on using the GBA principle on gene expression information alone to identify regulons of a TF. There are various reasons why GBA is insufficient to identify the full set of regulon. It is possible that the compendium does not include the experimental conditions under which these genes were regulated by the TF. It is possible that microarray gene expression data is not accurate enough due to measurement error and its limitation in quantifying low-level expression. It is also possible that due to the complexity in regulatory mechanism, some TF-regulon relationships do not imply co-expression under any condition. For example, the TF may require the presence of co-factors or signaling molecules to exert its regulatory function. Other complex regulatory mechanisms such as post-translational modification, chromatin modification, and microRNA regulation may also explain what we observed.</p>
+<p>In this study, we assumed that all columns are independent and there is no covariance. This is because replicates in our data have already been merged and adding covariance will significantly increase the complexity of our model. Admittedly, when there are biological or technical replicates, adding covariance in our model will improve the result. We plan to add this option in future releases of BEST.</p>
+<p>It is possible to perform a genome-wide search using BEST for genes co-expressed with the query gene. To reduce computation time and to maximize the chance of finding biologically meaningful targets, we recommend a filtering step to reduce the search space. In this study, we adopted a variance filter, which is typical in large-scale gene expression clustering analysis <xref ref-type="bibr" rid="pone.0004495-Tamayo1">[36]</xref> to remove genes that show less variation than the query gene when considering all experimental conditions. We tested this strategy on Lrp in <italic>E. coli</italic>. There are 524 genes (out of 4217 in total, 12%) with total expression variance greater than that of Lrp. They contain 30 genes (out of 61, 49%) that are in the RegulonDB target set. Running BEST with the default setting on this dataset identified 77 genes as targets. Among them, 18 are among the 30 known Lrp target genes (enrichment p-value is 3.32×10<sup>−9</sup>). Compared to the CLR prediction in <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>, seven of the 43 CLR predicted target genes that are not in the RegulonDB targets set are among the 524 genes tested. Six of them, gdhA, metE, ompT, pntA, thrA, yagU were also identified by BEST. All but metE have been confirmed <italic>in vivo</italic> as Lrp targets using ChIP-qPCR <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>. The 139 experimental conditions identified by BEST as foreground are essentially the same as in the results from the 100- or 300-gene test sets. These results confirmed the feasibility of our genome-wide search strategy. One can lower the variance threshold to expand the search space if longer computing time can be tolerated.</p>
+<p>The statistical model adopted in BEST is closely related to those used in various model-based clustering methods designed for analyzing microarray data <xref ref-type="bibr" rid="pone.0004495-McLachlan1">[37]</xref>–<xref ref-type="bibr" rid="pone.0004495-Kim2">[42]</xref>. However, as a supervised learning tool, BEST is able to automatically distinguish the two sets of genes using the expression profile of the pre-specified query gene. This is particularly valuable for searching specific expression patterns of interest. The user can even specify a custom expression pattern to search. In addition, our method allows linearly transformed expression patterns to be recognized and is robust against sporadic outliers in the data.</p>
+<p>Our algorithm is built under the Bayesian model selection framework, which may easily incorporate prior biological information. For example, some genes or experimental conditions can be designated as targets or foreground. Similarly, informative priors on cell indicators can help to rule out some sporadic outliers.</p>
+<p>MCMC-based methods are typically computation-intensive and therefore time-consuming. BEST's running time depends on the number of iterations and on the size of the dataset. In the study on <italic>E. coli</italic> microarray compendium dataset, using the default setting which is ten parallel chains each with 50 cycles, searching 100 genes takes about 30 minutes on a PowerMac with dual 2.5 GHz processors. Searching 300 and 524 genes takes about 3 hours and 30 hours respectively. A computer program named BEST has been developed based on the aforementioned algorithm. BEST can be downloaded at <ext-link ext-link-type="uri" xlink:href="http://www.sph.umich.edu/csg/qin/BEST" xlink:type="simple">http://www.sph.umich.edu/csg/qin/BEST</ext-link>.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0004495.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s001" xlink:type="simple"><label>Formula S1</label><caption>
+<p>(0.09 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s002" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s002" xlink:type="simple"><label>Material S1</label><caption>
+<p>(0.10 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s003" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s003" xlink:type="simple"><label>Table S1</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s004" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s004" xlink:type="simple"><label>Table S2</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s005" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s005" xlink:type="simple"><label>Table S3</label><caption>
+<p>(0.04 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s006" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s006" xlink:type="simple"><label>Table S4</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s007" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s007" xlink:type="simple"><label>Table S5</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s008" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s008" xlink:type="simple"><label>Table S6</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s009" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s009" xlink:type="simple"><label>Table S7</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s010" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s010" xlink:type="simple"><label>Table S8</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s011" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s011" xlink:type="simple"><label>Table S9</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s012" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s012" xlink:type="simple"><label>Table S10</label><caption>
+<p>(0.02 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s013" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s013" xlink:type="simple"><label>Figure S1</label><caption>
+<p>ROC curves for various query methods when applying to synthetic datasets simulated under different settings and when there are 100% foreground columns. BEST A default setting; BEST B allowing exclusion of individual cells from the foreground; BEST C fixing the indicator variables of five true target genes and five true experimental conditions as 1. A. No linear transformation nor cell-level noise. B. With linear transformation only. C. With cell-level noise only. D. With both linear transformation and cell-level noise.</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s014" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s014" xlink:type="simple"><label>Figure S2</label><caption>
+<p>ROC curves for various query methods when applying to synthetic datasets simulated under different settings and when there are 75% foreground columns. BEST A default setting; BEST B allowing exclusion of individual cells from the foreground; BEST C fixing the indicator variables of five true target genes and five true experimental conditions as 1. A. No linear transformation nor cell-level noise. B. With linear transformation only. C. With cell-level noise only. D. With both linear transformation and cell-level noise.</p>
+<p>(0.09 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s015" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s015" xlink:type="simple"><label>Figure S3</label><caption>
+<p>ROC curves for various query methods when applying to synthetic datasets simulated under different settings and when there are 50% foreground columns. BEST A default setting; BEST B allowing exclusion of individual cells from the foreground; BEST C fixing the indicator variables of five true target genes and five true experimental conditions as 1. A. No linear transformation nor cell-level noise. B. With linear transformation only. C. With cell-level noise only. D. With both linear transformation and cell-level noise.</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s016" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s016" xlink:type="simple"><label>Figure S4</label><caption>
+<p>Log-likelihood trace plots of the ten parallel chains resulted from the BEST run on 100-gene and 300-gene test sets selected from the E. coli microarray compendium.</p>
+<p>(0.06 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s017" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s017" xlink:type="simple"><label>Figure S5</label><caption>
+<p>Sequence logo plot <xref ref-type="bibr" rid="pone.0004495-Schena1">[1]</xref> and position specific weight matrix (PSWM) for the motif of transcription factor Lrp. Lrp motif is downloaded from regulonDB: <ext-link ext-link-type="uri" xlink:href="http://regulondb.ccg.unam.mx/data/Matrix_AlignmentSet.txt" xlink:type="simple">http://regulondb.ccg.unam.mx/data/Matrix_AlignmentSet.txt</ext-link>. The logo plot was generated by the seqLogo program <xref ref-type="bibr" rid="pone.0004495-Faith1">[4]</xref>.</p>
+<p>(0.03 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s018" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s018" xlink:type="simple"><label>Figure S6</label><caption>
+<p>Boxplots of Pearson correlation coefficients. A. Boxplots of Pearson correlations between expression profiles of the 61 experimentally verified Lrp target genes and Lrp. The left one summarize correlations measured in the 162 background experiments and the right one summarize correlations measured in the 143 foreground experiments. A paired t-test comparing the two sets of correlation coefficients returns a p-value of 0.0079. B. Boxplots of Pearson correlations between expression profiles of the 28 genes BEST indentified as Lrp target. The left one summarize correlations measured in the 162 background experiments and the right one summarize correlations measured in the 143 foreground experiments. A paired t-test comparing the two sets of correlation coefficients returns a p-value of 1.948×10–12.</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s019" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s019" xlink:type="simple"><label>Figure S7</label><caption>
+<p>A. Histograms of expression profile differences (zij) in the top five experimental conditions (foreground). B. Histogram of expression profile differences (zij) in the bottom five experimental conditions (background). Data used here is the 100-gene test set selected from the E. coli microarray compendium.</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s020" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s020" xlink:type="simple"><label>Figure S8</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 1). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.07 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s021" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s021" xlink:type="simple"><label>Figure S9</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 2). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s022" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s022" xlink:type="simple"><label>Figure S10</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 3). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s023" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s023" xlink:type="simple"><label>Figure S11</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 4). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s024" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s024" xlink:type="simple"><label>Figure S12</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 5). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s025" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s025" xlink:type="simple"><label>Figure S13</label><caption>
+<p>Trace plots of 24 predicted Lrp target genes identified by BEST that are not in the RegulonDB target set (Part 6). Black lines indicate the query gene-Lrp, the red line indicate the potential target genes. Only the 139 foreground experimental conditions identified by BEST were shown in these plots</p>
+<p>(0.07 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0004495.s026" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0004495.s026" xlink:type="simple"><label>Figure S14</label><caption>
+<p>A. Histograms of expression profile differences (zij) in the top five experimental conditions (foreground). B. Histogram of expression profile differences (zij) in the bottom five experimental conditions (background). Data used here is the 300-gene test set selected from the E. coli microarray compendium</p>
+<p>(0.08 MB TIF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors want to thank Drs. Gardner and Faith for making the <italic>Escherichia coli</italic> microarray compendium data publicly available and Drs. Yongqun He and Nicholas Bergman for helpful discussion on Lrp gene regulation in <italic>E. coli</italic>. The authors also want to thank the associate editor and two anonymous reviewers for their insightful comments and suggestions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0004495-Schena1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schena</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Shalon</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Davis</surname><given-names>RW</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Quantitative monitoring of gene expression patterns with a complementary DNA microarray.</article-title>             <source>Science</source>             <volume>270</volume>             <fpage>467</fpage>             <lpage>470</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Lockhart1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lockhart</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Dong</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Byrne</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Follettie</surname><given-names>MT</given-names></name>
+<name name-style="western"><surname>Gallo</surname><given-names>MV</given-names></name>
+<etal/></person-group>             <year>1996</year>             <article-title>Expression monitoring by hybridization to high-density oligonucleotide arrays.</article-title>             <source>Nat Biotechnol</source>             <volume>14</volume>             <fpage>1675</fpage>             <lpage>1680</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Brown1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Exploring the new world of the genome with DNA microarrays.</article-title>             <source>Nat Genet</source>             <volume>21</volume>             <fpage>33</fpage>             <lpage>37</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Faith1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Large-scale mapping and validation of Escherichia coli transcriptional regulation from a compendium of expression profiles.</article-title>             <source>PLoS Biol</source>             <volume>5</volume>             <fpage>e8</fpage>          </element-citation></ref>
+<ref id="pone.0004495-Hughes1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hughes</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Marton</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Jones</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Roberts</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Stoughton</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Functional discovery via a compendium of expression profiles.</article-title>             <source>Cell</source>             <volume>102</volume>             <fpage>109</fpage>             <lpage>126</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Kim1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>SK</given-names></name>
+<name name-style="western"><surname>Lund</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kiraly</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Duke</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Jiang</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>A gene expression map for Caenorhabditis elegans.</article-title>             <source>Science</source>             <volume>293</volume>             <fpage>2087</fpage>             <lpage>2092</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Hibbs1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hibbs</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Hess</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>Myers</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Huttenhower</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Exploring the functional landscape of gene expression: directed search of large microarray compendia.</article-title>             <source>Bioinformatics</source>             <volume>23</volume>             <fpage>2692</fpage>             <lpage>2699</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Eisen1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eisen</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Spellman</surname><given-names>PT</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Cluster analysis and display of genome-wide expression patterns.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>95</volume>             <fpage>14863</fpage>             <lpage>14868</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Bassett1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bassett</surname><given-names>DE</given-names><suffix>Jr</suffix></name>
+<name name-style="western"><surname>Eisen</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Boguski</surname><given-names>MS</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Gene expression informatics–it's all in your mine.</article-title>             <source>Nat Genet</source>             <volume>21</volume>             <fpage>51</fpage>             <lpage>55</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Walker1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Walker</surname><given-names>MG</given-names></name>
+<name name-style="western"><surname>Volkmuth</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Sprinzak</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Hodgson</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Klingler</surname><given-names>T</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Prediction of gene function by genome-scale expression analysis: prostate cancer-associated genes.</article-title>             <source>Genome Res</source>             <volume>9</volume>             <fpage>1198</fpage>             <lpage>1203</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Quackenbush1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Quackenbush</surname><given-names>J</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Genomics. Microarrays–guilt by association.</article-title>             <source>Science</source>             <volume>302</volume>             <fpage>240</fpage>             <lpage>241</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Wolfe1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wolfe</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Kohane</surname><given-names>IS</given-names></name>
+<name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Systematic survey reveals general applicability of “guilt-by-association” within gene coexpression networks.</article-title>             <source>BMC Bioinformatics</source>             <volume>6</volume>             <fpage>227</fpage>          </element-citation></ref>
+<ref id="pone.0004495-Mootha1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mootha</surname><given-names>VK</given-names></name>
+<name name-style="western"><surname>Lepage</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Miller</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Bunkenborg</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Reich</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Identification of a gene causing human cytochrome c oxidase deficiency by integrative genomics.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>100</volume>             <fpage>605</fpage>             <lpage>610</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Butte1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Kohane</surname><given-names>IS</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Mutual information relevance networks: functional genomic clustering using pairwise entropy measurements.</article-title>             <source>Pac Symp Biocomput</source>             <fpage>418</fpage>             <lpage>429</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Margolin1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Basso</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Wiggins</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>ARACNE: an algorithm for the reconstruction of gene regulatory networks in a mammalian cellular context.</article-title>             <source>BMC Bioinformatics</source>             <volume>7</volume><supplement>Suppl 1</supplement>             <fpage>S7</fpage>          </element-citation></ref>
+<ref id="pone.0004495-Neuwald1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Neuwald</surname><given-names>AF</given-names></name>
+<name name-style="western"><surname>Kannan</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Poleksic</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Hata</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>JS</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Ran's C-terminal, Basic Patch, and Nucleotide Exchange Mechanisms in Light of a Canonical Structure for Rab, Rho, Ras, and Ran GTPases.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>673</fpage>             <lpage>692</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Tanay1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tanay</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Sharan</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Shamir</surname><given-names>R</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Discovering statistically significant biclusters in gene expression data.</article-title>             <source>Bioinformatics</source>             <volume>18</volume><supplement>Suppl 1</supplement>             <fpage>S136</fpage>             <lpage>144</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Cheng1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cheng</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Church</surname><given-names>GM</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Biclustering of expression data.</article-title>             <source>Proc Int Conf Intell Syst Mol Biol</source>             <volume>8</volume>             <fpage>93</fpage>             <lpage>103</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Getz1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Getz</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Levine</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Domany</surname><given-names>E</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Coupled two-way clustering analysis of gene microarray data.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>97</volume>             <fpage>12079</fpage>             <lpage>12084</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Sheng1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sheng</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Moreau</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>De Moor</surname><given-names>B</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Biclustering microarray data by Gibbs sampling.</article-title>             <source>Bioinformatics</source>             <volume>19</volume><supplement>Suppl 2</supplement>             <fpage>II196</fpage>             <lpage>II205</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Madeira1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Madeira</surname><given-names>SC</given-names></name>
+<name name-style="western"><surname>Oliveira</surname><given-names>AL</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Biclustering algorithms for biological data analysis: a survey.</article-title>             <source>IEEE/ACM Trans Comput Biol Bioinform</source>             <volume>1</volume>             <fpage>24</fpage>             <lpage>45</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Qian1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Qian</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Dolled-Filhart</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lin</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Yu</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Beyond synexpression relationships: local clustering of time-shifted and inverted gene expression profiles identifies new, biologically relevant interactions.</article-title>             <source>J Mol Biol</source>             <volume>314</volume>             <fpage>1053</fpage>             <lpage>1066</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Smith1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>TF</given-names></name>
+<name name-style="western"><surname>Waterman</surname><given-names>MS</given-names></name>
+</person-group>             <year>1981</year>             <article-title>Identification of common molecular subsequences.</article-title>             <source>J Mol Biol</source>             <volume>147</volume>             <fpage>195</fpage>             <lpage>197</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Dhollander1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dhollander</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Sheng</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Lemmens</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Moor</surname><given-names>BD</given-names></name>
+<name name-style="western"><surname>Marchal</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Query-driven module discovery in microarray data.</article-title>             <source>Bioinformatics</source>          </element-citation></ref>
+<ref id="pone.0004495-Owen1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Owen</surname><given-names>AB</given-names></name>
+<name name-style="western"><surname>Stuart</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mach</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Villeneuve</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>S</given-names></name>
+</person-group>             <year>2003</year>             <article-title>A gene recommender algorithm to identify coexpressed genes in C. elegans.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>1828</fpage>             <lpage>1837</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Gelman1"><label>26</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gelman</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Carlin</surname><given-names>JB</given-names></name>
+<name name-style="western"><surname>Stern</surname><given-names>HS</given-names></name>
+<name name-style="western"><surname>Rubin</surname><given-names>DB</given-names></name>
+</person-group>             <year>1995</year>             <source>Bayesian data analysis</source>             <publisher-loc>London</publisher-loc>             <publisher-name>Chapman &amp; Hall</publisher-name>             <fpage>xix, 526</fpage>          </element-citation></ref>
+<ref id="pone.0004495-Chen1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>JS</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Predictive Updating Methods With Application to Bayesian Classification.</article-title>             <source>Journal of the Royal Statistical Society Series B-Methodological</source>             <volume>58</volume>             <fpage>397</fpage>             <lpage>415</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Gelfand1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gelfand</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>AFM</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Sampling-based approaches to calculating marginal densities.</article-title>             <source>Journal of the American Statistical Association</source>             <volume>85</volume>             <fpage>398</fpage>             <lpage>409</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Liu1"><label>29</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>JS</given-names></name>
+</person-group>             <year>2001</year>             <source>Monte Carlo Strategies in Scientific Computing</source>             <publisher-loc>Berlin</publisher-loc>             <publisher-name>springer Verlag</publisher-name>          </element-citation></ref>
+<ref id="pone.0004495-Faith2"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Driscoll</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Fusaro</surname><given-names>VA</given-names></name>
+<name name-style="western"><surname>Cosgrove</surname><given-names>EJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Many Microbe Microarrays Database: uniformly normalized Affymetrix compendia with structured experimental metadata.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D866</fpage>             <lpage>870</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Brinkman1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brinkman</surname><given-names>AB</given-names></name>
+<name name-style="western"><surname>Ettema</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>de Vos</surname><given-names>WM</given-names></name>
+<name name-style="western"><surname>van der Oost</surname><given-names>J</given-names></name>
+</person-group>             <year>2003</year>             <article-title>The Lrp family of transcriptional regulators.</article-title>             <source>Mol Microbiol</source>             <volume>48</volume>             <fpage>287</fpage>             <lpage>294</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Salgado1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Salgado</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Gama-Castro</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Peralta-Gil</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Diaz-Peredo</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Sanchez-Solano</surname><given-names>F</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>RegulonDB (version 5.0): Escherichia coli K-12 transcriptional regulatory network, operon organization, and growth conditions.</article-title>             <source>Nucleic Acids Res</source>             <volume>34</volume>             <fpage>D394</fpage>             <lpage>397</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Urbanowski1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Urbanowski</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Stauffer</surname><given-names>LT</given-names></name>
+<name name-style="western"><surname>Stauffer</surname><given-names>GV</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The gcvB gene encodes a small untranslated RNA involved in expression of the dipeptide and oligopeptide transport systems in Escherichia coli.</article-title>             <source>Mol Microbiol</source>             <volume>37</volume>             <fpage>856</fpage>             <lpage>868</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Tani1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tani</surname><given-names>TH</given-names></name>
+<name name-style="western"><surname>Khodursky</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Blumenthal</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Matthews</surname><given-names>RG</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Adaptation to famine: a family of stationary-phase genes revealed by microarray analysis.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>99</volume>             <fpage>13471</fpage>             <lpage>13476</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Roth1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roth</surname><given-names>FP</given-names></name>
+<name name-style="western"><surname>Hughes</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Estep</surname><given-names>PW</given-names></name>
+<name name-style="western"><surname>Church</surname><given-names>GM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Finding DNA regulatory motifs within unaligned noncoding sequences clustered by whole-genome mRNA quantitation.</article-title>             <source>Nature Biotechnology</source>             <volume>16</volume>             <fpage>939</fpage>             <lpage>945</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Tamayo1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tamayo</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Slonim</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Mesirov</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Kitareewan</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>Interpreting patterns of gene expression with self-organizing maps: methods and application to hematopoietic differentiation.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>96</volume>             <fpage>2907</fpage>             <lpage>2912</lpage>          </element-citation></ref>
+<ref id="pone.0004495-McLachlan1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McLachlan</surname><given-names>GJ</given-names></name>
+<name name-style="western"><surname>Bean</surname><given-names>RW</given-names></name>
+<name name-style="western"><surname>Peel</surname><given-names>D</given-names></name>
+</person-group>             <year>2002</year>             <article-title>A mixture model-based approach to the clustering of microarray expression data.</article-title>             <source>Bioinformatics</source>             <volume>18</volume>             <fpage>413</fpage>             <lpage>422</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Yeung1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yeung</surname><given-names>KY</given-names></name>
+<name name-style="western"><surname>Ruzzo</surname><given-names>WL</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Principal component analysis for clustering gene expression data.</article-title>             <source>Bioinformatics</source>             <volume>17</volume>             <fpage>763</fpage>             <lpage>774</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Ghosh1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ghosh</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Chinnaiyan</surname><given-names>AM</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Mixture modelling of gene expression data from microarray experiments.</article-title>             <source>Bioinformatics</source>             <volume>18</volume>             <fpage>275</fpage>             <lpage>286</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Medvedovic1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Medvedovic</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Sivaganesan</surname><given-names>S</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Bayesian infinite mixture model based clustering of gene expression profiles.</article-title>             <source>Bioinformatics</source>             <volume>18</volume>             <fpage>1194</fpage>             <lpage>1206</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Qin1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Qin</surname><given-names>ZS</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Clustering microarray gene expression data using weighted Chinese restaurant process.</article-title>             <source>Bioinformatics</source>             <volume>22</volume>             <fpage>1988</fpage>             <lpage>1997</lpage>          </element-citation></ref>
+<ref id="pone.0004495-Kim2"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Tadesse</surname><given-names>MG</given-names></name>
+<name name-style="western"><surname>Vannucci</surname><given-names>M</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Variable selection in clustering via Dirichlet process mixture models.</article-title>             <source>Biometrika</source>             <volume>93</volume>             <fpage>877</fpage>             <lpage>893</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

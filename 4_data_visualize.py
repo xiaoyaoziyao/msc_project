@@ -27,12 +27,13 @@ for docu in cursor:
         cited_nos.append(cited_no)
         cited_years.append(cited_year)
     for loc in location:
-        locations.append(loc)  
-data = {'cited_year':cited_years,'cited_no':cited_nos,'year_diff':year_diffs,'location':locations}
+        locations.append(loc)
+no_year = list(zip(cited_nos,cited_years))
+data = {'cited_no_year':no_year,'year_diff':year_diffs,'location':locations}
 df = pd.DataFrame(data=data)
 fig,axes=plt.subplots(1,1,figsize=(20,8),dpi=80) 
 #sns.violinplot(x='cited_year',y='pub_year',hue='location',inner='stick',data=df)
-sns.swarmplot(x='cited_no',y='year_diff',hue='location', data=df)
+sns.swarmplot(x='cited_no_year',y='year_diff',hue='location', data=df)
 plt.savefig('result.png')
 
 client.close()  

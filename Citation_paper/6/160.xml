@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0139280</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-15-20688</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Identify Beta-Hairpin Motifs with Quadratic Discriminant Algorithm Based on the Chemical Shifts</article-title>
+<alt-title alt-title-type="running-head">The Prediction of Beta-Hairpin Motifs Using the Chemical Shifts</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>YongE</surname>
+<given-names>Feng</given-names>
+</name>
+<xref rid="cor001" ref-type="corresp">*</xref>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>GaoShan</surname>
+<given-names>Kou</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+</contrib-group>
+<aff id="aff001"><addr-line>College of Science, Inner Mongolia Agriculture University, Hohhot, PR China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Ramamoorthy</surname>
+<given-names>Ayyalusamy</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Michigan, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: FYE. Performed the experiments: FYE KGS. Analyzed the data: FYE. Contributed reagents/materials/analysis tools: FYE KGS. Wrote the paper: FYE.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">fengyonge@163.com</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>30</day>
+<month>9</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>9</issue>
+<elocation-id>e0139280</elocation-id>
+<history>
+<date date-type="received">
+<day>12</day>
+<month>5</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>9</day>
+<month>9</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>YongE, GaoShan</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0139280" xlink:type="simple"/>
+<abstract>
+<p>Successful prediction of the beta-hairpin motif will be helpful for understanding the of the fold recognition. Some algorithms have been proposed for the prediction of beta-hairpin motifs. However, the parameters used by these methods were primarily based on the amino acid sequences. Here, we proposed a novel model for predicting beta-hairpin structure based on the chemical shift. Firstly, we analyzed the statistical distribution of chemical shifts of six nuclei in not beta-hairpin and beta-hairpin motifs. Secondly, we used these chemical shifts as features combined with three algorithms to predict beta-hairpin structure. Finally, we achieved the best prediction, namely sensitivity of 92%, the specificity of 94% with 0.85 of Mathew’s correlation coefficient using quadratic discriminant analysis algorithm, which is clearly superior to the same method for the prediction of beta-hairpin structure from 20 amino acid compositions in the three-fold cross-validation. Our finding showed that the chemical shift is an effective parameter for beta-hairpin prediction, suggesting the quadratic discriminant analysis is a powerful algorithm for the prediction of beta-hairpin.</p>
+</abstract>
+<funding-group>
+<funding-statement>The work was supported by the Inner Mongolia autonomous region higher school science and technology research projects (No. NJZY067) and Basic Science of Inner Mongolia Agriculture University Research Fund (No. JC2013004).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="1"/>
+<table-count count="4"/>
+<page-count count="10"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Protein function is inherently correlated with its structure. So, the prediction of protein structure is an active research field in bioinformatics. At present, it is still difficult to predict the spatial structure directly from protein primary structure. However, the successful prediction of protein super-secondary structure is the key step in the spatial structure prediction. Protein super-secondary-structure motifs are composed of a few regular secondary structural elements connected by loops. These structural motifs play an important role in protein folding and stability because a large number of motifs exist in protein spatial structure. Generally speaking, the empirical prediction of protein super-secondary structure essentially consists of two parts: one is the prediction of different structural types from amino acid sequences [<xref rid="pone.0139280.ref001" ref-type="bibr">1</xref>–<xref rid="pone.0139280.ref003" ref-type="bibr">3</xref>]; another is the prediction of structural motifs [<xref rid="pone.0139280.ref004" ref-type="bibr">4</xref>–<xref rid="pone.0139280.ref007" ref-type="bibr">7</xref>]. In this article we concentrate on the latter. The prediction of beta-hairpin motif will be helpful to identify fold in the unknown structure. In the past decade, many researchers have focused on exploring methods for beta-hairpin prediction [<xref rid="pone.0139280.ref006" ref-type="bibr">6</xref>–<xref rid="pone.0139280.ref010" ref-type="bibr">10</xref>]. However, the features of these studies were mainly derived from the amino acid compositions or dipeptide compositions. In this study, we introduced a novel feature, chemical shifts (CSs), to predict beta-hairpin motifs. Chemical shift describes the local chemical environment of nuclear spins in nuclear magnetic resonance [<xref rid="pone.0139280.ref011" ref-type="bibr">11</xref>]. Therefore, some researchers have utilized it for the determination of bimolecular structures and molecular dynamics studies [<xref rid="pone.0139280.ref012" ref-type="bibr">12</xref>–<xref rid="pone.0139280.ref017" ref-type="bibr">17</xref>]. Moreover, some works have studied on protein structure prediction [<xref rid="pone.0139280.ref018" ref-type="bibr">18</xref>–<xref rid="pone.0139280.ref026" ref-type="bibr">26</xref>] and protein backbone and side chain torsion angle prediction [<xref rid="pone.0139280.ref027" ref-type="bibr">27</xref>] by using chemical shifts, results showing that chemical shift is a powerful parameter for the determination of protein structure information.</p>
+<p>In this paper, we would like to utilize CSs as parameters to predict beta-hairpin motifs combined with quadratic discriminant analysis. Using the benchmark dataset, we adopted three-fold cross-validation and achieved the sensitivity of 92% and specificity of 94% and the overall prediction accuracy of 87% by using CSs of six nuclei as features and combining with quadratic discriminant analysis (QDA) algorithm. At the same time, to compare with other parameter, we have performed the prediction by using 20 amino acid compositions (AAC) as inputs of the method of QDA. The results showed that the performance of CSs outperform that of 20 AAC in the prediction of beta-hairpin. At present, some machine learning algorithms were used in the prediction of beta-hairpin motifs [<xref rid="pone.0139280.ref006" ref-type="bibr">6</xref>–<xref rid="pone.0139280.ref010" ref-type="bibr">10</xref>]. Therefore, to test our method and facilitate comparison with other methods, we have performed the prediction by using the same six CSs as feature of the support vector machine (SVM) and Random forest (RF) algorithm in the same cross-validation. Compared results showed that QDA is better than the other two algorithms in terms of accuracies.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec003">
+<title>Database</title>
+<p>All of the CSs data used in this paper were retrieved from the re-referenced protein chemical shift database RefDB [<xref rid="pone.0139280.ref028" ref-type="bibr">28</xref>]. The following steps were performed to construct our dataset. Firstly, only proteins in RefDB overlapping with the corresponding Protein Data Bank (PDB) file with sequence identity of 100% were considered. Secondly, only proteins with the beta-hairpin or beta-link (called not beta-hairpin) motifs information in ArchDB40 database [<xref rid="pone.0139280.ref029" ref-type="bibr">29</xref>] were considered. Thirdly, only proteins with six nuclei (<italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>) assigned CSs were considered. Finally, we utilized the PISCES program [<xref rid="pone.0139280.ref030" ref-type="bibr">30</xref>] to remove the highly similarity sequences. After strictly following the aforementioned procedures, 123 proteins were obtained. Among 123 proteins, 87% (107 sequences) proteins have less than 25% sequence identity, and the sequence identity of the remains ranges from 25 to 30%. In 123 proteins, due to consider the six CSs information at the same time, finally we obtained 157 beta-hairpin fragments, in which the lengths are ranged from 7 to 38 amino acid residues. And 75 not beta-hairpin fragments, the lengths of these fragments are ranged from 8 to 40 amino acid residues. PDB IDs of 123 and CSs data of 157 beta-hairpin fragments and 75 not beta-hairpin fragments are listed in the Supplementary Materials <xref rid="pone.0139280.s001" ref-type="supplementary-material">S1</xref>–<xref rid="pone.0139280.s003" ref-type="supplementary-material">S3</xref> files.</p>
+</sec>
+<sec id="sec004">
+<title>Feature parameter</title>
+<p>In the two data subsets {beta-hairpin, not beta-hairpin}, we calculated the averaged CSs of six nuclei for a fragment of length <italic>l</italic> using following formula.
+<disp-formula id="pone.0139280.e001">
+<alternatives>
+<graphic id="pone.0139280.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>t</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>l</mml:mi></mml:mfrac><mml:mstyle displaystyle="true"><mml:munderover><mml:mo>∑</mml:mo><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>l</mml:mi></mml:munderover><mml:mrow><mml:mi>C</mml:mi><mml:msubsup><mml:mi>S</mml:mi><mml:mi>m</mml:mi><mml:mi>j</mml:mi></mml:msubsup></mml:mrow></mml:mstyle></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+Here <inline-formula id="pone.0139280.e002"><alternatives><graphic id="pone.0139280.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e002" xlink:type="simple"/><mml:math display="inline" id="M2" overflow="scroll"><mml:mrow><mml:mi>l</mml:mi><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mo stretchy="false">[</mml:mo><mml:mn>7</mml:mn><mml:mo>~</mml:mo><mml:mn>38</mml:mn><mml:mo stretchy="false">]</mml:mo><mml:mtext>   </mml:mtext><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mtext> </mml:mtext><mml:mi>b</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mo>−</mml:mo><mml:mi>h</mml:mi><mml:mi>a</mml:mi><mml:mi>i</mml:mi><mml:mi>r</mml:mi><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mtext> </mml:mtext><mml:mi>d</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mo stretchy="false">[</mml:mo><mml:mn>8</mml:mn><mml:mo>~</mml:mo><mml:mn>40</mml:mn><mml:mo stretchy="false">]</mml:mo><mml:mtext>   </mml:mtext><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mtext> </mml:mtext><mml:mi>n</mml:mi><mml:mi>o</mml:mi><mml:mi>t</mml:mi><mml:mtext> </mml:mtext><mml:mi>b</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mo>−</mml:mo><mml:mi>h</mml:mi><mml:mi>a</mml:mi><mml:mi>i</mml:mi><mml:mi>r</mml:mi><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mtext> </mml:mtext><mml:mi>d</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi></mml:mtd></mml:mtr></mml:mtable><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,<italic>m</italic> = <italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>,and <italic>j</italic> represents amino acid positions in the fragment. Therefore, a sequence fragment can be converted into a six-dimensional vector <italic>R</italic>:{<italic>t</italic><sub><italic>m</italic></sub>}.</p>
+</sec>
+<sec id="sec005">
+<title>Statistical distribution</title>
+<p>Under the normal distribution, the analysis of variance (ANOVA) can be used to test whether there was a significant difference for two-group or multi-group samples [<xref rid="pone.0139280.ref019" ref-type="bibr">19</xref>, <xref rid="pone.0139280.ref031" ref-type="bibr">31</xref>] in the database. In this paper, the ANOVA is defined by <xref rid="pone.0139280.e003" ref-type="disp-formula">Eq (2)</xref>
+<disp-formula id="pone.0139280.e003">
+<alternatives>
+<graphic id="pone.0139280.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:mi>M</mml:mi><mml:msub><mml:mi>S</mml:mi><mml:mi>T</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mi>M</mml:mi><mml:msub><mml:mi>S</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:mi>M</mml:mi><mml:msub><mml:mi>S</mml:mi><mml:mi>W</mml:mi></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+where <italic>MS</italic><sub><italic>T</italic></sub>, <italic>MS</italic><sub><italic>B</italic></sub> and <italic>MS</italic><sub><italic>W</italic></sub> denoted the square means of total, between groups and within a group, respectively. The statistical value, called <italic>F</italic>-value, is the ratio of <italic>MS</italic><sub><italic>B</italic></sub> and <italic>MS</italic><sub><italic>W</italic></sub>, which can be calculated by <xref rid="pone.0139280.e004" ref-type="disp-formula">Eq (3)</xref>
+<disp-formula id="pone.0139280.e004">
+<alternatives>
+<graphic id="pone.0139280.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:mi>F</mml:mi><mml:mtext>-value</mml:mtext><mml:mo>=</mml:mo><mml:mrow><mml:mrow><mml:mi>M</mml:mi><mml:msub><mml:mi>S</mml:mi><mml:mi>B</mml:mi></mml:msub></mml:mrow><mml:mo>/</mml:mo><mml:mrow><mml:mi>M</mml:mi><mml:msub><mml:mi>S</mml:mi><mml:mi>W</mml:mi></mml:msub></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula></p>
+<p>From <xref rid="pone.0139280.e004" ref-type="disp-formula">Eq (3)</xref>, we can see that the <italic>MS</italic><sub><italic>B</italic></sub> becomes increasingly larger than <italic>MS</italic><sub><italic>W</italic></sub>, <italic>F</italic>-value will become larger. That is to say, there are significant differences between groups, otherwise, the lack of differences.</p>
+</sec>
+<sec id="sec006">
+<title>Quadratic discriminant analysis (QDA)</title>
+<p>As mentioned above [<xref rid="pone.0139280.ref006" ref-type="bibr">6</xref>–<xref rid="pone.0139280.ref010" ref-type="bibr">10</xref>], various parameters such as amino acid compositions and dipeptide compositions have been employed in the prediction of beta-hairpin. Here, we used CSs as feature to predict beta-hairpin motifs.</p>
+<p>The QDA [<xref rid="pone.0139280.ref032" ref-type="bibr">32</xref>–<xref rid="pone.0139280.ref035" ref-type="bibr">35</xref>] is an effective algorithm that has been widely applied in genomic and proteomic bioinformatics in recent years. Thus, we used it here to perform prediction.</p>
+<p>For a sequence <italic>X</italic> to be classified, we calculated the averaged CSs of six nuclei using the <xref rid="pone.0139280.e001" ref-type="disp-formula">Eq (1)</xref>. So, the sequence is converted into a six-dimensional vector <italic>R</italic>:{<italic>t</italic><sub><italic>m</italic></sub>}
+<disp-formula id="pone.0139280.e005">
+<alternatives>
+<graphic id="pone.0139280.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5" overflow="scroll">
+<mml:mrow><mml:mi>R</mml:mi><mml:mo>:</mml:mo><mml:mo>{</mml:mo><mml:msub><mml:mi>t</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>}</mml:mo><mml:mtext> </mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>m</mml:mi><mml:mo>=</mml:mo><mml:mi>C</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>C</mml:mi><mml:mi>α</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>C</mml:mi><mml:mi>β</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>H</mml:mi><mml:mi>N</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>H</mml:mi><mml:mi>α</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<p>Here we integrated six-dimensional vector by using QDA. Consider a sequence <italic>X</italic> is classified into two groups (beta-hairpin, not beta-hairpin). The discriminant analysis function between group <italic>i</italic> and group <italic>j</italic> is defined by
+<disp-formula id="pone.0139280.e006">
+<alternatives>
+<graphic id="pone.0139280.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>ξ</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mtext>ln</mml:mtext><mml:mi>p</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>ω</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mi>X</mml:mi></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mo>−</mml:mo><mml:mtext>ln</mml:mtext><mml:mi>p</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>ω</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mi>X</mml:mi></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula></p>
+<p>According to Bayes’ Theorem, we deduce
+<disp-formula id="pone.0139280.e007">
+<alternatives>
+<graphic id="pone.0139280.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:msub><mml:mi>ξ</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mtext>ln</mml:mtext><mml:mfrac><mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>δ</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:mfrac><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:mtext>ln</mml:mtext><mml:mfrac><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>Σ</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>Σ</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mtext>    </mml:mtext><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mtext>ln</mml:mtext><mml:msub><mml:mi>p</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:msub><mml:mi>δ</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:mtext>ln</mml:mtext><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mo>−</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mtext>ln</mml:mtext><mml:msub><mml:mi>p</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:msub><mml:mi>δ</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:mtext>ln</mml:mtext><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mtd></mml:mtr></mml:mtable>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula>
+Set
+<disp-formula id="pone.0139280.e008">
+<alternatives>
+<graphic id="pone.0139280.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>η</mml:mi><mml:mi>v</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mtext>ln</mml:mtext><mml:msub><mml:mi>p</mml:mi><mml:mi>v</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>δ</mml:mi><mml:mi>v</mml:mi></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:mfrac><mml:mo>−</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:mtext>ln</mml:mtext><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>v</mml:mi></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(7)</label>
+</disp-formula>
+where
+<disp-formula id="pone.0139280.e009">
+<alternatives>
+<graphic id="pone.0139280.e009g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e009" xlink:type="simple"/>
+<mml:math display="block" id="M9" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>δ</mml:mi><mml:mi>v</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>R</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>v</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mi>T</mml:mi></mml:msup><mml:mtext> </mml:mtext><mml:msubsup><mml:mo>∑</mml:mo><mml:mi>v</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mtext> </mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>R</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>v</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(8)</label>
+</disp-formula>
+where <italic>v</italic> = beta-hairpin, not beta-hairpin, and <italic>p</italic><sub><italic>v</italic></sub> denotes the number of samples in group <italic>v</italic>, δ<sub><italic>v</italic></sub> is the square mahalanobis distance between <italic>R</italic> and μ<sub><italic>v</italic></sub> with respect to Σ<italic>v</italic> (notes: <italic>μ</italic><sub><italic>v</italic></sub> and |Σ<sub>v</sub>| are calculated in training set), and <italic>μ</italic><sub><italic>v</italic></sub> denotes chemical shift values of six nuclei <italic>R</italic>:{<italic>t</italic><sub><italic>m</italic></sub>} averaged over group <italic>v</italic>, |Σ<sub>v</sub>| is the determinant of matrix Σ<sub>v</sub>.</p>
+<p>The six-dimensional vector <italic>μ</italic><sub><italic>v</italic></sub> can be written
+<disp-formula id="pone.0139280.e010">
+<alternatives>
+<graphic id="pone.0139280.e010g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e010" xlink:type="simple"/>
+<mml:math display="block" id="M10" overflow="scroll">
+<mml:mrow><mml:msubsup><mml:mi>μ</mml:mi><mml:mi>m</mml:mi><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>v</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mi>v</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mstyle displaystyle="true"><mml:munderover><mml:mo>∑</mml:mo><mml:mrow><mml:mi>n</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mi>v</mml:mi></mml:msub></mml:mrow></mml:munderover><mml:mrow><mml:msubsup><mml:mi>t</mml:mi><mml:mi>m</mml:mi><mml:mi>n</mml:mi></mml:msubsup></mml:mrow></mml:mstyle><mml:mtext>   </mml:mtext></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(9)</label>
+</disp-formula>
+here <italic>p</italic><sub><italic>v</italic></sub> denotes the number of samples in group <italic>v</italic>; <inline-formula id="pone.0139280.e011"><alternatives><graphic id="pone.0139280.e011g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e011" xlink:type="simple"/><mml:math display="inline" id="M11" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>t</mml:mi><mml:mi>m</mml:mi><mml:mi>n</mml:mi></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula> tdenotes the average CSs of <italic>m</italic> nuclei for <italic>n</italic>-th sequence in group <italic>v</italic>; <italic>v</italic> = beta-hairpin, not beta-hairpin; <italic>m = C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>.</p>
+<p>The covariance matrix Σ<sub>v</sub> is 6 × 6dimension, quantifying correlations between the chemical shifts of six nuclei.
+<disp-formula id="pone.0139280.e012">
+<alternatives>
+<graphic id="pone.0139280.e012g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e012" xlink:type="simple"/>
+<mml:math display="block" id="M12" overflow="scroll">
+<mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>v</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>[</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msub><mml:mtext>      </mml:mtext><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:mtext>      </mml:mtext><mml:mo>⋯</mml:mo><mml:mtext>  </mml:mtext><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mn>6</mml:mn></mml:mrow></mml:msub></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn><mml:mtext>         </mml:mtext></mml:mrow></mml:msub><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:mtext>     </mml:mtext><mml:mo>⋯</mml:mo><mml:mtext>  </mml:mtext><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>6</mml:mn></mml:mrow></mml:msub></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mtext> </mml:mtext><mml:mo>⋮</mml:mo><mml:mtext>            </mml:mtext><mml:mo>⋮</mml:mo><mml:mtext>               </mml:mtext><mml:mo>⋮</mml:mo></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>6</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msub><mml:mtext>     </mml:mtext><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>6</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub><mml:mtext>     </mml:mtext><mml:mo>⋯</mml:mo><mml:mtext>  </mml:mtext><mml:msup><mml:mi>σ</mml:mi><mml:mi>v</mml:mi></mml:msup><mml:msub><mml:mrow/><mml:mrow><mml:mn>6</mml:mn><mml:mo>,</mml:mo><mml:mn>6</mml:mn></mml:mrow></mml:msub></mml:mtd></mml:mtr></mml:mtable><mml:mo>]</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+where the element
+<disp-formula id="pone.0139280.e013">
+<alternatives>
+<graphic id="pone.0139280.e013g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e013" xlink:type="simple"/>
+<mml:math display="block" id="M13" overflow="scroll">
+<mml:mrow><mml:msubsup><mml:mi>σ</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mi>v</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mi>v</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo><mml:mrow/></mml:mstyle><mml:mtext> </mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>t</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msubsup><mml:mi>μ</mml:mi><mml:mi>i</mml:mi><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mi>v</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext> </mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>t</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msubsup><mml:mi>μ</mml:mi><mml:mi>j</mml:mi><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mi>v</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(10)</label>
+</disp-formula>
+here <italic>v</italic> = beta-hairpin, not beta-hairpin; i,j = <italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic></p>
+<p>From <xref rid="pone.0139280.e007" ref-type="disp-formula">Eq (6)</xref> and <xref rid="pone.0139280.e008" ref-type="disp-formula">Eq (7)</xref>, we have concluded
+<disp-formula id="pone.0139280.e014">
+<alternatives>
+<graphic id="pone.0139280.e014g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e014" xlink:type="simple"/>
+<mml:math display="block" id="M14" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>ξ</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>η</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>η</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(11)</label>
+</disp-formula></p>
+<p>It can be easily proved that <italic>p</italic>(<italic>w</italic><sub><italic>k</italic></sub><italic>|X</italic>) is the maximum of <italic>p</italic>(<italic>w</italic><sub><italic>v</italic></sub><italic>|X</italic>), if <italic>η</italic><sub><italic>k</italic></sub> is the maximal one in <italic>η</italic><sub><italic>v</italic></sub> (<italic>v</italic> = beta-hairpin, not beta-hairpin). Then, we predict that <italic>X</italic> belongs to group <italic>k</italic>. In statistical results, fluctuation phenomenon inevitably exists. To correct predicted results, we define the coefficient of the error allowed scope as
+<disp-formula id="pone.0139280.e015">
+<alternatives>
+<graphic id="pone.0139280.e015g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e015" xlink:type="simple"/>
+<mml:math display="block" id="M15" overflow="scroll">
+<mml:mrow><mml:mi>R</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>η</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>η</mml:mi><mml:mrow><mml:mi>w</mml:mi><mml:mi>r</mml:mi><mml:mi>o</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>η</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(12)</label>
+</disp-formula>
+where <italic>η</italic><sub><italic>corr</italic></sub> denotes <italic>X</italic> belonging to itself class <italic>η</italic>, <italic>η</italic><sub><italic>wro</italic></sub> denotes <italic>X</italic> being predicted other class <italic>η</italic>. Set the appropriate <italic>R</italic>, the sequence <italic>X</italic> in the error allowed scope can be classified correctly by using <xref rid="pone.0139280.e015" ref-type="disp-formula">Eq (12)</xref>.</p>
+</sec>
+<sec id="sec007">
+<title>Performance evaluation</title>
+<p>In statistical prediction, the jackknife test is considered to be the most rigorous test method [<xref rid="pone.0139280.ref036" ref-type="bibr">36</xref>] and has been widely used to evaluate the performance of various predictors [<xref rid="pone.0139280.ref037" ref-type="bibr">37</xref>–<xref rid="pone.0139280.ref041" ref-type="bibr">41</xref>]. However, considering the longer time needed for the jackknife test and because the goal of our paper concentrated on introducing a new model for beta-hairpin prediction, we adopted the three-fold cross-validation to evaluate the performance of our method. We randomly divided the training dataset into three parts, two of which are for training and the one for testing. The process is repeated three times. The final performance was calculated by averaging over all three datasets. The following parameters: the sensitivity (Sn), specificity (Sp), the overall accuracy (Acc) and Mathew’s correlation coefficient (MCC) are used to evaluate the predictive performance of our approach.
+<disp-formula id="pone.0139280.e016">
+<alternatives>
+<graphic id="pone.0139280.e016g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e016" xlink:type="simple"/>
+<mml:math display="block" id="M16" overflow="scroll">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>n</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mn>100</mml:mn><mml:mi>%</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(13)</label>
+</disp-formula>
+<disp-formula id="pone.0139280.e017">
+<alternatives>
+<graphic id="pone.0139280.e017g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e017" xlink:type="simple"/>
+<mml:math display="block" id="M17" overflow="scroll">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>p</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>N</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mn>100</mml:mn><mml:mi>%</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(14)</label>
+</disp-formula>
+<disp-formula id="pone.0139280.e018">
+<alternatives>
+<graphic id="pone.0139280.e018g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e018" xlink:type="simple"/>
+<mml:math display="block" id="M18" overflow="scroll">
+<mml:mrow><mml:mi>A</mml:mi><mml:mi>c</mml:mi><mml:mi>c</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mn>100</mml:mn><mml:mi>%</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(15)</label>
+</disp-formula>
+<disp-formula id="pone.0139280.e019">
+<alternatives>
+<graphic id="pone.0139280.e019g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.e019" xlink:type="simple"/>
+<mml:math display="block" id="M19" overflow="scroll">
+<mml:mrow><mml:mi>M</mml:mi><mml:mi>C</mml:mi><mml:mi>C</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>−</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mrow><mml:msqrt><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>×</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>×</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>×</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mn>100</mml:mn><mml:mi>%</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(16)</label>
+</disp-formula>
+where true positive (<italic>TP</italic>) denotes the number of correctly predicted beta-hairpin motif, false negative (<italic>FN</italic>) denotes the number of the beta-hairpin misclassified as not beta-hairpin motif, false positive (<italic>FP</italic>) denotes the number of the not beta-hairpin misclassified as beta-hairpin motif, and true negative (<italic>TN</italic>) denotes the number of correctly predicted not beta-hairpin motif.</p>
+</sec>
+</sec>
+<sec id="sec008" sec-type="conclusions">
+<title>Results and Discussion</title>
+<sec id="sec009">
+<title>Statistical distribution of the average CSs of six nuclei</title>
+<p>We analyzed the average chemical shifts of six nuclei in beta-hairpin and not beta-hairpin dataset. As showed in <xref rid="pone.0139280.g001" ref-type="fig">Fig 1</xref>, we found that the different distribution of the CSs six nuclei in beta-hairpin and not beta-hairpin dataset. The average chemical shift values of <italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic> nuclei are higher in not beta-hairpin dataset than beta-hairpin dataset. However, the average chemical shift value of <italic>H</italic><sub><italic>N</italic></sub> nuclei is lower in not beta-hairpin dataset than beta-hairpin dataset.</p>
+<fig id="pone.0139280.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0139280.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Distribution chart of six-nuclei CSs in beta-hairpin and not beta-hairpin motifs.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>For further investigating whether the distribution of average CSs of six nuclei in two datasets are independent of one another, the analysis of variance (ANOVA) [<xref rid="pone.0139280.ref019" ref-type="bibr">19</xref>, <xref rid="pone.0139280.ref031" ref-type="bibr">31</xref>] can be used for the average CSs of six nuclei in beta-hairpin and not beta-hairpin statistical analysis under a normal distribution. Though we know that many test statistics are approximately normally distributed for large samples (generally&gt;30 samples) under the central limit theorem. In order to strictly verify the validity of a normal distributional assumption, we implemented the statistical test. The Quantile-quantile (Q-Q) plot or Probability-probability (P-P) plot in statistics is often as a means to check the validity of a statistical distributional assumption for a dataset [<xref rid="pone.0139280.ref042" ref-type="bibr">42</xref>]. In term of P-P plot, if the data indeed follow the assumed normal distribution, then the points on the P-P plot will fall approximately on the diagonal line. The result demonstrated that the sampling distributions of six-nuclei CSs obey normal distribution (see supplementary material <xref rid="pone.0139280.s004" ref-type="supplementary-material">S4 file</xref>). Therefore, ANOVA can be implemented. <xref rid="pone.0139280.t001" ref-type="table">Table 1</xref> records the F-values of six nuclei and corresponding <italic>p</italic>-values. From <xref rid="pone.0139280.t001" ref-type="table">Table 1</xref> we observed that six <italic>p</italic>-values are less than 0.05 (<italic>p</italic>&lt; 0.05). This result shows that the average CSs of six nuclei have a significant difference between beta-hairpin and not beta-hairpin structures, suggesting that beta-hairpin motifs can be discriminated from not beta-hairpin sequences based on the CSs of six nuclei.</p>
+<table-wrap id="pone.0139280.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0139280.t001</object-id>
+<label>Table 1</label> <caption><title>The statistical test using ANOVA for CSs of six nuclei.</title></caption>
+<alternatives>
+<graphic id="pone.0139280.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Nuclei</th>
+<th align="right" rowspan="1" colspan="1">ANOVA (<italic>p</italic>–value)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic></td>
+<td align="right" rowspan="1" colspan="1">4.42 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic><sub><italic>a</italic></sub></td>
+<td align="right" rowspan="1" colspan="1">4.01 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic><sub><italic>B</italic></sub></td>
+<td align="right" rowspan="1" colspan="1">4.44 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>H</italic><sub><italic>N</italic></sub></td>
+<td align="right" rowspan="1" colspan="1">4.13 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>H</italic><sub><italic>a</italic></sub></td>
+<td align="right" rowspan="1" colspan="1">4.36 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>N</italic></td>
+<td align="right" rowspan="1" colspan="1">4.12 (<italic>p</italic>&lt;0.05)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec010">
+<title>Prediction of beta-hairpin based on the CSs of six nuclei</title>
+<p>Results in <xref rid="pone.0139280.t001" ref-type="table">Table 1</xref> suggest that the CSs of six nuclei are capable of predicting beta-hairpin. Therefore, we examined the accuracy of six nuclei by using QDA algorithm. Under the benchmark dataset, we calculated the average chemical shift values using the <xref rid="pone.0139280.e001" ref-type="disp-formula">Eq (1)</xref>. The sequences from two data subsets are converted respectively into six-dimensional vectors. In the training sets, determinant and inverse matrix of covariance matrix Σ<sub><italic>v</italic></sub> are calculated. And <italic>μ</italic> is a six-dimensional mean vector, which is calculated in each dataset. Given a sequence <italic>X</italic> in testing sets, we may calculate <italic>η</italic><sub><italic>v</italic></sub> by using Eqs (<xref rid="pone.0139280.e007" ref-type="disp-formula">6</xref>–<xref rid="pone.0139280.e014" ref-type="disp-formula">11</xref>) and compare the results. Then the class of sequence <italic>X</italic> was determined by the maximum of <italic>η</italic><sub><italic>v</italic></sub> (<italic>v</italic> = beta-hairpin and not beta-hairpin). Finally, the coefficient <italic>R</italic> given in <xref rid="pone.0139280.e015" ref-type="disp-formula">Eq (12)</xref> is used to correct predicted results. The current study utilized <italic>R</italic>&lt;0.2. The results of three-fold cross-validation are listed in <xref rid="pone.0139280.t002" ref-type="table">Table 2</xref>.</p>
+<table-wrap id="pone.0139280.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0139280.t002</object-id>
+<label>Table 2</label> <caption><title>Results of different parameters using QDA (R&lt;0.2).</title></caption>
+<alternatives>
+<graphic id="pone.0139280.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Parameters</th>
+<th align="center" rowspan="1" colspan="1">Sn</th>
+<th align="center" rowspan="1" colspan="1">Sp</th>
+<th align="center" rowspan="1" colspan="1">Acc</th>
+<th align="center" rowspan="1" colspan="1">MCC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">Six CSs</td>
+<td align="center" rowspan="1" colspan="1">92%</td>
+<td align="center" rowspan="1" colspan="1">94%</td>
+<td align="center" rowspan="1" colspan="1">87%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.85</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">20 AAC</td>
+<td align="center" rowspan="1" colspan="1">36%</td>
+<td align="center" rowspan="1" colspan="1">87%</td>
+<td align="center" rowspan="1" colspan="1">32%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>From the <xref rid="pone.0139280.t002" ref-type="table">Table 2</xref>, we can see that the sensitivity, specificity and total accuracy are 92%, 94% and 87%, respectively, indicating that chemical shift is a good parameter for the beta-hairpin prediction.</p>
+<p>Chemical shift is an easily obtained experimental datum. However, Chemical shift values of a sequence are not always complete for a multitude of reasons. Often, chemical shifts can only be assigned partially or are missing. To assess the impact of incomplete chemical shift assignment and determine the importance of chemical shift of each nucleus, we performed the prediction by removing any one of the CSs six nuclei. Then, the CSs of combination of five nuclei can be seen as features to predict the beta-hairpin. The results are listed in <xref rid="pone.0139280.t003" ref-type="table">Table 3</xref>.</p>
+<table-wrap id="pone.0139280.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0139280.t003</object-id>
+<label>Table 3</label> <caption><title>Predicted results by using the CSs of five nuclei (R&lt;0.2).</title></caption>
+<alternatives>
+<graphic id="pone.0139280.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Parameters</th>
+<th align="center" rowspan="1" colspan="1">Sn</th>
+<th align="center" rowspan="1" colspan="1">Sp</th>
+<th align="center" rowspan="1" colspan="1">Acc</th>
+<th align="center" rowspan="1" colspan="1">MCC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>(omit <italic>C</italic>)</td>
+<td align="center" rowspan="1" colspan="1">98%</td>
+<td align="center" rowspan="1" colspan="1">52%</td>
+<td align="center" rowspan="1" colspan="1">83%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.61</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>(omit <italic>C</italic><sub><italic>a</italic></sub>)</td>
+<td align="center" rowspan="1" colspan="1">94%</td>
+<td align="center" rowspan="1" colspan="1">48%</td>
+<td align="center" rowspan="1" colspan="1">80%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.50</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>(omit <italic>C</italic><sub><italic>B</italic></sub>)</td>
+<td align="center" rowspan="1" colspan="1">87%</td>
+<td align="center" rowspan="1" colspan="1">76%</td>
+<td align="center" rowspan="1" colspan="1">83%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.62</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>,<italic>N</italic>(omit <italic>H</italic><sub><italic>N</italic></sub>)</td>
+<td align="center" rowspan="1" colspan="1">100%</td>
+<td align="center" rowspan="1" colspan="1">48%</td>
+<td align="center" rowspan="1" colspan="1">83%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.61</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>N</italic>(omit <italic>H</italic><sub><italic>a</italic></sub>)</td>
+<td align="center" rowspan="1" colspan="1">94%</td>
+<td align="center" rowspan="1" colspan="1">32%</td>
+<td align="center" rowspan="1" colspan="1">74%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>C</italic>,<italic>C</italic><sub><italic>α</italic></sub>,<italic>C</italic><sub><italic>β</italic></sub>,<italic>H</italic><sub><italic>N</italic></sub>,<italic>H</italic><sub><italic>α</italic></sub>(omit <italic>N</italic>)</td>
+<td align="center" rowspan="1" colspan="1">100%</td>
+<td align="center" rowspan="1" colspan="1">14%</td>
+<td align="center" rowspan="1" colspan="1">72%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.29</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>In <xref rid="pone.0139280.t003" ref-type="table">table 3</xref>, we can see that all results are affected compared with using six CSs as features when a CSs feature is left out. If all six CSs are used, we reach a prediction overall accuracy of 87% (see <xref rid="pone.0139280.t002" ref-type="table">Table 2</xref>). The absence of one CS leads to a significant decrease in prediction accuracy ranging from 4% for missing <italic>C</italic> or <italic>C</italic><sub><italic>B</italic></sub> or <italic>H</italic><sub><italic>N</italic></sub> shifts to 15% for missing <italic>N</italic> shifts. It is strange that the overall accuracy is worst when the CS of <italic>N</italic> nuclei is left out. This illustrates that <italic>N</italic> is the most important feature for prediction the beta-hairpin. According to the overall accuracy, we rank as the importance as: <italic>N</italic>&gt;<italic>H</italic><sub><italic>a</italic></sub>&gt;<italic>C</italic><sub><italic>a</italic></sub>&gt;<italic>C</italic>&gt; <italic>H</italic><sub><italic>N</italic></sub> &gt;<italic>C</italic><sub><italic>B</italic></sub> in this paper.</p>
+</sec>
+<sec id="sec011">
+<title>Comparison with other feature</title>
+<p>To test our method and facilitate comparison with other feature, we used 20 amino acid compositions (AAC) as inputs of the method of QDA. Notes: Where <italic>μ</italic> is a twenty-dimensional mean vector, and Σ<sub><italic>v</italic></sub> denotes the 20×20 dimensional covariance matrix. The results are also recorded in <xref rid="pone.0139280.t002" ref-type="table">Table 2</xref>. Compared results show that the performance of CSs is more superior to that of 20 AAC for the beta-hairpin prediction.</p>
+</sec>
+<sec id="sec012">
+<title>Comparison with other approaches</title>
+<p>Some approaches have been developed for predicting the beta-hairpin motifs [<xref rid="pone.0139280.ref007" ref-type="bibr">7</xref>–<xref rid="pone.0139280.ref010" ref-type="bibr">10</xref>]. However, due to differences in database, it is difficult to directly compare our results with other published results. Here we examined the predicted performance of other algorithms by use of the same CSs of six nuclei as features. At present, the support vector machine (SVM) and random forest (RF) are arguably the most widely used classification techniques in the Life Sciences [<xref rid="pone.0139280.ref043" ref-type="bibr">43</xref>–<xref rid="pone.0139280.ref046" ref-type="bibr">46</xref>]. In this paper, we implemented the SVM and RF algorithm based on R software package. The results are all listed in <xref rid="pone.0139280.t004" ref-type="table">Table 4</xref>.</p>
+<table-wrap id="pone.0139280.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0139280.t004</object-id>
+<label>Table 4</label> <caption><title>The results of different approaches using the same six CSs information.</title></caption>
+<alternatives>
+<graphic id="pone.0139280.t004g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0139280.t004" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">algorithm</th>
+<th align="center" rowspan="1" colspan="1">Sn</th>
+<th align="center" rowspan="1" colspan="1">Sp</th>
+<th align="center" rowspan="1" colspan="1">Acc</th>
+<th align="center" rowspan="1" colspan="1">MCC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">QDA</td>
+<td align="center" rowspan="1" colspan="1"><bold>92%</bold></td>
+<td align="center" rowspan="1" colspan="1">94%</td>
+<td align="center" rowspan="1" colspan="1"><bold>87%</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.85</bold></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SVM</td>
+<td align="center" rowspan="1" colspan="1">71%</td>
+<td align="center" rowspan="1" colspan="1"><bold>98%</bold></td>
+<td align="center" rowspan="1" colspan="1">86%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.75</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">RF</td>
+<td align="center" rowspan="1" colspan="1">12%</td>
+<td align="center" rowspan="1" colspan="1"><bold>86%</bold></td>
+<td align="center" rowspan="1" colspan="1">62%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.28</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p><xref rid="pone.0139280.t004" ref-type="table">Table 4</xref> shows that QDA yields the best outcomes in using six CSs as feature. Therefore, we proposed using QDA to perform the beta-hairpin motifs prediction.</p>
+</sec>
+</sec>
+<sec id="sec013" sec-type="conclusions">
+<title>Conclusion</title>
+<p>In this paper, we have introduced a model for predicting beta-hairpin motifs based on CSs. By the analysis of the statistical distributions of six-nuclei CSs in beta-hairpin and not beta-hairpin dataset, we found that the CSs of six nuclei are significantly different in beta-hairpin and not beta-hairpin motifs. Finally, we adopted three-fold cross-validation, and achieved the best prediction, namely the sensitivity (Sn) of 92%, the specificity (Sp) of 94%, the total accuracy (Acc) of 87% with 0.85 of Mathew’s correlation coefficient (MCC) by using six CSs as features and the quadratic discriminant analysis. Results showed that chemical shift is indeed an effective parameter for the prediction of beta-hairpin motifs. Moreover, we have performed the prediction by combining the CSs of five different nuclei. Results showed that CSs of each nucleus has a different influence on the prediction of beta-hairpin structures. Our model is both simple and easy to perform. We hope this model will assist investigation the topology of protein structures in the near future [<xref rid="pone.0139280.ref047" ref-type="bibr">47</xref>–<xref rid="pone.0139280.ref049" ref-type="bibr">49</xref>]. As demonstrated in a series of recent publications [<xref rid="pone.0139280.ref050" ref-type="bibr">50</xref>–<xref rid="pone.0139280.ref053" ref-type="bibr">53</xref>] in developing new prediction methods, user-friendly and publicly accessible web-servers will significantly enhance their impacts [<xref rid="pone.0139280.ref054" ref-type="bibr">54</xref>], we shall make efforts in our future work to provide a web-server for the prediction method presented in this paper.</p>
+</sec>
+<sec id="sec014">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0139280.s001" xlink:href="info:doi/10.1371/journal.pone.0139280.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 File</label>
+<caption>
+<title>123 proteins used in this paper.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0139280.s002" xlink:href="info:doi/10.1371/journal.pone.0139280.s002" mimetype="application/x-rar-compressed" position="float" xlink:type="simple">
+<label>S2 File</label>
+<caption>
+<title>CSs data of 157 beta-hairpin fragments.</title>
+<p>(RAR)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0139280.s003" xlink:href="info:doi/10.1371/journal.pone.0139280.s003" mimetype="application/x-rar-compressed" position="float" xlink:type="simple">
+<label>S3 File</label>
+<caption>
+<title>CSs data of 75 not beta-hairpin fragments.</title>
+<p>(RAR)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pone.0139280.s004" xlink:href="info:doi/10.1371/journal.pone.0139280.s004" mimetype="application/msword" position="float" xlink:type="simple">
+<label>S4 File</label>
+<caption>
+<title>p-p plots of six nuclei.</title>
+<p>(DOC)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors are grateful to the anonymous reviewers for their valuable suggestions and comments, which have led to the improvement of this paper.</p>
+</ack>
+<glossary>
+<title>Abbreviations</title>
+<def-list>
+<def-item><term>CSs</term>
+<def><p>Chemical Shifts</p></def>
+</def-item>
+<def-item><term>Sn</term>
+<def><p>Sensitivity</p></def>
+</def-item>
+<def-item><term>Sp</term>
+<def><p>Specificity</p></def>
+</def-item>
+<def-item><term>MCC</term>
+<def><p>Mathew’s correlation coefficient</p></def>
+</def-item>
+<def-item><term>Acc</term>
+<def><p>The overall accuracy</p></def>
+</def-item>
+<def-item><term>AAC</term>
+<def><p>Amino acid compositions</p></def>
+</def-item>
+<def-item><term>QDA</term>
+<def><p>Quadratic discriminant analysis</p></def>
+</def-item>
+<def-item><term>ANOVA</term>
+<def><p>Analysis of variance</p></def>
+</def-item>
+</def-list>
+</glossary>
+<ref-list>
+<title>References</title>
+<ref id="pone.0139280.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bystro</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Thorsson</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>. <article-title>HMMSTR: a hidden markov model for local sequence structure correlations in proteins</article-title>. <source>J Mol Biol</source>. <year>2000</year>; <volume>301</volume>(<issue>1</issue>): <fpage>173</fpage>–<lpage>90</lpage>. <object-id pub-id-type="pmid">10926500</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Burke</surname> <given-names>DF</given-names></name>, <name name-style="western"><surname>Deane</surname> <given-names>CM</given-names></name>. <article-title>Improved protein loop prediction from sequence alone</article-title>. <source>Protein Eng</source>. <year>2001</year>; <volume>14</volume>(<issue>7</issue>):<fpage>473</fpage>–<lpage>8</lpage>. <object-id pub-id-type="pmid">11522920</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sun</surname> <given-names>ZR</given-names></name>, <name name-style="western"><surname>Rao</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Peng</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Xu</surname> <given-names>D</given-names></name>. <article-title>Prediction of protein super secondary structures based on the artificial neural network method</article-title>. <source>Protein Eng</source>. <year>1997</year>; <volume>10</volume>(<issue>7</issue>):<fpage>763</fpage>–<lpage>9</lpage>. <object-id pub-id-type="pmid">9342142</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>. <article-title>Prediction of beta-turns in proteins</article-title>. <source>J Pept Res</source>. <year>1997</year>; <volume>49</volume>(<issue>2</issue>):<fpage>120</fpage>–<lpage>44</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>, <name name-style="western"><surname>Blinn</surname> <given-names>JR</given-names></name>. <article-title>Classification and prediction of beta-turn types</article-title>. <source>J Protein Chem</source>. <year>1997</year>; <volume>16</volume>(<issue>6</issue>): <fpage>575</fpage>–<lpage>95</lpage>. <object-id pub-id-type="pmid">9263121</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de la Cruz</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Hutchinson</surname> <given-names>EG</given-names></name>, <name name-style="western"><surname>Shepherd</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Thornton</surname> <given-names>JM</given-names></name>. <article-title>Toward predicting protein topology: an approach to identifying beta hairpins</article-title>. <source>Proc Natl Acad Sci,USA</source>. <year>2002</year>; <volume>99</volume>(<issue>17</issue>): <fpage>11157</fpage>–<lpage>62</lpage>. <object-id pub-id-type="pmid">12177429</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hu</surname> <given-names>XZ</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>QZ</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>CL</given-names></name>. <article-title>Recognition of β-hairpin motifs in proteins by using the composite vector</article-title>. <source>Amino Acids</source>. <year>2010</year>; <volume>38</volume>: <fpage>915</fpage>–<lpage>21</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00726-009-0299-7" xlink:type="simple">10.1007/s00726-009-0299-7</ext-link></comment> <object-id pub-id-type="pmid">19418016</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kuhn</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Meiler</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>. <article-title>Strand-loop-strand motifs: prediction of hairpins and diverging turns in proteins</article-title>. <source>Proteins</source>. <year>2004</year>; <volume>54</volume>(<issue>2</issue>): <fpage>282</fpage>–<lpage>8</lpage>. <object-id pub-id-type="pmid">14696190</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kumar</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bhasin</surname> <given-names>M</given-names></name>. <article-title>Bhairpred: prediction of B-hairpins in a protein from multiple alignment information using ANN and SVM techniques</article-title>. <source>Nucleic Acids Res</source>. <year>2005</year>; <volume>33</volume>: <fpage>154</fpage>–<lpage>9</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hu</surname> <given-names>XZ</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>QZ</given-names></name>. <article-title>Prediction of the B-hairpins in proteins using support vector machine</article-title>. <source>The Protein Journal</source>. <year>2008</year>; <volume>27</volume>(<issue>2</issue>):<fpage>115</fpage>–<lpage>22</lpage>. <object-id pub-id-type="pmid">18071887</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saitô</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ando</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>Chemical shift tensor-the heart of NMR: Insights into biological aspects of proteins</article-title>. <source>Prog Nucl Magn Reson Spectrosc</source>. <year>2010</year>; <volume>57</volume>(<issue>2</issue>): <fpage>181</fpage>–<lpage>228</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.pnmrs.2010.04.005" xlink:type="simple">10.1016/j.pnmrs.2010.04.005</ext-link></comment> <object-id pub-id-type="pmid">20633363</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Wittebort</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>Characterization of <sup>15</sup>N Chemical Shift and <sup>1</sup>H−<sup>15</sup>N Dipolar Coupling Interactions in a Peptide Bond of Uniaxially Oriented and Polycrystalline Samples by One-Dimensional Dipolar Chemical Shift Solid-State NMR Spectroscopy</article-title>. <source>J Am Chem Soc</source>. <year>1998</year>; <volume>120</volume>: <fpage>8868</fpage>–<lpage>74</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja981599u" xlink:type="simple">10.1021/ja981599u</ext-link></comment></mixed-citation></ref>
+<ref id="pone.0139280.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Poon</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Birn</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>How Does an Amide-N Chemical Shift Tensor Vary in Peptides?</article-title> <source>J Phys Chem B</source>. <year>2004</year>; <volume>108</volume>(<issue>42</issue>): <fpage>16577</fpage>–<lpage>85</lpage>. <object-id pub-id-type="pmid">18449362</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brender</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>Orientation of Amide-Nitrogen-15 Chemical Shift Tensors in Peptides:  A Quantum Chemical Study</article-title>. <source>J Am Chem Soc</source>. <year>2001</year>; <volume>123</volume>: <fpage>914</fpage>–<lpage>22</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja001980q" xlink:type="simple">10.1021/ja001980q</ext-link></comment> <object-id pub-id-type="pmid">11456625</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Birn</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Poon</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Mao</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>Ab initio study of <sup>13</sup>Ca chemical shift anisotropy tensors in peptides</article-title>. <source>J Am Chem Soc</source>. <year>2004</year>; <volume>126</volume>(<issue>27</issue>): <fpage>8529</fpage>–<lpage>34</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja049879z" xlink:type="simple">10.1021/ja049879z</ext-link></comment> <object-id pub-id-type="pmid">15238010</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Case</surname> <given-names>DA</given-names></name>. <article-title>The use of chemical shifts and their anisotropies in biomolecular structure determination</article-title>. <source>Curr Opin Struct Biol</source>. <year>1998</year>; <volume>8</volume>: <fpage>624</fpage>–<lpage>30</lpage>. <object-id pub-id-type="pmid">9818268</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wishart</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Case</surname> <given-names>DA</given-names></name>. <article-title>Use of chemical shifts in macromolecular structure determination</article-title>. <source>Methods Enzymol</source>. <year>2001</year>; <volume>338</volume>: <fpage>3</fpage>–<lpage>34</lpage>. <object-id pub-id-type="pmid">11460554</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cavalli</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Salvatella</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name>. <article-title>Protein structure determination from NMR chemical shifts</article-title>. <source>Proc Natl Acad Sci USA</source>. <year>2007</year>; <volume>104</volume>: <fpage>9615</fpage>–<lpage>20</lpage>. <object-id pub-id-type="pmid">17535901</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>KJ</given-names></name>, <etal>et al</etal>. <article-title>The predictin of protein structural class using averaged chemical shifts</article-title>. <source>J Biomolecular Struc and Dynamics</source>. <year>2012</year>; <volume>29</volume>(<issue>6</issue>): <fpage>643</fpage>–<lpage>9</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mao</surname> <given-names>WS</given-names></name>, <name name-style="western"><surname>Cong</surname> <given-names>PS</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>ZH</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>ZL</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>TH</given-names></name>. <article-title>NMRDSP: An accurate prediction of protein shape strings from NMR chemical shifts and sequence data</article-title>. <source>PLoS ONE</source>. <year>2013</year>; <volume>8</volume>(<issue>12</issue>): <fpage>e83532</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0083532" xlink:type="simple">10.1371/journal.pone.0083532</ext-link></comment> <object-id pub-id-type="pmid">24376713</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martin</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Michael</surname> <given-names>H</given-names></name>. <article-title>A probabilistic model for secondary structure prediction from protein chemical shifts</article-title>. <source>Proteins</source>. <year>2013</year>; <volume>81</volume>(<issue>6</issue>): <fpage>984</fpage>–<lpage>99</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.24249" xlink:type="simple">10.1002/prot.24249</ext-link></comment> <object-id pub-id-type="pmid">23292699</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mielke</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Drishnan</surname> <given-names>VV</given-names></name>. <article-title>Protein structural class identification directly from NMR spectra using average chemical shifts</article-title>. <source>Bioinformatics</source>. <year>2003</year>; <volume>19</volume>(<issue>16</issue>): <fpage>2054</fpage>–<lpage>64</lpage>. <object-id pub-id-type="pmid">14594710</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pastore</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Saudek</surname> <given-names>V</given-names></name>. <article-title>The relationship between chemical shift and secondary structure in proteins</article-title>. <source>J Magn Reson</source>. <year>1990</year>; <volume>90</volume>:<fpage>165</fpage>–<lpage>76</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Lange</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Delaglio</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Rossi</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Aramini</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>G</given-names></name>, <etal>et al</etal>. <article-title>Consistent blind protein structure generation from NMR chemical shift data</article-title>. <source>Proc Natl Acad Sci USA</source>. <year>2008</year>; <volume>105</volume>(<issue>12</issue>): <fpage>4685</fpage>–<lpage>90</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0800256105" xlink:type="simple">10.1073/pnas.0800256105</ext-link></comment> <object-id pub-id-type="pmid">18326625</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>. <article-title>Secondary structure effects on protein NMR chemical shifts</article-title>. <source>J Biomol NMR</source>. <year>2004</year>; <volume>30</volume>(<issue>3</issue>): <fpage>233</fpage>–<lpage>44</lpage>. <object-id pub-id-type="pmid">15754052</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Bax</surname> <given-names>A</given-names></name>. <article-title>Identification of helix capping and beta-turn motifs from NMR chemical shifts</article-title>. <source>J Biomol NMR</source>. <year>2012</year>; <volume>52</volume>(<issue>3</issue>): <fpage>211</fpage>–<lpage>32</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10858-012-9602-0" xlink:type="simple">10.1007/s10858-012-9602-0</ext-link></comment> <object-id pub-id-type="pmid">22314702</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Bax</surname> <given-names>A</given-names></name>. <article-title>Protein backbone and sidechain torsion angles predicted from NMR chemical shifts using artificial neural networks</article-title>. <source>J Biomol NMR</source>. <year>2013</year>; <volume>56</volume>(<issue>3</issue>): <fpage>227</fpage>–<lpage>41</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10858-013-9741-y" xlink:type="simple">10.1007/s10858-013-9741-y</ext-link></comment> <object-id pub-id-type="pmid">23728592</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Neal</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wishart</surname> <given-names>DS</given-names></name>. <article-title>RefDB: A database of uniformly referenced protein chemical shifts</article-title>. <source>J Biomol NMR</source>. <year>2003</year>; <volume>25</volume>(<issue>3</issue>):<fpage>173</fpage>–<lpage>95</lpage>. <object-id pub-id-type="pmid">12652131</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fernandez-Fuentes</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Hermoso</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Espadaler</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Querol</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Aviles</surname> <given-names>FX</given-names></name>, <name name-style="western"><surname>Oliva</surname> <given-names>B</given-names></name>. <article-title>Classification of common functional loops of kinase super-families</article-title>. <source>Proteins</source>. <year>2004</year>; <volume>56</volume>(<issue>3</issue>): <fpage>539</fpage>–<lpage>55</lpage>. <object-id pub-id-type="pmid">15229886</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Dunbrack</surname> <given-names>RJ</given-names></name>. <article-title>PISCES: recent improvements to a PDB sequence culling server</article-title>. <source>Nucleic Acids Res</source>. <year>2005</year>; <volume>33</volume>: <fpage>w94</fpage>–<lpage>98</lpage>. <object-id pub-id-type="pmid">15980589</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref031"><label>31</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Sprinthall</surname> <given-names>RC</given-names></name>. <source>Basic statistical analysis</source>.<edition>7th ed</edition>. <publisher-loc>Boston, MA</publisher-loc>: <publisher-name>Pearson Education Group</publisher-name>; <year>2003</year>.</mixed-citation></ref>
+<ref id="pone.0139280.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Feng</surname> <given-names>YE</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Luo</surname> <given-names>LF</given-names></name>. <article-title>Prediction of protein secondary structure using feature selection and analysis approach</article-title>. <source>Acta Biotheoretica</source>. <year>2014</year>; <volume>62</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>14</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10441-013-9203-7" xlink:type="simple">10.1007/s10441-013-9203-7</ext-link></comment> <object-id pub-id-type="pmid">24052343</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Feng</surname> <given-names>YE</given-names></name>, <name name-style="western"><surname>Luo</surname> <given-names>LF</given-names></name>. <article-title>Use of tetrapeptide signals for protein secondary structure prediction</article-title>. <source>Amino acids</source>. <year>2008</year>; <volume>35</volume>(<issue>3</issue>): <fpage>607</fpage>–<lpage>14</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00726-008-0089-7" xlink:type="simple">10.1007/s00726-008-0089-7</ext-link></comment> <object-id pub-id-type="pmid">18431531</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Feng</surname> <given-names>YE</given-names></name>. <article-title>Prediction of four kinds of simple super secondary structures in Protein by using chemical shifts</article-title>. <source>Scientific world journal</source>, <volume>2014</volume>, <fpage>978503</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1155/2014/978503" xlink:type="simple">10.1155/2014/978503</ext-link></comment> <object-id pub-id-type="pmid">25050407</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kou</surname> <given-names>GS</given-names></name>, <name name-style="western"><surname>Feng</surname> <given-names>YE</given-names></name>. <article-title>Identify five kinds of simple super secondary structures with quadratic discriminant algorithm based on the chemical shifts</article-title>. <source>J Theor Biol</source>. <year>2015</year>; <volume>380</volume>: <fpage>392</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2015.06.006" xlink:type="simple">10.1016/j.jtbi.2015.06.006</ext-link></comment> <object-id pub-id-type="pmid">26087283</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>HB</given-names></name>. <article-title>Cell-PLoc: a package of web servers for predicting subcellular localization of proteins in various organisms</article-title>. <source>Nat Protocol</source>. <year>2008</year>; <volume>3</volume>(<issue>2</issue>): <fpage>153</fpage>–<lpage>62</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Feng</surname> <given-names>PM</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>. <article-title>iRSpot-PseDNC: identify recombination spots with pseudo dinucleotide composition</article-title>. <source>Nucleic Acids Res</source>. <year>2013</year>; <volume>41</volume>(<issue>6</issue>): <fpage>e68</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gks1450" xlink:type="simple">10.1093/nar/gks1450</ext-link></comment> <object-id pub-id-type="pmid">23303794</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Esmaeili</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mohabatkar</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Mohsenzadeh</surname> <given-names>S</given-names></name>. <article-title>Using the concept of Chou's pseudo amino acid composition for risk type prediction of human papillomaviruses</article-title>. <source>J Theor Biol</source>. <year>2010</year>; <volume>263</volume>(<issue>2</issue>): <fpage>203</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2009.11.016" xlink:type="simple">10.1016/j.jtbi.2009.11.016</ext-link></comment> <object-id pub-id-type="pmid">19961864</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hayat</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Khan</surname> <given-names>A</given-names></name>. <article-title>Discriminating Outer Membrane Proteins with Fuzzy K-Nearest Neighbor Algorithms Based on the General Form of Chou's PseAAC</article-title>. <source>Protein Pept Lett</source>. <year>2012</year>; <volume>19</volume>(<issue>4</issue>): <fpage>411</fpage>–<lpage>21</lpage>. <object-id pub-id-type="pmid">22185508</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Yuan</surname> <given-names>LF</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>H</given-names></name>. <article-title>Using over-represented tetrapeptides to predict protein submitochondria locations</article-title>. <source>Acta biotheoretica</source>. <year>2013</year>; <volume>61</volume>(<issue>2</issue>): <fpage>259</fpage>–<lpage>68</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10441-013-9181-9" xlink:type="simple">10.1007/s10441-013-9181-9</ext-link></comment> <object-id pub-id-type="pmid">23475502</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xiao</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>WZ</given-names></name>, <name name-style="western"><surname>Jia</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>. <article-title>iAMP-2L: A two-level multi-label classifier for identifying antimicrobial peptides and their functional types</article-title>. <source>Anal Biochem</source>. <year>2013</year>; <volume>436</volume>(<issue>2</issue>): <fpage>168</fpage>–<lpage>77</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ab.2013.01.019" xlink:type="simple">10.1016/j.ab.2013.01.019</ext-link></comment> <object-id pub-id-type="pmid">23395824</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liang</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Pan</surname> <given-names>WS</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>ZH</given-names></name>. <article-title>Characterization-based Q-Q plots for testing multinormality</article-title>. <source>Stat. Probabil. Lett</source>. <year>2004</year>; <volume>70</volume>: <fpage>183</fpage>–<lpage>90</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Statnikov</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Aliferis</surname> <given-names>CF</given-names></name>. <article-title>A comprehensive comparison of random forests and support vector machines for microarray-based cancer classification</article-title>. <source>BMC Bioinformatics</source> <year>2008</year>; <volume>9</volume>: <fpage>319</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-9-319" xlink:type="simple">10.1186/1471-2105-9-319</ext-link></comment> <object-id pub-id-type="pmid">18647401</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jiang</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Wu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>Z</given-names></name>. <article-title>MiPred: classification of real and pseudo microRNA precursors using random forest prediction model with combined features</article-title>. <source>Nucleic Acids Res</source>. <year>2007</year>; <volume>35</volume>: <fpage>W339</fpage>–<lpage>44</lpage>. <object-id pub-id-type="pmid">17553836</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Ishwaran</surname> <given-names>H</given-names></name>. <article-title>Random forests for genomic data analysis</article-title>. <source>Genomics</source>. <year>2012</year>; <volume>99</volume>: <fpage>323</fpage>–<lpage>29</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ygeno.2012.04.003" xlink:type="simple">10.1016/j.ygeno.2012.04.003</ext-link></comment> <object-id pub-id-type="pmid">22546560</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goldstein</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Polley</surname> <given-names>EC</given-names></name>, <name name-style="western"><surname>Briggs</surname> <given-names>FBS</given-names></name>. <article-title>Random forests for genetic association studies</article-title>. <source>Stat Appl Genet Mol Biol</source>. <year>2011</year>; <volume>10</volume>: <fpage>1</fpage>–<lpage>34</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wei</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>DK</given-names></name>. <article-title>PISEMA solid-state NMR spectroscopy</article-title>. <source>Ann Rep NMR Spectrosc</source>. <year>2004</year>; <volume>52</volume>: <fpage>1</fpage>–<lpage>52</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dürr</surname> <given-names>HN Ulrich</given-names></name>, <name name-style="western"><surname>Yamamoto</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Im</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Waskell</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Ramamoorthy</surname> <given-names>A</given-names></name>. <article-title>Solid-State NMR Reveals Structural and Dynamical Properties of a Membrane-Anchored Electron-Carrier Protein, Cytochrome b5</article-title>. <source>J Am Chem Soc</source>. <year>2007</year>; <volume>129</volume>: <fpage>6670</fpage>–<lpage>71</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja069028m" xlink:type="simple">10.1021/ja069028m</ext-link></comment> <object-id pub-id-type="pmid">17488074</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yang</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Park</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jeon</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Shin</surname> <given-names>YE</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>S</given-names></name>. <article-title>Spatial and functional organization of mitochondrial protein network</article-title>. <source>Scientific Reports</source> <volume>3</volume>, <fpage>2013</fpage>; Article number: 1403.</mixed-citation></ref>
+<ref id="pone.0139280.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Wen</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wen</surname> <given-names>LS</given-names></name>, <name name-style="western"><surname>Wu</surname> <given-names>LY</given-names></name>. <article-title>iNitro-Tyr: Prediction of nitrotyrosine sites in proteins with general pseudo amino acid composition</article-title>. <source>PLoS ONE</source>. <year>2014</year>; <volume>9</volume>: <fpage>e105018</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0105018" xlink:type="simple">10.1371/journal.pone.0105018</ext-link></comment> <object-id pub-id-type="pmid">25121969</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>. <article-title>Some remarks on protein attribute prediction and pseudo amino acid composition (50th Anniversary Year Review)</article-title>. <source>J. Theor. Biol</source>. <year>2011</year>; <volume>273</volume>: <fpage>236</fpage>–<lpage>47</lpage>.</mixed-citation></ref>
+<ref id="pone.0139280.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname> <given-names>SH</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>EZ</given-names></name>, <name name-style="western"><surname>Xu</surname> <given-names>LQ</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>H</given-names></name>. <article-title>iNuc-PseKNC: a sequence-based predictor for predicting nucleosome positioning in genomes with pseudo k-tuple nucleotide composition</article-title>. <source>Bioinformatics</source>, <year>2014</year>; <volume>30</volume>: <fpage>1522</fpage>–<lpage>29</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btu083" xlink:type="simple">10.1093/bioinformatics/btu083</ext-link></comment> <object-id pub-id-type="pmid">24504871</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Xiao</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Qiu</surname> <given-names>WR</given-names></name>. <article-title>iDNA-Methyl: Identifying DNA methylation sites via pseudo trinucleotide composition</article-title>. <source>Anal. Biochem.</source>, <year>2015</year>; <volume>474</volume>: <fpage>69</fpage>–<lpage>77</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ab.2014.12.009" xlink:type="simple">10.1016/j.ab.2014.12.009</ext-link></comment> <object-id pub-id-type="pmid">25596338</object-id></mixed-citation></ref>
+<ref id="pone.0139280.ref054"><label>54</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname> <given-names>KC</given-names></name>. <article-title>Impacts of bioinformatics to medicinal chemistry</article-title>. <source>Medicinal Chemistry</source>. <year>2015</year>; <volume>11</volume>: <fpage>218</fpage>–<lpage>34</lpage>. <object-id pub-id-type="pmid">25548930</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

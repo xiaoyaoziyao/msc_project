@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-00418</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1002672</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Evolutionary biology</subject>
+            <subj-group>
+              <subject>Genomic evolution</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Microbiology</subject>
+            <subj-group>
+              <subject>Microbial physiology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Physics</subject>
+          <subj-group>
+            <subject>Biophysics</subject>
+            <subj-group>
+              <subject>Biophysics theory</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Microbiology</subject>
+          <subject>Evolutionary Biology</subject>
+          <subject>Physics</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Interplay of Gene Expression Noise and Ultrasensitive Dynamics Affects Bacterial Operon Organization</article-title><alt-title alt-title-type="running-head">Biochemical Noise Shapes Bacterial Operons</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Ray</surname>
+            <given-names>J. Christian J</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Igoshin</surname>
+            <given-names>Oleg A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">
+        <label>1</label>
+        <addr-line>Department of Bioengineering, Rice University, Houston, Texas, United States of America</addr-line>
+      </aff><aff id="aff2">
+        <label>2</label>
+        <addr-line>Department of Systems Biology, The University of Texas MD Anderson Cancer Center, Houston, Texas, United States of America</addr-line>
+      </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Rao</surname>
+            <given-names>Christopher V.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">
+        <addr-line>University of Illinois at Urbana-Champaign, United States of America</addr-line>
+      </aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">igoshin@rice.edu</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: JCJR OAI. Performed the experiments: JCJR. Analyzed the data: JCJR OAI. Wrote the paper: JCJR OAI.</p>
+        </fn>
+      </author-notes><pub-date pub-type="collection">
+        <month>8</month>
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>30</day>
+        <month>8</month>
+        <year>2012</year>
+      </pub-date><volume>8</volume><issue>8</issue><elocation-id>e1002672</elocation-id><history>
+        <date date-type="received">
+          <day>12</day>
+          <month>3</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>16</day>
+          <month>7</month>
+          <year>2012</year>
+        </date>
+      </history><permissions>
+        
+        <copyright-holder>Ray, Igoshin</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions><abstract>
+        <p>Bacterial chromosomes are organized into polycistronic cotranscribed operons, but the evolutionary pressures maintaining them are unclear. We hypothesized that operons alter gene expression noise characteristics, resulting in selection for or against maintaining operons depending on network architecture. Mathematical models for 6 functional classes of network modules showed that three classes exhibited decreased noise and 3 exhibited increased noise with same-operon cotranscription of interacting proteins. Noise reduction was often associated with a decreased chance of reaching an ultrasensitive threshold. Stochastic simulations of the <italic>lac</italic> operon demonstrated that the predicted effects of transcriptional coupling hold for a complex network module. We employed bioinformatic analysis to find overrepresentation of noise-minimizing operon organization compared with randomized controls. Among constitutively expressed physically interacting protein pairs, higher coupling frequencies appeared at lower expression levels, where noise effects are expected to be dominant. Our results thereby suggest an important role for gene expression noise, in many cases interacting with an ultrasensitive switch, in maintaining or selecting for operons in bacterial chromosomes.</p>
+      </abstract><abstract abstract-type="summary">
+        <title>Author Summary</title>
+        <p>In some species, most notably bacteria, chromosomal genes are arranged into clusters called operons. In operons, the process of transcription is physically coupled: a single pass of the RNA polymerase enzyme reading that region of the chromosome simultaneously produces messenger RNA encoding multiple proteins. So far, we do not have a satisfying explanation for what evolutionary forces have maintained operons on bacterial chromosomes. We hypothesized that different types of interactions between operon-coded proteins affect how strongly operons are selected for between two genes. The proposed mechanism for this effect is that operons correlate gene expression noise, changing how it manifests in the post-translational network depending on the type of protein interaction. Mathematical models demonstrate that operons reduce noise for some types of interactions but not others. We found that operon-dependent noise reduction has an underlying dependence on surprisingly high sensitivity of the network to the ratio of proteins from each gene. Databases of genetic information show that <italic>E. coli</italic> has operons more frequently than random if operons reduce noise for the type of interaction various gene pairs have, but not otherwise. Our study thus provides an example of how the architecture of post-translational networks affects bacterial evolution.</p>
+      </abstract><funding-group>
+        <funding-statement>This work was supported by a fellowship from the National Library of Medicine Computational Biology and Medicine Training Program of the Keck Center of the Gulf Coast Consortia (NIH Grant No. 5 T15 LM007093-16 to JCJR) and by NIH grant 1R01GM096189-01 to OAI funded through the joint National Science Foundation Division of Mathematical Sciences/National Institutes of Health National Institute of General Medical Sciences Mathematical Biology Initiative. The simulations were performed using the cyberinfrastructure supported by NSF Grants EIA-0216467, CNS-0821727 and OCI-0959097. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group><counts>
+        <page-count count="12"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The organization of genes into operons is a prominent feature of bacterial chromosomes <xref ref-type="bibr" rid="pcbi.1002672-Jacob1">[1]</xref> that appear in some eukaryotes as well <xref ref-type="bibr" rid="pcbi.1002672-Blumenthal1">[2]</xref>. An operon is typically characterized as a promoter followed by multiple genes that are cotranscribed so that each transcription initiation event produces a polycistronic messenger RNA (mRNA) encoding multiple gene products <xref ref-type="bibr" rid="pcbi.1002672-Rocha1">[3]</xref>. Hypotheses explaining the emergence and maintenance of operons include proportional coregulation <xref ref-type="bibr" rid="pcbi.1002672-Price1">[4]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Price2">[5]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Iber1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Ray1">[7]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Lim1">[8]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Laing1">[9]</xref>, horizontal transfer of intact “selfish” operons <xref ref-type="bibr" rid="pcbi.1002672-Lawrence1">[10]</xref>, emergence via gene duplication <xref ref-type="bibr" rid="pcbi.1002672-Lawrence2">[11]</xref>, coproduction of physically interacting proteins to speed their association <xref ref-type="bibr" rid="pcbi.1002672-Pl1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Dandekar1">[13]</xref>, evolvability of co-regulation for interacting protein products <xref ref-type="bibr" rid="pcbi.1002672-Voigt1">[14]</xref>, and reduction of intrinsic noise <xref ref-type="bibr" rid="pcbi.1002672-Swain1">[15]</xref>. Current evidence favors some hypotheses more than others, but fails to indicate a definitive explanation for how operons are maintained in bacterial chromosomes <xref ref-type="bibr" rid="pcbi.1002672-Price1">[4]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Lawrence2">[11]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Pl1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Dandekar1">[13]</xref>.</p>
+      <p>Arising from stochasticity of individual biochemical reactions and low copy numbers of reactants per cell, intrinsic noise plays a central role in network dynamics <xref ref-type="bibr" rid="pcbi.1002672-SilvaRocha1">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-McAdams1">[17]</xref>. In bacteria, intrinsic noise is most evident in gene expression, caused by translational bursting arising from small numbers of mRNA producing many proteins <xref ref-type="bibr" rid="pcbi.1002672-Paulsson1">[18]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Berg1">[19]</xref> and transcriptional bursting arising from slow activation-deactivation cycles of transcriptional activity by unknown mechanism <xref ref-type="bibr" rid="pcbi.1002672-Golding1">[20]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Mitarai1">[21]</xref>. Extrinsic noise, caused by uncertainties in global parameters and states including those characterizing transcriptional and translational machinery, also contributes to overall biochemical noise <xref ref-type="bibr" rid="pcbi.1002672-Swain2">[22]</xref>. Noise in protein levels is commonly characterized by coefficient of variation (CV), the normalized root-mean square deviation of the protein levels from their mean value (CV = σ/μ, where σ is the standard deviation and μ is the mean) but other measures such as autocorrelation and covariance between concentrations of different proteins can give additional insights.</p>
+      <p>The effects of intrinsic noise on operon maintenance are not well characterized, but covariance between protein levels arising from intrinsic noise depends on transcriptional coupling (co-expression from an operon) of the corresponding genes <xref ref-type="bibr" rid="pcbi.1002672-Swain1">[15]</xref>. The order of genes within an operon may also affect noise <xref ref-type="bibr" rid="pcbi.1002672-Kovcs1">[23]</xref>. Therefore, we hypothesize that noise-related effects contribute to the evolutionary maintenance of operons. Studies of several specific systems corroborate that correlative effects of transcriptional coupling alter posttranslational dynamics <xref ref-type="bibr" rid="pcbi.1002672-Iber1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Lvdok1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Sneppen1">[25]</xref>. However, it is still not clear how different classes of protein interactions and co-expression from an operon may interact to alter biochemical noise.</p>
+      <p>In this study we assessed these effects for different types of posttranslational interaction between gene products. In several types of interactions, the noise difference between cotranscribed and uncoupled configurations was amplified by the existence of a zero-order ultrasensitive switch <xref ref-type="bibr" rid="pcbi.1002672-Goldbeter1">[26]</xref>. We related the results to an intact naturally occurring system with simulations of cotranscribed and uncoupled configurations of the <italic>lac</italic> operon. To test our predictions bioinformatically, we classified naturally occurring interacting pairs of <italic>E. coli</italic> proteins by their type of interaction and analyzed the effect of chromosomal distance between pairs of genes with interacting products. Finally, we used single-cell protein copy number data to determine differences in operon frequencies at high and low expression levels in <italic>E. coli</italic> for physically interacting protein pairs.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>Operons correlate intrinsic protein fluctuations</title>
+        <p>Intrinsic gene expression noise is correlated in a cotranscribed two-gene configuration, but this correlation was not seen in an uncoupled configuration. Relationships between the fluctuations of two proteins can be quantitatively characterized by the covariance of concentrations for proteins <italic>A</italic> and <italic>B</italic> (<italic>σ<sub>AB</sub></italic>). Using the linear noise approximation (LNA; see Materials and Methods) <xref ref-type="bibr" rid="pcbi.1002672-Paulsson1">[18]</xref>, , we calculated a normalized covariance<disp-formula id="pcbi.1002672.e001"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e001" xlink:type="simple"/><label>(1)</label></disp-formula>where angle brackets represent average copy-number of each molecular species, and <italic>τ<sub>mRNA</sub></italic> and <italic>τ<sub>protein</sub></italic> are the characteristic timescales of mRNA and protein decay. Increased covariance of cotranscribed genes is preserved regardless of whether the translation processes are coupled (with a single ribosome binding site for multiple genes; <xref ref-type="fig" rid="pcbi-1002672-g001">Figure 1A–C</xref>) and regardless of the source of intrinsic noise (from translational bursting only or from both transcriptional and translational bursting; <xref ref-type="fig" rid="pcbi-1002672-g001">Figure 1B–C</xref>). We hypothesized that positive covariance can increase or decrease CV in relevant network outputs depending on the nature of the interactions between two proteins.</p>
+        <fig id="pcbi-1002672-g001" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Types of coupling in protein production affect correlations in their fluctuations.</title>
+            <p>A. Two proteins (<italic>A</italic> and <italic>B</italic>) can have coupled translation (1), coupled transcription with independent translation events (2), or uncoupled transcription (3). B, C. Scatter plots showing predicted single-cell distributions of copy numbers for proteins <italic>A</italic> and <italic>B</italic> with different coupling as indicated in models without (panel B) or with (panel C) transcriptional bursting. For simplicity, these models do not include extrinsic noise.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.g001" xlink:type="simple"/>
+        </fig>
+        <p>In addition to covariance, the effect of operons on correlation between protein copy number fluctuations can be quantified by another measure, the <italic>degree of decorrelation</italic> (<xref ref-type="supplementary-material" rid="pcbi.1002672.s014">Text S1</xref>). This measure is useful to characterize the effect of gene expression level on noise differences between cotranscribed and uncoupled proteins (<xref ref-type="supplementary-material" rid="pcbi.1002672.s006">Table S1</xref>), and to assess the effects of expression level on frequencies of operon occurrence in bacterial genomes.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Effects of operons on biochemical noise depends on the type of protein interaction</title>
+        <p>We surveyed databases of <italic>E. coli</italic> biochemical networks <xref ref-type="bibr" rid="pcbi.1002672-Kanehisa1">[29]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Keseler1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-GamaCastro1">[31]</xref> to identify simple two-gene modules of larger networks that represent different ways that two proteins can directly or indirectly interact. The modules represent simple models of the following interactions: catalysis of subsequent steps in a linear metabolic pathway (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2A</xref>), redundant catalysis of the same metabolic step (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2B</xref>), catalysis of diverging reactions following a branch point in a metabolic pathway (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2C</xref>), redundant transcriptional regulation of a downstream gene (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2D</xref>), physical binding between two proteins (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2E</xref>), and covalent modification of one protein by another (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2F</xref>). The list may not be fully comprehensive, but represents several classes of interactions between proteins that are building blocks of larger networks. For each module we constructed a mathematical model to calculate CV for interacting proteins transcribed from the same and different operons (hereafter referred to as cotranscribed and uncoupled configurations, respectively). We then determined differences in CV for relevant network outputs between cotranscribed and uncoupled configurations. The simulations were controlled by keeping the same mean and CV for total protein from each gene between configurations. The CV calculations were performed at stationary state, both numerically (stochastic simulation algorithm; <xref ref-type="bibr" rid="pcbi.1002672-Gillespie1">[32]</xref>) and analytically (LNA <xref ref-type="bibr" rid="pcbi.1002672-vanKampen1">[28]</xref> using Paulsson's <xref ref-type="bibr" rid="pcbi.1002672-Paulsson1">[18]</xref> normalization). The results of the simulations demonstrate that predicted differences in CV for each metabolic module depend on the type of interaction between proteins (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2</xref>).</p>
+        <fig id="pcbi-1002672-g002" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Noise levels in physiologically relevant variables depend on transcriptional coupling.</title>
+            <p>We computed coefficient of variation [CV] = σ/μ, where σ is the standard deviation and μ is the mean, for simplified modules representing modes of interaction between two proteins: A) catalysis of subsequent steps in a linear metabolic pathway, B) redundant catalysis of the same metabolic step, C) catalysis of metabolic steps following a branch point, D) redundant regulation of a downstream gene <italic>p</italic> encoding protein <italic>P</italic>, E) physical interactions resulting in heterodimer formation, and F) covalent modification of one protein by another. In metabolic modules, S, I and P represent substrate, intermediate, and product, respectively. Complete reaction diagrams and parameters are given in supplemental tables (S4, S5, S6). Error bars represent one standard deviation from bootstrap resampling. Results correspond to the single ribosome binding site model (translational coupling), but hold qualitatively for multiple ribosome binding sites as well.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.g002" xlink:type="simple"/>
+        </fig>
+        <p>For the linear metabolic pathway module, cotranscription of two enzymes from the same operon results in lower CV for metabolic intermediate. Without transcriptional coupling, metabolic intermediate concentrations are prone to large spikes (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1A, B, J, K</xref>). Notably, no significant differences between cotranscribed and uncoupled configurations are evident in metabolic product CV (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2A</xref>), indicating that metabolic flux is not significantly different between the two groups. Intuitively, a spike occurs when flux from the upstream enzyme exceeds the maximal flux capacity of the downstream enzyme resulting in large increase of metabolic intermediate concentration. This increase exceeds the saturation point for the enzyme converting it to product, making product concentration insulated from these spikes.</p>
+        <p>In contrast, the metabolic modules with redundant enzymes (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2B</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1C, L</xref>) and with a branch point (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2C</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1D, M</xref>) show an increase in metabolite CV when the two enzymes are in the same operon. In these cases, lower correlations between enzyme fluctuations reduce the chance of simultaneous stochastic drops in concentration of both enzymes.</p>
+        <p>Similarly, cotranscription of multiple (redundant) gene regulators from the same operon results in increased CV in the regulated gene as compared to the uncoupled regulator configuration (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2D</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1E, N</xref>). Here, we assumed that the gene regulatory logic was an OR gate (i.e., each regulator by itself or both together would have the same effect). Noise in the output from AND gate logic (i.e., a multi-subunit regulator) is expected to follow the noise pattern of the physical interaction module (below).</p>
+        <p>Consistent with a previous study <xref ref-type="bibr" rid="pcbi.1002672-Sneppen1">[25]</xref>, the physical protein interaction module under transcriptional coupling shows a strong reduction in fluctuations of monomer concentrations. (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2E</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1F, G, O, P</xref>). With strong binding, the concentration of each free monomer changes from nearly zero when its partner is in excess to a finite value when the monomer itself is in excess. These fluctuations are more common when the binding partners are not in the same operon, so the noise is therefore high. Cotranscription slightly increases heterodimer CV compared to the uncoupled configuration (species <italic>AB</italic>; <xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2E</xref>), but to a much lesser extent than its reduction of CV in monomer concentrations. In the limit of strong binding, nearly all of one monomer is bound, so the effect on monomer noise is dominant.</p>
+        <p>For the covalent modification module (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2F</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1H, I, Q, R</xref>), different gene configurations cause small changes in the CV of the modified form of protein <italic>A</italic> (<italic>A</italic>*) that can be of either sign depending on parameter values, whereas the unmodified form (<italic>A</italic>) has consistently lower CV in the cotranscribed configuration (<xref ref-type="fig" rid="pcbi-1002672-g002">Figures 2F</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s001">S1H, Q</xref>).</p>
+      </sec>
+      <sec id="s2c">
+        <title>Analytical approach confirms predicted effects of cotranscription on intrinsic noise</title>
+        <p>The stochastic simulation approach (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2</xref>) gives decisive results, but only for the parameter values tested. To determine how generally the simulation results hold in the face of different parameter values, we used the LNA to analytically determine noise differences (here quantified as CV<sup>2</sup>) between cotranscribed and uncoupled forms of each network module. For each molecular species denoted by <italic>j</italic>, we calculated the noise difference between cotranscribed (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e002" xlink:type="simple"/></inline-formula>) and uncoupled (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e003" xlink:type="simple"/></inline-formula>) configurations as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e004" xlink:type="simple"/></inline-formula>. If the value is positive, the cotranscribed configuration has lower CV<sup>2</sup> (and therefore, lower CV); if it is negative, the uncoupled configuration has lower CV<sup>2</sup>. A more complete analysis for each module is presented in <xref ref-type="supplementary-material" rid="pcbi.1002672.s015">Text S2</xref>. Here we highlight the main results.</p>
+        <list list-type="order">
+          <list-item>
+            <p>Linear metabolic pathway: We find a lower bound on the difference in metabolic intermediate:<disp-formula id="pcbi.1002672.e005"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e005" xlink:type="simple"/><label>(2)</label></disp-formula>Thus cotranscribed enzymes are generally predicted to have much lower noise in metabolic intermediate than uncoupled enzymes.</p>
+          </list-item>
+          <list-item>
+            <p>Redundant metabolic step: We find a difference in the product<disp-formula id="pcbi.1002672.e006"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e006" xlink:type="simple"/><label>(3)</label></disp-formula>where <italic>H<sub>AP</sub></italic> and <italic>H<sub>BP</sub></italic> are the logarithmic gains (sensitivities) of product <italic>P</italic> to proteins <italic>A</italic> and <italic>B</italic>, respectively. Because <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e007" xlink:type="simple"/></inline-formula>, the uncoupled configuration is predicted to have lower noise.</p>
+          </list-item>
+          <list-item>
+            <p>Metabolic branch point: For substrate noise, we find<disp-formula id="pcbi.1002672.e008"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e008" xlink:type="simple"/><label>(4)</label></disp-formula>where <italic>H<sub>As</sub></italic>, <italic>H<sub>Bs</sub></italic>, and <italic>H<sub>ss</sub></italic> are the logarithmic gains of substrate flux ratio (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e009" xlink:type="simple"/></inline-formula>, the ratio of the fluxes producing and consuming substrate) in response to changes in <italic>A</italic>, <italic>B</italic> and <italic>s</italic>, respectively. While <italic>H<sub>As</sub></italic> and <italic>H<sub>Bs</sub></italic> are positive, <italic>H<sub>ss</sub></italic> is negative (<xref ref-type="supplementary-material" rid="pcbi.1002672.s015">Text S2</xref>). As the enzymes approach saturation, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e010" xlink:type="simple"/></inline-formula> becomes small. As a result, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e011" xlink:type="simple"/></inline-formula> is large and positive, predicting much lower noise in the uncoupled configuration (<xref ref-type="supplementary-material" rid="pcbi.1002672.s015">Text S2</xref>).</p>
+          </list-item>
+          <list-item>
+            <p>Multiple gene regulators: The difference for protein production stimulated by two regulators with OR logic is<disp-formula id="pcbi.1002672.e012"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e012" xlink:type="simple"/><label>(5)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e013" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e014" xlink:type="simple"/></inline-formula> are the logarithmic gains of mRNA flux ratio (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e015" xlink:type="simple"/></inline-formula>, the ratio of mRNA production and degradation fluxes) in response to regulators <italic>A</italic> and <italic>B</italic>, respectively. Their absolute values are in the interval [0, 1] with positive values for activators and negative values for repressors. Thus, when both regulators are activators or repressors, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e016" xlink:type="simple"/></inline-formula>, predicting more noise if regulators are in the same operon.</p>
+          </list-item>
+          <list-item>
+            <p>Physically interacting proteins: With strong interactions, we have<disp-formula id="pcbi.1002672.e017"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e017" xlink:type="simple"/><label>(6)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e018" xlink:type="simple"/></inline-formula> is the logarithmic gain of the flux ratio of <italic>B</italic> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e019" xlink:type="simple"/></inline-formula>, the ratio of fluxes producing unbound B to the fluxes consuming it) to protein <italic>A</italic>. We show that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e020" xlink:type="simple"/></inline-formula> is negative with its absolute value approaching 1 from below. Therefore, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e021" xlink:type="simple"/></inline-formula>, predicting that monomer noise is significantly decreased by covariance. At the same time, the difference in noise in heterodimer is negative and limited in absolute value to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e022" xlink:type="simple"/></inline-formula>, predicting that complex noise slightly increases with cotranscription.</p>
+          </list-item>
+          <list-item>
+            <p>Covalent modification module: We have<disp-formula id="pcbi.1002672.e023"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e023" xlink:type="simple"/><label>(7)</label></disp-formula>where <italic>H<sub>mA</sub></italic> represents the logarithmic gain of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e024" xlink:type="simple"/></inline-formula> (the ratio of flux producing unmodified protein <italic>A</italic> to that consuming it) to concentration of mRNA. For realistic parameter values at which protein modification flux significantly exceeds the degradation flux, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e025" xlink:type="simple"/></inline-formula> (<xref ref-type="supplementary-material" rid="pcbi.1002672.s014">Text S1</xref>). In this regime, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e026" xlink:type="simple"/></inline-formula> is small and negative whereas <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e027" xlink:type="simple"/></inline-formula> remains positive and significant, predicting a lower noise in the cotranscribed configuration.</p>
+          </list-item>
+        </list>
+        <p>To summarize, we found that differences in noise between cotranscribed and uncoupled configurations in stochastic simulations are qualitatively consistent with the analytical approach. Notably, in all the cases the magnitude of the differences in CV<sup>2</sup> between two configurations is proportional to the value of covariance <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e028" xlink:type="simple"/></inline-formula>, but in many cases the coefficient of proportionality is very large. This qualitatively suggests posttranslational interactions in some modules are capable of amplifying noise differences between cotranscribed and uncoupled proteins. However, the LNA method likely underestimates the magnitude of non-linear amplification. We further explore these amplification mechanisms in the next section.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Ultrasensitivity arising in non-redundant protein interactions</title>
+        <p>Timecourse simulations predict that uncorrelated fluctuations of the two enzymes in a linear metabolic pathway result in large bursts of metabolic intermediate (<xref ref-type="fig" rid="pcbi-1002672-g003">Figure 3A, B</xref>). This suggests that higher noise in the transcriptionally uncoupled linear metabolic pathway arises at least in part from the increased probability of occasionally crossing an ultrasensitive threshold. Indeed, a sharp threshold in the intermediate of the linear metabolic pathway arises when the enzyme-mediated consumption of a product saturates, leading to non-linear degradation <xref ref-type="bibr" rid="pcbi.1002672-Buchler1">[33]</xref>. The ultrasensitive threshold is crossed when the downstream enzyme saturates, and the flux from the upstream enzyme exceeds its maximal value (<italic>V<sup>+</sup></italic>/<italic>V<sup>−</sup></italic>&gt;1 in <xref ref-type="fig" rid="pcbi-1002672-g003">Figure 3C</xref>). Because <italic>V<sup>+</sup></italic> and <italic>V<sup>−</sup></italic> are proportional to their enzyme levels, the numerator and denominator of the ratio fluctuate together when both enzymes are in the same operon. Therefore transcriptional coupling lowers noise in the flux ratio and making it unlikely to cross the threshold <italic>V<sup>+</sup></italic>/<italic>V<sup>−</sup></italic> = 1. When the enzymes are uncoupled, simulations show more variability in the <italic>V<sup>+</sup></italic>/<italic>V<sup>−</sup></italic> ratio, allowing the ratio to cross the threshold with consequent large spikes in metabolic intermediate. Thus, the ultrasensitive switch amplifies noise differences already present between cotranscribed and uncoupled configurations.</p>
+        <fig id="pcbi-1002672-g003" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>An ultrasensitive response amplifies noise differences between cotranscribed and uncoupled linear metabolic pathway modules.</title>
+            <p>A. When copy numbers of enzymes A and B are matched, transient changes in production and consumption flux are matched, resulting in maintenance of a low concentration of metabolic intermediate. An increase in expression of <italic>A</italic>, unmatched by a change in expression of B, can cause the production flux of metabolic intermediate to exceed the saturation point of flux through enzyme <italic>B</italic>, resulting in accumulation of metabolic intermediate. B. Simulated timecourse of metabolic intermediate in cotranscribed and uncoupled configurations of the linear metabolic pathway model. C. Steady state response of metabolic intermediate to changes in the ratio of production flux to consumption flux (solid line), with stochastic simulation timecourses of intermediate in cotranscribed and uncoupled linear metabolic pathway module configurations plotted with respect to changing flux balance. Results represent the single ribosome binding site model (translational coupling), but are qualitatively the same for multiple ribosome binding sites as well.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.g003" xlink:type="simple"/>
+        </fig>
+        <p>Differences in noise between cotranscribed and uncoupled configurations of all of the non-redundant modules can be amplified by ultrasensitive switches in a similar manner (<xref ref-type="supplementary-material" rid="pcbi.1002672.s002">Figure S2</xref>). The metabolic branch point module undergoes the same type of non-linear degradation effect as the linear metabolic pathway, but in the branch point transcriptionally coupled enzyme pairs are more likely to fluctuate downward and saturate simultaneously than uncoupled enzymes. This effect leads to a higher likelihood of substrate buildup in the cotranscribed configuration (<xref ref-type="supplementary-material" rid="pcbi.1002672.s002">Figure S2B</xref>). The physical interaction and covalent modification modules undergo molecular titration <xref ref-type="bibr" rid="pcbi.1002672-Buchler2">[34]</xref>, resulting in an ultrasensitive switch for monomers (physical interaction module) or unmodified protein (covalent module) that depends on the ratio of protein production fluxes (<xref ref-type="supplementary-material" rid="pcbi.1002672.s002">Figure S2C, D</xref>). Cotranscription of the two genes prevents the switch from amplifying transcriptional noise by reducing fluctuations in this ratio. Sensitivity analysis of mean-field models shows that the existence of ultrasensitive switches does not depend on strict parameter regimes (<xref ref-type="supplementary-material" rid="pcbi.1002672.s016">Text S3</xref>).</p>
+      </sec>
+      <sec id="s2e">
+        <title>Detailed <italic>lac</italic> operon model confirms effects of operons on intrinsic noise in an intact system</title>
+        <p>To explore how conclusions drawn from models of simple network modules apply to a more complicated realistic network, we implemented stochastic simulations of a detailed <italic>lac</italic> operon model that is based on a previous deterministic model <xref ref-type="bibr" rid="pcbi.1002672-Dreisigmeyer1">[35]</xref>. The stochastic model includes enzymatic steps reminiscent of a linear metabolic pathway with permease-mediated lactose import and conversion by β-galactosidase to allolactose and β-<sc>d</sc>-galactose+β-<sc>d</sc>-glucose (<xref ref-type="fig" rid="pcbi-1002672-g004">Figure 4A</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s012">Tables S7</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s008">S8</xref>). Feedback and gene regulation are present with derepression of <italic>lacY</italic> and <italic>lacZ</italic> expression caused by allolactose binding to LacI (<xref ref-type="fig" rid="pcbi-1002672-g004">Figure 4A</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s012">Tables S7</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s008">S8</xref>).</p>
+        <fig id="pcbi-1002672-g004" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Allolactose noise depends on transcriptional coupling in simulations of the <italic>E. coli lac</italic> operon.</title>
+            <p>A. Simplified reaction diagram of the model used. The complete reaction scheme and parameter values are given in <xref ref-type="supplementary-material" rid="pcbi.1002672.s012">Tables S7</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s013">S8</xref>. Arrows depict flux arising from the mechanisms in the model. B. Predicted dynamics of allolactose (Alac) and permease (LacY) in excess inducer (extracellular lactose at 5,000 µM) are represented by 20 individual timecourses. C. Time correlation between permease and β-galactosidase (LacZ) for 100 timecourses. Error bars represent standard error of the mean. D. Coefficients of variation (CV = σ/μ, where σ is the standard deviation and μ is the mean) of metabolite allolactose at three extracellular lactose concentrations. E. CV of permease protein at three extracellular lactose concentrations. Bootstrapped mean and standard deviation of CVs (red bars in panels D and E) diverge from simulated CV when the distribution is highly skewed. Concentration 1.39 µM represents minimal induction of the <italic>lac</italic> operon; 83.0 µM represents mid-range induction; and 5,000 µM represents an excess of inducer with maximal <italic>lac</italic> operon induction. Error bars represent one standard deviation from bootstrap resampling.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.g004" xlink:type="simple"/>
+        </fig>
+        <p>We simulated three inducer concentrations representing minimal <italic>lac</italic> operon induction (1.39 µM extracellular lactose concentration or 835 molecules/femtoliter), intermediate induction (83.0 µM or 50,000 molecules/femtoliter), and excess inducer with maximal <italic>lac</italic> operon induction (∼5,000 µM or 3×10<sup>6</sup> molecules/femtoliter). Timecourses suggest that transcriptional coupling between <italic>lacY</italic> and <italic>lacZ</italic> (wild-type situation) eliminates the large fluctuations in allolactose (<xref ref-type="fig" rid="pcbi-1002672-g004">Figures 4B</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s003">S3</xref>) and intracellular lactose (not shown) observed in the transcriptionally uncoupled form of the system. This is consistent with a reduction in the correlation between permease and β-galactosidase (<italic>lacY</italic> and <italic>lacZ</italic> gene products, respectively) in time (<xref ref-type="fig" rid="pcbi-1002672-g004">Figure 4C</xref>).</p>
+        <p>At all inducer concentrations, the uncoupled configuration displays higher CV in allolactose than did the cotranscribed configuration (<xref ref-type="fig" rid="pcbi-1002672-g004">Figure 4D</xref>). This difference is most pronounced in the minimal induction region and gradually reduced with increasing <italic>lacY-lacZ</italic> induction. At the same time, there is little difference in protein CV between cotranscribed and uncoupled configurations of the model at most inducer levels. In both configurations the CV monotonically decreases with higher expression.</p>
+        <p>The primary consequence of cotranscription of <italic>lac</italic> proteins in the same operon is a reduction in fluctuations of intracellular lactose and allolactose. These fluctuations may prevent disruption of other sugar uptake pathways by, for example, interfering with inducer exclusion mechanisms <xref ref-type="bibr" rid="pcbi.1002672-Saier1">[36]</xref>. Physiological benefits of noise reduction are also consistent with reports that excessive lactose import is associated with significant lowering of growth rate in <italic>E. coli</italic> [37 and references therein,38]. Thus, there may be a selective pressure to maintain high covariance between permease and β-galactosidase resulting from the wild-type genetic structure of the <italic>lac</italic> operon.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Operon incidence in <italic>E. coli</italic> is correlated with noise reduction</title>
+        <p>To determine if global operon organization in <italic>E. coli</italic> correlates with predicted noise differences, we characterized frequencies of gene membership in the same operon bioinformatically (<xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>). We first assigned membership of known <italic>E. coli</italic> K12 MG1655 <xref ref-type="bibr" rid="pcbi.1002672-Blattner1">[39]</xref> biochemical networks into patterns corresponding to the 2-gene modules (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2</xref>) using data on <italic>E. coli</italic> operons <xref ref-type="bibr" rid="pcbi.1002672-GamaCastro1">[31]</xref>, metabolic pathways <xref ref-type="bibr" rid="pcbi.1002672-Kanehisa1">[29]</xref>, gene regulation networks <xref ref-type="bibr" rid="pcbi.1002672-GamaCastro1">[31]</xref>, covalent modification <xref ref-type="bibr" rid="pcbi.1002672-Keseler1">[30]</xref>, and physical protein interactions <xref ref-type="bibr" rid="pcbi.1002672-Butland1">[40]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-PeregrnAlvarez1">[41]</xref>. Many natural networks fall into more than one class (e.g., common bacterial signal mediators, two-component systems, have physical interactions between the sensor and the regulator <xref ref-type="bibr" rid="pcbi.1002672-MarlesWright1">[42]</xref> and are also in the covalent modification class). For the metabolic and gene regulation network modules, we eliminated physically interacting pairs to ensure that those included had true functional overlap and were not acting as subunits of a larger enzyme or regulator. Thus, the only systems that are members of more than one class are in members of both the covalent modification and physical interaction modules. In each class we created controls with randomized operon assignment of the genes (see Materials and Methods).</p>
+        <table-wrap id="pcbi-1002672-t001" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.t001</object-id><label>Table 1</label><caption>
+            <title>Operon organization trends in <italic>E. coli</italic> relate to noise-minimizing transcriptional coupling patterns.</title>
+          </caption><alternatives>
+            <graphic id="pcbi-1002672-t001-1" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1">Network module</td>
+                  <td align="left" colspan="1" rowspan="1">Low noise configuration</td>
+                  <td align="left" colspan="1" rowspan="1">Number of pairs</td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>f</italic>
+                    <xref ref-type="table-fn" rid="nt101">a</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"><italic>f</italic><sub>rand</sub> (μ ± σ)</td>
+                  <td align="left" colspan="1" rowspan="1">Trend in <italic>E. coli</italic><xref ref-type="table-fn" rid="nt102">b</xref></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">A.</td>
+                  <td align="left" colspan="1" rowspan="1">Linear metabolic pathway</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled</td>
+                  <td align="left" colspan="1" rowspan="1">2471</td>
+                  <td align="left" colspan="1" rowspan="1">0.038</td>
+                  <td align="left" colspan="1" rowspan="1">0.0036±0.0011</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled (&lt;&lt;10<sup>−6</sup>)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">B.</td>
+                  <td align="left" colspan="1" rowspan="1">Redundant enzymes</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled</td>
+                  <td align="left" colspan="1" rowspan="1">114</td>
+                  <td align="left" colspan="1" rowspan="1">0</td>
+                  <td align="left" colspan="1" rowspan="1">0.01±0.00094</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled (&lt;&lt;10<sup>−6</sup>)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">C.</td>
+                  <td align="left" colspan="1" rowspan="1">Metabolic branch point</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled</td>
+                  <td align="left" colspan="1" rowspan="1">2036</td>
+                  <td align="left" colspan="1" rowspan="1">0.0025</td>
+                  <td align="left" colspan="1" rowspan="1">0.0047±0.0015</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled (0.071)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">D.</td>
+                  <td align="left" colspan="1" rowspan="1">Multiple gene regulators</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled</td>
+                  <td align="left" colspan="1" rowspan="1">1368</td>
+                  <td align="left" colspan="1" rowspan="1">0.0015</td>
+                  <td align="left" colspan="1" rowspan="1">0.043±0.0054</td>
+                  <td align="left" colspan="1" rowspan="1">Uncoupled (&lt;&lt;10<sup>−6</sup>)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">E.</td>
+                  <td align="left" colspan="1" rowspan="1">Physical interaction</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled</td>
+                  <td align="left" colspan="1" rowspan="1">3938</td>
+                  <td align="left" colspan="1" rowspan="1">0.35</td>
+                  <td align="left" colspan="1" rowspan="1">0.0030±0.00073</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled (&lt;&lt;10<sup>−6</sup>)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">F.</td>
+                  <td align="left" colspan="1" rowspan="1">Covalent modification</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled</td>
+                  <td align="left" colspan="1" rowspan="1">201</td>
+                  <td align="left" colspan="1" rowspan="1">0.23</td>
+                  <td align="left" colspan="1" rowspan="1">0.0047±0.0047</td>
+                  <td align="left" colspan="1" rowspan="1">Coupled (&lt;&lt;10<sup>−6</sup>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives><table-wrap-foot>
+            <fn id="nt101">
+              <label>a</label>
+              <p>Same operon pair fraction.</p>
+            </fn>
+            <fn id="nt102">
+              <label>b</label>
+              <p>Numbers represent <italic>p</italic>-value vs rand.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+        <p>Proteins in the linear metabolic pathway, physical interaction, and covalent modification modules appear in the same operon significantly more frequently than do randomized controls (<italic>p</italic>&lt;&lt;10<sup>−6</sup>; <xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>). On the other hand, redundant metabolic nodes and multiple gene regulators are significantly less likely to be in the same operon than randomized controls (<italic>p</italic>&lt;&lt;10<sup>−6</sup>; <xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>). Metabolic branch points show a bias toward being uncoupled, but falls just short of being statistically significant (<italic>p</italic> = 0.071). These findings hold even after we divide each class into essential and nonessential genes using data from Taniguchi <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1002672-Taniguchi1">[43]</xref>; <xref ref-type="supplementary-material" rid="pcbi.1002672.s007">Table S2</xref>). Thus operon overrepresentation, when it occurs, is present in essential genes, consistent with previous results contradicting the selfish operon hypothesis <xref ref-type="bibr" rid="pcbi.1002672-Pl1">[12]</xref>. Our results establish a correlation between operon organization of protein pairs and their function that is consistent with noise minimization and avoidance of ultrasensitivity.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Higher incidence of cotranscribed interacting proteins at low than high expression levels</title>
+        <p>To separate the specific effect of noise from that of other factors affecting selection for operons, such as proportional coregulation, we considered whether the tendency toward operon membership of posttranslationally interacting protein pairs is related to gene expression levels <xref ref-type="bibr" rid="pcbi.1002672-Kovcs1">[23]</xref>. Intrinsic noise is stronger for genes with low expression levels <xref ref-type="bibr" rid="pcbi.1002672-Taniguchi1">[43]</xref>, covariance of protein concentrations is more pronounced (<xref ref-type="disp-formula" rid="pcbi.1002672.e001">Equation 1</xref>) and the degree of decorrelation is higher (<xref ref-type="supplementary-material" rid="pcbi.1002672.s006">Table S1</xref>). Therefore, if noise is an evolutionary factor driving operon formation, levels of gene expression may be inversely correlated with operon patterns. On the other hand, if coregulation of mean expression levels is the dominant factor in selecting for operons, the frequency of transcriptional coupling may be directly correlated with gene expression levels because the cost of differential regulation would be highest at the highest expression levels. As a result, any trend in coupling frequencies with gene expression levels would favor one hypothesis and disfavor the other.</p>
+        <p>We used a dataset of average single-cell mRNA and protein copy numbers in <italic>E. coli</italic> <xref ref-type="bibr" rid="pcbi.1002672-Taniguchi1">[43]</xref> to explore this trend for constitutively expressed physically interacting protein pairs (other network modules have insufficient data for such analysis). Because different conditions can shift gene expression levels and the dataset is only available for one condition, we chose to focus on the subset of interacting proteins that are constitutive, i.e., not predicted to undergo any regulation in RegulonDB. Each gene's protein or mRNA copy number was considered once, along with a binary variable indicating whether or not the protein product interacts with a same or non-same operon protein. Further details are given in Materials and Methods.</p>
+        <p>We divided the set into two subsets of expression level, one below and one above the median copy number (<xref ref-type="fig" rid="pcbi-1002672-g005">Figure 5</xref>). The fraction of protein pairs sharing the same operon is higher in the low-expression subset for protein (bootstrap test <italic>p</italic>&lt;0.01) and mRNA (bootstrap test <italic>p</italic>&lt;0.05) copy numbers. This suggests that evolutionary selection against decorrelation (<xref ref-type="supplementary-material" rid="pcbi.1002672.s006">Table S1</xref>) significantly contributes to maintenance of operons in the chromosome.</p>
+        <fig id="pcbi-1002672-g005" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002672.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Dependence on expression level for frequencies of gene pairs of physically interacting proteins sharing operons.</title>
+            <p>A dataset of single-cell protein and mRNA copy numbers in <italic>E. coli</italic> <xref ref-type="bibr" rid="pcbi.1002672-Taniguchi1">[43]</xref> shows reduced frequency of coupling for abundant proteins (A) and mRNA (B). Error bars represent one standard deviation from bootstrapping the data 1,000 times. Significance levels were determined by a bootstrap test.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.g005" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>A longstanding question in evolutionary biology is how non-transcriptional dynamics <xref ref-type="bibr" rid="pcbi.1002672-Ray2">[44]</xref> affect selection of particular genetic architectures. By relating chromosomal patterns to protein network structures in <italic>E. coli</italic>, we see a compelling case for post-translational dynamics altering the probability of operon membership of genes depending on the nature of their interaction.</p>
+      <sec id="s3a">
+        <title>Covariance and noise reduction in non-redundant interactions</title>
+        <p>Because enzymes often operate close to saturation <xref ref-type="bibr" rid="pcbi.1002672-Bennett1">[45]</xref>, resolving metabolic flux imbalances may prevent widespread accumulation of intermediate, which is potentially toxic <xref ref-type="bibr" rid="pcbi.1002672-Fell1">[46]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Levine1">[47]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Lee1">[48]</xref>. Simulations of a detailed <italic>lac</italic> operon model in our study corroborate the results of the simpler linear metabolic module, suggesting a role for intrinsic noise in selecting for <italic>lac</italic> operon architecture (in addition to the stochastic effects previously examined in this system <xref ref-type="bibr" rid="pcbi.1002672-vanHoek1">[49]</xref>). Simulations that include extrinsic noise as a correlating factor indicate that it does not reduce metabolite noise as well as the stronger correlations caused by cotranscription (<xref ref-type="supplementary-material" rid="pcbi.1002672.s017">Text S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s004">Figure S4</xref>).</p>
+        <p>Many metabolic operons are large (and with complex evolutionary histories; <xref ref-type="bibr" rid="pcbi.1002672-Fani1">[50]</xref>), but the length of a metabolic pathway is often longer than that of a typical operon, leading to the question of where optimal operon break points for metabolic pathways may lie. Our results suggest that break points occur predominantly where the intermediate is not toxic or where it is processed by multiple downstream enzymes, such as at branch points and metabolic steps with redundant enzymes. Metabolite spikes could also potentially be buffered by reversibility of catalytic reactions, though the reversible step in the <italic>lac</italic> operon did not prevent intermediate spikes. Furthermore, if portions of metabolic pathways that are divided by intermediates with relatively low toxicity undergo upregulation as needed, there may be a trade-off between reduction of toxic intermediate spikes and just-in-time transcription <xref ref-type="bibr" rid="pcbi.1002672-Zaslaver1">[51]</xref> in the evolution of metabolic networks.</p>
+        <p>Our analysis suggests that pairs of enzymes after a branch point can have lower noise (CV) if they are not cotranscribed (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2C</xref>), but with a less consistent CV difference between cotranscribed and uncoupled configurations than the other modules (<xref ref-type="supplementary-material" rid="pcbi.1002672.s001">Figure S1</xref> D,M). Therefore, the noise hypothesis predicts patterns of transcriptional coupling to be weaker than in other modules, as we observe to be the case in <italic>E. coli</italic> (<xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>).</p>
+        <p>The simple physical protein interaction module in our study (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2E</xref>) may result in one of two different types of physiologically meaningful output variables: an active heterodimer, in which the genes make up subunits of a functional complex, or an active monomer, in which its activity is negatively regulated by the binding partner (as with sigma-antisigma systems <xref ref-type="bibr" rid="pcbi.1002672-Igoshin1">[52]</xref>). In either case reduction in monomer noise is justified; in the latter case, to reduce noise in the physiologically relevant output. In the former case, lower noise represents a reduction in inefficient protein production that can reduce promiscuous interactions with other parts of the network. Heterodimer noise is smaller for the uncoupled configuration because upward fluctuations in its concentration are limited to being no larger than the minimum of [<italic>A</italic>] and [<italic>B</italic>] and those concentrations are less likely to simultaneously fluctuate upward simultaneously.</p>
+        <p>The covalent modification system (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2F</xref>) in its uncoupled configuration has reduced fluctuations in the unmodified protein (<italic>A</italic>) compared with the uncoupled configuration. Noise effects of transcriptional coupling may therefore be important in covalent modification systems where the unmodified form of the protein is capable of interacting with other systems (<xref ref-type="supplementary-material" rid="pcbi.1002672.s015">Text S2</xref>).</p>
+        <p>Higher-order chromosome structure, such as bacterial chromatin <xref ref-type="bibr" rid="pcbi.1002672-Noom1">[53]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Wang1">[54]</xref> and regulatory factors such as bidirectional promoters and transcriptional terminators <xref ref-type="bibr" rid="pcbi.1002672-Hermsen1">[55]</xref> affect the spatial proximity of genes. Operons could also play a role in spatial proximity, as suggested by the selfish operon hypothesis <xref ref-type="bibr" rid="pcbi.1002672-Lawrence1">[10]</xref>. We explored whether chromosomal proximity can explain operon membership in linear metabolic and physically interacting gene pairs. Our bioinformatic analysis suggests that the prevalence of operons cannot be solely explained by a proximity bias of interacting gene pairs in the <italic>E. coli</italic> chromosome (<xref ref-type="supplementary-material" rid="pcbi.1002672.s017">Text S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s005">Figure S5</xref>).</p>
+      </sec>
+      <sec id="s3b">
+        <title>Noise differences in non-redundant modules arise from ultrasensitivity</title>
+        <p>A striking feature of the non-redundant protein interaction modules is that they all contain a zero-order ultrasensitive switch, which arises as a side-effect of saturation. This effect amplifies differences in CV between cotranscribed and uncoupled forms of the modules (<xref ref-type="fig" rid="pcbi-1002672-g003">Figures 3</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002672.s002">S2</xref>) and may degrade performance when its threshold is crossed. In each two-gene module, the operon architecture that avoids crossing the ultrasensitive threshold is significantly over-represented in <italic>E. coli</italic> (<xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>). Signatures of selection against noise in these modules thus likely represent selection against performance-degrading ultrasensitivity as well.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Gene expression level and operon prevalence</title>
+        <p>Gene pairs encoding constitutive physically interacting proteins are significantly more likely to be in the same operon if their expression levels are low (<xref ref-type="fig" rid="pcbi-1002672-g005">Figure 5</xref>). This trend could be explained by slow protein diffusion in the crowded intracellular environment, as cotranscribed gene products are more likely to be present at the same subcellular location. However even slow diffusion (&lt;1 µm<sup>2</sup>/s) across a typical bacterial length of ∼1 µm is much faster than the expected time lag between translation of two proteins given typical ribosomal speeds of 12–21 AA/s <xref ref-type="bibr" rid="pcbi.1002672-Bremer1">[56]</xref>. Therefore, increased biochemical noise (here, measured as decorrelations between uncoupled proteins) at low expression levels are the most likely explanation of the observed trend. We argue that these noise effects are detrimental to the performance of some protein interaction networks.</p>
+        <p>The opposite trend would be expected if proportional expression of mean concentrations or other mechanisms are the primary selective pressure on operon maintenance. In general, genes with high expression levels may operate under greater evolutionary pressure than genes with low expression levels <xref ref-type="bibr" rid="pcbi.1002672-Gouy1">[57]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Akashi1">[58]</xref> and therefore their deviation from optimal chromosomal organization is less likely. Arguably, noise minimization is the only selective force that is expected to be more important for genes with low expression levels than for genes with high expression levels <xref ref-type="bibr" rid="pcbi.1002672-Kovcs1">[23]</xref>.</p>
+      </sec>
+      <sec id="s3d">
+        <title>Redundant proteins and selection against operons</title>
+        <p>Partial functional redundancy of proteins allows one protein to compensate for a downward fluctuation in concentration of the other protein, thereby reducing noise with uncorrelated protein fluctuations (<xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>; <xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2</xref>). Therefore, just as noise minimization may explain operon membership for non-redundant interactions, it may also explain the lack of redundant proteins in operons. Differential regulation of the genes can additionally play an important role in keeping redundant interactions transcriptionally uncoupled. In yeast metabolic pathways, apparently redundant enzymes are differentially expressed in different pathways depending on external conditions <xref ref-type="bibr" rid="pcbi.1002672-Ihmels1">[59]</xref>. This type of mechanism, if present <italic>in E. coli</italic>, may also explain why no redundant enzymes are in the same operon. Similarly, different growth conditions may result in different regulators affecting downstream expression of the same genes. Further work is necessary to distinguish the noise reduction hypothesis more decisively from differential gene regulation as a selective force in redundant pairs; differential regulation may be physiologically important in some cases and not in others.</p>
+      </sec>
+      <sec id="s3e">
+        <title>Eukaryotes, operons, and noise</title>
+        <p>Improvement of dynamic performance of simple networks arising from cotranscription of interacting genes from the same operon raises the question of why operons are rare in eukaryotes. Eukaryotic cell volumes are much higher than prokaryotes, likely lowering the effect of intrinsic noise relative to the dominant effect of extrinsic noise <xref ref-type="bibr" rid="pcbi.1002672-Cheong1">[60]</xref>. Nevertheless, such benefits may still be present in some systems, and there are mechanisms that allow correlating gene expression noise in eukaryotic cells without polycistronic loci. Genes located near each other have correlated transcriptional bursts that likely arise from chromatin decondensation <xref ref-type="bibr" rid="pcbi.1002672-Becskei1">[61]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Raj1">[62]</xref>. Clusters of co-expressed genes, particularly metabolic genes, appear in eukaryotic chromosomes at a rate higher than would be expected randomly <xref ref-type="bibr" rid="pcbi.1002672-Wang2">[63]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Yi1">[64]</xref>. Co-expressed, functionally related genes at distant genomic loci also appear to migrate together for co-transcription from discrete transcription initiation complexes <xref ref-type="bibr" rid="pcbi.1002672-Osborne1">[65]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Schoenfelder1">[66]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-Dong1">[67]</xref>. These mechanisms, arising from the increased size and structural complexity of eukaryotic chromatin over prokaryotic chromosomes, can correlate gene expression noise with similar dynamic benefits to operons.</p>
+      </sec>
+      <sec id="s3f">
+        <title>Concluding remarks</title>
+        <p>We have developed a theory predicting that operon membership can increase or decrease noise in different types of protein interactions. Bioinformatic analysis finds that naturally occurring operon patterns in <italic>E. coli</italic> correlate with reduction of biochemical noise. Nevertheless, it would be interesting to explore operon coupling frequencies in bacterial stress response systems known to favor population-level heterogeneity, such as stress responses in <italic>B. subtilis</italic>; the amplification of noise by underlying ultrasensitive switches in non-redundant network modules may be a potential mechanism of population-level heterogeneity.</p>
+        <p>The existence of implicit ultrasensitive switches also underscores the idea that dramatic non-linearities are likely present in many simple protein interaction networks. Our results suggest that ultrasensitive switches are likely undetectable in the wild-type configurations of well-adapted systems as a result of selection against them, but may be present in conditions with lower selective pressure, or recent evolutionary events. These switches nevertheless have important implications for genome evolution. Their effects, and the mechanisms for avoiding them, may in turn shape larger biochemical networks by changing global noise properties, and will be an important factor in designing synthetic networks.</p>
+      </sec>
+    </sec>
+    <sec id="s4" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <p>Symbolic manipulations and data analysis were performed in Mathematica 7.0 and 8.0 (Wolfram Research, Champagne, IL). We predicted intrinsic noise characteristics with stochastic simulations at stationary state using the StochKit (<ext-link ext-link-type="uri" xlink:href="http://engineering.ucsb.edu/~cse/StochKit/" xlink:type="simple">http://engineering.ucsb.edu/~cse/StochKit/</ext-link>) tau-leaping routine for 10,000 runs of each model (except in the <italic>lac</italic> operon model, for which 1,000 runs of each condition were done). Initial model construction and test runs were done with Copasi (<ext-link ext-link-type="uri" xlink:href="http://www.copasi.org" xlink:type="simple">www.copasi.org</ext-link>). Simulations with an extrinsic noise representation were done in Copasi as detailed below. All models were represented with elementary reaction steps; in models involving gene regulation, we defined a promoter variable as always present at one copy per cell.</p>
+      <sec id="s4a">
+        <title>Stochastic simulations</title>
+        <p>Unless otherwise specified, each network module was tested with promoter-mediated noise, represented by promoters switching between “on” and “off” states of mRNA production. This process has estimated switching rates of <italic>k<sub>goff</sub></italic> = 0.0028 s<sup>−1</sup> for switching to the “off” state and <italic>k<sub>gon</sub></italic> = 0.00045 s<sup>−1</sup> for switching to the “on” state <xref ref-type="bibr" rid="pcbi.1002672-Golding1">[20]</xref>. In models including a gene regulation step, we assumed binding and unbinding of regulators to be independent of promoters switching between on and off states. Without promoter-generated bursting, gene expression noise largely arises from low mRNA copy numbers per cell and the effect of transcriptional coupling is qualitatively similar (<xref ref-type="fig" rid="pcbi-1002672-g001">Figure 1</xref>). Furthermore, analytical results from LNA do not include the effects of bursty transcription, showing that we arrive at qualitatively similar results without transcriptional bursts.</p>
+        <p>We distinguish between three types of coupling between production of two proteins in stochastic simulation reaction schemes. Transcription may be coupled or uncoupled (i.e., proteins in the same or separate operons) and when transcription is coupled, proteins may be cotranslated (single ribosome binding site for both) or translationally uncoupled (two ribosome binding sites). These three cases represent simplified extremes; intermediate translational linkage (e.g., read-through from multiple ribosome binding sites) is possible but was not further considered here. <xref ref-type="fig" rid="pcbi-1002672-g001">Figure 1</xref> illustrates the three cases with promoter-mediated gene expression noise. For simplicity of presentation, we compare transcriptionally uncoupled with cotranslated models in the main text.</p>
+        <p><xref ref-type="supplementary-material" rid="pcbi.1002672.s009">Tables S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s005">S5</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s006">S6</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s007">S7</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002672.s008">S8</xref> give reaction schematics and parameters for the gene expression and posttranslational models used in the main text. Parameter values were chosen to be of the correct order of magnitude for realistic expression levels and binding kinetics. To ensure a fair comparison between cotranscribed and uncoupled configurations, production and degradation rates of mRNA species for proteins A and B are identical. The degradation rate <italic>k<sub>deg</sub></italic> corresponds to the value expected from a dilution rate for typical <italic>E. coli</italic> doubling every half hour.</p>
+      </sec>
+      <sec id="s4b">
+        <title>Analytical determination of protein covariance</title>
+        <p>The basis of noise differences between networks with proteins in the same operon and those with proteins in separate operons is the covariance between the expressed proteins. We used LNA to analytically characterize noise and covariance as follows. For the mean values of copy numbers (denoted by angular brackets):<disp-formula id="pcbi.1002672.e029"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e029" xlink:type="simple"/><label>(8)</label></disp-formula>where <italic>i</italic> = 1 with proteins <italic>A</italic> and <italic>B</italic> in the same operon, and <italic>i</italic> = 2 with proteins <italic>A</italic> and <italic>B</italic> in separate operons. Then we solved the fluctuation-dissipation matrix equation at steady state (<bold>M</bold>σ+σ<bold>M</bold><sup>T</sup>+Ω<bold>N</bold> = 0) for σ, where <bold>M</bold> is the Jacobian of the (macroscopic) system, Ω is cell volume, and <bold>N</bold> is the diffusion matrix <xref ref-type="bibr" rid="pcbi.1002672-Paulsson1">[18]</xref>. Characterizing intrinsic noise as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e030" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e031" xlink:type="simple"/></inline-formula> with indices <italic>i</italic> and <italic>j</italic> taking values corresponding to molecular species (<italic>A, B, m</italic><sub>1</sub> and m<italic><sub>2</sub></italic>), we follow the methods of <xref ref-type="bibr" rid="pcbi.1002672-Paulsson1">[18]</xref> to obtain:<disp-formula id="pcbi.1002672.e032"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e032" xlink:type="simple"/><label>(9)</label></disp-formula>and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e033" xlink:type="simple"/></inline-formula> as in <xref ref-type="disp-formula" rid="pcbi.1002672.e001">Equation 1</xref>. Note that <italic>σ<sub>AA</sub></italic> is the variance, or the square of the standard deviation.</p>
+        <p>To analytically approximate noise of physiologically relevant variables in the simple network modules (<xref ref-type="fig" rid="pcbi-1002672-g002">Figure 2</xref>), we made the following simplifications to make the systems tractable. For metabolic steps with a substrate as a dependent variable, we assumed a Michaelis-Menten propensity. For the covalent modification module, we assumed a simple mass-action with no saturation or complexes. For the multiple gene regulator module, we used a Hill equation propensity for regulated mRNA production. Details of the analysis are in <xref ref-type="supplementary-material" rid="pcbi.1002672.s015">Text S2</xref>. Mean-field models are given in <xref ref-type="supplementary-material" rid="pcbi.1002672.s008">Table S3</xref>.</p>
+      </sec>
+      <sec id="s4c">
+        <title>Trends in <italic>E. coli</italic> K12 MG1655 genes</title>
+        <p>Bioinformatic analyses used pairs of interacting genes extracted from databases of <italic>E. coli</italic> K12 MG1655 as described below. To determine the randomized control, we needed to account for potential biases resulting from dataset size and other features of chromosome organization that we were not attempting to test. For instance, if we randomly assigned genes to extant operons in <italic>E. coli</italic> across the entire chromosome, the less frequently occurring modules would have much less same-operon membership than the modules with larger numbers of members, and would not be a useful control. We chose to randomize the genes extracted from the pairs within each module to set the random control for each class. Thus, for a list of gene pairs<disp-formula id="pcbi.1002672.e034"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e034" xlink:type="simple"/></disp-formula>we determined a randomized case by flattening <bold><italic>g</italic></bold> into<disp-formula id="pcbi.1002672.e035"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002672.e035" xlink:type="simple"/></disp-formula>randomly permuting the order of the genes and then re-pairing them to determine the frequency. This process was repeated 1000 times to determine the parameters of the randomized distribution.</p>
+        <sec id="s4c1">
+          <title>Metabolic networks</title>
+          <p>The <italic>E. coli</italic> metabolic network was extracted from Kyoto Encyclopedia of Genes and Genomes (KEGG; <xref ref-type="bibr" rid="pcbi.1002672-Kanehisa1">[29]</xref>). We partitioned the network into pairs of adjacent steps and assigned a value of 1 to each pair in the same operon (using the operon membership dataset from RegulonDB; <xref ref-type="bibr" rid="pcbi.1002672-GamaCastro1">[31]</xref>) and 0 to each pair in separate operons. This gave a frequency <italic>f<sub>met</sub></italic> of subsequent same-operon metabolic steps. Several metabolic steps were found to be catalyzed by enzymes with subunits from multiple genes. Because such interactions have a large bias in favor of operon membership (<xref ref-type="table" rid="pcbi-1002672-t001">Table 1</xref>), we eliminated them from the analysis to ensure operon membership biases result from metabolic, and not physical, interactions. We then repeatedly randomly assigned the metabolic enzymes to operons to generate a predicted distribution of background operon membership. The resulting distribution is approximately normal, allowing a parametric determination of <italic>f<sub>met</sub></italic> significance (<italic>f<sub>met</sub></italic> = 91/2417 = 0.038; mean μ<sub>r</sub> = 0.0036; standard deviation σ<sub>r</sub> = 0.0011; <italic>p</italic>&lt;&lt;10<sup>−6</sup>).</p>
+          <p>We extracted pairs of enzymes catalyzing the same metabolic step from the database to assess the trend in redundant metabolic steps. Here, <italic>f</italic><sub>redundant</sub> = 0/114. The resulting randomized distribution had mean μ<sub>r</sub> = 0.0047; standard deviation σ<sub>r</sub> = 0.0015 (<italic>p</italic>&lt;&lt;10<sup>−6</sup> against this distribution). Enzymes catalyzing steps after a metabolic branch point were determined on the basis of common substrates in KEGG (<italic>f</italic><sub>branch</sub> = 5/2036; <italic>p</italic> = 0.071 against a randomized operon membership set of the same genes).</p>
+        </sec>
+        <sec id="s4c2">
+          <title>Covalent modifications</title>
+          <p>Extracting examples of this interaction type from databases is difficult because of the complex nature of the relationship, which requires interaction with subsequent modification. We used the MultiFun Gene Ontology from EcoCyc <xref ref-type="bibr" rid="pcbi.1002672-Keseler1">[30]</xref> to identify protein-related information transfer systems, each of which we manually checked to eliminate irrelevant cases and identify operon membership of the pair. Forty-six of the 201 pairs (23%) had interactions within the same operon. Because some of the identified members have multiple interaction pairs that could not be identified, the 46/201 fraction is somewhat uncertain. Unlike any of the other interaction modules, this module has pairs that overlap with another module (specifically, the physical interaction module). We used the same randomization procedure as for the metabolic pairs above to test the fraction relative to a randomized case of the covalent modification genes. With μ<sub>c</sub> = 0.0047, σ<sub>c</sub> = 0.0047, and <italic>p</italic>&lt;&lt;10<sup>−6</sup>, the true fraction is likely greater than the randomized control.</p>
+        </sec>
+        <sec id="s4c3">
+          <title>Multiple gene regulators</title>
+          <p>We used the <italic>E. coli</italic> gene regulation network from RegulonDB <xref ref-type="bibr" rid="pcbi.1002672-GamaCastro1">[31]</xref> to construct a graph of genes regulated by two or more regulators, excluding pairs that form subunits of a larger regulator. Following the method for metabolic networks, we assigned to each pair a value of 1 if the regulators are in the same operon and 0 if the regulators are in separate operons, giving frequency <italic>f<sub>g</sub></italic> = 2/350 = 0.0057. Here, the random distribution has μ<sub>rg</sub> = 0.099, σ<sub>rg</sub> = 0.016, and <italic>p</italic>&lt;&lt;10<sup>−6</sup>.</p>
+        </sec>
+        <sec id="s4c4">
+          <title>Physical protein interactions</title>
+          <p>For physical protein interactions we used a functional interaction dataset <xref ref-type="bibr" rid="pcbi.1002672-Butland1">[40]</xref>, <xref ref-type="bibr" rid="pcbi.1002672-PeregrnAlvarez1">[41]</xref> to characterize the frequency of same-operon pairs, <italic>f</italic><sub>p</sub> = 0.35. In the randomized distribution, μ<sub>p</sub> = 0.0030, σ<sub>p</sub> = 0.00073, and <italic>p</italic>&lt;&lt;10<sup>−6</sup>.</p>
+        </sec>
+      </sec>
+      <sec id="s4d">
+        <title>Operon relationship to protein copy number per cell</title>
+        <p>We extracted single-cell mRNA expression data (RNAseq) and protein copy number data from Taniguchi <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1002672-Taniguchi1">[43]</xref>. To ensure a meaningful comparison of expression levels, we considered only genes predicted to be unregulated in RegulonDB. Only the physical interaction module left enough data for analysis. For instance, the number of unregulated pairs in the same operon for the linear metabolic pathway dataset was 5, insufficient to distinguish the established operon membership pattern from noise when partitioned between high and low expression. Each average single-cell mRNA or protein copy number was used, along with physical interaction status (1 = same operon; 0 = non-same operon). Proteins with multiple interaction partners within and between operons were represented twice, once for same-operon and once for non-same-operon interaction. We then divided the set into above- and below-median subsets and compared the fraction of same-operon interactions in the subsets using a standard bootstrap resampling test. We resampled 10,000 times with replacement and computed the difference in coupling frequencies between low and high expression as the test statistic. To compute error bars, we used bootstrapping of each bin by sampling each bin with replacement up to the bin size, repeated 1,000 times.</p>
+      </sec>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pcbi.1002672.s001" mimetype="image/png" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p>Conservation of noise relationships in network modules across expression level and parameter variations. Percentage noise difference is given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e036" xlink:type="simple"/></inline-formula>; blue shades indicate lower CV for the coupled architecture; red, lower CV for the uncoupled architecture. A, J. Intermediate in linear metabolic pathway. Parameter: <italic>k<sub>cat2</sub></italic>. The distributions at low expression level are highly skewed, giving misleading CV values that do not accurately reflect the higher variability in the uncoupled architecture. B, K. Product of metabolic pathway. Parameter: <italic>k<sub>cat2</sub></italic>. C, L. Product of redundant metabolic step. Parameter: <italic>k<sub>cat1</sub></italic> and <italic>k<sub>cat2</sub></italic> varied simultaneously. D, M. Substrate of a metabolic branch point. Some cases have lower CV in the co-transcribed model because the distribution is bimodal, but the uncoupled model predicts lower actual variability than the co-transcribed model in all cases. Parameter: <italic>k<sub>cat1</sub></italic> and <italic>k<sub>cat2</sub></italic> varied simultaneously. E, N. Protein product of multiple gene regulator network. Parameter: <italic>k<sub>d</sub></italic>. F, O. Monomer of physical protein interaction module. Parameter: <italic>k<sub>b</sub></italic>. G, P. Heterodimer of physical protein interaction module. Parameter: <italic>k<sub>b</sub></italic>. H, Q. Unmodified protein of covalent modification network. Parameter: <italic>k<sub>p</sub></italic>. I, R. Modified protein of covalent modification network. Parameter: <italic>k<sub>p</sub></italic> The scale for each variable was set by the largest absolute value. Expression levels (protein copy number/gene/cell) for multiple gene regulator module: L: 1 M: 53 H: 529. For all others: L: 53 M: 529 H: 5285.</p>
+          <p>(PNG)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s002" mimetype="image/png" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s002" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p>Non-redundant two-gene modules undergo an ultrasensitive switch dependent on production and degradation fluxes. Black lines are the mean-field steady state response while orange and blue lines trace timecourses from individual stochastic simulation trajectories. A. Intermediate in the linear metabolic pathway repeated from <xref ref-type="fig" rid="pcbi-1002672-g003">Figure 3C</xref> in the main text. B. Substrate levels at a metabolic branch point in response to changes in the balance between production and total consumption by two enzymes. Spikes are more likely when enzyme-mediated consumption fluxes at the branch point covary. C. Quantities of monomer subunit <italic>A</italic> of a heterodimer in response to different relative levels of <italic>A</italic> and <italic>B</italic> monomers. Physically interacting proteins produced asynchronously cross an ultrasensitive threshold, which is avoided by cotranscription from the same operon. D. Response of unmodified protein <italic>A</italic> in the covalent modification module to changes in the ratio of <italic>A</italic> to <italic>B</italic>. Unmodified protein <italic>A</italic> undergoes large spikes corresponding to crossing an ultrasensitive threshold when uncoupled.</p>
+          <p>(PNG)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s003" mimetype="image/png" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s003" xlink:type="simple">
+        <label>Figure S3</label>
+        <caption>
+          <p>Predicted dynamics of the <italic>lac</italic> operon system at three inducer concentrations. A. Simulated time courses of permease, allolactose and product. At all three concentrations, the transcriptionally uncoupled form of the system induces higher noise in allolactose (metabolic intermediate) concentration, but not product (glucose+galactose) or protein (permease). B. Correlations between permease and β-galactosidase in cotranscribed and uncoupled configurations. Throughout the range of induction the system demonstrates a consistent, significant reduction of correlation between permease and β-galactosidase in the uncoupled form of the system.</p>
+          <p>(PNG)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s004" mimetype="image/png" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s004" xlink:type="simple">
+        <label>Figure S4</label>
+        <caption>
+          <p>Effects of extrinsic noise on transcriptional coupling dynamics for metabolic modules. A. Linear metabolic pathway. B. Redundant metabolic step. Translational and transcriptional rate constants were randomly selected from uniform distributions to mimic global extrinsic noise. The resulting transcriptionally uncoupled protein distributions show a slight correlation between the proteins A and B (r = 0.293 top panel simulations and 0.388 in the bottom simulations). Metabolite noise differences between co-translated and transcriptionally uncoupled architectures are qualitatively unchanged from simulations that do not simulate extrinsic noise, with lower intermediate CV in the linear metabolic pathway (A) and higher product CV in the redundant metabolic step (B) in the cotranscribed configuration.</p>
+          <p>(PNG)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s005" mimetype="image/png" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s005" xlink:type="simple">
+        <label>Figure S5</label>
+        <caption>
+          <p>Distributions of linear metabolic and physically interacting protein pair interaction chromosomal locus distances in <italic>E. coli</italic> K12 MG1655. A. Gene pair locus distances in linear metabolic interactions are not distinguishable from randomized distances. B. A subset of gene pair locus distances in physical protein interactions have a distinct bias toward close chromosomal proximity. A distance randomization procedure (<xref ref-type="supplementary-material" rid="pcbi.1002672.s017">Text S4</xref>) does not indicate that proximity explains operon frequencies in either case.</p>
+          <p>(PNG)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s006" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s006" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p>Predicted level of decorrelation between proteins that are uncoupled, cotranscribed, or cotranslated, with or without transcriptional bursting.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s007" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s007" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p>Essential and nonessential subsets of gene pairs both have significantly high fractions of same-operon pairs <italic>f</italic>.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s008" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s008" xlink:type="simple">
+        <label>Table S3</label>
+        <caption>
+          <p>Mathematical models used for linear noise approximation of five simple network motifs in the form <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002672.e037" xlink:type="simple"/></inline-formula>.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s009" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s009" xlink:type="simple">
+        <label>Table S4</label>
+        <caption>
+          <p>Reactions for two genes expressed from the same and separate operons.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s010" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s010" xlink:type="simple">
+        <label>Table S5</label>
+        <caption>
+          <p>Post-translational interactions in the linear and redundant metabolic step models.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s011" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s011" xlink:type="simple">
+        <label>Table S6</label>
+        <caption>
+          <p>Post-translational interactions in the covalent modification and physical interaction models.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s012" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s012" xlink:type="simple">
+        <label>Table S7</label>
+        <caption>
+          <p>Detailed <italic>lac</italic> operon model.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s013" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s013" xlink:type="simple">
+        <label>Table S8</label>
+        <caption>
+          <p>Parameter values for detailed <italic>lac</italic> operon simulations.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s014" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s014" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <p>Decorrelation, extrinsic noise and expression levels.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s015" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s015" xlink:type="simple">
+        <label>Text S2</label>
+        <caption>
+          <p>Analytical approach confirms predicted effects of cotranscription on intrinsic noise.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s016" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s016" xlink:type="simple">
+        <label>Text S3</label>
+        <caption>
+          <p>Analytical determination of ultrasensitive thresholds.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002672.s017" mimetype="application/pdf" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002672.s017" xlink:type="simple">
+        <label>Text S4</label>
+        <caption>
+          <p>Chromosomal proximity of genes does not explain frequencies of metabolic or physical interaction operons.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank Jianzhi “George” Zhang, Gábor Balázsi, and Ricardo Azevedo for useful discussions and Erica Goodoff for editing the manuscript for clarity.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002672-Jacob1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jacob</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Monod</surname><given-names>J</given-names></name> (<year>1961</year>) <article-title>Genetic regulatory mechanisms in the synthesis of proteins</article-title>. <source>J Mol Biol</source> <volume>3</volume>: <fpage>318</fpage>–<lpage>356</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Blumenthal1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blumenthal</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Evans</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Link</surname><given-names>CD</given-names></name>, <name name-style="western"><surname>Guffanti</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lawson</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>A global analysis of Caenorhabditis elegans operons</article-title>. <source>Nature</source> <volume>417</volume>: <fpage>851</fpage>–<lpage>854</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Rocha1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rocha</surname><given-names>EP</given-names></name> (<year>2008</year>) <article-title>The organization of the bacterial genome</article-title>. <source>Annu Rev Genet</source> <volume>42</volume>: <fpage>211</fpage>–<lpage>233</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Price1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Arkin</surname><given-names>AP</given-names></name>, <name name-style="western"><surname>Alm</surname><given-names>EJ</given-names></name> (<year>2005</year>) <article-title>Operon formation is driven by co-regulation and not by horizontal gene transfer</article-title>. <source>Genome Res</source> <volume>15</volume>: <fpage>809</fpage>–<lpage>819</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Price2">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Arkin</surname><given-names>AP</given-names></name>, <name name-style="western"><surname>Alm</surname><given-names>EJ</given-names></name> (<year>2006</year>) <article-title>The life-cycle of operons</article-title>. <source>PLoS Genet</source> <volume>2</volume>: <fpage>e96</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Iber1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Iber</surname><given-names>D</given-names></name> (<year>2006</year>) <article-title>A quantitative study of the benefits of co-regulation using the spoIIA operon as an example</article-title>. <source>Mol Syst Biol</source> <volume>2</volume>: <fpage>43</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Ray1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ray</surname><given-names>JCJ</given-names></name>, <name name-style="western"><surname>Igoshin</surname><given-names>OA</given-names></name> (<year>2010</year>) <article-title>Adaptable functionality of transcriptional feedback in bacterial two-component systems</article-title>. <source>PLoS Comput Biol</source> <volume>6</volume>: <fpage>e1000676</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Lim1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lim</surname><given-names>HN</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Hussein</surname><given-names>R</given-names></name> (<year>2011</year>) <article-title>Fundamental relationship between operon organization and gene expression</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>108</volume>: <fpage>10626</fpage>–<lpage>10631</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Laing1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Laing</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Mersinias</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>CP</given-names></name>, <name name-style="western"><surname>Hubbard</surname><given-names>SJ</given-names></name> (<year>2006</year>) <article-title>Analysis of gene expression in operons of <italic>Streptomyces coelicolor</italic></article-title>. <source>Genome Biol</source> <volume>7</volume>: <fpage>R46</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Lawrence1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lawrence</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Roth</surname><given-names>JR</given-names></name> (<year>1996</year>) <article-title>Selfish operons: horizontal transfer may drive the evolution of gene clusters</article-title>. <source>Genetics</source> <volume>143</volume>: <fpage>1843</fpage>–<lpage>1860</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Lawrence2">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lawrence</surname><given-names>JG</given-names></name> (<year>1997</year>) <article-title>Selfish operons and speciation by gene transfer</article-title>. <source>Trends Microbiol</source> <volume>5</volume>: <fpage>355</fpage>–<lpage>359</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Pl1">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pál</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Hurst</surname><given-names>LD</given-names></name> (<year>2004</year>) <article-title>Evidence against the selfish operon theory</article-title>. <source>Trends Genet</source> <volume>20</volume>: <fpage>232</fpage>–<lpage>234</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Dandekar1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dandekar</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Huynen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bork</surname><given-names>P</given-names></name> (<year>1998</year>) <article-title>Conservation of gene order: a fingerprint of proteins that physically interact</article-title>. <source>Trends Biochem Sci</source> <volume>23</volume>: <fpage>324</fpage>–<lpage>328</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Voigt1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Voigt</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Wolf</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Arkin</surname><given-names>AP</given-names></name> (<year>2005</year>) <article-title>The <italic>Bacillus subtilis</italic> SIN Operon: An Evolvable Network Motif</article-title>. <source>Genetics</source> <volume>169</volume>: <fpage>1187</fpage>–<lpage>1202</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Swain1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Swain</surname><given-names>PS</given-names></name> (<year>2004</year>) <article-title>Efficient attenuation of stochasticity in gene expression through post-transcriptional control</article-title>. <source>J Mol Biol</source> <volume>344</volume>: <fpage>965</fpage>–<lpage>976</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-SilvaRocha1">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Silva-Rocha</surname><given-names>R</given-names></name>, <name name-style="western"><surname>de Lorenzo</surname><given-names>V</given-names></name> (<year>2010</year>) <article-title>Noise and robustness in prokaryotic regulatory networks</article-title>. <source>Annu Rev Microbiol</source> <volume>64</volume>: <fpage>257</fpage>–<lpage>275</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-McAdams1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McAdams</surname><given-names>HH</given-names></name>, <name name-style="western"><surname>Arkin</surname><given-names>A</given-names></name> (<year>1997</year>) <article-title>Stochastic mechanisms in gene expression</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>94</volume>: <fpage>814</fpage>–<lpage>819</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Paulsson1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Paulsson</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Summing up the noise in gene networks</article-title>. <source>Nature</source> <volume>427</volume>: <fpage>415</fpage>–<lpage>418</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Berg1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berg</surname><given-names>OG</given-names></name> (<year>1978</year>) <article-title>A model for the statistical fluctuations of protein numbers in a microbial population</article-title>. <source>J Theor Biol</source> <volume>71</volume>: <fpage>587</fpage>–<lpage>603</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Golding1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Golding</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Paulsson</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zawilski</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Cox</surname><given-names>EC</given-names></name> (<year>2005</year>) <article-title>Real-time kinetics of gene activity in individual bacteria</article-title>. <source>Cell</source> <volume>123</volume>: <fpage>1025</fpage>–<lpage>1036</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Mitarai1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mitarai</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Dodd</surname><given-names>IB</given-names></name>, <name name-style="western"><surname>Crooks</surname><given-names>MT</given-names></name>, <name name-style="western"><surname>Sneppen</surname><given-names>K</given-names></name> (<year>2008</year>) <article-title>The generation of promoter-mediated transcriptional noise in bacteria</article-title>. <source>PLoS Comput Biol</source> <volume>4</volume>: <fpage>e1000109</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Swain2">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Swain</surname><given-names>PS</given-names></name>, <name name-style="western"><surname>Elowitz</surname><given-names>MB</given-names></name>, <name name-style="western"><surname>Siggia</surname><given-names>ED</given-names></name> (<year>2002</year>) <article-title>Intrinsic and extrinsic contributions to stochasticity in gene expression</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>99</volume>: <fpage>12795</fpage>–<lpage>12800</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Kovcs1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kovács</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Hurst</surname><given-names>LD</given-names></name>, <name name-style="western"><surname>Papp</surname><given-names>B</given-names></name> (<year>2009</year>) <article-title>Stochasticity in protein levels drives colinearity of gene order in metabolic operons of <italic>Escherichia coli</italic></article-title>. <source>PLoS Biol</source> <volume>7</volume>: <fpage>e1000115</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Lvdok1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Løvdok</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Bentele</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Vladimirov</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Müller</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pop</surname><given-names>FS</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Role of translational coupling in robustness of bacterial chemotaxis pathway</article-title>. <source>PLoS Biol</source> <volume>7</volume>: <fpage>e1000171</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Sneppen1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sneppen</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Pedersen</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Krishna</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Dodd</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Semsey</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Economy of operon formation: cotranscription minimizes shortfall in protein complexes</article-title>. <source>MBio</source> <volume>1</volume>: <fpage>e00177</fpage>–<lpage>00110</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Goldbeter1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goldbeter</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Koshland</surname><given-names>DE</given-names></name> (<year>1981</year>) <article-title>An amplified sensitivity arising from covalent modification in biological systems</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>78</volume>: <fpage>6840</fpage>–<lpage>6844</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Alloing1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alloing</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Granadel</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Claverys</surname><given-names>J-P</given-names></name> (<year>1998</year>) <article-title>Development of competence in <italic>Streptococcus pneumoniae</italic>: pheromone autoinduction and control of quorum sensing by the oligopeptide permease</article-title>. <source>Mol Microbiol</source> <volume>29</volume>: <fpage>75</fpage>–<lpage>83</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-vanKampen1">
+        <label>28</label>
+        <mixed-citation publication-type="other" xlink:type="simple">van Kampen NG (2007) Stochastic Processes in Physics and Chemistry. 3rd edition. Amsterdam: North Holland Publishing Company.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Kanehisa1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Araki</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Goto</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hattori</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hirakawa</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>KEGG for linking genomes to life and the environment</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D480</fpage>–<lpage>D484</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Keseler1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keseler</surname><given-names>IM</given-names></name>, <name name-style="western"><surname>Bonavides-Martinez</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Collado-Vides</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gama-Castro</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Gunsalus</surname><given-names>RP</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>EcoCyc: A comprehensive view of <italic>Escherichia coli</italic> biology</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>D464</fpage>–<lpage>D470</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-GamaCastro1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gama-Castro</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Jiménez-Jacinto</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Peralta-Gil</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Santos-Zavaleta</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Peñaloza-Spinola</surname><given-names>MI</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>RegulonDB (version 6.0): gene regulation model of Escherichia coli K-12 beyond transcription, active (experimental) annotated promoters and Textpresso navigation</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D120</fpage>–<lpage>D124</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Gillespie1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gillespie</surname><given-names>DT</given-names></name> (<year>1977</year>) <article-title>Exact stochastic simulation of coupled chemical reactions</article-title>. <source>J Phys Chem</source> <volume>81</volume>: <fpage>2340</fpage>–<lpage>2361</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Buchler1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buchler</surname><given-names>NE</given-names></name>, <name name-style="western"><surname>Gerland</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Hwa</surname><given-names>T</given-names></name> (<year>2005</year>) <article-title>Nonlinear protein degradation and the function of genetic circuits</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>102</volume>: <fpage>9559</fpage>–<lpage>9564</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Buchler2">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buchler</surname><given-names>NE</given-names></name>, <name name-style="western"><surname>Louis</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Molecular titration and ultrasensitivity in regulatory networks</article-title>. <source>J Mol Biol</source> <volume>384</volume>: <fpage>1106</fpage>–<lpage>1119</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Dreisigmeyer1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dreisigmeyer</surname><given-names>DW</given-names></name>, <name name-style="western"><surname>Stajic</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Hlavacek</surname><given-names>WS</given-names></name>, <name name-style="western"><surname>Wall</surname><given-names>ME</given-names></name> (<year>2008</year>) <article-title>Determinants of bistability in induction of the <italic>Escherichia coli lac</italic> operon</article-title>. <source>IET Syst Biol</source> <volume>2</volume>: <fpage>293</fpage>–<lpage>303</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Saier1">
+        <label>36</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saier</surname><given-names>MH</given-names></name>, <name name-style="western"><surname>Crasnier</surname><given-names>M</given-names></name> (<year>1996</year>) <article-title>Inducer exclusion and the regulation of sugar transport</article-title>. <source>Res Microbiol</source> <volume>147</volume>: <fpage>482</fpage>–<lpage>489</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Perfeito1">
+        <label>37</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Perfeito</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Ghozzi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Berg</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schnetz</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Lässig</surname><given-names>M</given-names></name> (<year>2011</year>) <article-title>Nonlinear fitness landscape of a molecular pathway</article-title>. <source>PLoS Genet</source> <volume>7</volume>: <fpage>e1002160</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Eames1">
+        <label>38</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eames</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kortemme</surname><given-names>T</given-names></name> (<year>2012</year>) <article-title>Cost-benefit tradeoffs in engineered <italic>lac</italic> operons</article-title>. <source>Science</source> <volume>336</volume>: <fpage>911</fpage>–<lpage>915</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Blattner1">
+        <label>39</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blattner</surname><given-names>FR</given-names></name>, <name name-style="western"><surname>Plunkett</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Bloch</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Perna</surname><given-names>NT</given-names></name>, <name name-style="western"><surname>Burland</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>The complete genome sequence of Escherichia coli K-12</article-title>. <source>Science</source> <volume>277</volume>: <fpage>1453</fpage>–<lpage>1462</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Butland1">
+        <label>40</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Butland</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Peregrín-Alvarez</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>X</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Interaction network containing conserved and essential protein complexes in Escherichia coli</article-title>. <source>Nature</source> <volume>433</volume>: <fpage>531</fpage>–<lpage>537</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-PeregrnAlvarez1">
+        <label>41</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peregrín-Alvarez</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Xiong</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Su</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Parkinson</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>The modular organization of protein interactions in <italic>Escherichia coli</italic></article-title>. <source>PLoS Comput Biol</source> <volume>5</volume>: <fpage>e1000523</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-MarlesWright1">
+        <label>42</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marles-Wright</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lewis</surname><given-names>RJ</given-names></name> (<year>2007</year>) <article-title>Stress responses of bacteria</article-title>. <source>Curr Opinion Struct Biol</source> <volume>17</volume>: <fpage>755</fpage>–<lpage>760</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Taniguchi1">
+        <label>43</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Taniguchi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Choi</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>G-W</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Babu</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Quantifying <italic>E. coli</italic> proteome and transcriptome with single-molecule sensitivity in single cells</article-title>. <source>Science</source> <volume>329</volume>: <fpage>533</fpage>–<lpage>538</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Ray2">
+        <label>44</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ray</surname><given-names>JCJ</given-names></name>, <name name-style="western"><surname>Tabor</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Igoshin</surname><given-names>OA</given-names></name> (<year>2011</year>) <article-title>Non-transcriptional regulatory processes shape transcriptional network dynamics</article-title>. <source>Nat Rev Microbiol</source> <volume>9</volume>: <fpage>817</fpage>–<lpage>828</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Bennett1">
+        <label>45</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bennett</surname><given-names>BD</given-names></name>, <name name-style="western"><surname>Kimball</surname><given-names>EH</given-names></name>, <name name-style="western"><surname>Gao</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Osterhout</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Van Dien</surname><given-names>SJ</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Absolute metabolite concentrations and implied enzyme active site occupancy in <italic>Escherichia coli</italic></article-title>. <source>Nat Chem Biol</source> <volume>5</volume>: <fpage>593</fpage>–<lpage>599</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Fell1">
+        <label>46</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Fell DA (1996) Understanding the Control of Metabolism. London, UK: Portland Press.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Levine1">
+        <label>47</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Levine</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Hwa</surname><given-names>T</given-names></name> (<year>2007</year>) <article-title>Stochastic fluctuations in metabolic pathways</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>104</volume>: <fpage>9224</fpage>–<lpage>9229</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Lee1">
+        <label>48</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Trostel</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Le</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Harinarayanan</surname><given-names>R</given-names></name>, <name name-style="western"><surname>FitzGerald</surname><given-names>PC</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Cellular stress created by intermediary metabolite imbalances</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>106</volume>: <fpage>19515</fpage>–<lpage>19520</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-vanHoek1">
+        <label>49</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Hoek</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hogeweg</surname><given-names>P</given-names></name> (<year>2007</year>) <article-title>The effect of stochasticity on the <italic>lac</italic> operon: an evolutionary perspective</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>e111</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Fani1">
+        <label>50</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fani</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Brilli</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Liò</surname><given-names>P</given-names></name> (<year>2005</year>) <article-title>The origin and evolution of operons: the piecewise building of the proteobacterial histidine operon</article-title>. <source>J Mol Evol</source> <volume>60</volume>: <fpage>378</fpage>–<lpage>390</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Zaslaver1">
+        <label>51</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zaslaver</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Mayo</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Rosenberg</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Bashkin</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Sberro</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Just-in-time transcription program in metabolic pathways</article-title>. <source>Nat Genet</source> <volume>36</volume>: <fpage>486</fpage>–<lpage>491</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Igoshin1">
+        <label>52</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Igoshin</surname><given-names>OA</given-names></name>, <name name-style="western"><surname>Brody</surname><given-names>MS</given-names></name>, <name name-style="western"><surname>Price</surname><given-names>CW</given-names></name>, <name name-style="western"><surname>Savageau</surname><given-names>MA</given-names></name> (<year>2007</year>) <article-title>Distinctive topologies of partner-switching signaling networks correlate with their physiological roles</article-title>. <source>J Mol Biol</source> <volume>369</volume>: <fpage>1333</fpage>–<lpage>1352</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Noom1">
+        <label>53</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Noom</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Navarre</surname><given-names>WW</given-names></name>, <name name-style="western"><surname>Oshima</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Wuite</surname><given-names>GJ</given-names></name>, <name name-style="western"><surname>Dame</surname><given-names>RT</given-names></name> (<year>2007</year>) <article-title>H-NS promotes looped domain formation in the bacterial chromosome</article-title>. <source>Curr Biol</source> <volume>17</volume>: <fpage>R913</fpage>–<lpage>R914</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Wang1">
+        <label>54</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>G-W</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Xie</surname><given-names>XS</given-names></name>, <name name-style="western"><surname>Zhuang</surname><given-names>X</given-names></name> (<year>2011</year>) <article-title>Chromosome organization by a nucleoid-associated protein in live bacteria</article-title>. <source>Science</source> <volume>333</volume>: <fpage>1445</fpage>–<lpage>1449</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Hermsen1">
+        <label>55</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hermsen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Rein ten Wolde</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Teichmann</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Chance and necessity in chromosomal gene distributions</article-title>. <source>Trends Genet</source> <volume>24</volume>: <fpage>216</fpage>–<lpage>219</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Bremer1">
+        <label>56</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Bremer H, Dennis PP (1996) Modulation of chemical composition and other parameters of the cell by growth rate. In: Neidhart FC, III RC, Ingraham JL, Lin ECC, Low KB <etal>et al</etal>., editors. Escherichia coli and Salmonella: Cellular and Molecular Biology. 2nd edition. Washington: ASM Press.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Gouy1">
+        <label>57</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gouy</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Gautier</surname><given-names>C</given-names></name> (<year>1982</year>) <article-title>Codon usage in bacteria: correlation with gene expressivity</article-title>. <source>Nucleic Acids Res</source> <volume>10</volume>: <fpage>7055</fpage>–<lpage>7074</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Akashi1">
+        <label>58</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Akashi</surname><given-names>H</given-names></name> (<year>2001</year>) <article-title>Gene expression and molecular evolution</article-title>. <source>Curr Opin Genet Dev</source> <volume>11</volume>: <fpage>660</fpage>–<lpage>666</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Ihmels1">
+        <label>59</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ihmels</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Levy</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Barkai</surname><given-names>N</given-names></name> (<year>2004</year>) <article-title>Principles of transcriptional control in the metabolic network of Saccharomyces cerevisiae</article-title>. <source>Nat Biotechnol</source> <volume>22</volume>: <fpage>86</fpage>–<lpage>92</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Cheong1">
+        <label>60</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheong</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Rhee</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Levchenko</surname><given-names>A</given-names></name> (<year>2011</year>) <article-title>Information transduction capacity of noisy biochemical signaling networks</article-title>. <source>Science</source> <volume>334</volume>: <fpage>354</fpage>–<lpage>358</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Becskei1">
+        <label>61</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Becskei</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kaufmann</surname><given-names>BB</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname><given-names>A</given-names></name> (<year>2005</year>) <article-title>Contributions of low molecule number and chromosomal positioning to stochastic gene expression</article-title>. <source>Nat Genet</source> <volume>37</volume>: <fpage>937</fpage>–<lpage>944</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Raj1">
+        <label>62</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raj</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Peskin</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Tranchina</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Vargas</surname><given-names>DY</given-names></name>, <name name-style="western"><surname>Tyagi</surname><given-names>S</given-names></name> (<year>2006</year>) <article-title>Stochastic mRNA Synthesis in Mammalian Cells</article-title>. <source>PLoS Biol</source> <volume>4</volume>: <fpage>e309</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Wang2">
+        <label>63</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>G-Z</given-names></name>, <name name-style="western"><surname>Lercher</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Hurst</surname><given-names>LD</given-names></name> (<year>2011</year>) <article-title>Transcriptional coupling of neighboring genes and gene expression noise: evidence that gene orientation and noncoding transcripts are modulators of noise</article-title>. <source>Genome Biol Evol</source> <volume>3</volume>: <fpage>320</fpage>–<lpage>331</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Yi1">
+        <label>64</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yi</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Sze</surname><given-names>S-H</given-names></name>, <name name-style="western"><surname>Thon</surname><given-names>MR</given-names></name> (<year>2007</year>) <article-title>Identifying clusters of functionally related genes in genomes</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>1053</fpage>–<lpage>1060</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Osborne1">
+        <label>65</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Osborne</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Chakalova</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Carter</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Horton</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Active genes dynamically colocalize to shared sites of ongoing transcription</article-title>. <source>Nat Genet</source> <volume>36</volume>: <fpage>1065</fpage>–<lpage>1071</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Schoenfelder1">
+        <label>66</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schoenfelder</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sexton</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Chakalova</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Cope</surname><given-names>NF</given-names></name>, <name name-style="western"><surname>Horton</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Preferential associations between co-regulated genes reveal a transcriptional interactome in erythroid cells</article-title>. <source>Nat Genet</source> <volume>42</volume>: <fpage>53</fpage>–<lpage>61</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002672-Dong1">
+        <label>67</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dong</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ding</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>Y</given-names></name> (<year>2010</year>) <article-title>Human transcriptional interactome of chromatin contribute to gene co-expression</article-title>. <source>BMC Genomics</source> <volume>11</volume>: <fpage>704</fpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

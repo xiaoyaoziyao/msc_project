@@ -84,22 +84,15 @@ def main_revise(i,t_links):
 #pool.close()
 #pool.join()
 
-#main_function(1)
-#main_function(2)
-        
-#main_function(3)
-#main_function(4)
-#main_function(5)
+#main_function(6)
+#main_function(7)        
+
     
 #t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
 #t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
-
-t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
-main_revise(3,t_links3)
-
-t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
-main_revise(4,t_links4)
-
-t_links5 = ["10.1371/journal.pone.0187044"]
-main_revise(5,t_links5)
+#t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
+#t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
+#t_links5 = ["10.1371/journal.pone.0187044"]
+#t_links6 = ["10.1371/journal.pone.0187044"]
+#t_links7 = ["10.1371/journal.pone.0177179"]
 

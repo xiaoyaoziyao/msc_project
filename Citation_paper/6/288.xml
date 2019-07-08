@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-14918R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0010162</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology</subject><subject>Cell Biology/Gene Expression</subject><subject>Computational Biology/Systems Biology</subject><subject>Computational Biology/Transcriptional Regulation</subject></subj-group></article-categories><title-group><article-title>Module Network Inference from a Cancer Gene Expression Data Set Identifies MicroRNA Regulated Modules</article-title><alt-title alt-title-type="running-head">A MicroRNA Module Network</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Bonnet</surname><given-names>Eric</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Tatari</surname><given-names>Marianthi</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Joshi</surname><given-names>Anagha</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Michoel</surname><given-names>Tom</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Marchal</surname><given-names>Kathleen</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Berx</surname><given-names>Geert</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Van de Peer</surname><given-names>Yves</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Plant Systems Biology, VIB, Gent, Belgium</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Molecular Genetics, Ghent University, Gent, Belgium</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Unit of Molecular and Cellular Oncology, Department for Molecular Biomedical Research, VIB, Gent, Belgium</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Department of Biomedical Molecular Biology, Ghent University, Gent, Belgium</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>CMPG, Department Microbial and Molecular Systems, KULeuven, Leuven, Belgium</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Rogers</surname><given-names>Simon</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Glasgow, United Kingdom</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">yves.vandepeer@psb.vib-ugent.be</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: EB MT GB. Performed the experiments: MT. Analyzed the data: EB AJ TM. Wrote the paper: EB KM GB YVdP.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>14</day><month>4</month><year>2010</year></pub-date><volume>5</volume><issue>4</issue><elocation-id>e10162</elocation-id><history>
+<date date-type="received"><day>15</day><month>12</month><year>2009</year></date>
+<date date-type="accepted"><day>22</day><month>3</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Bonnet et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract><sec>
+<title>Background</title>
+<p>MicroRNAs (miRNAs) are small RNAs that recognize and regulate mRNA target genes. Multiple lines of evidence indicate that they are key regulators of numerous critical functions in development and disease, including cancer. However, defining the place and function of miRNAs in complex regulatory networks is not straightforward. Systems approaches, like the inference of a module network from expression data, can help to achieve this goal.</p>
+</sec><sec>
+<title>Methodology/Principal Findings</title>
+<p>During the last decade, much progress has been made in the development of robust and powerful module network inference algorithms. In this study, we analyze and assess experimentally a module network inferred from both miRNA and mRNA expression data, using our recently developed module network inference algorithm based on probabilistic optimization techniques. We show that several miRNAs are predicted as statistically significant regulators for various modules of tightly co-expressed genes. A detailed analysis of three of those modules demonstrates that the specific assignment of miRNAs is functionally coherent and supported by literature. We further designed a set of experiments to test the assignment of miR-200a as the top regulator of a small module of nine genes. The results strongly suggest that miR-200a is regulating the module genes via the transcription factor ZEB1. Interestingly, this module is most likely involved in epithelial homeostasis and its dysregulation might contribute to the malignant process in cancer cells.</p>
+</sec><sec>
+<title>Conclusions/Significance</title>
+<p>Our results show that a robust module network analysis of expression data can provide novel insights of miRNA function in important cellular processes. Such a computational approach, starting from expression data alone, can be helpful in the process of identifying the function of miRNAs by suggesting modules of co-expressed genes in which they play a regulatory role. As shown in this study, those modules can then be tested experimentally to further investigate and refine the function of the miRNA in the regulatory network.</p>
+</sec></abstract><funding-group><funding-statement>This work is supported by an Innovatie door Wetenschap en Technologie (IWT) grant for the Strategisch BasisOnderzoek (SBO) Bioframe project and by an Interuniversity Attraction Pole (IUAP) grant for the BioMaGNet project (Bioinformatics and Modelling: from Genomes to Networks, ref. p6/25). The funders had no role in study design, datacollection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="10"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>MicroRNAs (miRNAs) are small endogenous regulatory RNAs, present in a wide variety of eukaryotic organisms. They are incorporated into an RNA induced silencing complex (RISC) that binds to sites of variable complementarity in target messenger RNAs, triggering their degradation and/or repressing their translation <xref ref-type="bibr" rid="pone.0010162-Bartel1">[1]</xref>. Evidence for the participation of miRNAs in cell growth, cell differentiation and cancer is currently piling up. Nearly half of the annotated human miRNAs map within fragile chromosomal regions, which are areas associated with various types of human cancers. Recent evidence indicates that miRNAs as well as the factors that participate in miRNA biogenesis may function as tumor suppressors and/or oncogenes <xref ref-type="bibr" rid="pone.0010162-Medina1">[2]</xref>. According to the latest miRBase repository release <xref ref-type="bibr" rid="pone.0010162-GriffithsJones1">[3]</xref>, there are &gt;700 human mature miRNA sequences identified with experimental support, while some computational studies expand this list to more than 1,000 <xref ref-type="bibr" rid="pone.0010162-GriffithsJones1">[3]</xref>, roughly equaling the number of transcription factors <xref ref-type="bibr" rid="pone.0010162-Berezikov1">[4]</xref>. Computational and experimental studies have also predicted that between 30% and 100% of the human protein coding genes might be under the post-transcriptional regulation of miRNAs <xref ref-type="bibr" rid="pone.0010162-Grimson1">[5]</xref>, <xref ref-type="bibr" rid="pone.0010162-Friedman1">[6]</xref>. It is not difficult to see that even by taking the most conservative values, the regulatory network induced by such a large number of regulators and targets is potentially extremely large. Furthermore, miRNAs do not act in isolation, but are part of a complex regulatory network, involving transcription factors, signal transducers and other types of regulatory molecules <xref ref-type="bibr" rid="pone.0010162-Walhout1">[7]</xref>. Reconstructing and analyzing such regulatory networks is thus a complex but crucial challenge to tackle.</p>
+<p>Various algorithms exist to infer regulatory networks from expression data <xref ref-type="bibr" rid="pone.0010162-Basso1">[8]</xref>, <xref ref-type="bibr" rid="pone.0010162-Faith1">[9]</xref>, <xref ref-type="bibr" rid="pone.0010162-Segal1">[10]</xref>. One of the most powerful methods, especially for eukaryotic organisms, assumes a modular structure of the underlying regulatory network, where a group of co-expressed genes is regulated by a common set of regulators (also known as the regulatory program) <xref ref-type="bibr" rid="pone.0010162-Segal1">[10]</xref>. The regulatory program uses the expression levels of the set of regulators to predict the condition-dependent mean expression of the co-expressed genes. Thus, modules are composed of clusters of co-expressed genes together with their associated regulators. As a regulator can be associated with more than one module, the ensemble forms a module network. We have recently developed a novel algorithm which extends the original module network concept of Segal and co-workers <xref ref-type="bibr" rid="pone.0010162-Segal1">[10]</xref> by using probabilistic optimization techniques which enable prioritization of the statistically most significant clusters of co-expressed genes and their candidate regulators <xref ref-type="bibr" rid="pone.0010162-Joshi1">[11]</xref>, <xref ref-type="bibr" rid="pone.0010162-Michoel1">[12]</xref>. The main advantage of this algorithm is that it extracts more representative centroid-like solutions from an ensemble of possible statistical models, in order to avoid suboptimal solutions. By testing it on various biological datasets, we have shown that this approach generates more coherent modules, and that regulators consistently assigned to a module are more often supported by external sources of data <xref ref-type="bibr" rid="pone.0010162-Joshi1">[11]</xref>, <xref ref-type="bibr" rid="pone.0010162-Michoel1">[12]</xref>.</p>
+<p>In this study, we have adapted our module network algorithm to take as input a heterogeneous dataset of both miRNA and messenger RNA (mRNA) expression data measured on the same samples. Multiple miRNAs are assigned as high-scoring candidate regulators for several modules, together with well-known transcription factors or signal transducers. A detailed analysis of three modules where miRNAs are selected as high-scoring regulators shows that this assignment is highly coherent with the module function and is also supported by various external sources of data. We have also validated one of those modules experimentally, showing that over-expression or inhibition of the miRNA assigned as a regulator changes significantly the expression of a selection of module genes, thereby confirming the inference of the algorithm. Those results corroborate module network inference as a robust and useful approach to gain more precise insights into miRNA function.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Inference of a microRNA module network from expression data</title>
+<p>The LeMoNe algorithm, starting from an expression data matrix and a list of candidate regulators, will produce a module network, composed of modules of co-expressed genes and their associated regulators. The algorithm is also clustering the conditions (columns) for each set of co-expressed genes, creating condition clusters. The list of regulators for a given module is ordered according to their individual score. This score only takes into account the differential expression of the regulator across the different different condition clusters, and not their absolute value. This way we can simultaneously evaluate and compare mRNA and miRNA candidate regulators, using the expression levels of each class of regulators. As input for our algorithm, we used a dataset composed of expression data measured on 89 tumor and normal tissue samples (representing 11 tumor classes) both for 11,833 messenger RNAs and 124 miRNAs <xref ref-type="bibr" rid="pone.0010162-Lu1">[13]</xref>. Unlike previous attempts <xref ref-type="bibr" rid="pone.0010162-Joung1">[14]</xref>, <xref ref-type="bibr" rid="pone.0010162-Yoon1">[15]</xref>, <xref ref-type="bibr" rid="pone.0010162-Liu1">[16]</xref>, our approach for the integration of miRNAs in the network is not based on miRNA target prediction, or a mixture between target prediction and expression data, but relies solely on expression data. The algorithm generated a set of 76 tightly co-expressed gene clusters, corresponding to a total of 2,987 genes. We calculated the GO enrichment for all the modules <xref ref-type="bibr" rid="pone.0010162-Maere1">[17]</xref> and found a total of 44 clusters having at least one GO category enriched (p&lt;0.05), for a total of 589 enriched categories (the complete list of modules and their GO categories is available as <xref ref-type="supplementary-material" rid="pone.0010162.s002">table S2</xref>). For the assignment of regulators, we compiled a list of 1,841 candidate regulators based on their GO annotation (either transcription factors or signal transducers), plus the list of 124 miRNAs. After the assignment of regulators we took a stringent cutoff corresponding to the top 2% most significant predicted regulatory interactions (<xref ref-type="fig" rid="pone-0010162-g001">Figure 1</xref>), obtaining a final set of 294 unique regulators (the complete list of module genes and regulators is available in <xref ref-type="supplementary-material" rid="pone.0010162.s001">table S1</xref>). Within this set, ten miRNAs were selected as regulators for a total of seven modules (<xref ref-type="table" rid="pone-0010162-t001">Table 1</xref>). In order to assess the validity and the relevance of the inferred module network, we here present a detailed analysis of three modules, with an emphasis on the typical features of miRNA mediated regulatory modules. Those modules were selected based on their intrinsic interest, functional coherence and the high number of literature references discussing their putative function.</p>
+<fig id="pone-0010162-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0010162.g001</object-id><label>Figure 1</label><caption>
+<title>Random and real regulators score distributions.</title>
+<p>The histograms represent the distribution of randomly assigned (green) and true (yellow) regulators scores for the module network. The arrow for the random regulators represents the maximum score for randomly assigned regulators with the value indicated between brackets. The arrow for the true regulators represents the cutoff score value, with the raw value indicated between brackets.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.g001" xlink:type="simple"/></fig><table-wrap id="pone-0010162-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0010162.t001</object-id><label>Table 1</label><caption>
+<title>List of modules where miRNAs have been selected as high-scoring regulators.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0010162-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Module ID</td>
+<td align="left" colspan="1" rowspan="1">Number of genes in the module</td>
+<td align="left" colspan="1" rowspan="1">GO categories enriched for the module (p&lt;0.05)</td>
+<td align="left" colspan="1" rowspan="1">Regulators</td>
+<td align="left" colspan="1" rowspan="1">Score</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">73</td>
+<td align="left" colspan="1" rowspan="1">None</td>
+<td align="left" colspan="1" rowspan="1">MAFB</td>
+<td align="left" colspan="1" rowspan="1">3065</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">NFIB</td>
+<td align="left" colspan="1" rowspan="1">2774</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">MSRB2</td>
+<td align="left" colspan="1" rowspan="1">713</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IGFALS</td>
+<td align="left" colspan="1" rowspan="1">464</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">NR2C1</td>
+<td align="left" colspan="1" rowspan="1">457</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CCL23</td>
+<td align="left" colspan="1" rowspan="1">392</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">MORF4L1</td>
+<td align="left" colspan="1" rowspan="1">288</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">FOS</td>
+<td align="left" colspan="1" rowspan="1">249</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>let-7c</bold></td>
+<td align="left" colspan="1" rowspan="1">231</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>miR-125b</bold></td>
+<td align="left" colspan="1" rowspan="1">209</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">Digestion</td>
+<td align="left" colspan="1" rowspan="1">NFIB</td>
+<td align="left" colspan="1" rowspan="1">3785</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Proteolysis</td>
+<td align="left" colspan="1" rowspan="1">HEYL</td>
+<td align="left" colspan="1" rowspan="1">2361</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Lipid catabolic process</td>
+<td align="left" colspan="1" rowspan="1">PLA2G1B</td>
+<td align="left" colspan="1" rowspan="1">2164</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>miR-216</bold></td>
+<td align="left" colspan="1" rowspan="1">1085</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CCRL2</td>
+<td align="left" colspan="1" rowspan="1">780</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">MC5R</td>
+<td align="left" colspan="1" rowspan="1">327</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">TRAF1</td>
+<td align="left" colspan="1" rowspan="1">285</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CDX1</td>
+<td align="left" colspan="1" rowspan="1">261</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">DLX2</td>
+<td align="left" colspan="1" rowspan="1">254</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">E2F1</td>
+<td align="left" colspan="1" rowspan="1">251</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">IFNGR1</td>
+<td align="left" colspan="1" rowspan="1">250</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CCR9</td>
+<td align="left" colspan="1" rowspan="1">244</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">TACR3</td>
+<td align="left" colspan="1" rowspan="1">215</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">Immune response</td>
+<td align="left" colspan="1" rowspan="1">HOXC5</td>
+<td align="left" colspan="1" rowspan="1">1937</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">HMGA1</td>
+<td align="left" colspan="1" rowspan="1">1007</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>miR-142-5p</bold></td>
+<td align="left" colspan="1" rowspan="1">863</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>miR-142-3p</bold></td>
+<td align="left" colspan="1" rowspan="1">709</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">HLA-DRB1</td>
+<td align="left" colspan="1" rowspan="1">380</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CCL5</td>
+<td align="left" colspan="1" rowspan="1">241</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">AXL</td>
+<td align="left" colspan="1" rowspan="1">215</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CXCL14</td>
+<td align="left" colspan="1" rowspan="1">214</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">None</td>
+<td align="left" colspan="1" rowspan="1"><bold>miR-200a</bold></td>
+<td align="left" colspan="1" rowspan="1">1786</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">PPP1R1B</td>
+<td align="left" colspan="1" rowspan="1">727</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GPR30</td>
+<td align="left" colspan="1" rowspan="1">512</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">PTGER3</td>
+<td align="left" colspan="1" rowspan="1">456</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ZNF157</td>
+<td align="left" colspan="1" rowspan="1">320</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GNB3</td>
+<td align="left" colspan="1" rowspan="1">262</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GNG5</td>
+<td align="left" colspan="1" rowspan="1">209</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">29</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">Actomyosin structure organization and biogenesis</td>
+<td align="left" colspan="1" rowspan="1">PPP1R12B</td>
+<td align="left" colspan="1" rowspan="1">7346</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Smooth muscle contraction</td>
+<td align="left" colspan="1" rowspan="1"><bold>miR-133a</bold></td>
+<td align="left" colspan="1" rowspan="1">1216</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Smooth muscle fiber development</td>
+<td align="left" colspan="1" rowspan="1">TSC22D1</td>
+<td align="left" colspan="1" rowspan="1">1209</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Elastic fiber assembly</td>
+<td align="left" colspan="1" rowspan="1">ANGPTL2</td>
+<td align="left" colspan="1" rowspan="1">353</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Striated muscle development</td>
+<td align="left" colspan="1" rowspan="1"><bold>miR-145</bold></td>
+<td align="left" colspan="1" rowspan="1">220</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">35</td>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">None</td>
+<td align="left" colspan="1" rowspan="1">NFATC1</td>
+<td align="left" colspan="1" rowspan="1">2827</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">SH3BP1</td>
+<td align="left" colspan="1" rowspan="1">2162</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">FMNL2</td>
+<td align="left" colspan="1" rowspan="1">699</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">RASSF4</td>
+<td align="left" colspan="1" rowspan="1">381</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GNAQ</td>
+<td align="left" colspan="1" rowspan="1">290</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CTNNBIP1</td>
+<td align="left" colspan="1" rowspan="1">288</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>miR-181*</bold></td>
+<td align="left" colspan="1" rowspan="1">249</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">94</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">Folic acid metabolic process</td>
+<td align="left" colspan="1" rowspan="1"><bold>miR-10a</bold></td>
+<td align="left" colspan="1" rowspan="1">253</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Regulation of Notch signaling pathway</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Folic acid transport</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>All regulators that are above cutoff are listed for each module, and ordered according to their decreasing score value. MicroRNA genes are highlighted in bold.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2b">
+<title>MiR-133 and miR-145 are assigned as regulators of a smooth muscle actomyosin module</title>
+<p>Module 29 is a small module composed of four genes and five assigned regulators (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref>). The GO over-represented categories for this module are linked to smooth muscle development and actomyosin structure (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref> and <xref ref-type="supplementary-material" rid="pone.0010162.s002">table S2</xref>). MYH11 encodes a smooth muscle myosin heavy chain family member. ACTG2 is a gamma 2 actin protein found in enteric tissues. The two other genes in the module (MYLK and CNN1) are well known regulators of the actin-myosin interactions. MYLK is the myosin light chain kinase, a dedicated calcium-dependent kinase that phosphorylates a specific site on the regulatory light chain of the myosin, enhancing its activity. MYLK is ubiquitous in all adult tissues with the highest amounts found in smooth muscle tissues <xref ref-type="bibr" rid="pone.0010162-Kamm1">[18]</xref>. CNN1 (calponin) is a calcium binding protein that inhibits the ATPase activity of the myosin in smooth muscle. The top regulator (PPP1R12B) selected for this module is a myosin phosphatase subunit. The myosin phosphatase is also a well known core regulator of the actomyosin pathway, inhibiting the myosin activity <xref ref-type="bibr" rid="pone.0010162-Kamm1">[18]</xref>. The second high scoring candidate regulator is a miRNA, miR-133, while the third regulator is the TGF-beta stimulated clone-22 member 1 (TSC22D1) gene, which encodes a leucine zipper domain protein, a member of the TGF-beta1 pathway which is involved in the regulation of transcription. The last regulators are ANGPTL2, a vascular endothelial growth factor, and another miRNA, miR-145.</p>
+<fig id="pone-0010162-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0010162.g002</object-id><label>Figure 2</label><caption>
+<title>Modules 29 (a), 18 (b) and 25 (c) genes (MG) and assigned regulators (MR).</title>
+<p>Gene expression values are color coded, ranging from dark blue (low expression levels) to bright yellow (high expression levels). In each figure, columns represent a different sample. The color-coded bar at the bottom of the graph represents the tissue origin (see the legend), while the gray squares just below indicate whether the sample tissue was normal (light gray) or tumor (dark gray). The candidate regulators are ordered by decreasing score value (from top to bottom). The samples are grouped in leaves of homogeneous expression values, according to the hierarchical trees indicated on top of each figure. The orange boxes at the right of the figure indicate overrepresented GO categories (p≤0.05).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.g002" xlink:type="simple"/></fig>
+<p>The two miRNAs selected as regulators for this module clearly show a tightly positively correlated expression pattern with the module genes (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref>). As most miRNAs have been characterized so far as negative regulators of gene expression, this suggest an indirect regulation between the miRNAs and module 29 genes. Recent studies reveal several likely candidate genes that could act as intermediate regulators between the miRNAs and module 29 genes. MiR-133, selected as the second best regulator for this module (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref>), was recently shown to be a key regulator for skeletal muscle development and cardiac muscle hypertrophy <xref ref-type="bibr" rid="pone.0010162-Chen1">[19]</xref>, <xref ref-type="bibr" rid="pone.0010162-Care1">[20]</xref>. In those studies, miR-133 has been shown to directly regulate the SRF transcription factor. SRF is recognized as a vital factor for normal cytoskeletal and contractile cell activities and all the module 29 genes (<italic>MYH11</italic>, <italic>CNN1</italic>, <italic>ACTG2</italic>, <italic>MYLK</italic>) are known to be direct targets of SRF <xref ref-type="bibr" rid="pone.0010162-Miano1">[21]</xref>. Those literature results support the hypothesis of an indirect regulatory link between miR-133a and module 29 genes via SRF. Most studies on SRF activity have so far characterized this factor as a transcriptional activator <xref ref-type="bibr" rid="pone.0010162-Miano1">[21]</xref>, but some results also suggest that SRF might act as a transcriptional repressor of its targets genes <xref ref-type="bibr" rid="pone.0010162-Stritt1">[22]</xref>, <xref ref-type="bibr" rid="pone.0010162-Rivera1">[23]</xref>, <xref ref-type="bibr" rid="pone.0010162-Shaw1">[24]</xref>. SRF mediated gene repression is not clear, but it might involve the recruitment by SRF of transcriptional silencers <xref ref-type="bibr" rid="pone.0010162-Rivera1">[23]</xref>, <xref ref-type="bibr" rid="pone.0010162-Shaw1">[24]</xref>. If we hypothesize that SRF is repressing the transcription of module 29 genes, then the regulatory chain miR-133 – SRF – module 29 genes can explain the positive gene expression correlation that is observed in <xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref>. The other miRNA selected as a regulator, miR-145 was recently shown to be an important regulator for smooth muscle cell fate <xref ref-type="bibr" rid="pone.0010162-Cordes1">[25]</xref>. This study <xref ref-type="bibr" rid="pone.0010162-Cordes1">[25]</xref> also shows that miR-145 is activating one of its direct targets, the myocardin (Myocd), which is a transcription factor well known to activate smooth muscle gene expression by interacting with SRF <xref ref-type="bibr" rid="pone.0010162-Wang1">[26]</xref>. Thus we also have a regulatory chain miR-145 – Myocd – module 29 genes that can explain the pattern of expression observed in <xref ref-type="fig" rid="pone-0010162-g002">Figure 2a</xref>. Neither SRF nor Myocd are assigned as regulators or clustered together with the other module 29 genes. Unfortunately, the myocardin gene was not present in the microarrays used to produce the datasets <xref ref-type="bibr" rid="pone.0010162-Lu1">[13]</xref>. The profile of the SRF transcription factor appears to correlate poorly with the expression of module 29 genes in our dataset (<xref ref-type="supplementary-material" rid="pone.0010162.s003">Data file S1</xref>), explaining why this gene could not be selected as a regulator. Several reasons could explain why the profile is divergent, like post-translational modifications or the fact that miRNAs act at the post-transcriptional level, possibly preventing the regulatory effect to be detected (by repressing the translation).</p>
+</sec><sec id="s2c">
+<title>MiR-142s are assigned as regulators of an immune response module</title>
+<p>Module 18 is composed of six genes (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2b</xref>), of which five encode immunoglobulins corresponding either to the heavy chain (IGHG4, IGHA2, IGHA1) or to the light chain (IGKV1-5, IGLV3-21), while IGLL1 is the surrogate light chain, a critical component of the pre-B cell receptor complex. Not surprisingly, we found the GO category immune response over-represented for this module (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2b</xref> and <xref ref-type="supplementary-material" rid="pone.0010162.s002">table S2</xref>). All the module genes are known to be mostly expressed in developing and mature B-cells, revealing a coherent module <xref ref-type="bibr" rid="pone.0010162-Rebhan1">[27]</xref>. Nine high scoring regulators were selected for this module. The top regulator is a homeobox gene, HOXC5. The HMGA1 gene is selected as the second best regulator for this module. High mobility group proteins (HMGA) regulate the activity of a wide variety of genes by changing the DNA conformation of their target genes. HMGA1 is known to co-activate transcription in B-cells and to be important for B-cells development <xref ref-type="bibr" rid="pone.0010162-McCarthy1">[28]</xref>. The third and fourth candidate regulators are two miRNAs processed from the same precursor, miR-142-5p and miR-142-3p. The HLA-DRB1 gene belongs to the HLA class II beta chain paralogues. It is known to play a central role in the immune system by presenting peptides derived from extracellular proteins <xref ref-type="bibr" rid="pone.0010162-Turesson1">[29]</xref>. CCL5 is a chemotactic cytokine playing an active role in recruiting leukocytes to inflammatory sites <xref ref-type="bibr" rid="pone.0010162-Maghazachi1">[30]</xref>. AXL is a receptor tyrosine kinase that is transforming in fibroblast and hematopoietic cells, and is involved in mesenchymal development <xref ref-type="bibr" rid="pone.0010162-OBryan1">[31]</xref>. CXCL14 is a small cytokine belonging to the CXC chemokine family. This gene is chemotactic for monocytes and can activate these cells in the presence of an inflammatory mediator <xref ref-type="bibr" rid="pone.0010162-Kurth1">[32]</xref>. CXCL14 expression is reduced or absent from most cancer cells <xref ref-type="bibr" rid="pone.0010162-Frederick1">[33]</xref>. This module is probably linked to an immune response triggered by various tumor states. Such persistent pro-tumor immune responses are known to potentiate primary tumor development and malignant progression.</p>
+<p>MiR-142s are preferentially expressed in hematopoietic tissues and their expression is regulated during hematopoiesis, suggesting a role in immune cells differentiation <xref ref-type="bibr" rid="pone.0010162-Chen2">[34]</xref>. The transcription factor TCF12 is predicted as a target for miR-142-3p <xref ref-type="bibr" rid="pone.0010162-Liao1">[35]</xref>. In a previous study, a combined dosage of the factors E2A, E2-2 and TCF12 was shown to be required for normal B-cell development. More precisely, TCF12 is important for the generation of normal numbers of pro-B-cells <xref ref-type="bibr" rid="pone.0010162-Zhuang1">[36]</xref>. Because module 18 genes are expressed in developing B-cells, the regulation of TCF12 by miR-142-3p might be important for this process. Furthermore, we found conserved binding motifs for TCF12 for most module 18 genes (<xref ref-type="supplementary-material" rid="pone.0010162.s003">Data file S1</xref>), indicating that this transcription factor could be important for their regulation. Like for module 29 and SRF, the expression profile of TCF12 is highly divergent from the expression profiles of module 18 genes, explaining why this gene was not selected as module gene or regulator (data not shown).</p>
+</sec><sec id="s2d">
+<title>Mir-200a is a key regulator of a module involved in epithelial homeostasis</title>
+<p>Module 25 is composed of nine genes (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2c</xref>). SCNN1A (also known as ENaC) is the subunit alpha of the amiloride sensitive epithelial sodium channel, expressed in many epithelial tissues <xref ref-type="bibr" rid="pone.0010162-McDonald1">[37]</xref>. PRSS8 (prostasin) is a trypsinogen which regulates the activity of the epithelial sodium channel <xref ref-type="bibr" rid="pone.0010162-Chen3">[38]</xref>. FDXY3 is a small membrane protein that is highly transcribed in tissues such as uterus, stomach and colon, and may function as a Na/K channel regulator <xref ref-type="bibr" rid="pone.0010162-Crambert1">[39]</xref>. TACSTD1, the tumor-associated calcium signal transducer 1, functions as a calcium-independent cell adhesion molecule <xref ref-type="bibr" rid="pone.0010162-Gires1">[40]</xref>. Other genes like ATAD4 or TMEM63A are trans-membrane proteins of unknown function. RAB25 is a small GTP binding protein. RAB proteins have been involved in the regulation of vesicle trafficking <xref ref-type="bibr" rid="pone.0010162-Cheng1">[41]</xref>. The module top regulator is miR-200a. Regarding the other regulators, PPP1R1B is a phosphoprotein regulated by dopamine and cAMP, and is an inhibitor of the protein phosphatase 1. Besides its well-known role in the central nervous system, it is highly expressed in a variety of epithelial tissues where it might play a role in epithelial signaling and tumorigenesis <xref ref-type="bibr" rid="pone.0010162-Beckler1">[42]</xref>. GPR30 is a trans-membrane G protein coupled estrogen receptor <xref ref-type="bibr" rid="pone.0010162-Filardo1">[43]</xref>, while PTGER3 is a G-protein coupled prostaglandin E2 receptor that is involved in various physiological processes and was shown to affect intracellular concentrations of Ca++ and cAMP <xref ref-type="bibr" rid="pone.0010162-Filardo1">[43]</xref>. ZNF157 is a zinc finger protein of unknown function while GNB3 and GNG5 are G proteins subunits involved in signal transduction. From the functions of these genes, we can conclude that most of the module 25 genes and regulators are likely involved in epithelial homeostasis, although we did not find any particular GO category enriched for this module. It is also worth noting that several of those genes are related to tumor progression <xref ref-type="bibr" rid="pone.0010162-Gires1">[40]</xref>, <xref ref-type="bibr" rid="pone.0010162-Cheng1">[41]</xref>, <xref ref-type="bibr" rid="pone.0010162-Grzmil1">[44]</xref>.</p>
+<p>MiR-200a, which was selected as the best candidate regulator for module 25, is a member of a miRNA family of five closely related miRNAs (miR-200a, miR-200b, miR-200c, miR-141 and miR-429). Recent publications show epithelial-specific expression of miR-200a and miR-200b <xref ref-type="bibr" rid="pone.0010162-Baskerville1">[45]</xref>, <xref ref-type="bibr" rid="pone.0010162-Thomson1">[46]</xref>. We designed a set of experiments to validate the role of miR-200a as a regulator of the expression of genes in module 25. MiR-200a was introduced in a human de-differentiated epithelial breast cancer cell line MDA-MB-231, known to express aberrantly low levels of miR-200a. The expression of six genes (<italic>RAB25</italic>, <italic>IRF6, SCNN1A, PRSS8, ATAD4</italic>, <italic>TACSTD1</italic>) out of nine belonging to module 25 was monitored using RT-qPCR (<xref ref-type="fig" rid="pone-0010162-g003">Figure 3</xref>). Without exception, the six monitored genes show a clear up-regulation upon exogenous expression of miR-200a (<xref ref-type="fig" rid="pone-0010162-g003">Figure 3a</xref>). The reverse experiment, inhibition of some members of the miR-200 family (miR-200a,b,c) in the MDA-MB-231 cells using antagomirs, resulted in the significant down-regulation of four out of five tested genes, (<italic>SCNN1A</italic> is not significantly down-regulated, <italic>ATAD4</italic> is not expressed in normal conditions in this cell line)(<xref ref-type="fig" rid="pone-0010162-g003">Figure 3b</xref>). Those results clearly show that miR-200a is a core regulator of module 25, most probably with other members of the miR-200 family.</p>
+<fig id="pone-0010162-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0010162.g003</object-id><label>Figure 3</label><caption>
+<title>Validation of miR-200a as a regulator of module 25 genes expression.</title>
+<p>(a) Real time quantitative PCR (RT qPCR) analysis of the expression of module 25 genes <italic>RAB25</italic>, <italic>IRF6, SCNN1A</italic>, <italic>PRSS8</italic>, <italic>ATAD4 and TACSTD1</italic> and upon over-expression of miR-200a in MDA-MD-231 cells (mean ± standard deviation). The y-axis represents the relative mRNA expression value. miR-1 was used as the control (Ctrl), as it is not known to target any of the monitored genes (b) RT qPCR analysis of the relative expression for the genes <italic>RAB25</italic>, <italic>IRF6</italic>, <italic>SCNN1A</italic>, <italic>PRSS8</italic> and <italic>TACSTD1</italic> in MDA-MB-231 cells infiltrated with miR-200a,b,c antagomirs. The y-axis represents the relative mRNA expression value (mean ± standard deviation). miR-1 was used as the control (Ctrl) (c) RT qPCR analysis of the relative expression levels of module 25 genes <italic>RAB25, IRF6, SCNN1A, PRSS8, ATAD4, TACSTD1, TMEM63A</italic> and <italic>FXYD3</italic> in MDA-MB-231 cells where <italic>ZEB1</italic> is knocked down. The first barplot (black) shows effective repression of <italic>ZEB1</italic> levels upon transfection with the <italic>ZEB1</italic> specific siRNA. Par  =  parental cell culture, Mock  =  mock transfection, si-ZEB1  =  transfection with the ZEB1 specific siRNA.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.g003" xlink:type="simple"/></fig>
+<p>In this module, we observe again a clear positive correlation pattern between miR-200a and the module genes expression, suggesting an indirect regulatory circuit between miR-200a and module 25 genes (<xref ref-type="fig" rid="pone-0010162-g002">Figure 2c</xref> and <xref ref-type="fig" rid="pone-0010162-g003">Figure 3a and 3b</xref>). Recent experimental work showed that miR-200 family members directly target the transcription factors ZEB1 and ZEB2 <xref ref-type="bibr" rid="pone.0010162-Burk1">[47]</xref>, <xref ref-type="bibr" rid="pone.0010162-Gregory1">[48]</xref>, <xref ref-type="bibr" rid="pone.0010162-Park1">[49]</xref>. These transcription factors are known as major transcriptional repressors of epithelial differentiation orchestrating epithelial mesenchymal transition (EMT) <xref ref-type="bibr" rid="pone.0010162-Vandewalle1">[50]</xref>. EMT is a process that drives epithelial cells from a polarized phenotype to a highly motile, non polarized mesenchymal phenotype and is known to occur in epithelial tumors giving rise to highly malignant cancer cells. The ZEB transcription factors have been functionally related to members of the miR-200 family via a double negative feedback loop, thus promoting EMT and cancer invasion <xref ref-type="bibr" rid="pone.0010162-Burk1">[47]</xref>, <xref ref-type="bibr" rid="pone.0010162-Adam1">[51]</xref>, <xref ref-type="bibr" rid="pone.0010162-Kong1">[52]</xref>. We found conserved ZEB binding motifs for several module 25 genes (<xref ref-type="supplementary-material" rid="pone.0010162.s003">Data file S1</xref>), suggesting that ZEB factors could be the intermediate regulators between miR-200 and module 25 genes. To test this hypothesis, we down-regulated the ZEB1 transcription factor in MDA-MD-231 cells with a specific siRNA while monitoring the expression of eight module 25 genes (<xref ref-type="fig" rid="pone-0010162-g003">Figure 3c</xref>). All the genes show a strong up-regulation pattern, with the exception of the gene RAB25 (<xref ref-type="fig" rid="pone-0010162-g003">Figure 3c</xref>). Those results demonstrate that the ZEB1 factor is essential for the regulation of module 25 genes. Taken together, our experimental results (<xref ref-type="fig" rid="pone-0010162-g003">Figure 3</xref>) strongly suggest the existence of a regulatory chain between miR-200 and module 25 genes via the ZEB1 transcription factor (<xref ref-type="fig" rid="pone-0010162-g004">Figure 4</xref>). As both miR-200 and ZEB1 play important roles in EMT <xref ref-type="bibr" rid="pone.0010162-Burk1">[47]</xref>, <xref ref-type="bibr" rid="pone.0010162-Gregory1">[48]</xref>, <xref ref-type="bibr" rid="pone.0010162-Park1">[49]</xref>, <xref ref-type="bibr" rid="pone.0010162-Adam1">[51]</xref>, <xref ref-type="bibr" rid="pone.0010162-Kong1">[52]</xref> we hypothesize that module 25 repression might contribute to the malignant EMT process in cancer cells.</p>
+<fig id="pone-0010162-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0010162.g004</object-id><label>Figure 4</label><caption>
+<title>Module 25 hypothetical regulation model.</title>
+<p>MiR-200 genes repress ZEB factors, which in turn repress the expression of module 25 genes. The light yellow indicate genes assigned as regulators, the light green indicates module genes while the light orange indicates genes not assigned as regulators, but supported by literature (indirect regulation). This regulatory model support the positive correlation of the expression patterns between mir-200a and module 25 genes.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.g004" xlink:type="simple"/></fig></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>MiRNAs have emerged quite recently as a new and important layer of regulation. Most of the studies so far have focused on their identification and on the detection of their targets. Several experimental studies have shown that at least some of them play key roles in various developmental and cellular pathways. Integrating miRNAs in regulatory networks is therefore of fundamental importance and should ideally be done taking into account the other types of regulatory molecules. So far, a few studies have proposed a computational strategy to infer miRNA mediated module networks <xref ref-type="bibr" rid="pone.0010162-Joung1">[14]</xref>, <xref ref-type="bibr" rid="pone.0010162-Yoon1">[15]</xref>, <xref ref-type="bibr" rid="pone.0010162-Liu1">[16]</xref>. These were mainly based on miRNA target prediction, or on a combination of target prediction and expression data. We have applied a robust and unbiased module network inference algorithm to a cancer-related expression data set of both mRNAs and miRNAs. In our approach, miRNAs were considered as candidate regulators, together with other types of regulators, like transcription factors and signal transducers. Even after applying a stringent cutoff, several miRNAs were retained as high scoring, statistically significant candidate regulators for various modules. Through an in-depth analysis of three of those modules, we showed that the assignment of specific miRNAs as regulators is supported by various external sources and is functionally coherent. Furthermore, we could show experimentally that a miRNA, assigned as the best regulator, is indeed a key regulator for the module genes expression. The number of miRNAs assigned in this study (10) might seem rather modest, but this number has to be evaluated with respect to the total number of miRNAs for which expression was measured in the samples (124). The ratio assigned per total number of miRNAs is equal to 8%, while the same ratio value is 15% for the ensemble transcription factors plus signal transducers (284/1841). The two ratio values are comparable and therefore we can reasonably expect a higher number of miRNAs assigned when an increased coverage of the miRNome expression landscape will be available.</p>
+<p>Nevertheless, just as with other similar methods, care has to be taken for the interpretation of the inferred regulatory model. In particular, correlation of gene expression might not always indicate a direct interaction. Indeed, for the three modules we have investigated in detail, we have found an indirect regulation pathway between the regulator and the module genes. Furthermore, none of those indirect regulator genes were assigned by the algorithm in the regulation program or even clustered together with the module genes. As we could show for module 29 and the SRF transcription factor, the reason is because those indirect regulators expression profile differ significantly from those of the module genes. Various reasons can explain this divergence, for example the regulation might happen at the post-transcriptional level, or might be the result of post-translational modifications. Indirect regulators might of course complicate the interpretation of the results but they are to be expected, especially in higher eukaryotic organisms where regulatory networks are expected to be more complex <xref ref-type="bibr" rid="pone.0010162-Herrgard1">[53]</xref>.</p>
+<p>Taken together, our results show that novel insights can be gained from a robust module network analysis of miRNA and mRNA expression data and support the view that at least some miRNAs have key regulatory roles in important cellular processes. Our approach has also the advantage of providing a direct view of post-transcriptional modifications through the integration of miRNAs, where mRNA expression alone might not be enough to reveal the existence of regulatory interactions. All three modules for which we did a detailed analysis in this study have each a coherent set of genes, involved in the same process and function. Furthermore, by connecting miRNAs to coherent modules, we believe that this approach can help to elucidate miRNA function and could efficiently drive experimental work towards the identification of key regulatory components in various processes. With the rapid proliferation of various techniques to measure with a high accuracy the levels of expression for hundreds of miRNAs, and the concomitant availability of mRNA expression data, it will be highly appealing to apply computational strategies like the one we describe here to expand our knowledge on global regulatory networks.</p>
+</sec><sec id="s4" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Expression data sets</title>
+<p>We used a normalized cancer expression data set previously published <xref ref-type="bibr" rid="pone.0010162-Lu1">[13]</xref>. We performed additional filtering steps to improve the quality of the input data set. Probesets with no known ensembl gene identifiers were discarded, as well as miRNA sequences that were not annotated as human miRNAs in the most recent miRBase release <xref ref-type="bibr" rid="pone.0010162-GriffithsJones1">[3]</xref>. The final data matrix contained 11,833 genes and 124 miRNAs, for which expression was measured across 89 samples covering 11 different tumor classes.</p>
+</sec><sec id="s4b">
+<title>Module network inference</title>
+<p>We used the LeMoNe algorithm to infer the module network <xref ref-type="bibr" rid="pone.0010162-Joshi1">[11]</xref>, <xref ref-type="bibr" rid="pone.0010162-Michoel1">[12]</xref>, <xref ref-type="bibr" rid="pone.0010162-Joshi2">[54]</xref>. In a first step, the algorithm is searching for a partition of genes into clusters of co-expressed genes. In a second step, the algorithm defines a regulatory program (a set of regulator genes) for each cluster. To avoid local optima traps in the first step, the algorithm uses a gibbs sampling approach for two-way clustering of both genes and conditions <xref ref-type="bibr" rid="pone.0010162-Joshi2">[54]</xref>. For a given input expression matrix, multiple clustering solutions are generated. For this study, we generated 30 different cluster solutions from the initial dataset. This ensemble of partially overlapping solutions is averaged to produce a set of tight clusters, representing subsets of genes which consistently cluster together in all solutions. The set of tight clusters is extracted using a graph spectral method <xref ref-type="bibr" rid="pone.0010162-Joshi2">[54]</xref>. For the second step, regulation programs are learned using a fuzzy decision tree model. The two-way clustering of the first step has also generated condition clusters (set of conditions having a similar mean and standard deviation) for each set of co-expressed genes. The condition clusters of a given module are first linked together in a hierarchical decision tree. Each node in the tree is defining a split between two sets of conditions (corresponding to low and high expression levels). Regulators are assigned to each node of the tree using a probabilistic score reflecting how well the expression levels of the regulator match the genes expression levels defined by the split value (for details about the mathematical model of the algorithm, see <xref ref-type="bibr" rid="pone.0010162-Joshi1">[11]</xref>). Just as for the gene clusters, multiple solutions are generated for the conditions clusters. Consequently, there are multiple decision trees and multiple regulators assigned for each node of each hierarchical tree. We adopt an ensemble approach again by summing the strength with which a regulator participates in each regulatory program for a given set of co-expressed genes. A global score is calculated, reflecting the statistical confidence of the regulator over all the nodes of all the hierarchical trees generated for the set of co-expressed genes <xref ref-type="bibr" rid="pone.0010162-Joshi1">[11]</xref>. For this study, we assigned up to 100 regulators for each node of each of the 100 hierarchical trees defined for each module. It is worth noting that by using a score that only takes into account the differential expression of a regulator across the different condition clusters, we can simultaneously evaluate and compare mRNA and miRNA candidate regulators. In the end, the set of regulators assigned to each cluster of co-expressed genes can be ranked according to their global probabilistic score and a cutoff level can be defined, keeping only very high-scoring regulators. In order to evaluate the statistical significance of the assigned regulators, a second set of randomly assigned regulators is generated along the set of “true” regulators (<xref ref-type="fig" rid="pone-0010162-g001">Figure 1</xref>). The complete list of modules together with their high-scoring regulators for this study is available in the <xref ref-type="supplementary-material" rid="pone.0010162.s001">table S1</xref>. The LeMoNe software package can be downloaded from our website, is open-source and free of charge for academics (<ext-link ext-link-type="uri" xlink:href="http://bioinformatics.psb.ugent.be/software/details/lemone" xlink:type="simple">http://bioinformatics.psb.ugent.be/software/details/lemone</ext-link>).</p>
+</sec><sec id="s4c">
+<title>Gene Ontology over-represented categories</title>
+<p>For each module, we calculated GO enrichment using the BiNGO tool <xref ref-type="bibr" rid="pone.0010162-Maere1">[17]</xref>. The complete list of GO categories enrichment for all the modules is available in the <xref ref-type="supplementary-material" rid="pone.0010162.s002">table S2</xref>.</p>
+</sec><sec id="s4d">
+<title>Transcription factor binding motifs</title>
+<p>We used the ConTra <xref ref-type="bibr" rid="pone.0010162-Hooghe1">[55]</xref> software tool to look for conserved TCF12 and ZEB motif binding sites in the promoter regions of module 18 and 25 genes. A multiple alignment of nine eutherian mammal species (<italic>Bos taurus, Canis familiaris, Equus caballus, Pan troglodytes, Pongo pygmaeus, Macacca mulatta, Mus musculus and Rattus norvegicus</italic>) and a specific position weight matrix were used to determine the conservation of the motif across all species.</p>
+</sec><sec id="s4e">
+<title>Cell culture</title>
+<p>Human cancer cell lines were originally obtained from ATCC. MDA-MB-231 cells were maintained in Leibovitz's L-15 medium supplemented with 10% fetal calf serum (FCS), 100 µg/ml penicillin, 100 µg/ml streptomycin and 0.03% L-Glutamine. These cells were grown at 37°C without CO<sub>2</sub> supply.</p>
+</sec><sec id="s4f">
+<title>miRNA repression and overexpression assays</title>
+<p>MDA-MB-231 cells were seeded at 200.000 cells per well in 6-well plates in complete medium without antibiotics one day prior to transfection. The miRNA precursors and inhibitors as well as the positive and the negative control miRNAs were transfected at a final concentration of 25 nM using DharmaFECT 1 transfection reagent (ThermoSCIENTIFIC- Dharmacon) according to the manufacturer's instructions with the modification of using 8 µl of reagent instead of 6. The medium was refreshed after 18–24 hrs for the MDA-MB-231 cells and total RNA was collected 48 hrs post transfection. The negative control is Pre-miR™ miRNA Precursor–Negative Control #1, which does not target any known mRNA within the human or mouse transcriptome. The positive control is miR-1 Pre-miR miRNA precursor which has been shown to effectively downregulate the expression of twinfilin-1, also known as PTK9, at the mRNA level <xref ref-type="bibr" rid="pone.0010162-Lim1">[56]</xref>. Validation of the downregulation of PTK9 was performed using a TaqMan® Gene Expression Assay (Assay ID: Hs00702289_s1). The control miRNAs and the qRT-PCR assay for human PTK9 were provided in the Pre-miR™ miRNA Starter Kit (Ambion Cat #AM1540).</p>
+</sec><sec id="s4g">
+<title>ZEB1 repression assay</title>
+<p>MDA-MB-231 cells were seeded at 200.000 cells per well in 6-well plates in complete medium without antibiotics one day prior to transfection. ZEB1 siGENOME-SMARTpool was used for the downregulation of ZEB1 (ThermoSCIENTIFIC- Dharmacon, M-006564-02-0010), which consists of four SMART-selection designed siRNAs targeting one gene. The siZEB1 was dissolved in 1× siRNA buffer (ThermoSCIENTIFIC- Dharmacon, B-002000-UB) at a final concentration of 20 µM and was transfected at a final concentration of 25 nM using DharmaFECT 1 transfection reagent (ThermoSCIENTIFIC- Dharmacon) according to the manufacturer's instructions with the modification of using 8 µl of reagent instead of 6. As a negative control 1× siRNA buffer was used (MOCK transfection).</p>
+</sec><sec id="s4h">
+<title>Quantitative reverse transcription PCR (qRT-PCR)</title>
+<p>Total RNA was extracted using Trizol (Invitrogen) according to the manufacturer's instructions with one modification; absolute ethanol was used in place of isopropanol. For the qPCR analysis cDNA synthesis was performed on 1 µg of total RNA using the iScript synthesis kit (BIO-RAD). The qRT-PCR for every gene was performed on 20 ng of cDNA in triplicate using the SYBRGreen I Master (Roche) or Probes Master (Roche) on a LightCycler®480 Real-time PCR System (Roche). The expression levels were determined using comparative quantification to the negative control and all quantification data were normalized against 2 reference genes, HMBS and TBP. The sequences of the RT-qPCR primers that were used are given in the <xref ref-type="supplementary-material" rid="pone.0010162.s003">data file S1</xref>.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0010162.s001" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.s001" xlink:type="simple"><label>Table S1</label><caption>
+<p>Complete list of module genes and regulators.</p>
+<p>(0.28 MB XLS)</p>
+</caption></supplementary-material><supplementary-material id="pone.0010162.s002" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.s002" xlink:type="simple"><label>Table S2</label><caption>
+<p>Gene Ontology (GO) categories enrichment for each module.</p>
+<p>(0.14 MB XLS)</p>
+</caption></supplementary-material><supplementary-material id="pone.0010162.s003" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0010162.s003" xlink:type="simple"><label>Data file S1</label><caption>
+<p>Gene expression profile of MYH11, CNN1, ACTG2 and MYLK compared to SRF; TCF12 binding motifs for module 18 genes; ZEB binding motifs for module 25 genes; PCR primers.</p>
+<p>(0.49 MB DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Chris Marine for fruitful discussions and suggestions. We also thank the anonymous reviewers for valuable comments.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0010162-Bartel1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bartel</surname><given-names>DP</given-names></name>
+</person-group>             <year>2004</year>             <article-title>MicroRNAs: genomics, biogenesis, mechanism, and function.</article-title>             <source>Cell</source>             <volume>116</volume>             <fpage>281</fpage>             <lpage>297</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Medina1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Medina</surname><given-names>PP</given-names></name>
+<name name-style="western"><surname>Slack</surname><given-names>FJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>microRNAs and cancer: an overview.</article-title>             <source>Cell Cycle</source>             <volume>7</volume>             <fpage>2485</fpage>             <lpage>2492</lpage>          </element-citation></ref>
+<ref id="pone.0010162-GriffithsJones1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Griffiths-Jones</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Saini</surname><given-names>HK</given-names></name>
+<name name-style="western"><surname>van Dongen</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Enright</surname><given-names>AJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>miRBase: tools for microRNA genomics.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D154</fpage>             <lpage>158</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Berezikov1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Berezikov</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Guryev</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>van de Belt</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wienholds</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Plasterk</surname><given-names>RH</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Phylogenetic shadowing and computational identification of human microRNA genes.</article-title>             <source>Cell</source>             <volume>120</volume>             <fpage>21</fpage>             <lpage>24</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Grimson1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grimson</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Farh</surname><given-names>KK</given-names></name>
+<name name-style="western"><surname>Johnston</surname><given-names>WK</given-names></name>
+<name name-style="western"><surname>Garrett-Engele</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Lim</surname><given-names>LP</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>MicroRNA targeting specificity in mammals: determinants beyond seed pairing.</article-title>             <source>Mol Cell</source>             <volume>27</volume>             <fpage>91</fpage>             <lpage>105</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Friedman1"><label>6</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Friedman</surname><given-names>RC</given-names></name>
+<name name-style="western"><surname>Farh</surname><given-names>KK</given-names></name>
+<name name-style="western"><surname>Burge</surname><given-names>CB</given-names></name>
+<name name-style="western"><surname>Bartel</surname><given-names>D</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Most mammalian mRNAs are conserved targets of microRNAs.</article-title>             <publisher-name>Genome Res</publisher-name>          </element-citation></ref>
+<ref id="pone.0010162-Walhout1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Walhout</surname><given-names>AJ</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Unraveling transcription regulatory networks by protein-DNA and protein-protein interaction mapping.</article-title>             <source>Genome Res</source>             <volume>16</volume>             <fpage>1445</fpage>             <lpage>1454</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Basso1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Basso</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Klein</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Dalla-Favera</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Reverse engineering of regulatory networks in human B cells.</article-title>             <source>Nat Genet</source>             <volume>37</volume>             <fpage>382</fpage>             <lpage>390</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Faith1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Large-scale mapping and validation of Escherichia coli transcriptional regulation from a compendium of expression profiles.</article-title>             <source>PLoS Biol</source>             <volume>5</volume>             <fpage>e8</fpage>          </element-citation></ref>
+<ref id="pone.0010162-Segal1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Segal</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Shapira</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Regev</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pe'er</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Module networks: identifying regulatory modules and their condition-specific regulators from gene expression data.</article-title>             <source>Nat Genet</source>             <volume>34</volume>             <fpage>166</fpage>             <lpage>176</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Joshi1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Joshi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>De Smet</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Marchal</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Van de Peer</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Michoel</surname><given-names>T</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Module networks revisited: computational assessment and prioritization of model predictions.</article-title>             <source>Bioinformatics</source>             <volume>25</volume>             <fpage>490</fpage>             <lpage>496</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Michoel1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Michoel</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>De Smet</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Joshi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Van de Peer</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Marchal</surname><given-names>K</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Comparative analysis of module-based versus direct methods for reverse-engineering transcriptional regulatory networks.</article-title>             <source>BMC Syst Biol</source>             <volume>3</volume>             <fpage>49</fpage>          </element-citation></ref>
+<ref id="pone.0010162-Lu1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Getz</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Miska</surname><given-names>EA</given-names></name>
+<name name-style="western"><surname>Alvarez-Saavedra</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Lamb</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>MicroRNA expression profiles classify human cancers.</article-title>             <source>Nature</source>             <volume>435</volume>             <fpage>834</fpage>             <lpage>838</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Joung1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Joung</surname><given-names>JG</given-names></name>
+<name name-style="western"><surname>Hwang</surname><given-names>KB</given-names></name>
+<name name-style="western"><surname>Nam</surname><given-names>JW</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>SJ</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>BT</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Discovery of microRNA-mRNA modules via population-based probabilistic learning.</article-title>             <source>Bioinformatics</source>             <volume>23</volume>             <fpage>1141</fpage>             <lpage>1147</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Yoon1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yoon</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>De Micheli</surname><given-names>G</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Prediction of regulatory modules comprising microRNAs and target genes.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <supplement>Suppl 2</supplement>             <fpage>ii93</fpage>             <lpage>100</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Liu1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Tsykin</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Gaur</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Exploring complex miRNA-mRNA interactions with Bayesian networks by splitting-averaging strategy.</article-title>             <source>BMC Bioinformatics</source>             <volume>10</volume>             <fpage>408</fpage>          </element-citation></ref>
+<ref id="pone.0010162-Maere1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maere</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Heymans</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Kuiper</surname><given-names>M</given-names></name>
+</person-group>             <year>2005</year>             <article-title>BiNGO: a Cytoscape plugin to assess overrepresentation of gene ontology categories in biological networks.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>3448</fpage>             <lpage>3449</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Kamm1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kamm</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Stull</surname><given-names>JT</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Dedicated myosin light chain kinases with diverse cellular functions.</article-title>             <source>J Biol Chem</source>             <volume>276</volume>             <fpage>4527</fpage>             <lpage>4530</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Chen1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Mandel</surname><given-names>EM</given-names></name>
+<name name-style="western"><surname>Thomson</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Callis</surname><given-names>TE</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>The role of microRNA-1 and microRNA-133 in skeletal muscle proliferation and differentiation.</article-title>             <source>Nat Genet</source>             <volume>38</volume>             <fpage>228</fpage>             <lpage>233</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Care1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Care</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Catalucci</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Felicetti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Bonci</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Addario</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>MicroRNA-133 controls cardiac hypertrophy.</article-title>             <source>Nat Med</source>             <volume>13</volume>             <fpage>613</fpage>             <lpage>618</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Miano1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Miano</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Long</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Fujiwara</surname><given-names>K</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Serum response factor: master regulator of the actin cytoskeleton and contractile apparatus.</article-title>             <source>Am J Physiol Cell Physiol</source>             <volume>292</volume>             <fpage>C70</fpage>             <lpage>81</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Stritt1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stritt</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Stern</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Harting</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Manke</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Sinske</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Paracrine control of oligodendrocyte differentiation by SRF-directed neuronal gene expression.</article-title>             <source>Nat Neurosci</source>             <volume>12</volume>             <fpage>418</fpage>             <lpage>427</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Rivera1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rivera</surname><given-names>VM</given-names></name>
+<name name-style="western"><surname>Sheng</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Greenberg</surname><given-names>ME</given-names></name>
+</person-group>             <year>1990</year>             <article-title>The inner core of the serum response element mediates both the rapid induction and subsequent repression of c-fos transcription following serum stimulation.</article-title>             <source>Genes Dev</source>             <volume>4</volume>             <fpage>255</fpage>             <lpage>268</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Shaw1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shaw</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Frasch</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Nordheim</surname><given-names>A</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Repression of c-fos transcription is mediated through p67SRF bound to the SRE.</article-title>             <source>EMBO J</source>             <volume>8</volume>             <fpage>2567</fpage>             <lpage>2574</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Cordes1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cordes</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Sheehy</surname><given-names>NT</given-names></name>
+<name name-style="western"><surname>White</surname><given-names>MP</given-names></name>
+<name name-style="western"><surname>Berry</surname><given-names>EC</given-names></name>
+<name name-style="western"><surname>Morton</surname><given-names>SU</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>miR-145 and miR-143 regulate smooth muscle cell fate and plasticity.</article-title>             <source>Nature</source>             <volume>460</volume>             <fpage>705</fpage>             <lpage>710</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Wang1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>DZ</given-names></name>
+<name name-style="western"><surname>Pipes</surname><given-names>GC</given-names></name>
+<name name-style="western"><surname>Olson</surname><given-names>EN</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Myocardin is a master regulator of smooth muscle gene expression.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>100</volume>             <fpage>7129</fpage>             <lpage>7134</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Rebhan1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rebhan</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Chalifa-Caspi</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Prilusky</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lancet</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>GeneCards: a novel functional genomics compendium with automated data mining and query reformulation support.</article-title>             <source>Bioinformatics</source>             <volume>14</volume>             <fpage>656</fpage>             <lpage>664</lpage>          </element-citation></ref>
+<ref id="pone.0010162-McCarthy1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McCarthy</surname><given-names>KM</given-names></name>
+<name name-style="western"><surname>McDevit</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Andreucci</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Reeves</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Nikolajczyk</surname><given-names>BS</given-names></name>
+</person-group>             <year>2003</year>             <article-title>HMGA1 co-activates transcription in B cells through indirect association with DNA.</article-title>             <source>J Biol Chem</source>             <volume>278</volume>             <fpage>42106</fpage>             <lpage>42114</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Turesson1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Turesson</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Matteson</surname><given-names>EL</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Genetics of rheumatoid arthritis.</article-title>             <source>Mayo Clin Proc</source>             <volume>81</volume>             <fpage>94</fpage>             <lpage>101</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Maghazachi1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maghazachi</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Al-Aoukaty</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Schall</surname><given-names>TJ</given-names></name>
+</person-group>             <year>1996</year>             <article-title>CC chemokines induce the generation of killer cells from CD56+ cells.</article-title>             <source>Eur J Immunol</source>             <volume>26</volume>             <fpage>315</fpage>             <lpage>319</lpage>          </element-citation></ref>
+<ref id="pone.0010162-OBryan1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>O'Bryan</surname><given-names>JP</given-names></name>
+<name name-style="western"><surname>Fridell</surname><given-names>YW</given-names></name>
+<name name-style="western"><surname>Koski</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Varnum</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>ET</given-names></name>
+</person-group>             <year>1995</year>             <article-title>The transforming receptor tyrosine kinase, Axl, is post-translationally regulated by proteolytic cleavage.</article-title>             <source>J Biol Chem</source>             <volume>270</volume>             <fpage>551</fpage>             <lpage>557</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Kurth1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kurth</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Willimann</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Schaerli</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Hunziker</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Clark-Lewis</surname><given-names>I</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>Monocyte selectivity and tissue localization suggests a role for breast and kidney-expressed chemokine (BRAK) in macrophage development.</article-title>             <source>J Exp Med</source>             <volume>194</volume>             <fpage>855</fpage>             <lpage>861</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Frederick1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Frederick</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Henderson</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Xu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Deavers</surname><given-names>MT</given-names></name>
+<name name-style="western"><surname>Sahin</surname><given-names>AA</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>In vivo expression of the novel CXC chemokine BRAK in normal and cancerous human tissue.</article-title>             <source>Am J Pathol</source>             <volume>156</volume>             <fpage>1937</fpage>             <lpage>1950</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Chen2"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>CZ</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Lodish</surname><given-names>HF</given-names></name>
+<name name-style="western"><surname>Bartel</surname><given-names>DP</given-names></name>
+</person-group>             <year>2004</year>             <article-title>MicroRNAs modulate hematopoietic lineage differentiation.</article-title>             <source>Science</source>             <volume>303</volume>             <fpage>83</fpage>             <lpage>86</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Liao1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liao</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Sun</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Lou</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>MicroRNAs play a role in the development of human hematopoietic stem cells.</article-title>             <source>J Cell Biochem</source>             <volume>104</volume>             <fpage>805</fpage>             <lpage>817</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Zhuang1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhuang</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Cheng</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Weintraub</surname><given-names>H</given-names></name>
+</person-group>             <year>1996</year>             <article-title>B-lymphocyte development is regulated by the combined dosage of three basic helix-loop-helix genes, E2A, E2-2, and HEB.</article-title>             <source>Mol Cell Biol</source>             <volume>16</volume>             <fpage>2898</fpage>             <lpage>2905</lpage>          </element-citation></ref>
+<ref id="pone.0010162-McDonald1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonald</surname><given-names>FJ</given-names></name>
+<name name-style="western"><surname>Snyder</surname><given-names>PM</given-names></name>
+<name name-style="western"><surname>McCray</surname><given-names>PB</given-names><suffix>Jr</suffix></name>
+<name name-style="western"><surname>Welsh</surname><given-names>MJ</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Cloning, expression, and tissue distribution of a human amiloride-sensitive Na+ channel.</article-title>             <source>Am J Physiol</source>             <volume>266</volume>             <fpage>L728</fpage>             <lpage>734</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Chen3"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Fu</surname><given-names>YY</given-names></name>
+<name name-style="western"><surname>Lin</surname><given-names>CY</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Chai</surname><given-names>KX</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Prostasin induces protease-dependent and independent molecular changes in the human prostate carcinoma cell line PC-3.</article-title>             <source>Biochim Biophys Acta</source>             <volume>1773</volume>             <fpage>1133</fpage>             <lpage>1140</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Crambert1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Crambert</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Claeys</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Geering</surname><given-names>K</given-names></name>
+</person-group>             <year>2005</year>             <article-title>FXYD3 (Mat-8), a new regulator of Na,K-ATPase.</article-title>             <source>Mol Biol Cell</source>             <volume>16</volume>             <fpage>2363</fpage>             <lpage>2371</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Gires1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gires</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Eskofier</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Lang</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Zeidler</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Munz</surname><given-names>M</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Cloning and characterisation of a 1.1 kb fragment of the carcinoma-associated epithelial cell adhesion molecule promoter.</article-title>             <source>Anticancer Res</source>             <volume>23</volume>             <fpage>3255</fpage>             <lpage>3261</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Cheng1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cheng</surname><given-names>KW</given-names></name>
+<name name-style="western"><surname>Lahad</surname><given-names>JP</given-names></name>
+<name name-style="western"><surname>Kuo</surname><given-names>WL</given-names></name>
+<name name-style="western"><surname>Lapuk</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Yamada</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>The RAB25 small GTPase determines aggressiveness of ovarian and breast cancers.</article-title>             <source>Nat Med</source>             <volume>10</volume>             <fpage>1251</fpage>             <lpage>1256</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Beckler1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Beckler</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moskaluk</surname><given-names>CA</given-names></name>
+<name name-style="western"><surname>Zaika</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Hampton</surname><given-names>GM</given-names></name>
+<name name-style="western"><surname>Powell</surname><given-names>SM</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Overexpression of the 32-kilodalton dopamine and cyclic adenosine 3′,5′-monophosphate-regulated phosphoprotein in common adenocarcinomas.</article-title>             <source>Cancer</source>             <volume>98</volume>             <fpage>1547</fpage>             <lpage>1551</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Filardo1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Filardo</surname><given-names>EJ</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Epidermal growth factor receptor (EGFR) transactivation by estrogen via the G-protein-coupled receptor, GPR30: a novel signaling pathway with potential significance for breast cancer.</article-title>             <source>J Steroid Biochem Mol Biol</source>             <volume>80</volume>             <fpage>231</fpage>             <lpage>238</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Grzmil1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grzmil</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Voigt</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Thelen</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Hemmerlein</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Helmke</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Up-regulated expression of the MAT-8 gene in prostate cancer and its siRNA-mediated inhibition of expression induces a decrease in proliferation of human prostate carcinoma cells.</article-title>             <source>Int J Oncol</source>             <volume>24</volume>             <fpage>97</fpage>             <lpage>105</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Baskerville1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Baskerville</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Bartel</surname><given-names>DP</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Microarray profiling of microRNAs reveals frequent coexpression with neighboring miRNAs and host genes.</article-title>             <source>Rna</source>             <volume>11</volume>             <fpage>241</fpage>             <lpage>247</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Thomson1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thomson</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Parker</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Perou</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Hammond</surname><given-names>SM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A custom microarray platform for analysis of microRNA gene expression.</article-title>             <source>Nat Methods</source>             <volume>1</volume>             <fpage>47</fpage>             <lpage>53</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Burk1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Burk</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Schubert</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wellner</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Schmalhofer</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Vincan</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>A reciprocal repression between ZEB1 and members of the miR-200 family promotes EMT and invasion in cancer cells.</article-title>             <source>EMBO Rep</source>             <volume>9</volume>             <fpage>582</fpage>             <lpage>589</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Gregory1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gregory</surname><given-names>PA</given-names></name>
+<name name-style="western"><surname>Bert</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Paterson</surname><given-names>EL</given-names></name>
+<name name-style="western"><surname>Barry</surname><given-names>SC</given-names></name>
+<name name-style="western"><surname>Tsykin</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>The miR-200 family and miR-205 regulate epithelial to mesenchymal transition by targeting ZEB1 and SIP1.</article-title>             <source>Nat Cell Biol</source>             <volume>10</volume>             <fpage>593</fpage>             <lpage>601</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Park1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Park</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Gaur</surname><given-names>AB</given-names></name>
+<name name-style="western"><surname>Lengyel</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Peter</surname><given-names>ME</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The miR-200 family determines the epithelial phenotype of cancer cells by targeting the E-cadherin repressors ZEB1 and ZEB2.</article-title>             <source>Genes Dev</source>             <volume>22</volume>             <fpage>894</fpage>             <lpage>907</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Vandewalle1"><label>50</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vandewalle</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Van Roy</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Berx</surname><given-names>G</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The role of the ZEB family of transcription factors in development and disease.</article-title>             <publisher-name>Cell Mol Life Sci</publisher-name>          </element-citation></ref>
+<ref id="pone.0010162-Adam1"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Adam</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Zhong</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Choi</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Qi</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Nicoloso</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>miR-200 expression regulates epithelial-to-mesenchymal transition in bladder cancer cells and reverses resistance to epidermal growth factor receptor therapy.</article-title>             <source>Clin Cancer Res</source>             <volume>15</volume>             <fpage>5060</fpage>             <lpage>5072</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Kong1"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kong</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Banerjee</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Ahmad</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>miR-200 regulates PDGF-D-mediated epithelial-mesenchymal transition, adhesion, and invasion of prostate cancer cells.</article-title>             <source>Stem Cells</source>             <volume>27</volume>             <fpage>1712</fpage>             <lpage>1721</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Herrgard1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Herrgard</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Covert</surname><given-names>MW</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BO</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Reconciling gene expression data with known genome-scale regulatory network structures.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>2423</fpage>             <lpage>2434</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Joshi2"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Joshi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Van de Peer</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Michoel</surname><given-names>T</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Analysis of a Gibbs sampler method for model-based clustering of gene expression data.</article-title>             <source>Bioinformatics</source>             <volume>24</volume>             <fpage>176</fpage>             <lpage>183</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Hooghe1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hooghe</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Hulpiau</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>van Roy</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>De Bleser</surname><given-names>P</given-names></name>
+</person-group>             <year>2008</year>             <article-title>ConTra: a promoter alignment analysis tool for identification of transcription factor binding sites across species.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>W128</fpage>             <lpage>132</lpage>          </element-citation></ref>
+<ref id="pone.0010162-Lim1"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lim</surname><given-names>LP</given-names></name>
+<name name-style="western"><surname>Lau</surname><given-names>NC</given-names></name>
+<name name-style="western"><surname>Garrett-Engele</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Grimson</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Schelter</surname><given-names>JM</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Microarray analysis shows that some microRNAs downregulate large numbers of target mRNAs.</article-title>             <source>Nature</source>             <volume>433</volume>             <fpage>769</fpage>             <lpage>773</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-01872</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0075931</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>A Reverse Engineering Approach to Optimize Experiments for the Construction of Biological Regulatory Networks</article-title>
+<alt-title alt-title-type="running-head">Reverse Engineering for Network Construction</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Xiaomeng</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Shao</surname><given-names>Bin</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>Yangle</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Qi</surname><given-names>Ouyang</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>The State Key Laboratory for Artificial Microstructures and Mesoscopic Physics, School of Physics, Peking University, Beijing, China</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>The Center for Quantitative Biology and Peking-Tsinghua Center for Life Sciences, Peking University, Beijing, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>de la Fuente</surname><given-names>Alberto</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Leibniz-Institute for Farm Animal Biology (FBN), Germany</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">qi@pku.edu.cn</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: QO XZ. Performed the experiments: QO XZ BS YW. Analyzed the data: QO BS. Wrote the paper: QO XZ.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>19</day><month>9</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>9</issue>
+<elocation-id>e75931</elocation-id>
+<history>
+<date date-type="received"><day>9</day><month>1</month><year>2013</year></date>
+<date date-type="accepted"><day>22</day><month>8</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Zhang et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>One of the major objectives in systems biology is to understand the relation between the topological structures and the dynamics of biological regulatory networks. In this context, various mathematical tools have been developed to deduct structures of regulatory networks from microarray expression data. In general, from a single data set, one cannot deduct the whole network structure; additional expression data are usually needed. Thus how to design a microarray expression experiment in order to get the most information is a practical problem in systems biology. Here we propose three methods, namely, maximum distance method, trajectory entropy method, and sampling method, to derive the optimal initial conditions for experiments. The performance of these methods is tested and evaluated in three well-known regulatory networks (budding yeast cell cycle, fission yeast cell cycle, and E. coli. SOS network). Based on the evaluation, we propose an efficient strategy for the design of microarray expression experiments.</p>
+</abstract>
+<funding-group><funding-statement>Natural Science Foundation of China (11074009, 10721463), Minister of Science and Technology of China(2009CB918500). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>One of the main fields in biological researches is to reveal biological regulatory networks that control different functions. In the past, molecular interactions have been established at a rather slow pace. For example, it took more than a decade from the discovery of the well-known tumor suppressor gene p53 to the establishment of its regulatory feedback loop with the protein MDM2 <xref ref-type="bibr" rid="pone.0075931-Levine1">[1]</xref>. This situation has been qualitatively changed thanks to the development of different new biotechnologies, especially microarray expression experiments. Accordingly, theoretical systems biology has provided several algorithms for the deduction of regulatory interactions from experimental data. These algorithms can be employed to effectively reconstruct biological regulatory networks. One of the successful network reconstruction methods is reverse engineering approach <xref ref-type="bibr" rid="pone.0075931-delaFuente1">[2]</xref>, <xref ref-type="bibr" rid="pone.0075931-diBernardo1">[3]</xref>, <xref ref-type="bibr" rid="pone.0075931-delaFuente2">[4]</xref>, <xref ref-type="bibr" rid="pone.0075931-Gardner1">[5]</xref>, <xref ref-type="bibr" rid="pone.0075931-Friedman1">[6]</xref>, <xref ref-type="bibr" rid="pone.0075931-Rice1">[7]</xref>, <xref ref-type="bibr" rid="pone.0075931-Bonneau1">[8]</xref>, <xref ref-type="bibr" rid="pone.0075931-Faith1">[9]</xref>, <xref ref-type="bibr" rid="pone.0075931-Marbach1">[10]</xref>, which has been advancing very rapidly in recent years <xref ref-type="bibr" rid="pone.0075931-Stolovitzky1">[11]</xref>. At present, there are mainly four types of the reverse engineering algorithms: correlation-based methods <xref ref-type="bibr" rid="pone.0075931-Rice1">[7]</xref>, information-theoretic methods <xref ref-type="bibr" rid="pone.0075931-Faith1">[9]</xref>, Bayesian network predictions <xref ref-type="bibr" rid="pone.0075931-Friedman1">[6]</xref>, and methods based on dynamic models <xref ref-type="bibr" rid="pone.0075931-delaFuente2">[4]</xref>, <xref ref-type="bibr" rid="pone.0075931-Gardner1">[5]</xref>. In this paper, we apply the simplest method, the correlation-based Boolean reverse engineering, to discuss algorithms for the optimization of experiments in network construction.</p>
+<p>The basic procedures of the Boolean reverse engineering method are given as follows: Firstly, starting from experimental data (i.e. the mRNA expression level as a function of time), one reduces the analog experimental data into a digital (0 or 1) Boolean type of time sequence, which can be represented as a trajectory in phase space. Secondly, one defines the dynamic rules of network interactions. In the case of Boolean dynamics, the interaction between node <italic>i</italic> and node <italic>j</italic> can be simplified into an interaction coefficient (<italic>a<sub>ij</sub></italic>), and three types of interactions can be defined: inhibition (<italic>a<sub>ij</sub></italic>&lt;0), activation (<italic>a<sub>ij</sub>&gt;0</italic>), and no interaction (<italic>a<sub>ij</sub> = 0</italic>). The evolution of the system’s state can be described by Boolean dynamics equations, such as the following:<disp-formula id="pone.0075931.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e001" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>where <italic>S<sub>i</sub>(t)</italic> represents the state of node <italic>i</italic> at time <italic>t</italic>; {<italic>a<sub>ij</sub></italic>} forms the to-be –determined regulatory matrix of the network. Finally, one uses logical expressions (see Method) to construct the regulatory matrix under the restriction of the trajectory obtained from the mRNA expression data.</p>
+<p>In general, the information from one experiment (one trajectory) is insufficient for the reconstruction of the underlying control network; many possible networks can generate the same trajectory under the same dynamic rules of <xref ref-type="disp-formula" rid="pone.0075931.e001">Eqn. (1)</xref>. So that additional experiments (more trajectories) are needed to identify the real regulation network (in the case of Boolean dynamic, the regulation matrix). Every additional experiment will generate new information on the control network, so that it helps to cut-down the number of the possible networks. Different trajectories, however, result in different efficiencies. The purpose of this study is to develop algorithms to design experiments so that one can use minimal number of experiments to identify the underlying regulation network. Instead of using data from experiments, in this study we applied three well-known regulatory networks (budding yeast cell cycle, fission yeast cell cycle, and E. coli. SOS network) as tests to generate the trajectories of the networks according to <xref ref-type="disp-formula" rid="pone.0075931.e001">Eqn. (1)</xref>. The reconstructed networks were compared with the original ones to evaluate the algorithms. One of the possible ways to obtain different trajectories is to change the initial conditions of the dynamic system. As a demonstration, we used this way to obtain different trajectories in this study.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Boolean model</title>
+<p>For regulatory networks as shown in <xref ref-type="fig" rid="pone-0075931-g001">Fig. 1</xref>, their dynamics can be described with different modeling approaches. The most frequently studied models include stochastic model (master equation), continuous model (ordinary/partial differential equation), and discrete model (difference equation). Once initial (boundary) conditions are given, these equations provide a unique trajectory in phase space. Among different models, the most straightforward one is the Boolean model. Previous study found that this model can catch the essence of the dynamics of the control networks <xref ref-type="bibr" rid="pone.0075931-Li1">[12]</xref>. As stated previously, the Boolean model simplifies a biological species (DNA, mRNA or protein) to a node; the state of each node can be 0 or 1, 0 being inactive and 1 being active. The interactions of the network are represented by links, and the types of interactions are reflected by the interaction coefficient: <italic>a<sub>ij</sub></italic> = −∞ for inhibition (for dominant inhibition model), <italic>a<sub>ij</sub></italic> = 0 for non-interaction, and <italic>a<sub>ij</sub></italic> = 1 for activation. The interactions form a regulatory matrix. Given an initial condition, the sequence of states at different times can be calculated using <xref ref-type="disp-formula" rid="pone.0075931.e001">Eqn. (1)</xref>, which we call a trajectory. <xref ref-type="table" rid="pone-0075931-t001">Table 1</xref>, <xref ref-type="table" rid="pone-0075931-t002">Table 2</xref> and <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref> provide the normal trajectories (calculated using natural initial conditions) of budding yeast cell cycle (<xref ref-type="table" rid="pone-0075931-t001">Table 1</xref>), fission yeast cell cycle (<xref ref-type="table" rid="pone-0075931-t002">Table 2</xref>), and <italic>E. coli</italic> SOS network (<xref ref-type="table" rid="pone-0075931-t003">Table 3</xref>). They were calculated using the regulatory networks presented in <xref ref-type="fig" rid="pone-0075931-g001">Fig. 1A, 1B, and 1C</xref> respectively. It should be noted that for the inhibition interaction, the value of <italic>a<sub>ij</sub></italic> was set to −∞ here instead of −1 in previous work <xref ref-type="bibr" rid="pone.0075931-Li1">[12]</xref>, in order to emphasize the fact that the effects of inhibitors are always stronger than that of activators from a biological point of view.</p>
+<fig id="pone-0075931-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.g001</object-id><label>Figure 1</label><caption>
+<title>The regulatory networks.</title>
+<p>A, the network of mitotic cell cycle of budding yeast; B, the network of mitotic cell cycle of fission yeast; C, The network of SOS network of <italic>E.coli</italic>. The nodes represent the essential proteins. The lines with bar ending represent repression. The lines with arrow ending represent activation. One node only has two states: 0 (inactive) and 1(active).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.g001" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0075931-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t001</object-id><label>Table 1</label><caption>
+<title>The biological pathway of budding yeast cell cycle.</title>
+</caption><alternatives><graphic id="pone-0075931-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cln3</td>
+<td align="left" rowspan="1" colspan="1">SBF</td>
+<td align="left" rowspan="1" colspan="1">MBF</td>
+<td align="left" rowspan="1" colspan="1">Cln2</td>
+<td align="left" rowspan="1" colspan="1">Cdh1</td>
+<td align="left" rowspan="1" colspan="1">Swi5</td>
+<td align="left" rowspan="1" colspan="1">Cdc20</td>
+<td align="left" rowspan="1" colspan="1">Clb5</td>
+<td align="left" rowspan="1" colspan="1">Sic1</td>
+<td align="left" rowspan="1" colspan="1">Clb2</td>
+<td align="left" rowspan="1" colspan="1">Mcm1</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t002</object-id><label>Table 2</label><caption>
+<title>The biological pathway of fission yeast cell cycle.</title>
+</caption><alternatives><graphic id="pone-0075931-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">SK</td>
+<td align="left" rowspan="1" colspan="1">Cdc2</td>
+<td align="left" rowspan="1" colspan="1">Ste9</td>
+<td align="left" rowspan="1" colspan="1">Rum1</td>
+<td align="left" rowspan="1" colspan="1">Slp1</td>
+<td align="left" rowspan="1" colspan="1">Cdc2*</td>
+<td align="left" rowspan="1" colspan="1">Wee1</td>
+<td align="left" rowspan="1" colspan="1">Cdc25</td>
+<td align="left" rowspan="1" colspan="1">PP</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t003</object-id><label>Table 3</label><caption>
+<title>The biological pathway of <italic>E.coli</italic> SOS network.</title>
+</caption><alternatives><graphic id="pone-0075931-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">ssDNA</td>
+<td align="left" rowspan="1" colspan="1">RecA</td>
+<td align="left" rowspan="1" colspan="1">LexA</td>
+<td align="left" rowspan="1" colspan="1">Sigma70</td>
+<td align="left" rowspan="1" colspan="1">UmuDC</td>
+<td align="left" rowspan="1" colspan="1">SSB</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s2b">
+<title>Reverse engineering of Boolean model</title>
+<p>In the reverse engineering of Boolean model, we ask a reverse question: Given an evolution trajectory of a regulatory system such as shown in <xref ref-type="table" rid="pone-0075931-t001">Table 1</xref>, <xref ref-type="table" rid="pone-0075931-t002">Table 2</xref> and <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref>, what is the underlying regulation network that can perform this function? More specifically, we try to derive the control matrix of the Boolean model based on the sequence of states at different times. Here, we use the mathematical formula of Ref.<xref ref-type="bibr" rid="pone.0075931-Wang1">[13]</xref> to address the question. In this formula, the network interactions are treated as logical variables. If there is an inhibition interaction from node <italic>i</italic> to node <italic>j</italic>, we note <italic>r<sub>ij</sub></italic> = TRUE, otherwise <italic>r<sub>ij</sub></italic> = FALSE. Similarly, if there is activation interaction from node <italic>i</italic> to node <italic>j</italic>, we note <italic>g<sub>ij</sub></italic> = TRUE, otherwise <italic>g<sub>ij</sub></italic> = FALSE. With a Boolean model incorporating strong inhibition (<italic>a<sub>ij</sub></italic> = −∞), one can translate the trajectory constraint into a logical expressions <xref ref-type="bibr" rid="pone.0075931-Wang1">[13]</xref>.</p>
+<p><disp-formula id="pone.0075931.e002"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e002" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>where the ‘+’ and ‘∑’ denote the logic function ‘OR’; the ‘<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e003" xlink:type="simple"/></inline-formula>’ and ‘∏’ denote logic function ‘AND’; the bar denotes ‘NOT’; <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e004" xlink:type="simple"/></inline-formula> ranges from 1 to N, N being the number of nodes of the network. States of all nodes in the trajectory should satisfy <xref ref-type="disp-formula" rid="pone.0075931.e002">Eqn. (2)</xref> at all times. Therefore, the ensemble of <xref ref-type="disp-formula" rid="pone.0075931.e002">Eq. (2)</xref> for different nodes and at different evolution time, provides the logical expression of the trajectory constraint. After some mathematical transformation and simplification, one can obtain the Conjunctive Normal Form (CNF) or k-set form of the expression, which is the multiplication of summation of items. The CNF can be easily analyzed to obtain meaningful information of the regulatory network<xref ref-type="bibr" rid="pone.0075931-Wang1">[13]</xref>. For example, in the trajectory of <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref>, according to <xref ref-type="disp-formula" rid="pone.0075931.e002">Eq. (2)</xref>, the logic constraint of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e005" xlink:type="simple"/></inline-formula> for the node Sigma70 can be expressed as</p>
+<p><disp-formula id="pone.0075931.e006"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e006" xlink:type="simple"/></disp-formula>.</p>
+<p>In this expression, separated items indicate the presence of an edge, separated items with a bar indicate the absence of an edge, and items in parentheses indicate the presence of at least one combination of these. Thus the above expression implies that there must not be an inhibition link from node <italic>ssDNA</italic> to node <italic>Sigma70</italic>; there must not be an inhibition link from node <italic>RecA</italic> to node <italic>Sigma70</italic>; and there is at least one activation link to node <italic>Sigma70</italic>, either from node <italic>ssDNA</italic> or node <italic>RecA</italic>, or no self<monospace><bold>-</bold></monospace>inhibition link of <italic>Sigma70</italic>.</p>
+<p>Putting the constrain of all the nodes at all steps of <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref> together, we obtain the logical expression as the following</p>
+<p><disp-formula id="pone.0075931.e007"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e007" xlink:type="simple"/></disp-formula></p>
+<p>which contains all the information derivable from the trajectory constraint. By interpreting this formula in terms of network components, the must-exist edges and must-not-exist edges can be identified, as shown in <xref ref-type="fig" rid="pone-0075931-g002">Fig. 2C</xref>. In total, 7 out of 10 existing interactions have been established from SOS response trajectory. However the undetermined edges all together correspond to about 7.1×10<sup>6</sup> possible networks. The same procedure can be applied to the trajectories of budding yeast cell cycle (<xref ref-type="table" rid="pone-0075931-t001">Table 1</xref>) and fission yeast cell cycle (<xref ref-type="table" rid="pone-0075931-t002">Table 2</xref>), where the must-exist edges and must-not-exist edges are shown in <xref ref-type="fig" rid="pone-0075931-g002">Fig. 2A</xref> and <xref ref-type="fig" rid="pone-0075931-g002">Fig. 2B</xref> respectively. The undetermined edges all together give out about 2.8×10<sup>31</sup> possible networks for budding yeast cell cycle and about 9.6×10<sup>21</sup> possible networks for fission yeast cell cycle.</p>
+<fig id="pone-0075931-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.g002</object-id><label>Figure 2</label><caption>
+<title>The results of reverse engineering analysis.</title>
+<p>The interactions must (solid line) and must not (dashed line) exist in the networks. A, for budding yeast cell cycle network; B, for fission yeast cell cycle network. C, for <italic>E.coli</italic> SOS network.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s2c">
+<title>Applying Reverse Engineering Method to <italic>in silico</italic> data</title>
+<p>We also test this method on <italic>in silico</italic> data set from DREAM4 challenge<xref ref-type="bibr" rid="pone.0075931-Prill1">[14]</xref> and find out that our method can regenerate major regulations of the network. Our work mainly focuses on the first network with 10 genes in Dream 4 challenge. The connection matrix of the network is presented in <xref ref-type="table" rid="pone-0075931-t004">Table 4</xref>. We use the wild type steady state of all the genes as baseline (<xref ref-type="table" rid="pone-0075931-t005">Table 5</xref>), and combine knock-out data (<xref ref-type="table" rid="pone-0075931-t006">Table 6</xref>) and time-series data to test our method.</p>
+<table-wrap id="pone-0075931-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t004</object-id><label>Table 4</label><caption>
+<title>Connection matrix of the first gold standard network in Dream 4 challenge.</title>
+</caption><alternatives><graphic id="pone-0075931-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G10</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">−1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t005</object-id><label>Table 5</label><caption>
+<title>Wild type steady state in Dream4 data set.</title>
+</caption><alternatives><graphic id="pone-0075931-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">0.60</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">0.33</td>
+<td align="left" rowspan="1" colspan="1">0.60</td>
+<td align="left" rowspan="1" colspan="1">0.15</td>
+<td align="left" rowspan="1" colspan="1">0.33</td>
+<td align="left" rowspan="1" colspan="1">0.50</td>
+<td align="left" rowspan="1" colspan="1">0.65</td>
+<td align="left" rowspan="1" colspan="1">0.61</td>
+<td align="left" rowspan="1" colspan="1">0.75</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t006</object-id><label>Table 6</label><caption>
+<title>Knock out data set, all the diagonal elements are 0.</title>
+</caption><alternatives><graphic id="pone-0075931-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t006" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">G1 knock out</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.37</td>
+<td align="left" rowspan="1" colspan="1">0.26</td>
+<td align="left" rowspan="1" colspan="1">0.36</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+<td align="left" rowspan="1" colspan="1">0.38</td>
+<td align="left" rowspan="1" colspan="1">0.83</td>
+<td align="left" rowspan="1" colspan="1">0.77</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">0.72</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G2 knock out</td>
+<td align="left" rowspan="1" colspan="1">0.73</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.38</td>
+<td align="left" rowspan="1" colspan="1">0.60</td>
+<td align="left" rowspan="1" colspan="1">0.15</td>
+<td align="left" rowspan="1" colspan="1">0.34</td>
+<td align="left" rowspan="1" colspan="1">0.52</td>
+<td align="left" rowspan="1" colspan="1">0.68</td>
+<td align="left" rowspan="1" colspan="1">0.74</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.71</td>
+<td align="left" rowspan="1" colspan="1">0.14</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.37</td>
+<td align="left" rowspan="1" colspan="1">0.08</td>
+<td align="left" rowspan="1" colspan="1">0.40</td>
+<td align="left" rowspan="1" colspan="1">0.66</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+<td align="left" rowspan="1" colspan="1">0.72</td>
+<td align="left" rowspan="1" colspan="1">0.67</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.85</td>
+<td align="left" rowspan="1" colspan="1">0.11</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.15</td>
+<td align="left" rowspan="1" colspan="1">0.28</td>
+<td align="left" rowspan="1" colspan="1">0.11</td>
+<td align="left" rowspan="1" colspan="1">0.63</td>
+<td align="left" rowspan="1" colspan="1">0.59</td>
+<td align="left" rowspan="1" colspan="1">0.72</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.88</td>
+<td align="left" rowspan="1" colspan="1">0.14</td>
+<td align="left" rowspan="1" colspan="1">0.43</td>
+<td align="left" rowspan="1" colspan="1">0.56</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.33</td>
+<td align="left" rowspan="1" colspan="1">0.54</td>
+<td align="left" rowspan="1" colspan="1">0.57</td>
+<td align="left" rowspan="1" colspan="1">0.73</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">0.40</td>
+<td align="left" rowspan="1" colspan="1">0.46</td>
+<td align="left" rowspan="1" colspan="1">0.63</td>
+<td align="left" rowspan="1" colspan="1">0.09</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.46</td>
+<td align="left" rowspan="1" colspan="1">0.59</td>
+<td align="left" rowspan="1" colspan="1">0.74</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.69</td>
+<td align="left" rowspan="1" colspan="1">0.09</td>
+<td align="left" rowspan="1" colspan="1">0.32</td>
+<td align="left" rowspan="1" colspan="1">0.27</td>
+<td align="left" rowspan="1" colspan="1">0.08</td>
+<td align="left" rowspan="1" colspan="1">0.30</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.75</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+<td align="left" rowspan="1" colspan="1">0.64</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+<td align="left" rowspan="1" colspan="1">0.28</td>
+<td align="left" rowspan="1" colspan="1">0.38</td>
+<td align="left" rowspan="1" colspan="1">0.66</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">0.63</td>
+<td align="left" rowspan="1" colspan="1">0.55</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.77</td>
+<td align="left" rowspan="1" colspan="1">0.69</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">0.24</td>
+<td align="left" rowspan="1" colspan="1">0.40</td>
+<td align="left" rowspan="1" colspan="1">0.14</td>
+<td align="left" rowspan="1" colspan="1">0.30</td>
+<td align="left" rowspan="1" colspan="1">0.69</td>
+<td align="left" rowspan="1" colspan="1">0.77</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+<td align="left" rowspan="1" colspan="1">0.14</td>
+<td align="left" rowspan="1" colspan="1">0.42</td>
+<td align="left" rowspan="1" colspan="1">0.36</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">0.34</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">0.68</td>
+<td align="left" rowspan="1" colspan="1">0.72</td>
+<td align="left" rowspan="1" colspan="1">0.00</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><sec id="s2c1">
+<title>Discretization of data</title>
+<p>We first use the following rules to discretize the data: If expression of Gene X in some knock out data set is 0.2 larger (smaller) than the baseline, then we set the value of Gene X in those data set to 1(0), the baseline value and the rest of knock out data is set to 0(1) accordingly. If there’s no significant difference between baseline value and expressions in knock out strains. Then all the values are set to be 1. We suspect baseline value of Gene 1 is too low, so all values of Gene 1(except in G 1 knock out) is set to 1. Taking Gene 9 and Gene 10 for example, all values in 9<sup>th</sup> column (except Gene 9 knock out) is in the +/− 0.2 range of baseline level, then all the expressions of Gene 9 are set to 1. For Gene 10, the baseline level is set to 1, and the value of Gene 10 in Gene 9 knock out strain is set to 0. This restriction may be relaxed in later improvement of our method. After discretization, we noticed that the steady state (<xref ref-type="table" rid="pone-0075931-t007">Table 7</xref>) is the largest attractor of the network of <xref ref-type="table" rid="pone-0075931-t004">Table 4</xref> when we use Boolean network model to simulate the network. The result of analysis is shown in <xref ref-type="table" rid="pone-0075931-t008">Table 8</xref>.</p>
+<table-wrap id="pone-0075931-t007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t007</object-id><label>Table 7</label><caption>
+<title>The wild type steady state after discretization.</title>
+</caption><alternatives><graphic id="pone-0075931-t007-7" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t007" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t008</object-id><label>Table 8</label><caption>
+<title>Four largest attractors of the network.</title>
+</caption><alternatives><graphic id="pone-0075931-t008-8" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t008" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">size</td>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">WT</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">104</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">56</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">52</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">52</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>When we learn the regulators of Gene X from knock out data, we use the 9 different steady states (except Gene X knock out) to deduct the network structure. A modification of discretization is used: level of Gene X is determined according to the former procedure, but for the other genes, its knock out value is set to 0, all expressions larger than 0.2 are set to 1.(when Gene Y is knock out, its expression level is often significantly lower than its baseline level). In this way, we get the discretized knock-out data (<xref ref-type="table" rid="pone-0075931-t009">Table 9</xref>).</p>
+<table-wrap id="pone-0075931-t009" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t009</object-id><label>Table 9</label><caption>
+<title>Steady States used to get regulators of Gene 10.</title>
+</caption><alternatives><graphic id="pone-0075931-t009-9" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t009" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">G1 knock out</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G2 knock out</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">…</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">G9 knock out</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s2c2">
+<title>Time series data</title>
+<p>Time series data is discretized according to its value in comparison with baseline (wild type value). Adjacent states are compressed if they are same. It turns out that time series data provides little information (<xref ref-type="table" rid="pone-0075931-t010">Tables 10</xref> and <xref ref-type="table" rid="pone-0075931-t011">11</xref>). There’re 5 trajectories in total. But we only use time series 1, 3, and 4, because the rest is either too noisy or lack useful information.</p>
+<table-wrap id="pone-0075931-t010" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t010</object-id><label>Table 10</label><caption>
+<title>First time trajectory after discretization (t = 500 to t = 1000).</title>
+</caption><alternatives><graphic id="pone-0075931-t010-10" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t010" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">time</td>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pone-0075931-t011" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.t011</object-id><label>Table 11</label><caption>
+<title>Third time trajectory after discretization (t = 500 to t = 1000).</title>
+</caption><alternatives><graphic id="pone-0075931-t011-11" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.t011" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">time</td>
+<td align="left" rowspan="1" colspan="1">G1</td>
+<td align="left" rowspan="1" colspan="1">G2</td>
+<td align="left" rowspan="1" colspan="1">G3</td>
+<td align="left" rowspan="1" colspan="1">G4</td>
+<td align="left" rowspan="1" colspan="1">G5</td>
+<td align="left" rowspan="1" colspan="1">G6</td>
+<td align="left" rowspan="1" colspan="1">G7</td>
+<td align="left" rowspan="1" colspan="1">G8</td>
+<td align="left" rowspan="1" colspan="1">G9</td>
+<td align="left" rowspan="1" colspan="1">G10</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s2c3">
+<title>Inference of Network</title>
+<p>Using knock out data alone, we can get an ensemble of all possible networks. The total number depends on the specific knock-out data, but it is all around 10<sup>19</sup>, comparable with the number of possible networks of fission yeast cell cycle. After randomly sampling 10000 networks (we choose this number because the possibilities of edges have converged) from this ensemble and calculating the possibilities of each edge. The method can deduct 6 most possible links. Compared with the right network of <xref ref-type="table" rid="pone-0075931-t004">Table 4</xref>, we find out that among the 6 most possible edges, four is correct. They are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e008" xlink:type="simple"/></inline-formula> (the wrong ones are<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e009" xlink:type="simple"/></inline-formula>). After we use the time series data in addition, possibility of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e010" xlink:type="simple"/></inline-formula> goes to zero. Thus we get a Positive Predictive Value (PPV) of 4/5 = 0.8. However, there still exists a large number of possible networks (about 10<sup>19</sup>). The question now is how to select another trajectory (using another initial condition) so that the number of possible networks can be minimized.</p>
+</sec></sec><sec id="s2d">
+<title>Reduction methods</title>
+<p>To reduce the number of possible networks, we need extra information from other experiments (trajectories), which in principle can be provided by choosing different initial conditions. In this work, instead of using data from experiments, we used the actual networks shown in <xref ref-type="fig" rid="pone-0075931-g001">Fig. 1</xref> and the dynamic rule of <xref ref-type="disp-formula" rid="pone.0075931.e001">Eq. (1)</xref> to generate new trajectories. Three methods in choosing initial condition were considered. The performance of each method was evaluated for each network.</p>
+<sec id="s2d1">
+<title>Maximum distance method</title>
+<p>The basic idea of this method is that the new trajectory that generated from newly selected initial condition should have the least overlap with the trajectories that we have already considered. Greater difference between this trajectory and the other trajectories implies a larger amount of information that extractable from the new trajectory. For this purpose, we used the following strategy to select initial condition in experiment. First we defined the distance between two molecular states:</p>
+<p><disp-formula id="pone.0075931.e011"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e011" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e012" xlink:type="simple"/></inline-formula> denotes the distance between state <italic>i</italic> and state <italic>j</italic>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e013" xlink:type="simple"/></inline-formula> denotes the state of protein <italic>k</italic> in network state<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e014" xlink:type="simple"/></inline-formula>. Furthermore, we defined the shortest distance of an initial state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e015" xlink:type="simple"/></inline-formula>to the known trajectory <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e016" xlink:type="simple"/></inline-formula>:</p>
+<p><disp-formula id="pone.0075931.e017"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e017" xlink:type="simple"/></disp-formula></p>
+<p>We speculated that a longer distance of an initial condition to the known trajectories will generate a new trajectory that contains greater amount extractable information, so that we select the state with the longest distance D to the known trajectories as the initial condition:<disp-formula id="pone.0075931.e018"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e018" xlink:type="simple"/></disp-formula></p>
+</sec><sec id="s2d2">
+<title>Trajectory entropy method</title>
+<p>The basic idea of this method is that the new trajectory developed from newly selected initial condition should maximally reduce the uncertainties in network selection. Here, we take the control network of SOS system (<xref ref-type="fig" rid="pone-0075931-g001">Fig. 1C</xref>) as an example. The biological trajectory of <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref> reduces the number of possible networks to 7.1×10<sup>6</sup>. Selecting a new initial condition and applying it to all of these possible networks will produce 7.1×10<sup>6</sup> trajectories. Some of these trajectories might be identical. We presume that there are k different trajectories, and the trajectory <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e019" xlink:type="simple"/></inline-formula>can be produced by <italic>N<sub>j</sub></italic> networks. We can thus define a value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e020" xlink:type="simple"/></inline-formula>for this trajectory, and the trajectory entropy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e021" xlink:type="simple"/></inline-formula>for this initial condition. A larger trajectory entropy corresponds to greater amount of information obtainable from the selected initial condition. Therefore, in principle, one should select the initial condition which yields the largest trajectory entropy. However, in practice, the total number of possible networks is usually too large for computation; the precise entropy can only be obtained when the network number is below 10<sup>7</sup>. In dealing with more complex control networks as shown in <xref ref-type="fig" rid="pone-0075931-g001">Fig. 1A and 1B</xref>, one needs to find an alternative to estimate the trajectory entropy.</p>
+<p>Our alternative to evaluate the trajectory entropy is to compute it step by step. We let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e022" xlink:type="simple"/></inline-formula> denote the trajectory entropy with initial network state <italic>i</italic> and trajectory length <italic>n</italic>. The first step <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e023" xlink:type="simple"/></inline-formula>can be easily evaluated. For this purpose, we first add a new constraint: the trajectory goes from state i to state j, then we apply the reverse engineering method (described in the section Reverse engineering of Boolean model) to obtain the remaining network number <italic>n<sub>ij</sub></italic>. Subsequently we generate a state transfer matrix<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e024" xlink:type="simple"/></inline-formula>, where <italic>b<sub>ij</sub></italic> denotes the probability of a transfer from an initial state <italic>i</italic> to a state <italic>j</italic>. It can be proven that the expression of the first step trajectory entropy is given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e025" xlink:type="simple"/></inline-formula>. If we suppose the transfer matrix { <italic>b<sub>ij</sub></italic> } remains almost the same as states of the system evolves to the next time step, we can obtain the entropy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e026" xlink:type="simple"/></inline-formula>:</p>
+<p><disp-formula id="pone.0075931.e027"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e027" xlink:type="simple"/></disp-formula>.</p>
+<p>With the same assumption, we can obtain <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e028" xlink:type="simple"/></inline-formula> recursively:<disp-formula id="pone.0075931.e029"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0075931.e029" xlink:type="simple"/></disp-formula></p>
+<p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e030" xlink:type="simple"/></inline-formula> (n&gt;3).</p>
+<p>The computation goes to a stop when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e031" xlink:type="simple"/></inline-formula> no longer increases with <italic>n</italic>. The final value is considered as the trajectory entropy of initial condition <italic>i</italic>. In this study, we used this alternative way to evaluate trajectory entropy.</p>
+</sec><sec id="s2d3">
+<title>Sampling method</title>
+<p>The above-mentioned alternative way to calculate the trajectory entropy is based on the assumption that the transfer matrix { <italic>b<sub>ij</sub></italic> } remains unchanged when states evolve. To our knowledge, this assumption has not been proven. The sampling method by-passes this alternative by obtaining a statistic value of trajectory entropy instead. In this method, we chose only a part of networks to obtain the value of <italic>p<sub>j</sub></italic>, subsequently calculate the trajectory entropy using <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0075931.e032" xlink:type="simple"/></inline-formula>. In the calculation, we doubled the sampling number until the entropy value converges. For SOS network (<xref ref-type="fig" rid="pone-0075931-g001">Fig. 1C</xref>), the value of trajectory entropy converges when the sampling number is about 1000; for the budding yeast cell cycle and fission yeast cell cycle networks (<xref ref-type="fig" rid="pone-0075931-g001">Fig. 1A and 1B</xref>), the value converges when the sampling number is about 10000.</p>
+</sec></sec></sec><sec id="s3">
+<title>Results</title>
+<p>The performance of the three methods in the SOS network of <italic>E. coli</italic>, cell cycle network of budding yeast, and cell cycle network of fission yeast are summarized in <xref ref-type="fig" rid="pone-0075931-g003">Fig. 3</xref>. Each line in <xref ref-type="fig" rid="pone-0075931-g003">Fig. 3</xref> shows the remaining number of undetermined networks as a function of number of “experiments” (in this study the number of initial conditions to calculate new trajectories). One observes that the number of undetermined networks decreases as more trajectory information is provided. However, the slope of the curves varies with different methods in determining initial conditions of experiments.</p>
+<fig id="pone-0075931-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.g003</object-id><label>Figure 3</label><caption>
+<title>The performances of the three methods compared with random method and the best sequence.</title>
+<p>The best sequence is calculated by enumerating all the initial conditions. A, in budding yeast cell cycle network; B, in fission yeast cell cycle network; C, in <italic>E.coli</italic> SOS network.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.g003" position="float" xlink:type="simple"/></fig>
+<p>The number of possible networks of <italic>E.coli</italic> SOS network under the constraint of <xref ref-type="table" rid="pone-0075931-t003">Table 3</xref> is only about 7×10<sup>6</sup>. In this simple case all the three methods can effectively work. The entropy and sampling methods in average decrease the number of remaining network 10 times per step; both of them used about 5 steps to reach the minimum network number. Because of the symmetry of node UmuDC and node SSB, the minimum network number cannot be decreased to one.</p>
+<p>As the number of node in a network increases, the differences in performance of different methods become large. This is reflected by <xref ref-type="fig" rid="pone-0075931-g003">Fig. 3A</xref> and <xref ref-type="fig" rid="pone-0075931-g003">Fig. 3B</xref>. Taking the budding yeast cell cycle network for example, in average each new “experiment” can reduce the number of possible networks by three orders of magnitude for sampling and entropy method, and two orders of magnitude for maximum distance and random method. Maximum distance method has almost the same performance as random method in these two networks, although it performs slightly better in SOS network. The performance of the 3 methods in the same network can be ranked as P<sub>sampling</sub> ≥P<sub>entropy</sub> &gt; P<sub>distance</sub> ≥P<sub>random</sub>.</p>
+<p>The calculation cost for the three methods all increases with the increase of the node number of the network; it is ranked as T<sub>entropy</sub> &gt; T<sub>sampling</sub> &gt; T<sub>distance</sub> &gt;T<sub>random</sub>. The calculation cost of entropy method increases very rapidly as the node number increase; it becomes very time-consuming when the node number is large. In contrast, the calculation time of max-distance and sampling methods increase very slowly with the increase of the node number of network. At the same time the performance of sampling method kept satisfyingly, but the performance of entropy and max-distance methods worsened. As a result of these analyses, we conclude that sampling method has the best performance, acceptable level of calculation cost and unique resolution. It is the best among the three methods.</p>
+<p>In practice, not all the initial conditions can be implemented in experiments. To make our algorithms more practicable in a real experiment, we consider a constraint on the number of node that can be perturbed. For each network, we assume only 35% of all the nodes can be modulated. For example, we can perturb 3 nodes in fission cell cycle network, making the total number of possible initial condition equals to 2<sup>3</sup> = 8. In order to reflect the effects of different combinations of the perturbed nodes, we run each algorithm for 20 times and get the average performance (<xref ref-type="fig" rid="pone-0075931-g004">Figure 4</xref>). In budding yeast network, sampling method outperforms the other methods, though the error bar is large (partly due to the various combinations of perturbation). In SOS network we can still see this trend. But in fission yeast network, all methods, except the random method, performs equally well before step 5. In general, we can conclude that sampling method is still very powerful when the number of initial condition is constrained.</p>
+<fig id="pone-0075931-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0075931.g004</object-id><label>Figure 4</label><caption>
+<title>The performances of the three methods when the number of perturbed nodes are limited.</title>
+<p>For all methods we randomly choose 20 different combinations of perturbed nodes and get the average performance. A, in budding yeast cell cycle network; B, in fission yeast cell cycle network; C, in <italic>E.coli</italic> SOS network.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0075931.g004" position="float" xlink:type="simple"/></fig></sec><sec id="s4">
+<title>Discussion</title>
+<p>In this paper, we discuss a reverse engineering approach to reconstruct biological regulatory network from experiments. Instead of using real data from experiments, we applied three well-known regulatory networks (budding yeast cell cycle, fission yeast cell cycle, and <italic>E. coli.</italic> SOS network) as tests to generate the trajectories of the networks. We focus on how to design the experiment (in this study, the initial conditions) to get the most useful information from data of evolution trajectory. For this purpose, we propose three methods, namely, maximum distance method, trajectory entropy method, and sampling method, to derive the optimal initial conditions for experiments. The performance of these methods is discussed and evaluated by comparing the reconstructed networks with the original ones in three known systems. We also test our methods under more realistic circumstance when the number of nodes that can be perturbed is limited. From these analyses we conclude that the sampling method is the best among the three methods. Two issues are called for further investigation.</p>
+<p>First, the methods discussed in this paper are based on the assumption that all the undetermined networks have equal probability to be the true regulatory network. In fact, it is becoming more and more clear that biological regulatory networks have a strong bias toward a small set that shows dynamical robustness and structural coherence <xref ref-type="bibr" rid="pone.0075931-Ma1">[15]</xref>, <xref ref-type="bibr" rid="pone.0075931-Ma2">[16]</xref>, <xref ref-type="bibr" rid="pone.0075931-Wu1">[17]</xref>. How to include this information in our calculation is a challenge. The researches in this area are underway in our laboratory.</p>
+<p>Second, choosing different initial conditions to get different trajectories of underlying biological regulatory networks may not be practical in experiments, because certain initial conditions are not attainable. Though we have discussed the performance of our methods when states of limited number of nodes can be modulated, sometimes not all the combinations of the modulation are possible. Also in real microarray expression experiments, different data set is usually obtained by knocking out or knocking down one or few genes, rather than choosing different initial conditions. In this sense, the work reported here just provides a general method in principle. It shows the possibility of using the reverse engineering methods to optimize microarray expression experiments for the construction of biological regulatory networks. The actual methods must be modified and improved to meet the needs of experimentalists.</p>
+</sec></body>
+<back>
+<ack>
+<p>We thank C. Zeng for intriguing discussion of reverse engineering method.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0075931-Levine1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Levine</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Oren</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>The first 30 years of p53: growing ever more complex</article-title>. <source>Nat Rev Cancer</source> <volume>9</volume>: <fpage>749</fpage>–<lpage>758</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-delaFuente1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Makhecha</surname><given-names>DP</given-names></name> (<year>2006</year>) <article-title>Unravelling gene networks from noisy under-determined experimental perturbation data</article-title>. <source>Iee Proceedings Systems Biology</source> <volume>153</volume>: <fpage>257</fpage>–<lpage>262</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-diBernardo1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Thompson</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>Chobot</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Eastwood</surname><given-names>EL</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Chemogenomic profiling on a genomewide scale using reverse-engineered gene networks</article-title>. <source>Nature Biotechnology</source> <volume>23</volume>: <fpage>377</fpage>–<lpage>383</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-delaFuente2"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de la Fuente</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Brazhnik</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Mendes</surname><given-names>P</given-names></name> (<year>2002</year>) <article-title>Linking the genes: inferring quantitative gene networks from microarray data</article-title>. <source>Trends Genet</source> <volume>18</volume>: <fpage>395</fpage>–<lpage>398</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Gardner1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lorenz</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name> (<year>2003</year>) <article-title>Inferring genetic networks and identifying compound mode of action via expression profiling</article-title>. <source>Science</source> <volume>301</volume>: <fpage>102</fpage>–<lpage>105</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Friedman1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name> (<year>2004</year>) <article-title>Inferring cellular networks using probabilistic graphical models</article-title>. <source>Science</source> <volume>303</volume>: <fpage>799</fpage>–<lpage>805</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Rice1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rice</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Tu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name> (<year>2005</year>) <article-title>Reconstructing biological networks using conditional correlation analysis</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>765</fpage>–<lpage>773</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Bonneau1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bonneau</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Reiss</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Shannon</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Facciotti</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hood</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>The Inferelator: an algorithm for learning parsimonious regulatory networks from systems-biology data sets de novo</article-title>. <source>Genome Biol</source> <volume>7</volume>: <fpage>R36</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Faith1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Large-scale mapping and validation of Escherichia coli transcriptional regulation from a compendium of expression profiles</article-title>. <source>PLoS Biol</source> <volume>5</volume>: <fpage>e8</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Marbach1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Mattiussi</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>Replaying the evolutionary tape: biomimetic reverse engineering of gene networks</article-title>. <source>Ann N Y Acad Sci</source> <volume>1158</volume>: <fpage>234</fpage>–<lpage>245</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Stolovitzky1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Monroe</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Califano</surname><given-names>A</given-names></name> (<year>2007</year>) <article-title>Dialogue on reverse-engineering assessment and methods: the DREAM of high-throughput pathway inference</article-title>. <source>Ann N Y Acad Sci</source> <volume>1115</volume>: <fpage>1</fpage>–<lpage>22</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Li1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Long</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Lu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ouyang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>C</given-names></name> (<year>2004</year>) <article-title>The yeast cell-cycle network is robustly designed</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>4781</fpage>–<lpage>4786</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Wang1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Du</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Simha</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Rong</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Process-based network decomposition reveals backbone motif structure</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>107</volume>: <fpage>10478</fpage>–<lpage>10483</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Prill1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Saez-Rodriguez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Alexopoulos</surname><given-names>LG</given-names></name>, <name name-style="western"><surname>Sorger</surname><given-names>PK</given-names></name>, <name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name> (<year>2011</year>) <article-title>Crowdsourcing Network Inference: </article-title>. <source>The DREAM4 Predictive Signaling Network Challenge,Science Signaling</source> <volume>4(189)</volume>: <fpage>mr7</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Ma1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname><given-names>WZ</given-names></name>, <name name-style="western"><surname>Lai</surname><given-names>LH</given-names></name>, <name name-style="western"><surname>Ouyang</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>C</given-names></name>, (<year>2006</year>) <article-title>Robustness and modular design of the <italic>Drpsophila</italic> segment polarity network</article-title>. <source>Mol. Sys. Biol.</source> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb4100111" xlink:type="simple">10.1038/msb4100111</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0075931-Ma2"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname><given-names>WZ</given-names></name>, <name name-style="western"><surname>Trusina</surname><given-names>A</given-names></name>, <name name-style="western"><surname>El-Samad</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Lim</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>C</given-names></name> (<year>2009</year>) <article-title>Defining network topologies that can achieve biochemical adaptation. </article-title>. <source>Cell</source>. <volume>138</volume>: <fpage>760</fpage>–<lpage>766</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0075931-Wu1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>YL</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>XM</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Ouyang</surname><given-names>Q</given-names></name> (<year>2009</year>) <article-title>Identification of a Topological Characteristic Responsible for the Biological Robustness of Regulatory Networks. </article-title>. <source>PLoS Computational Biology</source>. <volume>5</volume>: <fpage>e1000442</fpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

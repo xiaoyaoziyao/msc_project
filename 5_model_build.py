@@ -11,6 +11,7 @@ from sklearn.svm import SVC
 from sklearn.cross_validation import cross_val_score
 from sklearn.learning_curve import learning_curve
 from sklearn import metrics
+
 def all_list(arr):
     result = {}
     for i in set(arr):

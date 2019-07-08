@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-02064</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0094360</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Computational biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Computer and information sciences</subject><subj-group><subject>Computer modeling</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Algorithms</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>A Three Step Network Based Approach (TSNBA) to Finding Disease Molecular Signature and Key Regulators: A Case Study of IL-1 and TNF-Alpha Stimulated Inflammation</article-title>
+<alt-title alt-title-type="running-head">TSNBA for Inflammatory Signature and Key Regulator Finding</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Yang</surname><given-names>Jihong</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>Zheng</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Fan</surname><given-names>Xiaohui</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>Yiyu</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Pharmaceutical Informatics Institute, College of Pharmaceutical Sciences, Zhejiang University, Hangzhou, China</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>State Key Laboratory of Modern Chinese Medicine, Tianjin University of Traditional Chinese Medicine, Tianjin, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Zuo</surname><given-names>Zhuang</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>UT MD Anderson Cancer Center, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">lizheng1@gmail.com</email> (ZL); <email xlink:type="simple">fanxh@zju.edu.cn</email> (XF)</corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: ZL XF YC. Performed the experiments: JY. Analyzed the data: JY. Contributed reagents/materials/analysis tools: XF. Wrote the paper: JY ZL.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>18</day><month>4</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>4</issue>
+<elocation-id>e94360</elocation-id>
+<history>
+<date date-type="received"><day>15</day><month>1</month><year>2014</year></date>
+<date date-type="accepted"><day>13</day><month>3</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Yang et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>A disease molecular signature is a set of biomolecular features that are prognostic of clinical phenotypes and indicative of underlying pathology. It is of great importance to develop computational approaches for finding more relevant molecular signatures. Based upon the hypothesis that various components in a molecular signature are more likely to share similar patterns, we introduced a novel three step network based approach (TSNBA) to identify the molecular signature and key pathological regulators. Protein-protein interaction (PPI) network and ranking algorithm were integrated in the first step to find pathology related proteins with high accuracy. It was followed by the second step to further screen with co-expression patterns for better pathology enrichment. Context likelihood of relatedness (CLR) algorithm was used in the third step to infer gene regulatory networks and identify key transcription regulators. We applied this approach to study IL-1 (interleukin-1) and TNF-alpha (tumor necrosis factor-alpha) stimulated inflammation. TSNBA identified inflammatory signature with high accuracy and outperformed 5 competing methods namely fold change, degree, interconnectivity, neighborhood score and network propagation based approaches. The best molecular signature, with 80% (40/50) confirmed inflammatory genes, was used to predict inflammation related genes. As a result, 8 out of 10 predicted inflammation genes that were not included in the benchmark Entrez Gene database were validated by literature evidence. Furthermore, 23 of the 32 predicted inflammation regulators were validated by literature evidence. The rest 9 were also validated with TF (transcription factor) binding site analysis. In conclusion, we developed an efficient strategy for disease molecular signature finding and key pathological regulator identification.</p>
+</abstract>
+<funding-group><funding-statement>This work was financially supported by the National S&amp;T Major Project (No. 2012ZX09503001) and the Natural Science Foundation of China (No. 81373893). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Molecular signature is defined as a set of biomolecular features that can be used as markers for a particular phenotype and underlying condition-related biological mechanisms. They can be a set of genes, proteins, metabolites, genetic variants and microRNAs. Molecular signatures have been derived and applied for various purposes <xref ref-type="bibr" rid="pone.0094360-Sung1">[1]</xref>, <xref ref-type="bibr" rid="pone.0094360-Nilsson1">[2]</xref> including disease diagnosis and risk assessment <xref ref-type="bibr" rid="pone.0094360-Mehrabian1">[3]</xref>–<xref ref-type="bibr" rid="pone.0094360-Schwarz1">[7]</xref>, prediction of physiological toxicity <xref ref-type="bibr" rid="pone.0094360-Jung1">[8]</xref>, <xref ref-type="bibr" rid="pone.0094360-Hines1">[9]</xref> and response to therapeutic drugs <xref ref-type="bibr" rid="pone.0094360-Cohen1">[10]</xref>, <xref ref-type="bibr" rid="pone.0094360-Friedman1">[11]</xref>. In addition, molecular signatures are also indicative of underlying molecular pathology and have been used for investigating disease progression <xref ref-type="bibr" rid="pone.0094360-Hur1">[12]</xref>, <xref ref-type="bibr" rid="pone.0094360-Kim1">[13]</xref> and discovering the underlying mechanisms <xref ref-type="bibr" rid="pone.0094360-Man1">[14]</xref>, <xref ref-type="bibr" rid="pone.0094360-Zajac1">[15]</xref>.</p>
+<p>Molecular signature can be obtained via a variety of approaches. Dimension reduction techniques <xref ref-type="bibr" rid="pone.0094360-West1">[16]</xref>, <xref ref-type="bibr" rid="pone.0094360-Ramaswamy1">[17]</xref>, differential expression analysis <xref ref-type="bibr" rid="pone.0094360-Xu1">[18]</xref>, and prioritization approaches <xref ref-type="bibr" rid="pone.0094360-Arias1">[19]</xref>, <xref ref-type="bibr" rid="pone.0094360-Dudley1">[20]</xref> are commonly used for this purpose. However, signature components obtained from principal component analysis (PCA) and partial least squares (PLS) are often difficult for interpretation. In addition, reproducibility and accuracy are still two challenges for current methods. “Omics” technologies have produced a lot of high throughput data, which provides tremendously rich information to discover molecular signature for better understanding diseases. In addition, diverse types of data can be integrated in network based approaches, which advantageously incorporate complex interactions and rich disease information. Methods integrating multiple data sets, multiple data types with network-based approaches have been shown to find accurate and robust molecular signatures <xref ref-type="bibr" rid="pone.0094360-Sung1">[1]</xref>.</p>
+<p>Another major challenge still exists regarding the lack of robustness for the algorithms with overly optimistic result for certain data sets and poor performance on other data sets. Different stimulations may lead to similar clinical phenotype by perturbing very different underlying molecular mechanisms. Therefore, it is important to improve current discovery process for identifying perturbation responsive signatures. Moreover, considering the experimental validation of a signature, it is more important to reduce hundreds of signature proteins/genes to a refined and manageable number of key regulators. Therefore, it is useful to develop an approach for accurate molecular signature and pathological regulators discovery at the same time.</p>
+<p>It is well recognized that interacted genes or proteins are likely involved in the same or similar biochemical process <xref ref-type="bibr" rid="pone.0094360-Hartwell1">[21]</xref>, <xref ref-type="bibr" rid="pone.0094360-Barabasi1">[22]</xref>. Therefore, similar expression patterns are more likely to be shared by components involved in the same molecular signature for a specific pathological process. Based on this understanding, a new approach was developed for finding disease molecular signature and key regulators by integrating PPI network, gene co-expression network and context likelihood of relatedness (CLR) algorithm as shown in <xref ref-type="fig" rid="pone-0094360-g001">Figure 1</xref>. In the first step, TSNBA (three step network based approach) uniquely combined gene expression data with PPI network to find pathology related proteins through a novel ranking algorithm incorporating perturbation responsive gene expression data. In the second step, the top ranking genes were further screened with co-expression network for a more enriched signature finding. Finally, CLR algorithm was used for inferring gene regulatory networks, followed by identification of key regulators based upon three screening criteria. The performance of TSNBA was tested on IL-1 (interleukin-1) and TNF-alpha (tumor necrosis factor-alpha) stimulated inflammation. As a result, TSNBA outperformed 5 competing methods namely fold change, degree, interconnectivity, neighborhood score and network propagation based approaches. The predicted pathological regulators were validated with literature evidence and provided potential new insights into the underlying molecular mechanisms of inflammation.</p>
+<fig id="pone-0094360-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g001</object-id><label>Figure 1</label><caption>
+<title>Framework of TSNBA. PPI network and gene expression data are integrated in the interaction activity matrix to rank genes for their relevancy to the perturbation.</title>
+<p>The top K ranking genes are further filtered with co-expression network for better pathology enrichment. Context likelihood of relatedness (CLR) algorithm is used in the third step to infer gene regulatory networks and identify key transcription regulators. Node in gray represents for known pathology related genes, white represents for predicted ones, and black represents for predicted key regulators.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g001" position="float" xlink:type="simple"/></fig></sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Data Preparation</title>
+<sec id="s2a1">
+<title>PPI data</title>
+<p>The PPI data was derived from HPRD <xref ref-type="bibr" rid="pone.0094360-KeshavaPrasad1">[23]</xref> (Release 9) with self-interactions removed.</p>
+</sec><sec id="s2a2">
+<title>TNF-alpha and IL-1 stimulated inflammation data</title>
+<p>The former, GSE2639 <xref ref-type="bibr" rid="pone.0094360-Viemann1">[24]</xref>, contains the gene expression profiles of 4 TNF-stimulated samples and 4 normal samples. Stimulated samples were treated with 2 ng/ml TNF for 5 hours, and normal samples were left-untreated. The latter, GSE973 <xref ref-type="bibr" rid="pone.0094360-Mayer1">[25]</xref>, contains 4 IL-1 stimulated samples and 1 normal sample. Stimulated samples were treated with 100 U/ml human IL-1 for 0, 0.5, 1, 2.5 and 6 hours, and the normal sample was untreated. Two groups of data sets were both obtained by using human U133A GeneChips (Affymetrix, Santa Clara, CA) from human umbilical vein endothelial cells (HUVEC). Raw data was stored in ArrayTrack 3.5.0 <xref ref-type="bibr" rid="pone.0094360-Tong1">[26]</xref>. MAS 5 <xref ref-type="bibr" rid="pone.0094360-Hubbell1">[27]</xref>, which has been suggested to be the best normalization procedure to reconstruct cellular network <xref ref-type="bibr" rid="pone.0094360-Lim1">[28]</xref>, was used for normalization. Expression data was summarized to the gene level by averaging all probes mapped to the same gene. Only the genes included in the PPI network were selected for further analysis.</p>
+</sec><sec id="s2a3">
+<title>PPI data Benchmark human inflammatory genes</title>
+<p>The data was collected from Entrez Gene database <xref ref-type="bibr" rid="pone.0094360-Maglott1">[29]</xref>. We queried “((“inflammatory” OR “inflammation”) AND “[Homo sapiens (human)]”)” and found 2210 related genes as of 5th September 2013. Only 1462 genes were involved in PPI network and those were used for further analysis.</p>
+</sec><sec id="s2a4">
+<title>Human TF (transcription factor) data</title>
+<p>Human transcription factor data was derived from AnimalTFDB <xref ref-type="bibr" rid="pone.0094360-Zhang1">[30]</xref>, and only TFs involved in PPI network were considered for further analysis.</p>
+</sec></sec><sec id="s2b">
+<title>The First Step: Gene ranking with PPI interaction network</title>
+<sec id="s2b1">
+<title>Generation of an interaction activity matrix</title>
+<p>An adjacency matrix Adj was constructed for PPI network. The Adj(i,j) = 1 when node i and j interact with each other and Adj(i,j) = 0 otherwise. The activity of each interaction was computed by a weighting function <xref ref-type="bibr" rid="pone.0094360-Kim2">[31]</xref>, <xref ref-type="bibr" rid="pone.0094360-Henrick1">[32]</xref>:<disp-formula id="pone.0094360.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e001" xlink:type="simple"/><label>(1)</label></disp-formula>Here, <italic>f<sub>k</sub></italic> is the log2-fold change value of the gene <italic>k</italic>. The shape of the multivariate logistic distribution is controlled by parameters <italic>C</italic> and <italic>K</italic> (<italic>C</italic> = 1 and <italic>K</italic> = 5 by default), and the shifting parameter <italic>T</italic> (0.5 by default) is added to produce zero when <italic>f<sub>i</sub></italic> and <italic>f<sub>j</sub></italic> are both zeros. The weighting function includes two multivariate logistic functions, with the first term capturing co-activation of genes and the second term capturing co-suppression. These activities of interactions replace “1” in Adj and generate an interaction activity matrix.</p>
+</sec><sec id="s2b2">
+<title>Gene ranking</title>
+<p>The influence of each node (<italic>P<sub>i</sub></italic>) is the sum of the influence it receives from each interacted nodes.<disp-formula id="pone.0094360.e002"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e002" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>Where <italic>N</italic> is the number of nodes in the interaction activity matrix, and <italic>A<sub>it</sub></italic> is the interaction activity of node <italic>t</italic> with node <italic>i</italic>. The final ranked list was obtained according to descending order of <italic>P<sub>i</sub></italic>.</p>
+</sec></sec><sec id="s2c">
+<title>The Second Step: Filtering with co-expression network for better enrichment</title>
+<p>Gene co-expression has been widely used for finding co-regulated genes <xref ref-type="bibr" rid="pone.0094360-Bulow1">[33]</xref>–<xref ref-type="bibr" rid="pone.0094360-Spellman1">[36]</xref> and co-regulatory relationships <xref ref-type="bibr" rid="pone.0094360-Obayashi1">[37]</xref>–<xref ref-type="bibr" rid="pone.0094360-Shoemaker1">[41]</xref>. Here, co-expression analysis was applied to the top ranking genes obtained from the first step to further screen for better pathology enrichment. Pearson correlation coefficient <italic>p</italic> was computed for each pair of genes:<disp-formula id="pone.0094360.e003"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e003" xlink:type="simple"/><label>(3)</label></disp-formula>with <italic>w<sub>i</sub></italic> as the vector containing expression values of gene <italic>i</italic> under all conditions. Correlation coefficients below a certain threshold will be filtered out, and eligible connections are included in the final co-expression network and deemed as the disease molecular signature.</p>
+</sec><sec id="s2d">
+<title>The Third Step: Searching for key regulators</title>
+<sec id="s2d1">
+<title>Ranking putative interactions by CLR</title>
+<p>A lot of approaches have been developed to identify regulatory networks, such as CLR <xref ref-type="bibr" rid="pone.0094360-Faith1">[42]</xref>, Bayesian network <xref ref-type="bibr" rid="pone.0094360-Friedman2">[43]</xref> and ARACNe <xref ref-type="bibr" rid="pone.0094360-Margolin1">[44]</xref>. As an extension of relevance networks approach <xref ref-type="bibr" rid="pone.0094360-Butte1">[45]</xref>, <xref ref-type="bibr" rid="pone.0094360-Eisen1">[46]</xref>, CLR detects regulatory interactions via important mutual information (MI). An adaptive background correction step is further applied to eliminate false correlations and indirect influences. The statistical likelihood of MI value for each gene is computed within its network context, and the MI value for each TF-target pair is compared to the context likelihood of both the TF and the target gene, followed by z-score normalization.<disp-formula id="pone.0094360.e004"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e004" xlink:type="simple"/><label>(4)</label></disp-formula><disp-formula id="pone.0094360.e005"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e005" xlink:type="simple"/><label>(5)</label></disp-formula><disp-formula id="pone.0094360.e006"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e006" xlink:type="simple"/><label>(6)</label></disp-formula><disp-formula id="pone.0094360.e007"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e007" xlink:type="simple"/><label>(7)</label></disp-formula><disp-formula id="pone.0094360.e008"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e008" xlink:type="simple"/><label>(8)</label></disp-formula>Where C is the correlation coefficient matrix for top K genes of ranking list. C<sub>diag</sub> is the diagonal matrix of C. MI<sub>K*M</sub> is derived from MI<sub>K*K</sub> for M genes coding for transcription factors in top K genes. Finally, putative regulatory interactions are then ranked by decreasing z-score.</p>
+</sec><sec id="s2d2">
+<title>Identifying key transcription factors of inflammation</title>
+<p>Key regulators should be closely associated with the pathology and play pivotal roles in the regulatory network. In the present study, three screening criteria were used for searching key inflammatory regulators. All interactions with z-score less than 3 are filtered out, the number of targets from Entrez Gene inflammation signature must be greater than 3, and the percentage of inflammatory gens in all targets should be more than 60%.</p>
+</sec></sec><sec id="s2e">
+<title>Competing approaches</title>
+<sec id="s2e1">
+<title>Fold change based approach</title>
+<p>Gene expression change quantifies the response to a pathological condition for a gene. Therefore, differentially expressed genes using a fold change cutoff has been used very often as the signature under the condition. In this study, absolute fold change cutoff was set to be 1.2, 1.5, 2.0, 3.0 and 4.0, eligible genes were collected in corresponding sets, namely “FC_1.2”, “FC_1.5”, “FC_2”, “FC_3”, and “FC_4”. Moreover, top 50 and 300 genes with biggest absolute fold change were collected and corresponding enrichment ratios were calculated.</p>
+</sec><sec id="s2e2">
+<title>Degree based approach</title>
+<p>Degree is an important topological parameter, e.g. hub genes are the genes with highest degrees. Deletion of these genes has been shown leading to more severe phenotypic outcomes than other genes <xref ref-type="bibr" rid="pone.0094360-Yu1">[47]</xref>. Although the importance of hub genes are still in debate, they have been used widely as a measure of biological importance. Moreover, our first step ranks genes via the weight calculated by <xref ref-type="disp-formula" rid="pone.0094360.e002">equation (2)</xref>, which may inadvertently capture the degree information. Thus, it is necessary to compare with degree based approach. According to the PPI network, genes were ranked by decreasing degrees. In the present study, degree cutoff was set to be 50, 100, 150, 200, 250 and 300 and corresponding enrichment ratios were calculated.</p>
+</sec><sec id="s2e3">
+<title>Neighborhood Scoring</title>
+<p>Neighborhood scoring is a local measure for prioritizing candidates based on the expression of the gene itself and its direct neighbors in the network <xref ref-type="bibr" rid="pone.0094360-Nitsch1">[48]</xref>, we implemented the adapted method as described in Dorothea Emig's work <xref ref-type="bibr" rid="pone.0094360-Emig1">[49]</xref>. Genes were ranked by their scores, which were calculated as follows:<disp-formula id="pone.0094360.e009"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e009" xlink:type="simple"/><label>(9)</label></disp-formula>Fold change (<italic>FC</italic>) of gene <italic>i</italic> and average fold change of its neighbors <italic>N</italic> equally contribute to the score, where <italic>N</italic>(<italic>i</italic>) includes all neighboring genes of <italic>i</italic>. To note, score 0 is assigned to genes that are neither differentially expressed or have any differently expressed genes in the direct neighborhood.</p>
+</sec><sec id="s2e4">
+<title>Interconnectivity</title>
+<p>Interconnectivity is also a local measurement for prioritizing candidates, which is based on genes' overall connectivity to differentially expressed genes <xref ref-type="bibr" rid="pone.0094360-Hsu1">[50]</xref>. An adapted method <xref ref-type="bibr" rid="pone.0094360-Emig1">[49]</xref> is used in the present study. First, interconnectivity scores for interactors of differentially expressed genes are calculated based on their direct interactions and their shared neighborhood as follows:<disp-formula id="pone.0094360.e010"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e010" xlink:type="simple"/><label>(10)</label></disp-formula><italic>e</italic>(<italic>i,j</italic>) describes whether an edge exists between gene <italic>i</italic> and <italic>j</italic>, 1 represents for edge exists and 0 otherwise. Both direct interaction and shared neighborhood N are taken into account, which are then normalized by the overall degrees of the two genes.</p>
+<p>Then, final score of each gene is based on the interconnectivity to all differentially expressed genes:<disp-formula id="pone.0094360.e011"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e011" xlink:type="simple"/><label>(11)</label></disp-formula>where <italic>DEG</italic> is the set of all differentially expressed genes and <italic>d</italic> represents one differentially expressed gene.</p>
+</sec><sec id="s2e5">
+<title>Network Propagation</title>
+<p>Different from interconnectivity and neighborhood score, network propagation is a global method, which takes the complete network topology into account for prioritizing candidates <xref ref-type="bibr" rid="pone.0094360-Emig1">[49]</xref>, <xref ref-type="bibr" rid="pone.0094360-Vanunu1">[51]</xref>. First, differentially expressed genes in the network are assigned to a score of 1, while the remaining 0. These scores represent the prior information on genes for disease and are regarded as the starting propagating flow. Then, the flow is further smoothed over the network in each iteration until a steady state is reached. Finally, each gene receives its final score according to the final flow and is ranked in the whole gene list. In each iteration, the flow for the genes is updated as follows:<disp-formula id="pone.0094360.e012"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0094360.e012" xlink:type="simple"/><label>(12)</label></disp-formula><italic>F<sup>t</sup></italic> is a vector containing the flow for each gene at time point <italic>t</italic>. α is diffusion parameter. <italic>A</italic> is the adjacency matrix of the network, where each entry is normalized by the degrees of the source gene and target gene. The normalization compensates for the fact that high degree genes have a higher chance of picking up flow by chance and are thus ranking higher in the prioritization. <italic>F<sup>0</sup></italic> represents the starting propagating flow. The steady state is reached when the L<sub>1</sub> norm of the difference between <italic>F<sup>t</sup></italic> and <italic>F<sup>t-1</sup></italic> is below 10<sup>−6</sup>.</p>
+</sec></sec><sec id="s2f">
+<title>Enrichment ratio and statistical test for inflammation</title>
+<sec id="s2f1">
+<title>Enrichment ratio and statistical test</title>
+<p>Enrichment ratio in the present work was defined as the percentage of inflammatory genes in top <bold>K</bold> genes of ranking list overlapping with the benchmark Entrez Gene inflammation set. <bold>K</bold> started from 50 with an increment of 50 at each step. For each ratio, a hypergeometric test was used to evaluate the enrichment of inflammatory genes in each selected list, and p-value was obtained.</p>
+</sec><sec id="s2f2">
+<title>Enrichment ratio and statistical test for signature genes by TSNBA</title>
+<p>Top <bold>K</bold> genes were chosen from the ranked list for screening signature proteins for better pathology enrichment. Different thresholds of correlation coefficient were tested, ranging from 0.6 to 0.945 with an increment of 0.005. For each threshold, genes involved in the co-regulatory relationships were selected to calculate enrichment ratio, and hypergeometric test was used for enrichment analysis.</p>
+</sec></sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>TSNBA identified better inflammation enriched signature</title>
+<p>The final PPI network used in this study consisted of 7633 genes (nodes) and 30995 interactions. 1469 human TFs derived from AnimalTFDB database and 1462 inflammatory genes extracted from Entrez Gene database were included in the network. The background ratio for inflammatory gene was 19.2% (1462/7633). Endothelial cells play critical roles during the inflammatory response <xref ref-type="bibr" rid="pone.0094360-Mayer1">[25]</xref>, and TNF-alpha <xref ref-type="bibr" rid="pone.0094360-Bradley1">[52]</xref> and IL-1 <xref ref-type="bibr" rid="pone.0094360-Gabay1">[53]</xref> are well known important mediators of the process. Therefore, gene expression data collected from TNF-alpha and IL-1 stimulated HUVEC were used in the present study. For IL-1 stimulated inflammation, HUVEC were treated with IL-1 for 0, 0.5, 1, 2.5 and 6 hours, 4 sets of data were constructed to calculate fold change of genes, namely “IL1_0.5h”, “IL1_1h”, “IL1_2.5h” and “IL1_6h”. In TNF-alpha stimulated inflammation, HUVEC were left untreated or stimulated for 5 h with TNF-alpha, and both were repeated for 4 times, thus constructing another 4 sets of data, namely “TNF1”, “TNF2”, “TNF3” and “TNF4”. A total of 8 sets of genes were used for following analysis.</p>
+<p>The ranked gene list was first obtained for each data set. The enrichment ratio and p-value were calculated by comparing top <bold>K</bold> ranking genes to the benchmark Entrez inflammation gene set. As shown in <xref ref-type="fig" rid="pone-0094360-g002">Figure 2A</xref>, the enrichment ratio (p-value&lt;0.0001) decreased with the increase of <bold>K</bold>, indicating higher probability of finding inflammation gene in the higher ranked genes. The highest enriched ratio was 0.72 in top 50 ranking genes from IL1_6h data set.</p>
+<fig id="pone-0094360-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g002</object-id><label>Figure 2</label><caption>
+<title>Enrichment analysis of inflammation signature by TSNBA.</title>
+<p>(A): Enrichment ratio of top K genes for different data sets. IL1_0.5h, IL1_1h, IL1_2.5h, and IL1_6h represent for the perturbation with 0.5, 1.0, 2.5, and 6.0 hours IL-1 stimulation, respectively. TNF1-4 represent for the perturbation with 5 hours TNF stimulation. (B) Comparison of ranking algorithm with TSNBA, rank_50 represents for top 50 ranking genes.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g002" position="float" xlink:type="simple"/></fig>
+<p>As shown in <xref ref-type="fig" rid="pone-0094360-g002">Figure 2A</xref>, there were some fluctuations when the number of selected genes ranged from 50 to 250. Taking “TNF1” data set for an example, enrichment ratio of top 100 ranking genes was higher than that of top 50, and enrichment ratio of top 300 was higher than that of top 250. These fluctuations were largely due to the small size of selected genes. Moreover, top 300 ranking genes got better pathology enrichment (which will be detailed in discussion). Given these results, <bold>K</bold>, the number of top ranking genes, was set to be 300. These genes were further used to construct co-expression networks. When the correlation threshold ranged from 0.6 to 0.84, little change in enrichment ratio was observed (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Figure S1 in File S1</xref>). However, when threshold was larger than 0.84, enrichment ratio increased. We then adjusted threshold to constrain the number of genes in co-expression network to about 50, detailed information was shown in <xref ref-type="table" rid="pone-0094360-t001">Table 1</xref>. Except for “TNF1” data set, TSNBA significantly enriched inflammatory signature further from the top 300 ranking genes. Furthermore, we compared enrichment ratio of TSNBA with that of top 50 ranking genes from step 1. TSNBA outperformed ranking algorithm on 7 out of 8 (87.5%) cases for identifying inflammation enriched signature (as shown in <xref ref-type="fig" rid="pone-0094360-g002">Figure 2B</xref>).</p>
+<table-wrap id="pone-0094360-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.t001</object-id><label>Table 1</label><caption>
+<title>Inflammation enrichment by TSNBA.</title>
+</caption><alternatives><graphic id="pone-0094360-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Data set</td>
+<td align="left" rowspan="1" colspan="1">Size of signature</td>
+<td align="left" rowspan="1" colspan="1">Enrichment ratio</td>
+<td align="left" rowspan="1" colspan="1">Threshold</td>
+<td align="left" rowspan="1" colspan="1">P-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_0.5h</bold></td>
+<td align="left" rowspan="1" colspan="1">52</td>
+<td align="left" rowspan="1" colspan="1">0.65</td>
+<td align="left" rowspan="1" colspan="1">0.91</td>
+<td align="left" rowspan="1" colspan="1">0.006131</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_1h</bold></td>
+<td align="left" rowspan="1" colspan="1">56</td>
+<td align="left" rowspan="1" colspan="1">0.73</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.000115</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_2.5h</bold></td>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="left" rowspan="1" colspan="1">0.80</td>
+<td align="left" rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">2.59E-05</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_6h</bold></td>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="left" rowspan="1" colspan="1">0.74</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.001221</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF1</bold></td>
+<td align="left" rowspan="1" colspan="1">55</td>
+<td align="left" rowspan="1" colspan="1">0.49</td>
+<td align="left" rowspan="1" colspan="1">0.94</td>
+<td align="left" rowspan="1" colspan="1">0.220595</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF2</bold></td>
+<td align="left" rowspan="1" colspan="1">52</td>
+<td align="left" rowspan="1" colspan="1">0.77</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+<td align="left" rowspan="1" colspan="1">5.80E-05</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF3</bold></td>
+<td align="left" rowspan="1" colspan="1">51</td>
+<td align="left" rowspan="1" colspan="1">0.71</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+<td align="left" rowspan="1" colspan="1">0.014408</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF4</bold></td>
+<td align="left" rowspan="1" colspan="1">54</td>
+<td align="left" rowspan="1" colspan="1">0.69</td>
+<td align="left" rowspan="1" colspan="1">0.94</td>
+<td align="left" rowspan="1" colspan="1">0.000223</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3b">
+<title>TSNBA predicted new inflammation related signature genes</title>
+<p>The number of genes in co-expression network was set to be about 50, but no less than 50. Under such a restricted condition, the highest enrichment ratio was found in “IL1_2.5h” data set with the threshold of 0.92 (<xref ref-type="fig" rid="pone-0094360-g002">Figure 2B</xref>). In the constructed co-expression network, 80% (40/50, p-value&lt;0.0001) genes were confirmed by Entrez Gene database to be human inflammatory genes. Hence, the rest 10 unconfirmed genes were predicted to be inflammatory genes. According to evidence collected from literature, 8 out of the 10 genes were reported to be associated with inflammation (see <xref ref-type="table" rid="pone-0094360-t002">Table 2</xref> with more details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S1 in File S1</xref>). Therefore, TSNBA was able to accurately predict pathology related genes by integrating gene expression and PPI network.</p>
+<table-wrap id="pone-0094360-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.t002</object-id><label>Table 2</label><caption>
+<title>Literature evaluation of predicted inflammation genes.</title>
+</caption><alternatives><graphic id="pone-0094360-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Potential inflammatory gene</td>
+<td align="left" rowspan="1" colspan="1">Whether inflammation related gene</td>
+<td align="left" rowspan="1" colspan="1">Pubmed</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>BCL3</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">19270711</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CALCOCO2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">23820297</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CD22</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22806142</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DLG3</bold></td>
+<td align="left" rowspan="1" colspan="1">Not known</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>ERBB3</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22157714</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>MAGI1</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22806142</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>POU1F1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not known</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>SMURF2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22843012</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>SSTR2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">15806094</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TANK</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">16698233</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>“√” represents for “Yes”.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>TSNBA predicted key inflammatory regulators</title>
+<p>Starting from the top 300 ranking genes, CLR was used to infer regulatory relationships. Potential regulators were predicted for each set and a final union set was obtained. A total of 32 transcription factors were predicted as potential regulators of inflammation. Among them, 21 regulators were included in inflammatory signature from Entrez Gene database and all of them were validated by literature to be important regulators of inflammation, e.g. nuclear factor kappa B (NFκB) a known master regulator of inflammation. In the rest 11 predicted regulators, serum response factor (SRF) was reported to regulate type I interferon-signaling in macrophage, thus is suggested as important regulator for regulating innate immunity <xref ref-type="bibr" rid="pone.0094360-Xie1">[54]</xref>. Moreover, SRF was proposed to be required in acrolein activation of NFκB <xref ref-type="bibr" rid="pone.0094360-Newaz1">[55]</xref>. Macrophage (retinoid X receptor alpha) RXRA could upregulate the expression of chemokines, such as CCL6 and CCL9, and control innate inflammatory responses <xref ref-type="bibr" rid="pone.0094360-Nunez1">[56]</xref>. Therefore, RXRA and SRF may play important role in the regulation of inflammation. In summary, a total of 71.9% (23/32) regulators predicted by TSNBA were validated by literature as inflammatory regulators (see <xref ref-type="table" rid="pone-0094360-t003">Table 3</xref> and details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S2 in File S1</xref>).</p>
+<table-wrap id="pone-0094360-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.t003</object-id><label>Table 3</label><caption>
+<title>Literature evaluation of predicted inflammatory regulator.</title>
+</caption><alternatives><graphic id="pone-0094360-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Potential Key Regulator</td>
+<td align="left" rowspan="1" colspan="1">Whether inflammatory regulator</td>
+<td align="left" rowspan="1" colspan="1">Whether in benchmark Entrez Gene inflammation set</td>
+<td align="left" rowspan="1" colspan="1">PubMed</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>ATF3</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">18794337</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>BCL6</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22465074</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CEBPB</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">22074460</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>EGR1</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">11100120</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>ESR2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">20045727</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>FOS</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">19995753</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>HES1</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">20832754</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>JUNB</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">19933155</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>JUND</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">19933155</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>NFKB1</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">18927578</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>NFKB2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">18927578</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>NR2C2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">16675448</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>POU2F1</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">21059098</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RELA</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">12509469</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>SMAD2</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">20667820</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>SMAD7</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">19352540</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>STAT5A</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">15749913</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TP53</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">21779518</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TP73</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">10716451</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>VDR</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">17224129</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>VTN</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1">17982099</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RXRA</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">20498053</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>SRF</bold></td>
+<td align="left" rowspan="1" colspan="1">√</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">23705899; 23893683</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DLX5</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>GTF2I</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>HEY1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>MSX1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>NFE2</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>NR5A1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PITX1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PRRX1</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RARA</bold></td>
+<td align="left" rowspan="1" colspan="1">Not Known</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>“√” represents for “Yes”.</p></fn></table-wrap-foot></table-wrap>
+<p>In addition to the validation from the literature evidence, bioinformatics approaches were also taken to explore the relationship between predicted TFs and inflammation. Potential TF binding sites within promoter regions of the 32 TFs were assessed via TRANSFAC component of GATHER <xref ref-type="bibr" rid="pone.0094360-Chang1">[57]</xref>. The result showed strong evidence that nuclear factor kappa B (NFκB) binding motifs were contained in the proximal promoter regions of all genes (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S4 in File S1</xref>). Given the critical role of NFκB in regulating inflammation, it is very likely that these regulators are all involved in the process of inflammation. On the other hand, TFactS database <xref ref-type="bibr" rid="pone.0094360-Essaghir1">[58]</xref> was used to find target genes for the rest TFs that were not validated by literature. As a result, 5 of the 6 TFs included in TFactS were reported to target inflammatory genes included in benchmark Entrez Gene database (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S5 in File S1</xref>). Furthermore, these TFs were all shown to interact with confirmed inflammatory proteins via PPIs collected from STRING database (Release 9.1) (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S6 in File S1</xref>) <xref ref-type="bibr" rid="pone.0094360-Franceschini1">[59]</xref>.</p>
+<p>In summary, both literature and bioinformatics analysis suggested that our predicted TFs were closely related to inflammation, thus indicating the applicability of TSNBA for finding key inflammatory regulators.</p>
+</sec><sec id="s3d">
+<title>Methods comparison</title>
+<p>Statistical significance test was performed on the methods comparison part. According to the working flow of our approach, paired t-test was performed to evaluate statistical significance for results of the first and second step, and enrichment ratios of different sets via different methods were used for comparison.</p>
+<p>In the first step, top 300 ranking genes were extracted and enrichment ratio was calculated for each data set. As shown in <xref ref-type="fig" rid="pone-0094360-g003">Figure 3A</xref>, the first step of TSNBA outperformed another 4 methods (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S8 in File S1</xref>).</p>
+<fig id="pone-0094360-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g003</object-id><label>Figure 3</label><caption>
+<title>Statistical significance test for methods comparison.</title>
+<p>Fold change based approach (red), network propagation (green), interconnectivity (purple), and neighborhood scoring (cyan) are compared with first step of TSNBA (A) and full TSNBA (B).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g003" position="float" xlink:type="simple"/></fig>
+<p>In order to perform statistical significance test for the second step of TSNBA, molecular signatures needed to be identified by given methods. When molecular signature was identified by fold change based approach, enrichment ratios were calculated for different data sets under different fold change cutoff. As shown in <xref ref-type="fig" rid="pone-0094360-g004">Figure 4</xref>, enrichment ratios increased with increasing cutoff, which indicated that genes with large fold change were more likely to be included in the pathological process. Given this, top 50 ranking genes with highest absolute fold change was set to be molecular signature. As for degree based approach, enrichment ratios for different degree cutoffs were studied. The highest enrichment ratio was obtained under top 50 genes (as shown in <xref ref-type="fig" rid="pone-0094360-g005">Figure 5</xref>). Therefore, these 50 genes were identified as the molecular signature. Given results from degree based and fold change based approach, absolute fold change was set to be 4 to identify differentially expressed genes. For the convenience of comparison, the size of signature was set to be 50 for 3 candidate gene prioritization methods. Moreover, diffusion parameter α was investigated (see <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S7 in File S1</xref>), and finally set to be 0.1 for best performance. As shown in <xref ref-type="fig" rid="pone-0094360-g003">Figure 3B</xref> and <xref ref-type="fig" rid="pone-0094360-g006">Figure 6</xref>, TSNBA outperformed fold change based approach, interconnectivity, neighborhood scoring and network propagation in all data sets (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S9 in File S1</xref>). Besides, our approach also outperformed degree based approach in 7 data sets (except for “TNF1” data set).</p>
+<fig id="pone-0094360-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g004</object-id><label>Figure 4</label><caption>
+<title>Performance of fold change based approach.</title>
+<p>Enrichment ratios are calculated under 5 absolute fold change cutoffs, namely 1.2, 1.5, 2.0, 3.0 and 4.0. Different colors represent for different data sets.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g004" position="float" xlink:type="simple"/></fig><fig id="pone-0094360-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g005</object-id><label>Figure 5</label><caption>
+<title>Performance of network degree based approach.</title>
+<p>Enrichment ratios are calculated for top K genes. The size of genes, K, is set to be 50, 100, 150, 200, 250 and 300.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g005" position="float" xlink:type="simple"/></fig><fig id="pone-0094360-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.g006</object-id><label>Figure 6</label><caption>
+<title>Methods comparison. TSNBA (blue), fold change based approach (red), interconnectivity (purple), neighborhood scoring (cyan) and network propagation (green) are tested on different data sets.</title>
+<p>To note, the enrichment ratio for degree based approach only depend on the selected network.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.g006" position="float" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>Proteins play a central role in activities of living cells and they are interconnected in PPI network. Systematic PPI network exploration could lead to a better understanding of protein function and biological processes <xref ref-type="bibr" rid="pone.0094360-Stelzl1">[60]</xref>. Combining PPI network with gene expression profiles provides two advantages. First, microarray gene expression enables genome wide screening of all genes at once and thus guarantees a comprehensive coverage. Second, gene expression data captures perturbation responsive information and perturbation related PPIs are more likely to be activated. Our ranking algorithm takes both aspects into consideration and could find more relevant gene/protein sets. It has long been known that genes involved in the same process often share similar expression patterns. It is thus the motivation of the second step to further reveal the underlying biological process by constructing co-expression network. Co-expression network was used as an integrative filter to find functionally related signature genes. In addition, CLR provided more detailed regulatory information beyond co-expression and identified key regulators of the pathological process. In summary, TSNBA utilized PPI network, co-expression network and regulatory network to progressively find pathology relevant signature genes and regulators.</p>
+<p>TSNBA is able to find perturbation responsive molecular signatures. Due to the differences of experimental settings and biological samples, signatures may be different even for the same perturbation. Taking TNF-alpha case for an example, we identified 4 different molecular signatures. Wikipathway enrichment analysis was carried out for each signature by WebGestalt <xref ref-type="bibr" rid="pone.0094360-Wang1">[61]</xref>, <xref ref-type="bibr" rid="pone.0094360-Zhang2">[62]</xref>. “hsapiens_entrezgene_protein-coding” was set as the reference set and hypergeometric p-value was calculated. As a result, TNF-alpha signaling pathway was significantly enriched for each signature with adjusted p-value less than 0.01 (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S3 in File S1</xref>). Similarly, IL-1 signaling pathway was also significantly enriched for signatures derived from IL-1 stimulated data sets with adjusted p-value less than 0.05 (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S3 in File S1</xref>). These results provided a good support for the ability of TSNBA in finding perturbation responsive signatures. Moreover, many genes were shared by signatures of the same stimulation. Nine genes (NFKBIA, CALCOO2, PLAU, TNFAIP3, SQSTM1, EGFR, BCL3, BIRC3, BMP2) were shared by 4 TNF-alpha signatures and 13 genes (NFKBIA, JUNB, FASLG, NFKB2, PLAU, CCL5, ATF3, BCL6, CTNNB1, PRTN3, BCL2A1, BMP2, ERBB3) by 4 IL-1 signatures.</p>
+<p>As shown in <xref ref-type="fig" rid="pone-0094360-g005">Figure 5</xref>, it should be noted that enrichment ratio generally decreased with the size of top ranking genes, which suggested that degree information was associated with enrichment. However, ranking algorithm, which guaranteed the improvement in enrichment for our approach, inadvertently captured degree information (see the method). Is improvement in enrichment largely attributed to degree information and do these ranking lists worth further study? Therefore, in order to further evaluate our algorithm's ability in finding perturbation responsive signature, wiki pathway enrichment analysis was performed for top 300 ranking genes by degree based approach and our approach, respectively. As shown in <xref ref-type="table" rid="pone-0094360-t004">Table 4</xref>, our algorithm outperformed degree based approach in all data sets by ranking perturbation responsive pathway higher. Moreover, in “TNF1” and “TNF2” data sets, our approach even ranked the “TNF alpha Signaling Pathway” the number one, which was a strong indication of the reliability of our approach. Besides, top 300 highest degree genes were compared with molecular signatures identified by TSNBA, less than 33% of genes were overlapped, suggesting that network degree was not the major contributor of the high enrichment of TSNBA.</p>
+<table-wrap id="pone-0094360-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094360.t004</object-id><label>Table 4</label><caption>
+<title>Comparison of TSNBA and Degree based approach for top 300 ranking genes.</title>
+</caption><alternatives><graphic id="pone-0094360-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094360.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Data set</td>
+<td align="left" rowspan="1" colspan="1">Pathway Name</td>
+<td align="left" rowspan="1" colspan="1">Rank (Selected data set vs Degree)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_0.5h</bold></td>
+<td align="left" rowspan="1" colspan="1">IL-1 signaling pathway</td>
+<td align="left" rowspan="1" colspan="1">27 vs 43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_1h</bold></td>
+<td align="left" rowspan="1" colspan="1">IL-1 signaling pathway</td>
+<td align="left" rowspan="1" colspan="1">9 vs 43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_2.5h</bold></td>
+<td align="left" rowspan="1" colspan="1">IL-1 signaling pathway</td>
+<td align="left" rowspan="1" colspan="1">34 vs 43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IL1_6h</bold></td>
+<td align="left" rowspan="1" colspan="1">IL-1 signaling pathway</td>
+<td align="left" rowspan="1" colspan="1">18 vs 43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF1</bold></td>
+<td align="left" rowspan="1" colspan="1">TNF alpha Signaling Pathway</td>
+<td align="left" rowspan="1" colspan="1">1 vs 18</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF2</bold></td>
+<td align="left" rowspan="1" colspan="1">TNF alpha Signaling Pathway</td>
+<td align="left" rowspan="1" colspan="1">1 vs 18</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF3</bold></td>
+<td align="left" rowspan="1" colspan="1">TNF alpha Signaling Pathway</td>
+<td align="left" rowspan="1" colspan="1">6 vs 18</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TNF4</bold></td>
+<td align="left" rowspan="1" colspan="1">TNF alpha Signaling Pathway</td>
+<td align="left" rowspan="1" colspan="1">14 vs 18</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>An inspection of the results presented in <xref ref-type="fig" rid="pone-0094360-g002">Figure 2B</xref> and <xref ref-type="fig" rid="pone-0094360-g006">Figure 6</xref> showed that degree and fold change methods showed the results on TNF2, TNF3 and TNF4 to be similar with TNF1 being particularly less. TSNBA also showed the lowest enrichment result on TNF1 data set. Our approach took the fold change into consideration in the first step, and fold change was an important factor to rank genes. Besides, as shown in <xref ref-type="fig" rid="pone-0094360-g004">Figure 4</xref>, fold change based approach also performed worst in TNF1 data set, which indicated that the worst performance in “TNF1” data set was likely due to the data itself.</p>
+<p>In addition, we took union set of signatures of different conditions by fold change based approach, interconnectivity, neighborhood scoring, network propagation, and TSNBA. The size of these sets was 242, 247, 233, 265 and 192 (see details in <xref ref-type="supplementary-material" rid="pone.0094360.s001">Table S10 in File S1</xref>). This indicated that more genes were overlapped in signatures determined by TSNBA, and our method was more likely to find reproducible signatures. TNFRSF9 and TRAF1 were shared by all sets, and 19 genes (PLAU, ALOX12, ATF3, POU1F1, FOS, CSF1, CCL8, JUNB, TNFRSF11B, ICAM1, SELE, VCAM1, IL8, NFKBIA, RND1, TNFAIP3, BCL2A1, CSF2, and BIRC3) were shared by 4 sets except for the sets determined by interconnectivity, while 4 genes (OCM2, CLEC2D, MATN3, and IFIT3) were shared by other 4 sets but not the set of our approach. A recent report had pointed out the regulatory role of MATN3 in inducing the IL-1Ra and raised the possibility of recombinant human MATN3 protein in anti-inflammatory therapy <xref ref-type="bibr" rid="pone.0094360-Jayasuriya1">[63]</xref>. Therefore, there were still some important inflammation related genes that may be missed by our approach, and common signature of several methods was worth of follow up investigation.</p>
+<p>Gene expression profile has been used widely to represent indirectly the protein activity. It has its limitations in quantifying actual protein abundance and incapable of reflecting many ‘switches’ in PPI behavior, such as ligand binding and posttranslational modification <xref ref-type="bibr" rid="pone.0094360-Guo1">[64]</xref>. Therefore, other data types, such as protein and microRNA expression profiles should be integrated to further reveal these missing actions. At the same time, the network should be updated. Ever-increasing amount of PPIs shall continuously be incorporated into the network. In addition, many other interaction types, such as DNA-protein interaction, transcription factor-target interaction and microRNA-target interaction, shall also be included. It could be envisioned that a comprehensive network with biologically relevant profiles will lead us to more accurate disease molecular signature finding.</p>
+</sec><sec id="s5">
+<title>Conclusion</title>
+<p>In this study, TSNBA was proposed to identify the molecular signature and key pathological regulators. In the case study of IL-1 and TNF-alpha stimulated inflammation, TSNBA identified inflammatory signature with high enrichment of pathology related genes and outperformed 5 methods in prioritizing candidates, including fold change based approach, degree based approach, interconnectivity, neighborhood score and network propagation. In conclusion, we developed an efficient strategy for disease molecular signature finding and key pathological regulator identification.</p>
+</sec><sec id="s6">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0094360.s001" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pone.0094360.s001" position="float" xlink:type="simple"><label>File S1</label><caption>
+<p>Including the following: (1) Enrichment ratios under different thresholds in the second step (Figure S1); (2) literature evaluation for 10 predicted inflammatory genes (Table S1); (3) literature evaluation for 32 predicted regulators of inflammation (Table S2); (4) wikipathway enrichment analysis of molecular signatures via TSNBA (Table S3); (5) TF binding sites analysis of 32 predicted regulators of inflammation (Table S4); (6) transcription factor-inflammatory gene relationships from TFactS for 5 transcription factors, namely DLX5, MSX1, NR5A1, PRRX1, and RXRA (Table S5); (7) protein-protein interactions collected from STRING database for 9 transcription factors that are confirmed by literature to be inflammatory regulators (Table S6); (8) investigation for diffusion parameter α of network propagation (Table S7); (9) methods comparison for the first step of TSNBA (Table S8); (10) methods comparison for TSNBA (Table S9); (11) union sets of signatures from different methods.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pone.0094360-Sung1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sung</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Chandrasekaran</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Witten</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Price</surname><given-names>ND</given-names></name> (<year>2012</year>) <article-title>Molecular signatures from omics data: from chaos to consensus</article-title>. <source>Biotechnol J</source> <volume>7</volume>: <fpage>946</fpage>–<lpage>957</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Nilsson1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nilsson</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Bjorkegren</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Tegner</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>On reliable discovery of molecular signatures</article-title>. <source>BMC Bioinformatics</source> <volume>10</volume>: <fpage>38</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Mehrabian1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mehrabian</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Allayee</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Stockton</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lum</surname><given-names>PY</given-names></name>, <name name-style="western"><surname>Drake</surname><given-names>TA</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Integrating genotypic and expression data in a segregating mouse population to identify 5-lipoxygenase as a susceptibility gene for obesity and bone traits</article-title>. <source>Nat Genet</source> <volume>37</volume>: <fpage>1224</fpage>–<lpage>1233</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-PericakVance1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pericak-Vance</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Bass</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Yamaoka</surname><given-names>LH</given-names></name>, <name name-style="western"><surname>Gaskell</surname><given-names>PC</given-names></name>, <name name-style="western"><surname>Scott</surname><given-names>WK</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Complete genomic screen in late-onset familial Alzheimer disease. Evidence for a new locus on chromosome 12</article-title>. <source>JAMA</source> <volume>278</volume>: <fpage>1237</fpage>–<lpage>1241</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Bovelstad1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bovelstad</surname><given-names>HM</given-names></name>, <name name-style="western"><surname>Nygard</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Storvold</surname><given-names>HL</given-names></name>, <name name-style="western"><surname>Aldrin</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Borgan</surname><given-names>O</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Predicting survival from microarray data–a comparative study</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>2080</fpage>–<lpage>2087</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Pittman1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pittman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Dressman</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Horng</surname><given-names>CF</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>SH</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Integrated modeling of clinical and gene expression information for personalized prediction of disease outcomes</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>8431</fpage>–<lpage>8436</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Schwarz1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schwarz</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Guest</surname><given-names>PC</given-names></name>, <name name-style="western"><surname>Steiner</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bogerts</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Bahn</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>Identification of blood-based molecular signatures for prediction of response and relapse in schizophrenia patients</article-title>. <source>Transl Psychiatry</source> <volume>2</volume>: <fpage>e82</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Jung1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jung</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>JK</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>MG</given-names></name>, <name name-style="western"><surname>Noh</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Eun</surname><given-names>JW</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Characteristic molecular signature for early detection and prediction of persistent organic pollutants in rat liver</article-title>. <source>Environ Sci Technol</source> <volume>46</volume>: <fpage>12882</fpage>–<lpage>12889</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hines1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hines</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Staff</surname><given-names>FJ</given-names></name>, <name name-style="western"><surname>Widdows</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Compton</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Falciani</surname><given-names>F</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Discovery of metabolic signatures for predicting whole organism toxicology</article-title>. <source>Toxicol Sci</source> <volume>115</volume>: <fpage>369</fpage>–<lpage>378</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Cohen1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohen</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Soldi</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gustafson</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Wilcox</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A pharmacogenomic method for individualized prediction of drug sensitivity</article-title>. <source>Mol Syst Biol</source> <volume>7</volume>: <fpage>513</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Friedman1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Weinberg</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Barry</surname><given-names>WT</given-names></name>, <name name-style="western"><surname>Goodman</surname><given-names>BK</given-names></name>, <name name-style="western"><surname>Volkheimer</surname><given-names>AD</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>A genomic approach to improve prognosis and predict therapeutic response in chronic lymphocytic leukemia</article-title>. <source>Clin Cancer Res</source> <volume>15</volume>: <fpage>6947</fpage>–<lpage>6955</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hur1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hur</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sullivan</surname><given-names>KA</given-names></name>, <name name-style="western"><surname>Pande</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hong</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Sima</surname><given-names>AA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>The identification of gene expression profiles associated with progression of human diabetic neuropathy</article-title>. <source>Brain</source> <volume>134</volume>: <fpage>3222</fpage>–<lpage>3235</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Kim1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>WJ</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Jeong</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Yun</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Cho</surname><given-names>IC</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A four-gene signature predicts disease progression in muscle invasive bladder cancer</article-title>. <source>Mol Med</source> <volume>17</volume>: <fpage>478</fpage>–<lpage>485</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Man1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Man</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Shih</surname><given-names>KC</given-names></name>, <name name-style="western"><surname>Ng</surname><given-names>KT</given-names></name>, <name name-style="western"><surname>Xiao</surname><given-names>JW</given-names></name>, <name name-style="western"><surname>Guo</surname><given-names>DY</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Molecular signature linked to acute phase injury and tumor invasiveness in small-for-size liver grafts</article-title>. <source>Ann Surg</source> <volume>251</volume>: <fpage>1154</fpage>–<lpage>1161</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Zajac1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zajac</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Gomez</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Benitez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Martinez-Delgado</surname><given-names>B</given-names></name> (<year>2010</year>) <article-title>Molecular signature of response and potential pathways related to resistance to the HSP90 inhibitor, 17AAG, in breast cancer</article-title>. <source>BMC Med Genomics</source> <volume>3</volume>: <fpage>44</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-West1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>West</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Blanchette</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Dressman</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Ishida</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Predicting the clinical status of human breast cancer by using gene expression profiles</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>98</volume>: <fpage>11462</fpage>–<lpage>11467</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Ramaswamy1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ramaswamy</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Tamayo</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rifkin</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Mukherjee</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Yeang</surname><given-names>CH</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Multiclass cancer diagnosis using tumor gene expression signatures</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>98</volume>: <fpage>15149</fpage>–<lpage>15154</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Xu1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Shao</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fedorov</surname><given-names>VB</given-names></name>, <name name-style="western"><surname>Goropashnaya</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>Barnes</surname><given-names>BM</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Molecular signatures of mammalian hibernation: comparisons with alternative phenotypes</article-title>. <source>BMC Genomics</source> <volume>14</volume>: <fpage>567</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Arias1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arias</surname><given-names>CR</given-names></name>, <name name-style="western"><surname>Yeh</surname><given-names>HY</given-names></name>, <name name-style="western"><surname>Soo</surname><given-names>VW</given-names></name> (<year>2012</year>) <article-title>Biomarker identification for prostate cancer and lymph node metastasis from microarray data and protein interaction network using gene prioritization method</article-title>. <source>ScientificWorldJournal</source> <volume>2012</volume>: <fpage>842727</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Dudley1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dudley</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name> (<year>2009</year>) <article-title>Identification of discriminating biomarkers for human disease using integrative network biology</article-title>. <source>Pac Symp Biocomput</source> <fpage>27</fpage>–<lpage>38</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hartwell1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hartwell</surname><given-names>LH</given-names></name>, <name name-style="western"><surname>Hopfield</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Leibler</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Murray</surname><given-names>AW</given-names></name> (<year>1999</year>) <article-title>From molecular to modular cell biology</article-title>. <source>Nature</source> <volume>402</volume>: <fpage>C47</fpage>–<lpage>52</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Barabasi1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barabasi</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Gulbahce</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Loscalzo</surname><given-names>J</given-names></name> (<year>2011</year>) <article-title>Network medicine: a network-based approach to human disease</article-title>. <source>Nat Rev Genet</source> <volume>12</volume>: <fpage>56</fpage>–<lpage>68</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-KeshavaPrasad1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keshava Prasad</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>Goel</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kandasamy</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Keerthikumar</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Human Protein Reference Database–2009 update</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>D767</fpage>–<lpage>772</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Viemann1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Viemann</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Goebeler</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Schmid</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Nordhues</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Klimmek</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>TNF induces distinct gene expression programs in microvascular and macrovascular human endothelial cells</article-title>. <source>J Leukoc Biol</source> <volume>80</volume>: <fpage>174</fpage>–<lpage>185</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Mayer1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mayer</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Bilban</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kurtev</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Gruber</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Wagner</surname><given-names>O</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Deciphering regulatory patterns of inflammatory gene expression from interleukin-1-stimulated human endothelial cells</article-title>. <source>Arterioscler Thromb Vasc Biol</source> <volume>24</volume>: <fpage>1192</fpage>–<lpage>1198</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Tong1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tong</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Cao</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Harris</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sun</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Fang</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>ArrayTrack–supporting toxicogenomic research at the U.S. Food and Drug Administration National Center for Toxicological Research</article-title>. <source>Environ Health Perspect</source> <volume>111</volume>: <fpage>1819</fpage>–<lpage>1826</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hubbell1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hubbell</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>WM</given-names></name>, <name name-style="western"><surname>Mei</surname><given-names>R</given-names></name> (<year>2002</year>) <article-title>Robust estimators for expression analysis</article-title>. <source>Bioinformatics</source> <volume>18</volume>: <fpage>1585</fpage>–<lpage>1592</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Lim1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lim</surname><given-names>WK</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Lefebvre</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Califano</surname><given-names>A</given-names></name> (<year>2007</year>) <article-title>Comparative analysis of microarray normalization procedures: effects on reverse engineering gene networks</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>i282</fpage>–<lpage>288</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Maglott1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maglott</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Ostell</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Pruitt</surname><given-names>KD</given-names></name>, <name name-style="western"><surname>Tatusova</surname><given-names>T</given-names></name> (<year>2005</year>) <article-title>Entrez Gene: gene-centered information at NCBI</article-title>. <source>Nucleic Acids Res</source> <volume>33</volume>: <fpage>D54</fpage>–<lpage>58</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Zhang1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>HM</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gong</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>AnimalTFDB: a comprehensive animal transcription factor database</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D144</fpage>–<lpage>149</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Kim2"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>TK</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Yoo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>You</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Principal network analysis: identification of subnetworks representing major dynamics using gene expression data</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>391</fpage>–<lpage>398</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Henrick1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Henrick</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bovas</surname><given-names>A</given-names></name> (<year>1973</year>) <article-title>Multivariate logistic distribution</article-title>. <source>Ann Stat</source> <volume>1</volume>: <fpage>588</fpage>–<lpage>590</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Bulow1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bulow</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Schindler</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hehl</surname><given-names>R</given-names></name> (<year>2007</year>) <article-title>PathoPlant: a platform for microarray expression data to analyze co-regulated genes involved in plant defense responses</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>D841</fpage>–<lpage>845</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hughes1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hughes</surname><given-names>TR</given-names></name>, <name name-style="western"><surname>Marton</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>AR</given-names></name>, <name name-style="western"><surname>Roberts</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Stoughton</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Functional discovery via a compendium of expression profiles</article-title>. <source>Cell</source> <volume>102</volume>: <fpage>109</fpage>–<lpage>126</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Shapira1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shapira</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Segal</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name> (<year>2004</year>) <article-title>Disruption of yeast forkhead-associated cell cycle transcription by oxidative stress</article-title>. <source>Mol Biol Cell</source> <volume>15</volume>: <fpage>5659</fpage>–<lpage>5669</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Spellman1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Spellman</surname><given-names>PT</given-names></name>, <name name-style="western"><surname>Sherlock</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>MQ</given-names></name>, <name name-style="western"><surname>Iyer</surname><given-names>VR</given-names></name>, <name name-style="western"><surname>Anders</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>1998</year>) <article-title>Comprehensive identification of cell cycle-regulated genes of the yeast Saccharomyces cerevisiae by microarray hybridization</article-title>. <source>Mol Biol Cell</source> <volume>9</volume>: <fpage>3273</fpage>–<lpage>3297</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Obayashi1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Obayashi</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Kinoshita</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Nakai</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Shibaoka</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hayashi</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>ATTED-II: a database of co-expressed genes and cis elements for identifying co-regulated gene groups in Arabidopsis</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>D863</fpage>–<lpage>869</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Obayashi2"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Obayashi</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hayashi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Shibaoka</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Saeki</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ohta</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>COXPRESdb: a database of coexpressed gene networks in mammals</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D77</fpage>–<lpage>82</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Obayashi3"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Obayashi</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hayashi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Saeki</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ohta</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Kinoshita</surname><given-names>K</given-names></name> (<year>2009</year>) <article-title>ATTED-II provides coexpressed gene networks for Arabidopsis</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>D987</fpage>–<lpage>991</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Aoki1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aoki</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Ogata</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Shibata</surname><given-names>D</given-names></name> (<year>2007</year>) <article-title>Approaches for extracting practical information from gene co-expression networks in plant biology</article-title>. <source>Plant Cell Physiol</source> <volume>48</volume>: <fpage>381</fpage>–<lpage>390</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Shoemaker1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shoemaker</surname><given-names>BA</given-names></name>, <name name-style="western"><surname>Panchenko</surname><given-names>AR</given-names></name> (<year>2007</year>) <article-title>Deciphering protein-protein interactions. Part I. Experimental techniques and databases</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>e42</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Faith1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Large-scale mapping and validation of Escherichia coli transcriptional regulation from a compendium of expression profiles</article-title>. <source>PLoS Biol</source> <volume>5</volume>: <fpage>e8</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Friedman2"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Linial</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Nachman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Pe'er</surname><given-names>D</given-names></name> (<year>2000</year>) <article-title>Using Bayesian networks to analyze expression data</article-title>. <source>J Comput Biol</source> <volume>7</volume>: <fpage>601</fpage>–<lpage>620</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Margolin1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Basso</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Wiggins</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>ARACNE: an algorithm for the reconstruction of gene regulatory networks in a mammalian cellular context</article-title>. <source>BMC Bioinformatics</source> <volume>7 Suppl 1</volume>: <fpage>S7</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Butte1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Kohane</surname><given-names>IS</given-names></name> (<year>2000</year>) <article-title>Mutual information relevance networks: functional genomic clustering using pairwise entropy measurements</article-title>. <source>Pac Symp Biocomput</source> <fpage>418</fpage>–<lpage>429</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Eisen1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eisen</surname><given-names>MB</given-names></name>, <name name-style="western"><surname>Spellman</surname><given-names>PT</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>, <name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name> (<year>1998</year>) <article-title>Cluster analysis and display of genome-wide expression patterns</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>95</volume>: <fpage>14863</fpage>–<lpage>14868</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Yu1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Braun</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Yildirim</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Lemmens</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Venkatesan</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>High-quality binary protein interaction map of the yeast interactome network</article-title>. <source>Science</source> <volume>322</volume>: <fpage>104</fpage>–<lpage>110</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Nitsch1"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nitsch</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Goncalves</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Ojeda</surname><given-names>F</given-names></name>, <name name-style="western"><surname>de Moor</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Moreau</surname><given-names>Y</given-names></name> (<year>2010</year>) <article-title>Candidate gene prioritization by network analysis of differential expression using machine learning approaches</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume>: <fpage>460</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Emig1"><label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Emig</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Ivliev</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pustovalova</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Lancashire</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Bureeva</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Drug target prediction and repositioning using an integrated network-based approach</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e60618</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Hsu1"><label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hsu</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>YH</given-names></name>, <name name-style="western"><surname>Hsu</surname><given-names>CT</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>UC</given-names></name> (<year>2011</year>) <article-title>Prioritizing disease candidate genes by a gene interconnectedness-based approach</article-title>. <source>BMC Genomics</source> <volume>12 Suppl 3</volume>: <fpage>S25</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Vanunu1"><label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vanunu</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Magger</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Ruppin</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Shlomi</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sharan</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Associating genes and protein complexes with disease via network propagation</article-title>. <source>PLoS Comput Biol</source> <volume>6</volume>: <fpage>e1000641</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Bradley1"><label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bradley</surname><given-names>JR</given-names></name> (<year>2008</year>) <article-title>TNF-mediated inflammatory disease</article-title>. <source>J Pathol</source> <volume>214</volume>: <fpage>149</fpage>–<lpage>160</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Gabay1"><label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gabay</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lamacchia</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Palmer</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>IL-1 pathways in inflammation and human diseases</article-title>. <source>Nat Rev Rheumatol</source> <volume>6</volume>: <fpage>232</fpage>–<lpage>241</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Xie1"><label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Sullivan</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Collier</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Glass</surname><given-names>CK</given-names></name> (<year>2013</year>) <article-title>Serum response factor indirectly regulates type I interferon-signaling in macrophages</article-title>. <source>J Interferon Cytokine Res</source> <volume>33</volume>: <fpage>588</fpage>–<lpage>596</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Newaz1"><label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Newaz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yousefipour</surname><given-names>Z</given-names></name> (<year>2013</year>) <article-title>Acrolein-induced inflammatory signaling in vascular smooth muscle cells requires activation of serum response factor (SRF) and NFkappaB</article-title>. <source>J Basic Clin Physiol Pharmacol</source> <volume>24</volume>: <fpage>287</fpage>–<lpage>297</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Nunez1"><label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nunez</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Alameda</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Rico</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Mota</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Gonzalo</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Retinoid X receptor alpha controls innate inflammatory responses through the up-regulation of chemokine expression</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>107</volume>: <fpage>10626</fpage>–<lpage>10631</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Chang1"><label>57</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chang</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Nevins</surname><given-names>JR</given-names></name> (<year>2006</year>) <article-title>GATHER: a systems approach to interpreting genomic signatures</article-title>. <source>Bioinformatics</source> <volume>22</volume>: <fpage>2926</fpage>–<lpage>2933</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Essaghir1"><label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Essaghir</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Toffalini</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Knoops</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Kallin</surname><given-names>A</given-names></name>, <name name-style="western"><surname>van Helden</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Transcription factor regulation can be accurately predicted from the presence of target gene signatures in microarray gene expression data</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>e120</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Franceschini1"><label>59</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Franceschini</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Szklarczyk</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Frankild</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kuhn</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Simonovic</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>STRING v9.1: protein-protein interaction networks, with increased coverage and integration</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>D808</fpage>–<lpage>815</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Stelzl1"><label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stelzl</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Worm</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Lalowski</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Haenig</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Brembeck</surname><given-names>FH</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>A human protein-protein interaction network: a resource for annotating the proteome</article-title>. <source>Cell</source> <volume>122</volume>: <fpage>957</fpage>–<lpage>968</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Wang1"><label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Duncan</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name> (<year>2013</year>) <article-title>WEB-based GEne SeT AnaLysis Toolkit (WebGestalt): update 2013</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>W77</fpage>–<lpage>83</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Zhang2"><label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Kirov</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Snoddy</surname><given-names>J</given-names></name> (<year>2005</year>) <article-title>WebGestalt: an integrated system for exploring gene sets in various biological contexts</article-title>. <source>Nucleic Acids Res</source> <volume>33</volume>: <fpage>W741</fpage>–<lpage>748</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Jayasuriya1"><label>63</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jayasuriya</surname><given-names>CT</given-names></name>, <name name-style="western"><surname>Goldring</surname><given-names>MB</given-names></name>, <name name-style="western"><surname>Terek</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>Q</given-names></name> (<year>2012</year>) <article-title>Matrilin-3 Induction of IL-1 receptor antagonist Is required for up-regulating collagen II and aggrecan and down-regulating ADAMTS-5 gene expression</article-title>. <source>Arthritis Res Ther</source> <volume>14</volume>: <fpage>R197</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094360-Guo1"><label>64</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gong</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Yao</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Edge-based scoring and searching method for identifying condition-responsive protein-protein interaction sub-network</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>2121</fpage>–<lpage>2128</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PONE-RA-18635R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0012776</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology</subject><subject>Computational Biology/Systems Biology</subject><subject>Computational Biology/Transcriptional Regulation</subject></subj-group></article-categories><title-group><article-title>Inferring Regulatory Networks from Expression Data Using Tree-Based Methods</article-title><alt-title alt-title-type="running-head">Inferring GRNs with Trees</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Huynh-Thu</surname><given-names>Vân Anh</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Irrthum</surname><given-names>Alexandre</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Wehenkel</surname><given-names>Louis</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Geurts</surname><given-names>Pierre</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Electrical Engineering and Computer Science, Systems and Modeling, University of Liège, Liège, Belgium</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>GIGA-Research, Bioinformatics and Modeling, University of Liège, Liège, Belgium</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Isalan</surname><given-names>Mark</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Center for Genomic Regulation, Spain</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">vahuynh@ulg.ac.be</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: VAHT PG. Performed the experiments: VAHT. Analyzed the data: VAHT AI LW PG. Wrote the paper: VAHT AI LW PG.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>28</day><month>9</month><year>2010</year></pub-date><volume>5</volume><issue>9</issue><elocation-id>e12776</elocation-id><history>
+<date date-type="received"><day>5</day><month>5</month><year>2010</year></date>
+<date date-type="accepted"><day>9</day><month>8</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Huynh-Thu et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>One of the pressing open problems of computational systems biology is the elucidation of the topology of genetic regulatory networks (GRNs) using high throughput genomic data, in particular microarray gene expression data. The Dialogue for Reverse Engineering Assessments and Methods (DREAM) challenge aims to evaluate the success of GRN inference algorithms on benchmarks of simulated data. In this article, we present GENIE3, a new algorithm for the inference of GRNs that was best performer in the DREAM4 <italic>In Silico Multifactorial</italic> challenge. GENIE3 decomposes the prediction of a regulatory network between <italic>p</italic> genes into <italic>p</italic> different regression problems. In each of the regression problems, the expression pattern of one of the genes (target gene) is predicted from the expression patterns of all the other genes (input genes), using tree-based ensemble methods Random Forests or Extra-Trees. The importance of an input gene in the prediction of the target gene expression pattern is taken as an indication of a putative regulatory link. Putative regulatory links are then aggregated over all genes to provide a ranking of interactions from which the whole network is reconstructed. In addition to performing well on the DREAM4 <italic>In Silico Multifactorial</italic> challenge simulated data, we show that GENIE3 compares favorably with existing algorithms to decipher the genetic regulatory network of <italic>Escherichia coli</italic>. It doesn't make any assumption about the nature of gene regulation, can deal with combinatorial and non-linear interactions, produces directed GRNs, and is fast and scalable. In conclusion, we propose a new algorithm for GRN inference that performs well on both synthetic and real gene expression data. The algorithm, based on feature selection with tree-based ensemble methods, is simple and generic, making it adaptable to other types of genomic data and interactions.</p>
+</abstract><funding-group><funding-statement>This work was partially funded by the Interuniversity Attraction Poles Programme (IAP P6/25 BIOMAGNET), initiated by the Belgian State, Science Policy Office, by the French Community of Belgium (ARC Biomod), and by the European Network of Excellence PASCAL2. VAHT is recipient of a Fonds pour la formation a la Recherche dans l'Industrie et dans l'Agriculture (F.R.I.A.) fellowship and PG is Research Associate of the Fonds de la Recherche Scientifique - Fonds National de la Recherche Scientifique (F.R.S.-FNRS), Belgium. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="10"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Genetic regulatory networks (GRNs) <xref ref-type="bibr" rid="pone.0012776-Bolouri1">[1]</xref> are central to all biological organisms, and their deciphering is crucial to understand the development, functioning and pathology of these organisms. Once a remote theoretical possibility, this deciphering is now made possible by advances in genomics, most notably high-throughput profiling of gene expression patterns with DNA microarrays. These advances have prompted the development of a plethora of models of GRNs and algorithms to reverse-engineer them from expression data <xref ref-type="bibr" rid="pone.0012776-Gardner1">[2]</xref>–<xref ref-type="bibr" rid="pone.0012776-Lee1">[5]</xref>.</p>
+<p>The simplest models of genetic regulatory networks are based on Boolean logic. Because of their simplicity, these Boolean network models have provided high-level insights into the design principles and emerging properties of GRNs <xref ref-type="bibr" rid="pone.0012776-Kauffman1">[6]</xref>. At the other end of the complexity spectrum are physical models mimicking the biological mechanisms at play, including promoter recognition, mRNA transcription and protein translation. These models, typically based on systems of ordinary or stochastic differential equations, can generate realistic behavior <xref ref-type="bibr" rid="pone.0012776-Gardner2">[7]</xref>. One of their main drawbacks is that they have high-dimensional parameter spaces, and thus a large number of experimental data are needed for their identification. Nevertheless, hybrid methods involving ordinary differential equations have shown good performances on real-life genome-wide GRN inference <xref ref-type="bibr" rid="pone.0012776-Bonneau1">[8]</xref>.</p>
+<p>Models based on the statistical analysis of dependencies between expression patterns have an intermediate complexity, and have already been successfully applied to the inference of large GRNs. Early models used correlation coefficients between expression patterns of all pairs of genes to infer “coexpression networks” <xref ref-type="bibr" rid="pone.0012776-Eisen1">[9]</xref>. However, correlation coefficients fail to capture more complex statistical dependencies (e.g. non-linear ones) between expression patterns, and thus more general measures of dependency based on mutual information (MI), have been proposed. The simplest model based on this measure, the “relevance network”, computes MI between all pairs of genes and infers the presence of a regulatory interaction when MI is larger than a given threshold <xref ref-type="bibr" rid="pone.0012776-Butte1">[10]</xref>. Various refinements have been proposed to try to discriminate between direct and indirect interactions in relevance networks. The CLR algorithm <xref ref-type="bibr" rid="pone.0012776-Faith1">[11]</xref> modifies the MI score based on the empirical distribution of all MI scores. The ARACNE algorithm <xref ref-type="bibr" rid="pone.0012776-Margolin1">[12]</xref> filters out indirect interactions from triplets of genes with the Data Processing Inequality <xref ref-type="bibr" rid="pone.0012776-Cover1">[13]</xref>. Finally, MRNET <xref ref-type="bibr" rid="pone.0012776-Meyer1">[14]</xref> uses an iterative feature selection method based on a maximum relevance/minimum redundancy criterion.</p>
+<p>Probabilistic graphical models have been widely used to model GRNs <xref ref-type="bibr" rid="pone.0012776-Friedman1">[15]</xref>. With respect to correlation or mutual information based approaches, these methods are potentially able to model higher-order dependencies between the expression patterns of genes. Among these methods, Bayesian networks have been used since the advent of microarray technologies for GRN modeling and inference <xref ref-type="bibr" rid="pone.0012776-Friedman2">[16]</xref>. A Bayesian network represents conditional dependencies between random variables with a directed acyclic graph. Learning the structure of a Bayesian network is a non trivial problem, both from a theoretical and computational point of view, and several sophisticated heuristics have been proposed in the context of GRN inference <xref ref-type="bibr" rid="pone.0012776-Yu1">[17]</xref>, <xref ref-type="bibr" rid="pone.0012776-Auliac1">[18]</xref>. One limitation of Bayesian networks for GRN inference is that these models do not allow the presence of cycles (feedback loops). While this limitation is partially circumvented by dynamic Bayesian networks <xref ref-type="bibr" rid="pone.0012776-Yu1">[17]</xref>, <xref ref-type="bibr" rid="pone.0012776-Perrin1">[19]</xref>, these models can only be learned from time-series expression data. Another family of probabilistic models that gained interest recently for GRN inference are Gaussian graphical models. These methods assume that gene expression values are jointly Gaussian distributed and represent conditional dependencies between genes by an undirected graph. The estimation of this graph for high-dimensional data is difficult but several robust solutions have been proposed in the literature <xref ref-type="bibr" rid="pone.0012776-Schafer1">[20]</xref>–<xref ref-type="bibr" rid="pone.0012776-Ambroise1">[23]</xref>. Although often very effective, the main limitations of these methods is of course the Gaussianity assumption, which also implies linear dependencies between variables, and the undirected nature of the inferred regulatory links (although some heuristics have been proposed to direct them <xref ref-type="bibr" rid="pone.0012776-OpgenRhein1">[24]</xref>).</p>
+<p>Within this context, this article presents GENIE3 (for “GEne Network Inference with Ensemble of trees”), a new GRN inference method based on variable selection with ensembles of regression trees. This method was best performer in the DREAM4 <italic>In Silico Multifactorial</italic> challenge <xref ref-type="bibr" rid="pone.0012776-The1">[25]</xref>. Its main features with respect to existing techniques is that it makes very few assumptions about the nature of the relationships between the variables (which can thus be non-linear) and can potentially capture high-order conditional dependencies between expression patterns. It also produces a <italic>directed</italic> graph of regulatory interactions and naturally allows for the presence of feedback loops in the network. At the same time, it remains intuitive, computationally tractable, and easy to implement. In addition to its good performance on the synthetic data of the DREAM4 challenge, we show that GENIE3 compares favorably with existing algorithms to decipher the genetic regulatory network of <italic>Escherichia coli</italic>.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Problem Definition</title>
+<p>We address the problem of recovering regulatory networks from gene expression data. The targeted networks are directed graphs with <italic>p</italic> nodes, where each node represents a gene, and an edge directed from one gene <italic>i</italic> to another gene <italic>j</italic> indicates that gene <italic>i</italic> (directly) regulates the expression of gene <italic>j</italic>. We only consider unsigned edges; when gene <italic>i</italic> is connected to gene <italic>j</italic>, the former can be either an activator or a repressor of the latter.</p>
+<p>The goal of (unsupervised) gene regulatory network inference is to recover the network solely from measurements of the expression of the genes in various conditions. Given the dynamic and combinatorial nature of genetic regulation, measurements of different kinds can be obtained, including steady-state expression profiles resulting from the systematic knockout or knockdown of genes or time series measurements resulting from random perturbations. In this paper, we focus on multifactorial perturbation data as generated for the DREAM4 <italic>In Silico Size 100 Multifactorial</italic> subchallenge. Multifactorial expression data are static steady-state measurements obtained by (slightly) perturbing all genes simultaneously. Multifactorial data might correspond for example to expression profiles obtained from different patients or biological replicates. Such data are easier and less expensive to obtain than knockout/knockdown or time series data and are thus more common in practice. They are however also less informative for the prediction of edge directionality <xref ref-type="bibr" rid="pone.0012776-Bansal1">[3]</xref>, <xref ref-type="bibr" rid="pone.0012776-Werhli1">[26]</xref>, <xref ref-type="bibr" rid="pone.0012776-Pournara1">[27]</xref> and therefore make the regulatory network inference task more challenging.</p>
+<p>In what follows, we define a (multifactorial) learning sample from which to infer the network as a sample of <italic>N</italic> measurements:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e001" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e002" xlink:type="simple"/></inline-formula> is a vector of expression values of all <italic>p</italic> genes in the <italic>k</italic>th experiment:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e003" xlink:type="simple"/></disp-formula></p>
+<p>From this learning sample, the goal of network inference algorithms is to make a prediction of the underlying regulatory links between genes. Most network inference algorithms work first by providing a ranking of the potential regulatory links from the most to the less significant. A practical network prediction is then obtained by setting a threshold on this ranking. In this paper, we focus only on the first task, which is also targeted by the evaluation procedure of the DREAM4 challenge. The question of the choice of an optimal confidence threshold, although important, will be left open.</p>
+<p>A network inference algorithm is thus defined in this paper as a procedure that exploits a <italic>LS</italic> to assign weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e004" xlink:type="simple"/></inline-formula> to putative regulatory links from any gene <italic>i</italic> to any gene <italic>j</italic>, with the aim of yielding large values for weights which correspond to actual regulatory interactions.</p>
+</sec><sec id="s2b">
+<title>Network Inference with Tree-based Methods</title>
+<p>The basic idea of our procedure is to decompose the problem of recovering a network involving <italic>p</italic> genes into <italic>p</italic> different subproblems, where each of these subproblems consists in identifying the regulators of one of the genes of the network. Exploiting expression data, the identification of the regulatory genes for a given target gene is defined as determining the subset of genes whose expression directly influences or is predictive of the expression of the target gene. Within the framework of supervised learning, this problem is equivalent to a feature selection problem. In this context, our solution will exploit the embedded feature ranking mechanism of tree-based ensemble methods.</p>
+<p>We first describe our procedure to solve the network inference problem using feature selection techniques and then specialize it to the case of tree-based ensemble methods.</p>
+</sec><sec id="s2c">
+<title>Network Inference as a Feature Selection Problem</title>
+<p>Our method makes the assumption that the expression of each gene in a given condition is a function of the expression of the other genes in the network (plus some random noise). Denoting by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e005" xlink:type="simple"/></inline-formula> the vector containing the expression values in the <italic>k</italic>th experiment of all genes except gene <italic>j</italic>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e006" xlink:type="simple"/></disp-formula>we assume that we can write:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e007" xlink:type="simple"/><label>(1)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e008" xlink:type="simple"/></inline-formula> is a random noise with zero mean (conditionally to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e009" xlink:type="simple"/></inline-formula>). We further make the assumption that the function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e010" xlink:type="simple"/></inline-formula> only exploits the expression in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e011" xlink:type="simple"/></inline-formula> of the genes that are direct regulators of gene <italic>j</italic>, i.e. genes that are directly connected to gene <italic>j</italic> in the targeted network. Recovering the regulatory links pointing to gene <italic>j</italic> thus amounts at finding those genes whose expression is predictive of the expression of the target gene. In machine learning terminology, this can be considered as a feature selection problem (in regression) for which many solutions exist <xref ref-type="bibr" rid="pone.0012776-Saeys1">[28]</xref>. We assume here the use of a feature ranking technique that, instead of directly returning a feature subset, yields a ranking of the features from the most relevant to the less relevant for predicting the output.</p>
+<p>The proposed network inference procedure is illustrated in <xref ref-type="fig" rid="pone-0012776-g001">Figure 1</xref> and works as follows:</p>
+<list list-type="bullet"><list-item>
+<p>For <italic>j</italic> = 1 to <italic>p</italic>:                    <list list-type="bullet"><list-item>
+<p>Generate the learning sample of input-output pairs for gene <italic>j</italic>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e012" xlink:type="simple"/></disp-formula></p>
+</list-item><list-item>
+<p>Use a feature selection technique on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e013" xlink:type="simple"/></inline-formula> to compute confidence levels <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e014" xlink:type="simple"/></inline-formula>, for all genes except gene <italic>j</italic> itself.</p>
+</list-item></list>                </p>
+</list-item><list-item>
+<p>Aggregate the <italic>p</italic> individual gene rankings to get a global ranking of all regulatory links.</p>
+</list-item></list>
+<fig id="pone-0012776-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.g001</object-id><label>Figure 1</label><caption>
+<title>GENIE3 procedure.</title>
+<p>For each gene <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e015" xlink:type="simple"/></inline-formula>, a learning sample <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e016" xlink:type="simple"/></inline-formula> is generated with expression levels of <italic>j</italic> as output values and expression levels of all other genes as input values. A function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e017" xlink:type="simple"/></inline-formula> is learned from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e018" xlink:type="simple"/></inline-formula> and a local ranking of all genes except <italic>j</italic> is computed. The <italic>p</italic> local rankings are then aggregated to get a global ranking of all regulatory links.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.g001" xlink:type="simple"/></fig>
+<p>Note that depending of the interpretation of the weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e019" xlink:type="simple"/></inline-formula>, their aggregation to a get a global ranking of regulatory links is not trivial. We will see in the context of tree-based methods that it requires to normalize each expression vector appropriately.</p>
+</sec><sec id="s2d">
+<title>Gene Ranking with Tree-based Methods</title>
+<p>The nature of the problem and the proposed solution put some constraints on candidate feature selection techniques. The nature of the functions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e020" xlink:type="simple"/></inline-formula> is unknown but they are expected to involve the expression of several genes (combinatorial regulation) and to be non-linear. The number of input features in each of these problems is typically much greater than the number of observations. Computationally, since the identification of a network involving <italic>p</italic> genes requires to rerun the algorithm <italic>p</italic> times, it is also of interest for this algorithm to be fast and to require as few manual tuning as possible. Tree-based ensemble methods are good candidates for that purpose. These methods do not make any assumption about the nature of the target function, can potentially deal with interacting features and non-linearity. They work well in the presence of a large number of features, are fast to compute, scalable, and essentially parameter-free (see <xref ref-type="bibr" rid="pone.0012776-Geurts1">[29]</xref> for a review).</p>
+<p>We first briefly describe these methods and their built-in feature ranking mechanism and then discuss their use in the context of the network inference procedure described in the previous section.</p>
+</sec><sec id="s2e">
+<title>Tree-based Ensemble Methods</title>
+<p>Each subproblem, defined by a learning sample <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e021" xlink:type="simple"/></inline-formula>, is a supervised (non-parametric) regression problem. Using square error loss, each problem amounts at finding a function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e022" xlink:type="simple"/></inline-formula> that minimizes the following error:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e023" xlink:type="simple"/><label>(2)</label></disp-formula>Regression trees <xref ref-type="bibr" rid="pone.0012776-Breiman1">[30]</xref> solve this problem by developing tree structured models. The basic idea of this method is to recursively split the learning sample with binary tests based each on one input variable (selected in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e024" xlink:type="simple"/></inline-formula>), trying to reduce as much as possible the variance of the output variable (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e025" xlink:type="simple"/></inline-formula>) in the resulting subsets of samples. Candidate splits for numerical variables typically compare the input variable values with a threshold which is determined during the tree growing.</p>
+<p>Single trees are usually very much improved by ensemble methods, which average the predictions of several trees. In our network inference procedure, we compare two tree-based ensemble methods based on randomization, namely Random Forests <xref ref-type="bibr" rid="pone.0012776-Breiman2">[31]</xref> and Extra-Trees <xref ref-type="bibr" rid="pone.0012776-Geurts2">[32]</xref>. In a Random Forests ensemble, each tree is built on a bootstrap sample from the original learning sample and, at each test node, <italic>K</italic> attributes are selected at random among all candidate attributes before determining the best split. In the Extra-Trees method on the other hand, each tree is built from the original learning sample and at each test node, the best split is determined among <italic>K</italic> random splits, each determined by randomly selecting one input (without replacement) and a threshold. For these two methods, we will grow ensembles of 1000 trees and we will consider two values of the main parameter of these methods: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e026" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e027" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e028" xlink:type="simple"/></inline-formula> is the number of inputs, equal to the number of potential regulators of each gene. Empirical validations in <xref ref-type="bibr" rid="pone.0012776-Geurts2">[32]</xref> have shown that these two values of <italic>K</italic> were near-optimal in terms of predictive accuracy on several problems. Note however that we do not exclude that better results could be obtained with other settings of <italic>K</italic>.</p>
+</sec><sec id="s2f">
+<title>Variable Importance Measure</title>
+<p>One of the most interesting characteristics of tree-based methods is that it is possible to compute from a tree a variable importance measure that allows to rank the input features according to their relevance for predicting the output. Several variable importance measures have been proposed in the literature for tree-based methods. In our experiment, we consider a measure which at each test node <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e029" xlink:type="simple"/></inline-formula> computes the total reduction of the variance of the output variable due to the split, defined by <xref ref-type="bibr" rid="pone.0012776-Breiman1">[30]</xref>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e030" xlink:type="simple"/><label>(3)</label></disp-formula>where <italic>S</italic> denotes the set of samples that reach node <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e031" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e032" xlink:type="simple"/></inline-formula> (resp. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e033" xlink:type="simple"/></inline-formula>) denotes its subset for which the test is true (resp. false), Var(.) is the variance of the output variable in a subset, and # denotes the cardinality of a set of samples. For a single tree, the overall importance of one variable is then computed by summing the <italic>I</italic> values of all tree nodes where this variable is used to split. Those attributes that are not selected at all obtain a zero value of their importance, and those that are selected close to the root node of the tree typically obtain high scores. Attribute importance measures can be easily extended to ensembles, simply by averaging importance scores over all trees in the ensemble. The resulting importance measure is then even more reliable because of the variance reduction effect resulting from this averaging.</p>
+<p>Breiman <xref ref-type="bibr" rid="pone.0012776-Breiman2">[31]</xref> proposed an alternative measure that computes the average reduction of the tree accuracy on out-of-bag samples (i.e. training objects that are not present in the bootstrap sample used to build each tree) when the values of the corresponding variable are randomly permuted. While this procedure has some advantages with respect to the variance reduction based measure of (3) <xref ref-type="bibr" rid="pone.0012776-Strobl1">[33]</xref>, it gives in most practical applications very similar results but is much more computationally demanding. Furthermore, it does not extend to methods like the Extra-Trees method which do not consider bootstrap sampling.</p>
+</sec><sec id="s2g">
+<title>Regulatory Link Ranking</title>
+<p>Each tree-based model yields a separate ranking of the genes as potential regulators of a target gene in the form of weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e034" xlink:type="simple"/></inline-formula> computed as sums of total variance reductions in the form (3). The sum of the importances of all variables for a tree is equal to the total variance of the output variable explained by the tree, which in the case of unpruned trees (as they are in the case of Random Forests and Extra-Trees ensembles) is usually very close to the initial total variance of the output:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e035" xlink:type="simple"/><label>(4)</label></disp-formula>where <italic>S</italic> is the learning sample from which the tree was built (i.e. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e036" xlink:type="simple"/></inline-formula> for the Extra-Trees method and a bootstrap sample for the Random Forests method) and where Var(<italic>S</italic>) is the variance of the target gene estimated in the corresponding learning sample. As a consequence, if we trivially order the regulatory links according to the weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e037" xlink:type="simple"/></inline-formula>, this is likely to introduce a positive bias for regulatory links towards the more highly variable genes. To avoid this bias, we have first normalized the gene expressions so that they all have a unit variance in the training set, before applying the tree-based ensemble methods. This normalization indeed implies that the different weights inferred from different models predicting the different gene expressions are comparable.</p>
+</sec><sec id="s2h">
+<title>Computational Complexity</title>
+<p>The computational complexity of the Random Forests and Extra-Trees algorithms is on the order of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e038" xlink:type="simple"/></inline-formula>, where <italic>T</italic> is the number of trees, <italic>N</italic> is the learning sample size and <italic>K</italic> is the main parameter of the two tree-based methods. GENIE3's complexity is thus on the order of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e039" xlink:type="simple"/></inline-formula> since it requires to build an ensemble of trees for each of the <italic>p</italic> genes. The complexity of the whole procedure is thus log linear with respect to the number of measurements and, at worst, quadratic with respect to the number of genes (when <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e040" xlink:type="simple"/></inline-formula>).</p>
+<p>To fix ideas, with our MatLab implementation of GENIE3, it takes 6.5 minutes to infer the five networks of the DREAM4 challenge and 7 hours to infer the <italic>E. coli</italic> network (with known transcription factors), in both cases with Random Forests and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e041" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e042" xlink:type="simple"/></inline-formula> is the number of potential regulators (see later for the details of these experiments). These computing times where measured on a 16GB RAM, Intel L5420 2.50 GHz computer.</p>
+<p>Note that, if needed, the algorithm can be easily parallelized as the <italic>p</italic> feature selection problems, as well as the different trees in an ensemble, are independent of each other.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Datasets</title>
+<p>We report below two series of experiments: first on the DREAM4 <italic>In Silico Multifactorial</italic> challenge and then on the <italic>Escherichia coli</italic> regulatory network.</p>
+</sec><sec id="s3b">
+<title>DREAM4 Datasets</title>
+<p>The DREAM (for “Dialogue for Reverse Engineering Assessments and Methods”) initiative organizes an annual reverse engineering competition called the DREAM challenge <xref ref-type="bibr" rid="pone.0012776-The2">[34]</xref>–<xref ref-type="bibr" rid="pone.0012776-Stolovitzky2">[37]</xref>. We report here our results on the DREAM4 edition of this competition, where one challenge concerned <italic>in silico</italic> regulatory network inference <xref ref-type="bibr" rid="pone.0012776-The1">[25]</xref>. This challenge was divided into three subchallenges, called <italic>In Silico Size 10</italic>, <italic>In Silico Size 100</italic>, and <italic>In Silico Size 100 Multifactorial</italic>. We only report here our result of this last subchallenge.</p>
+<p>The goal of the <italic>In Silico Size 100 Multifactorial</italic> subchallenge was to infer five networks of <italic>p</italic> = 100 genes each from multifactorial perturbation data. Multifactorial data are defined as static steady-state expression profiles resulting from slight perturbations of all genes simultaneously.</p>
+<p>All networks and data were generated with GeneNetWeaver (GNW) version 2.0 <xref ref-type="bibr" rid="pone.0012776-Marbach1">[38]</xref>. Network topologies were obtained by extracting subnetworks from transcriptional regulatory networks of <italic>E. coli</italic> and <italic>S. cerevisiae</italic>. The subnetwork extraction method was adapted to preferentially include parts of the network with cycles but direct self-interactions were removed. The dynamics of the networks were simulated using a detailed kinetic model of gene regulation. Noise was added both in the dynamics of the networks and on the measurement of expression data. Multifactorial perturbations were simulated by slightly increasing or decreasing the basal activation of all genes of the network simultaneously by different random amounts. In total, the number of expression conditions <italic>N</italic> for each network was set to 100.</p>
+</sec><sec id="s3c">
+<title><italic>Escherichia coli</italic> Dataset</title>
+<p>In addition, we carried out experiments with our method on the inference of the regulatory network of <italic>Escherichia coli</italic>, which has been used by several authors as a benchmark.</p>
+<p>The dataset of expression profiles we used was retrieved from the Many Microbe Microarrays (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e043" xlink:type="simple"/></inline-formula>) database <xref ref-type="bibr" rid="pone.0012776-Faith2">[39]</xref> (version 4 build 6). It contains 907 <italic>E. coli</italic> microarray expression profiles of 4297 genes collected from different experiments at steady-state level. To validate the network predictions we used 3433 experimentally confirmed regulatory interactions among 1471 genes that have been curated in RegulonDB version 6.4 <xref ref-type="bibr" rid="pone.0012776-GamaCastro1">[40]</xref>.</p>
+</sec><sec id="s3d">
+<title>Performance Metrics</title>
+<p>Our algorithm provides a ranking of the regulatory links from the most confident to the less confident. To evaluate such a ranking independently of the choice of a specific threshold, we used both precision-recall (PR) curve and receiver operating characteristic (ROC) curve. The former plots for varying thresholds on the importance scores the proportion of true positives among all predictions (precision) versus the percentage of true positives that are retrieved (recall), whereas a ROC curve plots the true positive rate versus the false positive rate.</p>
+<p>To summarize these curves, the DREAM organizers proposed different statistics:</p>
+<list list-type="bullet"><list-item>
+<p>AUPR: The area under the PR curve.</p>
+</list-item><list-item>
+<p>AUROC: The area under the ROC curve.</p>
+</list-item><list-item>
+<p>AUPR p-value: The probability that a given or larger AUPR is obtained by random ordering of the potential network edges.</p>
+</list-item><list-item>
+<p>AUROC p-value: The probability that a given or larger AUROC is obtained by random ordering of the potential network edges.</p>
+</list-item></list>
+<p>An overall score was used to evaluate the predictions for the five networks of each subchallenge:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.e044" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e045" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e046" xlink:type="simple"/></inline-formula> are respectively the geometric means of AUPR p-values and AUROC p-values taken over the five networks.</p>
+</sec><sec id="s3e">
+<title>Results on the DREAM4 Multifactorial Data</title>
+<sec id="s3e1">
+<title>Challenge</title>
+<p>We took part in the DREAM4 <italic>In Silico Multifactorial</italic> challenge, where the goal was to provide the ranking of the potential (directed) regulatory interactions for five simulated networks. At the time of submission, the gold standard networks were unknown and it was thus impossible to choose the best one among several tree-based methods at our disposal. We thus submitted the rankings obtained by our GENIE3 procedure using the Random Forests algorithm with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e047" xlink:type="simple"/></inline-formula>.</p>
+<p>Among twelve challengers, GENIE3 got the best performance with an overall score of 37.428. As a comparison, the score of the first runner-up was 28.165.</p>
+<p><xref ref-type="table" rid="pone-0012776-t001">Table 1</xref> shows the AUPR and AUROC values of our predictions and those of the first runner-up, and <xref ref-type="table" rid="pone-0012776-t002">Table 2</xref> shows their associated p-values, indicating that our predictions were significantly better than random guessing. On all networks, these scores were the highest among the twelve challengers. Individual PR and ROC curves on each network are collected in <xref ref-type="supplementary-material" rid="pone.0012776.s001">Figure S1</xref>.</p>
+<table-wrap id="pone-0012776-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t001</object-id><label>Table 1</label><caption>
+<title>AUPR and AUROC scores for DREAM4 Multifactorial challenge.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Method</td>
+<td align="left" colspan="1" rowspan="1">NET1</td>
+<td align="left" colspan="1" rowspan="1">NET2</td>
+<td align="left" colspan="1" rowspan="1">NET3</td>
+<td align="left" colspan="1" rowspan="1">NET4</td>
+<td align="left" colspan="1" rowspan="1">NET5</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUPR</td>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-sqrt</td>
+<td align="left" colspan="1" rowspan="1">0.154</td>
+<td align="left" colspan="1" rowspan="1">0.155</td>
+<td align="left" colspan="1" rowspan="1">0.231</td>
+<td align="left" colspan="1" rowspan="1">0.208</td>
+<td align="left" colspan="1" rowspan="1">0.197</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2nd best</td>
+<td align="left" colspan="1" rowspan="1">0.108</td>
+<td align="left" colspan="1" rowspan="1">0.147</td>
+<td align="left" colspan="1" rowspan="1">0.185</td>
+<td align="left" colspan="1" rowspan="1">0.161</td>
+<td align="left" colspan="1" rowspan="1">0.111</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUROC</td>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-sqrt</td>
+<td align="left" colspan="1" rowspan="1">0.745</td>
+<td align="left" colspan="1" rowspan="1">0.733</td>
+<td align="left" colspan="1" rowspan="1">0.775</td>
+<td align="left" colspan="1" rowspan="1">0.791</td>
+<td align="left" colspan="1" rowspan="1">0.798</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2nd best</td>
+<td align="left" colspan="1" rowspan="1">0.739</td>
+<td align="left" colspan="1" rowspan="1">0.694</td>
+<td align="left" colspan="1" rowspan="1">0.748</td>
+<td align="left" colspan="1" rowspan="1">0.736</td>
+<td align="left" colspan="1" rowspan="1">0.745</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>GENIE3-RF-sqrt: GENIE3 using Random Forests with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e048" xlink:type="simple"/></inline-formula>. 2nd best: Second best performer in the DREAM4 Multifactorial challenge.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0012776-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t002</object-id><label>Table 2</label><caption>
+<title>AUPR and AUROC p-values for DREAM4 Multifactorial challenge.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Method</td>
+<td align="left" colspan="1" rowspan="1">NET1</td>
+<td align="left" colspan="1" rowspan="1">NET2</td>
+<td align="left" colspan="1" rowspan="1">NET3</td>
+<td align="left" colspan="1" rowspan="1">NET4</td>
+<td align="left" colspan="1" rowspan="1">NET5</td>
+<td align="left" colspan="1" rowspan="1">Overall p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUPR p-value</td>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-sqrt</td>
+<td align="left" colspan="1" rowspan="1">3.3e-34</td>
+<td align="left" colspan="1" rowspan="1">7.9e-54</td>
+<td align="left" colspan="1" rowspan="1">1.8e-54</td>
+<td align="left" colspan="1" rowspan="1">5.5e-47</td>
+<td align="left" colspan="1" rowspan="1">4.6e-44</td>
+<td align="left" colspan="1" rowspan="1">1.0e-46</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2nd best</td>
+<td align="left" colspan="1" rowspan="1">5.6e-23</td>
+<td align="left" colspan="1" rowspan="1">9.7e-50</td>
+<td align="left" colspan="1" rowspan="1">6.6e-43</td>
+<td align="left" colspan="1" rowspan="1">1.5e-35</td>
+<td align="left" colspan="1" rowspan="1">4.4e-23</td>
+<td align="left" colspan="1" rowspan="1">7.4e-35</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">AUROC p-value</td>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-sqrt</td>
+<td align="left" colspan="1" rowspan="1">3.3e-18</td>
+<td align="left" colspan="1" rowspan="1">1.1e-28</td>
+<td align="left" colspan="1" rowspan="1">9.7e-34</td>
+<td align="left" colspan="1" rowspan="1">6.7e-33</td>
+<td align="left" colspan="1" rowspan="1">1.9e-34</td>
+<td align="left" colspan="1" rowspan="1">1.4e-29</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2nd best</td>
+<td align="left" colspan="1" rowspan="1">1.7e-17</td>
+<td align="left" colspan="1" rowspan="1">5.4e-21</td>
+<td align="left" colspan="1" rowspan="1">4.9e-28</td>
+<td align="left" colspan="1" rowspan="1">1.9e-23</td>
+<td align="left" colspan="1" rowspan="1">1.1e-24</td>
+<td align="left" colspan="1" rowspan="1">6.3e-23</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label/><p>GENIE3-RF-sqrt: GENIE3 using Random Forests with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e049" xlink:type="simple"/></inline-formula>. 2nd best: Second best performer in the DREAM4 Multifactorial challenge.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3e2">
+<title>Comparison of Tree-based Methods</title>
+<p>We have subsequently applied GENIE3 on these same datasets, using the Extra-Trees algorithm, and also setting <italic>K</italic> to its maximum value (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e050" xlink:type="simple"/></inline-formula>). <xref ref-type="table" rid="pone-0012776-t003">Table 3</xref> shows the overall scores obtained with the four different combinations. The Random Forests and the Extra-Trees algorithms gave comparable results, and the predictions were improved when the parameter <italic>K</italic> was increased, i.e. when the randomization was reduced. The overall best result was achieved when we used Random Forests with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e051" xlink:type="simple"/></inline-formula>, giving an overall score equal to 40.471. This result is slightly better than our initial submission to the challenge. Unless otherwise stated, all subsequent experiments in the paper will be carried out with this particular setting. Note that in this case, the algorithm simply corresponds to the Bagging method applied on standard regression trees <xref ref-type="bibr" rid="pone.0012776-Breiman3">[41]</xref>.</p>
+<table-wrap id="pone-0012776-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t003</object-id><label>Table 3</label><caption>
+<title>Overall scores of GENIE3 for DREAM4 networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">RF-sqrt</td>
+<td align="left" colspan="1" rowspan="1">RF-all</td>
+<td align="left" colspan="1" rowspan="1">ET-sqrt</td>
+<td align="left" colspan="1" rowspan="1">ET-all</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Overall score</td>
+<td align="left" colspan="1" rowspan="1">37.428</td>
+<td align="left" colspan="1" rowspan="1">40.471</td>
+<td align="left" colspan="1" rowspan="1">35.881</td>
+<td align="left" colspan="1" rowspan="1">40.111</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label/><p>RF: Random Forests, ET: Extra-Trees, sqrt: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e052" xlink:type="simple"/></inline-formula>, all: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e053" xlink:type="simple"/></inline-formula>.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3e3">
+<title>Detailed Analysis of the Predictions</title>
+<p>To have a more precise picture of the quality of the predictions obtained with GENIE3, <xref ref-type="fig" rid="pone-0012776-g002">Figure 2</xref> depicts the ranking of regulators for all genes, grouped according to their number of regulators, for the third network which was predicted with the highest AUPR score by our method. Similar plots for the other networks can be found in <xref ref-type="supplementary-material" rid="pone.0012776.s002">Figure S2</xref>.</p>
+<fig id="pone-0012776-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.g002</object-id><label>Figure 2</label><caption>
+<title>Detailed results on DREAM4 NET3.</title>
+<p>Ranking of the regulators for all genes. Each row corresponds to a gene. Dots in each row represent the positions in the Random Forests ranking of the regulators of this gene. Genes are ordered on the y-axis according to their number of regulators in the gold standard network; those having the same number of regulators are grouped inside an horizontal block (from no regulator at the top to 6 regulators at the bottom). Inside each block, genes are ordered according to the median rank of their regulators. The ranking of interactions was obtained with Random Forests and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e054" xlink:type="simple"/></inline-formula>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.g002" xlink:type="simple"/></fig>
+<p>As can be seen from this figure, GENIE3 is able to retrieve the best regulator for about two thirds of the genes that have only one regulator. For genes with two regulators, the method retrieves one of the two regulators for about the same proportion of genes but is less good at retrieving the second regulator (only for one gene, the two regulators are at the top of the ranking). For genes with three or more regulators, even one regulator seems to be difficult to retrieve.</p>
+<p>This suggests that the performance of GENIE3 at retrieving a regulator of one gene degrades as the number of regulators of this gene increases, as also observed from the analysis of the results of the DREAM3 challenge in <xref ref-type="bibr" rid="pone.0012776-Marbach2">[42]</xref>. To further check this hypothesis, we plotted in <xref ref-type="fig" rid="pone-0012776-g003">Figure 3</xref> the median rank of the regulators of gene <italic>j</italic>, such that gene <italic>j</italic> is regulated by an increasing number of genes. The rank is presented here as a percentage, such that the first and last regulators of the ranking have a rank equal to 100% and 0% respectively. This plot clearly shows that the quality of the ranking monotonically decreases with the in-degree of the genes.</p>
+<fig id="pone-0012776-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.g003</object-id><label>Figure 3</label><caption>
+<title>Rank of regulators as a function of the in-degree of the target.</title>
+<p>The in-degree of a target is its number of regulators. The dot corresponding to in-degree <italic>n</italic> is the median rank of regulators that regulate a gene with in-degree <italic>n</italic>, over the five networks. The rank is presented here as a percentage, such that the first and last regulators of each ranking have a rank equal to 100% and 0% respectively. The ranking of interactions was obtained with Random Forests and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e055" xlink:type="simple"/></inline-formula>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.g003" xlink:type="simple"/></fig></sec><sec id="s3e4">
+<title>Undirected Versus Directed Predictions</title>
+<p>One interesting feature of GENIE3 is its potential ability to predict directed networks, while methods based on mutual information or correlation are only able to predict undirected networks.</p>
+<p>To see to what extent the networks predicted by our method are asymmetric, we show in <xref ref-type="table" rid="pone-0012776-t004">Table 4</xref> for each network the proportion of predicted regulatory links for which the opposite link is not predicted. Notice that these predictions were obtained from the Random Forests ranking, by fixing a weight threshold such that the predicted network contains the same total number of edges as the gold standard. This percentage is compared with the same percentage computed for the gold standard. Our predicted networks are clearly more symmetric than the corresponding gold standards but they nevertheless contain a significant number of asymmetric predictions (52% of the links on the average).</p>
+<table-wrap id="pone-0012776-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t004</object-id><label>Table 4</label><caption>
+<title>Asymmetry of predicted and gold standard networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">NET1</td>
+<td align="left" colspan="1" rowspan="1">NET2</td>
+<td align="left" colspan="1" rowspan="1">NET3</td>
+<td align="left" colspan="1" rowspan="1">NET4</td>
+<td align="left" colspan="1" rowspan="1">NET5</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-all</td>
+<td align="left" colspan="1" rowspan="1">50%</td>
+<td align="left" colspan="1" rowspan="1">58%</td>
+<td align="left" colspan="1" rowspan="1">48%</td>
+<td align="left" colspan="1" rowspan="1">48%</td>
+<td align="left" colspan="1" rowspan="1">58%</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gold standard</td>
+<td align="left" colspan="1" rowspan="1">92%</td>
+<td align="left" colspan="1" rowspan="1">94%</td>
+<td align="left" colspan="1" rowspan="1">97%</td>
+<td align="left" colspan="1" rowspan="1">96%</td>
+<td align="left" colspan="1" rowspan="1">98%</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt104"><label/><p>The asymmetry of a network is measured by the proportion of regulatory links for which the opposite link is not predicted.</p></fn></table-wrap-foot></table-wrap>
+<p>Of course, the fact that GENIE3 predicts asymmetric networks does not ensure that the prediction of these asymmetric links is really informative; asymmetric predictions might precisely correspond to spurious predictions. To check this, we swapped the weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e056" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e057" xlink:type="simple"/></inline-formula> for each pair of genes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e058" xlink:type="simple"/></inline-formula> and assessed the new resulting rankings. The overall score dropped from 40.471 to 14.674, suggesting that GENIE3 tends to correctly assign the highest weight to the true direction, given an undirected regulatory link.</p>
+<p>To further assess the ability of our method to predict link directions, we computed the proportion of edges <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e059" xlink:type="simple"/></inline-formula> in the gold standard network such that there is no edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e060" xlink:type="simple"/></inline-formula> and for which our method wrongly predicts <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e061" xlink:type="simple"/></inline-formula>. This can be considered as an error rate when our method is used for directing the edges of a known undirected network. <xref ref-type="table" rid="pone-0012776-t005">Table 5</xref> shows the average value of this error rate over the five networks, for increasing recall values. Given that there are only two choices for a given link, a random ranking of the directed interactions would yield an error rate close to 50%. For all recall values, the error rate is significantly lower than 50% suggesting that our method is a plausible approach for directing an undirected network. The error rate is smaller (20%) for the top ranked interactions but it remains quite good (27%) even when considering less confident predictions.</p>
+<table-wrap id="pone-0012776-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t005</object-id><label>Table 5</label><caption>
+<title>Error rates on edge directionality on DREAM4 networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t005" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Recall</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">25%</td>
+<td align="left" colspan="1" rowspan="1">50%</td>
+<td align="left" colspan="1" rowspan="1">75%</td>
+<td align="left" colspan="1" rowspan="1">100%</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Error rate</td>
+<td align="left" colspan="1" rowspan="1">20%</td>
+<td align="left" colspan="1" rowspan="1">28%</td>
+<td align="left" colspan="1" rowspan="1">27%</td>
+<td align="left" colspan="1" rowspan="1">27%</td>
+<td align="left" colspan="1" rowspan="1">26%</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt105"><label/><p>The error rate is the proportion of edges <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e062" xlink:type="simple"/></inline-formula> in the gold standard network such that there is no edge <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e063" xlink:type="simple"/></inline-formula> and for which our method wrongly predicts <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e064" xlink:type="simple"/></inline-formula>. Each column corresponds to one value of the number of considered directed links of the gold standard. These error rates were obtained with Random Forests and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e065" xlink:type="simple"/></inline-formula>, and averaged over the five networks.</p></fn></table-wrap-foot></table-wrap>
+<p>Finally, we compared GENIE3 to three existing approaches based on the computation of mutual information (MI), namely CLR <xref ref-type="bibr" rid="pone.0012776-Faith1">[11]</xref>, ARACNE <xref ref-type="bibr" rid="pone.0012776-Margolin1">[12]</xref> and MRNET <xref ref-type="bibr" rid="pone.0012776-Meyer1">[14]</xref>, and to one approach based on graphical Gaussian models (GGMs) <xref ref-type="bibr" rid="pone.0012776-Schafer1">[20]</xref>. All these four methods can only predict undirected networks. For these experiments, we used the original MatLab implementation of CLR <xref ref-type="bibr" rid="pone.0012776-Faith3">[43]</xref> and the implementations of ARACNE and MRNET in the minet R package <xref ref-type="bibr" rid="pone.0012776-Meyer2">[44]</xref>. To compute mutual information, we used a B-spline smoothing and discretization, as implemented in the CLR package, with the parameter setting used in <xref ref-type="bibr" rid="pone.0012776-Faith1">[11]</xref> (10 bins and third order B-splines). For ARACNE, the tolerance parameter was optimized between 0 and 15%, as advised in <xref ref-type="bibr" rid="pone.0012776-Margolin1">[12]</xref>. For GGMs, we used the GeneNet R package <xref ref-type="bibr" rid="pone.0012776-Schfer1">[45]</xref>.</p>
+<p>We carried two evaluations, the first one against the undirected gold standard (<xref ref-type="table" rid="pone-0012776-t006">Table 6</xref>) and the second one against the directed gold standard (<xref ref-type="table" rid="pone-0012776-t007">Table 7</xref>). In the first case, the predictions of GENIE3 were symmetrized by assigning to each pair <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e066" xlink:type="simple"/></inline-formula> the maximum between <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e067" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e068" xlink:type="simple"/></inline-formula>. In the second case, links <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e069" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e070" xlink:type="simple"/></inline-formula> were both assigned the same weights by the four undirected methods, while GENIE3 was used unmodified. In the undirected case, GGMs give the lowest score while all MI-based methods are equally good with only a slight advantage to our method. In the directed case, GENIE3 is significantly better than the four other methods that are constrained to predict undirected links.</p>
+<table-wrap id="pone-0012776-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t006</object-id><label>Table 6</label><caption>
+<title>Overall scores for the undirected networks of DREAM4.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t006-6" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t006" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-all</td>
+<td align="left" colspan="1" rowspan="1">CLR</td>
+<td align="left" colspan="1" rowspan="1">ARACNE</td>
+<td align="left" colspan="1" rowspan="1">MRNET</td>
+<td align="left" colspan="1" rowspan="1">GGM</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Overall score</td>
+<td align="left" colspan="1" rowspan="1">36.736</td>
+<td align="left" colspan="1" rowspan="1">35.838</td>
+<td align="left" colspan="1" rowspan="1">32.632</td>
+<td align="left" colspan="1" rowspan="1">34.124</td>
+<td align="left" colspan="1" rowspan="1">26.846</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><label/><p>Links <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e071" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e072" xlink:type="simple"/></inline-formula> were both assigned the same weights by CLR, ARACNE, MRNET, and GGM, while the predictions of GENIE3 were symmetrized by assigning to each pair <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e073" xlink:type="simple"/></inline-formula> the maximum between <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e074" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e075" xlink:type="simple"/></inline-formula>.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0012776-t007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.t007</object-id><label>Table 7</label><caption>
+<title>Overall scores for the directed networks of DREAM4.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012776-t007-7" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.t007" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">GENIE3-RF-all</td>
+<td align="left" colspan="1" rowspan="1">CLR</td>
+<td align="left" colspan="1" rowspan="1">ARACNE</td>
+<td align="left" colspan="1" rowspan="1">MRNET</td>
+<td align="left" colspan="1" rowspan="1">GGM</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Overall score</td>
+<td align="left" colspan="1" rowspan="1">40.471</td>
+<td align="left" colspan="1" rowspan="1">31.57</td>
+<td align="left" colspan="1" rowspan="1">28.488</td>
+<td align="left" colspan="1" rowspan="1">30.435</td>
+<td align="left" colspan="1" rowspan="1">23.705</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt107"><label/><p>Links <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e076" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e077" xlink:type="simple"/></inline-formula> were both assigned the same weights by CLR, ARACNE, MRNET, and GGM, while GENIE3 was used unmodified.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3e5">
+<title>Performance on <italic>Escherichia coli</italic> Dataset</title>
+<p>As a first experiment on the real <italic>E. coli</italic> dataset, we adopted the same evaluation protocol as in <xref ref-type="bibr" rid="pone.0012776-Faith1">[11]</xref> that assumes that we have prior knowledge about which genes of the gold standard (i.e. the experimentally confirmed interactions curated in RegulonDB) are transcription factors. In the context of our method, this makes each feature selection problem much easier as the regulators have to be identified among a much smaller set of genes. This also makes undirected and directed methods equally applicable (since all links are automatically directed from transcription factors to genes). <xref ref-type="fig" rid="pone-0012776-g004">Figure 4A</xref> shows the precision-recall curves for the four different settings of the tree-based procedure. Contrary to the DREAM4 networks, setting <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e078" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e079" xlink:type="simple"/></inline-formula> is the number of potential regulators, improves the performance compared to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e080" xlink:type="simple"/></inline-formula>, RF-sqrt leading to the best precision-recall curve. <xref ref-type="fig" rid="pone-0012776-g004">Figure 4B</xref> compares this method with the four undirected methods, CLR, ARACNE, MRNET, and GGMs, using exactly the same protocol. The predictions obtained using GENIE3 with Random Forests and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e081" xlink:type="simple"/></inline-formula> outperform those obtained from ARACNE and MRNET, and give a precision-recall curve comparable with CLR and GGMs (although less good for small recall values). <xref ref-type="supplementary-material" rid="pone.0012776.s003">Figure S3</xref> shows the ranking of the regulators with GENIE3-RF-sqrt for all genes grouped according to their number of regulators.</p>
+<fig id="pone-0012776-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012776.g004</object-id><label>Figure 4</label><caption>
+<title>Precision-Recall curves for the <italic>E. coli</italic> network.</title>
+<p>Only known transcription factors were used as input genes. A. Comparison between the four different settings of the tree procedure. B. Comparison to other approaches.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.g004" xlink:type="simple"/></fig>
+<p>As a second experiment, we simulated conditions similar to the DREAM4 challenge, where transcription factors were unknown and tried to infer the network using as input features in each step of our procedure all 1471 genes except the target gene itself. For this experiment, precision never exceeded 6%, even for the smallest values of recall. This indicates that the predictions are extremely poor and only slightly better than random guessing.</p>
+<p>With respect to the results obtained in the DREAM4 challenge, these results are disappointing. The larger number of genes in this case does not explain everything since it also comes with an increase of the number of observations. Actually in both cases, the number of observations is comparable to the number of genes. However, since the <italic>E. coli</italic> dataset is a collection of expression data compiled from experiments carried out in different laboratories, there may be some redundancy among these experiments or some bias in their selection. They are thus probably not as statistically useful as the really randomized and i.i.d. perturbation data generated for the DREAM4 multifactorial challenge. Other potential reasons for these poor results are the fact that the gold standard network is not complete and also the discrepancy that exists between the simulation model used to generate the DREAM4 data and the real regulation mechanism of <italic>E. coli</italic>.</p>
+</sec></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>We developed GENIE3, a procedure that aims at recovering a gene regulatory network from multifactorial expression data. This procedure decomposes the problem of inferring a network of size <italic>p</italic> into <italic>p</italic> different feature selection problems, where the goal is to identify the regulators of one of the genes of the network. Among different feature selection methods, we chose to use tree-based ensemble methods. These methods do not make any assumption about the nature of gene regulation, can potentially deal with combinatorial regulations and non-linearity. They work well in the presence of a large number of genes, are fast to compute and scalable.</p>
+<p>GENIE3 got the best performance on the DREAM4 <italic>In Silico Multifactorial</italic> challenge and is competitive with existing algorithms to decipher the genetic regulatory network of <italic>Escherichia coli</italic> assuming that transcription factors are known. When no prior knowledge is available about transcription factors, our results on the <italic>E. coli</italic> network were however not better than random guessing. The reason of this discrepancy with respect to the results on the DREAM4 challenge deserves to be further analysed.</p>
+<p>Our algorithm can be improved along several directions. As tree-based ensemble methods, we used the Random Forests and the Extra-Trees algorithms, that both gave comparable results. However, the performances of these methods depend to some extent on their main parameter, the number <italic>K</italic> of randomly selected attributes at each node of one tree. On the DREAM4 <italic>Multifactorial</italic> datasets, improved predictions were obtained by increasing <italic>K</italic> to its maximum value (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e082" xlink:type="simple"/></inline-formula>), while on the <italic>E. coli</italic> dataset, the best ranking of interactions was obtained by using <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e083" xlink:type="simple"/></inline-formula>. It would thus be of interest to find a way to automatically tune this parameter. A first solution could be to select the value of the parameter that leads to the best performance for the prediction of the expression values, i.e. that minimizes mean square error in (2) estimated by cross-validation. Unfortunately, this solution did not work on the <italic>E. coli</italic> dataset, where using <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e084" xlink:type="simple"/></inline-formula> led to lower mean square error but a less good precision-recall curve.</p>
+<p>There is also a potential room for improvement on the way variable importance scores are normalized. One apparent drawback of the measure we proposed is that it does not take into account the quality of the trees in generalization. Indeed since our trees are fully grown, importance weights satisfy equation (4) which, given our normalization, attributes equal weights to all tree models irrespective of their quality when used to predict the expression values of the target gene. We tried to correct for this bias by normalizing the variable importance scores by the effective variance reduction brought by the model as estimated by cross-validation but it actually deteriorated the performances. The question of the optimal normalization remains thus open at this stage.</p>
+<p>In this paper, we focused on providing a ranking of the regulatory interactions. In some practical applications however, one would like to determine a threshold on this ranking to obtain a practical predicted network. To address this question, we have tried to exploit cross-validation estimates of the mean-square error as a criterion to determine such a threshold but we have not been successfull so far. As future work, we therefore would like to extend the technique developed in <xref ref-type="bibr" rid="pone.0012776-HuynhThu1">[46]</xref> to better assess the significance of the predicted regulatory links and thus help determining a threshold.</p>
+<p>Our experiments on the DREAM4 dataset show that GENIE3 is able to predict the direction of the edges to some extent, even though it only exploits steady-state measurements. This is an interesting result as this is commonly admitted to be a difficult problem. Bayesian networks also potentially allow to predict edge directionality. A comparison with this family of methods would be an interesting future work direction. Note that with respect to our approach, Bayesian networks do not allow for the presence of cycles in the predicted network, which could be a limiting factor for networks such as those in DREAM4 that contain cycles by construction.</p>
+<p>Several procedures using regression trees have already been proposed to solve the regulatory network inference problem. Most of these procedures exploits other kinds of data in addition to expression data, e.g. counts of regulatory motifs that serve as binding sites for transcription factors <xref ref-type="bibr" rid="pone.0012776-Phuong1">[47]</xref>, <xref ref-type="bibr" rid="pone.0012776-Ruan1">[48]</xref>, or ChIP-based binding data <xref ref-type="bibr" rid="pone.0012776-Xiao1">[49]</xref>. The closest work to ours is the procedure developed by Segal et al. <xref ref-type="bibr" rid="pone.0012776-Segal1">[50]</xref>, that recovers module networks from expression data, so that the genes in each module share the same regulators in the network and the same conditional probability distribution, represented by a (single) regression tree.</p>
+<p>Finally, although we exploited tree-based ensemble methods, our framework is general and other feature selection techniques could have been used as well. Actually, several existing methods for network inference can be interpreted as special instances of this framework. In particular, mutual information as used in Relevance Networks <xref ref-type="bibr" rid="pone.0012776-Butte1">[10]</xref> or CLR <xref ref-type="bibr" rid="pone.0012776-Faith1">[11]</xref> is a common dependency measure exploited in filter-kind approaches for feature selection <xref ref-type="bibr" rid="pone.0012776-Saeys1">[28]</xref>. MRNET <xref ref-type="bibr" rid="pone.0012776-Meyer1">[14]</xref> also considers each gene in turn as the target output and exploits the maximum relevance/minimum redundancy feature selection method to rank its candidate regulators. Like Relevance Networks and CLR, this method reduces all the information contained in the expression data to mutual information between all pairs of genes, while our approach is by nature multivariate. Meinshausen and Bühlmann <xref ref-type="bibr" rid="pone.0012776-Meinshausen1">[21]</xref> show that finding the zero entries in the inverse covariance matrix of a multivariate Gaussian distribution can be solved by applying the LASSO embedded feature selection mechanism using each gene in turn as the target output, which links Gaussian graphical models with our approach. While the latter assumes that the functions <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0012776.e085" xlink:type="simple"/></inline-formula> in (1) are linear, our approach can be seen as a relaxation of this assumption by exploiting a non-parametric supervised learning method. Whether or not this is an advantage in practice for inferring regulatory networks is still an open question that deserves to be studied.</p>
+<sec id="s4a">
+<title>Software Availability</title>
+<p>Our GENIE3 software is available from <ext-link ext-link-type="uri" xlink:href="http://www.montefiore.ulg.ac.be/~huynh-thu/software.html" xlink:type="simple">http://www.montefiore.ulg.ac.be/~huynh-thu/software.html</ext-link>.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0012776.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p>PR and ROC curves for each DREAM4 Multifactorial network. Left: PR curves. Right: ROC curves. Prec: Precision. FPR: False Positive Rate. TPR: True Positive Rate. The rankings of interactions were obtained using Random Forests and <italic>K</italic> = √<italic>p</italic>−1.</p>
+<p>(3.04 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0012776.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.s002" xlink:type="simple"><label>Figure S2</label><caption>
+<p>Ranking of the regulators for all genes on DREAM4 networks. Each row in a figure corresponds to a gene. Dots in each row represent the positions in the Random Forests ranking of the regulators of this gene. Genes are ordered on the y-axis according to their number of regulators in the gold standard network; those having the same number of regulators are grouped inside an horizontal block. Inside each block, genes are ordered according to the median rank of their regulators. The rankings of interactions were obtained with Random Forests and <italic>K</italic> = <italic>p</italic>−1.</p>
+<p>(8.11 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0012776.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0012776.s003" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Ranking of the regulators for all genes on the <italic>E. coli</italic> network. Each row in a figure corresponds to a gene. Dots in each row represent the positions in the Random Forests ranking of the regulators of this gene. Genes are ordered on the y-axis according to their number of regulators in the gold standard network; those having the same number of regulators are grouped inside an horizontal block. Inside each block, genes are ordered according to the median rank of their regulators. Only known transcription factors where used as input genes. The ranking of interactions was obtained with Random Forests and <italic>K</italic> = √ <italic>n<sub>TF</sub></italic>.</p>
+<p>(3.06 MB TIF)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pone.0012776-Bolouri1"><label>1</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolouri</surname><given-names>H</given-names></name>
+</person-group>             <year>2008</year>             <source>Computational Modeling of Gene Regulatory Networks - a Primer</source>             <publisher-name>Imperial College Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0012776-Gardner1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Reverse-engineering transcription control networks.</article-title>             <source>Physics of Life Reviews</source>             <volume>2</volume>             <fpage>65</fpage>             <lpage>88</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Bansal1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bansal</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Belcastro</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Ambesi-Impiombato</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>
+</person-group>             <year>2007</year>             <article-title>How to infer gene networks from expression profiles.</article-title>             <source>Mol Syst Biol</source>             <volume>3</volume>             <fpage>78</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Markowetz1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Markowetz</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Spang</surname><given-names>R</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Inferring cellular networks–a review.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <supplement>Suppl 6</supplement>             <fpage>S5</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Lee1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lee</surname><given-names>WP</given-names></name>
+<name name-style="western"><surname>Tzou</surname><given-names>WS</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Computational methods for discovering gene networks from expression data.</article-title>             <source>Brief Bioinform</source>             <volume>10</volume>             <fpage>408</fpage>             <lpage>423</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Kauffman1"><label>6</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kauffman</surname><given-names>SA</given-names></name>
+</person-group>             <year>1993</year>             <source>The Origins of Order: Self-Organization and Selection in Evolution</source>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0012776-Gardner2"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>
+<name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Lorenz</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Inferring genetic networks and identifying compound mode of action via expression profiling.</article-title>             <source>Science</source>             <volume>301</volume>             <fpage>102</fpage>             <lpage>105</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Bonneau1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bonneau</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Reiss</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Shannon</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Facciotti</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Hood</surname><given-names>L</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>The inferelator: an algorithm for learning parsimonious regulatory networks from systems-biology data sets de novo.</article-title>             <source>Genome Biol</source>             <volume>7</volume>             <fpage>R36</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Eisen1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eisen</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Spellman</surname><given-names>PT</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Cluster analysis and display of genome-wide expression patterns.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>95</volume>             <fpage>14863</fpage>             <lpage>14868</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Butte1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Butte</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Kohane</surname><given-names>IS</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Mutual information relevance networks: functional genomic clustering using pairwise entropy measurements.</article-title>             <source>Pac Symp Biocomput</source>             <fpage>418</fpage>             <lpage>429b</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Faith1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Large-scale mapping and validation of <italic>Escherichia coli</italic> transcriptional regulation from a compendium of expression profiles.</article-title>             <source>PLoS Biology</source>             <volume>5</volume>             <fpage>e8</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Margolin1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Lim</surname><given-names>WK</given-names></name>
+<name name-style="western"><surname>Kustagi</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Reverse engineering cellular networks.</article-title>             <source>Nature Protocols</source>             <volume>1</volume>             <fpage>663</fpage>             <lpage>672</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Cover1"><label>13</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cover</surname><given-names>TM</given-names></name>
+<name name-style="western"><surname>Thomas</surname><given-names>JA</given-names></name>
+</person-group>             <year>2006</year>             <source>Elements of Information Theory 2nd Edition</source>             <publisher-name>Wiley-Interscience</publisher-name>          </element-citation></ref>
+<ref id="pone.0012776-Meyer1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meyer</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Kontos</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Lafitte</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Bontempi</surname><given-names>G</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Information-theoretic inference of large transcriptional regulatory networks.</article-title>             <source>EURASIP J Bioinform Syst Biol</source>             <volume>2007</volume>             <fpage>79879</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Friedman1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Inferring cellular networks using probabilistic graphical models.</article-title>             <source>Science</source>             <volume>303</volume>             <fpage>799</fpage>             <lpage>805</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Friedman2"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Linial</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Nachman</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Pe'er</surname><given-names>D</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Using bayesian networks to analyze expression data.</article-title>             <source>Journal of computational biology</source>             <volume>7</volume>             <fpage>601</fpage>             <lpage>620</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Yu1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Hartemink</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Jarvis</surname><given-names>E</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Advances to bayesian network inference for generating causal networks from observational biological data.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>3594</fpage>             <lpage>603</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Auliac1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Auliac</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Frouin</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Gidrol</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>D'Alché-Buc</surname><given-names>F</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Evolutionary approaches for the reverse-engineering of gene regulatory networks: A study on a biologically realistic dataset.</article-title>             <source>BMC Bioinformatics</source>             <volume>9</volume>             <fpage>91</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Perrin1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Perrin</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Ralaivola</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Mazurie</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bottani</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Mallet</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Gene networks inference using dynamic bayesian networks.</article-title>             <source>Bioinformatics</source>             <volume>19</volume>             <fpage>ii138</fpage>             <lpage>48</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Schafer1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schafer</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Strimmer</surname><given-names>K</given-names></name>
+</person-group>             <year>2005</year>             <article-title>A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics.</article-title>             <source>Statistical applications in genetics and molecular biology</source>             <volume>4</volume>             <fpage>1175</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Meinshausen1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meinshausen</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Bühlmann</surname><given-names>P</given-names></name>
+</person-group>             <year>2006</year>             <article-title>High-dimensional graphs and variable selection with the lasso.</article-title>             <source>Ann Statist</source>             <volume>34</volume>             <fpage>1436</fpage>             <lpage>1462</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Castelo1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Castelo</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Roverato</surname><given-names>A</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Reverse engineering molecular regulatory networks from microarray data with qp-graphs.</article-title>             <source>Journal of Computational Biology</source>             <volume>16</volume>             <fpage>213</fpage>             <lpage>227</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Ambroise1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ambroise</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Chiquet</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Matias</surname><given-names>C</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Inferring sparse gaussian graphical models with latent structure.</article-title>             <source>Electronic Journal of Statistics</source>             <volume>3</volume>             <fpage>205</fpage>             <lpage>238</lpage>          </element-citation></ref>
+<ref id="pone.0012776-OpgenRhein1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Opgen-Rhein</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Strimmer</surname><given-names>K</given-names></name>
+</person-group>             <year>2007</year>             <article-title>From correlation to causation networks: a simple approximate learning algorithm and its application to high-dimensional plant gene expression data.</article-title>             <source>BMC Systems Biology</source>             <volume>1</volume>             <fpage>37</fpage>          </element-citation></ref>
+<ref id="pone.0012776-The1"><label>25</label><element-citation publication-type="other" xlink:type="simple">             <article-title>The DREAM4 <italic>In Silico</italic> network challenge.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://wiki.c2b2.columbia.edu/dream09/index.php/D4c2" xlink:type="simple">http://wiki.c2b2.columbia.edu/dream09/index.php/D4c2</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012776-Werhli1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Werhli</surname><given-names>AV</given-names></name>
+<name name-style="western"><surname>Grzegorczyk</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Husmeier</surname><given-names>D</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Comparative evaluation of reverse engineering gene regulatory networks with relevance networks, graphical gaussian models and bayesian networks.</article-title>             <source>Bioinformatics</source>             <volume>22</volume>             <fpage>2523</fpage>             <lpage>2531</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Pournara1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pournara</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wernisch</surname><given-names>L</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Reconstruction of gene networks using bayesian learning and manipulation experiments.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>2934</fpage>             <lpage>2942</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Saeys1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Saeys</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Inza</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Larranaga</surname><given-names>P</given-names></name>
+</person-group>             <year>2007</year>             <article-title>A review of feature selection techniques in bioinformatics.</article-title>             <source>Bioinformatics</source>             <volume>23</volume>             <fpage>2507</fpage>             <lpage>2517</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Geurts1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geurts</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Irrthum</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Wehenkel</surname><given-names>L</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Supervised learning with decision tree-based methods in computational and systems biology.</article-title>             <source>Mol Biosyst</source>             <volume>5</volume>             <fpage>1593</fpage>             <lpage>605</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Breiman1"><label>30</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Breiman</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Friedman</surname><given-names>JH</given-names></name>
+<name name-style="western"><surname>Olsen</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Stone</surname><given-names>CJ</given-names></name>
+</person-group>             <year>1984</year>             <source>Classification and Regression Trees</source>             <publisher-name>Wadsworth International (California)</publisher-name>          </element-citation></ref>
+<ref id="pone.0012776-Breiman2"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Breiman</surname><given-names>L</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Random forests.</article-title>             <source>Machine Learning</source>             <volume>45</volume>             <fpage>5</fpage>             <lpage>32</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Geurts2"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geurts</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Ernst</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Wehenkel</surname><given-names>L</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Extremely randomized trees.</article-title>             <source>Machine Learning</source>             <volume>36</volume>             <fpage>3</fpage>             <lpage>42</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Strobl1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Strobl</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Boulesteix</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Zeileis</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Horthorn</surname><given-names>T</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Bias in random forest variable importance measures: Illustrations, sources and a solution.</article-title>             <source>BMC Bioinformatics</source>             <volume>8</volume>             <fpage>5</fpage>          </element-citation></ref>
+<ref id="pone.0012776-The2"><label>34</label><element-citation publication-type="other" xlink:type="simple">             <article-title>The DREAM project.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://wiki.c2b2.columbia.edu/dream/index.php/The_DREAM_Project" xlink:type="simple">http://wiki.c2b2.columbia.edu/dream/index.php/The_DREAM_Project</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012776-Prill1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Saez-Rodriguez</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Sorger</surname><given-names>PK</given-names></name>
+<name name-style="western"><surname>Alexopoulos</surname><given-names>LG</given-names></name>
+<etal/></person-group>             <year>2010</year>             <article-title>Towards a rigorous assessment of systems biology models: The DREAM3 challenges.</article-title>             <source>PLoS ONE</source>             <volume>5</volume>             <fpage>e9202</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Stolovitzky1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Califano</surname><given-names>A</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Lessons from the DREAM2 challenges.</article-title>             <source>Annals of the New York Academy of Sciences</source>             <volume>1158</volume>             <fpage>159</fpage>             <lpage>95</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Stolovitzky2"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Monroe</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Califano</surname><given-names>A</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Dialogue on reverse-engineering assessment and methods: The DREAM of high-throughput pathway inference.</article-title>             <source>Annals of the New York Academy of Sciences</source>             <volume>1115</volume>             <fpage>11</fpage>             <lpage>22</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Marbach1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Schaffter</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Mattiussi</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Generating realistic <italic>in silico</italic> gene networks for performance assessment of reverse engineering methods.</article-title>             <source>Journal of Computational Biology</source>             <volume>16</volume>             <fpage>229</fpage>             <lpage>239</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Faith2"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Driscoll</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Fusaro</surname><given-names>VA</given-names></name>
+<name name-style="western"><surname>Cosgrove</surname><given-names>EJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Many microbe microarrays database: uniformly normalized affymetrix compendia with structured experimental metadata.</article-title>             <source>Nucleic Acids Research</source>             <volume>36 (Database issue)</volume>             <fpage>D866</fpage>             <lpage>70</lpage>          </element-citation></ref>
+<ref id="pone.0012776-GamaCastro1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gama-Castro</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>JimŽnez-Jacinto</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Peralta-Gil</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Santos-Zavaleta</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pealoza-Spinola</surname><given-names>MI</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>RegulonDB (version 6.0): gene regulation model of Escherichia coli K-12 beyond transcription, active (experimental) annotated promoters and Textpresso navigation.</article-title>             <source>Nucleic Acids Research</source>             <volume>36 (Database issue)</volume>             <fpage>D120</fpage>             <lpage>4</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Breiman3"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Breiman</surname><given-names>L</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Bagging predictors.</article-title>             <source>Machine Learning</source>             <volume>24</volume>             <fpage>123</fpage>             <lpage>140</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Marbach2"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Schaffter</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Mattiussi</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2010</year>             <article-title>Revealing strengths and weaknesses of methods for gene network inference.</article-title>             <source>Proceedings of the National Academy of Sciences</source>             <volume>107</volume>             <fpage>6286</fpage>             <lpage>6291</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Faith3"><label>43</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>
+<etal/></person-group>             <article-title>Supplemental website for: Large-scale mapping and validation of <italic>Escherichia coli</italic> transcriptional regulation from a compendium of expression profiles.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://gardnerlab.bu.edu/data/PLoS_2007/" xlink:type="simple">http://gardnerlab.bu.edu/data/PLoS_2007/</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012776-Meyer2"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meyer</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Lafitte</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Bontempi</surname><given-names>G</given-names></name>
+</person-group>             <year>2008</year>             <article-title>minet: A r/bioconductor package for inferring large transcriptional networks using mutual information.</article-title>             <source>BMC Bioinformatics</source>             <volume>9</volume>             <fpage>461</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Schfer1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schäfer</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Opgen-Rhein</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Strimmer</surname><given-names>K</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Reverse engineering genetic networks using the GeneNet package.</article-title>             <source>R News 6/</source>             <volume>5</volume>             <fpage>50</fpage>             <lpage>53</lpage>          </element-citation></ref>
+<ref id="pone.0012776-HuynhThu1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huynh-Thu</surname><given-names>VA</given-names></name>
+<name name-style="western"><surname>Wehenkel</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Geurts</surname><given-names>P</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Exploiting tree-based variable importances to selectively identify relevant variables.</article-title>             <source>JMLR: Workshop and Conference proceedings</source>             <volume>4</volume>             <fpage>60</fpage>             <lpage>73</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Phuong1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Phuong</surname><given-names>TM</given-names></name>
+<name name-style="western"><surname>Lee</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Lee</surname><given-names>KH</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Regression trees for regulatory element identification.</article-title>             <source>Bioinformatics</source>             <volume>20</volume>             <fpage>750</fpage>             <lpage>757</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Ruan1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ruan</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>W</given-names></name>
+</person-group>             <year>2006</year>             <article-title>A bi-dimensional regression tree approach to the modeling of gene expression regulation.</article-title>             <source>Bioinformatics</source>             <volume>22</volume>             <fpage>332</fpage>             <lpage>340</lpage>          </element-citation></ref>
+<ref id="pone.0012776-Xiao1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Xiao</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Segal</surname><given-names>MR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Identification of yeast transcriptional regulation networks using multivariate random forests.</article-title>             <source>PLoS Computational Biology</source>             <volume>5</volume>             <fpage>e1000414</fpage>          </element-citation></ref>
+<ref id="pone.0012776-Segal1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Segal</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Pe'er</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Regev</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Koller</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Learning module networks.</article-title>             <source>Journal of Machine Learning Research</source>             <volume>6</volume>             <fpage>557</fpage>             <lpage>588</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

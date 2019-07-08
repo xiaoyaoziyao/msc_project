@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-15-07945</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0127390</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Quantifying the Consistency of Scientific Databases</article-title>
+<alt-title alt-title-type="running-head">Consistency of Databases</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Šubelj</surname> <given-names>Lovro</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Bajec</surname> <given-names>Marko</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Mileva Boshkoska</surname> <given-names>Biljana</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Kastrin</surname> <given-names>Andrej</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Levnajić</surname> <given-names>Zoran</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Faculty of Computer and Information Science, University of Ljubljana, Ljubljana, Slovenia</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Faculty of Information Studies in Novo mesto, Novo mesto, Slovenia</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Perc</surname> <given-names>Matjaz</given-names></name>
+<role>Academic Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of Maribor, SLOVENIA</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have the following interests: Thomson Reuters provided data for this study. There are no patents, products in development or marketed products to declare. This does not alter the authors' adherence to all the PLOS ONE policies on sharing data and materials.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: LS MB. Performed the experiments: LS. Analyzed the data: LS BMB AK. Contributed reagents/materials/analysis tools: AK. Wrote the paper: ZL LS.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">lovro.subelj@fri.uni-lj.si</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>18</day>
+<month>5</month>
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>5</issue>
+<elocation-id>e0127390</elocation-id>
+<history>
+<date date-type="received">
+<day>21</day>
+<month>2</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>14</day>
+<month>4</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Šubelj et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0127390" xlink:type="simple"/>
+<abstract>
+<p>Science is a social process with far-reaching impact on our modern society. In recent years, for the first time we are able to scientifically study the science itself. This is enabled by massive amounts of data on scientific publications that is increasingly becoming available. The data is contained in several databases such as Web of Science or PubMed, maintained by various public and private entities. Unfortunately, these databases are not always consistent, which considerably hinders this study. Relying on the powerful framework of complex networks, we conduct a systematic analysis of the consistency among six major scientific databases. We found that identifying a single "best" database is far from easy. Nevertheless, our results indicate appreciable differences in mutual consistency of different databases, which we interpret as recipes for future bibliometric studies.</p>
+</abstract>
+<funding-group>
+<funding-statement>The authors thank American Physical Society and Thomson Reuters for providing the data. Work supported by Creative Core FISNM-3330-13-500033 funded by the European Union and The European Regional Development Fund, by the Slovenian Research Agency via programs P2-0359, P1-0383, and via projects J1-5454, L7-4119, and by the Slovenian Ministry of Education, Science and Sport grant 430-168/2013/91. The authors thank the colleagues Dalibor Fiala, Ludo Waltman, and Nees Jan van Eck for useful comments and discussions. Thomson Reuters provided some data, but had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="4"/>
+<table-count count="2"/>
+<page-count count="16"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data can be freely accessed using the sources and URLs described in the Methods section of the manuscript. These sources include the American Physical Society (APS), the DBLP Computer Science Bibliography (DBLP), PubMed, the Computer Science Research Paper Search Engine (Cora), and arXiv. Data from Thompson Reuter's Web of Science can be obtained by contacting Julian Herciu (<email xlink:type="simple">julian.herciu@thomsonreuters.com</email>).</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Science is a human endeavor. As such, it benefits from all virtues and suffers from all paradoxes inherent to humans. Among these are the old problems of appreciating and measuring research achievements [<xref ref-type="bibr" rid="pone.0127390.ref001">1</xref>]. When judging what is and what is not scientifically interesting or important, scientists are not just subjective, but often offer arguments that stem from poor understanding of the academic culture and tradition in fields other than their own. In the age of Big data, <italic>science of science</italic> is emerging as an attempt to scientifically examine the science itself [<xref ref-type="bibr" rid="pone.0127390.ref002">2</xref>, <xref ref-type="bibr" rid="pone.0127390.ref003">3</xref>]. This young field has potential to answer some of the oldest questions about scientific progress, such as elucidating the sociological mechanisms leading to new discoveries [<xref ref-type="bibr" rid="pone.0127390.ref004">4</xref>–<xref ref-type="bibr" rid="pone.0127390.ref006">6</xref>], or establishing a platform for objectively quantifying scientific impact [<xref ref-type="bibr" rid="pone.0127390.ref003">3</xref>, <xref ref-type="bibr" rid="pone.0127390.ref007">7</xref>, <xref ref-type="bibr" rid="pone.0127390.ref008">8</xref>]. These insights are also useful in building realistic scenarios of future development of science and its impact on our lives [<xref ref-type="bibr" rid="pone.0127390.ref005">5</xref>, <xref ref-type="bibr" rid="pone.0127390.ref007">7</xref>, <xref ref-type="bibr" rid="pone.0127390.ref009">9</xref>]. Science of science also receives attention from policy makers [<xref ref-type="bibr" rid="pone.0127390.ref010">10</xref>]. Indeed, being able to fairly evaluate and compare scientific outputs enables the community to improve the funding strategies and target them towards achievable goals. It also provides a framework to quantify the research impact resulting from a given investment [<xref ref-type="bibr" rid="pone.0127390.ref009">9</xref>].</p>
+<p>The dynamics of science is articulated through a constant influx of scientific publications, primarily research papers. Appearing in a variety of journals, papers are interrelated in intricate ways, governed by complex patterns of co-authorships (collaborations) [<xref ref-type="bibr" rid="pone.0127390.ref011">11</xref>] and citations [<xref ref-type="bibr" rid="pone.0127390.ref012">12</xref>]. Hidden in these patterns are the answers to many pondering questions: Which papers set the new trends [<xref ref-type="bibr" rid="pone.0127390.ref013">13</xref>]? Can their eventual impact be recognized early upon publication [<xref ref-type="bibr" rid="pone.0127390.ref014">14</xref>]? How does interdisciplinary research arise and what are the best ways to stimulate it [<xref ref-type="bibr" rid="pone.0127390.ref015">15</xref>]? Extracting these answers calls for new methodologies of untangling these complex patterns from scientific databases such as Web of Science or arXiv. The only way to exploit the rapid growth of bibliometric (scientometric) data, is to parallel it with equally rapid growth and improvement of methodologies aimed at efficiently mining them.</p>
+<p>In this context, the framework of networks (graphs) has been recognized as an elegant tool for representing and analyzing complex systems [<xref ref-type="bibr" rid="pone.0127390.ref016">16</xref>, <xref ref-type="bibr" rid="pone.0127390.ref017">17</xref>]. In a variety of fields ranging from computer science and physics to sociology and biology, this approach has provided paradigm-shifting results [<xref ref-type="bibr" rid="pone.0127390.ref018">18</xref>, <xref ref-type="bibr" rid="pone.0127390.ref019">19</xref>]. In particular, scientific databases can be represented as complex networks by identifying publications or authors as network nodes and modeling their bibliometric relationships as network links [<xref ref-type="bibr" rid="pone.0127390.ref011">11</xref>, <xref ref-type="bibr" rid="pone.0127390.ref020">20</xref>]. Relying on this paradigm, intense research efforts over the last decade provided novel quantitative findings on dynamics and evolution of science. Besides being suited for analyzing the emergence of interdisciplinarity [<xref ref-type="bibr" rid="pone.0127390.ref021">21</xref>], this framework gave insights into new ways of estimating scientific impact [<xref ref-type="bibr" rid="pone.0127390.ref014">14</xref>, <xref ref-type="bibr" rid="pone.0127390.ref022">22</xref>], opened a window into the communities among scientists [<xref ref-type="bibr" rid="pone.0127390.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0127390.ref024">24</xref>], or enabled novel approaches to study the evolution of science [<xref ref-type="bibr" rid="pone.0127390.ref025">25</xref>, <xref ref-type="bibr" rid="pone.0127390.ref026">26</xref>].</p>
+<p>However, despite promising results and increasing availability of data, the core obstacle is the lack of a universal scientific database with all data systematically stored. Instead, there are several databases, each relying on its own practice in storing, organizing and tracking bibliometric data, including Web of Science, arXiv, PubMed etc. Moreover, none of the datasets is free from errors, mostly occurring due to different referencing styles or typos in authors names (in particular names utilizing non-English characters), which often lead to incorrectly recorded collaborations and citations. This in practice means that each bibliometric study in itself unavoidably carries some degree of bias, resulting from the choice of the database. On top of this comes the fact that different fields usually have different collaboration and citation cultures, which further complicates issue of objectively comparing different scientific fields.</p>
+<p>On the other hand, researchers is bibliometrics usually work relying on the database at their disposal. Finding additional data is often difficult and sometimes expensive. While the construction of a universal database is an ambitious goal, we recognize that the bibliometric community will benefit from a critical comparison of the available databases. Of course, since there is no “ground truth” to tell between the reliable and non-reliable databases, the best we can do is to systematically examine and quantify the consistency among different scientific databases. We here conduct a detailed analysis of the consistency among six major scientific databases, employing three different paradigms (categories) of bibliometric networks (paper citation, author citation and collaboration). This amounts to a major methodological and empirical extension of our earlier paper [<xref ref-type="bibr" rid="pone.0127390.ref027">27</xref>]: additional datasets and network paradigms are considered, and findings confirmed by complementary analyses. Our results consist of an approximate quantification of consistency between the six databases that hold within each network category. Our study aims at being helpful to colleagues when choosing the most suitable network paradigm.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<p>We obtained the data on co-authorships and citations from the following six databases: American Physical Society (APS), Web of Science (WoS), DBLP, PubMed, Cora and arXiv. Since some databases are very large (e.g. WoS), we were unable to include them entirely. Nevertheless, we made sure that the dataset from each database is representative of it in terms of papers and citations (see <xref ref-type="sec" rid="sec004">Methods</xref>). From each database we constructed three bibliometric networks using the following three network paradigms (categories):
+<list list-type="bullet">
+<list-item><p>P → P, directed paper citation network (nodes: papers, links: one paper citing another),</p></list-item>
+<list-item><p>A ↔ A, directed author citation network (nodes: authors, links: one author cites another in at least one of his/her papers),</p></list-item>
+<list-item><p>A–A, undirected co-authorship network (nodes: authors, links: co-authorship of at least one paper).</p></list-item>
+</list>
+This gives us the total of 6+6+6 = 18 networks (12 directed and 6 undirected), to which we devote the rest of this paper. Our goal is to study the consistency among the networks within each category in terms of their topologies, from which we draw conclusions on the consistency among the databases.</p>
+<p>In <xref ref-type="table" rid="pone.0127390.t001">Table 1</xref> we summarize the basic properties of the 18 examined networks. Numbers of nodes and links vary greatly, but are always larger than 10<sup>4</sup>. WCC is the fraction of nodes contained in the largest connected component (weak connectivity for directed networks, see <xref ref-type="sec" rid="sec004">Methods</xref>). With exception of DBLP P → P network, it always contains at least 80% of nodes (DBLP database consists mostly of the papers only from major journals and conferences, which rarely cite one another). Some papers/authors are never cited, others do not cite any other paper/author in the same database. Motivated by this, we consider “bow-tie” [<xref ref-type="bibr" rid="pone.0127390.ref027">27</xref>] of directed networks, which indicates the fraction of ‘core’ nodes (both citing and cited), in contrast to the fraction of ‘in’ nodes (never cited) and ‘out’ nodes (not citing). Diversity of these parameters (note their independence from networks’ sizes) already gives a hint at the variability among the databases. Some additional particularities: P → P networks are in general acyclic since a paper can only cite older papers. Rare exceptions occur due to parallel publication of multiple papers citing one another, and due to errors. These networks include the information on chronology of publishing. In contrast, A ↔ A networks often contain cycles, since collaborating authors typically cite one another. Also, basically all nodes here will have self-loops (authors cite their previous work). On the other hand, no P → P network node has a self-loop, since papers usually do not cite themselves (except in very unusual cases or due to errors).</p>
+<table-wrap id="pone.0127390.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Basic network measures.</title>
+<p>The values of all basic network measures for the 18 examined networks. See Methods for details on the definitions of network measures and their computation.</p>
+</caption>
+<alternatives>
+<graphic id="pone.0127390.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.t001"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="center" colspan="2" rowspan="1">Network size</th>
+<th align="center" colspan="4" rowspan="1">Network bow-tie</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1">Type</th>
+<th align="left" rowspan="1" colspan="1">Database</th>
+<th align="left" rowspan="1" colspan="1"># Nodes</th>
+<th align="left" rowspan="1" colspan="1"># Links</th>
+<th align="left" rowspan="1" colspan="1">% WCC</th>
+<th align="left" rowspan="1" colspan="1">% In</th>
+<th align="left" rowspan="1" colspan="1">% Core</th>
+<th align="left" rowspan="1" colspan="1">% Out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="6" colspan="1">P → P</td>
+<td align="left" rowspan="1" colspan="1">APS</td>
+<td align="left" rowspan="1" colspan="1">450,084</td>
+<td align="left" rowspan="1" colspan="1">4,691,938</td>
+<td align="char" char="." rowspan="1" colspan="1">99.8%</td>
+<td align="char" char="." rowspan="1" colspan="1">2.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">82.7%</td>
+<td align="char" char="." rowspan="1" colspan="1">14.5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WoS</td>
+<td align="left" rowspan="1" colspan="1">728,673</td>
+<td align="left" rowspan="1" colspan="1">3,633,240</td>
+<td align="char" char="." rowspan="1" colspan="1">96.9%</td>
+<td align="char" char="." rowspan="1" colspan="1">11.5%</td>
+<td align="char" char="." rowspan="1" colspan="1">53.9%</td>
+<td align="char" char="." rowspan="1" colspan="1">31.5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">DBLP</td>
+<td align="left" rowspan="1" colspan="1">1,467,987</td>
+<td align="left" rowspan="1" colspan="1">1,502,092</td>
+<td align="char" char="." rowspan="1" colspan="1">4.3%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">0.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">3.1%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">PubMed</td>
+<td align="left" rowspan="1" colspan="1">5,853,635</td>
+<td align="left" rowspan="1" colspan="1">18,790,433</td>
+<td align="char" char="." rowspan="1" colspan="1">99.7%</td>
+<td align="char" char="." rowspan="1" colspan="1">89.9%</td>
+<td align="char" char="." rowspan="1" colspan="1">4.3%</td>
+<td align="char" char="." rowspan="1" colspan="1">5.5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Cora</td>
+<td align="left" rowspan="1" colspan="1">195,946</td>
+<td align="left" rowspan="1" colspan="1">608,475</td>
+<td align="char" char="." rowspan="1" colspan="1">99.0%</td>
+<td align="char" char="." rowspan="1" colspan="1">83.7%</td>
+<td align="char" char="." rowspan="1" colspan="1">8.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">6.6%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">arXiv</td>
+<td align="left" rowspan="1" colspan="1">27,770</td>
+<td align="left" rowspan="1" colspan="1">352,768</td>
+<td align="char" char="." rowspan="1" colspan="1">98.7%</td>
+<td align="char" char="." rowspan="1" colspan="1">9.2%</td>
+<td align="char" char="." rowspan="1" colspan="1">73.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">15.9%</td>
+</tr>
+<tr>
+<td align="left" rowspan="6" colspan="1">A ↔ A</td>
+<td align="left" rowspan="1" colspan="1">APS</td>
+<td align="left" rowspan="1" colspan="1">260,816</td>
+<td align="left" rowspan="1" colspan="1">40,556,550</td>
+<td align="char" char="." rowspan="1" colspan="1">100.0%</td>
+<td align="char" char="." rowspan="1" colspan="1">1.7%</td>
+<td align="char" char="." rowspan="1" colspan="1">84.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">13.7%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WoS</td>
+<td align="left" rowspan="1" colspan="1">470,227</td>
+<td align="left" rowspan="1" colspan="1">20,291,830</td>
+<td align="char" char="." rowspan="1" colspan="1">99.5%</td>
+<td align="char" char="." rowspan="1" colspan="1">9.9%</td>
+<td align="char" char="." rowspan="1" colspan="1">65.3%</td>
+<td align="char" char="." rowspan="1" colspan="1">24.4%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">DBLP</td>
+<td align="left" rowspan="1" colspan="1">14,880</td>
+<td align="left" rowspan="1" colspan="1">219,173</td>
+<td align="char" char="." rowspan="1" colspan="1">98.8%</td>
+<td align="char" char="." rowspan="1" colspan="1">59.4%</td>
+<td align="char" char="." rowspan="1" colspan="1">26.8%</td>
+<td align="char" char="." rowspan="1" colspan="1">12.6%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">PubMed</td>
+<td align="left" rowspan="1" colspan="1">638,178</td>
+<td align="left" rowspan="1" colspan="1">11,905,813</td>
+<td align="char" char="." rowspan="1" colspan="1">99.8%</td>
+<td align="char" char="." rowspan="1" colspan="1">51.1%</td>
+<td align="char" char="." rowspan="1" colspan="1">31.2%</td>
+<td align="char" char="." rowspan="1" colspan="1">17.5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Cora</td>
+<td align="left" rowspan="1" colspan="1">21,521</td>
+<td align="left" rowspan="1" colspan="1">582,021</td>
+<td align="char" char="." rowspan="1" colspan="1">99.6%</td>
+<td align="char" char="." rowspan="1" colspan="1">9.2%</td>
+<td align="char" char="." rowspan="1" colspan="1">66.2%</td>
+<td align="char" char="." rowspan="1" colspan="1">24.1%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">arXiv</td>
+<td align="left" rowspan="1" colspan="1">11,779</td>
+<td align="left" rowspan="1" colspan="1">586,562</td>
+<td align="char" char="." rowspan="1" colspan="1">99.4%</td>
+<td align="char" char="." rowspan="1" colspan="1">7.4%</td>
+<td align="char" char="." rowspan="1" colspan="1">79.3%</td>
+<td align="char" char="." rowspan="1" colspan="1">12.7%</td>
+</tr>
+<tr>
+<td align="left" rowspan="6" colspan="1">A–A</td>
+<td align="left" rowspan="1" colspan="1">APS</td>
+<td align="left" rowspan="1" colspan="1">248,866</td>
+<td align="left" rowspan="1" colspan="1">4,231,131</td>
+<td align="char" char="." rowspan="1" colspan="1">90.0%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WoS</td>
+<td align="left" rowspan="1" colspan="1">531,952</td>
+<td align="left" rowspan="1" colspan="1">2,966,442</td>
+<td align="char" char="." rowspan="1" colspan="1">89.8%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">DBLP</td>
+<td align="left" rowspan="1" colspan="1">1,359,484</td>
+<td align="left" rowspan="1" colspan="1">5,821,900</td>
+<td align="char" char="." rowspan="1" colspan="1">89.9%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">PubMed</td>
+<td align="left" rowspan="1" colspan="1">1,675,367</td>
+<td align="left" rowspan="1" colspan="1">16,926,075</td>
+<td align="char" char="." rowspan="1" colspan="1">96.4%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Cora</td>
+<td align="left" rowspan="1" colspan="1">23,480</td>
+<td align="left" rowspan="1" colspan="1">130,644</td>
+<td align="char" char="." rowspan="1" colspan="1">87.5%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">arXiv</td>
+<td align="left" rowspan="1" colspan="1">11,868</td>
+<td align="left" rowspan="1" colspan="1">24,638</td>
+<td align="char" char="." rowspan="1" colspan="1">81.4%</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We now observe the following: while the three network paradigms (P → P, A ↔ A and A–A) are all bibliometric in nature, the resulting network architectures are very different. In other words, by representing a database via three different network paradigms, we view its complexity from three different standpoints. These three representations are largely uncorrelated, each contributing some new information (for example, although collaborating authors often cite one another, they also cite other scientists they never worked with, and sometimes co-author papers with scientists they never cited or got cited by). This allows the comparison among the databases along three independent lines, allowing us to isolate for each database the network category best suited for its study. To illustrate this point, we graphically visualize a sample of each network in <xref ref-type="fig" rid="pone.0127390.g001">Fig 1</xref>, obtained via network sampling algorithm [<xref ref-type="bibr" rid="pone.0127390.ref028">28</xref>, <xref ref-type="bibr" rid="pone.0127390.ref029">29</xref>]. Network samples are small subnetworks which capture the key topological features of the corresponding large (complete) networks (visualizing complete networks is impractical due to their size, see <xref ref-type="sec" rid="sec004">Methods</xref>). Visual comparison of network samples coming from the same database (horizontal) indeed indicates that each network paradigm presents a database from a different angle, viewing its complexity from a specific aspect. Comparison of network samples corresponding to different databases (vertical) reveals significant topological differences among them. They exist along all three vertical columns, and are most clearly pronounced for P → P and A–A networks. This suggests that in all three network categories there are at least some differences in the data structure and bibliometric precision among the databases. Motivated by this insight, we continue our study in more quantitative terms.</p>
+<fig id="pone.0127390.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Graphical visualization of the network samples.</title>
+<p>As indicated, each sample corresponds to one of the 18 examined networks. See Methods for details on network sampling algorithm.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.g001"/>
+</fig>
+<p>We begin by introducing a platform for quantification of the network topologies [<xref ref-type="bibr" rid="pone.0127390.ref027">27</xref>]. On top of 6 network measures introduced in <xref ref-type="table" rid="pone.0127390.t001">Table 1</xref>, we compute for each network additional 16 measures:
+<list list-type="bullet">
+<list-item><p>Degree statistics and distribution parameters: ⟨<italic>k</italic>⟩, <italic>γ</italic>, <italic>γ</italic><sub><italic>in</italic></sub>, <italic>γ</italic><sub><italic>out</italic></sub>,</p></list-item>
+<list-item><p>Degree mixing quantifiers: <italic>r</italic>, <italic>r</italic><sub>(<italic>in</italic>,<italic>in</italic>)</sub>, <italic>r</italic><sub>(<italic>in</italic>,<italic>out</italic>)</sub>, <italic>r</italic><sub>(<italic>out</italic>,<italic>in</italic>)</sub>, <italic>r</italic><sub>(<italic>out</italic>,<italic>out</italic>)</sub>,</p></list-item>
+<list-item><p>Clustering distribution parameters: ⟨<italic>c</italic>⟩, ⟨<italic>b</italic>⟩, ⟨<italic>d</italic>⟩,</p></list-item>
+<list-item><p>Clustering mixing quantifiers: <italic>r</italic><sub><italic>c</italic></sub>, <italic>r</italic><sub><italic>b</italic></sub>, <italic>r</italic><sub><italic>d</italic></sub>,</p></list-item>
+<list-item><p>Effective diameter parameter: <italic>δ</italic><sub>90</sub>.</p></list-item>
+</list>
+The definition and interpretation of each network measure along with the procedure used for its computation are explained in Methods. The Supporting Information Fig. A in <xref ref-type="supplementary-material" rid="pone.0127390.s001">S1 File</xref> graphically shows relevant node degree and clustering profiles and distributions (see <xref ref-type="sec" rid="sec004">Methods</xref>). Rather than studying all the values (which are reported in the Supporting Information Tables B1 and B2 in <xref ref-type="supplementary-material" rid="pone.0127390.s001">S1 File</xref>), we would here like to illustrate our approach to quantifying the mutual consistency of databases relying on these measures. We focus on a specific one among them, clustering mixing <italic>r</italic><sub><italic>b</italic></sub>, whose values for all networks are shown in <xref ref-type="table" rid="pone.0127390.t002">Table 2</xref>. Looking at the table row by row, three observations can be made. All P → P networks are relatively consistent in their values except for DBLP. Similarly, with exception of APS, all A ↔ A networks are roughly consistent. Finally, PubMed is the only database not consistent with the others when it comes to A–A networks. This suggests a simple way to quantify the consistency of databases within each network category. Of course, we expect that the consistency will depend on the chosen network measure. Ideally, the “best” database would be the one most consistent with as many others for as many measures as possible. However, as we show in what follows, trying to identify such a database is elusive. Instead, our main result is the consistent quantification of their mutual consistency for each network category. Our findings are to be understood as an “advice” to researchers in bibliometrics about the suitability of various network paradigms in relation to the database of their interest.</p>
+<table-wrap id="pone.0127390.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Values of clustering mixing.</title>
+<p>Values of the network measure clustering mixing <italic>r</italic><sub><italic>b</italic></sub> for all 18 examined networks. See text for discussion.</p>
+</caption>
+<alternatives>
+<graphic id="pone.0127390.t002g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.t002"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1">APS</th>
+<th align="left" rowspan="1" colspan="1">WoS</th>
+<th align="left" rowspan="1" colspan="1">DBLP</th>
+<th align="left" rowspan="1" colspan="1">PubMed</th>
+<th align="left" rowspan="1" colspan="1">Cora</th>
+<th align="left" rowspan="1" colspan="1">arXiv</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">P → P</td>
+<td align="char" char="." rowspan="1" colspan="1">0.43</td>
+<td align="char" char="." rowspan="1" colspan="1">0.51</td>
+<td align="char" char="." rowspan="1" colspan="1">0.66</td>
+<td align="char" char="." rowspan="1" colspan="1">0.41</td>
+<td align="char" char="." rowspan="1" colspan="1">0.43</td>
+<td align="char" char="." rowspan="1" colspan="1">0.51</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">A ↔ A</td>
+<td align="char" char="." rowspan="1" colspan="1">0.71</td>
+<td align="char" char="." rowspan="1" colspan="1">0.12</td>
+<td align="char" char="." rowspan="1" colspan="1">0.17</td>
+<td align="char" char="." rowspan="1" colspan="1">0.29</td>
+<td align="char" char="." rowspan="1" colspan="1">0.34</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">A–A</td>
+<td align="char" char="." rowspan="1" colspan="1">0.87</td>
+<td align="char" char="." rowspan="1" colspan="1">0.91</td>
+<td align="char" char="." rowspan="1" colspan="1">0.84</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.85</td>
+<td align="char" char="." rowspan="1" colspan="1">0.64</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Our next step is to employ the standard technique of multidimensional scaling (MDS) [<xref ref-type="bibr" rid="pone.0127390.ref030">30</xref>, <xref ref-type="bibr" rid="pone.0127390.ref031">31</xref>], with aim to graphically visualize the overall differences among the databases. To this end, for each network category, we consider the differences of values of all network measures and for each pair of databases. The result of MDS is the embedding of 6 points representing 6 databases into the Euclidean space of given dimensionality. This embedding is done in a way that the Euclidean distance between each pair of points is representative of the inconsistency between the corresponding databases, in terms of the average difference in values of network measure (see <xref ref-type="sec" rid="sec004">Methods</xref>). The obtained embeddings for 2- and 3-dimensional space are shown in <xref ref-type="fig" rid="pone.0127390.g002">Fig 2</xref>. Closer together databases are, better the overall consistency of their network measures. For the case of P → P networks, only PubMed and Cora appear to be relatively consistent with one another. PubMed and DBLP display a nearly perfect consistency between them for A ↔ A networks, with some (independent) consistency among arXiv, WoS and Cora. For A ↔ A networks, best consistency is found for DBLP, Cora and WoS. Indeed, the consistency among databases is dependent on the network paradigm used to represent them. Even within each of these categories, it seems difficult to establish which databases are mutually consistent and which are not. In what follows, we seek to establish at least some approximate results in this direction.</p>
+<fig id="pone.0127390.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Multidimensional scaling (MDS) analysis.</title>
+<p>Embedding of points in 2D (top row) and 3D space (bottom row) obtained via MDS. Each point represents one database as indicated. Distance between any pair of points is representative of the average difference of network measure values for the corresponding database pair, and in adequate ratio with distances between other points in that plot.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.g002"/>
+</fig>
+<p>Returning to the values of network measures, we construct another comparison among databases, this time relying on the standard statistical analysis. We begin by realizing that network measures are not all independent [<xref ref-type="bibr" rid="pone.0127390.ref032">32</xref>, <xref ref-type="bibr" rid="pone.0127390.ref033">33</xref>], neither are the “true” values for any of them known. This calls for identifying a set of measures which cumulatively provide the optimal information on the network topologies. To this end, for each database we first compute the externally studentized residual, separately for each network measure and category (see <xref ref-type="sec" rid="sec004">Methods</xref>). We express the residuals in the units of standard deviations for that measure. That is to say, the database with residual zero is the one most “in the middle” according to that measure. Oppositely, the database with the residual farthest from zero is the one least surrounded by others. Next we use these residuals to identify the optimal set of independent network measures, separating between directed and undirected networks (<xref ref-type="sec" rid="sec004">Methods</xref>). We found this to consist of 13 measures for directed and 7 for undirected networks, whose residuals are reported in <xref ref-type="fig" rid="pone.0127390.g003">Fig 3</xref>. We also confirmed that this selection still cumulatively provides enough information to enable the differentiation among the networks (<xref ref-type="sec" rid="sec004">Methods</xref>). The difference with the previous MDS analysis is that here we treat each network measure separately, without mixing their values in any way, and we also remove some measures as redundant. This is done not just to exclude possible inter-dependences among them, but also since the values belonging to different measures cannot always be directly compared. For P → P networks, with exception of DBLP, all databases appear to be relatively consistent. A ↔ A networks also display good consistency, with exception of APS which shows a notable discrepancy. A–A networks reveal APS and arXiv databases to be most inconsistent with others. Note that these results are in a good agreement with the results of the MDS analysis (<xref ref-type="fig" rid="pone.0127390.g002">Fig 2</xref>). In fact, the analysis of residuals again confirms that it is hard to identify a single “best” database in terms of biggest consistency with other databases, even within the realm of a single network category. Needless to say, it would be even more elusive to search for the “best” database simultaneously for all network categories.</p>
+<fig id="pone.0127390.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Analysis via residual computation.</title>
+<p>Externally studentized residuals for all databases, computed separately for each independent network measure and each network category. See Methods for interpretation and details on computation.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.g003"/>
+</fig>
+<p>Still, as our wish is to offer at least some qualitative argument on mutual consistency of databases, we construct the ranking of databases from computed residuals. Within each network category we proceed as follows. For each network measure, we assign the rank 1 to the database with the residual closest to zero, rank 2 to the database with the residual second closest to zero, and so on until we assign the rank 6. Averaging these ranks yields an average rank for each database, defining a database ranking for each category (see <xref ref-type="sec" rid="sec004">Methods</xref>). Smaller the rank of a database, better its overall consistency with the rest. The rankings are reported in <xref ref-type="fig" rid="pone.0127390.g004">Fig 4</xref>. However, despite a clear hierarchy given by ranking, not all ranking differences are statistically significant. To account for this, we indicate as CD (critical difference) the width corresponding to the <italic>p</italic>-value of 0.1 by which we establish the statistical significance. Thus, any ranking difference smaller than CD is not statistically significant. For easier understanding of the figure, we add bold lines to indicate groups of databases where ranking differences are not statistically significant. For P → P networks, WoS is the most consistent database, even though its ranking is not statistically different from Cora, arXiv, APS and PubMed. The same is visible from A ↔ A networks, where rankings of Cora and arXiv are even somewhat better than that of WoS. Finally, DBLP ranks best in terms of A–A networks, followed by WoS, Cora and APS, none of which are actually statistically worse. Based on the available data, these results represent the optimal differentiation among the databases in terms of their consistency. We believe that the differences we found are to be attributed to different methodologies in maintaining different databases. Specifically, WoS keeps track of citations manually, thus avoiding many errors related to referencing styles and authors’ names, which to a large extent explains its good quality.</p>
+<fig id="pone.0127390.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0127390.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Final overall ranking.</title>
+<p>Ranking of databases for all three network categories. Critical difference (CD) indicates what range of ranking differences is not statistically significant. The difference in ranking of databases underlined by the common bold line are not statistically significant (<xref ref-type="sec" rid="sec004">Methods</xref>).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.g004"/>
+</fig>
+<p>As mentioned earlier, bibliometric studies are in practice done by relying on the data that happens to be available to the researcher. These data usually comes from a single database, which is usually among here considered databases. However, such studies often suffer from criticism of bias coming from relying on a single database. To aid this situation, we reiterate the above results towards offering concrete suggestions regarding the choice of the network paradigm best suited for studying any given database. WoS can be basically studied via any network paradigm. Roughly the same can be said of Cora. When examining arXiv, one should avoid A–A networks. In contrast, study of DBLP should exactly go via A–A networks. On the other hand, studying APS and PubMed seems to be less promising. However, if the choice has to be made, P → P appears to be the best option for both.</p>
+</sec>
+<sec id="sec003" sec-type="conclusions">
+<title>Discussion</title>
+<p>Our work was done relaying on the representative datasets from six databases which, to our best knowledge, are the ones most frequently used in modern bibliometrics. Of course, we realize that these by no means include all the relevant bibliometric data. In particular, some databases including SCOPUS, Google Scholar and CiteSeer are missing from our study. Unfortunately, we were unable to obtain the representative datasets from these databases. However, some of the missing databases rely on the bibliometric methodology similar to some of the studied databases (notably, SCOPUS uses methodology very similar to WoS [<xref ref-type="bibr" rid="pone.0127390.ref034">34</xref>, <xref ref-type="bibr" rid="pone.0127390.ref035">35</xref>]). For this reason, we believe that the presence of these databases would not significantly alter our results. Furthermore, the considered databases do not always overlap in the scientific fields they cover (for example APS, Cora and PubMed). Due to this a minor bias could be present in our study, which unfortunately can never be entirely removed if one wants to compare different fields. On the other hand, all databases refer to computer and natural sciences, which are known to have very similar collaboration and citation cultures. We thus believe this bias had no major impact on our key findings. Nevertheless, we agree that there exists an intrinsic incomparability between distant scientific fields (for instance computer science and history), which necessitates new approaches and methodologies able to offer more objective comparisons. Another interesting question revolves around aggregation of the databases: aggregate data would provide a closer approximation of the ground truth, yet it might be hindered by the above described discrepancies in the datasets. We leave this open problem for future work.</p>
+<p>One could argue that bibliometric networks are not the only framework for studying the consistency among scientific databases. For example, a simple comparison of a sample of records could provide insights on their precision. Yet, complex networks have become over the years a well established platform for investigating complex systems. This is due to their power to reveal the information hidden in the shear complexity of systems such as scientific community. For this reason, while acknowledging the value of additional approaches to this problem, we argue that networks are presently the most appropriate framework. On the other hand, our study could be extended to other network paradigms used for bibliometric networks, such as those based on linking the papers which share keywords or specific words in the title or abstract [<xref ref-type="bibr" rid="pone.0127390.ref036">36</xref>].</p>
+<p>The main ingredient of our methodology is the network comparison, realized via computation of 22 network measures and identifying the independent among them. In fact, this turns out to be the simplest approach, easily applicable to both directed and undirected networks. However, we note that the NP-hard problem of network comparison is a topic of constant interest in the field, with novel ideas rapidly accumulating [<xref ref-type="bibr" rid="pone.0127390.ref037">37</xref>]. Also, our approach was largely based on classical statistical analysis involving significance testing, which was recently scrutinized [<xref ref-type="bibr" rid="pone.0127390.ref038">38</xref>]. However, besides being in agreement with our previous paper [<xref ref-type="bibr" rid="pone.0127390.ref027">27</xref>], our results are also confirmed by MDS analysis which is in no way related to classical statistics. We thus argue that our statistical results are indeed informative. Finally, while noting that improvements of our methodology are possible, we hope our work traces a new avenue for all interested in critically examining science as a human endeavor.</p>
+</sec>
+<sec id="sec004" sec-type="materials|methods">
+<title>Methods</title>
+<p><bold>The data.</bold> The data has been extracted from publicly available repositories and purchased from commercial bibliographic sources. Authors and publications neither citing nor cited were discarded, together with authors not collaborating. Self-citations of papers that occur due to errors were discarded. The details on six studied databases are below.</p>
+<p><italic>American Physical Society</italic> (APS) is the world’s second largest organization of physicists (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.aps.org">http://www.aps.org</ext-link>), behind German DPG. It publishes a range of scientific journals, including the Physical Review series, Physical Review Letters and Reviews of Modern Physics. The data considered here contains all publications in aforementioned journals up until 2010 consisting of 450,084 papers and 264,844 authors, and 4,710,547 citations between the papers.</p>
+<p><italic>Web of Science</italic> (WoS) is informally considered the most accurate scientific bibliographic database, professionally hand-maintained by Thomson Reuters (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://thomsonreuters.com">http://thomsonreuters.com</ext-link>). It dates back to early 1950s [<xref ref-type="bibr" rid="pone.0127390.ref039">39</xref>, <xref ref-type="bibr" rid="pone.0127390.ref040">40</xref>] and contains over 45 million records of publications from all fields of science [<xref ref-type="bibr" rid="pone.0127390.ref035">35</xref>]. For this study, we consider all publications in WoS category Computer Science up until late 2014. The entire dataset includes 978,821 papers and 580,112 authors, and 3,633,421 citations between the papers.</p>
+<p><italic>DBLP Computer Science Bibliography</italic> (DBLP) indexes major journals and proceedings from all fields of computer science [<xref ref-type="bibr" rid="pone.0127390.ref041">41</xref>] (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://dblp.uni-trier.de">http://dblp.uni-trier.de</ext-link>). It is freely available since 1993 and hand-maintained by University of Trier, Germany. It contains more than 2 million records of publications, while the citation information is rather scarce compared to WoS [<xref ref-type="bibr" rid="pone.0127390.ref035">35</xref>]. For this study, we considered a snapshot of the database on September 2014 including 2,696,491 papers and 1,424,895 authors, and 1,534,369 citations between the papers (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://lovro.lpt.fri.uni-lj.si">http://lovro.lpt.fri.uni-lj.si</ext-link>).</p>
+<p><italic>PubMed</italic> (PubMed) is a search engine of MEDLINE database focusing on life sciences and biomedicine, maintained by US National Institutes of Health (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.ncbi.nlm.nih.gov">http://www.ncbi.nlm.nih.gov</ext-link>). It contains about 24 million citations between publications dating back to late 19th century. For this study, we extracted open access publications from PubMed Central Collection up until 2014 and author information from MEDLINE Baseline Repository between 2012 and 2014. We thus obtained 5,853,635 papers and 1,716,762 authors, and 18,842,120 citations between the papers.</p>
+<p><italic>Computer Science Research Paper Search Engine</italic> (Cora) is a service for automatic retrieval of publication manuscripts from the Web using machine learning techniques [<xref ref-type="bibr" rid="pone.0127390.ref042">42</xref>]. It contains over 200,000 publication records collected from the websites of computer science departments at major universities in August 1998 (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://people.cs.umass.edu/˜mccallum">http://people.cs.umass.edu/˜mccallum</ext-link>). For this study, we consider a complete database including 195,950 papers and 24,911 authors, and 623,287 citations between the papers (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://lovro.lpt.fri.uni-lj.si">http://lovro.lpt.fri.uni-lj.si</ext-link>).</p>
+<p><italic>arXiv.org</italic> (arXiv) is a public preprint repository of publication drafts uploaded by the authors prior to an actual journal or conference submission hosted by the Cornell University in US since 1991 [<xref ref-type="bibr" rid="pone.0127390.ref043">43</xref>] (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://arxiv.org">http://arxiv.org</ext-link>). It currently contains almost one million publications from physics, mathematics, computer science and other fields. For this study, we consider all publications in arXiv category High Energy Physics Theory between 1992 and 2003 (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://snap.stanford.edu">http://snap.stanford.edu</ext-link>). The data contains 27,770 papers and 12,820 authors, and 352,807 citations between the papers.</p>
+<p><bold>Network sampling algorithm.</bold> The goal of network sampling is to extract a subnetwork from the complete (often very large) network, which would be representative of its topological (or other) properties. Due to its small and regulable size, this subnetwork (which we call network sample) can be easily visualized and compared to network samples representing other networks. We obtained the network samples by considering the induced subgraphs on the nodes visited by a random walker starting at some random node [<xref ref-type="bibr" rid="pone.0127390.ref028">28</xref>, <xref ref-type="bibr" rid="pone.0127390.ref029">29</xref>]. That is to say, our network sample includes all the nodes visited by the walker after some number of steps, together with all the links connecting those nodes. In fact, this has been proven to generate samples that are most similar to the original networks [<xref ref-type="bibr" rid="pone.0127390.ref044">44</xref>]. In our work we generated 5000 networks samples of 250 nodes for each of the original networks, whereas the best sample is selected according to Kolmogorov-Smirnov distance between the degree distributions.</p>
+<p><bold>The network measures.</bold> To quantify the topology of the examined networks we used 22 different measures. Below we explain the remaining 20 measures (number of nodes and links is obvious). For undirected networks we compute only the measures naturally defined for them. For directed networks, upon computing the measures naturally defined for them, we disregard their directionality, and also compute the measures normally referring to undirected networks. Largest (weakly) connected component of a directed network is its maximal subnetwork such that all its nodes are mutually reachable, disregarding the directionality. We define as WCC the size of this subnetwork. We measured the strong connectivity only in the context of network bow-tie structure [<xref ref-type="bibr" rid="pone.0127390.ref027">27</xref>] (% core, % in, and % out).</p>
+<p><italic>Degree distributions.</italic> For directed networks, in-degree <italic>k</italic><sub><italic>in</italic></sub> and out-degree <italic>k</italic><sub><italic>out</italic></sub> of a node are respectively the number of incoming and outgoing links. <italic>k</italic> is the degree of a node, <italic>k</italic> = <italic>k</italic><sub><italic>in</italic></sub>+<italic>k</italic><sub><italic>out</italic></sub>, and ⟨<italic>k</italic>⟩ denotes the mean degree. For undirected networks we deal only with <italic>k</italic>. We computed the exponents <italic>γ</italic><sub><italic>in</italic></sub>, <italic>γ</italic><sub><italic>out</italic></sub> and <italic>γ</italic> which characterize the degree distributions (for directed network <italic>γ</italic> is computed disregarding the directionality). This is done by fitting the tails of the distributions by maximum-likelihood estimation:
+<disp-formula id="pone.0127390.e001"><alternatives><graphic id="pone.0127390.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e001"/><mml:math id="M1" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>γ</mml:mi> <mml:mo>·</mml:mo></mml:msub> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mi>n</mml:mi> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>V</mml:mi></mml:munder> <mml:mo form="prefix">ln</mml:mo> <mml:mo/><mml:msub><mml:mi>k</mml:mi> <mml:mo>·</mml:mo></mml:msub> <mml:mo>/</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mi>m</mml:mi> <mml:mi>i</mml:mi> <mml:mi>n</mml:mi></mml:mrow></mml:msub> <mml:mo/><mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mspace width="0.277778em"/><mml:mspace width="0.277778em"/><mml:mspace width="0.277778em"/><mml:mtext>for</mml:mtext> <mml:mspace width="0.277778em"/><mml:mspace width="0.277778em"/><mml:mspace width="0.277778em"/><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mi>m</mml:mi> <mml:mi>i</mml:mi> <mml:mi>n</mml:mi></mml:mrow></mml:msub> <mml:mo>∈</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:mn>10</mml:mn> <mml:mo>,</mml:mo> <mml:mn>25</mml:mn> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+In cases exhibiting power-law degree distributions, these exponents correspond to the actual power-law exponents. In all cases these exponents were characteristic of the degree distributions, in the sense that similar distributions have similar exponents.</p>
+<p><italic>Degree mixing.</italic> Neighbor connectivity <italic>Nk</italic><sub>⋅</sub> is the mean neighbor degree of all network nodes with degree <italic>k</italic><sub>⋅</sub> [<xref ref-type="bibr" rid="pone.0127390.ref045">45</xref>]. The degree mixing <italic>r</italic><sub>(<italic>α</italic>,<italic>β</italic>)</sub> is the Pearson correlation coefficient of <italic>α</italic>-degrees or <italic>β</italic>-degrees at links’ source and target nodes, respectively [<xref ref-type="bibr" rid="pone.0127390.ref046">46</xref>]:
+<disp-formula id="pone.0127390.e002"><alternatives><graphic id="pone.0127390.e002g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e002"/><mml:math id="M2" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>α</mml:mi> <mml:mo>,</mml:mo> <mml:mi>β</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:msub><mml:mi>σ</mml:mi> <mml:msub><mml:mi>k</mml:mi> <mml:mi>α</mml:mi></mml:msub></mml:msub> <mml:msub><mml:mi>σ</mml:mi> <mml:msub><mml:mi>k</mml:mi> <mml:mi>β</mml:mi></mml:msub></mml:msub></mml:mrow></mml:mfrac> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>L</mml:mi></mml:munder> <mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mi>α</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mrow><mml:mo>⟨</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mi>α</mml:mi></mml:msub> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mi>β</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mrow><mml:mo>⟨</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mi>β</mml:mi></mml:msub> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mo stretchy="false">)</mml:mo> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+where ⟨<italic>k</italic><sub>⋅</sub>⟩ and <italic>σ</italic><sub><italic>k</italic><sub>⋅</sub></sub> are the means and standard deviations, <italic>α</italic>, <italic>β</italic> ∈ {<italic>in</italic>, <italic>out</italic>} (measured only for directed networks). <italic>r</italic> is the mixing of degrees <italic>k</italic>, measured for undirected networks and for directed ones disregarding their directionality [<xref ref-type="bibr" rid="pone.0127390.ref047">47</xref>].</p>
+<p><italic>Clustering distributions and mixing.</italic> All clustering coefficients were computed disregarding the directionality of directed networks. Clustering coefficient <italic>c</italic> is usually defined as the link density of its neighborhood [<xref ref-type="bibr" rid="pone.0127390.ref032">32</xref>]:
+<disp-formula id="pone.0127390.e003"><alternatives><graphic id="pone.0127390.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>c</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:mn>2</mml:mn> <mml:mi>t</mml:mi></mml:mrow> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>(</mml:mo> <mml:mi>k</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula>
+where <italic>t</italic> is the number of linked neighbors and <italic>k</italic>(<italic>k</italic>−1)/2 is the maximum possible number, <italic>c</italic> = 0 for <italic>k</italic> ≤ 1. The mean ⟨<italic>c</italic>⟩ is denoted network clustering coefficient [<xref ref-type="bibr" rid="pone.0127390.ref032">32</xref>], while the clustering mixing <italic>r</italic><sub><italic>c</italic></sub> is defined as before. Clustering profile gives the mean clustering <italic>Ck</italic> of nodes with degree <italic>k</italic> [<xref ref-type="bibr" rid="pone.0127390.ref048">48</xref>]. Note that the denominator in the equation above introduces biases when <italic>r</italic> &lt; 0 [<xref ref-type="bibr" rid="pone.0127390.ref033">33</xref>]. Thus, we rely on delta-corrected clustering coefficient <italic>b</italic>, defined as <italic>c</italic>⋅<italic>k</italic>/Δ [<xref ref-type="bibr" rid="pone.0127390.ref049">49</xref>], where Δ is the maximal degree <italic>k</italic> and <italic>b</italic> = 0 for <italic>k</italic> ≤ 1. Similarly, degree-corrected clustering coefficient <italic>d</italic> is defined as <italic>t</italic>/<italic>ω</italic> [<xref ref-type="bibr" rid="pone.0127390.ref033">33</xref>], where <italic>ω</italic> is the maximum number of linked neighbors with respect to their degrees <italic>k</italic> and <italic>d</italic> = 0 for <italic>k</italic> ≤ 1. From definition it follows <italic>b</italic> ≤ <italic>c</italic> ≤ <italic>d</italic>.</p>
+<p><italic>Diameter statistics.</italic> All diameter statistics were computed disregarding the directionality of directed networks. Hop plot shows the percentage of mutually reachable pairs of nodes <italic>H</italic>(<italic>δ</italic>) with <italic>δ</italic> hops [<xref ref-type="bibr" rid="pone.0127390.ref050">50</xref>]. The network diameter is defined as the minimal number of hops <italic>δ</italic> for which <italic>H</italic>(<italic>δ</italic>) = 1, while the effective diameter <italic>δ</italic><sub>90</sub> is the number of hops at which 90% of such pairs of nodes are reachable [<xref ref-type="bibr" rid="pone.0127390.ref050">50</xref>], <italic>H</italic>(<italic>δ</italic><sub>90</sub>) = 0.9. Hop plots are averaged over 100 realizations of the approximate neighborhood function with 32 trials [<xref ref-type="bibr" rid="pone.0127390.ref051">51</xref>].</p>
+<p><bold>Multidimensional scaling (MDS).</bold> MDS is a statistical technique that visualizes the level of similarity of individual objects of a dataset. From the range of the available MDS techniques, we used the non-metric multidimensional scaling (NMDS), which work as follows. Given are <italic>h</italic> objects (or points) defined via their coordinates in <italic>l</italic> dimensions. This situation is expressed via <italic>h</italic> × <italic>l</italic> matrix called <italic>H</italic>. From this original matrix <italic>H</italic> we compute the dissimilarity <italic>h</italic> × <italic>h</italic> matrix <italic>D</italic>, in which each matrix element <italic>D</italic>(<italic>i</italic>, <italic>j</italic>) represents the Euclidean distance between the pair of objects <italic>i</italic> and <italic>j</italic> in the original matrix <italic>H</italic>. NMDS reduces the dimensionality of the problem, by transforming the <italic>h</italic> × <italic>h</italic> matrix <italic>D</italic> into a <italic>h</italic> × <italic>p</italic> matrix <italic>Y</italic>, where <italic>h</italic> is the number of objects (or points), now embedded in <italic>p</italic> dimensions instead of <italic>l</italic> (<italic>p</italic> &lt; <italic>l</italic>) [<xref ref-type="bibr" rid="pone.0127390.ref031">31</xref>]. The Euclidean distances between the obtained <italic>h</italic> points in <italic>Y</italic> are a monotonic transformation of the points in <italic>D</italic> in <italic>p</italic> dimensions. In our analysis, we used a original matrix <italic>H</italic> with size of 6 × 20, meaning that the number of points (data basis) is <italic>h</italic> = 6 and the number of coordinates is <italic>l</italic> = 20. The original matrix <italic>H</italic> is transformed into dissimilarity matrix <italic>D</italic> with size of 6 × 6. Using NMDS we transformed the matrix <italic>D</italic> into two matrices <italic>Y</italic>′ and <italic>Y</italic>′′, so that <italic>Y</italic>′ has a size of 6 × 2, and <italic>Y</italic>′′ has a size of 6 × 3.</p>
+<p><bold>Externally studentized residuals.</bold> Let <italic>x</italic><sub><italic>ij</italic></sub> be the value of <italic>j</italic>-th network measure of <italic>i</italic>-th database, where <italic>N</italic> is the number of databases, <italic>N</italic> = 6. Corresponding externally studentized residual <inline-formula id="pone.0127390.e004"><mml:math id="M4" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></inline-formula> is:
+<disp-formula id="pone.0127390.e005"><alternatives><graphic id="pone.0127390.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>x</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>μ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:msqrt><mml:mrow><mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>/</mml:mo> <mml:mi>N</mml:mi></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+where <inline-formula id="pone.0127390.e006"><mml:math id="M6" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>μ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></inline-formula> and <inline-formula id="pone.0127390.e007"><mml:math id="M7" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></inline-formula> are the sample mean and the corrected standard deviation excluding the considered <italic>i</italic>-th database, <inline-formula id="pone.0127390.e008"><mml:math id="M8" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>μ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>x</mml:mi> <mml:mrow><mml:mi>k</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>/</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mi>N</mml:mi> <mml:mo>−</mml:mo> <mml:mn>1</mml:mn> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pone.0127390.e009"><mml:math id="M9" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mover accent="true"><mml:mi>σ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo>=</mml:mo> <mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msup><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>x</mml:mi> <mml:mrow><mml:mi>k</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>−</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>μ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mo>/</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mi>N</mml:mi> <mml:mo>−</mml:mo> <mml:mn>2</mml:mn> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>. Assuming that the errors in <italic>x</italic> are independent and normally distributed, the residuals <inline-formula id="pone.0127390.e010"><mml:math id="M10" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> have Student <italic>t</italic>-distribution with <italic>N</italic>−2 degrees of freedom. Significant differences in individual statistics <italic>x</italic> are revealed by the independent two-tailed Student <italic>t</italic>-tests [<xref ref-type="bibr" rid="pone.0127390.ref052">52</xref>] at <italic>P</italic>-value = 0.1, rejecting the null hypothesis <italic>H</italic><sub>0</sub> that <italic>x</italic> are consistent across the databases, <inline-formula id="pone.0127390.e011"><mml:math id="M11" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>H</mml:mi> <mml:mn>0</mml:mn></mml:msub> <mml:mo>:</mml:mo> <mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:math></inline-formula>. Thus, <inline-formula id="pone.0127390.e012"><mml:math id="M12" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></inline-formula> express the consistency of the database <italic>i</italic> with the other databases, along the <italic>j</italic>-th network measure. Note also that the absolute values of individual residuals <inline-formula id="pone.0127390.e013"><mml:math id="M13" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">|</mml:mo> <mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">|</mml:mo></mml:mrow></mml:math></inline-formula> imply a ranking <italic>R</italic> over the databases, where the database with the lowest <inline-formula id="pone.0127390.e014"><mml:math id="M14" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">|</mml:mo> <mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">|</mml:mo></mml:mrow></mml:math></inline-formula> has rank one, the second one has rank two and the one with the largest <inline-formula id="pone.0127390.e015"><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">|</mml:mo> <mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">|</mml:mo></mml:mrow></mml:math></inline-formula> has rank <italic>N</italic>.</p>
+<p><bold>Identifying independent network measures.</bold> Denote <italic>r</italic><sub><italic>ij</italic></sub> to be the Pearson product-moment correlation coefficient of the residuals <inline-formula id="pone.0127390.e016"><mml:math id="M16" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> for <italic>i</italic>-th and <italic>j</italic>-th network measure over all databases. Spearman rank correlation coefficient <italic>ρ</italic><sub><italic>ij</italic></sub> is defined as the Pearson coefficient of the ranks <italic>R</italic> for <italic>i</italic>-th and <italic>j</italic>-th statistics. Under the null hypothesis of statistical independence of <italic>i</italic>-th and <italic>j</italic>-th statistics, <italic>H</italic><sub>0</sub>:<italic>ρ</italic><sub><italic>ij</italic></sub> = 0, adjusted Fisher transformation [<xref ref-type="bibr" rid="pone.0127390.ref053">53</xref>]:
+<disp-formula id="pone.0127390.e017"><alternatives><graphic id="pone.0127390.e017g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e017"/><mml:math id="M17" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mfrac><mml:msqrt><mml:mrow><mml:mi>N</mml:mi> <mml:mo>-</mml:mo> <mml:mn>3</mml:mn></mml:mrow></mml:msqrt> <mml:mn>2</mml:mn></mml:mfrac> <mml:mo form="prefix">ln</mml:mo> <mml:mo/><mml:mfrac><mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac> <mml:mo/></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(5)</label></disp-formula>
+approximately follows a standard normal distribution. Pairwise independence of the selected network measures is thus confirmed by the independent two-tailed <italic>z</italic>-tests. This gives 13 independent measures for directed, and 7 independent measures for undirected networks, as shown in the <xref ref-type="fig" rid="pone.0127390.g003">Fig 3</xref>. Furthermore, Friedman rank test [<xref ref-type="bibr" rid="pone.0127390.ref054">54</xref>] confirms that chosen set of measures exhibits significant internal differences, as to still be informative on the databases (see below).</p>
+<p><bold>Ranking of databases.</bold> Significant inconsistencies between the databases are exposed using the methodology introduced for comparing classification algorithms over multiple data sets [<xref ref-type="bibr" rid="pone.0127390.ref055">55</xref>]. Denote <italic>R</italic><sub><italic>i</italic></sub> to be the mean rank of <italic>i</italic>-th database over the selected measure, <italic>R</italic><sub><italic>i</italic></sub> = ∑<sub><italic>j</italic></sub> <italic>R</italic><sub><italic>ij</italic></sub>/<italic>K</italic>, where <italic>K</italic> is the number of independent measures <italic>K</italic> ∈ {7, 13}. One-tailed Friedman rank test [<xref ref-type="bibr" rid="pone.0127390.ref054">54</xref>, <xref ref-type="bibr" rid="pone.0127390.ref056">56</xref>] first verifies the null hypothesis that the databases are statistically equivalent and thus their ranks <italic>R</italic><sub><italic>i</italic></sub> should equal, <italic>H</italic><sub>0</sub>:<italic>R</italic><sub><italic>i</italic></sub> = <italic>R</italic><sub><italic>j</italic></sub>. Under the assumption that the selected statistics are indeed independent, the Friedman testing statistic [<xref ref-type="bibr" rid="pone.0127390.ref054">54</xref>]:
+<disp-formula id="pone.0127390.e018"><alternatives><graphic id="pone.0127390.e018g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e018"/><mml:math id="M18" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mfrac><mml:mrow><mml:mn>12</mml:mn> <mml:mi>K</mml:mi></mml:mrow> <mml:mrow><mml:mi>N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>N</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac> <mml:mo>(</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>i</mml:mi></mml:munder> <mml:msubsup><mml:mi>R</mml:mi> <mml:mi>i</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo>-</mml:mo> <mml:mfrac><mml:mrow><mml:mi>N</mml:mi> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>N</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup></mml:mrow> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula>
+has <italic>χ</italic><sup>2</sup>-distribution with <italic>N</italic>−1 degrees of freedom. By rejecting the hypothesis at <italic>P</italic>-value = 0.1, we proceed with the Nemenyi post-hoc test that reveals databases whose ranks <italic>R</italic><sub><italic>i</italic></sub> differ more than the critical difference [<xref ref-type="bibr" rid="pone.0127390.ref057">57</xref>]:
+<disp-formula id="pone.0127390.e019"><alternatives><graphic id="pone.0127390.e019g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0127390.e019"/><mml:math id="M19" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>q</mml:mi> <mml:msqrt><mml:mfrac><mml:mrow><mml:mi>N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>N</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mn>6</mml:mn> <mml:mi>K</mml:mi></mml:mrow></mml:mfrac></mml:msqrt> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+where <italic>q</italic> is the critical value based on the studentized range statistic [<xref ref-type="bibr" rid="pone.0127390.ref055">55</xref>], <italic>q</italic> = 2.59 at <italic>P</italic>-value = 0.1. A critical difference diagram plots the databases with no statistically significant inconsistencies in the selected statistics [<xref ref-type="bibr" rid="pone.0127390.ref055">55</xref>].</p>
+</sec>
+<sec id="sec005">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0127390.s001" position="float" xlink:href="info:doi/10.1371/journal.pone.0127390.s001" mimetype="application/pdf" xlink:type="simple">
+<label>S1 File</label>
+<caption>
+<title>Degree and clustering graphical profiles, continuation of network measures.</title>
+<p>Node degree and clustering profiles and distributions of all the considered networks, along with other network statistics. See Methods for interpretation and details on computation.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>Authors thank American Physical Society and Thomson Reuters for providing the data. Thomson Reuters had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. Work supported by Creative Core FISNM-3330-13-500033 funded by the European Union and The European Regional Development Fund, by the H2020-MSCA-ITN-2015 project COSMOS 642563, by the Slovenian Research Agency (ARRS) via programs P2-0359, P1-0383, via projects J1-5454, L7-4119, and by the Slovenian Ministry of Education, Science and Sport grant 430-168/2013/91. We thank the colleagues Dalibor Fiala, Ludo Waltman and Nees Jan van Eck for useful comments and discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0127390.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Ding</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Rousseau</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wolfram</surname> <given-names>D</given-names></name>. <source>Measuring Scholarly Impact: Methods and Practice</source>. <publisher-loc>Berlin</publisher-loc>: <publisher-name>Springer</publisher-name>; <year>2014</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Guimera</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Uzzi</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Spiro</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Amaral</surname> <given-names>LN</given-names></name>. <article-title>Team Assembly Mechanisms Determine Collaboration Network Structure and Team Performance</article-title>. <source>Science</source>. <year>2005</year>;<volume>308</volume>:<fpage>697</fpage>–<lpage>702</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1106340" xlink:type="simple">10.1126/science.1106340</ext-link></comment> <object-id pub-id-type="pmid">15860629</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pan</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Fortunato</surname> <given-names>S</given-names></name>. <article-title>Author Impact Factor: Tracking the dynamics of individual scientific impact</article-title>. <source>Scientific Reports</source>. <year>2014</year>;<volume>4</volume>:<fpage>4880</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/srep04880" xlink:type="simple">10.1038/srep04880</ext-link></comment> <object-id pub-id-type="pmid">24814674</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Uzzi</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Mukherjee</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Stringer</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>B</given-names></name>. <article-title>Atypical Combinations and Scientific Impact</article-title>. <source>Science</source>. <year>2013</year>;<volume>342</volume>:<fpage>468</fpage>–<lpage>472</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1240474" xlink:type="simple">10.1126/science.1240474</ext-link></comment> <object-id pub-id-type="pmid">24159044</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wuchty</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>BF</given-names></name>, <name name-style="western"><surname>Uzzi</surname> <given-names>B</given-names></name>. <article-title>The Increasing Dominance of Teams in Production of Knowledge</article-title>. <source>Science</source>. <year>2007</year>;<volume>316</volume>:<fpage>1036</fpage>–<lpage>1039</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1136099" xlink:type="simple">10.1126/science.1136099</ext-link></comment> <object-id pub-id-type="pmid">17431139</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Milojević</surname> <given-names>S</given-names></name>. <article-title>Principles of scientific researchand evolution team formation</article-title>. <source>P Natl Acad Sci USA</source>. <year>2014</year>;<volume>111</volume>:<fpage>3984</fpage>–<lpage>3989</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1309723111" xlink:type="simple">10.1073/pnas.1309723111</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Petersen</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Fortunato</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Pan</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Kaski</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Penner</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Rungi</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Reputation and impact in academic careers</article-title>. <source>P Natl Acad Sci USA</source>. <year>2014</year>;<volume>111</volume>:<fpage>15316</fpage>–<lpage>15321</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1323111111" xlink:type="simple">10.1073/pnas.1323111111</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Yao</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Wei</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Zeng</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fan</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Di</surname> <given-names>Z</given-names></name>. <article-title>Ranking scientific publications: The effect of nonlinearity</article-title>. <source>Scientific Reports</source>. <year>2014</year>;<volume>4</volume>:<fpage>6663</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/srep06663" xlink:type="simple">10.1038/srep06663</ext-link></comment> <object-id pub-id-type="pmid">25322852</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Shena</surname> <given-names>HW</given-names></name>, <name name-style="western"><surname>Barabasi</surname> <given-names>AL</given-names></name>. <article-title>Collective credit allocation in science</article-title>. <source>P Natl Acad Sci USA</source>. <year>2014</year>;<volume>111</volume>:<fpage>12325</fpage>–<lpage>12330</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1401992111" xlink:type="simple">10.1073/pnas.1401992111</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="other">Science of science policy, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.scienceofsciencepolicy.net/">http://www.scienceofsciencepolicy.net/</ext-link>. Date of access: 11/01/2015;.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Newman</surname> <given-names>MEJ</given-names></name>. <article-title>The structure of scientific collaboration networks</article-title>. <source>P Natl Acad Sci USA</source>. <year>2001</year>;<volume>98</volume>(<issue>2</issue>):<fpage>404</fpage>–<lpage>409</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.98.2.404" xlink:type="simple">10.1073/pnas.98.2.404</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Šubelj</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Bajec</surname> <given-names>M</given-names></name>. <chapter-title>Model of complex networks based on citation dynamics</chapter-title>. In: <source>Proceedings of the WWW Workshop on Large Scale Network Analysis</source>. <publisher-loc>Rio de Janeiro, Brazil</publisher-loc>; <year>2013</year>. p. <fpage>527</fpage>–<lpage>530</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kim</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Yoon</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Crowcroft</surname> <given-names>J</given-names></name>. <article-title>Network analysis of temporal trends in scholarly research productivity</article-title>. <source>J Infometrics</source>. <year>2012</year>;<volume>6</volume>(<issue>1</issue>):<fpage>97</fpage>–<lpage>110</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.joi.2011.05.006" xlink:type="simple">10.1016/j.joi.2011.05.006</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wang</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Barabási</surname> <given-names>AL</given-names></name>. <article-title>Quantifying long-term scientific impact</article-title>. <source>Science</source>. <year>2013</year>;<volume>342</volume>(<issue>6154</issue>):<fpage>127</fpage>–<lpage>132</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1237825" xlink:type="simple">10.1126/science.1237825</ext-link></comment> <object-id pub-id-type="pmid">24092745</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sayama</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Akaishi</surname> <given-names>J</given-names></name>. <article-title>Characterizing interdisciplinarity of researchers and research topics using web search engines</article-title>. <source>PLoS ONE</source>. <year>2012</year>;<volume>7</volume>:<fpage>e38747</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0038747" xlink:type="simple">10.1371/journal.pone.0038747</ext-link></comment> <object-id pub-id-type="pmid">22719935</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Barrat</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Barthélemy</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Vespignani</surname> <given-names>A</given-names></name>. <source>Dynamical Processes on Complex Networks</source>. <publisher-loc>Cambridge</publisher-loc>: <publisher-name>Cambridge University Press</publisher-name>; <year>2008</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Newman</surname> <given-names>M</given-names></name>. <source>Networks: An Introduction</source>. <publisher-loc>Oxford</publisher-loc>: <publisher-name>Oxford University Press</publisher-name>; <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Easley</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kleinberg</surname> <given-names>J</given-names></name>. <source>Networks, Crowds, and Markets: Reasoning About a Highly Connected World</source>. <publisher-loc>Cambridge</publisher-loc>: <publisher-name>Cambridge University Press</publisher-name>; <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Šubelj</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Furlan</surname> <given-names>Š</given-names></name>, <name name-style="western"><surname>Bajec</surname> <given-names>M</given-names></name>. <article-title>An expert system for detecting automobile insurance fraud using social network analysis</article-title>. <source>Expert Syst Appl</source>. <year>2011</year>;<volume>38</volume>(<issue>1</issue>):<fpage>1039</fpage>–<lpage>1052</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.eswa.2010.07.143" xlink:type="simple">10.1016/j.eswa.2010.07.143</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Perc</surname> <given-names>M</given-names></name>. <article-title>Growth and structure of Slovenia’s scientific collaboration network</article-title>. <source>J Infometrics</source>. <year>2010</year>;<volume>4</volume>(<issue>4</issue>):<fpage>475</fpage>–<lpage>482</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.joi.2010.04.003" xlink:type="simple">10.1016/j.joi.2010.04.003</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Levnajić</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Lužar</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Povh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Perc</surname> <given-names>M</given-names></name>. <article-title>Community Structure and the Evolution of Interdisciplinarity in Slovenia’s Scientific Collaboration Network</article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>:<fpage>e94429</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0094429" xlink:type="simple">10.1371/journal.pone.0094429</ext-link></comment> <object-id pub-id-type="pmid">24728345</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Krumov</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Fretter</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Müller-Hannemann</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Weihe</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Hütt</surname> <given-names>MT</given-names></name>. <article-title>Motifs in co-authorship networks and their relation to the impact of scientific publications</article-title>. <source>Eur Phys J B</source>. <year>2011</year>;<volume>84</volume>:<fpage>535</fpage>–<lpage>540</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1140/epjb/e2011-10746-5" xlink:type="simple">10.1140/epjb/e2011-10746-5</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Evans</surname> <given-names>TS</given-names></name>, <name name-style="western"><surname>Lambiotte</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Panzarasa</surname> <given-names>P</given-names></name>. <article-title>Communities and patterns of scientific collaboration</article-title>. <source>Scientometrics</source>. <year>2011</year>;<volume>89</volume>(<issue>1</issue>):<fpage>381</fpage>–<lpage>396</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11192-011-0439-1" xlink:type="simple">10.1007/s11192-011-0439-1</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pan</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Saramäki</surname> <given-names>J</given-names></name>. <article-title>The strength of strong ties in scientific collaboration networks</article-title>. <source>Europhys Lett</source>. <year>2012</year>;<volume>97</volume>(<issue>1</issue>):<fpage>18007</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1209/0295-5075/97/18007" xlink:type="simple">10.1209/0295-5075/97/18007</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Eom</surname> <given-names>YH</given-names></name>, <name name-style="western"><surname>Fortunato</surname> <given-names>S</given-names></name>. <article-title>Characterizing and modeling citation dynamics</article-title>. <source>PLoS ONE</source>. <year>2011</year>;<volume>6</volume>(<issue>9</issue>):<fpage>e24926</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0024926" xlink:type="simple">10.1371/journal.pone.0024926</ext-link></comment> <object-id pub-id-type="pmid">21966387</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Abbasi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hossain</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Leydesdorff</surname> <given-names>L</given-names></name>. <article-title>Betweenness centrality as a driver of preferential attachment in the evolution of research collaboration networks</article-title>. <source>J Infometrics</source>. <year>2012</year>;<volume>6</volume>(<issue>3</issue>):<fpage>403</fpage>–<lpage>412</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.joi.2012.01.002" xlink:type="simple">10.1016/j.joi.2012.01.002</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Šubelj</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Fiala</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Bajec</surname> <given-names>M</given-names></name>. <article-title>Network-based statistical comparison of citation topology of bibliographic databases</article-title>. <source>Scientific Reports</source>. <year>2014</year>;<volume>4</volume>:<fpage>6496</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/srep06496" xlink:type="simple">10.1038/srep06496</ext-link></comment> <object-id pub-id-type="pmid">25263231</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="other">Leskovec J, Faloutsos C. Sampling from Large Graphs. In: Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. New York, NY, USA; 2006. p. 631–636.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Ahmed</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Neville</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kompella</surname> <given-names>R</given-names></name>. <source>Network Sampling via Edge-based Node Selection with Graph Induction</source>. <publisher-name>Purdue University</publisher-name>; <year>2011</year>. Technical Report <fpage>11</fpage>–<lpage>016</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Cox</surname> <given-names>TF</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>MAA</given-names></name>. <source>Multidimensional Scaling</source>. <publisher-loc>Florida</publisher-loc>: <publisher-name>CRC Press</publisher-name>; <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Martinez</surname> <given-names>WL</given-names></name>, <name name-style="western"><surname>Martinez</surname> <given-names>AR</given-names></name>. <source>Exploratory Data Analysis with MATLAB</source>. <publisher-loc>Abingdon</publisher-loc>: <publisher-name>Chapman and Hall</publisher-name>; <year>2004</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Watts</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Strogatz</surname> <given-names>SH</given-names></name>. <article-title>Collective dynamics of ‘small-world’ networks</article-title>. <source>Nature</source>. <year>1998</year>;<volume>393</volume>(<issue>6684</issue>):<fpage>440</fpage>–<lpage>442</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/30918" xlink:type="simple">10.1038/30918</ext-link></comment> <object-id pub-id-type="pmid">9623998</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Soffer</surname> <given-names>SN</given-names></name>, <name name-style="western"><surname>Vázquez</surname> <given-names>A</given-names></name>. <article-title>Network clustering coefficient without degree-correlation biases</article-title>. <source>Phys Rev E</source>. <year>2005</year>;<volume>71</volume>(<issue>5</issue>):<fpage>057101</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.71.057101" xlink:type="simple">10.1103/PhysRevE.71.057101</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Falagas</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Pitsouni</surname> <given-names>EI</given-names></name>, <name name-style="western"><surname>Malietzis</surname> <given-names>GA</given-names></name>, <name name-style="western"><surname>Pappas</surname> <given-names>G</given-names></name>. <article-title>Comparison of PubMed, Scopus, Web of Science, and Google Scholar: Strengths and weaknesses</article-title>. <source>FASEB J</source>. <year>2008</year>;<volume>22</volume>(<issue>2</issue>):<fpage>338</fpage>–<lpage>342</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1096/fj.07-9492LSF" xlink:type="simple">10.1096/fj.07-9492LSF</ext-link></comment> <object-id pub-id-type="pmid">17884971</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fiala</surname> <given-names>D</given-names></name>. <article-title>Mining citation information from CiteSeer data</article-title>. <source>Scientometrics</source>. <year>2011</year>;<volume>86</volume>(<issue>3</issue>):<fpage>553</fpage>–<lpage>562</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11192-010-0326-1" xlink:type="simple">10.1007/s11192-010-0326-1</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kastrin</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Rindflesch</surname> <given-names>TC</given-names></name>, <name name-style="western"><surname>Hristovski</surname> <given-names>D</given-names></name>. <article-title>Large-Scale Structure of a Network of Co-Occurring MeSH Terms: Statistical Analysis of Macroscopic Properties</article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>:<fpage>e102188</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0102188" xlink:type="simple">10.1371/journal.pone.0102188</ext-link></comment> <object-id pub-id-type="pmid">25006672</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Yaveroglu</surname> <given-names>ON</given-names></name>, <name name-style="western"><surname>Malod-Dognin</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Davis</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Levnajic</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Janjic</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Karapandza</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>Revealing the Hidden Language of Complex Networks</article-title>. <source>Scientific Reports</source>. <year>2014</year>;<volume>4</volume>:<fpage>4547</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/srep04547" xlink:type="simple">10.1038/srep04547</ext-link></comment> <object-id pub-id-type="pmid">24686408</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Ziliak</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>McCloskey</surname> <given-names>DN</given-names></name>. <source>The Cult of Statistical Significance: How the Standard Error Costs Us Jobs, Justice, and Lives</source>. <publisher-name>The University of Michigan Press</publisher-name>; <year>2008</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Garfield</surname> <given-names>E</given-names></name>. <article-title>Citation indexes for science: A new dimension in documentation through association of ideas</article-title>. <source>Science</source>. <year>1955</year>;<volume>122</volume>(<issue>3159</issue>):<fpage>108</fpage>–<lpage>111</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.122.3159.108" xlink:type="simple">10.1126/science.122.3159.108</ext-link></comment> <object-id pub-id-type="pmid">14385826</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>de Solla Price</surname> <given-names>DJ</given-names></name>. <article-title>Networks of scientific papers</article-title>. <source>Science</source>. <year>1965</year>;<volume>149</volume>:<fpage>510</fpage>–<lpage>515</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.149.3683.510" xlink:type="simple">10.1126/science.149.3683.510</ext-link></comment> <object-id pub-id-type="pmid">14325149</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Ley</surname> <given-names>M</given-names></name>. <chapter-title>The DBLP computer science bibliography: Evolution, research issues, perspectives</chapter-title>. In: <source>Proceedings of the International Symposium on String Processing and Information Retrieval</source>. <publisher-loc>London, UK</publisher-loc>; <year>2002</year>. p. <fpage>1</fpage>–<lpage>10</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McCallum</surname> <given-names>AK</given-names></name>, <name name-style="western"><surname>Nigam</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Rennie</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Seymore</surname> <given-names>K</given-names></name>. <article-title>Automating the construction of Internet portals with machine learning</article-title>. <source>Inform Retrieval</source>. <year>2000</year>;<volume>3</volume>(<issue>2</issue>):<fpage>127</fpage>–<lpage>163</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1023/A:1009953814988" xlink:type="simple">10.1023/A:1009953814988</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ginsparg</surname> <given-names>P</given-names></name>. <article-title>ArXiv at 20</article-title>. <source>Nature</source>. <year>2011</year>;<volume>476</volume>(<issue>7359</issue>):<fpage>145</fpage>–<lpage>147</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/476145a" xlink:type="simple">10.1038/476145a</ext-link></comment> <object-id pub-id-type="pmid">21833066</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="other">Blagus N, Šubelj L, Bajec M. Improving the accuracy of network sampling with subgraph induction. submitted to Physica A. 2014;p. 17.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pastor-Satorras</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Vázquez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vespignani</surname> <given-names>A</given-names></name>. <article-title>Dynamical and correlation properties of the Internet</article-title>. <source>Phys Rev Lett</source>. <year>2001</year>;<volume>87</volume>(<issue>25</issue>):<fpage>258701</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.87.258701" xlink:type="simple">10.1103/PhysRevLett.87.258701</ext-link></comment> <object-id pub-id-type="pmid">11736611</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Foster</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Foster</surname> <given-names>DV</given-names></name>, <name name-style="western"><surname>Grassberger</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Paczuski</surname> <given-names>M</given-names></name>. <article-title>Edge direction and the structure of networks</article-title>. <source>P Natl Acad Sci USA</source>. <year>2010</year>;<volume>107</volume>(<issue>24</issue>):<fpage>10815</fpage>–<lpage>10820</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0912671107" xlink:type="simple">10.1073/pnas.0912671107</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Newman</surname> <given-names>MEJ</given-names></name>. <article-title>Mixing patterns in networks</article-title>. <source>Phys Rev E</source>. <year>2003</year>;<volume>67</volume>(<issue>2</issue>):<fpage>026126</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.67.026126" xlink:type="simple">10.1103/PhysRevE.67.026126</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ravasz</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Somera</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Mongru</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Oltvai</surname> <given-names>ZN</given-names></name>, <name name-style="western"><surname>Barabási</surname> <given-names>AL</given-names></name>. <article-title>Hierarchical organization of modularity in metabolic networks</article-title>. <source>Science</source>. <year>2002</year>;<volume>297</volume>(<issue>5586</issue>):<fpage>1551</fpage>–<lpage>1555</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1073374" xlink:type="simple">10.1126/science.1073374</ext-link></comment> <object-id pub-id-type="pmid">12202830</object-id></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>de Nooy</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Mrvar</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Batagelj</surname> <given-names>V</given-names></name>. <source>Exploratory Social Network Analysis with Pajek</source>. <publisher-loc>Cambridge</publisher-loc>: <publisher-name>Cambridge University Press</publisher-name>; <year>2005</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Leskovec</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kleinberg</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Faloutsos</surname> <given-names>C</given-names></name>. <article-title>Graph evolution: Densification and shrinking diameters</article-title>. <source>ACM Trans Knowl Discov Data</source>. <year>2007</year>;<volume>1</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>41</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1145/1217299.1217301" xlink:type="simple">10.1145/1217299.1217301</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="other">Palmer CR, Gibbons PB, Faloutsos C. ANF: A fast and scalable tool for data mining in massive graphs. In: Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. New York, NY, USA; 2002. p. 81–90.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Cook</surname> <given-names>RD</given-names></name>, <name name-style="western"><surname>Weisberg</surname> <given-names>S</given-names></name>. <source>Residuals and Influence in Regression</source>. <publisher-loc>New York</publisher-loc>: <publisher-name>Chapman and Hall</publisher-name>; <year>1982</year>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fisher</surname> <given-names>RA</given-names></name>. <article-title>Frequency distribution of the values of the correlation coefficient in samples from an indefinitely large population</article-title>. <source>Biometrika</source>. <year>1915</year>;<volume>10</volume>(<issue>4</issue>):<fpage>507</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2331838" xlink:type="simple">10.2307/2331838</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Friedman</surname> <given-names>M</given-names></name>. <article-title>The use of ranks to avoid the assumption of normality implicit in the analysis of variance</article-title>. <source>J Am Stat Assoc</source>. <year>1937</year>;<volume>32</volume>(<issue>200</issue>):<fpage>675</fpage>–<lpage>701</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/01621459.1937.10503522" xlink:type="simple">10.1080/01621459.1937.10503522</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref055">
+<label>55</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Demšar</surname> <given-names>J</given-names></name>. <article-title>Statistical comparisons of classifiers over multiple data sets</article-title>. <source>J Mach Learn Res</source>. <year>2006</year>;<volume>7</volume>:<fpage>1</fpage>–<lpage>30</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0127390.ref056">
+<label>56</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Friedman</surname> <given-names>M</given-names></name>. <article-title>A comparison of alternative tests of significance for the problem of m rankings</article-title>. <source>Ann Math Stat</source>. <year>1940</year>;<volume>11</volume>(<issue>1</issue>):<fpage>86</fpage>–<lpage>92</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/aoms/1177731944" xlink:type="simple">10.1214/aoms/1177731944</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0127390.ref057">
+<label>57</label>
+<mixed-citation xlink:type="simple" publication-type="other">Nemenyi PB. Distribution-free Multiple Comparisons [PhD thesis]. Princeton University; 1963.</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

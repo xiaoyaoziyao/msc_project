@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-16-01952</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1005491</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Gene expression</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Nucleic acids</subject><subj-group><subject>RNA</subject><subj-group><subject>Messenger RNA</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Gene expression</subject><subj-group><subject>DNA transcription</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Gene expression</subject><subj-group><subject>Gene regulation</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Population genetics</subject><subj-group><subject>Gene pool</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Population genetics</subject><subj-group><subject>Gene pool</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Population biology</subject><subj-group><subject>Population genetics</subject><subj-group><subject>Gene pool</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>DNA-binding proteins</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>DNA-binding proteins</subject><subj-group><subject>Transcription factors</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Genetics</subject><subj-group><subject>Gene expression</subject><subj-group><subject>Gene regulation</subject><subj-group><subject>Transcription factors</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Regulatory proteins</subject><subj-group><subject>Transcription factors</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Cell biology</subject><subj-group><subject>Cell physiology</subject><subj-group><subject>Cell binding</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Effect of transcription factor resource sharing on gene expression noise</article-title>
+<alt-title alt-title-type="running-head">Effect of transcription factor resource sharing on gene expression noise</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Das</surname> <given-names>Dipjyoti</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Dey</surname> <given-names>Supravat</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Brewster</surname> <given-names>Robert C.</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Choubey</surname> <given-names>Sandeep</given-names></name>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Molecular, Cellular and Developmental Biology, Yale University, New Haven, Connecticut, United States of America</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Laboratoire Charles Coulomb, Université de Montpellier and CNRS, Montpellier, France</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Program in Systems Biology, University of Massachusetts Medical School, Worcester, Massachusetts, United States of America</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Department of Microbiology and Physiological Systems, University of Massachusetts Medical School, Worcester, Massachusetts, United States of America</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>FAS Center for Systems Biology, Harvard University, Cambridge, Massachusetts, United States of America</addr-line>
+</aff>
+<aff id="aff006">
+<label>6</label>
+<addr-line>Department of Molecular and Cellular Biology, Harvard University, Cambridge, Massachusetts, United States of America</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Guigo</surname> <given-names>Roderic</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Center for Genomic Regulation, SPAIN</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con">
+<p>
+<list list-type="simple">
+<list-item>
+<p><bold>Conceptualization:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Data curation:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Formal analysis:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Funding acquisition:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Investigation:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Methodology:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Project administration:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Resources:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Software:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Supervision:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Validation:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Visualization:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Writing – original draft:</bold> DD SD RCB SC.</p>
+</list-item>
+<list-item>
+<p><bold>Writing – review &amp; editing:</bold> DD SD RCB SC.</p>
+</list-item>
+</list>
+</p>
+</fn>
+<fn fn-type="other" id="econtrib001">
+<p>‡ RCB and SC also contributed equally to this work.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">Robert.Brewster@umassmed.edu</email> (RCB); <email xlink:type="simple">schoubey@fas.harvard.edu</email> (SC)</corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>4</month>
+<year>2017</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>17</day>
+<month>4</month>
+<year>2017</year>
+</pub-date>
+<volume>13</volume>
+<issue>4</issue>
+<elocation-id>e1005491</elocation-id>
+<history>
+<date date-type="received">
+<day>30</day>
+<month>11</month>
+<year>2016</year>
+</date>
+<date date-type="accepted">
+<day>31</day>
+<month>3</month>
+<year>2017</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2017</copyright-year>
+<copyright-holder>Das et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1005491"/>
+<abstract>
+<p>Gene expression is intrinsically a stochastic (noisy) process with important implications for cellular functions. Deciphering the underlying mechanisms of gene expression noise remains one of the key challenges of regulatory biology. Theoretical models of transcription often incorporate the kinetics of how transcription factors (TFs) interact with a single promoter to impact gene expression noise. However, inside single cells multiple identical gene copies as well as additional binding sites can compete for a limiting pool of TFs. Here we develop a simple kinetic model of transcription, which explicitly incorporates this interplay between TF copy number and its binding sites. We show that TF sharing enhances noise in mRNA distribution across an isogenic population of cells. Moreover, when a single gene copy shares it’s TFs with multiple competitor sites, the mRNA variance as a function of the mean remains unaltered by their presence. Hence, all the data for variance as a function of mean expression collapse onto a single master curve independent of the strength and number of competitor sites. However, this result does not hold true when the competition stems from multiple copies of the same gene. Therefore, although previous studies showed that the mean expression follows a universal master curve, our findings suggest that different scenarios of competition bear distinct signatures at the level of variance. Intriguingly, the introduction of competitor sites can transform a unimodal mRNA distribution into a multimodal distribution. These results demonstrate the impact of limited availability of TF resource on the regulation of noise in gene expression.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author summary</title>
+<p>Genetically identical cells, even when they are exposed to the same environmental conditions, display incredible diversity. Gene expression noise is attributed to be a key source of this phenotypic diversity. Transcriptional dynamics is a dominant source of expression noise. Although scores of theoretical and experimental studies have explored how noise is regulated at the level of transcription, most of them focus on the gene specific, cis regulatory elements, such as the number of transcription factor (TF) binding sites, their binding strength, etc. However, how the global properties of transcription, such as the limited availability of TFs impact noise in gene expression remains rather elusive. Here we build a theoretical model that incorporates the effect of limiting TF pool on gene expression noise. We find that competition between genes for TFs leads to enhanced variability in mRNA copy number across an isogenic population. Moreover, for gene copies sharing TFs with other competitor sites, mRNA variance as a function of the mean shows distinct imprints for one gene copy and multiple gene copies respectively. This stands in sharp contrast to the universal behavior found in mean expression irrespective of the different scenarios of competition. An interesting feature of competition is that introduction of competitor sites can transform a unimodal mRNA distribution into a multimodal distribution, which could lead to phenotypic variability.</p>
+</abstract>
+<funding-group>
+<funding-statement>The authors received no specific funding for this work.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="1"/>
+<page-count count="20"/>
+</counts>
+<custom-meta-group>
+<custom-meta>
+<meta-name>PLOS Publication Stage</meta-name>
+<meta-value>vor-update-to-uncorrected-proof</meta-value>
+</custom-meta>
+<custom-meta>
+<meta-name>Publication Update</meta-name>
+<meta-value>2017-05-01</meta-value>
+</custom-meta>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Every living organism regulates gene expression through the action of transcription factors (TFs), enabling the cell to respond to intra-cellular and environmental cues [<xref ref-type="bibr" rid="pcbi.1005491.ref001">1</xref>]. The binding and unbinding of both RNAP molecules and the TFs (DNA binding proteins that abet or hinder RNAP binding) to the promoter [<xref ref-type="bibr" rid="pcbi.1005491.ref002">2</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref004">4</xref>], are inherently stochastic processes and this stochasticity is manifested in the output of gene expression [<xref ref-type="bibr" rid="pcbi.1005491.ref005">5</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref011">11</xref>]. Consequently, at the single cell level, the numbers of mRNA and protein molecules fluctuate in time and across populations. Such fluctuations in expression can be detrimental to cell fitness [<xref ref-type="bibr" rid="pcbi.1005491.ref012">12</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref014">14</xref>] and the development of multicellular organisms [<xref ref-type="bibr" rid="pcbi.1005491.ref015">15</xref>]. On the contrary, noisy expression can benefit a population of genetically identical cells by creating phenotypic heterogeneity [<xref ref-type="bibr" rid="pcbi.1005491.ref016">16</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref021">21</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref021">21</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref030">30</xref>]. This raises the question of how noise in gene expression is regulated [<xref ref-type="bibr" rid="pcbi.1005491.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref032">32</xref>]. Over the past decade or so, theorists have sought to unravel how gene expression noise is regulated [<xref ref-type="bibr" rid="pcbi.1005491.ref033">33</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref040">40</xref>]. Meanwhile, experimentalists have measured noise at both the mRNA and protein level in prokaryotes [<xref ref-type="bibr" rid="pcbi.1005491.ref041">41</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref045">45</xref>] and eukaryotes [<xref ref-type="bibr" rid="pcbi.1005491.ref046">46</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref048">48</xref>], in order to systematically test the predictions of these models, and refine our understanding.</p>
+<p>Models of transcription quintessentially hinge on the details of the promoter architecture such as the number and affinity of TF binding sites and relative binding positions on the gene [<xref ref-type="bibr" rid="pcbi.1005491.ref039">39</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref049">49</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref054">54</xref>]. Most of these theoretical models implicitly assume that the number of TFs is in excess with respect to the number of its binding sites in the cell. However, inside the cell this assumption often breaks down. For example, TFs get shared by multiple gene copies, in highly replicated viral DNA genes [<xref ref-type="bibr" rid="pcbi.1005491.ref055">55</xref>], genes expressed on plasmids [<xref ref-type="bibr" rid="pcbi.1005491.ref056">56</xref>], and in multiple identical copies on the chromosome [<xref ref-type="bibr" rid="pcbi.1005491.ref057">57</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref061">61</xref>]. Furthermore, the majority of TFs are entrusted with the regulation of multiple genes; for instance, cAMP receptor protein (CRP) is reported to have nearly 400 binding sites per <italic>E. coli</italic> genome copy [<xref ref-type="bibr" rid="pcbi.1005491.ref062">62</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref063">63</xref>]. It is therefore crucial to predict gene expression noise due to limited availability of TF resource, in order to dissect how the sharing of TFs among multiple genes contributes to noise.</p>
+<p>Some studies have explored the interplay of TF sharing between genes and other competing binding sites in different scenarios [<xref ref-type="bibr" rid="pcbi.1005491.ref044">44</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref064">64</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref072">72</xref>]. For instance, in a recent study, Rydenfelt et al. [<xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>] have theoretically explored the effect of TF sharing on the mean level of gene expression, which has since been verified experimentally [<xref ref-type="bibr" rid="pcbi.1005491.ref065">65</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>]. However, few studies have systematically explored how competition, for TF binding influences gene expression noise [<xref ref-type="bibr" rid="pcbi.1005491.ref068">68</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref071">71</xref>]. In one such study, it was found that in the context of a single auto-regulated gene copy, the addition of decoy binding sites can lead to bimodal protein distributions in an isogenic population. Although these studies provide useful insights, nevertheless a general theoretical framework of understanding how TF resource sharing affects noise in gene expression remains in its infancy. The goal of this study is to develop such a framework.</p>
+<p>Here we examine a simple model of transcription, where a number of TFs are shared between a comparable number of gene copies and other competitor sites. We explicitly envisage two different scenarios of competition, demonstrated schematically in <xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1</xref>: (i) multiple identical promoters sharing their TFs (<xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1B</xref>), and (ii) promoters sharing their TFs with other competitor sites (<xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1C</xref>). These competitor sites can represent ‘decoy sites’ or promoters driving expression of other gene species. We find that competition enhances noise across an isogenic population, i.e. the Fano factor (defined as the variance divided by the mean) of the mRNA distribution shows a peak when the TF number becomes comparable to the promoter number. Interestingly when a single promoter copy shares TFs with multiple competitor sites in a cell, we find that there exists a master curve for the mRNA variance as a function of its mean that is independent of the binding, unbinding rates and the number of competitor sites. However, this result does not hold when a number of promoter copies compete for a pool of TFs. In other words, these different scenarios of TF competition bear distinct signatures at the variance level. This finding stands in sharp contrast to the behavior at the mean level [<xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>], which follows a universal master curve irrespective of the nature of competition. We further find that a unimodal mRNA distribution without any competitor sites can be transformed into a multimodal distribution when competitor sites are introduced. For such a multimodal distribution, different modes arise and diminish as the number of competitor sites is systematically tuned. While our model predictions are consistent with recent experimental [<xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>] and theoretical [<xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>] studies at the mean level of expression, we also find that TF competition can have a complex impact on the noise in expression which results in multimodality and a scaling with mean expression level that depends on the source of the competition.</p>
+<fig id="pcbi.1005491.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Different scenarios of competition for a pool of TFs among promoters and other binding sites.</title>
+<p>(A) A single promoter copy in isolation without the presence of any other TF binding sites. (B) Multiple copies of identical promoters competing with each other for the TFs. (C) Promoters compete with other competitor sites for the TFs. Competitor sites can correspond to ‘decoy sites’ or promoters driving expression of other gene species. Therefore, although the competitor sites bind to the TFs, they do not regulate the production of mRNA molecules from the target promoters.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.g001" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Model</title>
+<p>In order to investigate how TF sharing affects cell-to-cell variability at the mRNA level across a population of genetically identical cells, we examine a simple model of transcription, where a number of TFs are shared between a comparable number of identical promoter copies and competitor sites (see <xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1B and 1C</xref>). Moreover, as case studies, we consider two regulatory motifs of transcription in <italic>E. coli</italic> [<xref ref-type="bibr" rid="pcbi.1005491.ref074">74</xref>]: 1) a promoter containing a single binding site where a repressor molecule can bind and hinder transcription, and 2) a promoter consisting of a single binding site where an activator molecule can bind and increase the rate of transcription. These regulatory architectures have been extensively explored in different studies, using the implicit assumption that TFs are in abundance [<xref ref-type="bibr" rid="pcbi.1005491.ref038">38</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref064">64</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref075">75</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref079">79</xref>].</p>
+<p>We construct a general model of transcription, that explicitly incorporates the interplay between TF copy number and its binding sites. To elucidate the model, we first consider a number of identical promoters sharing a pool of TFs, as shown in <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2A</xref> in the absence of any competitor sites. We can easily incorporate the presence of competitor sites in our model, as shown in the later sections. For the sake of generality we discuss the process of TF binding and unbinding generically without regard to their regulatory functions; later we will outline the influence of activators and repressors separately. Let us consider <italic>N</italic><sub>TF</sub> number of TFs being shared by <italic>N</italic><sub>P</sub> number of promoters, where each promoter contains a single TF binding site. A TF binds to a promoter at a rate <italic>k</italic><sub>on</sub>, and it unbinds from it at a rate <italic>k</italic><sub>off</sub> (see <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2A</xref>). For mathematical convenience we view the process of TF binding to a promoter as the formation of a ‘TF-promoter’ complex, and the unbinding of the TF as dissociation of the complex [<xref ref-type="bibr" rid="pcbi.1005491.ref080">80</xref>]. Consequently, complex formation rate per TF per promoter is <italic>k</italic><sub>on</sub>, while dissociation rate per complex is <italic>k</italic><sub>off</sub> (see <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2B</xref>).</p>
+<fig id="pcbi.1005491.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>A kinetic model of transcription, incorporating the TFs’ binding and unbinding to multiple competing promoters.</title>
+<p>(A) The rate of binding of a TF to a promoter is <italic>k</italic><sub>on</sub> and the rate of unbinding of the TF from the promoter is <italic>k</italic><sub>off</sub>. (B) List of possible stochastic transitions leading to either formation or dissociation of ‘TF-promoter’ complexes, and their respective statistical weights. The weights represent the probability that each transition will occur during a time interval, Δ<italic>t</italic>. TF copy number, promoter copy number, and the instantaneous number of complexes are denoted by <italic>N</italic><sub>TF</sub>, <italic>N</italic><sub>P</sub> and <italic>n</italic> respectively. (C) While an activator is bound to a promoter, it promotes the binding of RNAP molecules to the promoter, which subsequently leads to the production of an mRNA molecule at a rate <italic>r</italic>. Each mRNA molecule then decays at a rate <italic>γ</italic>. Here, <italic>m</italic> denotes mRNA copy number. The basal transcription rate, when the activator is not bound to the promoter, is assumed to be zero (see <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref> for a more general model for activators with a nonzero basal rate). (D) List of stochastic transitions leading to changes in mRNA copy number by the action of activators and their respective weights. (E) When a repressor is bound to a promoter, it hinders RNAP binding to the promoter, subsequently blocking mRNA production. However when a promoter is not bound to any repressor molecule, it produces mRNA molecules at a rate <italic>r</italic>, which again subsequently decay at a rate <italic>γ</italic>. (F) List of stochastic transitions leading to changes in mRNA copy number by the action of repressors, with respective weights.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.g002" xlink:type="simple"/>
+</fig>
+<p>The number of TF-promoter complexes determines the transcriptional output. In the case of activators, mRNA production takes place when the activator is bound to a promoter (see <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2C</xref>). Each of the activator-promoter complexes produces mRNA molecules at a rate <italic>r</italic>, which then subsequently degrades at a rate <italic>γ</italic>. Here we have assumed for simplicity that the basal transcription rate, when the promoter is not bound to an activator, is zero, as it is negligible for many activator regulated genes [<xref ref-type="bibr" rid="pcbi.1005491.ref062">62</xref>]. However, all our results still qualitatively hold even when we incorporate a non-zero basal rate of transcription (see Fig D in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). On the other hand, since repressor binding to a promoter hinders the attachment of RNA polymerases to the promoter, each promoter produces mRNA molecules at a rate <italic>r</italic>, only when it is not bound to a repressor, as shown in <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2E</xref>. In the limit of one promoter copy, our model reduces to the well known ON-OFF model [<xref ref-type="bibr" rid="pcbi.1005491.ref075">75</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref081">81</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref084">84</xref>], where the promoter switches between an active and an inactive state, and transcription can ensue only in the active state.</p>
+<p>The above processes can be depicted as trajectories in the space of TF-promoter complex number and mRNA copy number, as shown in <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2B, 2D and 2F</xref>. By employing a stochastic framework, we monitor the time evolution of two random variables: the instantaneous number of TF-promoter complexes, <italic>n</italic>(<italic>t</italic>) and the instantaneous number of mRNA molecules, <italic>m</italic>(<italic>t</italic>). Evidently for activators, the instantaneous mRNA production rate is proportional to the number of complexes (<italic>n</italic>); while for repressors, the mRNA production rate is proportional to the number of unbound promoters (<italic>N</italic><sub>P</sub> − <italic>n</italic>) (compare <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2D and 2F</xref>). Using the master equation approach, we write down the time-evolution equation for the joint probability distribution <italic>P</italic>(<italic>n</italic>, <italic>m</italic>, <italic>t</italic>) of having <italic>n</italic> complexes and <italic>m</italic> mRNA molecules at a time <italic>t</italic>. For instance, the master equation for activators is given by
+<disp-formula id="pcbi.1005491.e001"><alternatives><graphic id="pcbi.1005491.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e001" xlink:type="simple"/><mml:math display="block" id="M1"><mml:mrow><mml:mtable columnalign="left"><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mi>d</mml:mi> <mml:mi>t</mml:mi></mml:mrow></mml:mfrac> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>−</mml:mo> <mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:msub><mml:mi>N</mml:mi> <mml:mtext>P</mml:mtext></mml:msub> <mml:mo>−</mml:mo> <mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>−</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow/></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>+</mml:mo> <mml:mi>r</mml:mi> <mml:mi>n</mml:mi> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>−</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mi>γ</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>m</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow/></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>−</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>−</mml:mo> <mml:mi>n</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:msub><mml:mi>N</mml:mi> <mml:mtext>P</mml:mtext></mml:msub> <mml:mo>−</mml:mo> <mml:mi>n</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mi>r</mml:mi> <mml:mi>n</mml:mi> <mml:mo>+</mml:mo> <mml:mi>γ</mml:mi> <mml:mi>m</mml:mi></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>m</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>The above equation is built by counting all possible steps that lead to either a change in complex number (<italic>n</italic>) or in mRNA copy number (<italic>m</italic>) by one (see trajectories in <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2B and 2D</xref>). Similarly, we could also write the master equation for repressors by combining the trajectories depicted in <xref ref-type="fig" rid="pcbi.1005491.g002">Fig 2B and 2F</xref> (see <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref> for details). In principle, we can obtain the relevant moments of the mRNA distribution from these master equations. However, exact expressions of mean (〈<italic>m</italic>〉) and variance (var(<italic>m</italic>)) of the mRNA distribution can only be obtained for the simplest case of one promoter. For the general case of multiple promoters, deriving exact closed-from expressions for the moments is challenging, because the system of equations for the moments do not close. Nonetheless, we can obtain approximate analytical solutions (see <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref> for details).</p>
+<p>Since we do not have exact analytical solutions for the moments of the mRNA distribution, we simulate the kinetic processes defined above using the Gillespie algorithm [<xref ref-type="bibr" rid="pcbi.1005491.ref085">85</xref>]. This allows us to numerically generate multiple time-traces of the random numbers <italic>n</italic> and <italic>m</italic>, using realistic values of the kinetic rates suitable for <italic>E. coli</italic> promoters (see <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>). From these different time traces, we calculate the values of the mean and variance of the steady state mRNA distribution. The approximate analytical solutions match reasonably well with our simulation data (see Fig A in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). While there is a systematic deviation which results from ignoring higher order terms (beyond second order), these closed form relations can be useful in understanding the qualitative behaviors of these curves, which the analytical solutions do capture (see <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref> for details). Below we summarize our main results, obtained from the Gillespie simulations.</p>
+<table-wrap id="pcbi.1005491.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Kinetic rates that are used in simulations.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1005491.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" style="border-bottom:thick">Kinetic processes</th>
+<th align="center" style="border-bottom:thick">Symbols of rates</th>
+<th align="center" style="border-bottom:thick">Values of rates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Activator/repressor binding</td>
+<td align="center"><italic>k</italic><sub>on</sub></td>
+<td align="center">0.0027<italic>s</italic><sup>−1</sup> (per TF per promoter) [<xref ref-type="bibr" rid="pcbi.1005491.ref042">42</xref>]</td>
+</tr>
+<tr>
+<td align="center">Activator/repressor unbinding</td>
+<td align="center"><italic>k</italic><sub>off</sub></td>
+<td align="center">0.0023<italic>s</italic><sup>−1</sup> (per TF-promoter complex) [<xref ref-type="bibr" rid="pcbi.1005491.ref086">86</xref>]</td>
+</tr>
+<tr>
+<td align="center">mRNA production (transcription)</td>
+<td align="center"><italic>r</italic></td>
+<td align="center">0.33<italic>s</italic><sup>−1</sup> (per ‘activator-bound’ or ‘repressor-free’ promoter) [<xref ref-type="bibr" rid="pcbi.1005491.ref087">87</xref>]</td>
+</tr>
+<tr>
+<td align="center">mRNA decay</td>
+<td align="center"><italic>γ</italic></td>
+<td align="center">0.011<italic>s</italic><sup>−1</sup> (per mRNA) [<xref ref-type="bibr" rid="pcbi.1005491.ref041">41</xref>]</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec004">
+<title>Multiple identical promoters competing for a pool of TFs</title>
+<p>Armed with the framework established above, we first investigate the scenario when multiple identical promoter copies compete for a pool of TFs (as shown in <xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1B</xref>). Our model predicts the effect of TF sharing on the mean (〈<italic>m</italic>〉) and variance (var(<italic>m</italic>)) of the steady-state mRNA distribution. We shall first discuss the case when the TFs act as activators, and then shift our focus to the case of repressors.</p>
+<p>We explore the effect of activator sharing in the fold-change of mean expression, a quantity often measured in bulk assays (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3A</xref>) [<xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>]. Here we define the fold-change as the ratio of the mean expression 〈<italic>m</italic>〉 to its maximum value <italic>N</italic><sub><italic>P</italic></sub>(<italic>r</italic>/<italic>γ</italic>). The mean of the mRNA distribution, increases steadily with activator number, and asymptotically goes towards the value of <italic>N</italic><sub>P</sub>(<italic>r/γ</italic>) (see Fig F in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). In the limit of activator copy number being much greater than the promoter copy number, all the promoters essentially remain bound to activators. Accordingly each of these activator-promoter complexes contributes, on average, <italic>r</italic>/<italic>γ</italic> mRNA molecules, resulting in the production of <italic>N</italic><sub>P</sub>(<italic>r/γ</italic>) mRNA molecules on average, in the steady state. The qualitative behavior of fold-change, which first monotonically increases with activator number and asymptotically approaches one, is in agreement with previous studies [<xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>].</p>
+<fig id="pcbi.1005491.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Our model of TF sharing predicts the behavior of the first two moments of steady-state mRNA distribution across an isogenic population.</title>
+<p>(A) Fold change of the mRNA distribution (defined by 〈<italic>m</italic>〉/(<italic>N</italic><sub>P</sub><italic>r</italic>/<italic>γ</italic>)) as a function of activator number. (B) Variance of mRNA distribution (var(<italic>m</italic>)) versus activator number. Note that the variance peaks when the activator number equals the promoter number. (C) Fano factor (defined by var(<italic>m</italic>)/〈<italic>m</italic>〉) also exhibit a peak as a function of activator number, when the activator number equals the promoter number. (D) Fold change of expression as a function of repressor number. (E) Variance of mRNA distribution versus repressor number. Just like activators, the variance peaks when repressor number equals the promoter number. (F) Fano factor versus repressor number, showing peaks when the repressor number becomes comparable, but slightly higher than the promoter number. In all the plots, symbols represent data from numerical simulations, which are connected by smooth dashed lines to guide the eyes. The parameter values are as specified in <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.g003" xlink:type="simple"/>
+</fig>
+<p>In contrast to the fold-change, variance is a non-monotonic function of the number of activator molecules, which peaks when the number of activators equals the promoter copy-number (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3B</xref> and also see Fig F in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). The origin of the peak in variance lies in the activator-promoter complex number variability. In fact the variance in complex number also peaks when the promoter copy number equals activator copy number (see Fig B in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). In other words, when activator number is comparable to promoter copy-number, there is enhanced variability in complex number stemming from the stochastic complex formation and dissociation processes, which subsequently gets reflected at the level of mRNA distribution. On the contrary, if the numbe of activators is either much greater or much less than the promoter number (in the limits of <italic>N</italic><sub>TF</sub> ≫ <italic>N</italic><sub>P</sub> and <italic>N</italic><sub>TF</sub> ⪡ <italic>N</italic><sub>P</sub>), the effect of competition disappears, as all the promoters remain either bound or unbound to activators. If we consider the example of activator number being much higher than promoter number, all the identical gene copies driven by the promoters will be expressed all the time. This will lead to each gene copy producing mRNA molecules which is Poisson distributed across an isogenic population [<xref ref-type="bibr" rid="pcbi.1005491.ref054">54</xref>]. Hence the distribution of all the mRNAs produced from all the identical gene copies will be given by the sum of the numbers of mRNA produced from every gene, leading to a reduction in mRNA variability and a sharply peaked distribution. We further show in <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3C</xref> the effect of activator sharing on the Fano factor (var(<italic>m</italic>)/〈<italic>m</italic>〉). Just like the mRNA variance, the Fano factor also exhibits non-monotonicity as a function of activator number, and peaks when the activator and promoter numbers become equal.</p>
+<p>Turning our attention to repressors, we find an analogous result where instead of gene expression being proportional to the number of activator-promoter complexes; it is now proportional to the number of promoters not bound to repressors. As such, we find that the fold-change, defined by 〈<italic>m</italic>〉/(<italic>N</italic><sub>P</sub><italic>r</italic>/<italic>γ</italic>), monotonically decreases with increasing repressor number, and asymptotically approaches zero (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3D</xref>). Moreover, the variance is a non-monotonic function of repressor number, and exhibits a sharp peak when the number of repressors equal promoter copy number, as was the case for activators (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3E</xref>). As before the appearance of these peaks can be understood from a corresponding enhancement in complex number variability (see Fig B in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). Finally, the non-monotonic behavior of Fano factor, found in the case of activators, also persists for repressors, when the Fano factor is plotted as a function of the repressor number (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3D</xref>). However, there is a distinction between the cases of activators and repressors at the level of Fano factor. Unlike the activators, the Fano factor for repressors do not peak exactly when the repressor number equals the promoter number; rather the peaks appear when the repressor number is slightly greater than (although comparable to) the promoter number (see <xref ref-type="fig" rid="pcbi.1005491.g003">Fig 3D</xref>). These behaviors are very robust with respect to changes in the different parameter values associated with the model (for details see the <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>, Figs G-I).</p>
+<p>In summary, a key prediction of our model is that TF sharing among identical promoters leads to a substantial increase in gene expression noise when TF and promoter copy number become comparable to each other. Sharp peaks arise in mRNA variance and Fano factor as a function of TF copy number, which bears the signature of pronounced competition.</p>
+</sec>
+<sec id="sec005">
+<title>Promoters sharing TFs with other competitor sites</title>
+<p>Inside single cells, TFs often promiscuously bind to different competitor sites [<xref ref-type="bibr" rid="pcbi.1005491.ref042">42</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref088">88</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref089">89</xref>] such as ‘decoy sites’ or promoters driving expression of other gene species, compelling a promoter of interest to compete with these sites for a limiting pool of TFs (as shown in <xref ref-type="fig" rid="pcbi.1005491.g001">Fig 1C</xref>). Recent bulk studies have theoretically [<xref ref-type="bibr" rid="pcbi.1005491.ref068">68</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>] and experimentally [<xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref090">90</xref>] studied this scenario inside bacterial cells, by synthetically integrating multiple competitor sites at several chromosomal locations or on plasmids.</p>
+<p>To explore how this interplay affects the cell-to-cell variability at the mRNA level, we incorporate TF binding to competitor sites, and extend our model as described before to consider <italic>N</italic><sub>P</sub> number of promoters competing for <italic>N</italic><sub>TF</sub> number of TFs in the presence of <italic>N</italic><sub>C</sub> number of competitor sites (shown in <xref ref-type="fig" rid="pcbi.1005491.g004">Fig 4A</xref>). Consequently, every TF can bind either to a promoter or to a competitor site. The rates at which a TF binds to a competitor site and unbinds from it are given by <inline-formula id="pcbi.1005491.e002"><alternatives><graphic id="pcbi.1005491.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e002" xlink:type="simple"/><mml:math display="inline" id="M2"><mml:msubsup><mml:mi>k</mml:mi> <mml:mtext>on</mml:mtext> <mml:mi mathvariant="normal">C</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> and <inline-formula id="pcbi.1005491.e003"><alternatives><graphic id="pcbi.1005491.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e003" xlink:type="simple"/><mml:math display="inline" id="M3"><mml:msubsup><mml:mi>k</mml:mi> <mml:mtext>off</mml:mtext> <mml:mi mathvariant="normal">C</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> respectively. We first discuss how the competition of a single promoter copy (<italic>N</italic><sub>P</sub> = 1) with multiple competitor sites affects the variability at the mRNA level.</p>
+<fig id="pcbi.1005491.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Prediction of mRNA variance as a function of mean, when the promoters share TFs with other competitor sites.</title>
+<p>(A) Schematic of a single target promoter sharing TFs with multiple competitor sites. (B) The variance of mRNA molecules per promoter (var(<italic>m</italic>)/<italic>N</italic><sub>P</sub>) versus the mean per promoter (〈<italic>m</italic>〉/<italic>N</italic><sub>P</sub>), when the TFs act as activators. (C) The mRNA variance per promoter versus mean per promoter when the TFs act as repressors. In both the subfigures B and C, different numerical data points are obtained for various numbers of competitor sites by varying the TF copy number. Note that all the data for a single target promoter collapse onto a master curve (black curve). Data for a single target promoter is shown by closed symbols, and the data for two target promoters are shown by open symbols. The parameters related to the promoters (<italic>k</italic><sub>on</sub>, <italic>k</italic><sub>off</sub>, <italic>r</italic>, <italic>γ</italic>) are taken from the <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>, while the number of competitor sites are systematically varied and listed in the figures. The master curves are predictions from <xref ref-type="disp-formula" rid="pcbi.1005491.e007">Eq 3</xref>.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.g004" xlink:type="simple"/>
+</fig>
+<p>A key prediction of this model is that for both activators and repressors, the variance as a function of the mean remains unaltered, regardless of the number and the strength of the competitor sites, as shown in <xref ref-type="fig" rid="pcbi.1005491.g004">Fig 4B and 4C</xref> (also see Fig E in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). In other words, when we tune the variance as a function of the mean by altering TF number <italic>N</italic><sub><italic>TF</italic></sub>, all the data points for variance, generated from numerical simulations using different parameter values for the number of competitor sites collapse onto a single master curve. This result holds true even for different TF binding/unbinding rates to the competitor sites (please see Fig E in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). In order to develop an intuition for this result, we employ already existing analytical results involving TF regulating a single promoter copy [<xref ref-type="bibr" rid="pcbi.1005491.ref037">37</xref>]. In fact, when the number of competitor sites is zero, it is easy to obtain exact analytical expressions for the variance and the mean from the master equation (<xref ref-type="disp-formula" rid="pcbi.1005491.e001">Eq 1</xref>), which are given by,
+<disp-formula id="pcbi.1005491.e004"><alternatives><graphic id="pcbi.1005491.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e004" xlink:type="simple"/><mml:math display="block" id="M4"><mml:mrow><mml:mtable columnalign="left"><mml:mtr columnalign="left"><mml:mtd columnalign="right"><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfrac><mml:mi>r</mml:mi> <mml:mi>γ</mml:mi></mml:mfrac> <mml:mfrac><mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow/></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="right"><mml:mrow><mml:mtext>var</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac> <mml:mfrac><mml:mi>r</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>γ</mml:mi> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mtext> </mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mtext>for activators</mml:mtext> <mml:mo stretchy="false">)</mml:mo> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="right"><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfrac><mml:mi>r</mml:mi> <mml:mi>γ</mml:mi></mml:mfrac> <mml:mfrac><mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac> </mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow/></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="right"><mml:mrow><mml:mtext>var</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac> <mml:mfrac><mml:mi>r</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>γ</mml:mi> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mo> </mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mtext>for repressors</mml:mtext> <mml:mo stretchy="false">)</mml:mo> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math></alternatives> <label>(2)</label></disp-formula></p>
+<p>It is conceivable from the above analytical expressions, that both the variance and the mean can be expressed as simple functions of an ‘effective’ binding rate of the TFs to the promoter, <inline-formula id="pcbi.1005491.e005"><alternatives><graphic id="pcbi.1005491.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e005" xlink:type="simple"/><mml:math display="inline" id="M5"><mml:mrow><mml:msubsup><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow> <mml:mtext>eff</mml:mtext></mml:msubsup> <mml:mo>=</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mtext>on</mml:mtext></mml:msub> <mml:msub><mml:mi>N</mml:mi> <mml:mtext>TF</mml:mtext></mml:msub></mml:mrow></mml:math></alternatives></inline-formula> (also see Eq. 14-15 in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). The presence of the competitor sites essentially modifies the TF pool as seen by the promoter i.e. the effective binding rate of the TFs to the promoter without altering any of the other parameters such as, <italic>k</italic><sub>off</sub>, <italic>r</italic> and <italic>γ</italic>. Hence we can express the variance as a function of the mean by eliminating the dependence of these functions on the effective binding rate, <inline-formula id="pcbi.1005491.e006"><alternatives><graphic id="pcbi.1005491.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e006" xlink:type="simple"/><mml:math display="inline" id="M6"><mml:msubsup><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow> <mml:mtext>eff</mml:mtext></mml:msubsup></mml:math></alternatives></inline-formula>. For both the activators and repressors, we can thus express the variances as functions of the means given by,
+<disp-formula id="pcbi.1005491.e007"><alternatives><graphic id="pcbi.1005491.e007g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e007" xlink:type="simple"/><mml:math display="block" id="M7"><mml:mrow><mml:mtable columnalign="left"><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow><mml:mtext>var</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow> <mml:msup><mml:mrow><mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>r</mml:mi> <mml:mo>/</mml:mo> <mml:mi>γ</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>−</mml:mo> <mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow></mml:mrow> <mml:mo>]</mml:mo></mml:mrow></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mi>γ</mml:mi></mml:mrow> <mml:mrow><mml:mi>γ</mml:mi> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>r</mml:mi> <mml:mo>/</mml:mo> <mml:mi>γ</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>−</mml:mo> <mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>r</mml:mi> <mml:mo>/</mml:mo> <mml:mi>γ</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mtext>for activators</mml:mtext></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow><mml:mtext>var</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:msup><mml:mrow><mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>r</mml:mi> <mml:mo>/</mml:mo> <mml:mi>γ</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>−</mml:mo> <mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mi>γ</mml:mi></mml:mrow> <mml:mrow><mml:mi>γ</mml:mi> <mml:mrow><mml:mo>〈</mml:mo> <mml:mi>m</mml:mi> <mml:mo>〉</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mi>r</mml:mi> <mml:mo>/</mml:mo> <mml:mi>γ</mml:mi></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>off</mml:mtext></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mtext>for repressors</mml:mtext></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives> <label>(3)</label></disp-formula></p>
+<p>These are the functional forms of the master curves, which exactly match the collapsed data, as shown in <xref ref-type="fig" rid="pcbi.1005491.g004">Fig 4B and 4C</xref>. In other words, for a single promoter copy, noise at the mRNA level changes only as a function of the mean, irrespective of whether the promoter of interest is competing for a pool of TFs with competitor sites or not. Moreover, this result holds true even when there exists a basal rate of transcription for promoters not bound to activators (see Fig E in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). This highlights an intriguing prediction for transcriptional noise in the face of competition; the noise depends only on the mean, and it is determined solely by an effective binding rate of the TFs to that promoter, irrespective of the interaction of the TFs with the competitor sites. In fact this result also implies that variance as a function of the mean cannot be used as a signature to distinguish scenarios where a single promoter copy is in competition for a pool of TF with other competitor sites.</p>
+<p>Next, we investigate the case of multiple promoter copies competing for a pool of TFs with a number of competitor sites. Our model predicts that the collapse, as observed in the variance as a function of the mean for a single promoter copy does not hold anymore. To explicate this further, we consider the hypothetical situation of two promoter copies, competing with other competitor sites. When we systematically tune the number of competitor sites and using gillespie simulations obtain the variance as a function of the mean, we find that the different curves, defining the variance per promoter as a function of the mean per promoter, no longer collapse onto a single master curve, as shown in <xref ref-type="fig" rid="pcbi.1005491.g004">Fig 4B and 4C</xref> (open symbols). We note that the TF copy number variation, affects mRNA production from both the promoter copies. Hence the numbers of mRNAs produced from the two copies become correlated [<xref ref-type="bibr" rid="pcbi.1005491.ref073">73</xref>]. Owing to this correlation, the mean and variance cannot be simply expressed in terms of some effective variable, such as <italic>k</italic><sub>on</sub><italic>N</italic><sub>TF</sub>, as before (see Eq. 17 in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>, where nonlinear terms, like <inline-formula id="pcbi.1005491.e008"><alternatives><graphic id="pcbi.1005491.e008g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005491.e008" xlink:type="simple"/><mml:math display="inline" id="M8"><mml:mrow><mml:msubsup><mml:mi>k</mml:mi> <mml:mrow><mml:mtext>on</mml:mtext></mml:mrow> <mml:mn>2</mml:mn></mml:msubsup> <mml:msubsup><mml:mi>N</mml:mi> <mml:mrow><mml:mtext>TF</mml:mtext></mml:mrow> <mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula>, appear in the expressions). However, in the limit of the TF copy number or the number of competitor sites becoming much greater than one (i.e. <italic>N</italic><sub>TF</sub> ≫ 1 or <italic>N</italic><sub>C</sub> ≫ 1), the correlation between the number of mRNAs produced from different promoter copies become negligible. In both these limits the data for variance per promoter versus mean per promoter again fall on the master curve obtained for a single promoter copy, signifying that the promoters behave independently (see <xref ref-type="fig" rid="pcbi.1005491.g004">Fig 4B and 4C</xref>).</p>
+</sec>
+<sec id="sec006">
+<title>Introduction of competitor sites leads to multimodal mRNA distribution</title>
+<p>The observations in the last two sections suggest that the mRNA distribution passes through an interesting regime when the TF number is comparable to the number of binding sites (promoter copies and competitor sites). In order to examine the features of mRNA distribution, we consider activator sharing between multiple promoter copies driving the expression of the same target gene. We find that multimodal mRNA distributions arise as activator number is tuned for a given number of promoter copies (see <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5A</xref>), when the binding and unbinding rates of activators (<italic>k</italic><sub>on</sub> and <italic>k</italic><sub>off</sub> respectively) to the promoters are much slower compared to the mRNA production and degradation rates (<italic>r</italic> and <italic>γ</italic> respectively)(see <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>). Multi-modal mRNA distribution implies that mRNA molecules are present in multiple distinct abundances across an isogenic cell population. The appearance of multimodality at the mRNA level can be intuited by examining the steady state activator-promoter complex number distribution, since mRNA production is directly proportional to the number of activator-promoter complexes. In order to elucidate this point further, we consider the scenario when there are three activator copies, shared by two promoters. As evident, we can have three possible values of the complex number: zero, one or two. Since the binding and unbinding of the activator molecule to the promoters are much slower than the mRNA production and degradation rates, the promoters remain in activator bound and unbound states for a long time, such that sampling of mRNA molecules across a population can capture the effect of distinct relative abundances. Consequently in a genetically identical cell population, we may find three sub-populations, with one population having one complex producing ∼<italic>r</italic>/<italic>γ</italic> amount of mRNA molecules on average, another population having two complexes producing ∼2<italic>r</italic>/<italic>γ</italic> amount of mRNA molecules on average; and the other population having zero mRNA molecules on average due to the absence of any activator-promoter complexes. However, for our particular choice of parameters, the relative probability of having zero complexes becomes much smaller than having one or two complexes. Consequently the peak at zero vanishes, and we obtain a bi-modal mRNA distribution with two peaks, approximately at 2<italic>r</italic>/<italic>γ</italic> and <italic>r</italic>/<italic>γ</italic> (see the blue curve in <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5A</xref>). Nevertheless, with suitable choices of parameters one could recover all the three modes (see Fig J in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). In the limit of activator copy number being much greater than the promoter copy number, all the promoters are essentially occupied and the mRNA distribution approaches a uni-modal distribution, sharply peaked around <italic>N</italic><sub>P</sub><italic>r</italic>/<italic>γ</italic> (<italic>N</italic><sub>P</sub> being the number of promoter copies). For identical promoter copies competing for repressor molecules, we again find bi-modal mRNA distribution in certain parameter regime, as shown in <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5B</xref>.</p>
+<fig id="pcbi.1005491.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005491.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Introduction of competitor sites can lead to multi-modal mRNA distribution.</title>
+<p>(A-B) The steady-state number distributions of mRNA molecules produced by two identical promoters are shown in absence of any competitor sites, with varying number of activators (A) and repressors (B). The kinetic rates are taken from <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>. Insets: The mRNA distributions with a faster TF binding rate (<italic>k</italic><sub>on</sub> = 0.027<italic>s</italic><sup>-1</sup>) than the mRNA degradation rate (<italic>γ</italic> = 0.011<italic>s</italic><sup>−1</sup>). Other parameters are as specified in <xref ref-type="table" rid="pcbi.1005491.t001">Table 1</xref>. (C-D) The steady-state mRNA distributions for two identical promoters are shown in presence of competitor sites, when the TFs either act as activators (C) or repressors (D). For these plots, we choose a faster TF binding rate than mRNA degradation rate (as in the insets of A, B) such that the distributions are unimodal in absence of any competitor sites. The number of competitor sites is increased systematically keeping a fixed number of TFs (<italic>N</italic><sub>TF</sub> = 3). For simplicity we assume that the TF binding and unbinding rates to the promoters are the same as to the competitor sites.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.g005" xlink:type="simple"/>
+</fig>
+<p>The appearance of bimodal distribution is known theoretically for a single ‘two-state’ promoter switching between ‘on’ and ‘off’ states, when the state switching rates are slower than mRNA production and degradation rates [<xref ref-type="bibr" rid="pcbi.1005491.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref091">91</xref>]. The fact that we consider more than one competing identical promoters leads to the possibility of obtaining more than two modes as we tune the TF copy number, since it allows for the formation of more than one TF-promoter complex. However, it is to be noted that multimodality can be observed only for a certain parameter regime, namely when the binding and unbinding rates of the TFs are much slower than mRNA production and degradation rates ({<italic>r</italic>, <italic>γ</italic>} &gt; {<italic>k</italic><sub>on</sub>, <italic>k</italic><sub>off</sub>}). When this stringent condition is met, sharing of TFs among promoters alters the relative proportion of the different modes, making them either more or less prominent. On the other hand, if the condition is not met, the distribution becomes unimodal. For example, see the inset of <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5A and 5B</xref>, where we choose the TF binding rate <italic>k</italic><sub>on</sub> to be higher than the mRNA degradation rate <italic>γ</italic>.</p>
+<p>Next, we investigate how the presence of competitor sites affects the distribution of mRNAs produced by multiple copies of a promoter of interest. In the case of activator sharing, one of the key findings is that the introduction of competitor sites can lead to multi-modality even when the binding rate of TFs to the promoter is faster than the degradation rate of the mRNA. In order to explain this further let us consider the example discussed above, where two competing promoters of interest produce a unimodal mRNA distribution in the absence of any competitor sites (<xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5A</xref>, inset). By systematically increasing the number of competitor sites, we find that the unimodal mRNA distribution transforms into a multimodal distribution (see <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5C</xref>). This is because the activators can now also bind to the competitor sites, restricting the pool of freely available activators (ones that are not bound to any binding sites). Since the free activator number is restricted due to competition, the promoters can stay in unoccupied states for sufficiently long time, even when the binding rate of the activators are faster than the mRNA degradation rate. Hence the only requirement for observing multimodality is that the unbinding rate of activators to the promoter has to be slower than mRNA degradation rate, such that promoters can also stay occupied for a sufficiently long time, allowing the system to again sample the relative abundances of mRNA molecules. It should be noted that for quite a few known TFs, such as LacI, or lambda CI repressors in <italic>E. Coli</italic>, the unbinding rate from the promoter is slower or comparable to the mRNA degradation rate [<xref ref-type="bibr" rid="pcbi.1005491.ref042">42</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref092">92</xref>]. This is also true for many TFs in yeast [<xref ref-type="bibr" rid="pcbi.1005491.ref093">93</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref095">95</xref>]. Please see the Methods section for a comprehensive discussion of the rates we choose.</p>
+<p>Similarly, for two promoter copies sharing repressors with a number of competitor sites, our model predicts emergence of multi-modal mRNA distribution, as shown in <xref ref-type="fig" rid="pcbi.1005491.g005">Fig 5D</xref>. Just like the case of activators, different modes of mRNA distribution arise and diminish as the number of competitor sites is tuned. In the results above, we assumed for simplicity that the TFs have the same binding and unbinding rate to both the promoters and competitor sites. Nevertheless, our conclusions remain intact even when the TFs bind or unbind to the competitor sites with a different rate than to the promoters (see Fig K in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>).</p>
+<p>To further validate our model prediction that multi-modal mRNA distribution stems from the promoters of interest competing with the competitor sites for a pool of TFs, we also look at the Pearson correlation coefficient between the numbers of mRNA molecules produced from two promoters of interest. If the number of competitor sites is much smaller than the promoter number, and the TF number is much higher than the promoter number, effectively each promoter is expected to express independently. Thus, a nonzero correlation coefficient can be regarded as a signature of competition. For our choice of parameters, we see that the correlation starts from zero, reaches a minimum and then asymptotically approaches zero as the number of competitor sites is increased (See Fig L in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). Hence the rise of multimodality at the mRNA level coincides with nonzero values of correlation coefficient, signifying that this effect stems from the competition between the promoters and competitor sites. One central finding of this section is that altering the number of competitor sites and changing the number of TFs in the absence of competitor sites yield qualitatively distinct responses at the level of the mRNA distribution and correlation (see Fig M in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>).</p>
+</sec>
+</sec>
+<sec id="sec007" sec-type="conclusions">
+<title>Discussion</title>
+<p>The impact of transcriptional dynamics on gene expression noise has been a topic of intense enquiry, in the field of quantitative regulatory biology [<xref ref-type="bibr" rid="pcbi.1005491.ref033">33</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref039">39</xref>]. Most of these studies have investigated models of transcription, hinging on the properties of the cis regulatory elements, such as the number of TF binding sites, their binding strength, etc [<xref ref-type="bibr" rid="pcbi.1005491.ref039">39</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref049">49</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref054">54</xref>]. The key assumption these studies make is that we can treat each gene in isolation while dissecting their transcriptional dynamics and its impact on noise in expression. In reality this assumption often breaks down when a TF for a gene of interest gets shared by other genes or competitor sites on the chromosomal DNA or plasmids [<xref ref-type="bibr" rid="pcbi.1005491.ref055">55</xref>–<xref ref-type="bibr" rid="pcbi.1005491.ref061">61</xref>]. Hence in order to understand how transcriptional dynamics influences noise in gene expression, theoretical studies need to include the global effect of TF sharing.</p>
+<p>The model of transcription developed here offers a way to incorporate the interplay of TF copy number and its binding sites and make predictions for how this interplay impacts gene expression noise. Predictions of this model, for the mean mRNA expression as a function of TF copy number is in agreement with recent bulk studies [<xref ref-type="bibr" rid="pcbi.1005491.ref067">67</xref>] (see Fig C in <xref ref-type="supplementary-material" rid="pcbi.1005491.s001">S1 Text</xref>). Moreover, for identical promoters competing for a pool of TFs, we find that both the variance and Fano factor of the mRNA distribution are non-monotonic functions of the TF copy number and show a peak when the TF and promoter copy numbers are comparable.</p>
+<p>The incorporation of competitor sites into this model gives rise to intriguing predictions at the noise level. As has been expounded in recent studies [<xref ref-type="bibr" rid="pcbi.1005491.ref065">65</xref>], at the mean level, gene expression profiles from a wide range of competition scenarios in the presence of competitor sites can be collapsed onto a single master curve by considering the natural variable of the problem. However, at the level of variance this elegant universality ceases to exist. Although there exists a master curve in the variance as a function of the mean for a single promoter copy competing with multiple competitor sites, for more than one promoter copy, this result no longer holds. In other words, for more than one promoter copy, the simple picture of each promoter seeing an effective pool of TFs fails. Although introduction of competitor sites would imply a change in free TF concentration, one key implication of our results is that altering the number of competitor sites has a qualitatively different impact than directly changing the number of TFs in the absence of competitor sites.</p>
+<p>As is evident, one major outcome of this study is that different scenarios of TF sharing lead to qualitatively distinct noise characteristics at the mRNA level. In a recent set of experiments in <italic>E.coli</italic>, Jones et al. [<xref ref-type="bibr" rid="pcbi.1005491.ref044">44</xref>] systematically tuned the number of LacI repressors and counted mRNA molecules across an isogenic population in order to demonstrate the effect of promoter architecture on gene expression noise. Similar strategies could be adopted to systematically test the different scenarios of TF resource sharing by altering the number and strength of competing binding sites, as we have outlined above.</p>
+<p>We also find that the presence of competitor sites can further lead to a multi-modal distribution, so long as unbinding rates of TFs to the promoters of interest are slower than the mRNA production and degradation rates. Multi-modal distributions in expression, across an isogenic population can provide a fitness advantage in a changing environment, by giving rise to phenotypic diversity [<xref ref-type="bibr" rid="pcbi.1005491.ref096">96</xref>]. Certain cis regulatory elements have been demonstrated to lead to bimodal expression patterns [<xref ref-type="bibr" rid="pcbi.1005491.ref071">71</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref091">91</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref097">97</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref098">98</xref>]. Here we demonstrate that a generic feature of promoters competing for a finite TF resource in the presence of competitor sites lead to a multi-modal distribution at the mRNA level. Whether such differential control is used by cells to control the shape and modality of the mRNA distributions is a fascinating question.</p>
+<p>In general, the impact of global properties of transcription, such as the limited availability of TF [<xref ref-type="bibr" rid="pcbi.1005491.ref099">99</xref>] or sigma factor [<xref ref-type="bibr" rid="pcbi.1005491.ref100">100</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref101">101</xref>] resources on gene expression noise remain poorly understood. In this light our theoretical framework provides a way of deciphering the global effect of genetic resource sharing on expression noise.</p>
+</sec>
+<sec id="sec008" sec-type="materials|methods">
+<title>Materials and methods</title>
+<sec id="sec009">
+<title>Parameter selection</title>
+<p>For <italic>E.Coli</italic>, there are several experimental studies that measure the degradation rates of the different mRNAs. In particular genome wide studies in <italic>E.Coli</italic> have shown that the average lifetime of mRNAs in E.coli is 2.5 minutes in the exponential phase and 4.5 minutes in the stationary phase respectively, as shown in Figure 3A of [<xref ref-type="bibr" rid="pcbi.1005491.ref095">95</xref>]. On the other hand numerous studies have measured the binding and unbinding rates of TFs to the promoters, as we have cited in the manuscript. For a lot of these TF such as the well-known Lac and Lambda cI repressors, the average residence times of minutes up to tens of minutes [<xref ref-type="bibr" rid="pcbi.1005491.ref042">42</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref092">92</xref>, <xref ref-type="bibr" rid="pcbi.1005491.ref102">102</xref>]. In other words the residence time is longer or comparable than the degradation rates of the mRNA molecules, justifying the assumption we make.</p>
+<p>For eukaryotes, genome wide studies (see Figure 2A of [<xref ref-type="bibr" rid="pcbi.1005491.ref093">93</xref>]) in yeast have measured the lifetime of mRNA molecules from 4687 genes. These studies found that around 1700 genes have an average lifetime of less than 10 minutes. Although we do not know of genome wide studies that characterize the unbinding rates of all TFs to all binding sequences, we can find examples where the residence time of different TFs to the DNA were measured or inferred [<xref ref-type="bibr" rid="pcbi.1005491.ref094">94</xref>]. For TFs such as Rap I and Gcr I, the residence times are of the order or 10 minutes. As binding and unbinding rates of different TFs are discovered more of them might have a long residence time at the promoter.</p>
+</sec>
+<sec id="sec010">
+<title>Computational tools</title>
+<p>In order to compute the mRNA distribution across an isogenic population, we performed Gillespie simulations [<xref ref-type="bibr" rid="pcbi.1005491.ref085">85</xref>] using codes written in C++.</p>
+</sec>
+</sec>
+<sec id="sec011">
+<title>Supporting information</title>
+<supplementary-material id="pcbi.1005491.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005491.s001" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>A single pdf file containing analytical calculations, discussion of activators with a basal rate of expression, and 13 supporting figures.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We wish to thank Jane Kondev, Rob Phillips, Alvaro Sanchez, Jeff Gelles for years of stimulating discussions and shared thoughts about how transcriptional dynamics impacts noise. We would also like to thank Lishibanya Mohapatra and Anjan Roy for detailed comments and feedback on this work.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1005491.ref001">
+<label>1</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Alberts</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Johnson</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lewis</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Raff</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Walter</surname> <given-names>P</given-names></name>. <source>Molecular Biology of the Cell</source>. <edition>4th ed</edition>. <publisher-loc>New York</publisher-loc>: <publisher-name>Garland Science</publisher-name>; <year>2002</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>McEwen</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Crothers</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Levene</surname> <given-names>SD</given-names></name>. <article-title>Statistical-mechanical theory of DNA looping</article-title>. <source>Biophys J</source>. <year>2006</year>;<volume>90</volume>(<issue>6</issue>):<fpage>1903</fpage>–<lpage>12</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1529/biophysj.105.070490" xlink:type="simple">10.1529/biophysj.105.070490</ext-link></comment> <object-id pub-id-type="pmid">16361335</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref003">
+<label>3</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Theriot</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>HG</given-names></name>. <source>Physical Biology of the Cell</source>. <edition>2nd ed</edition>. <publisher-loc>New York</publisher-loc>: <publisher-name>Garland Science</publisher-name>; <year>2013</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Cournac</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Plumbridge</surname> <given-names>J</given-names></name>. <article-title>DNA looping in prokaryotes: experimental and theoretical approaches</article-title>. <source>J Bacteriol</source>. <year>2013</year>;<volume>195</volume>(<issue>6</issue>):<fpage>1109</fpage>–<lpage>19</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.02038-12" xlink:type="simple">10.1128/JB.02038-12</ext-link></comment> <object-id pub-id-type="pmid">23292776</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>McAdams</surname> <given-names>HH</given-names></name>, <name name-style="western"><surname>Arkin</surname> <given-names>A</given-names></name>. <article-title>It’s a noisy business! Genetic regulation at the nanomolar scale</article-title>. <source>Trends in genetics</source>. <year>1999</year>;<volume>15</volume>(<issue>2</issue>):<fpage>65</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0168-9525(98)01659-X" xlink:type="simple">10.1016/S0168-9525(98)01659-X</ext-link></comment> <object-id pub-id-type="pmid">10098409</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref006">
+<label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rao</surname> <given-names>CV</given-names></name>, <name name-style="western"><surname>Wolf</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Arkin</surname> <given-names>AP</given-names></name>. <article-title>Control, exploitation and tolerance of intracellular noise</article-title>. <source>Nature</source>. <year>2002</year>;<volume>420</volume>(<issue>6912</issue>):<fpage>231</fpage>–<lpage>237</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature01258" xlink:type="simple">10.1038/nature01258</ext-link></comment> <object-id pub-id-type="pmid">12432408</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref007">
+<label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Raser</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>O’Shea</surname> <given-names>EK</given-names></name>. <article-title>Noise in gene expression: origins, consequences, and control</article-title>. <source>Science</source>. <year>2005</year>;<volume>309</volume>(<issue>5743</issue>):<fpage>2010</fpage>–<lpage>3</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1105891" xlink:type="simple">10.1126/science.1105891</ext-link></comment> <object-id pub-id-type="pmid">16179466</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Munsky</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Neuert</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname> <given-names>A</given-names></name>. <article-title>Using gene expression noise to understand gene regulation</article-title>. <source>Science</source>. <year>2012</year>;<volume>336</volume>(<issue>6078</issue>):<fpage>183</fpage>–<lpage>7</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1216379" xlink:type="simple">10.1126/science.1216379</ext-link></comment> <object-id pub-id-type="pmid">22499939</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref009">
+<label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Raj</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname> <given-names>A</given-names></name>. <article-title>Nature, nurture, or chance: stochastic gene expression and its consequences</article-title>. <source>Cell</source>. <year>2008</year>;<volume>135</volume>(<issue>2</issue>):<fpage>216</fpage>–<lpage>26</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2008.09.050" xlink:type="simple">10.1016/j.cell.2008.09.050</ext-link></comment> <object-id pub-id-type="pmid">18957198</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Elowitz</surname> <given-names>MB</given-names></name>, <name name-style="western"><surname>Levine</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Siggia</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Swain</surname> <given-names>PS</given-names></name>. <article-title>Stochastic gene expression in a single cell</article-title>. <source>Science</source>. <year>2002</year>;<volume>297</volume>(<issue>5584</issue>):<fpage>1183</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1070919" xlink:type="simple">10.1126/science.1070919</ext-link></comment> <object-id pub-id-type="pmid">12183631</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Golding</surname> <given-names>I</given-names></name>. <article-title>Genetic determinants and cellular constraints in noisy gene expression</article-title>. <source>Science</source>. <year>2013</year>;<volume>342</volume>(<issue>6163</issue>):<fpage>1188</fpage>–<lpage>93</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1242975" xlink:type="simple">10.1126/science.1242975</ext-link></comment> <object-id pub-id-type="pmid">24311680</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Fraser</surname> <given-names>HB</given-names></name>, <name name-style="western"><surname>Hirsh</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Giaever</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Kumm</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Eisen</surname> <given-names>MB</given-names></name>. <article-title>Noise minimization in eukaryotic gene expression</article-title>. <source>PLoS biology</source>. <year>2004</year>;<volume>2</volume>(<issue>6</issue>):<fpage>e137</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0020137" xlink:type="simple">10.1371/journal.pbio.0020137</ext-link></comment> <object-id pub-id-type="pmid">15124029</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref013">
+<label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bai</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Charvin</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Siggia</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Cross</surname> <given-names>FR</given-names></name>. <article-title>Nucleosome-depleted regions in cell-cycle-regulated promoters ensure reliable gene expression in every cell cycle</article-title>. <source>Developmental cell</source>. <year>2010</year>;<volume>18</volume>(<issue>4</issue>):<fpage>544</fpage>–<lpage>55</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.devcel.2010.02.007" xlink:type="simple">10.1016/j.devcel.2010.02.007</ext-link></comment> <object-id pub-id-type="pmid">20412770</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Newman</surname> <given-names>JRS</given-names></name>, <name name-style="western"><surname>Ghaemmaghami</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ihmels</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Breslow</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Noble</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>DeRisi</surname> <given-names>JL</given-names></name>, <etal>et al</etal>. <article-title>Single-cell proteomic analysis of S. cerevisiae reveals the architecture of biological noise</article-title>. <source>Nature</source>. <year>2006</year>;<volume>441</volume>(<issue>7095</issue>):<fpage>840</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04785" xlink:type="simple">10.1038/nature04785</ext-link></comment> <object-id pub-id-type="pmid">16699522</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Arias</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Hayward</surname> <given-names>P</given-names></name>. <article-title>Filtering transcriptional noise during development: concepts and mechanisms</article-title>. <source>Nat Rev Genet</source>. <year>2006</year>;<volume>7</volume>:<fpage>34</fpage>–<lpage>44</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg1750" xlink:type="simple">10.1038/nrg1750</ext-link></comment> <object-id pub-id-type="pmid">16369570</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kussell</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Leibler</surname> <given-names>S</given-names></name>. <article-title>Phenotypic diversity, population growth, and information in fluctuating environments</article-title>. <source>Science</source>. <year>2005</year>;<volume>309</volume>(<issue>5743</issue>):<fpage>2075</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1114383" xlink:type="simple">10.1126/science.1114383</ext-link></comment> <object-id pub-id-type="pmid">16123265</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Weinberger</surname> <given-names>LS</given-names></name>, <name name-style="western"><surname>Burnett</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Toettcher</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Arkin</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Schaffer</surname> <given-names>DV</given-names></name>. <article-title>Stochastic gene expression in a lentiviral positive-feedback loop: HIV-1 Tat fluctuations drive phenotypic diversity</article-title>. <source>Cell</source>. <year>2005</year>;<volume>122</volume>(<issue>2</issue>):<fpage>169</fpage>–<lpage>82</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2005.06.006" xlink:type="simple">10.1016/j.cell.2005.06.006</ext-link></comment> <object-id pub-id-type="pmid">16051143</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kaern</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Elston</surname> <given-names>TC</given-names></name>, <name name-style="western"><surname>Blake</surname> <given-names>WJ</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>JJ</given-names></name>. <article-title>Stochasticity in gene expression: from theories to phenotypes</article-title>. <source>Nat Rev Genet</source>. <year>2005</year>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg1615" xlink:type="simple">10.1038/nrg1615</ext-link></comment> <object-id pub-id-type="pmid">15883588</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref019">
+<label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Blake</surname> <given-names>WJ</given-names></name>, <name name-style="western"><surname>Balazsi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Kohanski</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Isaacs</surname> <given-names>FJ</given-names></name>, <name name-style="western"><surname>Murphy</surname> <given-names>KF</given-names></name>, <name name-style="western"><surname>Kuang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Phenotypic consequences of promoter-mediated transcriptional noise</article-title>. <source>Mol Cell</source>. <year>2006</year>;<volume>24</volume>(<issue>6</issue>):<fpage>853</fpage>–<lpage>65</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.molcel.2006.11.003" xlink:type="simple">10.1016/j.molcel.2006.11.003</ext-link></comment> <object-id pub-id-type="pmid">17189188</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref020">
+<label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Thattai</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname> <given-names>A</given-names></name>. <article-title>Stochastic Gene Expression in Fluctuating Environments</article-title>. <source>Genetics</source>. <year>2004</year>;<volume>167</volume>(<issue>1</issue>):<fpage>523</fpage>–<lpage>530</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.167.1.523" xlink:type="simple">10.1534/genetics.167.1.523</ext-link></comment> <object-id pub-id-type="pmid">15166174</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref021">
+<label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Losick</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Desplan</surname> <given-names>C</given-names></name>. <article-title>Stochasticity and cell fate</article-title>. <source>Science</source>. <year>2008</year>;<volume>320</volume>(<issue>5872</issue>):<fpage>65</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1147888" xlink:type="simple">10.1126/science.1147888</ext-link></comment> <object-id pub-id-type="pmid">18388284</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref022">
+<label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>López-Maury</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Marguerat</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Bähler</surname> <given-names>J</given-names></name>. <article-title>Tuning gene expression to changing environments: from rapid responses to evolutionary adaptation</article-title>. <source>Nat Rev Genet</source>. <year>2008</year>;<volume>9</volume>(<issue>8</issue>):<fpage>583</fpage>–<lpage>93</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2398" xlink:type="simple">10.1038/nrg2398</ext-link></comment> <object-id pub-id-type="pmid">18591982</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref023">
+<label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rotem</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Loinger</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ronin</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Levin-Reisman</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Gabay</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Shoresh</surname> <given-names>N</given-names></name>, <etal>et al</etal>. <article-title>Regulation of phenotypic variability by a threshold-based mechanism underlies bacterial persistence</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2010</year>;<volume>107</volume>(<issue>28</issue>):<fpage>12541</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1004333107" xlink:type="simple">10.1073/pnas.1004333107</ext-link></comment> <object-id pub-id-type="pmid">20616060</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Balázsi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>JJ</given-names></name>. <article-title>Cellular decision making and biological noise: from microbes to mammals</article-title>. <source>Cell</source>. <year>2011</year>;<volume>144</volume>(<issue>6</issue>):<fpage>910</fpage>–<lpage>25</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2011.01.030" xlink:type="simple">10.1016/j.cell.2011.01.030</ext-link></comment> <object-id pub-id-type="pmid">21414483</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rister</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Desplan</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vasiliauskas</surname> <given-names>D</given-names></name>. <article-title>Establishing and maintaining gene expression patterns: insights from sensory receptor patterning</article-title>. <source>Development</source>. <year>2013</year>;<volume>140</volume>(<issue>3</issue>):<fpage>493</fpage>–<lpage>503</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/dev.079095" xlink:type="simple">10.1242/dev.079095</ext-link></comment> <object-id pub-id-type="pmid">23293281</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref026">
+<label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Charlebois</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Abdennur</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Kaern</surname> <given-names>M</given-names></name>. <article-title>Gene Expression Noise Facilitates Adaptation and Drug Resistance Independently of Mutation</article-title>. <source>Phys Rev Lett</source>. <year>2011</year>;<volume>107</volume>:<fpage>218101</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.107.218101" xlink:type="simple">10.1103/PhysRevLett.107.218101</ext-link></comment> <object-id pub-id-type="pmid">22181928</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Brock</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>S</given-names></name>. <article-title>Non-genetic heterogeneity–a mutation-independent driving force for the somatic evolution of tumours</article-title>. <source>Nat Rev Genet</source>. <year>2009</year>;<volume>10</volume>(<issue>5</issue>):<fpage>336</fpage>–<lpage>42</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2556" xlink:type="simple">10.1038/nrg2556</ext-link></comment> <object-id pub-id-type="pmid">19337290</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref028">
+<label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sharma</surname> <given-names>SV</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>DY</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Quinlan</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Takahashi</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Maheswaran</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>A chromatin-mediated reversible drug-tolerant state in cancer cell subpopulations</article-title>. <source>Cell</source>. <year>2010</year>;<volume>141</volume>(<issue>1</issue>):<fpage>69</fpage>–<lpage>80</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2010.02.027" xlink:type="simple">10.1016/j.cell.2010.02.027</ext-link></comment> <object-id pub-id-type="pmid">20371346</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref029">
+<label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Eldar</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Elowitz</surname> <given-names>MB</given-names></name>. <article-title>Functional roles for noise in genetic circuits</article-title>. <source>Nature</source>. <year>2010</year>;<volume>467</volume>(<issue>7312</issue>):<fpage>167</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09326" xlink:type="simple">10.1038/nature09326</ext-link></comment> <object-id pub-id-type="pmid">20829787</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref030">
+<label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Tsimring</surname> <given-names>LS</given-names></name>. <article-title>Noise in biology</article-title>. <source>Rep Prog Phys</source>. <year>2014</year>;<volume>77</volume>(<issue>2</issue>):<fpage>026601</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/0034-4885/77/2/026601" xlink:type="simple">10.1088/0034-4885/77/2/026601</ext-link></comment> <object-id pub-id-type="pmid">24444693</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref031">
+<label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Chalancon</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Ravarani</surname> <given-names>CNJ</given-names></name>, <name name-style="western"><surname>Balaji</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Martinez-Arias</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Aravind</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Jothi</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>Interplay between gene expression noise and regulatory network architecture</article-title>. <source>Trends in Genetics</source>. <year>2012</year>;<volume>28</volume>(<issue>5</issue>):<fpage>221</fpage>–<lpage>232</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tig.2012.01.006" xlink:type="simple">10.1016/j.tig.2012.01.006</ext-link></comment> <object-id pub-id-type="pmid">22365642</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref032">
+<label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Choubey</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>. <article-title>Regulation of noise in gene expression</article-title>. <source>Annu Rev Biophys</source>. <year>2013</year>;<volume>42</volume>:<fpage>469</fpage>–<lpage>91</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev-biophys-083012-130401" xlink:type="simple">10.1146/annurev-biophys-083012-130401</ext-link></comment> <object-id pub-id-type="pmid">23527780</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref033">
+<label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>. <article-title>Transcriptional control of noise in gene expression</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2008</year>;<volume>105</volume>(<issue>13</issue>):<fpage>5081</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0707904105" xlink:type="simple">10.1073/pnas.0707904105</ext-link></comment> <object-id pub-id-type="pmid">18353986</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref034">
+<label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Elgart</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Jia</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Fenley</surname> <given-names>AT</given-names></name>, <name name-style="western"><surname>Kulkarni</surname> <given-names>R</given-names></name>. <article-title>Connecting protein and mRNA burst distributions for stochastic models of gene expression</article-title>. <source>Phys Biol</source>. <year>2011</year>;<volume>8</volume>(<issue>4</issue>):<fpage>046001</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/1478-3975/8/4/046001" xlink:type="simple">10.1088/1478-3975/8/4/046001</ext-link></comment> <object-id pub-id-type="pmid">21490380</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref035">
+<label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Singh</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Weinberger</surname> <given-names>LS</given-names></name>. <article-title>Stochastic gene expression as a molecular switch for viral latency</article-title>. <source>Curr Opin Microbiol</source>. <year>2009</year>;<volume>12</volume>(<issue>4</issue>):<fpage>460</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.mib.2009.06.016" xlink:type="simple">10.1016/j.mib.2009.06.016</ext-link></comment> <object-id pub-id-type="pmid">19595626</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref036">
+<label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kumar</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Singh</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kulkarni</surname> <given-names>RV</given-names></name>. <article-title>Transcriptional Bursting in Gene Expression: Analytical Results for General Stochastic Models</article-title>. <source>PLoS Comput Biol</source>. <year>2015</year>;<volume>11</volume>(<issue>10</issue>):<fpage>e1004292</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1004292" xlink:type="simple">10.1371/journal.pcbi.1004292</ext-link></comment> <object-id pub-id-type="pmid">26474290</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref037">
+<label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Choubey</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>. <article-title>Stochastic models of transcription: From single molecules to single cells</article-title>. <source>Methods</source>. <year>2013</year>;<volume>62</volume>(<issue>1</issue>):<fpage>13</fpage>—<lpage>25</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ymeth.2013.03.026" xlink:type="simple">http://dx.doi.org/10.1016/j.ymeth.2013.03.026</ext-link>. <object-id pub-id-type="pmid">23557991</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref038">
+<label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kumar</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Platini</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Kulkarni</surname> <given-names>RV</given-names></name>. <article-title>Exact Distributions for Stochastic Gene Expression Models with Bursting and Feedback</article-title>. <source>Phys Rev Lett</source>. <year>2014</year>;<volume>113</volume>:<fpage>268105</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.113.268105" xlink:type="simple">10.1103/PhysRevLett.113.268105</ext-link></comment> <object-id pub-id-type="pmid">25615392</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref039">
+<label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Choubey</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>. <article-title>Deciphering Transcriptional Dynamics In Vivo by Counting Nascent RNA Molecules</article-title>. <source>PLoS Comput Biol</source>. <year>2015</year>;<volume>11</volume>(<issue>11</issue>):<fpage>e1004345</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1004345" xlink:type="simple">10.1371/journal.pcbi.1004345</ext-link></comment> <object-id pub-id-type="pmid">26544860</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref040">
+<label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lipniacki</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Paszek</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Marciniak-Czochra</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Brasier</surname> <given-names>AR</given-names></name>, <name name-style="western"><surname>Kimmel</surname> <given-names>M</given-names></name>. <article-title>Transcriptional stochasticity in gene expression</article-title>. <source>J Theor Biol</source>. <year>2006</year>;<volume>238</volume>(<issue>2</issue>):<fpage>348</fpage>—<lpage>367</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2005.05.032" xlink:type="simple">http://dx.doi.org/10.1016/j.jtbi.2005.05.032</ext-link>. <object-id pub-id-type="pmid">16039671</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref041">
+<label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Yu</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Xiao</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ren</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Lao</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>XS</given-names></name>. <article-title>Probing gene expression in live cells, one protein molecule at a time</article-title>. <source>Science</source>. <year>2006</year>;<volume>311</volume>(<issue>5767</issue>):<fpage>1600</fpage>–<lpage>3</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1119623" xlink:type="simple">10.1126/science.1119623</ext-link></comment> <object-id pub-id-type="pmid">16543458</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref042">
+<label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Elf</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>GW</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>XS</given-names></name>. <article-title>Probing transcription factor dynamics at the single-molecule level in a living cell</article-title>. <source>Science</source>. <year>2007</year>;<volume>316</volume>(<issue>5828</issue>):<fpage>1191</fpage>–<lpage>4</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1141967" xlink:type="simple">10.1126/science.1141967</ext-link></comment> <object-id pub-id-type="pmid">17525339</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref043">
+<label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Choi</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Cai</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Frieda</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>XS</given-names></name>. <article-title>A stochastic single-molecule event triggers phenotype switching of a bacterial cell</article-title>. <source>Science</source>. <year>2008</year>;<volume>322</volume>(<issue>5900</issue>):<fpage>442</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1161427" xlink:type="simple">10.1126/science.1161427</ext-link></comment> <object-id pub-id-type="pmid">18927393</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref044">
+<label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Jones</surname> <given-names>DL</given-names></name>, <name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>Promoter architecture dictates cell-to-cell variability in gene expression</article-title>. <source>Science</source>. <year>2014</year>;<volume>346</volume>(<issue>6216</issue>):<fpage>1533</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1255301" xlink:type="simple">10.1126/science.1255301</ext-link></comment> <object-id pub-id-type="pmid">25525251</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref045">
+<label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sharon</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>van Dijk</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kalma</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Keren</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Manor</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Yakhini</surname> <given-names>Z</given-names></name>, <etal>et al</etal>. <article-title>Probing the effect of promoters on noise in gene expression using thousands of designed sequences</article-title>. <source>Genome research</source>. <year>2014</year>;<volume>24</volume>(<issue>10</issue>):<fpage>1698</fpage>–<lpage>706</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.168773.113" xlink:type="simple">10.1101/gr.168773.113</ext-link></comment> <object-id pub-id-type="pmid">25030889</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref046">
+<label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Raj</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Peskin</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Tranchina</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Vargas</surname> <given-names>DY</given-names></name>, <name name-style="western"><surname>Tyagi</surname> <given-names>S</given-names></name>. <article-title>Stochastic mRNA synthesis in mammalian cells</article-title>. <source>PLoS Biol</source>. <year>2006</year>;<volume>4</volume>(<issue>10</issue>):<fpage>e309</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0040309" xlink:type="simple">10.1371/journal.pbio.0040309</ext-link></comment> <object-id pub-id-type="pmid">17048983</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref047">
+<label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Chubb</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Trcek</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Shenoy</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Singer</surname> <given-names>RH</given-names></name>. <article-title>Transcriptional pulsing of a developmental gene</article-title>. <source>Curr Biol</source>. <year>2006</year>;<volume>16</volume>(<issue>10</issue>):<fpage>1018</fpage>–<lpage>25</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2006.03.092" xlink:type="simple">10.1016/j.cub.2006.03.092</ext-link></comment> <object-id pub-id-type="pmid">16713960</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref048">
+<label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gandhi</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Zenklusen</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lionnet</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Singer</surname> <given-names>RH</given-names></name>. <article-title>Transcription of functionally related constitutive genes is not coordinated</article-title>. <source>Nat Struct Mol Biol</source>. <year>2011</year>;<volume>18</volume>(<issue>1</issue>):<fpage>27</fpage>–<lpage>34</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nsmb.1934" xlink:type="simple">10.1038/nsmb.1934</ext-link></comment> <object-id pub-id-type="pmid">21131977</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref049">
+<label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vilar</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Leibler</surname> <given-names>S</given-names></name>. <article-title>DNA looping and physical constraints on transcription regulation</article-title>. <source>J Mol Biol</source>. <year>2003</year>;<volume>331</volume>(<issue>5</issue>):<fpage>981</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0022-2836(03)00764-2" xlink:type="simple">10.1016/S0022-2836(03)00764-2</ext-link></comment> <object-id pub-id-type="pmid">12927535</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref050">
+<label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bilu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Barkai</surname> <given-names>N</given-names></name>. <article-title>The design of transcription-factor binding sites is affected by combinatorial regulation</article-title>. <source>Genome Biology</source>. <year>2005</year>;<volume>6</volume>(<issue>12</issue>):<fpage>1</fpage>–<lpage>10</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2005-6-12-r103" xlink:type="simple">10.1186/gb-2005-6-12-r103</ext-link></comment> <object-id pub-id-type="pmid">16356266</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref051">
+<label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Shahrezaei</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Swain</surname> <given-names>PS</given-names></name>. <article-title>Analytical distributions for stochastic gene expression</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2008</year>;<volume>105</volume>(<issue>45</issue>):<fpage>17256</fpage>–<lpage>61</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0803850105" xlink:type="simple">10.1073/pnas.0803850105</ext-link></comment> <object-id pub-id-type="pmid">18988743</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref052">
+<label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Segal</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Widom</surname> <given-names>J</given-names></name>. <article-title>From DNA sequence to transcriptional behaviour: a quantitative approach</article-title>. <source>Nat Rev Genet</source>. <year>2009</year>;<volume>10</volume>(<issue>7</issue>):<fpage>443</fpage>–<lpage>56</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2591" xlink:type="simple">10.1038/nrg2591</ext-link></comment> <object-id pub-id-type="pmid">19506578</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref053">
+<label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gertz</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Siggia</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Cohen</surname> <given-names>BA</given-names></name>. <article-title>Analysis of combinatorial cis-regulation in synthetic and genomic promoters</article-title>. <source>Nature</source>. <year>2009</year>;<volume>457</volume>(<issue>7226</issue>):<fpage>215</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature07521" xlink:type="simple">10.1038/nature07521</ext-link></comment> <object-id pub-id-type="pmid">19029883</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref054">
+<label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sanchez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kondev</surname> <given-names>J</given-names></name>. <article-title>Effect of promoter architecture on the cell-to-cell variability in gene expression</article-title>. <source>PLoS Comput Biol</source>. <year>2011</year>;<volume>7</volume>(<issue>3</issue>):<fpage>e1001100</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1001100" xlink:type="simple">10.1371/journal.pcbi.1001100</ext-link></comment> <object-id pub-id-type="pmid">21390269</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref055">
+<label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Luria</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Dulbecco</surname> <given-names>R</given-names></name>. <article-title>Genetic Recombinations Leading to Production of Active Bacteriophage from Ultraviolet Inactivated Bacteriophage Particles</article-title>. <source>Genetics</source>. <year>1949</year>;<volume>34</volume>(<issue>2</issue>):<fpage>93</fpage>–<lpage>125</lpage>. <object-id pub-id-type="pmid">17247312</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref056">
+<label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Guido</surname> <given-names>NJ</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Adalsteinsson</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>McMillen</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Hasty</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Cantor</surname> <given-names>CR</given-names></name>, <etal>et al</etal>. <article-title>A bottom-up approach to gene regulation</article-title>. <source>Nature</source>. <year>2006</year>;<volume>439</volume>(<issue>7078</issue>):<fpage>856</fpage>–<lpage>60</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04473" xlink:type="simple">10.1038/nature04473</ext-link></comment> <object-id pub-id-type="pmid">16482159</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref057">
+<label>57</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Bremer</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Dennis</surname> <given-names>PP</given-names></name>. <chapter-title>Modulation of Chemical Composition and Other Parameters of the Cell by Growth Rate</chapter-title>. In: <name name-style="western"><surname>e al</surname> <given-names>NF</given-names></name>, editor. In <source><italic>Escherichia coli</italic> and Salmonella Cellular and Molecular Biology</source>. <publisher-loc>Washington DC</publisher-loc>: <publisher-name>ASM Press</publisher-name>; <year>1996</year>. p. <fpage>1553</fpage>–<lpage>1569</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref058">
+<label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wang</surname> <given-names>RL</given-names></name>, <name name-style="western"><surname>Stec</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hey</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Lukens</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Doebley</surname> <given-names>J</given-names></name>. <article-title>The limits of selection during maize domestication</article-title>. <source>Nature</source>. <year>1999</year>;<volume>398</volume>(<issue>6724</issue>):<fpage>236</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/18435" xlink:type="simple">10.1038/18435</ext-link></comment> <object-id pub-id-type="pmid">10094045</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref059">
+<label>59</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Navarro-Quezada</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Schoen</surname> <given-names>DJ</given-names></name>. <article-title>Sequence evolution and copy number of Ty1-copia retrotransposons in diverse plant genomes</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2002</year>;<volume>99</volume>(<issue>1</issue>):<fpage>268</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.012422299" xlink:type="simple">10.1073/pnas.012422299</ext-link></comment> <object-id pub-id-type="pmid">11752395</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref060">
+<label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Aitman</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Dong</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Vyse</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Norsworthy</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Johnson</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Copy number polymorphism in Fcgr3 predisposes to glomerulonephritis in rats and humans</article-title>. <source>Nature</source>. <year>2006</year>;<volume>439</volume>(<issue>7078</issue>):<fpage>851</fpage>–<lpage>5</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04489" xlink:type="simple">10.1038/nature04489</ext-link></comment> <object-id pub-id-type="pmid">16482158</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref061">
+<label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hanada</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Hashizume</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Tokuhara</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Takenaka</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Kohmura</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Ogasawara</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Perampanel: a novel, orally active, noncompetitive AMPA-receptor antagonist that reduces seizure activity in rodent models of epilepsy</article-title>. <source>Epilepsia</source>. <year>2011</year>;<volume>52</volume>(<issue>7</issue>):<fpage>1331</fpage>–<lpage>40</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2011.03109.x" xlink:type="simple">10.1111/j.1528-1167.2011.03109.x</ext-link></comment> <object-id pub-id-type="pmid">21635236</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref062">
+<label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gama-Castro</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jimenez-Jacinto</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Peralta-Gil</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Santos-Zavaleta</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Penaloza-Spinola</surname> <given-names>MI</given-names></name>, <name name-style="western"><surname>Contreras-Moreira</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>RegulonDB (version 6.0): gene regulation model of Escherichia coli K-12 beyond transcription, active (experimental) annotated promoters and Textpresso navigation</article-title>. <source>Nucleic Acids Res</source>. <year>2008</year>;<volume>36</volume>:<fpage>D120</fpage>–<lpage>4</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkm994" xlink:type="simple">10.1093/nar/gkm994</ext-link></comment> <object-id pub-id-type="pmid">18158297</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref063">
+<label>63</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Shimada</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Kawai</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Takeda</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Matsumoto</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Inoue</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Tatsumi</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>IKK-i, a novel lipopolysaccharide-inducible kinase that is related to IkappaB kinases</article-title>. <source>International immunology</source>. <year>1999</year>;<volume>11</volume>(<issue>8</issue>):<fpage>1357</fpage>–<lpage>62</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/intimm/11.8.1357" xlink:type="simple">10.1093/intimm/11.8.1357</ext-link></comment> <object-id pub-id-type="pmid">10421793</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref064">
+<label>64</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>DL</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>Tuning promoter strength through RNA polymerase binding site design in <italic>Escherichia coli</italic></article-title>. <source>PLoS Comput Biol</source>. <year>2012</year>;<volume>8</volume>(<issue>12</issue>):<fpage>e1002811</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002811" xlink:type="simple">10.1371/journal.pcbi.1002811</ext-link></comment> <object-id pub-id-type="pmid">23271961</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref065">
+<label>65</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Weinert</surname> <given-names>FM</given-names></name>, <name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Rydenfelt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kegel</surname> <given-names>WK</given-names></name>. <article-title>Scaling of gene expression with transcription-factor fugacity</article-title>. <source>Phys Rev Lett</source>. <year>2014</year>;<volume>113</volume>(<issue>25</issue>):<fpage>1</fpage>–<lpage>5</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.113.258101" xlink:type="simple">10.1103/PhysRevLett.113.258101</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref066">
+<label>66</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lovely</surname> <given-names>GA</given-names></name>, <name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Schatz</surname> <given-names>DG</given-names></name>, <name name-style="western"><surname>Baltimore</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>Single-molecule analysis of RAG-mediated V(D)J DNA cleavage</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2015</year>;<volume>112</volume>(<issue>14</issue>):<fpage>E1715</fpage>–<lpage>23</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1503477112" xlink:type="simple">10.1073/pnas.1503477112</ext-link></comment> <object-id pub-id-type="pmid">25831509</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref067">
+<label>67</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Weinert</surname> <given-names>FM</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Rydenfelt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>The transcription factor titration effect dictates level of gene expression</article-title>. <source>Cell</source>. <year>2014</year>;<volume>156</volume>(<issue>6</issue>):<fpage>1312</fpage>–<lpage>23</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2014.02.022" xlink:type="simple">10.1016/j.cell.2014.02.022</ext-link></comment> <object-id pub-id-type="pmid">24612990</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref068">
+<label>68</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Burger</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Walczak</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Wolynes</surname> <given-names>PG</given-names></name>. <article-title>Abduction and asylum in the lives of transcription factors</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2010</year>;<volume>107</volume>(<issue>9</issue>):<fpage>4016</fpage>–<lpage>21</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0915138107" xlink:type="simple">10.1073/pnas.0915138107</ext-link></comment> <object-id pub-id-type="pmid">20160109</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref069">
+<label>69</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Burger</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Walczak</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Wolynes</surname> <given-names>PG</given-names></name>. <article-title>Influence of decoys on the noise and dynamics of gene expression</article-title>. <source>Phys Rev E Stat Nonlin Soft Matter Phys</source>. <year>2012</year>;<volume>86</volume>(<issue>4 Pt 1</issue>):<fpage>041920</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.86.041920" xlink:type="simple">10.1103/PhysRevE.86.041920</ext-link></comment> <object-id pub-id-type="pmid">23214628</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref070">
+<label>70</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Soltani</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bokes</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Fox</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Singh</surname> <given-names>A</given-names></name>. <article-title>Nonspecific transcription factor binding can reduce noise in the expression of downstream proteins</article-title>. <source>Physical Biology</source>. <year>2015</year>;<volume>12</volume>(<issue>5</issue>):<fpage>055002</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/1478-3975/12/5/055002" xlink:type="simple">10.1088/1478-3975/12/5/055002</ext-link></comment> <object-id pub-id-type="pmid">26267711</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref071">
+<label>71</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bokes</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Singh</surname> <given-names>A</given-names></name>. <article-title>Protein copy number distributions for a self-regulating gene in the presence of decoy binding sites</article-title>. <source>PloS one</source>. <year>2015</year>;<volume>10</volume>(<issue>3</issue>):<fpage>e0120555</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0120555" xlink:type="simple">10.1371/journal.pone.0120555</ext-link></comment> <object-id pub-id-type="pmid">25811868</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref072">
+<label>72</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Karapetyan</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Buchler</surname> <given-names>NE</given-names></name>. <article-title>Role of DNA binding sites and slow unbinding kinetics in titration-based oscillators</article-title>. <source>Phys Rev E</source>. <year>2015</year>;<volume>92</volume>:<fpage>062712</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.92.062712" xlink:type="simple">10.1103/PhysRevE.92.062712</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref073">
+<label>73</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rydenfelt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>Statistical mechanical model of coupled transcription from multiple promoters due to transcription factor titration</article-title>. <source>Phys Rev E</source>. <year>2014</year>;<volume>89</volume>:<fpage>012702</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.89.012702" xlink:type="simple">10.1103/PhysRevE.89.012702</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref074">
+<label>74</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rydenfelt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>The Influence of Promoter Architectures and Regulatory Motifs on Gene Expression in <italic>Escherichia coli</italic></article-title>. <source>PLoS ONE</source>. <year>2014</year>;<volume>9</volume>(<issue>12</issue>):<fpage>e114347</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0114347" xlink:type="simple">10.1371/journal.pone.0114347</ext-link></comment> <object-id pub-id-type="pmid">25549361</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref075">
+<label>75</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>, <name name-style="western"><surname>Elston</surname> <given-names>TC</given-names></name>. <article-title>Stochasticity in transcriptional regulation: origins, consequences, and mathematical representations</article-title>. <source>Biophys J</source>. <year>2001</year>;<volume>81</volume>:<fpage>3116</fpage>–<lpage>36</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0006-3495(01)75949-8" xlink:type="simple">10.1016/S0006-3495(01)75949-8</ext-link></comment> <object-id pub-id-type="pmid">11720979</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref076">
+<label>76</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Karmakar</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Bose</surname> <given-names>I</given-names></name>. <article-title>Graded and binary responses in stochastic gene expression</article-title>. <source>Physical biology</source>. <year>2004</year>;<volume>1</volume>:<fpage>197</fpage>–<lpage>204</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/1478-3967/1/4/001" xlink:type="simple">10.1088/1478-3967/1/4/001</ext-link></comment> <object-id pub-id-type="pmid">16204839</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref077">
+<label>77</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Paulsson</surname> <given-names>J</given-names></name>. <article-title>Models of stochastic gene expression</article-title>. <source>Phys Life Rev</source>. <year>2005</year>;<volume>2</volume>(<issue>2</issue>):<fpage>157</fpage>–<lpage>175</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.plrev.2005.03.003" xlink:type="simple">10.1016/j.plrev.2005.03.003</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref078">
+<label>78</label>
+<mixed-citation publication-type="other" xlink:type="simple">Dattani J, Barahona M. Stochastic models of gene transcription with upstream drives: exact solution and sample path characterization. arXiv:160507124. 2016; p. 19.</mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref079">
+<label>79</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Garcia</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>. <article-title>Quantitative dissection of the simple repression input-output function</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2011</year>;<volume>108</volume>(<issue>29</issue>):<fpage>12173</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1015616108" xlink:type="simple">10.1073/pnas.1015616108</ext-link></comment> <object-id pub-id-type="pmid">21730194</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref080">
+<label>80</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Firman</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ghosh</surname> <given-names>K</given-names></name>. <article-title>Competition enhances stochasticity in biochemical reactions</article-title>. <source>J Chem Phys</source>. <year>2013</year>;<volume>139</volume>(<issue>12</issue>). doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1063/1.4816527" xlink:type="simple">http://dx.doi.org/10.1063/1.4816527</ext-link>. <object-id pub-id-type="pmid">24089727</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref081">
+<label>81</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Peccoud</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ycart</surname> <given-names>B</given-names></name>. <article-title>Markovian modeling of gene product synthesis</article-title>. <source>Theor Popul Biol</source>. <year>1995</year>;<volume>48</volume>:<fpage>222</fpage>–<lpage>234</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1006/tpbi.1995.1027" xlink:type="simple">10.1006/tpbi.1995.1027</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref082">
+<label>82</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sasai</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wolynes</surname> <given-names>PG</given-names></name>. <article-title>Stochastic gene expression as a many-body problem</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2003</year>;<volume>100</volume>(<issue>5</issue>):<fpage>2374</fpage>–<lpage>2379</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.2627987100" xlink:type="simple">10.1073/pnas.2627987100</ext-link></comment> <object-id pub-id-type="pmid">12606710</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref083">
+<label>83</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Golding</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Paulsson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Zawilski</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>EC</given-names></name>. <article-title>Real-time kinetics of gene activity in individual bacteria</article-title>. <source>Cell</source>. <year>2005</year>;<volume>123</volume>(<issue>6</issue>):<fpage>1025</fpage>–<lpage>36</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2005.09.031" xlink:type="simple">10.1016/j.cell.2005.09.031</ext-link></comment> <object-id pub-id-type="pmid">16360033</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref084">
+<label>84</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Cai</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Friedman</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>XS</given-names></name>. <article-title>Stochastic protein expression in individual cells at the single molecule level</article-title>. <source>Nature</source>. <year>2006</year>;<volume>440</volume>(<issue>7082</issue>):<fpage>358</fpage>–<lpage>62</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04599" xlink:type="simple">10.1038/nature04599</ext-link></comment> <object-id pub-id-type="pmid">16541077</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref085">
+<label>85</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gillespie</surname> <given-names>DT</given-names></name>. <article-title>General Method for Numerically Simulating Stochastic Time Evolution of Coupled Chemical-Reactions</article-title>. <source>J Comput Phys</source>. <year>1976</year>;<volume>22</volume>(<issue>4</issue>):<fpage>403</fpage>–<lpage>434</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0021-9991(76)90041-3" xlink:type="simple">10.1016/0021-9991(76)90041-3</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref086">
+<label>86</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wong</surname> <given-names>OK</given-names></name>, <name name-style="western"><surname>Guthold</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Erie</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Gelles</surname> <given-names>J</given-names></name>. <article-title>Interconvertible lac repressor-DNA loops revealed by single-molecule experiments</article-title>. <source>PLoS Biol</source>. <year>2008</year>;<volume>6</volume>(<issue>9</issue>):<fpage>e232</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0060232" xlink:type="simple">10.1371/journal.pbio.0060232</ext-link></comment> <object-id pub-id-type="pmid">18828671</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref087">
+<label>87</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kennell</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Riezman</surname> <given-names>H</given-names></name>. <article-title>Transcription and translation initiation frequencies of the <italic>Escherichia coli lac</italic> operon</article-title>. <source>J Mol Biol</source>. <year>1977</year>;<volume>114</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>21</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0022-2836(77)90279-0" xlink:type="simple">10.1016/0022-2836(77)90279-0</ext-link></comment> <object-id pub-id-type="pmid">409848</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref088">
+<label>88</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bakk</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Metzler</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Sneppen</surname> <given-names>K</given-names></name>. <article-title>Sensitivity of OR in phage lambda</article-title>. <source>Biophys J</source>. <year>2004</year>;<volume>86</volume>(<issue>1 Pt 1</issue>):<fpage>58</fpage>–<lpage>66</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0006-3495(04)74083-7" xlink:type="simple">10.1016/S0006-3495(04)74083-7</ext-link></comment> <object-id pub-id-type="pmid">14695249</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref089">
+<label>89</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wunderlich</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Depace</surname> <given-names>AH</given-names></name>. <article-title>Modeling transcriptional networks in Drosophila development at multiple scales</article-title>. <source>Curr Opin Genet Dev</source>. <year>2011</year>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.gde.2011.07.005" xlink:type="simple">10.1016/j.gde.2011.07.005</ext-link></comment> <object-id pub-id-type="pmid">21889888</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref090">
+<label>90</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lee</surname> <given-names>TH</given-names></name>, <name name-style="western"><surname>Maheshri</surname> <given-names>N</given-names></name>. <article-title>A regulatory role for repeated decoy transcription factor binding sites in target gene expression</article-title>. <source>Mol Syst Biol</source>. <year>2012</year>;<volume>8</volume>:<fpage>576</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb.2012.7" xlink:type="simple">10.1038/msb.2012.7</ext-link></comment> <object-id pub-id-type="pmid">22453733</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref091">
+<label>91</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Iyer-Biswas</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hayot</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Jayaprakash</surname> <given-names>C</given-names></name>. <article-title>Stochasticity of gene products from transcriptional pulsing</article-title>. <source>Phys Rev E Stat Nonlin Soft Matter Phys</source>. <year>2009</year>;<volume>79</volume>(<issue>3 Pt 1</issue>):<fpage>031911</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.79.031911" xlink:type="simple">10.1103/PhysRevE.79.031911</ext-link></comment> <object-id pub-id-type="pmid">19391975</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref092">
+<label>92</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dodd</surname> <given-names>IB</given-names></name>, <name name-style="western"><surname>Shearwin</surname> <given-names>KE</given-names></name>, <name name-style="western"><surname>Perkins</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Burr</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Hochschild</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Egan</surname> <given-names>JB</given-names></name>. <article-title>Cooperativity in long-range gene regulation by the lambda CI repressor</article-title>. <source>Genes Dev</source>. <year>2004</year>;<volume>18</volume>(<issue>3</issue>):<fpage>344</fpage>–<lpage>54</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gad.1167904" xlink:type="simple">10.1101/gad.1167904</ext-link></comment> <object-id pub-id-type="pmid">14871931</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref093">
+<label>93</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Storey</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Tibshirani</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Herschlag</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Brown</surname> <given-names>PO</given-names></name>. <article-title>Precision and functional specificity in mRNA decay</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2002</year>;<volume>99</volume>(<issue>9</issue>):<fpage>5860</fpage>–<lpage>5865</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.092538799" xlink:type="simple">10.1073/pnas.092538799</ext-link></comment> <object-id pub-id-type="pmid">11972065</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref094">
+<label>94</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Carey</surname> <given-names>LB</given-names></name>, <name name-style="western"><surname>van Dijk</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sloot</surname> <given-names>PMA</given-names></name>, <name name-style="western"><surname>Kaandorp</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Segal</surname> <given-names>E</given-names></name>. <article-title>Promoter Sequence Determines the Relationship between Expression Level and Noise</article-title>. <source>PLOS Biology</source>. <year>2013</year>;<volume>11</volume>(<issue>4</issue>):<fpage>1</fpage>–<lpage>15</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1001528" xlink:type="simple">10.1371/journal.pbio.1001528</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref095">
+<label>95</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Chen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Shiroguchi</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Ge</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>XS</given-names></name>. <article-title>Genome-wide study of mRNA degradation and transcript elongation in Escherichia coli</article-title>. <source>Molecular Systems Biology</source>. <year>2015</year>;<volume>11</volume>(<issue>1</issue>). <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.15252/msb.20145794" xlink:type="simple">10.15252/msb.20145794</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref096">
+<label>96</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Acar</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mettetal</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>van Oudenaarden</surname> <given-names>A</given-names></name>. <article-title>Stochastic switching as a survival strategy in fluctuating environments</article-title>. <source>Nat Genet</source>. <year>2008</year>;<volume>40</volume>(<issue>4</issue>):<fpage>471</fpage>–<lpage>5</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.110" xlink:type="simple">10.1038/ng.110</ext-link></comment> <object-id pub-id-type="pmid">18362885</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref097">
+<label>97</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>To</surname> <given-names>TL</given-names></name>, <name name-style="western"><surname>Maheshri</surname> <given-names>N</given-names></name>. <article-title>Noise can induce bimodality in positive transcriptional feedback loops without bistability</article-title>. <source>Science (New York, NY)</source>. <year>2010</year>;<volume>327</volume>(<issue>5969</issue>):<fpage>1142</fpage>–<lpage>5</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1178962" xlink:type="simple">10.1126/science.1178962</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref098">
+<label>98</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ochab-Marcinek</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Tabaka</surname> <given-names>M</given-names></name>. <article-title>Bimodal gene expression in noncooperative regulatory systems</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2010</year>;<volume>107</volume>(<issue>51</issue>):<fpage>22096</fpage>–<lpage>101</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1008965107" xlink:type="simple">10.1073/pnas.1008965107</ext-link></comment> <object-id pub-id-type="pmid">21135209</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref099">
+<label>99</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lorenzin</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Benary</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Baluapuri</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Walz</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jung</surname> <given-names>LA</given-names></name>, <name name-style="western"><surname>von Eyss</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>Different promoter affinities account for specificity in MYC-dependent gene regulation</article-title>. <source>eLife</source>. <year>2016</year>;<volume>5</volume>:<fpage>e15161</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.7554/eLife.15161" xlink:type="simple">10.7554/eLife.15161</ext-link></comment> <object-id pub-id-type="pmid">27460974</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref100">
+<label>100</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mauri</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Klumpp</surname> <given-names>S</given-names></name>. <article-title>A Model for Sigma Factor Competition in Bacterial Cells</article-title>. <source>PLoS Comput Biol</source>. <year>2014</year>;<volume>10</volume>(<issue>10</issue>):<fpage>e1003845</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1003845" xlink:type="simple">10.1371/journal.pcbi.1003845</ext-link></comment> <object-id pub-id-type="pmid">25299042</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref101">
+<label>101</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Locke</surname> <given-names>JCW</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Fontes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Jiménez</surname> <given-names>MJH</given-names></name>, <name name-style="western"><surname>Elowitz</surname> <given-names>MB</given-names></name>. <article-title>Stochastic Pulse Regulation in Bacterial Stress Response</article-title>. <source>Science</source>. <year>2011</year>;<volume>334</volume>(<issue>6054</issue>):<fpage>366</fpage>–<lpage>369</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1208144" xlink:type="simple">10.1126/science.1208144</ext-link></comment> <object-id pub-id-type="pmid">21979936</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005491.ref102">
+<label>102</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hammar</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Wallden</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Fange</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Persson</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Baltekin</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Ullman</surname> <given-names>G</given-names></name>, <etal>et al</etal>. <article-title>Direct measurement of transcription factor dissociation excludes a simple operator occupancy model for gene regulation</article-title>. <source>Nat Genet</source>. <year>2014</year>;<volume>46</volume>(<issue>4</issue>):<fpage>405</fpage>–<lpage>408</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.2905" xlink:type="simple">10.1038/ng.2905</ext-link></comment> <object-id pub-id-type="pmid">24562187</object-id></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

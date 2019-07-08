@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1005177</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-16-00778</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Imaging techniques</subject><subj-group><subject>Fluorescence imaging</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Cell biology</subject><subj-group><subject>Cellular structures and organelles</subject><subj-group><subject>Cytoplasm</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Imaging techniques</subject><subj-group><subject>In vivo imaging</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Imaging techniques</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Microscopy</subject><subj-group><subject>Light microscopy</subject><subj-group><subject>Fluorescence microscopy</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Diagnostic medicine</subject><subj-group><subject>Diagnostic radiology</subject><subj-group><subject>Bone imaging</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Imaging techniques</subject><subj-group><subject>Diagnostic radiology</subject><subj-group><subject>Bone imaging</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Radiology and imaging</subject><subj-group><subject>Diagnostic radiology</subject><subj-group><subject>Bone imaging</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Computer and information sciences</subject><subj-group><subject>Neural networks</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Neural networks</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Organisms</subject><subj-group><subject>Bacteria</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Deep Learning Automates the Quantitative Analysis of Individual Cells in Live-Cell Imaging Experiments</article-title>
+<alt-title alt-title-type="running-head">Segmenting Single Cells with Deep Learning</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Van Valen</surname>
+<given-names>David A.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-9709-5549</contrib-id>
+<name name-style="western">
+<surname>Kudo</surname>
+<given-names>Takamasa</given-names>
+</name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Lane</surname>
+<given-names>Keara M.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-7257-0315</contrib-id>
+<name name-style="western">
+<surname>Macklin</surname>
+<given-names>Derek N.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Quach</surname>
+<given-names>Nicolas T.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-7197-6292</contrib-id>
+<name name-style="western">
+<surname>DeFelice</surname>
+<given-names>Mialy M.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Maayan</surname>
+<given-names>Inbal</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-6039-748X</contrib-id>
+<name name-style="western">
+<surname>Tanouchi</surname>
+<given-names>Yu</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0001-9418-9577</contrib-id>
+<name name-style="western">
+<surname>Ashley</surname>
+<given-names>Euan A.</given-names>
+</name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-5993-8912</contrib-id>
+<name name-style="western">
+<surname>Covert</surname>
+<given-names>Markus W.</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Bioengineering, Stanford University, Stanford, California, United States of America</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Department of Chemical and Systems Biology, Stanford University, Stanford, California, United States of America</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Department of Genetics, Stanford University, Stanford, California, United States of America</addr-line></aff>
+<aff id="aff004"><label>4</label> <addr-line>Department of Cardiovascular Medicine, Stanford University, Stanford, California, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Meier-Schellersheim</surname>
+<given-names>Martin</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>National Institutes of Health, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con">
+<p><list list-type="simple"><list-item><p><bold>Conceptualization:</bold> DAVV MWC.</p></list-item> <list-item><p><bold>Data curation:</bold> DAVV KML NTQ MMD IM.</p></list-item> <list-item><p><bold>Formal analysis:</bold> DAVV.</p></list-item> <list-item><p><bold>Funding acquisition:</bold> DAVV TK KML DNM NTQ MMD IM YT EAA MWC.</p></list-item> <list-item><p><bold>Investigation:</bold> DAVV TK KML DNM NTQ MMD IM YT EAA MWC.</p></list-item> <list-item><p><bold>Methodology:</bold> DAVV.</p></list-item> <list-item><p><bold>Project administration:</bold> DAVV MWC.</p></list-item> <list-item><p><bold>Resources:</bold> DAVV TK KML DNM NTQ MMD IM YT.</p></list-item> <list-item><p><bold>Software:</bold> DAVV TK DNM NTQ.</p></list-item> <list-item><p><bold>Supervision:</bold> EAA MWC.</p></list-item> <list-item><p><bold>Validation:</bold> DAVV MMD KML IM YT NTQ.</p></list-item> <list-item><p><bold>Visualization:</bold> DAVV.</p></list-item> <list-item><p><bold>Writing – original draft:</bold> DAVV MWC.</p></list-item> <list-item><p><bold>Writing – review &amp; editing:</bold> DAVV TK KML DNM NTQ MMD IM YT EAA MWC.</p></list-item></list></p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">mcovert@stanford.edu</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>4</day>
+<month>11</month>
+<year>2016</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>11</month>
+<year>2016</year>
+</pub-date>
+<volume>12</volume>
+<issue>11</issue>
+<elocation-id>e1005177</elocation-id>
+<history>
+<date date-type="received">
+<day>18</day>
+<month>5</month>
+<year>2016</year>
+</date>
+<date date-type="accepted">
+<day>3</day>
+<month>10</month>
+<year>2016</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2016</copyright-year>
+<copyright-holder>Van Valen et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1005177"/>
+<abstract>
+<p>Live-cell imaging has opened an exciting window into the role cellular heterogeneity plays in dynamic, living systems. A major critical challenge for this class of experiments is the problem of image segmentation, or determining which parts of a microscope image correspond to which individual cells. Current approaches require many hours of manual curation and depend on approaches that are difficult to share between labs. They are also unable to robustly segment the cytoplasms of mammalian cells. Here, we show that deep convolutional neural networks, a supervised machine learning method, can solve this challenge for multiple cell types across the domains of life. We demonstrate that this approach can robustly segment fluorescent images of cell nuclei as well as phase images of the cytoplasms of individual bacterial and mammalian cells from phase contrast images without the need for a fluorescent cytoplasmic marker. These networks also enable the simultaneous segmentation and identification of different mammalian cell types grown in co-culture. A quantitative comparison with prior methods demonstrates that convolutional neural networks have improved accuracy and lead to a significant reduction in curation time. We relay our experience in designing and optimizing deep convolutional neural networks for this task and outline several design rules that we found led to robust performance. We conclude that deep convolutional neural networks are an accurate method that require less curation time, are generalizable to a multiplicity of cell types, from bacteria to mammalian cells, and expand live-cell imaging capabilities to include multi-cell type systems.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Dynamic live-cell imaging experiments are a powerful tool to interrogate biological systems with single cell resolution. The key barrier to analyzing data generated by these measurements is image segmentation—identifying which parts of an image belong to which individual cells. Here we show that deep learning is a natural technology to solve this problem for these experiments. We show that deep learning is more accurate, requires less time to curate segmentation results, can segment multiple cell types, and can distinguish between different cell lines present in the same image. We highlight specific design rules that enable us to achieve high segmentation accuracy even with a small number of manually annotated images (~100 cells). We expect that our work will enable new experiments that were previously impossible, as well as reduce the computational barrier for new labs to join the live-cell imaging space.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution>Paul G. Allen Family Foundation (US)</institution>
+</funding-source>
+<award-id>Allen Distinguished Investigator</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-5993-8912</contrib-id>
+<name name-style="western">
+<surname>Covert</surname>
+<given-names>Markus W.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution>Paul G. Allen Family Foundation (US)</institution>
+</funding-source>
+<award-id>Allen Discovery Center</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-5993-8912</contrib-id>
+<name name-style="western">
+<surname>Covert</surname>
+<given-names>Markus W.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award003">
+<funding-source>
+<institution>NIH Office of the Director (US)</institution>
+</funding-source>
+<award-id>5DP1LM01150</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-5993-8912</contrib-id>
+<name name-style="western">
+<surname>Covert</surname>
+<given-names>Markus W.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award004">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000057</institution-id>
+<institution>National Institute of General Medical Sciences</institution>
+</institution-wrap>
+</funding-source>
+<award-id>P50 GM107615</award-id>
+</award-group>
+<award-group id="award005">
+<funding-source>
+<institution>U.S. Department of Energy (US)</institution>
+</funding-source>
+<award-id>DE-FG02-97ER25308</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-7257-0315</contrib-id>
+<name name-style="western">
+<surname>Macklin</surname>
+<given-names>Derek N.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award006">
+<funding-source>
+<institution>Siebel Foundation</institution>
+</funding-source>
+<award-id>Graduate Scholarship</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-7257-0315</contrib-id>
+<name name-style="western">
+<surname>Macklin</surname>
+<given-names>Derek N.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award007">
+<funding-source>
+<institution>Stanford University School of Medicine (US)</institution>
+</funding-source>
+<award-id>Stanford Biomedical Big Data Science Postdoctoral Fellowship</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Van Valen</surname>
+<given-names>David A.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award008">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000861</institution-id>
+<institution>Burroughs Wellcome Fund</institution>
+</institution-wrap>
+</funding-source>
+<award-id>Postdoctoral Enrichment Program</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Van Valen</surname>
+<given-names>David A.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award009">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000057</institution-id>
+<institution>National Institute of General Medical Sciences</institution>
+</institution-wrap>
+</funding-source>
+<award-id>1F32GM119319-01</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Van Valen</surname>
+<given-names>David A.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>We gratefully acknowledge funding from several sources, including a Paul Allen Family Foundation Allen Distinguished Investigator award, a Paul Allen Family Foundation Allen Discovery Center Award and an NIH Pioneer Award (5DP1LM01150-05) to MWC, a Systems Biology Center grant (P50 GM107615), a DOE Computational Science Graduate Fellowship (DE-FG02-97ER25308) and a Siebel Scholarship to DNM, and a Stanford Biomedical Big Data Science Postdoctoral Fellowship as well as the Burroughs Wellcome Fund’s Postdoctoral Enrichment Program and an NIH F32 Postdoctoral Fellowship (1F32GM119319-01) to DVV. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="1"/>
+<page-count count="24"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All data and software are available at the NIH-funded repository SIMTK (<ext-link ext-link-type="uri" xlink:href="https://simtk.org/projects/deepcell" xlink:type="simple">https://simtk.org/projects/deepcell</ext-link>).</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<disp-quote><p>This is a <italic>PLOS Computational Biology</italic> Methods paper.</p></disp-quote>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Live-cell imaging, in which living cells are imaged over a period of time using phase contrast and/or fluorescence microscopy, is a powerful method for interrogating living systems. This class of experiments has shed light on numerous biological problems, which include transcriptional regulation in both bacteria and eukaryotes as well as information transmission in mammalian signaling networks [<xref ref-type="bibr" rid="pcbi.1005177.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref008">8</xref>]. One common insight these single-cell measurements have been able to provide is the role cellular heterogeneity plays in these systems, as they have the ability to capture the differences between cells and observe how these differences evolve in time. This aspect of living systems is often missed in population level analyses and is best captured by live-cell imaging [<xref ref-type="bibr" rid="pcbi.1005177.ref009">9</xref>].</p>
+<p>Central to the analysis for these experiments is the problem of image segmentation—the assignment of which pixels in an image belong to each individual cell [<xref ref-type="bibr" rid="pcbi.1005177.ref009">9</xref>]. Without this mapping, it is impossible to extract statistics on cellular fluorescence or geometry with single-cell resolution. The available solutions to date draw upon a standard set of techniques—filtering, morphological operations, thresholding, and the watershed transform—from computer vision. Typically, a combination of these tools are tailored to each individual experiment [<xref ref-type="bibr" rid="pcbi.1005177.ref004">4</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref010">10</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref013">13</xref>]. For example, CellProfiler and Oufti are tools to perform cell segmentation and tracking (primarily using thresholding, watershed transform, and Voronoi algorithms). Supervised machine learning methods have also seen significant success in this space [<xref ref-type="bibr" rid="pcbi.1005177.ref014">14</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref016">16</xref>]. Two notable examples are Ilastik and Microscopy Image Browser, two freely available programs that use supervised machine learning (edge and texture filters with random forest classification) to perform segmentation [<xref ref-type="bibr" rid="pcbi.1005177.ref012">12</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref019">19</xref>].</p>
+<p>Our lab’s experience in performing all aspects live-cell imaging experiments—from data generation to analysis—have lead us to identify three main challenges in this space. These are curation time, segmentation accuracy, and solution sharing. The unfortunate reality is that the output of most programs built around the standard set of techniques described above requires significant amounts of manual curation. The specific time cost is rarely, if ever, reported, but work by our lab on NF-κ B signaling in mammalian cells, which required segmenting images of fluorescent nuclei, required on the order of 100+ hours of manual curation per manuscript [<xref ref-type="bibr" rid="pcbi.1005177.ref004">4</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref005">5</xref>]. Similarly, recently-published work requiring segmentation of growing micro-colonies of <italic>E</italic>. <italic>coli</italic> required ~40 hours [<xref ref-type="bibr" rid="pcbi.1005177.ref020">20</xref>]. Much of this burden can be traced to inaccurate segmentation algorithms and the time required to separate accurately segmented cells from inaccurately segmented ones. The need for human curation is a significant drawback to these methods; not only are far fewer experiments performed than could be, but many types of experiments are never performed because the analysis is seen as prohibitive (co-culture, for example—see [<xref ref-type="bibr" rid="pcbi.1005177.ref005">5</xref>]).</p>
+<p>The image analysis techniques mentioned above are also confounded by commonly-desired tasks, such as robust segmentation of mammalian cell cytoplasms, or bacterial cells in close proximity. Segmentation methods exist for the mammalian cytoplasm, but they typically require either imaging a cytoplasmic fluorescent protein (which removes a fluorescence channel) or imaging multiple focal planes (which increases acquisition time) [<xref ref-type="bibr" rid="pcbi.1005177.ref021">21</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref026">26</xref>]. Neither of these consequences are desirable. As a result, the cytoplasmic segmentation problem is frequently circumvented by sampling pixels in close proximity to the nucleus and using them as a proxy for the cytoplasm [<xref ref-type="bibr" rid="pcbi.1005177.ref027">27</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref029">29</xref>]. More progress has been made in segmenting closely packed bacterial cells [<xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>]; however, a robust method to identify the cytoplasm of mammalian cells or bacterial micro-colonies with single-cell resolution directly from phase microscopy images has remained elusive [<xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref026">26</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref030">30</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref031">31</xref>].</p>
+<p>Another challenge concerns generality, or the ability of existing solutions or software in one lab to be applied to the problems of another lab. Because different groups use highly-tuned combinations of these standard techniques to solve the image segmentation problem for specific experiments, there is a barrier to sharing work and ideas in this space. CellProfiler, Oufti, and Ilastik represent notable exceptions, and have empowered a number of experiments, including in labs which were otherwise new to computational image analysis [<xref ref-type="bibr" rid="pcbi.1005177.ref012">12</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref018">18</xref>]. However, the overall lack of sharable segmentation solutions means the cost of entering this field requires a significant—and often unanticipated—computational investment, beyond the obvious costs associated with the microscopy itself.</p>
+<p>Recent advances in supervised machine learning, namely deep convolutional neural networks (referred to here as conv-nets) have shown remarkable performance for the task of image classification—that is, assigning descriptive labels to images [<xref ref-type="bibr" rid="pcbi.1005177.ref032">32</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref033">33</xref>]. By “learning” on a set of manually annotated data, conv-nets can be used to classify new images with remarkable accuracy [<xref ref-type="bibr" rid="pcbi.1005177.ref033">33</xref>]. Prior work has shown that in addition to functioning as image classifiers, conv-nets can also perform semantic segmentation—the assignment of class labels to each individual pixel of an image rather than to the whole image itself—in a computationally efficient manner [<xref ref-type="bibr" rid="pcbi.1005177.ref034">34</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref036">36</xref>]. Despite their successful application to numerous real-world problems, conv-nets have only recently been applied to analyzing biological data. Recent work has demonstrated that they have significant potential to address the needs of live cell imaging experiments. Work by Ronnenberg et. al. won the 2015 ISBI cell tracking competition, and was the first to demonstrate that conv-nets can segment images of U373 (with almost perfect accuracy) and HeLa cells from DIC microscopy images [<xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>]. Another recent paper addressed the problem of segmenting fluorescent images of yeast cells [<xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref040">40</xref>]. Much like Krizhevsky’s initial application of conv-nets to the ImageNet image classification challenge in 2012, this work strongly suggests that conv-nets are a natural technology for live-cell imaging experiments [<xref ref-type="bibr" rid="pcbi.1005177.ref033">33</xref>]. While these recent developments have the potential to be revolutionary, our experience both as experimentalists and as users of deep learning demonstrated that there was still work to be done before conv-nets can supplant prior image segmentation methods in this space. In this work, we build on these exciting advances to demonstrate that conv-nets address all of the image analysis problems described above for a large variety of cell types. Our aim was to leverage our lab’s experience in live-cell imaging and deep learning to develop a robust tool that could be applied to a variety of live-cell imaging experiments.</p>
+<p>Our paper is organized as follows. We first review how image segmentation can be thought of as image classification as well as the mathematical structure of conv-nets. We show that conv-nets can accurately segment the cytoplasms of bacterial cells and mammalian cell nuclei from fluorescent microscopy images. We show that integrating phase microscopy images with fluorescent microscopy images of a nuclear marker enables the accurate segmentation of the cytoplasm of mammalian cells. We show that by integrating conv-nets into an image analysis pipeline, we can quantify the growth of thousands of bacterial cells and track individual mammalian nuclei with almost no manual correction. We also show that incorporation of cytoplasmic segmentation masks provides a more accurate quantification of fluorescent protein localization kinase translocation reporters (KTRs) [<xref ref-type="bibr" rid="pcbi.1005177.ref006">6</xref>]. A quantitative comparison demonstrates that conv-nets are superior to other methods, both in terms of accuracy and curation time. We show how this approach can be used to both segment and classify different mammalian cell types in a co-culture using just the phase image and a nuclear marker. We highlight particular features of our work—image normalization, segmentation refinement with active contours, and receptive field size—which were critical for conv-nets to perform robustly on live-cell imaging data using relatively small training data sets. We also explore how much recent deep learning advances—namely dropout, batch normalization, and multi-resolution networks—impact segmentation performance [<xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref041">41</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref042">42</xref>]. All of the software and training data described here, as well as a Docker container, is available at <ext-link ext-link-type="uri" xlink:href="https://simtk.org/projects/deepcell" xlink:type="simple">https://simtk.org/projects/deepcell</ext-link>.</p>
+<sec id="sec002">
+<title>Image segmentation as image classification</title>
+<p>Image segmentation of single cells in microscopy images can be converted into an image classification problem [<xref ref-type="bibr" rid="pcbi.1005177.ref038">38</xref>]. Consider a manually annotated image where each pixel has been identified as either a cell boundary, cellular interior, or background (non-cell) pixel, as depicted in <xref ref-type="fig" rid="pcbi.1005177.g001">Fig 1a</xref>. By sampling a small region around each pixel and assigning the resulting image that pixel’s respective class, we can construct a training data set that contains representative images of each class. After the manually annotated image is reconstructed in this way, the image segmentation task is effectively reduced to finding a classifier that can distinguish between the three classes in the training data set and is robust enough to classify new images. Should such a classifier exist, any new microscope image could be segmented by decomposing it into small overlapping images, applying the classifier to each image, and then reassembling the classification prediction into a new image. This image can then be subjected to standard computer vision techniques to produce a segmentation mask—an image where the pixels for each cell’s interior have been assigned a unique integer label. Conv-nets can function as exactly such a classifier for data acquired from live-cell imaging experiments because they have both substantial representational power to encode the nonlinear relationship between images and classes, yet are general enough to provide robust predictions for new images [<xref ref-type="bibr" rid="pcbi.1005177.ref032">32</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref033">33</xref>].</p>
+<fig id="pcbi.1005177.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Performing image segmentation with deep convolutional neural networks.</title>
+<p>(a) Image segmentation can be recast as an image classification task that is amenable to a supervised machine learning approach. A manually annotated image is converted into a training dataset by sampling regions around boundary, interior, and background pixels. These sample images are then used to train an image classifier that can then be applied to new images. (b) The mathematical structure of a conv-net. A conv-net can be broken down into two components. The first component is dimensionality reduction through the iterative application of three operations—convolutions, a transfer function, and down sampling. The second component is a classifier that uses the representation and outputs scores for each class.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.g001" xlink:type="simple"/>
+</fig>
+<p>Here, we briefly review the mathematical structure of conv-nets and how they are trained to perform classification tasks [<xref ref-type="bibr" rid="pcbi.1005177.ref032">32</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref038">38</xref>]. With respect to their mathematical structure, conv-nets can be thought of as having two components; this is schematized in <xref ref-type="fig" rid="pcbi.1005177.g001">Fig 1b</xref>. The first component constructs a low dimensional representation of an image using the iterative application of three operations, as depicted in <xref ref-type="fig" rid="pcbi.1005177.g001">Fig 1b</xref>. If we denote the input image as <italic>I</italic>, then the first operation is to convolve the image with a set of filters, denoted here as {<italic>w</italic><sub>1</sub>,…, <italic>w</italic><sub><italic>n</italic></sub>}, to produce the filtered images {<italic>I</italic> * <italic>w</italic><sub>1</sub>,…, <italic>I</italic> * <italic>w</italic><sub><italic>n</italic></sub>}. Each filter <italic>w</italic><sub><italic>i</italic></sub> has the same shape—a square with a size of 3–5 pixels—in the conv-nets considered here. The filters can be thought of as local feature extractors as their output only depends on pixels in close spatial proximity. The weights of these filters are variables—their values are changed during a training procedure to minimize the classification error on a training data set.</p>
+<p>Once the image is filtered, the second operation is to apply a transfer function <italic>f</italic> to produce a set of feature maps {<italic>f</italic>(<italic>I</italic> * <italic>w</italic><sub>1</sub>),…, <italic>f</italic>(<italic>I</italic> * <italic>w</italic><sub><italic>n</italic></sub>)}. The transfer function serves to enable the classifier to construct non-linear decision boundaries. In this work, we use the rectified linear unit, or relu, as our transfer function which is defined as <italic>relu</italic>(<italic>x</italic>) = max(0, <italic>x</italic>) [<xref ref-type="bibr" rid="pcbi.1005177.ref043">43</xref>]. The third operation is an optional down-sampling using max-pooling, which creates feature maps at a coarser spatial scale. The max-pooling operation replaces an <italic>m</italic> × <italic>m</italic> window with the largest pixel value within that window. The window is then slid across the image with a particular step size to produce the down sampled image. In this work, we only consider max-pooling with a 2 ×2 window using a step size of 2. The output of these dimensionality reduction steps are a collection of down sampled (if max pooling was applied) feature maps {<italic>pool</italic>(<italic>f</italic>(<italic>I</italic> * <italic>w</italic><sub>1</sub>)),…, <italic>pool</italic>(<italic>f</italic>(<italic>I</italic> * <italic>w</italic><sub><italic>n</italic></sub>))}. These feature maps can be viewed as a single multi-channel image, which then serves as the input to another round of the same three operations—convolution with a set of filters, application of a transfer function, and optional down-sampling by max pooling. By iterating these three operations for several rounds (4–6 times in this work), we construct a low dimensional representation of the input image.</p>
+<p>The second component of a conv-net, classification, uses a fully connected neural network that takes the low dimensional representation described above an input and assigns class labels. The mathematical structure is similar to a linear classifier, which collapses the low dimensional representation of the image into a single vector <bold>r</bold> and then multiplies it by a matrix W. The dimensions of <italic>W</italic> are (number of classes X number of elements in r), which by design produces the appropriate number of class scores. The output is a vector of class scores, with the highest score being called as the winner.</p>
+<p>The difference between the linear classifier and a fully connected neural network is that the latter uses iterative applications of matrix multiplication and a transfer function to construct a nonlinear mapping between the low dimensional representation and the set of class labels. Put concretely, the first step is to collapse the low-dimensional representation into a single vector <bold>r</bold> and then multiply with a matrix <italic>W</italic><sub>1</sub>. The product is then sent through the transfer function <italic>f</italic> to yield the output <italic>f</italic>(<italic>W</italic><sub>1</sub><bold><italic>r</italic></bold>). The repeated application of these two operations produce the output <italic>W</italic><sub><italic>q</italic></sub><italic>f</italic>(<italic>W</italic><sub><italic>q</italic>-1</sub><italic>f</italic>(…<italic>f</italic>(<italic>W</italic><sub>1</sub><bold><italic>r</italic></bold>))), where the number of rows of the last matrix <italic>W</italic><sub><italic>q</italic></sub> is equal to the number of classes. This output is a vector of class scores which serves as the classification prediction. For the networks considered in this work, we take <italic>q</italic> = 3 or 4. The structure of the conv-nets explored here are shown in Table A in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>.</p>
+<p>With the mathematical structure of a conv-net defined, we now to turn to training. As with other supervised machine learning methods, conv-nets have to learn from manually annotated datasets to perform the classification task, such as the classifying of boundary, interior, and background images mentioned earlier. We refer to this dataset as our “training data” because it is used to train the conv-net as a classifier. A small portion (10%) of this dataset is set aside as “validation data” and is used to benchmark the training procedure. In the case of conv-nets, training means tuning the weights of the filters <italic>w</italic><sub><italic>i</italic></sub> and matrices <italic>W</italic><sub><italic>j</italic></sub> to minimize the classification error. This is done by first constructing a cost function that provides a reward for predicting the correct class and a penalty for predicting the wrong class for a set of images. In this work, we use soft-max cost function, which is defined as
+<disp-formula id="pcbi.1005177.e001">
+<alternatives>
+<graphic id="pcbi.1005177.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1">
+<mml:mrow><mml:mi>C</mml:mi><mml:mi>o</mml:mi><mml:mi>s</mml:mi><mml:mi>t</mml:mi><mml:mo>=</mml:mo><mml:mo>−</mml:mo><mml:munder><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>g</mml:mi><mml:mi>e</mml:mi><mml:mi>s</mml:mi></mml:mrow></mml:munder><mml:mtext>log</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mo> </mml:mo><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msup></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>s</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mi>λ</mml:mi><mml:munder><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>w</mml:mi><mml:mo> </mml:mo><mml:mo>∈</mml:mo><mml:mo> </mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mi>l</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mo> </mml:mo><mml:mi>w</mml:mi><mml:mi>e</mml:mi><mml:mi>i</mml:mi><mml:mi>g</mml:mi><mml:mi>h</mml:mi><mml:mi>t</mml:mi><mml:mi>s</mml:mi></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:munder><mml:msup><mml:mi>w</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula></p>
+<p>The first term can be thought of as the negative log likelihood of choosing the correct class while the second is a regularization term included to reduce overfitting. With the cost function defined, batch stochastic gradient descent (or a variant like RMSprop) was used to tune the filter weights (after a random initialization) to minimize the cost function [<xref ref-type="bibr" rid="pcbi.1005177.ref044">44</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref045">45</xref>]. Batch stochastic gradient descent works by computing the derivative of the cost function with respect to each weight for a batch of images. The cost function is minimized by adjusting the weights according to the formula
+<disp-formula id="pcbi.1005177.e002">
+<alternatives>
+<graphic id="pcbi.1005177.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2">
+<mml:mrow><mml:mi>w</mml:mi><mml:mo>=</mml:mo><mml:mi>w</mml:mi><mml:mo>−</mml:mo><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>n</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mi>g</mml:mi><mml:mo> </mml:mo><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mo> </mml:mo><mml:mo>×</mml:mo><mml:mfrac><mml:mrow><mml:mo>∂</mml:mo><mml:mi>C</mml:mi><mml:mi>o</mml:mi><mml:mi>s</mml:mi><mml:mi>t</mml:mi></mml:mrow><mml:mrow><mml:mo>∂</mml:mo><mml:mi>w</mml:mi></mml:mrow></mml:mfrac><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula></p>
+<p>The gradient of the cost with respect to the weights is computed analytically using the backpropagation algorithm [<xref ref-type="bibr" rid="pcbi.1005177.ref046">46</xref>]. We implemented training and execution of conv-nets in Python using the Keras, Theano, Numpy, Scipy, and Scikit-image Python packages[<xref ref-type="bibr" rid="pcbi.1005177.ref047">47</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref051">51</xref>]. Additional details about training are provided in the supplemental information.</p>
+</sec>
+</sec>
+<sec id="sec003" sec-type="results">
+<title>Results</title>
+<sec id="sec004">
+<title>Conv-nets accurately segment bacterial and mammalian cells</title>
+<p>We trained conv-nets to perform 3 different segmentation tasks—bacterial cytoplasms (from phase microscopy images), mammalian cell nuclei (from fluorescent microscopy images of cells expressing a nuclear marker), and mammalian cell cytoplasms (from phase microscopy images and images of a fluorescent nuclear marker). For the mammalian cell cytoplasm segmentation task, we opted to allow the conv-net to see both the phase image and an image of a nuclear marker. We did this for three reasons. First, most live-cell imaging experiments of mammalian cells collect images of a nuclear marker for cell tracking purposes, so we expect that data to typically be present. Second, we reasoned that because the nuclei and the cytoplasm overlap spatially, the nuclear channel might help when the phase image is ambiguous. Third, because the nuclei are typically separated spatially, we reasoned that the nuclear channel could be used to separate cells that are in close spatial proximity—either inherently by the conv-net or through a post processing step. The conv-net architectures trained on each dataset are shown in Table A in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>.</p>
+<p>Once trained, a new image can be run through the conv-net to produce a prediction of which pixels are background, cellular boundary, or cellular interior. As opposed to processing a new image patch-by-patch, d-regularly sparse kernels can be used to process images in a fully convolutional, computationally efficient fashion [<xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref036">36</xref>]. These predictions are images with pixel values ranging from 0 to 1 to reflect how certain the conv-net is of its pixel level classification. For live-cell imaging experiments, this prediction must be turned into a binary mask—an image with a 1 at every cellular interior pixel and a 0 everywhere else. We’ve found that this necessitated an additional downstream processing step. For bacterial cells and mammalian nuclei, thresholding was sufficient to produce accurate segmentation masks. For the mammalian cytoplasm, we first used a conv-net to segment the nuclei, and then used the nuclear prediction to seed a refinement of the cellular interior prediction with active contours [<xref ref-type="bibr" rid="pcbi.1005177.ref052">52</xref>].</p>
+<p>Sample segmentation results are shown in <xref ref-type="fig" rid="pcbi.1005177.g002">Fig 2</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s002">S1</xref>–<xref ref-type="supplementary-material" rid="pcbi.1005177.s009">S8</xref> Figs. To date we have trained and tested conv-nets to segment images of the following cell types/lines—<italic>E</italic>. <italic>coli</italic>, NIH-3T3, MCF10A, HeLa-S3, RAW 264.7, and bone marrow derived macrophages (BMDMs). To benchmark the segmentation results, we computed standard (Jaccard and Dice) indices of segmentation accuracy [<xref ref-type="bibr" rid="pcbi.1005177.ref053">53</xref>] (<xref ref-type="table" rid="pcbi.1005177.t001">Table 1</xref>). For each cell, given a reference segmentation <italic>R</italic> and computed segmentation <italic>S</italic>, the Jaccard index is defined as <inline-formula id="pcbi.1005177.e003"><alternatives><graphic id="pcbi.1005177.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e003" xlink:type="simple"/><mml:math display="inline" id="M3"><mml:mrow><mml:mi>J</mml:mi><mml:mi>I</mml:mi><mml:mo>=</mml:mo><mml:mo> </mml:mo><mml:mfrac><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:mi>R</mml:mi><mml:mo>∩</mml:mo><mml:mi>S</mml:mi></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:mi>R</mml:mi><mml:mo>∪</mml:mo><mml:mi>S</mml:mi></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula> and the Dice index is defined as <inline-formula id="pcbi.1005177.e004"><alternatives><graphic id="pcbi.1005177.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e004" xlink:type="simple"/><mml:math display="inline" id="M4"><mml:mrow><mml:mi>D</mml:mi><mml:mi>I</mml:mi><mml:mo>=</mml:mo><mml:mo> </mml:mo><mml:mfrac><mml:mrow><mml:mn>2</mml:mn><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:mi>R</mml:mi><mml:mo>∩</mml:mo><mml:mi>S</mml:mi></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mi>R</mml:mi><mml:mo>|</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mrow><mml:mo>|</mml:mo><mml:mi>S</mml:mi><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>. The conv-net based approach has an accuracy that is either on par with or superior to the current methods developed to segment phase and fluorescent images of cellular cytoplasms and nuclei. The results in <xref ref-type="table" rid="pcbi.1005177.t001">Table 1</xref> also suggest two significant advantages of conv-nets over other approaches. First, the approach is general. Although the specifics of the architecture may need to be fine-tuned for each cell type, they have the capacity to segment images of multiple different cell lines. Second, because of their improved accuracy, less time is required to manually curate the segmentation results.</p>
+<fig id="pcbi.1005177.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Sample images from live-cell experiments that were segmented using conv-nets.</title>
+<p>Images of bacterial and mammalian cells were segmented using trained conv-nets and additional downstream processing. Thresholding for bacterial cells and an active contour based approach for mammalian cells were used to convert the conv-net prediction into a segmentation mask.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.g002" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1005177.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.t001</object-id>
+<label>Table 1</label> <caption><title>Comparison of segmentation performance among different segmentation algorithms and datasets.</title> <p>The Jaccard (JI) and Dice (DI) indices were computed on a validation data set as previously described [<xref ref-type="bibr" rid="pcbi.1005177.ref053">53</xref>]. The Jaccard index for <italic>E</italic>. <italic>coli</italic> was estimated from the segmentation error rate (0.5% in this work and 2.6% in [<xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>]) assuming each segmentation error was due to the incorrect joining of 2 bacteria. NA—Not available.</p></caption>
+<alternatives>
+<graphic id="pcbi.1005177.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Cell type(s)</th>
+<th align="left">Method</th>
+<th align="left">Imaging type</th>
+<th align="left">JI</th>
+<th align="left">DI</th>
+<th align="left">Dense</th>
+<th align="left">Processing time per image</th>
+<th align="left">Curation time per image</th>
+<th align="left">Citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="9" style="background-color:#F2F2F2"><bold>Bacteria</bold></td>
+</tr>
+<tr>
+<td align="left"><bold>Coliform bacteria</bold></td>
+<td align="left">Edge finding and thresholding</td>
+<td align="left">Phase</td>
+<td align="left">~0.94</td>
+<td align="left"/>
+<td align="left">Yes</td>
+<td align="left">5 s</td>
+<td align="left">~10–30 s</td>
+<td align="left">[<xref ref-type="bibr" rid="pcbi.1005177.ref015">15</xref>,<xref ref-type="bibr" rid="pcbi.1005177.ref014">14</xref>]</td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"><bold>Coliform bacteria</bold></td>
+<td align="left" style="background-color:#F2F2F2">Conv-nets</td>
+<td align="left" style="background-color:#F2F2F2">Phase</td>
+<td align="left" style="background-color:#F2F2F2">~0.95</td>
+<td align="left" style="background-color:#F2F2F2"/>
+<td align="left" style="background-color:#F2F2F2">Yes</td>
+<td align="left" style="background-color:#F2F2F2">120 s</td>
+<td align="left" style="background-color:#F2F2F2">1–2 s</td>
+<td align="left" style="background-color:#F2F2F2">This work</td>
+</tr>
+<tr>
+<td align="left" colspan="9"><bold>Mammalian nuclei</bold></td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"/>
+<td align="left" style="background-color:#F2F2F2">Thresholding and level sets</td>
+<td align="left" style="background-color:#F2F2F2">Fluorescence</td>
+<td align="left" style="background-color:#F2F2F2">0.88</td>
+<td align="left" style="background-color:#F2F2F2"/>
+<td align="left" style="background-color:#F2F2F2">Yes</td>
+<td align="left" style="background-color:#F2F2F2">2–3 s</td>
+<td align="left" style="background-color:#F2F2F2">~ 5–10 s</td>
+<td align="left" style="background-color:#F2F2F2">[<xref ref-type="bibr" rid="pcbi.1005177.ref045">45</xref>]</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Conv-nets and thresholding</td>
+<td align="left">Fluorescence</td>
+<td align="left">0.89</td>
+<td align="left">0.94</td>
+<td align="left">Yes</td>
+<td align="left">10 s</td>
+<td align="left">~0–1 s</td>
+<td align="left">This work</td>
+</tr>
+<tr>
+<td align="left" colspan="9" style="background-color:#F2F2F2"><bold>Mammalian cytoplasm</bold></td>
+</tr>
+<tr>
+<td align="left"><bold>N1E115</bold></td>
+<td align="left">Voronoi diagrams</td>
+<td align="left">Fluorescence</td>
+<td align="left">0.75</td>
+<td align="left"/>
+<td align="left">No</td>
+<td align="left">40 s</td>
+<td align="left">NA</td>
+<td align="left">[<xref ref-type="bibr" rid="pcbi.1005177.ref046">46</xref>]</td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"><bold>Neural stem cells</bold></td>
+<td align="left" style="background-color:#F2F2F2">Level sets</td>
+<td align="left" style="background-color:#F2F2F2">Bright field</td>
+<td align="left" style="background-color:#F2F2F2">0.79</td>
+<td align="left" style="background-color:#F2F2F2"/>
+<td align="left" style="background-color:#F2F2F2">No</td>
+<td align="left" style="background-color:#F2F2F2">NA</td>
+<td align="left" style="background-color:#F2F2F2">NA</td>
+<td align="left" style="background-color:#F2F2F2">[<xref ref-type="bibr" rid="pcbi.1005177.ref047">47</xref>]</td>
+</tr>
+<tr>
+<td align="left"><bold>NIH-3T3</bold></td>
+<td align="left">Edge finding, thresholding, and morphological operations</td>
+<td align="left">Phase</td>
+<td align="left"/>
+<td align="left">0.76–0.92</td>
+<td align="left">No</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">[<xref ref-type="bibr" rid="pcbi.1005177.ref021">21</xref>]</td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"><bold>HeLa-S3</bold></td>
+<td align="left" style="background-color:#F2F2F2">Ilastik (texture/edge filters and random forest classifier)</td>
+<td align="left" style="background-color:#F2F2F2">Phase</td>
+<td align="left" style="background-color:#F2F2F2">0.56<xref ref-type="table-fn" rid="t001fn001">*</xref></td>
+<td align="left" style="background-color:#F2F2F2">0.71<xref ref-type="table-fn" rid="t001fn001">*</xref></td>
+<td align="left" style="background-color:#F2F2F2">Yes</td>
+<td align="left" style="background-color:#F2F2F2">1s</td>
+<td align="left" style="background-color:#F2F2F2">NA</td>
+<td align="left" style="background-color:#F2F2F2">[<xref ref-type="bibr" rid="pcbi.1005177.ref018">18</xref>], This work</td>
+</tr>
+<tr>
+<td align="left"><bold>HeLa-S3</bold></td>
+<td align="left">Conv-nets</td>
+<td align="left">DIC</td>
+<td align="left">0.77</td>
+<td align="left"/>
+<td align="left">Yes</td>
+<td align="left">1s</td>
+<td align="left">NA</td>
+<td align="left">[<xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>]</td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"><bold>U373</bold></td>
+<td align="left" style="background-color:#F2F2F2">Conv-nets</td>
+<td align="left" style="background-color:#F2F2F2">DIC</td>
+<td align="left" style="background-color:#F2F2F2">0.93</td>
+<td align="left" style="background-color:#F2F2F2"/>
+<td align="left" style="background-color:#F2F2F2">No</td>
+<td align="left" style="background-color:#F2F2F2">1s</td>
+<td align="left" style="background-color:#F2F2F2">NA</td>
+<td align="left" style="background-color:#F2F2F2">[<xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>]</td>
+</tr>
+<tr>
+<td align="left"><bold>MCF10A</bold></td>
+<td align="left">Conv-nets and active contours</td>
+<td align="left">Phase</td>
+<td align="left">0.77</td>
+<td align="left">0.86</td>
+<td align="left">Yes</td>
+<td align="left">75 s</td>
+<td align="left">~ 2–10 s</td>
+<td align="left">This work</td>
+</tr>
+<tr>
+<td align="left" style="background-color:#F2F2F2"><bold>NIH-3T3</bold></td>
+<td align="left" style="background-color:#F2F2F2">Conv-nets and active contours</td>
+<td align="left" style="background-color:#F2F2F2">Phase</td>
+<td align="left" style="background-color:#F2F2F2">0.77</td>
+<td align="left" style="background-color:#F2F2F2">0.86</td>
+<td align="left" style="background-color:#F2F2F2">Yes</td>
+<td align="left" style="background-color:#F2F2F2">75 s</td>
+<td align="left" style="background-color:#F2F2F2">~ 2–10 s</td>
+<td align="left" style="background-color:#F2F2F2">This work</td>
+</tr>
+<tr>
+<td align="left"><bold>HeLa-S3</bold></td>
+<td align="left">Conv-nets and active contours</td>
+<td align="left">Phase</td>
+<td align="left">0.71<xref ref-type="table-fn" rid="t001fn002">**</xref>-0.84</td>
+<td align="left">0.83<xref ref-type="table-fn" rid="t001fn002">**</xref>-0.92</td>
+<td align="left">Yes</td>
+<td align="left">75 s</td>
+<td align="left">~ 2–10 s</td>
+<td align="left">This work</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p>*: See the supplemental information and <xref ref-type="supplementary-material" rid="pcbi.1005177.s018">S17 Fig</xref> for more details.</p></fn>
+<fn id="t001fn002"><p>**: For fully confluent cells. See the supplemental information and <xref ref-type="supplementary-material" rid="pcbi.1005177.s017">S16 Fig</xref> for more details.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>As a second validation test, we examined time lapse images of <italic>E</italic>. <italic>coli</italic> and HeLa cells to determine whether segmentation results were significantly different between images known to be closely related in time. This test also had the advantage of being particularly relevant to the most pressing application of our method. A linear assignment problem-based approach was used to track cells from frame to frame [<xref ref-type="bibr" rid="pcbi.1005177.ref054">54</xref>]. To estimate how many <italic>E</italic>. <italic>coli</italic> cells showed high variance in segmentation over time, we counted how many cells had a 30% or larger area increase from frame to frame (<xref ref-type="supplementary-material" rid="pcbi.1005177.s019">S1</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s020">S2</xref> Movies)—such a large increase typically means that two bacteria have been incorrectly segmented as a single cell. We found that 69 of the 11909 cells (across all frames) analyzed in <xref ref-type="fig" rid="pcbi.1005177.g003">Fig 3</xref> met this criterion, which leads to an error rate of ~0.6%. This number is superior to the best results from standard approaches by four-fold (2.6%) [<xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>]. For HeLa cells, we performed a similar analysis, but in this case comparing the segmentation contour for each cell to the actual phase image over time. We visually inspected a segmented movie (<xref ref-type="supplementary-material" rid="pcbi.1005177.s021">S3</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s022">S4</xref> Movies), and found that 21 of 145 cells tracked over time exhibited significant changes in segmentation. This leads to an error rate of 14%, which is sufficient to analyze most cells within a field of view, and represents a significant step forward in comparison to prior methods. We conclude that conv-nets are comparably accurate for a variety of cell types with a significantly reduced curation requirement.</p>
+<fig id="pcbi.1005177.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Extracting dynamic measurements of live-cell imaging experiments using conv-nets.</title>
+<p>(a) Single-cell growth curves for <italic>E</italic>. <italic>coli</italic>. Because conv-nets allow for the robust segmentation of bacterial cells, we can construct single-cell growth curves from movies of growing bacterial micro-colonies. A linear assignment problem based method was used for lineage construction. (b) By computing the change in area from frame to frame for each cell, we can construct a histogram of the instantaneous growth rate. (c) Using the instantaneous growth rate and the segmentation masks, we can construct a spatial map of growth rates with single-cell resolution. Such a map allows rapid identification of slowly dividing cells (such as metabolically inactive cells).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.g003" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec005">
+<title>Conv-nets automate the quantification of live-cell imaging experiments</title>
+<p>Having established and validated the use of conv-nets for segmentation of live-cell images, we decided to apply them to pressing needs in our field: first, constructing single-cell growth curves for bacteria; and second, quantifying localization-based kinase reporters in mammalian cells. The analysis of single-cell growth curves has recently produced a number of insights into the mechanism of bacterial growth, including the identification of the adder model for bacterial growth and the observation of metabolic co-dependence within biofilms [<xref ref-type="bibr" rid="pcbi.1005177.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref055">55</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref058">58</xref>]. The images for single-cell growth curves are typically generated by growing bacteria in a patterned microfluidic device, although agar pads and other microfluidic devices have also been used [<xref ref-type="bibr" rid="pcbi.1005177.ref059">59</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref061">61</xref>]. The generation of these growth curves has typically been difficult because of the close proximity of the growing cells, although recent efforts using standard approaches have shown some success [<xref ref-type="bibr" rid="pcbi.1005177.ref011">11</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>]. By using our conv-net based approach and a linear assignment problem method for lineage construction, we can construct single-cell growth curves for <italic>E</italic>. <italic>coli</italic>–even when they are growing in a micro-colony—and use them to compute the instantaneous growth rate for each cell. These are shown in <xref ref-type="fig" rid="pcbi.1005177.g003">Fig 3a, 3b</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s013">S12 Fig</xref>. Because our approach can robustly produce accurate segmentation masks, it can be used to automate the analysis of thousands of bacterial cells regardless of their proximity. Using the instantaneous growth rate, we can create a spatial heat map of the micro-colony that is colored by the growth rate with single-cell resolution. This is shown in <xref ref-type="fig" rid="pcbi.1005177.g003">Fig 3c</xref>. We note that all of the panels in <xref ref-type="fig" rid="pcbi.1005177.g003">Fig 3</xref> were generated without manual correction.</p>
+<p>A second application of our method is the quantification of localization-based kinase reporters. These reporters are a recent advance that enable the monitoring of kinase activities inside individual mammalian cells [<xref ref-type="bibr" rid="pcbi.1005177.ref006">6</xref>]. These reporters consist of a kinase recruitment domain tethered to a nuclear localization signal, nuclear export signal, and a fluorescent protein. Activation of the associated kinase leads to phosphorylation of the reporter and a nucleocytoplasmic translocation event. Because the reporter is fused to a fluorescent protein, this event results in a change in fluorescence localization. Due to the complexity of segmenting mammalian cytoplasms, we had originally taken a 5-pixel wide ring around each nucleus as a proxy for the entire cytoplasm, as has been done in other studies [<xref ref-type="bibr" rid="pcbi.1005177.ref027">27</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref029">29</xref>]. With an improved ability to sample the cytoplasm pixels, we reasoned that our conv-net based approach would lead to more accurate quantification of KTRs. To test this, we acquired movies of HeLa-S3 cells expressing the JNK-KTR after they were stimulated with TNF-α and segmented them using our conv-net approach. For this analysis, we segmented both the nuclei and the cytoplasm using conv-nets (<xref ref-type="supplementary-material" rid="pcbi.1005177.s022">S4 Movie</xref>). A montage of cells from this data set is shown in <xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4a</xref>.</p>
+<fig id="pcbi.1005177.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Analysis of JNK-KTR dynamics in single cells.</title>
+<p>(a) A montage of HeLa-S3 cells expressing a JNK-KTR after stimulation with TNF-α. The scale bar is 20 μm. (b) A line profile of the fluorescence of the cell highlighted in (a) which demonstrates that there is considerable spatial heterogeneity of the fluorescence in the cytoplasm. We model the cytoplasm as having two compartments, only one of which receives fluorescence from the nucleus during translocation. (c) A fit of a two component Gaussian mixture model to the cytoplasmic fluorescence of a HeLa-S3 cell. This method allows us to accurately estimate the fluorescence inside the cytoplasmic compartment that communicates with the nucleus. (d) Dynamics of the JNK-KTR after stimulation with TNF-α after segmentation with our conv-net based approach and quantification with the two component Gaussian mixture model. Plotted in comparison are dynamics obtained from using cytorings with radii of 5 pixels and 25 pixels.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.g004" xlink:type="simple"/>
+</fig>
+<p>To identify the most robust way to quantify the nuclear-to-cytoplasm ratio, we first visually inspected our movies. This inspection revealed that the cytoplasmic fluorescence is not uniform—rather the fluorescence is highest close to the nucleus and is much lower at the periphery (<xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4a and 4b</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s021">S3</xref>–<xref ref-type="supplementary-material" rid="pcbi.1005177.s025">S7</xref> Movies). Furthermore, as evidenced by <xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4a and 4b</xref>, the fluorescence transfer from the nucleus is spatially restricted when it enters the cytoplasm. The HeLa-S3 cytoplasm can therefore be thought of as having two compartments, only one of which receives fluorescence from the nucleus. To see how this experimental reality influences the quantitation of the data, we varied the radius of the cytoring to see how its size influences the extracted dynamics (<xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4d</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s011">S10 Fig</xref>). We found that as we increased the radius, the qualitative shape of each curve was intact but there were important quantitative differences. These differences are important when using models to infer the concentration of active kinase inside a cell. The smallest cytoring almost exclusively samples the compartment in communication with the nucleus but also has the fewest number of pixels. The larger cytorings sample this compartment more thoroughly but also incorporate pixels that are not in the correct compartment. We therefore expect the cytoring to give qualitatively correct but quantitatively inaccurate results regardless of the radius. Our conv-net based approach improves on this method because it better samples the cytoplasmic pixels (as seen in <xref ref-type="supplementary-material" rid="pcbi.1005177.s012">S11 Fig</xref>). To determine the average fluorescence of the compartment that is in communication with the nucleus, we fit the pixel intensity histograms of the cytoplasm of each cell to a 2-component Gaussian mixture model as shown in <xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4c</xref>. The resulting dynamics for this approach and comparison to the cytoring method are shown in <xref ref-type="fig" rid="pcbi.1005177.g004">Fig 4d</xref>. We feel this method is superior because it properly incorporates information from the entire cytoplasm whereas the cytoring forces one to make a decision between accuracy and sampling sparsity. We note that this method for quantifying KTRs may not be necessary for all cell types, as NIH-3T3 cells did not appear to have a two-compartment cytoplasm [<xref ref-type="bibr" rid="pcbi.1005177.ref006">6</xref>].</p>
+</sec>
+<sec id="sec006">
+<title>Conv-nets enable the identification of cell type in mammalian cell co-cultures</title>
+<p>The ability to quantify fluorescence microscopy data is a powerful application of deep learning that will lead to more accurate quantification of live-cell imaging experiments. However, conv-nets also have the ability to perform semantic segmentation—that is, to both segment individual cells and also predict their cell type [<xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref062">62</xref>]. We explored how well conv-nets perform semantic segmentation in this context by training a conv-net on a data set that contained images of both NIH-3T3 and MCF10A cells, which exhibit distinct morphologies under phase contrast. We modified the conv-net architecture (Table A in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>) by increasing the number of classes from 3 to 4 so that the conv-net could recognize the difference between the interiors of the two cell types. To generate a prediction for each cell, the trained conv-net was first applied to an image of a co-culture. We then used the sum of the NIH-3T3 and MCF10A normalized score images to generate segmentation masks as described above. We then computed the cellular classification score for each class (NIH-3T3 or MCF10A), which is given by
+<disp-formula id="pcbi.1005177.e005">
+<alternatives>
+<graphic id="pcbi.1005177.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5">
+<mml:mrow><mml:mi>c</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mi>u</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mo> </mml:mo><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mo>=</mml:mo><mml:mo> </mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mi>c</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>x</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mo> </mml:mo><mml:mi>f</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mo> </mml:mo><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>x</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>i</mml:mi></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>s</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mi>c</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>x</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>s</mml:mi></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mo> </mml:mo><mml:mi>f</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mo> </mml:mo><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mi>x</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:mfrac><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula></p>
+<p>The results for semantic-segmentation are shown in <xref ref-type="fig" rid="pcbi.1005177.g005">Fig 5a and 5b</xref>. When compared with the ground truth (provided by distinct nuclear markers for the two cell types), our trained conv-net has an accuracy of 95% when it comes to a cellular level prediction of cell type. One image containing 92 NIH-3T3 cells and 182 MCF10A cells was classified to determine the accuracy of cell type classification. Similar results were obtained for additional images (see <xref ref-type="supplementary-material" rid="pcbi.1005177.s010">S9 Fig</xref>).</p>
+<fig id="pcbi.1005177.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005177.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Semantic segmentation of a co-culture with MCF10A and NIH-3T3 cells.</title>
+<p>A conv-net was trained to both segment and recognize NIH-3T3 and MCF10A cells. The training data was created from separate images of NIH-3T3 and MCF10A cells with each image having a nuclear marker (Hoechst 33342) as a separate channel. (a) A ground truth image of a co-culture containing NIH-3T3 and MCF10A cells. The NIH-3T3 cells express a mCerulean nuclear marker (blue) while the MCF10A cells express an iRFP nuclear marker (red). Hoechst 33342 (image not shown) was also used to generate an image of a nuclear marker. (b) Simultaneous image segmentation and cell-type classification of the image in (a) using a trained conv-net. (c) Classification accuracy for the trained conv-net’s cellular level cell type prediction. The cellular classification score of the correct cell type for each cell is plotted as a histogram. The size of the cellular classification score is strongly associated with making a correct prediction. A classification accuracy of 86% was achieved for NIH-3T3 cells and 100% for MCF10A cells.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.g005" xlink:type="simple"/>
+</fig>
+<p>We were curious whether stronger cellular classification scores were less prone to classification errors. To explore this, we constructed a histogram of the cellular classification scores of the correct class for each cell (<xref ref-type="fig" rid="pcbi.1005177.g005">Fig 5c</xref>). We found that classification errors are clustered around 0.5, with only 3 cells with errors having a value less than 0.25. This observation leads us to conclude that the closer a cellular classification score is to 1, the more likely that the prediction is correct.</p>
+</sec>
+</sec>
+<sec id="sec007" sec-type="conclusions">
+<title>Discussion</title>
+<sec id="sec008">
+<title>Advantages of conv-nets over standard computer vision techniques</title>
+<p>Image segmentation is the core task required to convert the data from live-cell imaging experiments into a quantitative, dynamic description of living systems with single-cell resolution. Here, we have shown that deep learning can perform this task with accuracy sufficient for live-cell experiments. The approach to single-cell segmentation we have outlined has four main advantages. First, incorporating conv-nets into an image segmentation pipeline significantly reduces the time required for manual supervision and correction. This improvement comes about from the improved accuracy of the segmentation masks. In the two case studies presented here, we were able to obtain our end result with no manual curation. We note that this ability depends on data quality and likely will not hold for all experiments. To get a sense of the actual time savings, we estimated the curation time required for our previous work and searched the literature to obtain estimates of how long it takes to analyze a typical experiment [<xref ref-type="bibr" rid="pcbi.1005177.ref004">4</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref005">5</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref009">9</xref>]. We found that, including parameter tuning, for nuclear segmentation we typically spend 6–12 hours analyzing a typical data set (96 positions x 45 frames) using a watershed based segmentation approach. Analyzing the segmentation results for bacterial cell division to produce the results in [<xref ref-type="bibr" rid="pcbi.1005177.ref015">15</xref>] required approximately 40 hours. Similarly, manually segmenting the cytoplasms of 3T3 cells in ~200 images required over 200 hours [<xref ref-type="bibr" rid="pcbi.1005177.ref026">26</xref>]. Even in the cases where the computational cost is significant, conv-nets invariably lead to significant savings in human time. Moreover, human time and computation time are not equivalent—a 20 hour task may take a human nearly a week (given scheduling demands and ergonomic requirements) while a computer can complete it within a day (or less if parallelization is used).</p>
+<p>The second advantage is the low time and hardware requirements for training and testing new conv-nets. We have found that for the training data we generate, it typically takes 2–4 hours to generate training data (human time) and 5–10 hours (computer time) to train the conv-net architectures considered here. Both of these represent a fixed initial cost which apply to all subsequent experiments for a given cell type or types. In addition, because a capable GPU is the key piece of hardware required for this work, it is relatively inexpensive (~500–1000 US dollars) to provide existing workstations with the capacity to train and execute conv-nets.</p>
+<p>Third is the ability to perform semantic segmentation to identify different cell types without sacrificing an additional fluorescence channel. This ability enables the analysis of live-cell imaging experiments involving co-cultures, monitoring differentiation, or possibly even tissues.</p>
+<p>Fourth, and most importantly, is the generality of the approach. Using our framework, segmenting new cell types involves simply creating a new training data set and training a new conv-net. To date we have been able to segment images from 5 different mammalian cell lines with no changes in the conv-net architecture. While the architecture may need refinement, deep learning will likely be applied to even more cell types and enable the analysis of a variety of live-cell imaging experiments.</p>
+</sec>
+<sec id="sec009">
+<title>Design rules for new conv-nets</title>
+<p>Moving forward, we foresee two possible approaches. In one approach, similar to the ImageNet challenge, one large network would be trained to segment and classify the majority of cell lines that are in use today [<xref ref-type="bibr" rid="pcbi.1005177.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>]. In another approach, which we consider to be more likely, a collection of conv-nets would be designed for each specific segmentation task required for a live-cell imaging experiment. This approach we term laboratory scale deep learning. By making the trained conv-nets and the requisite training data publically available, laboratories performing this type of work would be able to build on each other’s technical advances. In pursuit of this aim, here we outline some of the design rules we’ve extracted from our successes (and failures) in training conv-nets.</p>
+<p>First, we found that image normalization was critically important for robustness, segmentation performance, and processing speed. We tried three different normalization schemes—normalizing images by the median pixel value, by the maximum pixel value, or not at all. We found that normalizing by the median pixel value was best with respect to robust performance on images acquired with different illumination intensities. In the case of semantic segmentation, we found that without proper normalization, the conv-nets learned intensity differences between the MCF10A and NIH-3T3 data sets instead of differences in cell morphology. This led to poor performance when the conv-nets were applied to new images, as they classified all the cells as the same cell-type based on the images illumination (see <xref ref-type="supplementary-material" rid="pcbi.1005177.s014">S13 Fig</xref>). Furthermore, the normalization choice impacts whether or not a fully convolutional implementation of conv-nets can be used when segmenting new images. Normalizing patches by their standard deviation, for instance, or performing PCA based whitening would require new images to be processed in a patch-by-patch manner. We note that in our experience, performance was optimal when the illumination intensity was reasonably similar to or higher than the illumination used to acquire the training data.</p>
+<p>Second is the importance of data augmentation. One of our key results is that only a few hundred cells worth of training data is required to produce a well performing conv-net. This is in contrast to the thousands of images contained in the ImageNet and PASCAL databases. Smaller training datasets were sufficient for out purposes because we made maximal use of the data available by using data augmentation through image rotation and reflection and by enabling the conv-net to “see” the nuclear channel—information that is collected in every live-cell imaging experiment done in our lab. Curiously, we found that using image shearing for data augmentation did not significantly improve the segmentation performance (Table B in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>). While additional data augmentation techniques may improve performance, it is clear that the large numbers of images typically used to train conv-nets are not required for this purpose. Nevertheless, we anticipate that the incorporation of additional training data will lead to more accurate and robust conv-nets in the future.</p>
+<p>Third, is the importance of hyper-parameters. The most important hyper-parameter in our experience was the conv-net’s receptive field size, or the size of the image patches sampled from the training image. We found that this was a key hyper-parameter that had to be tuned to obtain a well-performing conv-net. Our experience leads us to believe that the optimal size is roughly on the order of the diameter of a cell. Receptive fields that are too small led to conv-nets that classified the background as edges while receptive fields that were too large took longer to train and are more prone to over-fitting. While we obtained good results given our choice of hyper-parameters (for instance the regularization strength—see <xref ref-type="supplementary-material" rid="pcbi.1005177.s016">S15 Fig</xref>), we note that optimization of the number of layers in a conv-net, the number of filters in each layer, the filter sizes for each layer, or the conv-net architecture may also lead to further improvements [<xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref063">63</xref>].</p>
+<p>Fourth, we found that segmentation refinement was necessary to produce segmentation masks that could be applied to real data. While conv-nets produce remarkably accurate pixel-wise classification predictions, we found we still needed to refine these predictions to produce binary segmentation masks. In the end, the method we found that worked the best was using the conv-net predictions to guide active contours. One advantage of this novel approach was that we could seed this process using the segmentation masks of the cell nuclei, in essence using the cell nuclei to separate the masks of spatially proximate cells. While it is possible that additional training data and hyper-parameter optimization may make this refinement step unnecessary, this is likely an area for further improvement. For instance, conditional random fields have shown success in refining conv-net predictions for semantic segmentation and may prove to be of some use here [<xref ref-type="bibr" rid="pcbi.1005177.ref062">62</xref>]. Incorporating segmentation and tracking together in a unified framework may also provide opportunities for performance improvement [<xref ref-type="bibr" rid="pcbi.1005177.ref017">17</xref>].</p>
+<p>Fifth, we explored how much dropout, batch normalization, and multi-resolution fully connected layers, improve the segmentation performance of conv-nets. Dropout is a regularization technique in which filters are randomly turned off during training [<xref ref-type="bibr" rid="pcbi.1005177.ref041">41</xref>]. By training in this fashion, the conv-net learns to not depend too heavily on any one filter. Batch normalization is a solution to the covariate shift problem that works by using per batch statistics to convert the output of each conv-net layer into one that has zero mean and unit variance [<xref ref-type="bibr" rid="pcbi.1005177.ref042">42</xref>]. Batch normalization also functions as a regularization method. Multi-resolution fully connected layers are an advance geared towards improving semantic segmentation performance [<xref ref-type="bibr" rid="pcbi.1005177.ref034">34</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref037">37</xref>]. By allowing hidden layers to see multiple spatial scales, these networks can boost their segmentation performance. We added these features to conv-nets while keeping most of their features fixed, trained them on our HeLa-S3 training data, and then evaluated their performance (in conjunction with active contours) on a validation data set. The classification error during training (on both training and validation data) is shown in <xref ref-type="supplementary-material" rid="pcbi.1005177.s015">S14 Fig</xref> and the results are shown in Table B in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>. We found that performance for most of these variations were similar. Curiously, conv-nets with dropout and multi-resolution fully connected layers had worse performance than an unmodified conv-net. Batch normalization in conjunction with multi-resolution layers produced the best performance, but these conv-nets were prone to overfitting (as judged by the difference between the training and validation classification error). The networks presented here use batch-normalization, which we opted for because of their regularization ability, their reduced training time, and a desire to avoid overfitting.</p>
+</sec>
+<sec id="sec010">
+<title>Conclusions</title>
+<p>Deep learning has been a transformative technology for computer vision, and based on our experiences outlined in this paper, we expect that it will be a powerful tool for analyzing images from live-cell imaging experiments. We offer several thoughts in conclusion. First, we expect that laboratory scale deep learning (as described above) will the development model moving forward. Second, we expect that the availability of open source deep learning APIs, such as Keras (as used in this work), Theano, Torch, Caffe, and TensorFlow, in addition to the myriad of tutorials available online, will help make this technology more accessible to the causal user. Finally, we expect that in addition to being able to better quantify fluorescence levels, there are other classes of live-cell imaging experiments where the localization of fluorescence must be quantified that will benefit from the approach outlined here [<xref ref-type="bibr" rid="pcbi.1005177.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref064">64</xref>–<xref ref-type="bibr" rid="pcbi.1005177.ref066">66</xref>]. Given our experience detailed in this work, we expect deep learning to have a transformative impact on the analysis of live-cell imaging experiments.</p>
+</sec>
+</sec>
+<sec id="sec011" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec012">
+<title>Constructing training datasets</title>
+<p>To construct manually annotated datasets for <italic>E</italic>. <italic>coli</italic> strain MG1655 and 5 different mammalian cell lines (NIH-3T3, MCF10A, HeLa-S3, RAW 264.7, and bone marrow derived macrophages), we first acquired images to construct training datasets. For bacterial cells we acquired phase images of the bacterial micro-colonies while for mammalian cells, we acquired both fluorescent images of labeled nuclei and phase images of the cytoplasm. We then used ImageJ to annotate each training dataset and classify each pixel in a training image as either boundary, cellular interior, or background. Details of this annotation procedure are contained in the supplemental information. Empirically, we found that annotating one microscope image containing a total of ~300 bacteria, ~500 nuclei, or ~ 100 mammalian cells was sufficient to make a training dataset that led to a well performing conv-net; the annotation typically required ~2–4 hours. A small patch (31x31 pixels for bacteria, and 61x61 pixels for mammalian cytoplasm and nuclei) was sampled around each annotated pixel to create a collection of representative images for each class. We found that this sampling was best done at run time to preserve GPU memory. This collection of images was then randomly down-sampled so that each class had equal representation in the collection.</p>
+<p>One concern regarding the performance of trained conv-nets we had was their robustness to fluctuations in illumination and microscope cameras. Sharable solutions to this segmentation problem require some amount of robustness to these changes, as different labs use different microscopes and cameras to acquire data. Even within labs, image acquisition parameters may not be identical between experiments. To account for this, we normalized our training data sets prior to using them to train a conv-net. Each training image was first divided by the median pixel value. The local average of this normalized image was computed by applying an averaging filter (the same size as that of the neural network’s effective receptive field size—in our case 31x31 for bacterial cells and 61x61 for mammalian nuclei and cytoplasms) and then subtracted from the normalized image to create the final image that was sampled to train a conv-net. After sampling our image, we then performed data augmentation by randomly rotating each patch by either 0, 90, 180, or 270 degrees and randomly reflecting them on the fly prior to their use our training dataset. Our reasoning was that class labels should be invariant to these transformations.</p>
+<p>After normalization and data augmentation, each training dataset consisted of ~200,000–400,000 patches. The mammalian cytoplasm training datasets contained two channels—a phase image and an image in which cell nuclei were labelled with Hoechst 33342 (NIH-3T3 and MCF10A) or H2B-iRFP (HeLa-S3).</p>
+</sec>
+<sec id="sec013">
+<title>Segmenting new images</title>
+<p>To construct a segmentation mask for a new image, the trained conv-net is applied to the entire image to produce pixel level classification predictions. This is done by using a fully convolutional implementation of conv-nets that can be directly applied to the entire image [<xref ref-type="bibr" rid="pcbi.1005177.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005177.ref036">36</xref>]. We also used model parallelism (averaging the results of 5 trained networks) to improve our segmentation accuracy.</p>
+<p>While the classification predictions produced by conv-nets were remarkably accurate, we found that they required further refinement to produce binary segmentation masks. As opposed to using the raw class scores for each pixel as the input for refinement, we instead use the softmax normalized score <inline-formula id="pcbi.1005177.e006"><alternatives><graphic id="pcbi.1005177.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005177.e006" xlink:type="simple"/><mml:math display="inline" id="M6"><mml:mrow><mml:mfrac><mml:mrow><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msup></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true" mathsize="140%"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo> </mml:mo><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>s</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mi>e</mml:mi><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mo> </mml:mo><mml:mi>s</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>, which we loosely interpret as the probability deduced by the conv-net that the pixel in question belongs to that particular class. For bacterial cells, we found that thresholding of the softmax normalized score for the cell interior class with a value of 0.6 was sufficient to produce accurate masks. For nuclei, we found that thresholding with a value of 0.5–0.75 in a similar fashion to bacteria worked well in most cases, with adaptive thresholding of the softmax normalized cell interior score being used for images with very dim nuclei. For mammalian cells, the conv-net prediction in combination with the nuclear marker was used to guide an active contour algorithm to further refine the segmentation[<xref ref-type="bibr" rid="pcbi.1005177.ref052">52</xref>]. Training error and segmentation results for <italic>E</italic>. <italic>coli</italic>, MCF10A, NIH-3T3, and HeLa-S3 cells are shown in <xref ref-type="fig" rid="pcbi.1005177.g002">Fig 2</xref>, <xref ref-type="supplementary-material" rid="pcbi.1005177.s002">S1</xref>–<xref ref-type="supplementary-material" rid="pcbi.1005177.s009">S8</xref> Figs and <xref ref-type="supplementary-material" rid="pcbi.1005177.s022">S4</xref> and <xref ref-type="supplementary-material" rid="pcbi.1005177.s025">S7</xref> Movies.</p>
+</sec>
+</sec>
+<sec id="sec014">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1005177.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s001" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>Supplemental text.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s002" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for <italic>E</italic>. <italic>coli</italic>.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s003" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for MCF10A cells.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s004" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for NIH-3T3 cells.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s005" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s005" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for HeLa-S3 cells.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s006" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for RAW 264.7 cells.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s007" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s007" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for bone marrow derived macrophages.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s008" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s008" xlink:type="simple">
+<label>S7 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for H2B-iRFP labeled and DAPI stained nuclei.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s009" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s009" xlink:type="simple">
+<label>S8 Fig</label>
+<caption>
+<title>Sample image, conv-net interior prediction map, segmentation mask, and training/validation error curves for semantic segmentation of MCF10A cells and NIH-3T3 cells.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s010" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s010" xlink:type="simple">
+<label>S9 Fig</label>
+<caption>
+<title>Additional semantic segmentation of NIH-3T3 and MCF10A cells.</title>
+<p>286 cells were analyzed, including 93 3T3 cells and 192 MCF 10A cells. The classification accuracy was 89% for NIH-3T3 cells and 98% for MCF10A cells.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s011" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s011" xlink:type="simple">
+<label>S10 Fig</label>
+<caption>
+<title>Sensitivity analysis of the influence of the cytoring size on the dynamics of the JNK-KTR.</title>
+<p>While the qualitative shapes of the curves remain intact as the size of the cytoring increases, there are important quantitative differences that emerge as the cytoring increases. In the grey trace, the first peak is identified as being quantitatively identical to the other cells in the plot if a 5 pixel cytoring is used, but becomes separated from the rest as the cytoring size is increased. A similar quantitative change can be seen in the size of the second peak in the purple trace, as it quantitatively becomes more diminished as the cytoring size is increased.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s012" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s012" xlink:type="simple">
+<label>S11 Fig</label>
+<caption>
+<title>Areas of the different cytorings used in <xref ref-type="supplementary-material" rid="pcbi.1005177.s011">S10 Fig</xref>.</title>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s013" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s013" xlink:type="simple">
+<label>S12 Fig</label>
+<caption>
+<title>Histogram of the instantaneous growth rate for a bacterial micro-colony.</title>
+<p>This histogram is identical to the histogram showed in <xref ref-type="fig" rid="pcbi.1005177.g003">Fig 3</xref>, with the axes expanded to show the negative growth rates corresponding to cell division.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s014" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s014" xlink:type="simple">
+<label>S13 Fig</label>
+<caption>
+<title>Poorly performing conv-nets.</title>
+<p>This figure highlights the importance of image normalization and receptive field size in training robust conv-nets. (a), (b), and (c). Mammalian-net semantic was trained on an un-normalized images of NIH-3T3 and MCF10A cells. Instead of learning differences in cell shape, the conv-net learned the brightness difference between the two dataset sources, leading to poor performance on images of co-cultures. 100% of MCF10A cells and 14% of 3T3 cells were classified correctly. (d) A conv-net with a 41x41 receptive field (as opposed to the 61x61 receptive field of mammalian net) was trained using a HeLa cell data set. Because of the smaller receptive field, the conv-net has difficulty distinguishing cell boundaries and interiors from background.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s015" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s015" xlink:type="simple">
+<label>S14 Fig</label>
+<caption>
+<title>Training and validation error for conv-nets to assess the performance improvements provided by dropout, batch normalization, shearing for data augmentation, and multi-resolution fully connected layers.</title>
+<p>Dropout was only used in fully connected layers. The segmentation performance of each network as quantified by the Jaccard and Dice indices is provided in Table B in <xref ref-type="supplementary-material" rid="pcbi.1005177.s001">S1 Text</xref>.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s016" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s016" xlink:type="simple">
+<label>S15 Fig</label>
+<caption>
+<title>Regularization optimization.</title>
+<p>The L2 regularization parameter was varied from 0, 10<sup>−7</sup>, 10<sup>−6</sup>, and 10<sup>−5</sup>. Lower regularization was associated with more fluctuations in the classification error on the validation data set.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s017" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s017" xlink:type="simple">
+<label>S16 Fig</label>
+<caption>
+<title>Segmentation accuracy vs. cell density for HeLa-S3 cells.</title>
+<p>1250, 2500, 5000, 10000, and 20000 cells were plated in the wells of a 96 well dish and imaged. The images were segmented manually and with conv-nets to compute the Jaccard and Dice indices. Segmentation performance remains stable for most plating densities, but decreases once cells are confluent.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s018" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s018" xlink:type="simple">
+<label>S17 Fig</label>
+<caption>
+<title>Comparison of segmentation performance of conv-nets and Ilastik on a HeLa cell validation data set.</title>
+<p>(a) Phase image of HeLa cells. (b) Ground truth for the cell boundary. (c) Conv-net soft-max score for edge and interior prediction. (d) Ilastik segmentation. (e) Conv-net segmentation after active contour processing. (f) Ilastik segmentation after active contour processing.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s019" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s019" xlink:type="simple">
+<label>S1 Movie</label>
+<caption>
+<title>Phase images of a growing <italic>E</italic>. <italic>coli</italic> micro colony.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s020" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s020" xlink:type="simple">
+<label>S2 Movie</label>
+<caption>
+<title>Bacteria-net output when used to process <xref ref-type="supplementary-material" rid="pcbi.1005177.s019">S1 Movie</xref>.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s021" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s021" xlink:type="simple">
+<label>S3 Movie</label>
+<caption>
+<title>Phase images of HeLa-S3 cells expressing the JNK-KTR.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s022" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s022" xlink:type="simple">
+<label>S4 Movie</label>
+<caption>
+<title>Segmentation of <xref ref-type="supplementary-material" rid="pcbi.1005177.s021">S3 Movie</xref>.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s023" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s023" xlink:type="simple">
+<label>S5 Movie</label>
+<caption>
+<title>Nuclear marker channel for <xref ref-type="supplementary-material" rid="pcbi.1005177.s021">S3 Movie</xref>.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s024" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s024" xlink:type="simple">
+<label>S6 Movie</label>
+<caption>
+<title>JNK-KTR channel for <xref ref-type="supplementary-material" rid="pcbi.1005177.s021">S3 Movie</xref>.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005177.s025" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005177.s025" xlink:type="simple">
+<label>S7 Movie</label>
+<caption>
+<title>Representative movie of HeLa-S3 with overlaying nuclear marker and segmentation boundaries.</title>
+<p>(AVI)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We are deeply grateful to a number of people for advice, assistance with experiments, and critical commentary on the manuscript, including Zev Bryant, Joe Levine, Fei Fei Li, Andrej Karpathy, Henrietta Lacks, Amanda Miguel, K.C. Huang, Robert Brewster, Rob Phillips, John Phillips, Jan Liphardt, Andy Spakowitz, and members of the Covert lab.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1005177.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rosenfeld</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Alon</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Swain</surname> <given-names>PS</given-names></name>, <name name-style="western"><surname>Elowitz</surname> <given-names>MB</given-names></name>. <article-title>Gene regulation at the single-cell level</article-title>. <source>Science</source>. <year>2005</year>;<volume>307</volume>(<issue>5717</issue>):<fpage>1962</fpage>–<lpage>5</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1106914" xlink:type="simple">10.1126/science.1106914</ext-link></comment> <object-id pub-id-type="pmid">15790856</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weinert</surname> <given-names>FM</given-names></name>, <name name-style="western"><surname>Brewster</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Rydenfelt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kegel</surname> <given-names>WK</given-names></name>. <article-title>Scaling of gene expression with transcription-factor fugacity</article-title>. <source>Physical review letters</source>. <year>2014</year>;<volume>113</volume>(<issue>25</issue>):<fpage>258101</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.113.258101" xlink:type="simple">10.1103/PhysRevLett.113.258101</ext-link></comment> <object-id pub-id-type="pmid">25554908</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Selimkhanov</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Yao</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Pilko</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Albeck</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hoffmann</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Accurate information transmission through dynamic biochemical signaling networks</article-title>. <source>Science</source>. <year>2014</year>;<volume>346</volume>(<issue>6215</issue>):<fpage>1370</fpage>–<lpage>3</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1254933" xlink:type="simple">10.1126/science.1254933</ext-link></comment> <object-id pub-id-type="pmid">25504722</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tay</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hughey</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Lipniacki</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Quake</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Covert</surname> <given-names>MW</given-names></name>. <article-title>Single-cell NF-[kgr] B dynamics reveal digital activation and analogue information processing</article-title>. <source>Nature</source>. <year>2010</year>;<volume>466</volume>(<issue>7303</issue>):<fpage>267</fpage>–<lpage>71</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09145" xlink:type="simple">10.1038/nature09145</ext-link></comment> <object-id pub-id-type="pmid">20581820</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Denny</surname> <given-names>EM</given-names></name>, <name name-style="western"><surname>Sanghvi</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Gaston</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Maynard</surname> <given-names>ND</given-names></name>, <name name-style="western"><surname>Hughey</surname> <given-names>JJ</given-names></name>, <etal>et al</etal>. <article-title>A noisy paracrine signal determines the cellular NF-κB response to lipopolysaccharide</article-title>. <source>Science signaling</source>. <year>2009</year>;<volume>2</volume>(<issue>93</issue>):<fpage>ra65</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/scisignal.2000599" xlink:type="simple">10.1126/scisignal.2000599</ext-link></comment> <object-id pub-id-type="pmid">19843957</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Regot</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hughey</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Bajar</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Carrasco</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Covert</surname> <given-names>MW</given-names></name>. <article-title>High-sensitivity measurements of multiple kinase activities in live single cells</article-title>. <source>Cell</source>. <year>2014</year>;<volume>157</volume>(<issue>7</issue>):<fpage>1724</fpage>–<lpage>34</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2014.04.039" xlink:type="simple">10.1016/j.cell.2014.04.039</ext-link></comment> <object-id pub-id-type="pmid">24949979</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheong</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Rhee</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Nemenman</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Levchenko</surname> <given-names>A</given-names></name>. <article-title>Information transduction capacity of noisy biochemical signaling networks</article-title>. <source>Science</source>. <year>2011</year>;<volume>334</volume>(<issue>6054</issue>):<fpage>354</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1204553" xlink:type="simple">10.1126/science.1204553</ext-link></comment> <object-id pub-id-type="pmid">21921160</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hughey</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Covert</surname> <given-names>MW</given-names></name>. <article-title>Computational modeling of mammalian signaling networks</article-title>. <source>Wiley Interdisciplinary Reviews: Systems Biology and Medicine</source>. <year>2010</year>;<volume>2</volume>(<issue>2</issue>):<fpage>194</fpage>–<lpage>209</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/wsbm.52" xlink:type="simple">10.1002/wsbm.52</ext-link></comment> <object-id pub-id-type="pmid">20836022</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Covert</surname> <given-names>MW</given-names></name>. <article-title>High-throughput, single-cell NF-κB dynamics</article-title>. <source>Current opinion in genetics &amp; development</source>. <year>2010</year>;<volume>20</volume>(<issue>6</issue>):<fpage>677</fpage>–<lpage>83</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sliusarenko</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Heinritz</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Emonet</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Jacobs-Wagner</surname> <given-names>C</given-names></name>. <article-title>High-throughput, subpixel precision analysis of bacterial morphogenesis and intracellular spatio-temporal dynamics</article-title>. <source>Molecular microbiology</source>. <year>2011</year>;<volume>80</volume>(<issue>3</issue>):<fpage>612</fpage>–<lpage>27</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2958.2011.07579.x" xlink:type="simple">10.1111/j.1365-2958.2011.07579.x</ext-link></comment> <object-id pub-id-type="pmid">21414037</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Young</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Locke</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Altinok</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Rosenfeld</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Bacarian</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Swain</surname> <given-names>PS</given-names></name>, <etal>et al</etal>. <article-title>Measuring single-cell gene expression dynamics in bacteria using fluorescence time-lapse microscopy</article-title>. <source>Nature protocols</source>. <year>2012</year>;<volume>7</volume>(<issue>1</issue>):<fpage>80</fpage>–<lpage>8</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carpenter</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>TR</given-names></name>, <name name-style="western"><surname>Lamprecht</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Clarke</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Kang</surname> <given-names>IH</given-names></name>, <name name-style="western"><surname>Friman</surname> <given-names>O</given-names></name>, <etal>et al</etal>. <article-title>CellProfiler: image analysis software for identifying and quantifying cell phenotypes</article-title>. <source>Genome biology</source>. <year>2006</year>;<volume>7</volume>(<issue>10</issue>):<fpage>R100</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2006-7-10-r100" xlink:type="simple">10.1186/gb-2006-7-10-r100</ext-link></comment> <object-id pub-id-type="pmid">17076895</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Malpica</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Ortiz de Solorzano</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vaquero</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Santos</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vallcorba</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Garcia-Sagredo</surname> <given-names>JM</given-names></name>, <etal>et al</etal>. <source>Applying watershed algorithms to the segmentation of clustered nuclei</source>. <year>1997</year>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martin</surname> <given-names>DR</given-names></name>, <name name-style="western"><surname>Fowlkes</surname> <given-names>CC</given-names></name>, <name name-style="western"><surname>Malik</surname> <given-names>J</given-names></name>. <article-title>Learning to detect natural image boundaries using local brightness, color, and texture cues</article-title>. <source>IEEE transactions on pattern analysis and machine intelligence</source>. <year>2004</year>;<volume>26</volume>(<issue>5</issue>):<fpage>530</fpage>–<lpage>49</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TPAMI.2004.1273918" xlink:type="simple">10.1109/TPAMI.2004.1273918</ext-link></comment> <object-id pub-id-type="pmid">15460277</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mao</surname> <given-names>KZ</given-names></name>, <name name-style="western"><surname>Zhao</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Tan</surname> <given-names>P-H</given-names></name>. <article-title>Supervised learning-based cell image segmentation for p53 immunohistochemistry</article-title>. <source>IEEE Transactions on Biomedical Engineering</source>. <year>2006</year>;<volume>53</volume>(<issue>6</issue>):<fpage>1153</fpage>–<lpage>63</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TBME.2006.873538" xlink:type="simple">10.1109/TBME.2006.873538</ext-link></comment> <object-id pub-id-type="pmid">16761842</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref016"><label>16</label><mixed-citation publication-type="other" xlink:type="simple">Bertelli L, Yu T, Vu D, Gokturk B, editors. Kernelized structural SVM learning for supervised object segmentation. Computer Vision and Pattern Recognition (CVPR), 2011 IEEE Conference on; 2011: IEEE.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Paintdakhi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Parry</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Campos</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Irnov</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Elf</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Surovtsev</surname> <given-names>I</given-names></name>, <etal>et al</etal>. <article-title>Oufti: an integrated software package for high-accuracy, high-throughput quantitative microscopy analysis</article-title>. <source>Molecular microbiology</source>. <year>2016</year>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref018"><label>18</label><mixed-citation publication-type="other" xlink:type="simple">Sommer C, Straehle C, Koethe U, Hamprecht FA, editors. ilastik: Interactive learning and segmentation toolkit. Biomedical Imaging: From Nano to Macro, 2011 IEEE International Symposium on; 2011: IEEE.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Belevich</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Joensuu</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kumar</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Vihinen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Jokitalo</surname> <given-names>E</given-names></name>. <article-title>Microscopy Image Browser: A Platform for Segmentation and Analysis of Multidimensional Datasets</article-title>. <source>PLoS Biol</source>. <year>2016</year>;<volume>14</volume>(<issue>1</issue>):<fpage>e1002340</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1002340" xlink:type="simple">10.1371/journal.pbio.1002340</ext-link></comment> <object-id pub-id-type="pmid">26727152</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tanouchi</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Pai</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Park</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Stamatov</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Buchler</surname> <given-names>NE</given-names></name>, <etal>et al</etal>. <article-title>A noisy linear map underlies oscillations in cell size and gene expression in bacteria</article-title>. <source>Nature</source>. <year>2015</year>;<volume>523</volume>(<issue>7560</issue>):<fpage>357</fpage>–<lpage>60</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature14562" xlink:type="simple">10.1038/nature14562</ext-link></comment> <object-id pub-id-type="pmid">26040722</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref021"><label>21</label><mixed-citation publication-type="other" xlink:type="simple">Ali R, Gooding M, Christlieb M, Brady M, editors. Phase-based segmentation of cells from brightfield microscopy. Biomedical Imaging: From Nano to Macro, 2007 ISBI 2007 4th IEEE International Symposium on; 2007: IEEE.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lindblad</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wahlby</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Bengtsson</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Zaltsman</surname> <given-names>A</given-names></name>. <article-title>Image analysis for automatic segmentation of cytoplasms and classification of Rac1 activation</article-title>. <source>Cytometry Part A: the journal of the International Society for Analytical Cytology</source>. <year>2004</year>;<volume>57</volume>(<issue>1</issue>):<fpage>22</fpage>–<lpage>33</lpage>. Epub 2003/12/31. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/cyto.a.10107" xlink:type="simple">10.1002/cyto.a.10107</ext-link></comment> <object-id pub-id-type="pmid">14699602</object-id>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Niemi</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Tan</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>You</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>West</surname> <given-names>M</given-names></name>. <article-title>Image segmentation and dynamic lineage analysis in single-cell fluorescence microscopy</article-title>. <source>Cytometry Part A</source>. <year>2010</year>;<volume>77</volume>(<issue>1</issue>):<fpage>101</fpage>–<lpage>10</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mualla</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Scholl</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sommerfeldt</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Maier</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hornegger</surname> <given-names>J</given-names></name>. <article-title>Automatic cell detection in bright-field microscope images using SIFT, random forests, and hierarchical clustering</article-title>. <source>Medical Imaging, IEEE Transactions on</source>. <year>2013</year>;<volume>32</volume>(<issue>12</issue>):<fpage>2274</fpage>–<lpage>86</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gudla</surname> <given-names>PR</given-names></name>, <name name-style="western"><surname>Nandy</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Meaburn</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Misteli</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Lockett</surname> <given-names>S</given-names></name>. <article-title>A high-throughput system for segmenting nuclei using multiscale techniques</article-title>. <source>Cytometry Part A</source>. <year>2008</year>;<volume>73</volume>(<issue>5</issue>):<fpage>451</fpage>–<lpage>66</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chalfoun</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kociolek</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Dima</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Halter</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cardone</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Peskin</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Segmenting time-lapse phase contrast images of adjacent NIH 3T3 cells</article-title>. <source>Journal of microscopy</source>. <year>2013</year>;<volume>249</volume>(<issue>1</issue>):<fpage>41</fpage>–<lpage>52</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2818.2012.03678.x" xlink:type="simple">10.1111/j.1365-2818.2012.03678.x</ext-link></comment> <object-id pub-id-type="pmid">23126432</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rees</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Wills</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Brown</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Tonkin</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Holton</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Hondow</surname> <given-names>N</given-names></name>, <etal>et al</etal>. <article-title>Nanoparticle vesicle encoding for imaging and tracking cell populations</article-title>. <source>Nature methods</source>. <year>2014</year>;<volume>11</volume>(<issue>11</issue>):<fpage>1177</fpage>–<lpage>81</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.3105" xlink:type="simple">10.1038/nmeth.3105</ext-link></comment> <object-id pub-id-type="pmid">25218182</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chong</surname> <given-names>YT</given-names></name>, <name name-style="western"><surname>Cox</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Andrews</surname> <given-names>B</given-names></name>. <article-title>Proteome-wide screens in Saccharomyces cerevisiae using the yeast GFP collection</article-title>. <source>Advances in Systems Biology: Springer</source>; <year>2012</year>. p. <fpage>169</fpage>–<lpage>78</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shedden</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>YT</given-names></name>, <name name-style="western"><surname>Rosania</surname> <given-names>GR</given-names></name>. <article-title>Machine vision-assisted analysis of structure-localization relationships in a combinatorial library of prospective bioimaging probes</article-title>. <source>Cytometry Part A</source>. <year>2009</year>;<volume>75</volume>(<issue>6</issue>):<fpage>482</fpage>–<lpage>93</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chalfoun</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Majurski</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Peskin</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Breen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Bajcsy</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Brady</surname> <given-names>M</given-names></name>. <article-title>Empirical gradient threshold technique for automated segmentation across image modalities and cell lines</article-title>. <source>Journal of microscopy</source>. <year>2015</year>;<volume>260</volume>(<issue>1</issue>):<fpage>86</fpage>–<lpage>99</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/jmi.12269" xlink:type="simple">10.1111/jmi.12269</ext-link></comment> <object-id pub-id-type="pmid">26046924</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Yao</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>J</given-names></name>. <article-title>Hierarchical Mergence Approach to Cell Detection in Phase Contrast Microscopy Images</article-title>. <source>Computational and Mathematical Methods in Medicine</source>. <year>2014</year>;<volume>2014</volume>:<fpage>10</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1155/2014/758587" xlink:type="simple">10.1155/2014/758587</ext-link></comment> <object-id pub-id-type="pmid">24987452</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>LeCun</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Bengio</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Hinton</surname> <given-names>G</given-names></name>. <article-title>Deep learning</article-title>. <source>Nature</source>. <year>2015</year>;<volume>521</volume>(<issue>7553</issue>):<fpage>436</fpage>–<lpage>44</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature14539" xlink:type="simple">10.1038/nature14539</ext-link></comment> <object-id pub-id-type="pmid">26017442</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref033"><label>33</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Krizhevsky</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sutskever</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Hinton</surname> <given-names>G</given-names></name>. <source>Advances in Neural Information Processing Systems</source>. <publisher-loc>Cambridge, MA</publisher-loc>: <publisher-name>MIT Press</publisher-name>; <year>2012</year>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref034"><label>34</label><mixed-citation publication-type="other" xlink:type="simple">Sermanet P, Eigen D, Zhang X, Mathieu M, Fergus R, LeCun Y. Overfeat: Integrated recognition, localization and detection using convolutional networks. arXiv preprint arXiv:13126229. 2013.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref035"><label>35</label><mixed-citation publication-type="other" xlink:type="simple">Long J, Shelhamer E, Darrell T, editors. Fully convolutional networks for semantic segmentation. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition; 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref036"><label>36</label><mixed-citation publication-type="other" xlink:type="simple">Li H, Zhao R, Wang X. Highly efficient forward and backward propagation of convolutional neural networks for pixelwise classification. arXiv preprint arXiv:14124526. 2014.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref037"><label>37</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Ronneberger</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Brox</surname> <given-names>T</given-names></name>. <chapter-title>U-Net: Convolutional Networks for Biomedical Image Segmentation</chapter-title>. <source>Medical Image Computing and Computer-Assisted Intervention–MICCAI 2015</source>: <collab>Springer</collab>; <year>2015</year>. p. <fpage>234</fpage>–<lpage>41</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref038"><label>38</label><mixed-citation publication-type="other" xlink:type="simple">Ciresan D, Giusti A, Gambardella LM, Schmidhuber J, editors. Deep neural networks segment neuronal membranes in electron microscopy images. Advances in neural information processing systems; 2012.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref039"><label>39</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Cireşan</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Giusti</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Gambardella</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Schmidhuber</surname> <given-names>J</given-names></name>. <chapter-title>Mitosis detection in breast cancer histology images with deep neural networks</chapter-title>. <source>Medical Image Computing and Computer-Assisted Intervention–MICCAI 2013</source>: <collab>Springer</collab>; <year>2013</year>. p. <fpage>411</fpage>–<lpage>8</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref040"><label>40</label><mixed-citation publication-type="other" xlink:type="simple">Kraus OZ, Ba LJ, Frey B. Classifying and Segmenting Microscopy Images Using Convolutional Multiple Instance Learning. arXiv preprint arXiv:151105286. 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Srivastava</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Hinton</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Krizhevsky</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sutskever</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Salakhutdinov</surname> <given-names>R</given-names></name>. <article-title>Dropout: a simple way to prevent neural networks from overfitting</article-title>. <source>Journal of Machine Learning Research</source>. <year>2014</year>;<volume>15</volume>(<issue>1</issue>):<fpage>1929</fpage>–<lpage>58</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref042"><label>42</label><mixed-citation publication-type="other" xlink:type="simple">Ioffe S, Szegedy C. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:150203167. 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref043"><label>43</label><mixed-citation publication-type="other" xlink:type="simple">Nair V, Hinton GE, editors. Rectified linear units improve restricted boltzmann machines. Proceedings of the 27th International Conference on Machine Learning (ICML-10); 2010.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tieleman</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Hinton</surname> <given-names>G</given-names></name>. <article-title>Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude</article-title>. <source>COURSERA: Neural Networks for Machine Learning</source>. <year>2012</year>;<volume>4</volume>:<fpage>2</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref045"><label>45</label><mixed-citation publication-type="other" xlink:type="simple">He K, Zhang X, Ren S, Sun J, editors. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. Proceedings of the IEEE International Conference on Computer Vision; 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rumelhart</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Hinton</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Williams</surname> <given-names>RJ</given-names></name>. <article-title>Learning representations by back-propagating errors</article-title>. <source>Nature</source>. <year>1986</year>;<volume>323</volume>(<issue>6088</issue>):<fpage>533</fpage>–<lpage>6</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref047"><label>47</label><mixed-citation publication-type="other" xlink:type="simple">Bergstra J, Breuleux O, Bastien F, Lamblin P, Pascanu R, Desjardins G, et al., editors. Theano: a CPU and GPU math expression compiler. Proceedings of the Python for scientific computing conference (SciPy); 2010: Austin, TX.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Der Walt</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Schönberger</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Nunez-Iglesias</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Boulogne</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Warner</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Yager</surname> <given-names>N</given-names></name>, <etal>et al</etal>. <article-title>scikit-image: image processing in Python</article-title>. <source>PeerJ</source>. <year>2014</year>;<volume>2</volume>:<fpage>e453</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.7717/peerj.453" xlink:type="simple">10.7717/peerj.453</ext-link></comment> <object-id pub-id-type="pmid">25024921</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref049"><label>49</label><mixed-citation publication-type="other" xlink:type="simple">Chollet F. Keras. GitHub repository: GitHub; 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref050"><label>50</label><mixed-citation publication-type="other" xlink:type="simple">Jones E, Oliphant T, Peterson P. SciPy: Open source scientific tools for Python, 2001. <ext-link ext-link-type="uri" xlink:href="http://www.scipy.org" xlink:type="simple">http://www.scipy.org</ext-link>. 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Der Walt</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Colbert</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Varoquaux</surname> <given-names>G</given-names></name>. <article-title>The NumPy array: a structure for efficient numerical computation</article-title>. <source>Computing in Science &amp; Engineering</source>. <year>2011</year>;<volume>13</volume>(<issue>2</issue>):<fpage>22</fpage>–<lpage>30</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marquez-Neila</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Baumela</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Alvarez</surname> <given-names>L</given-names></name>. <article-title>A morphological approach to curvature-based evolution of curves and surfaces</article-title>. <source>Pattern Analysis and Machine Intelligence, IEEE Transactions on</source>. <year>2014</year>;<volume>36</volume>(<issue>1</issue>):<fpage>2</fpage>–<lpage>17</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bajcsy</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cardone</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Chalfoun</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Halter</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Juba</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kociolek</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Survey statistics of automated segmentations applied to optical imaging of mammalian cells</article-title>. <source>BMC bioinformatics</source>. <year>2015</year>;<volume>16</volume>(<issue>1</issue>):<fpage>1</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref054"><label>54</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jaqaman</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Loerke</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mettlen</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kuwata</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Grinstein</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Schmid</surname> <given-names>SL</given-names></name>, <etal>et al</etal>. <article-title>Robust single-particle tracking in live-cell time-lapse sequences</article-title>. <source>Nature methods</source>. <year>2008</year>;<volume>5</volume>(<issue>8</issue>):<fpage>695</fpage>–<lpage>702</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.1237" xlink:type="simple">10.1038/nmeth.1237</ext-link></comment> <object-id pub-id-type="pmid">18641657</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref055"><label>55</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Taheri-Araghi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Bradde</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sauls</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Hill</surname> <given-names>NS</given-names></name>, <name name-style="western"><surname>Levin</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Paulsson</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Cell-size control and homeostasis in bacteria</article-title>. <source>Current Biology</source>. <year>2015</year>;<volume>25</volume>(<issue>3</issue>):<fpage>385</fpage>–<lpage>91</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2014.12.009" xlink:type="simple">10.1016/j.cub.2014.12.009</ext-link></comment> <object-id pub-id-type="pmid">25544609</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref056"><label>56</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Robert</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Pelletier</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Dang</surname> <given-names>WL</given-names></name>, <name name-style="western"><surname>Taddei</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Wright</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Robust growth of Escherichia coli</article-title>. <source>Current biology</source>. <year>2010</year>;<volume>20</volume>(<issue>12</issue>):<fpage>1099</fpage>–<lpage>103</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2010.04.045" xlink:type="simple">10.1016/j.cub.2010.04.045</ext-link></comment> <object-id pub-id-type="pmid">20537537</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref057"><label>57</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Campos</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Surovtsev</surname> <given-names>IV</given-names></name>, <name name-style="western"><surname>Kato</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Paintdakhi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Beltran</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Ebmeier</surname> <given-names>SE</given-names></name>, <etal>et al</etal>. <article-title>A constant size extension drives bacterial cell size homeostasis</article-title>. <source>Cell</source>. <year>2014</year>;<volume>159</volume>(<issue>6</issue>):<fpage>1433</fpage>–<lpage>46</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2014.11.022" xlink:type="simple">10.1016/j.cell.2014.11.022</ext-link></comment> <object-id pub-id-type="pmid">25480302</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref058"><label>58</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Prindle</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Humphries</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Gabalda-Sagarra</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Asally</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Dong-yeon</surname> <given-names>DL</given-names></name>, <etal>et al</etal>. <article-title>Metabolic co-dependence gives rise to collective oscillations within biofilms</article-title>. <source>Nature</source>. <year>2015</year>;<volume>523</volume>(<issue>7562</issue>):<fpage>550</fpage>–<lpage>4</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature14660" xlink:type="simple">10.1038/nature14660</ext-link></comment> <object-id pub-id-type="pmid">26200335</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref059"><label>59</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nghe</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Boulineau</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Gude</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Recouvreux</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>van Zon</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Tans</surname> <given-names>SJ</given-names></name>. <article-title>Microfabricated polyacrylamide devices for the controlled culture of growing cells and developing organisms</article-title>. <source>PloS one</source>. <year>2013</year>;<volume>8</volume>(<issue>9</issue>):<fpage>e75537</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0075537" xlink:type="simple">10.1371/journal.pone.0075537</ext-link></comment> <object-id pub-id-type="pmid">24086559</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref060"><label>60</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Boulineau</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Tostevin</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Kiviet</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>ten Wolde</surname> <given-names>PR</given-names></name>, <name name-style="western"><surname>Nghe</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Tans</surname> <given-names>SJ</given-names></name>. <article-title>Single-cell dynamics reveals sustained growth during diauxic shifts</article-title>. <source>PLoS One</source>. <year>2013</year>;<volume>8</volume>(<issue>4</issue>):<fpage>e61686</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0061686" xlink:type="simple">10.1371/journal.pone.0061686</ext-link></comment> <object-id pub-id-type="pmid">23637881</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref061"><label>61</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kiviet</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Nghe</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Walker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Boulineau</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sunderlikova</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Tans</surname> <given-names>SJ</given-names></name>. <article-title>Stochasticity of metabolism and growth at the single-cell level</article-title>. <source>Nature</source>. <year>2014</year>;<volume>514</volume>(<issue>7522</issue>):<fpage>376</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature13582" xlink:type="simple">10.1038/nature13582</ext-link></comment> <object-id pub-id-type="pmid">25186725</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref062"><label>62</label><mixed-citation publication-type="other" xlink:type="simple">Chen L- C, Papandreou G, Kokkinos I, Murphy K, Yuille AL. Semantic image segmentation with deep convolutional nets and fully connected crfs. arXiv preprint arXiv:14127062. 2014.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref063"><label>63</label><mixed-citation publication-type="other" xlink:type="simple">Szegedy C, Liu W, Jia Y, Sermanet P, Reed S, Anguelov D, et al., editors. Going deeper with convolutions. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition; 2015.</mixed-citation></ref>
+<ref id="pcbi.1005177.ref064"><label>64</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helaine</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Cheverton</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Watson</surname> <given-names>KG</given-names></name>, <name name-style="western"><surname>Faure</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Matthews</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Holden</surname> <given-names>DW</given-names></name>. <article-title>Internalization of Salmonella by macrophages induces formation of nonreplicating persisters</article-title>. <source>Science</source>. <year>2014</year>;<volume>343</volume>(<issue>6167</issue>):<fpage>204</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1244705" xlink:type="simple">10.1126/science.1244705</ext-link></comment> <object-id pub-id-type="pmid">24408438</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref065"><label>65</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raj</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Peskin</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Tranchina</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Vargas</surname> <given-names>DY</given-names></name>, <name name-style="western"><surname>Tyagi</surname> <given-names>S</given-names></name>. <article-title>Stochastic mRNA Synthesis in Mammalian Cells</article-title>. <source>PLoS Biol</source>. <year>2006</year>;<volume>4</volume>(<issue>10</issue>):<fpage>e309</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.0040309" xlink:type="simple">10.1371/journal.pbio.0040309</ext-link></comment> <object-id pub-id-type="pmid">17048983</object-id></mixed-citation></ref>
+<ref id="pcbi.1005177.ref066"><label>66</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nielsen</surname> <given-names>HJ</given-names></name>, <name name-style="western"><surname>Youngren</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Hansen</surname> <given-names>FG</given-names></name>, <name name-style="western"><surname>Austin</surname> <given-names>S</given-names></name>. <article-title>Dynamics of Escherichia coli chromosome segregation during multifork replication</article-title>. <source>Journal of bacteriology</source>. <year>2007</year>;<volume>189</volume>(<issue>23</issue>):<fpage>8660</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.01212-07" xlink:type="simple">10.1128/JB.01212-07</ext-link></comment> <object-id pub-id-type="pmid">17905986</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

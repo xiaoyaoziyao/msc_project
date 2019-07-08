@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-28028</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0083308</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Computational biology</subject><subj-group><subject>Genomics</subject><subj-group><subject>Genome analysis tools</subject><subj-group><subject>Genetic networks</subject></subj-group></subj-group></subj-group><subj-group><subject>Molecular genetics</subject><subj-group><subject>Gene expression</subject></subj-group></subj-group><subj-group><subject>Regulatory networks</subject><subject>Systems biology</subject></subj-group></subj-group><subj-group><subject>Systems biology</subject></subj-group><subj-group><subject>Theoretical biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Computer science</subject><subj-group><subject>Algorithms</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Algorithms</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Inference of Vohradský's Models of Genetic Networks by Solving Two-Dimensional Function Optimization Problems</article-title>
+<alt-title alt-title-type="running-head">Inference of Vohradsky Models of Genetic Networks</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Kimura</surname><given-names>Shuhei</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sato</surname><given-names>Masanao</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Okada-Hatakeyama</surname><given-names>Mariko</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Graduate School of Engineering, Tottori University, Tottori, Japan</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>National Institute for Basic Biology, Okazaki Institute for Integrative Bioscience, National Institute for Natural Sciences, Okazaki, Japan</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>RIKEN Center for Integrative Medical Sciences, Yokohama, Japan</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>de la Fuente</surname><given-names>Alberto</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Leibniz-Institute for Farm Animal Biology (FBN), Germany</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">kimura@ike.tottori-u.ac.jp</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: SK. Performed the experiments: SK. Analyzed the data: SK MS MOH. Contributed reagents/materials/analysis tools: SK. Wrote the paper: SK.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>30</day><month>12</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>12</issue>
+<elocation-id>e83308</elocation-id>
+<history>
+<date date-type="received"><day>8</day><month>7</month><year>2013</year></date>
+<date date-type="accepted"><day>1</day><month>11</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Kimura et al</copyright-holder><license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>The inference of a genetic network is a problem in which mutual interactions among genes are inferred from time-series of gene expression levels. While a number of models have been proposed to describe genetic networks, this study focuses on a mathematical model proposed by Vohradský. Because of its advantageous features, several researchers have proposed the inference methods based on Vohradský's model. When trying to analyze large-scale networks consisting of dozens of genes, however, these methods must solve high-dimensional non-linear function optimization problems. In order to resolve the difficulty of estimating the parameters of the Vohradský's model, this study proposes a new method that defines the problem as several two-dimensional function optimization problems. Through numerical experiments on artificial genetic network inference problems, we showed that, although the computation time of the proposed method is not the shortest, the method has the ability to estimate parameters of Vohradský's models more effectively with sufficiently short computation times. This study then applied the proposed method to an actual inference problem of the bacterial SOS DNA repair system, and succeeded in finding several reasonable regulations.</p>
+</abstract>
+<funding-group><funding-statement>This work is supported by the Ministry of Education, Culture, Sports, Science and Technology of Japan under Grant-in-Aid for Young Scientists (B) No. 23700266. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>With the rapid advancement of technologies such as RNA-seq using next generation sequencers, it has become possible to measure the expression levels of thousands of genes. These data implicitly contain enormous amounts of information on biological systems. In order to exploit these high-throughput technologies, we must develop a way of extracting hidden information from the observed data. The inference of genetic networks is considered a promising approach for extracting useful information from these data. In the genetic network inference, the information is extracted by inferring mutual interactions among genes from the time-series of the gene expression levels. The inferred model of the genetic network is conceived of as an ideal tool to help biologists generate hypotheses and facilitate the design of their experiments. Many researchers have thus taken an interest in the inference of genetic networks, and the development of this methodology has become a major topic in the field of bioinformatics and systems biology.</p>
+<p>Numerous models for describing genetic networks have been proposed, and numerous algorithms based on individual models have been developed for the inference of genetic networks <xref ref-type="bibr" rid="pone.0083308-Akutsu1">[1]</xref>–<xref ref-type="bibr" rid="pone.0083308-Yu1">[14]</xref>. Among these models, this study focuses especially on sets of differential equations, as they can capture the dynamic behavior of gene expression. When we use the set of differential equations to describe a genetic network, its inference is generally defined as a problem of estimating the model parameters that produce time-series data consistent with the observed gene expression levels.</p>
+<p>A linear model is one of the best-studied models based on a set of differential equations. Several inference methods based on the linear model have therefore been proposed <xref ref-type="bibr" rid="pone.0083308-Yeung1">[13]</xref>, <xref ref-type="bibr" rid="pone.0083308-Gardner1">[15]</xref>. The computation times of these methods are reportedly very short. As the linear model requires that the system is operating near a steady state, however, it is unsuitable for analyzing the time-series of gene expression levels <xref ref-type="bibr" rid="pone.0083308-Yeung1">[13]</xref>. An S-system model is another well-studied model based on a set of differential equations <xref ref-type="bibr" rid="pone.0083308-Savageau1">[16]</xref>, <xref ref-type="bibr" rid="pone.0083308-Voit1">[17]</xref>. As several fundamental properties of biochemical systems are inherent in this model, a number of inference methods based on it have been proposed <xref ref-type="bibr" rid="pone.0083308-Chemmangattuvalappil1">[18]</xref>–<xref ref-type="bibr" rid="pone.0083308-Voit2">[28]</xref>. However, the number of parameters in the S-system model is larger. The number of the parameters in the linear model is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e001" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e002" xlink:type="simple"/></inline-formula> is the number of genes contained in the target network. On the other hand, the number of the parameters in the S-system model is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e003" xlink:type="simple"/></inline-formula>. To obtain reasonable results, therefore, we should give the inference methods based on the S-system model a larger amount of the gene expression data.</p>
+<p>When trying to infer genetic networks, we should use a mathematical model that has the ability to approximate actual biochemical reactions. As it is generally difficult to measure a sufficient amount of gene expression data, moreover, the model should contain a fewer number of the parameters. Vohradský proposed a model that is capable of representing the process of the gene expression <xref ref-type="bibr" rid="pone.0083308-Vohradsk1">[29]</xref>. The number of the parameters of the Vohradský's model, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e004" xlink:type="simple"/></inline-formula>, is comparable to that of the linear model. Because of its advantageous features, several researchers have proposed the inference methods based on this model <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref>. However, these methods try to estimate all of the model parameters simultaneously. When inferring genetic networks consisting of many genes, therefore, they must solve high-dimensional non-linear function optimization problems. In order to overcome this high-dimensionality in the canonical methods, this study proposes a new approach that defines the estimation of the model parameters as two-dimensional function optimization problems. Although the defined problems are still non-linear, their low-dimensionality enhances the probability of obtaining reasonable results. Finally, we confirm the effectiveness of the proposed method by applying it to artificial and actual genetic network inference problems.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Vohradský's model</title>
+<p>This study uses a mathematical model proposed by Vohradský <xref ref-type="bibr" rid="pone.0083308-Vohradsk1">[29]</xref> to describe genetic networks. The Vohradský's model is a set of differential equations of the form <disp-formula id="pone.0083308.e005"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e005" xlink:type="simple"/><label>(1)</label></disp-formula>where <disp-formula id="pone.0083308.e006"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e006" xlink:type="simple"/></disp-formula>and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e007" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e008" xlink:type="simple"/></inline-formula>), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e009" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e010" xlink:type="simple"/></inline-formula>), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e011" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e012" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e013" xlink:type="simple"/></inline-formula>) are model parameters. In the genetic network inference, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e014" xlink:type="simple"/></inline-formula> is the expression level of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e015" xlink:type="simple"/></inline-formula>-th gene and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e016" xlink:type="simple"/></inline-formula> is the number of genes contained in the target network. When we use the Vohradský's model to describe genetic networks, our purpose is to estimate all of the model parameters that produce time-series data consistent with the observed gene expression levels.</p>
+<p>The discrete form of the model (1) is equivalent to a recurrent neural network. We can thus use learning algorithms for recurrent neural networks, such as a back-propagation through time <xref ref-type="bibr" rid="pone.0083308-Williams1">[33]</xref>, in order to estimate the parameters of this model <xref ref-type="bibr" rid="pone.0083308-Vohradsk1">[29]</xref>. The canonical inference methods based on the Vohradský's model <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref> have been designed on the basis of the back-propagation through time. In contrast to these methods, on the other hand, the proposed method estimates the parameters by solving simultaneous equations, as described below.</p>
+</sec><sec id="s2b">
+<title>Parameter estimation</title>
+<p>The proposed method divides the inference problem of the Vohradský's model of a genetic network consisting of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e017" xlink:type="simple"/></inline-formula> genes into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e018" xlink:type="simple"/></inline-formula> subproblems, each of which corresponds to each gene. By solving the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e019" xlink:type="simple"/></inline-formula>-th subproblem, our method estimates the parameters corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e020" xlink:type="simple"/></inline-formula>-th gene, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e021" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e022" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e023" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e024" xlink:type="simple"/></inline-formula>. This section will describe the method to solve the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e025" xlink:type="simple"/></inline-formula>-th subproblem.</p>
+</sec><sec id="s2c">
+<title>Concept</title>
+<p>In the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e026" xlink:type="simple"/></inline-formula>-th subproblem corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e027" xlink:type="simple"/></inline-formula>-th gene, the proposed method estimates the model parameters, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e028" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e029" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e030" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e031" xlink:type="simple"/></inline-formula>, by solving the following simultaneous equations. <disp-formula id="pone.0083308.e032"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e032" xlink:type="simple"/><label>(2)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e033" xlink:type="simple"/></inline-formula> is the expression level of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e034" xlink:type="simple"/></inline-formula>-th gene at time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e035" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e036" xlink:type="simple"/></inline-formula> is the time derivative of the expression level of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e037" xlink:type="simple"/></inline-formula>-th gene at time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e038" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e039" xlink:type="simple"/></inline-formula> is the number of measurements. In the proposed approach, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e040" xlink:type="simple"/></inline-formula>'s are measured using technologies such as RNA-seq, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e041" xlink:type="simple"/></inline-formula>'s are estimated directly from the observed time-series of the gene expression levels using a smoothing technique such as spline interpolation <xref ref-type="bibr" rid="pone.0083308-Press1">[34]</xref>, local linear regression <xref ref-type="bibr" rid="pone.0083308-Cleveland1">[35]</xref>, neural networks <xref ref-type="bibr" rid="pone.0083308-Voit2">[28]</xref>, or a modified Whittaker's smoother <xref ref-type="bibr" rid="pone.0083308-Vilela2">[36]</xref>. Based on an idea similar to the method proposed here, several genetic network inference methods have already been proposed <xref ref-type="bibr" rid="pone.0083308-Kimura1">[8]</xref>, <xref ref-type="bibr" rid="pone.0083308-Yeung1">[13]</xref>, <xref ref-type="bibr" rid="pone.0083308-Kimura4">[23]</xref>, <xref ref-type="bibr" rid="pone.0083308-Voit2">[28]</xref>, <xref ref-type="bibr" rid="pone.0083308-Chou2">[37]</xref>.</p>
+<p>It is not always easy to solve the simultaneous <xref ref-type="disp-formula" rid="pone.0083308.e032">equations (2</xref>), since they are non-linear. In order to resolve the difficulty in solving these equations, this study uses a feature arisen from the transformation of them. By rearranging the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e042" xlink:type="simple"/></inline-formula>-th member of the <xref ref-type="disp-formula" rid="pone.0083308.e032">equations (2</xref>), we have <disp-formula id="pone.0083308.e043"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e043" xlink:type="simple"/><label>(3)</label></disp-formula>where <disp-formula id="pone.0083308.e044"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e044" xlink:type="simple"/></disp-formula></p>
+<p>By applying <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e045" xlink:type="simple"/></inline-formula> to the <xref ref-type="disp-formula" rid="pone.0083308.e043">equation (3</xref>), then, we obtain <disp-formula id="pone.0083308.e046"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e046" xlink:type="simple"/></disp-formula><disp-formula id="pone.0083308.e047"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e047" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+<p>By taking the logarithms of both sides of the equation above, we finally have <disp-formula id="pone.0083308.e048"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e048" xlink:type="simple"/><label>(5)</label></disp-formula></p>
+<p>Note that, although the transformed <xref ref-type="disp-formula" rid="pone.0083308.e048">equation (5</xref>) is non-linear with respect to the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e049" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e050" xlink:type="simple"/></inline-formula>, it is linear with respect to the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e051" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e052" xlink:type="simple"/></inline-formula>. This fact suggests that, when the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e053" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e054" xlink:type="simple"/></inline-formula> are given, the other parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e055" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e056" xlink:type="simple"/></inline-formula> are easily estimated. The proposed method uses this feature for solving the simultaneous <xref ref-type="disp-formula" rid="pone.0083308.e032">equations (2</xref>), as described below.</p>
+</sec><sec id="s2d">
+<title>Solving the simultaneous equations</title>
+<p>As mentioned just before, we can easily estimate the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e057" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e058" xlink:type="simple"/></inline-formula>, when the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e059" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e060" xlink:type="simple"/></inline-formula> are given. In this study, the set of algebraic <xref ref-type="disp-formula" rid="pone.0083308.e032">equations (2</xref>) is thus solved by estimating the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e061" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e062" xlink:type="simple"/></inline-formula>. As this study uses a least-squares method to solve the simultaneous equations, the estimation of the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e063" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e064" xlink:type="simple"/></inline-formula> is defined as a problem of minimizing the following two-dimensional function. <disp-formula id="pone.0083308.e065"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e065" xlink:type="simple"/><label>(6)</label></disp-formula>where <disp-formula id="pone.0083308.e066"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e066" xlink:type="simple"/></disp-formula>and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e067" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e068" xlink:type="simple"/></inline-formula> are the optimal values for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e069" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e070" xlink:type="simple"/></inline-formula>, respectively, under given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e071" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e072" xlink:type="simple"/></inline-formula>. In the next section, we will describe a method for obtaining <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e073" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e074" xlink:type="simple"/></inline-formula>.</p>
+<p>Any function optimization algorithm can be used to minimize the objective function (6). When we used the local search for optimizing this function, however, several local optima were found. As this optimization problem seemed to be multimodal, this study uses an evolutionary algorithm, REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e075" xlink:type="simple"/></inline-formula>/JGG (see Supporting Information) <xref ref-type="bibr" rid="pone.0083308-Kobayashi1">[38]</xref>, to solve it. Because the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e076" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e077" xlink:type="simple"/></inline-formula> are positive, this study searches for them in a logarithmic space.</p>
+</sec><sec id="s2e">
+<title>Estimation of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e078" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e079" xlink:type="simple"/></inline-formula></title>
+<p>In order to compute a value for the objective function (6), we must provide values for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e080" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e081" xlink:type="simple"/></inline-formula>. In the proposed method, they serve as the solution of a set of the transformed <xref ref-type="disp-formula" rid="pone.0083308.e048">equations (5</xref>) under given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e082" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e083" xlink:type="simple"/></inline-formula>. Note that, when the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e084" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e085" xlink:type="simple"/></inline-formula> are given, these equations are linear with respect to the unknown parameters, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e086" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e087" xlink:type="simple"/></inline-formula>. We can thus easily obtain <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e088" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e089" xlink:type="simple"/></inline-formula>. The proposed method estimates these parameters by optimizing the following constrained function minimization problem. <disp-formula id="pone.0083308.e090"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e090" xlink:type="simple"/><label>(7)</label></disp-formula>subject to <disp-formula id="pone.0083308.e091"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e091" xlink:type="simple"/></disp-formula>where <disp-formula id="pone.0083308.e092"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e092" xlink:type="simple"/></disp-formula><disp-formula id="pone.0083308.e093"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e093" xlink:type="simple"/></disp-formula><disp-formula id="pone.0083308.e094"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e094" xlink:type="simple"/></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e095" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e096" xlink:type="simple"/></inline-formula> are slack variables, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e097" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e098" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e099" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e100" xlink:type="simple"/></inline-formula> are constant parameters. In this problem, we treat the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e101" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e102" xlink:type="simple"/></inline-formula> as constants. Note that, whenever trying to compute a value for the objective function (6), we must always solve the problem (7) (see <xref ref-type="fig" rid="pone-0083308-g001">Figure 1</xref>).</p>
+<fig id="pone-0083308-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.g001</object-id><label>Figure 1</label><caption>
+<title>A framework of the algorithm for solving the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e103" xlink:type="simple"/></inline-formula>-th subproblem.</title>
+<p>Note that the proposed method divides the inference of the Vohradský's model of a genetic network consisting of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e104" xlink:type="simple"/></inline-formula> genes into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e105" xlink:type="simple"/></inline-formula> subproblems. By solving the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e106" xlink:type="simple"/></inline-formula>-th subproblem, we have the model parameters corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e107" xlink:type="simple"/></inline-formula>-th gene, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e108" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e109" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e110" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e111" xlink:type="simple"/></inline-formula></p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.g001" position="float" xlink:type="simple"/></fig>
+<p>When the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e112" xlink:type="simple"/></inline-formula>-th gene is not regulated by the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e113" xlink:type="simple"/></inline-formula>-th gene, the parameter corresponding to this regulation, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e114" xlink:type="simple"/></inline-formula>, is zero in the Vohradský's model. Because genetic networks are known to be sparsely connected <xref ref-type="bibr" rid="pone.0083308-Xu2">[39]</xref>, most of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e115" xlink:type="simple"/></inline-formula>'s should be zero. The first term of the objective function of the problem (7), i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e116" xlink:type="simple"/></inline-formula>, introduces this a priori knowledge into our parameter estimation. The second term of the objective function is, on the other hand, a sum of the differences between the left and right hand sides of the <xref ref-type="disp-formula" rid="pone.0083308.e048">equations (5</xref>).</p>
+<p>Note that, only when the condition <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e117" xlink:type="simple"/></inline-formula> is satisfied, we can transform the <xref ref-type="disp-formula" rid="pone.0083308.e032">equation (2</xref>) into the <xref ref-type="disp-formula" rid="pone.0083308.e048">equation (5</xref>). However, the observed gene expression data are generally polluted by noise. Even when the optimum values are set for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e118" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e119" xlink:type="simple"/></inline-formula>, some <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e120" xlink:type="simple"/></inline-formula>'s might not satisfy the condition above. This study thus introduces a threshold parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e121" xlink:type="simple"/></inline-formula>, and sets its value to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e122" xlink:type="simple"/></inline-formula>. On the other hand, we should note that, when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e123" xlink:type="simple"/></inline-formula> approaches <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e124" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e125" xlink:type="simple"/></inline-formula>, the term <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e126" xlink:type="simple"/></inline-formula> contained in the <xref ref-type="disp-formula" rid="pone.0083308.e048">equation (5</xref>) approaches <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e127" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e128" xlink:type="simple"/></inline-formula>, respectively. When <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e129" xlink:type="simple"/></inline-formula> is approximately equal to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e130" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e131" xlink:type="simple"/></inline-formula>, therefore, the transformation of the <xref ref-type="disp-formula" rid="pone.0083308.e032">equation (2</xref>) into the <xref ref-type="disp-formula" rid="pone.0083308.e048">equation (5</xref>) would amplify the noise contained in the measurement data. It is thus inadvisable to rely too much on the equations transformed under this condition. In order to introduce this notion into our estimation, this study sets the constant parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e132" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e133" xlink:type="simple"/></inline-formula> to <disp-formula id="pone.0083308.e134"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e134" xlink:type="simple"/></disp-formula><disp-formula id="pone.0083308.e135"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e135" xlink:type="simple"/></disp-formula></p>
+<p>We can transform the optimization problem (7) to a linear programming problem. Thus, the proposed method easily solves this problem by using an interior point method <xref ref-type="bibr" rid="pone.0083308-Mehrotra1">[40]</xref>.</p>
+</sec><sec id="s2f">
+<title>Remarks</title>
+<p>As mentioned before, this study proposes to define the estimation of the model parameters corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e136" xlink:type="simple"/></inline-formula>-th gene as a problem of solving the simultaneous <xref ref-type="disp-formula" rid="pone.0083308.e032">equations (2</xref>). The proposed method effectively solves them by minimizing the two-dimensional function optimization problem (6). We can however solve the simultaneous equations simply by using a least-squares method. In this case, for example, the parameters corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e137" xlink:type="simple"/></inline-formula>-th gene are estimated by minimizing <disp-formula id="pone.0083308.e138"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e138" xlink:type="simple"/><label>(8)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e139" xlink:type="simple"/></inline-formula>'s are given by rearranging <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e140" xlink:type="simple"/></inline-formula>'s in descending order of their absolute values, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e141" xlink:type="simple"/></inline-formula>. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e142" xlink:type="simple"/></inline-formula> is a constant parameter, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e143" xlink:type="simple"/></inline-formula> is a maximum indegree. The maximum indegree determines the maximum number of genes that affect the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e144" xlink:type="simple"/></inline-formula>-th gene directly. The second term of the objective function (8) is a penalty term that introduces the sparseness into the inferred network. Similar terms have been used in several genetic network inference methods <xref ref-type="bibr" rid="pone.0083308-Kikuchi1">[21]</xref>, <xref ref-type="bibr" rid="pone.0083308-Kimura3">[22]</xref>, <xref ref-type="bibr" rid="pone.0083308-Liu1">[24]</xref>.</p>
+<p>As mentioned before, the existing inference methods based on the Vohradský's model try to estimate all of the model parameters simultaneously <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref>. It is therefore difficult for them to analyze genetic networks with many genes because of the high-dimensionality in the parameter estimation. For the computational simplicity, moreover, they limit the model to being <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e145" xlink:type="simple"/></inline-formula>. This study thus compared the proposed method chiefly with a method that minimizes the objective function (8). In this study, we refer to the method of optimizing this function as the least-squares approach. As same as the proposed method, the least-squares approach also uses REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e146" xlink:type="simple"/></inline-formula>/JGG <xref ref-type="bibr" rid="pone.0083308-Kobayashi1">[38]</xref> as a function optimizer. The following recommended values were used for the parameters of REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e147" xlink:type="simple"/></inline-formula>/JGG applied in the least-squares approach; the population size <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e148" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e149" xlink:type="simple"/></inline-formula>, the number of children generated per selection <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e150" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e151" xlink:type="simple"/></inline-formula>, and the step-size parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e152" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e153" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e154" xlink:type="simple"/></inline-formula> is the dimension of the search space. Each run was continued until the best objective value did not improved over <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e155" xlink:type="simple"/></inline-formula> generations.</p>
+</sec></sec><sec id="s3">
+<title>Results and Discussion</title>
+<p>This section shows that the proposed method has an ability to estimate parameters of Vohradský's models more effectively.</p>
+<sec id="s3a">
+<title>Inference of a small-scale network</title>
+<p>This experiment confirms that the proposed method is capable of estimating reasonable values for the parameters of the Vohradský's model.</p>
+<p><bold>Experimental setup:</bold> We used the Vohradský's model with 4 genes (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e156" xlink:type="simple"/></inline-formula>), that was introduced by the reference <xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref>, as a target network. The model parameters of this system are given in <xref ref-type="table" rid="pone-0083308-t001">Table 1</xref>. Note that, as this network consists of 4 genes, the proposed method solves 4 individual two-dimensional function optimization problems to estimate all of the model parameters.</p>
+<table-wrap id="pone-0083308-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.t001</object-id><label>Table 1</label><caption>
+<title>The model parameters for the small-scale target network.</title>
+</caption><alternatives><graphic id="pone-0083308-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e157" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e158" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e159" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e160" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e161" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e162" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e163" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e164" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">20.0</td>
+<td align="left" rowspan="1" colspan="1">−20.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">0.1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">15.0</td>
+<td align="left" rowspan="1" colspan="1">−10.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">−5.0</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">−8.0</td>
+<td align="left" rowspan="1" colspan="1">12.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">8.0</td>
+<td align="left" rowspan="1" colspan="1">−12.0</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>The observed gene expression patterns, 3 sets of time-series data, each covering 4 genes, were computed from the differential <xref ref-type="disp-formula" rid="pone.0083308.e005">equations (1</xref>) on the target model. The sets began from initial values randomly generated in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e165" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e166" xlink:type="simple"/></inline-formula> sampling points for the time-series data were assigned to each gene in each set. The number of observations <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e167" xlink:type="simple"/></inline-formula> is therefore <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e168" xlink:type="simple"/></inline-formula>. For a practical application, these sets would be obtained by actual biological experiments under different experimental conditions. This experiment simulated no measurement noise in the computed data. The time derivatives of the gene expression levels were thus directly computed from the target model. In this study, we estimated the parameters of the target model only from the gene expression levels and their derivatives.</p>
+<p>We performed <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e169" xlink:type="simple"/></inline-formula> trials, each with different sets of gene expression data. We considered the model parameters to be successfully estimated only when the value of the objective function (6) dropped to less than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e170" xlink:type="simple"/></inline-formula>. As the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e171" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e172" xlink:type="simple"/></inline-formula> of our objective function (6) are both positive, this study searched for them in the logarithmic space. Their search area was set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e173" xlink:type="simple"/></inline-formula>. Based on the preliminary experiments, we set the constant parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e174" xlink:type="simple"/></inline-formula> contained in the constrained function minimization problem (7) to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e175" xlink:type="simple"/></inline-formula>. This study used the following recommended values for the parameters of the optimization algorithm, REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e176" xlink:type="simple"/></inline-formula>/JGG (see Supporting Information) <xref ref-type="bibr" rid="pone.0083308-Kobayashi1">[38]</xref>: the population size <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e177" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e178" xlink:type="simple"/></inline-formula>, the number of children generated per selection <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e179" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e180" xlink:type="simple"/></inline-formula>, and the step-size parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e181" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e182" xlink:type="simple"/></inline-formula>. Each run of REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e183" xlink:type="simple"/></inline-formula>/JGG was continued until the maximum number of the generation alternation reached <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e184" xlink:type="simple"/></inline-formula>. All of the computation were carried out on personal computers using Linux (Fedora release 12). The program was written in C++, and the compiler was gcc 4.4.2.</p>
+<p><bold>Results:</bold> The proposed method succeeded in estimating the parameter values with precision in 7 trials. Even in the rest of the trials, most of the parameters were correctly estimated. <xref ref-type="table" rid="pone-0083308-t002">Table 2</xref> shows a sample of the model parameters estimated in one of the failed trials. As mentioned before, the proposed method divided the parameter estimation problem of the target network here into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e185" xlink:type="simple"/></inline-formula> subproblems, each of which is defined as a two-dimensional function optimization problem. In this experiment, our method therefore solved <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e186" xlink:type="simple"/></inline-formula> subproblems and failed to find the optimum solutions for only 3 of these 40 subproblems. While the averaged objective value (6) of the 3 failed subproblems was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e187" xlink:type="simple"/></inline-formula>, that of the other subproblems was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e188" xlink:type="simple"/></inline-formula>. In order to estimate all of the model parameters for this network, our method took about <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e189" xlink:type="simple"/></inline-formula> minutes on a single-CPU personal computer (Pentium IV 2.8 GHz).</p>
+<table-wrap id="pone-0083308-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.t002</object-id><label>Table 2</label><caption>
+<title>A sample of the parameters erroneously estimated by the proposed method in the experiment using the small-scale network.</title>
+</caption><alternatives><graphic id="pone-0083308-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e190" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e191" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e192" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e193" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e194" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e195" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e196" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e197" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">2.745</td>
+<td align="left" rowspan="1" colspan="1">−0.662</td>
+<td align="left" rowspan="1" colspan="1">0.090</td>
+<td align="left" rowspan="1" colspan="1">−0.189</td>
+<td align="left" rowspan="1" colspan="1">−1.667</td>
+<td align="left" rowspan="1" colspan="1">0.730</td>
+<td align="left" rowspan="1" colspan="1">0.457</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">15.002</td>
+<td align="left" rowspan="1" colspan="1">−10.002</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">−5.000</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">0.043</td>
+<td align="left" rowspan="1" colspan="1">−8.095</td>
+<td align="left" rowspan="1" colspan="1">11.958</td>
+<td align="left" rowspan="1" colspan="1">0.072</td>
+<td align="left" rowspan="1" colspan="1">0.017</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">8.000</td>
+<td align="left" rowspan="1" colspan="1">−12.000</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+<td align="left" rowspan="1" colspan="1">0.200</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Note that the proposed method succeeded in estimating the parameter values with precision in 7 of the 10 trials.</p></fn></table-wrap-foot></table-wrap>
+<p>The discrete form of the Vohradský's model can be viewed as a recurrent neural network. The existing inference methods <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref> have therefore designed on the basis of the learning algorithm for the recurrent neural network, i.e., the back-propagation through time <xref ref-type="bibr" rid="pone.0083308-Williams1">[33]</xref>. For the computational simplicity, however, these methods limit the search space to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e198" xlink:type="simple"/></inline-formula>. For making a fair comparison, thus, this study constructed two inference methods based on the back-propagation through time, i.e., BPTTLS and BPTTGA, that do not limit the search space. As function optimization algorithms, BPTTLS and BPTTGA used a local search, i.e., the conjugate gradient method <xref ref-type="bibr" rid="pone.0083308-Press1">[34]</xref>, and an evolutionary algorithm, i.e., REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e199" xlink:type="simple"/></inline-formula>/JGG <xref ref-type="bibr" rid="pone.0083308-Kobayashi1">[38]</xref>, respectively. In Supporting Information, readers can find more detailed information on these inference methods. We then compared the proposed method with BPTTLS and BPTTGA. The computational costs of these methods were both lower in the small-scale problem described here. They were however unable to estimate the model parameters with precision. In order to estimate all of the model parameters, BPTTLS and BPTTGA required about <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e200" xlink:type="simple"/></inline-formula> seconds and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e201" xlink:type="simple"/></inline-formula> minutes, respectively, on the single-CPU personal computer (Pentium IV 2.8GHz). The averaged objective values of BPTTLS and BPTTGA were <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e202" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e203" xlink:type="simple"/></inline-formula>, respectively. The objective values of BPTTLS were much worse than those of BPTTGA. Note here that, when we set the model parameters to their optimal values, its objective value is better than those of BPTTGA. These facts indicate that the objective function defined by the back-propagation through time has a lot of local optima. A typical sample of the model parameters estimated by BPTTGA was shown in <xref ref-type="table" rid="pone-0083308-t003">Table 3</xref>. Although the existing inference methods <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref> limit the search space, on the other hand, they were reportedly still unable to estimate the model parameters with precision.</p>
+<table-wrap id="pone-0083308-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.t003</object-id><label>Table 3</label><caption>
+<title>A typical sample of the parameters estimated by BPTTGA.</title>
+</caption><alternatives><graphic id="pone-0083308-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e204" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e205" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e206" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e207" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e208" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e209" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e210" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e211" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">20.559</td>
+<td align="left" rowspan="1" colspan="1">−19.907</td>
+<td align="left" rowspan="1" colspan="1">0.396</td>
+<td align="left" rowspan="1" colspan="1">−0.309</td>
+<td align="left" rowspan="1" colspan="1">0.079</td>
+<td align="left" rowspan="1" colspan="1">0.098</td>
+<td align="left" rowspan="1" colspan="1">0.100</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">13.422</td>
+<td align="left" rowspan="1" colspan="1">−8.879</td>
+<td align="left" rowspan="1" colspan="1">−0.633</td>
+<td align="left" rowspan="1" colspan="1">1.296</td>
+<td align="left" rowspan="1" colspan="1">−4.593</td>
+<td align="left" rowspan="1" colspan="1">0.190</td>
+<td align="left" rowspan="1" colspan="1">0.189</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">−7.843</td>
+<td align="left" rowspan="1" colspan="1">0.037</td>
+<td align="left" rowspan="1" colspan="1">−2.923</td>
+<td align="left" rowspan="1" colspan="1">−1.354</td>
+<td align="left" rowspan="1" colspan="1">−0.728</td>
+<td align="left" rowspan="1" colspan="1">3.000</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">−0.079</td>
+<td align="left" rowspan="1" colspan="1">−0.016</td>
+<td align="left" rowspan="1" colspan="1">7.516</td>
+<td align="left" rowspan="1" colspan="1">−10.387</td>
+<td align="left" rowspan="1" colspan="1">0.022</td>
+<td align="left" rowspan="1" colspan="1">0.161</td>
+<td align="left" rowspan="1" colspan="1">0.188</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>BPTTGA is the parameter estimation method of Vohradský's models, that is designed on the basis of the back-propagation through time <xref ref-type="bibr" rid="pone.0083308-Williams1">[33]</xref>. As a function optimizer, BPTTGA used an evolutionary algorithm, REX<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e212" xlink:type="simple"/></inline-formula>/JGG <xref ref-type="bibr" rid="pone.0083308-Kobayashi1">[38]</xref>. Readers can find more detailed information on BPTTGA in Supporting Information.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3b">
+<title>Inference in noisy environment</title>
+<p>Next, we checked the performance of the proposed method in a real-world setting by conducting an experiment with noisy data.</p>
+<p><bold>Experimental setup:</bold> In the second experiment, we used the Vohradský's models consisting of 10, 20 and 30 genes (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e213" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e214" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e215" xlink:type="simple"/></inline-formula>) as target networks. As the inference ability of our method might depend on the structure of the target network, we generated the target networks of different structures by changing the model parameters. When trying to determine the model parameters corresponding to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e216" xlink:type="simple"/></inline-formula>-th gene, we randomly chose an integer <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e217" xlink:type="simple"/></inline-formula> from a power-law distribution with a cutoff of 5. Then, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e218" xlink:type="simple"/></inline-formula> genes were randomly selected from all of the genes contained in the network. The weight parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e219" xlink:type="simple"/></inline-formula>'s corresponding to the regulations of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e220" xlink:type="simple"/></inline-formula>-th gene from the selected genes were randomly chosen from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e221" xlink:type="simple"/></inline-formula>, and the rest of the weight parameters were set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e222" xlink:type="simple"/></inline-formula>. We also randomly selected the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e223" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e224" xlink:type="simple"/></inline-formula> from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e225" xlink:type="simple"/></inline-formula>. The parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e226" xlink:type="simple"/></inline-formula> was set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e227" xlink:type="simple"/></inline-formula>. This study changed the network structure on every trial.</p>
+<p>As the performance of the inference method might also depend on the amount of time-series data given, different numbers of time-series datasets were used for the experiments. The time-series datasets were obtained by solving the differential <xref ref-type="disp-formula" rid="pone.0083308.e005">equations (1</xref>) on the target networks. The initial values of these sets were selected randomly from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e228" xlink:type="simple"/></inline-formula>. Each dataset consisted of the expression levels at 11 time points with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e229" xlink:type="simple"/></inline-formula> time intervals. The measurement noise was simulated by adding 10% Gaussian noise to the computed time-series data. To estimate the time derivatives of the gene expression levels from the given time-series datasets, this experiment used the local linear regression <xref ref-type="bibr" rid="pone.0083308-Cleveland1">[35]</xref>, an interpolation technique.</p>
+<p>In order to check the performance of the proposed method, this study constructed and then solved 10 genetic network inference problems of each available size with each available number of time-series datasets. In this experiment, we set the constant parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e230" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e231" xlink:type="simple"/></inline-formula>. All of the other experimental conditions were the same as those used in the previous experiment.</p>
+<p><bold>Results:</bold> In the noisy environment, the proposed method was unable to estimate the parameter values with precision. In this experiment, therefore, we only checked whether or not our method infers the structures of the target networks correctly. Note that the Vohradský's model represents the positive and negative regulations from the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e232" xlink:type="simple"/></inline-formula>-th gene to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e233" xlink:type="simple"/></inline-formula>-th gene as positive and negative values, respectively, of the weight parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e234" xlink:type="simple"/></inline-formula>. On the other hand, when the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e235" xlink:type="simple"/></inline-formula>-th gene has no influence on the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e236" xlink:type="simple"/></inline-formula>-th gene, the value of the parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e237" xlink:type="simple"/></inline-formula> is zero. This study thus extracted the structures of the networks from the estimated model parameters according to the following rules: when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e238" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e239" xlink:type="simple"/></inline-formula>, we conclude that the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e240" xlink:type="simple"/></inline-formula>-th gene positively and negatively, respectively, regulates the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e241" xlink:type="simple"/></inline-formula>-th gene, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e242" xlink:type="simple"/></inline-formula> is a threshold; otherwise, we infer no regulation from the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e243" xlink:type="simple"/></inline-formula>-th gene to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e244" xlink:type="simple"/></inline-formula>-th gene. This study set the threshold <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e245" xlink:type="simple"/></inline-formula> to <disp-formula id="pone.0083308.e246"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e246" xlink:type="simple"/></disp-formula></p>
+<p><xref ref-type="fig" rid="pone-0083308-g002">Figure 2</xref> (a), (b) and (c) show the recalls, the precisions and the specificities of the proposed method on the experiments of solving the inference problems for different sizes with different amounts of gene expression data. The recall, the precision and the specificity are defined as <disp-formula id="pone.0083308.e247"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0083308.e247" xlink:type="simple"/></disp-formula></p>
+<fig id="pone-0083308-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.g002</object-id><label>Figure 2</label><caption>
+<title>The performances of the proposed method on the experiments of genetic networks consisting of (a) 10 genes, (b) 20 genes, and (c) 30 genes, respectively.</title>
+<p>Solid, dotted and dashed lines represent the recall, the specificity and the precision, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.g002" position="float" xlink:type="simple"/></fig>
+<p>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e248" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e249" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e250" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e251" xlink:type="simple"/></inline-formula> are the numbers of true-positive, false-negative, false-positive and false-negative regulations, respectively. The figures show that the performances of the proposed method improved with increasing the amount of the given data. A similar experiment has been performed to confirm the performance of the inference method based on the S-system model <xref ref-type="bibr" rid="pone.0083308-Kimura4">[23]</xref>. These results indicate that the proposed method has the ability to infer a more reasonable network even with a smaller amount of gene expression data. This advantageous feature is due to the smaller number of the parameters of the Vohradský's model. On the other hand, the computation time required by the proposed method was not always short. The computation times of our method on the single-CPU personal computer (Pentium IV 2.8 GHz) are shown in <xref ref-type="fig" rid="pone-0083308-g003">Figure 3</xref>.</p>
+<fig id="pone-0083308-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.g003</object-id><label>Figure 3</label><caption>
+<title>The computation times of the proposed method for noisy experiments.</title>
+<p>Solid, dotted and dashed lines represents the averaged computation times required for solving the inference problems for 10, 20 and 30 genes, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.g003" position="float" xlink:type="simple"/></fig>
+<p>The existing inference methods based on the Vohradský's model try to estimate all of the model parameters simultaneously <xref ref-type="bibr" rid="pone.0083308-Palafox1">[30]</xref>–<xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref>. Because of the high-dimensionality in their parameter estimation, it is difficult for them to analyze genetic networks consisting of dozens of genes. When we applied BPTTGA mentioned before to the inference problem of 20 genes with 20 sets of time-series data, therefore, its computation did not finish within 72 hours. Although the computational cost of BPTTLS was still low, on the other hand, its recalls, precisions and specificities were much worse. We thus compared the proposed method only with the least-squares approach described before. <xref ref-type="fig" rid="pone-0083308-g004">Figure 4</xref> shows the precision-recall curves of the proposed method and the least-squares approach on the genetic network inference problems of 20 genes with 20 sets of noisy time-series data. The least-squares approach was performed under different hyper-parameter settings, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e252" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e253" xlink:type="simple"/></inline-formula>. These curves were obtained by changing the hyper-parameter of our method, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e254" xlink:type="simple"/></inline-formula>, and that of the least-squares approach, i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e255" xlink:type="simple"/></inline-formula>. The figure indicates that our method outperforms the least-squares approach with respect to inference ability. However, the computation time of the proposed method was much longer. While the least-squares approach required <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e256" xlink:type="simple"/></inline-formula> minutes on the single-CPU personal computer (Pentium IV 2.8 GHz) to infer each network, the proposed method required <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e257" xlink:type="simple"/></inline-formula> minutes on the same computer. In the future work, we must therefore develop a way to reduce the computational cost of the proposed method.</p>
+<fig id="pone-0083308-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.g004</object-id><label>Figure 4</label><caption>
+<title>The precision versus the recall for the genetic network inference problems of 20 genes with 20 sets of time-series data.</title>
+<p>A solid line represents the performances of the proposed method. Dotted and dashed lines represent the performances of the least-squares approach with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e258" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e259" xlink:type="simple"/></inline-formula>, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.g004" position="float" xlink:type="simple"/></fig>
+<p>In the proposed method, the number of the inferred regulations depends on the value of the hyper-parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e260" xlink:type="simple"/></inline-formula>. <xref ref-type="fig" rid="pone-0083308-g004">Figure 4</xref> indicates, on the other hand, that the quality of the network inferred by the proposed method was quickly degraded with decreasing the number of the inferred regulations. When trying to analyze an actual genetic network, therefore, we should set the hyper-parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e261" xlink:type="simple"/></inline-formula> so that the inferred network contains a larger number of regulations.</p>
+</sec><sec id="s3c">
+<title>Analysis of actual data</title>
+<p>We then checked the performance of the proposed method in an experiment using actual gene expression data.</p>
+<p><bold>Experimental setup:</bold> In this experiment, we analyzed the SOS DNA repair regulatory network in <italic>E.coli</italic> <xref ref-type="bibr" rid="pone.0083308-Sutton1">[41]</xref>. More than 30 genes are known to be involved in this system. This study however analyzed the expression data of six genes, i.e., <italic>uvrD</italic>, <italic>lexA</italic>, <italic>umuD</italic>, <italic>recA</italic>, <italic>uvrA</italic> and <italic>polB</italic>, which had been measured by Ronen and colleagues <xref ref-type="bibr" rid="pone.0083308-Ronen1">[42]</xref> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e262" xlink:type="simple"/></inline-formula>). These data have often been used to confirm the performances of the inference methods <xref ref-type="bibr" rid="pone.0083308-Kabir1">[7]</xref>–<xref ref-type="bibr" rid="pone.0083308-Kimura2">[9]</xref>, <xref ref-type="bibr" rid="pone.0083308-Chemmangattuvalappil1">[18]</xref>, <xref ref-type="bibr" rid="pone.0083308-Cho1">[19]</xref>, <xref ref-type="bibr" rid="pone.0083308-Kimura4">[23]</xref>, <xref ref-type="bibr" rid="pone.0083308-Xu1">[31]</xref>, <xref ref-type="bibr" rid="pone.0083308-Xu2">[32]</xref>. The original expression data contain four sets of time-series data. This study however used only two sets (the third and fourth sets), since those two had been measured under the same experimental conditions. Each set of time-series data consisted of 50 measurement values including the initial concentrations of zero. In the experiment, we removed the initial concentrations from both of the sets, as models based on a set of differential equations cannot produce different time-courses from the same initial conditions. The number of measurements <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e263" xlink:type="simple"/></inline-formula> is thus <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e264" xlink:type="simple"/></inline-formula>. According to our previous work <xref ref-type="bibr" rid="pone.0083308-Kimura2">[9]</xref>, we normalized the data corresponding to each gene against its maximum expression level. The normalized data were then smoothed by the local linear regression <xref ref-type="bibr" rid="pone.0083308-Cleveland1">[35]</xref>. We assigned a value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e265" xlink:type="simple"/></inline-formula> to expression levels with values of less than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e266" xlink:type="simple"/></inline-formula>, as the gene expression levels must not be negative.</p>
+<p>In this experiment, we set the hyper-parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e267" xlink:type="simple"/></inline-formula> to 2000. All of the other experimental conditions were the same as those described before.</p>
+<p><bold>Results:</bold> <xref ref-type="fig" rid="pone-0083308-g005">Figure 5</xref> shows the structure of the network inferred by the proposed method. Although we performed 10 trials in this experiment, all of the inferred networks had the same structure. A sample of the parameters estimated by the proposed method is listed in <xref ref-type="table" rid="pone-0083308-t004">Table 4</xref>. As shown in the figure, our method removed few regulations from all of the candidate regulations. Most of the inferred regulations would therefore be false-positive. However, the negative regulations of all of the genes from <italic>lexA</italic> are reasonable, since LexA is known to repress the SOS genes. The negative regulation of <italic>lexA</italic> from <italic>recA</italic> also appears to be reasonable, as RecA senses the damage of DNA and mediates LexA autocleavage. Moreover, the regulation of <italic>umuD</italic> from <italic>recA</italic>, inferred by the proposed method, has been contained in a network now known <xref ref-type="bibr" rid="pone.0083308-Gardner1">[15]</xref>.</p>
+<fig id="pone-0083308-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.g005</object-id><label>Figure 5</label><caption>
+<title>The network structure obtained for the SOS DNA repair system in <italic>E.coli</italic>.</title>
+<p>Bold lines represent biologically plausible regulations mentioned in the ‘Analysis of actual data’ section.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.g005" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0083308-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.t004</object-id><label>Table 4</label><caption>
+<title>A sample of the parameters estimated by the proposed method in the experiment with actual gene expression data.</title>
+</caption><alternatives><graphic id="pone-0083308-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e268" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e269" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e270" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e271" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e272" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e273" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e274" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e275" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e276" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e277" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1(<italic>uvrD</italic>)</td>
+<td align="left" rowspan="1" colspan="1">4.412</td>
+<td align="left" rowspan="1" colspan="1"><bold>−6.461</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>0.354</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">5.900</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>0.028</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>4.183</td>
+<td align="left" rowspan="1" colspan="1">0.336</td>
+<td align="left" rowspan="1" colspan="1">0.055</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2 (<italic>lexA</italic>)</td>
+<td align="left" rowspan="1" colspan="1">6.056</td>
+<td align="left" rowspan="1" colspan="1"><bold>−14.288</bold></td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1"><bold>−7.567</bold></td>
+<td align="left" rowspan="1" colspan="1">19.773</td>
+<td align="left" rowspan="1" colspan="1">1.668</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>4.769</td>
+<td align="left" rowspan="1" colspan="1">0.163</td>
+<td align="left" rowspan="1" colspan="1">0.050</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3 (<italic>umuD</italic>)</td>
+<td align="left" rowspan="1" colspan="1">3.291</td>
+<td align="left" rowspan="1" colspan="1"><bold>−11.751</bold></td>
+<td align="left" rowspan="1" colspan="1">7.892</td>
+<td align="left" rowspan="1" colspan="1"><bold>−5.101</bold></td>
+<td align="left" rowspan="1" colspan="1">9.328</td>
+<td align="left" rowspan="1" colspan="1">0.475</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>4.997</td>
+<td align="left" rowspan="1" colspan="1">0.604</td>
+<td align="left" rowspan="1" colspan="1">0.095</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4 (<italic>recA</italic>)</td>
+<td align="left" rowspan="1" colspan="1">4.173</td>
+<td align="left" rowspan="1" colspan="1"><bold>−14.738</bold></td>
+<td align="left" rowspan="1" colspan="1">6.996</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>3.642</td>
+<td align="left" rowspan="1" colspan="1">11.510</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>5.195</td>
+<td align="left" rowspan="1" colspan="1">0.464</td>
+<td align="left" rowspan="1" colspan="1">0.069</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5 (<italic>uvrA</italic>)</td>
+<td align="left" rowspan="1" colspan="1">5.230</td>
+<td align="left" rowspan="1" colspan="1"><bold>−20.042</bold></td>
+<td align="left" rowspan="1" colspan="1">9.914</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>7.364</td>
+<td align="left" rowspan="1" colspan="1">19.515</td>
+<td align="left" rowspan="1" colspan="1">0.180</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>4.307</td>
+<td align="left" rowspan="1" colspan="1">0.259</td>
+<td align="left" rowspan="1" colspan="1">0.246</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6 (<italic>polB</italic>)</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>0.368</td>
+<td align="left" rowspan="1" colspan="1"><bold>−4.866</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>17.080</td>
+<td align="left" rowspan="1" colspan="1">10.910</td>
+<td align="left" rowspan="1" colspan="1">15.702</td>
+<td align="left" rowspan="1" colspan="1">7.342</td>
+<td align="left" rowspan="1" colspan="1"><bold>−</bold>2.536</td>
+<td align="left" rowspan="1" colspan="1">0.094</td>
+<td align="left" rowspan="1" colspan="1">0.110</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>The parameters written in boldface type correspond to biologically plausible regulations mentioned in the ‘Analysis of actual data’ section.</p></fn></table-wrap-foot></table-wrap>
+<p>As mentioned above, our method seemed to find a number of false-positive regulations. In a future work, therefore, we should find a way to reduce these erroneous regulations.</p>
+</sec><sec id="s3d">
+<title>Experiments on a DREAM3 network</title>
+<p>In the experiments described before, we focused on whether the proposed method has an ability to estimate parameters of the Vohradský's models more effectively. Therefore, our experiments have chiefly used the Vohradský's models as the target networks. In the experiments described here, on the other hand, we applied the proposed method to an inference problem whose target network is described as a set of differential equations of the form different from the Vohradský's model.</p>
+<p><bold>Experimental setup:</bold> The proposed method was applied to one of the artificial genetic network problems obtained from DREAM3 in silico challenges <xref ref-type="bibr" rid="pone.0083308-Dream1">[43]</xref>. These problems have been often used to check the performances of genetic network inference methods. This study analyzed the third network, i.e., Yeast1, which consists of 100 genes.</p>
+<p>46 sets of time-series data, that were obtained by solving a set of differential equations of the form different from the Vohradský's model, were given as the observed gene expression levels. The given data were polluted by noise. 21 sampling points for time-series data were assigned on each gene in each set. The number of observations <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e278" xlink:type="simple"/></inline-formula> was therefore <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e279" xlink:type="simple"/></inline-formula>.</p>
+<p>In this experiment, we checked the performances of the proposed method by changing a value for the hyper-parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e280" xlink:type="simple"/></inline-formula> from 20 to 2000. All of the other experimental conditions were the same as those described before.</p>
+<p><bold>Results:</bold> The performances of the proposed method on the DREAM3 problem are shown in <xref ref-type="table" rid="pone-0083308-t005">Table 5</xref>. The network inferred by the proposed method tells us whether the regulation of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e281" xlink:type="simple"/></inline-formula>-th gene from the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e282" xlink:type="simple"/></inline-formula>-th gene is positive or negative. As the correct network given by the DREAM3 does not have the information about the types of the regulations, however, we omitted to check the types of the regulations. Compared with the champion algorithm of the DREAM3 challenges <xref ref-type="bibr" rid="pone.0083308-Prill1">[44]</xref>, the performances of our method were worse. Note however that this study confirmed the effectiveness of the proposed method through the experiments on the actual genetic network inference problem. Thus, the experimental results shown here do not always prove the inability of the proposed method in analyzing actual gene expression data. The Vohradský's model would be unsuitable to capture the features of the DREAM3 network. One of the reasons of the unsuitability would be that, while the model used in the DREAM3 problem considers the effect of the intrinsic noise <xref ref-type="bibr" rid="pone.0083308-Schaffter1">[45]</xref>, the Vohradský's model does not consider it. The intrinsic noise is unavoidable in biological processes, and the analysis of it would be important to understand biological systems. However, the current technologies generally measure the gene expression levels averaged over a lot of cells. As we think that the averaged gene expression levels weaken the effect of the intrinsic noise, the method proposed in this study infers genetic networks without considering it.</p>
+<table-wrap id="pone-0083308-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0083308.t005</object-id><label>Table 5</label><caption>
+<title>The performances of the proposed method on the third problem of the DREAM3 in silico challenges <xref ref-type="bibr" rid="pone.0083308-Dream1">[43]</xref>.</title>
+</caption><alternatives><graphic id="pone-0083308-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0083308.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e283" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">FP</td>
+<td align="left" rowspan="1" colspan="1">FN</td>
+<td align="left" rowspan="1" colspan="1">TP</td>
+<td align="left" rowspan="1" colspan="1">TN</td>
+<td align="left" rowspan="1" colspan="1">recall</td>
+<td align="left" rowspan="1" colspan="1">precision</td>
+<td align="left" rowspan="1" colspan="1">specisificy</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1">153</td>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">9719</td>
+<td align="left" rowspan="1" colspan="1">0.078</td>
+<td align="left" rowspan="1" colspan="1">0.464</td>
+<td align="left" rowspan="1" colspan="1">0.998</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="left" rowspan="1" colspan="1">78</td>
+<td align="left" rowspan="1" colspan="1">131</td>
+<td align="left" rowspan="1" colspan="1">35</td>
+<td align="left" rowspan="1" colspan="1">9656</td>
+<td align="left" rowspan="1" colspan="1">0.211</td>
+<td align="left" rowspan="1" colspan="1">0.310</td>
+<td align="left" rowspan="1" colspan="1">0.992</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">100</td>
+<td align="left" rowspan="1" colspan="1">312</td>
+<td align="left" rowspan="1" colspan="1">112</td>
+<td align="left" rowspan="1" colspan="1">54</td>
+<td align="left" rowspan="1" colspan="1">9422</td>
+<td align="left" rowspan="1" colspan="1">0.325</td>
+<td align="left" rowspan="1" colspan="1">0.148</td>
+<td align="left" rowspan="1" colspan="1">0.968</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">150</td>
+<td align="left" rowspan="1" colspan="1">632</td>
+<td align="left" rowspan="1" colspan="1">95</td>
+<td align="left" rowspan="1" colspan="1">71</td>
+<td align="left" rowspan="1" colspan="1">9102</td>
+<td align="left" rowspan="1" colspan="1">0.428</td>
+<td align="left" rowspan="1" colspan="1">0.101</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">200</td>
+<td align="left" rowspan="1" colspan="1">876</td>
+<td align="left" rowspan="1" colspan="1">91</td>
+<td align="left" rowspan="1" colspan="1">75</td>
+<td align="left" rowspan="1" colspan="1">8858</td>
+<td align="left" rowspan="1" colspan="1">0.452</td>
+<td align="left" rowspan="1" colspan="1">0.079</td>
+<td align="left" rowspan="1" colspan="1">0.910</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">1948</td>
+<td align="left" rowspan="1" colspan="1">84</td>
+<td align="left" rowspan="1" colspan="1">82</td>
+<td align="left" rowspan="1" colspan="1">7786</td>
+<td align="left" rowspan="1" colspan="1">0.494</td>
+<td align="left" rowspan="1" colspan="1">0.040</td>
+<td align="left" rowspan="1" colspan="1">0.800</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">4009</td>
+<td align="left" rowspan="1" colspan="1">69</td>
+<td align="left" rowspan="1" colspan="1">97</td>
+<td align="left" rowspan="1" colspan="1">5725</td>
+<td align="left" rowspan="1" colspan="1">0.584</td>
+<td align="left" rowspan="1" colspan="1">0.024</td>
+<td align="left" rowspan="1" colspan="1">0.588</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>The performances were checked by changing the hyper-parameter of the proposed method, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e284" xlink:type="simple"/></inline-formula>. FP, FN, TP and TN are the numbers of false-positive, false-negative, true-positive, true-negative regulations, respectively.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s4">
+<title>Conclusion</title>
+<p>This study proposed a new method for the inference of Vohradský's models of genetic networks. The proposed method resolves the difficulty in the estimation of the model parameters by defining it as two-dimensional function optimization problems. The experimental results indicated that our method has an ability to estimate reasonable values for the parameters of the Vohradský's model. However, the computation time of the proposed method is not always short. In the future work, therefore, we must develop a technique to reduce its computational cost.</p>
+<p>A variety of inference methods based on a variety of mathematical models have been proposed. However, we still do not know which method is the most suitable for the inference of genetic networks. In order to obtain a reliable network, therefore, it will be important to analyze the measurement data using multiple inference methods based on models different from each other. The inference method proposed in this study may be a promising choice for this purpose.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0083308.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0083308.s001" position="float" xlink:type="simple"><label>Text S1</label><caption>
+<p><bold>Detailed algorithms of REX</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0083308.e285" xlink:type="simple"/></inline-formula><bold>/JGG and the least-squares approach.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0083308.s002" mimetype="application/x-gzip" xlink:href="info:doi/10.1371/journal.pone.0083308.s002" position="float" xlink:type="simple"><label>Text S2</label><caption>
+<p><bold>Time-series data used in the ‘Inference in noisy environment’ section (compressed by gzip).</bold></p>
+<p>(GZ)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>A software, BPMPD, developed by Dr. C. Mészáros at MTA SZTAKI was used to solve the linear programming problems in this study.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0083308-Akutsu1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Akutsu</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Miyano</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kuhara</surname><given-names>S</given-names></name> (<year>2000</year>) <article-title>Inferring qualitative relations in genetic networks and metabolic pathways</article-title>. <source>Bioinformatics</source> <volume>16</volume>: <fpage>727</fpage>–<lpage>734</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Bansal1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bansal</surname><given-names>M</given-names></name>, <name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name> (<year>2007</year>) <article-title>Inference of gene networks from temporal gene expression profiles</article-title>. <source>IET Systems Biology</source> <volume>1</volume>: <fpage>306</fpage>–<lpage>312</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Chou1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname><given-names>IC</given-names></name>, <name name-style="western"><surname>Voit</surname><given-names>EO</given-names></name> (<year>2009</year>) <article-title>Recent development in parameter estimation and structure identification of biochemical and genomic systems</article-title>. <source>Mathematical Biosciences</source> <volume>219</volume>: <fpage>57</fpage>–<lpage>83</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Dhaeseleer1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>D'haeseleer</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Liang</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Somogyi</surname><given-names>R</given-names></name> (<year>2000</year>) <article-title>Genetic network inference: From co-expression clustering to reverse engineering</article-title>. <source>Bioinformatics</source> <volume>16</volume>: <fpage>707</fpage>–<lpage>726</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Ergn1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ergün</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lawrence</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Kohanski</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Brennan</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name> (<year>2007</year>) <article-title>A network biology approach to prostate cancer</article-title>. <source>Molecular Systems Biology</source> <volume>3</volume>: <fpage>82</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Faith1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faith</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Hayete</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Thaden</surname><given-names>JT</given-names></name>, <name name-style="western"><surname>Mogno</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Wierzbowski</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Large-scale mapping and validation of escherichia coli transcriptional regulation from a compendium of expression profiles</article-title>. <source>PLoS Biology</source> <volume>5</volume>: <fpage>e8</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kabir1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kabir</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Noman</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Iba</surname><given-names>H</given-names></name> (<year>2010</year>) <article-title>Reverse engineering gene regulatory network from microarray data using linear time-variant model</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume>: <fpage>S56</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kimura1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kimura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sonoda</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Yamane</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Maeda</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Matsumura</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Function approximation approach to the inference of reduced ngnet models of genetic networks</article-title>. <source>BMC Bioinformatics</source> <volume>9</volume>: <fpage>23</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kimura2"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kimura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Nakayama</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hatakeyama</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>Genetic network inference as a series of discrimination tasks</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>918</fpage>–<lpage>925</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Margolin1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Basso</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Wiggins</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Stolovitzky</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Aracne: an algorithm for the reconstruction of gene regulatory networks in a mammalian cellular context</article-title>. <source>BMC Bioinformatics</source> <volume>7</volume>: <fpage>S7</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Tucker1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tucker</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Kutalik</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Moulton</surname><given-names>V</given-names></name> (<year>2007</year>) <article-title>Estimating parameters for generallized mass action models using constraint propagation</article-title>. <source>Mathematical Biosciences</source> <volume>208</volume>: <fpage>607</fpage>–<lpage>620</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Veflingstad1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Veflingstad</surname><given-names>SR</given-names></name>, <name name-style="western"><surname>Almeida</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Voit</surname><given-names>EO</given-names></name> (<year>2004</year>) <article-title>Priming nonlinear searches for pathway identification</article-title>. <source>Theoretical Biology and Medical Modelling</source> <volume>1</volume>: <fpage>8</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Yeung1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yeung</surname><given-names>MKS</given-names></name>, <name name-style="western"><surname>Tegnér</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name> (<year>2002</year>) <article-title>Reverse engineering gene networks using singular value decomposition and robust regression</article-title>. <source>Proc National Academy of Sciences of USA</source> <volume>99</volume>: <fpage>6163</fpage>–<lpage>6168</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Yu1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>VA</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>PP</given-names></name>, <name name-style="western"><surname>Hartemink</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Jarvis</surname><given-names>ED</given-names></name> (<year>2004</year>) <article-title>Advances to bayesian network inference for generating causal networks from observational biological data</article-title>. <source>Bioinformatics</source> <volume>20</volume>: <fpage>3594</fpage>–<lpage>3603</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Gardner1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gardner</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>di Bernardo</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lorenz</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name> (<year>2003</year>) <article-title>Inferring genetic networks and identifying compound mode of action via expression profiling</article-title>. <source>Science</source> <volume>301</volume>: <fpage>102</fpage>–<lpage>105</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Savageau1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Savageau</surname><given-names>MA</given-names></name> (<year>1969</year>) <article-title>Biochemical systems analysis i. some mathematical properties of the rate law for the component enzymatic reactions</article-title>. <source>Journal of Theoretical Biology</source> <volume>25</volume>: <fpage>365</fpage>–<lpage>369</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Voit1"><label>17</label>
+<mixed-citation publication-type="other" xlink:type="simple">Voit EO (2000) Computational Analysis of Biochemical Systems. Cambridge: Cambridge University Press.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Chemmangattuvalappil1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chemmangattuvalappil</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Task</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Banerjee</surname><given-names>I</given-names></name> (<year>2012</year>) <article-title>An integer optimization algorithm for robust identification of non-linear gene regulatory networks</article-title>. <source>BMC Systems Biology</source> <volume>6</volume>: <fpage>119</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Cho1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cho</surname><given-names>DY</given-names></name>, <name name-style="western"><surname>Cho</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>BT</given-names></name> (<year>2006</year>) <article-title>Identification of biochemical networks by s-tree based genetic programming</article-title>. <source>Bioinformatics</source> <volume>22</volume>: <fpage>1631</fpage>–<lpage>1640</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Gonzalez1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gonzalez</surname><given-names>OR</given-names></name>, <name name-style="western"><surname>Küper</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Jung</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Naval Jr</surname><given-names>PC</given-names></name>, <name name-style="western"><surname>Mendoza</surname><given-names>E</given-names></name> (<year>2007</year>) <article-title>Parameter estimation using simulated annealing for s-system models of biochemical networks</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>480</fpage>–<lpage>486</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kikuchi1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kikuchi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Tominaga</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Arita</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Takahashi</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Tomita</surname><given-names>M</given-names></name> (<year>2003</year>) <article-title>Dynamic modeling of genetic networks using genetic algorithm and s-system</article-title>. <source>Bioinformatics</source> <volume>19</volume>: <fpage>643</fpage>–<lpage>650</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kimura3"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kimura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ide</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Kashihara</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kano</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hatakeyama</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Inference of s-system models of genetic networks using a cooperative coevolutionary algorithm</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>1154</fpage>–<lpage>1163</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kimura4"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kimura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Araki</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Matsumura</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Okada-Hatakeyama</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>Inference of s-system models of genetic networks by solving one-dimensional function optimization problems</article-title>. <source>Mathematical Biosciences</source> <volume>235</volume>: <fpage>161</fpage>–<lpage>170</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Liu1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>PK</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>FS</given-names></name> (<year>2008</year>) <article-title>Inference of biochemical network models in s-system using multiobjective optimization approach</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>1085</fpage>–<lpage>1092</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Nakatsui1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nakatsui</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ueda</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Maki</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ono</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Okamoto</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Method for inferring and extracting reliable genetic interactions from time-series profile of gene expression</article-title>. <source>Mathematical Biosciences</source> <volume>215</volume>: <fpage>105</fpage>–<lpage>114</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Tsai1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tsai</surname><given-names>KY</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>FS</given-names></name> (<year>2005</year>) <article-title>Evolutionary optimization with data collocation for reverse engineering of biological networks</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>1180</fpage>–<lpage>1188</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Vilela1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vilela</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Chou</surname><given-names>IC</given-names></name>, <name name-style="western"><surname>Vinga</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Vasconcelos</surname><given-names>ATR</given-names></name>, <name name-style="western"><surname>Voit</surname><given-names>EO</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Parameter optimization in s-system models</article-title>. <source>BMC Systems Biology</source> <volume>2</volume>: <fpage>35</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Voit2"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Voit</surname><given-names>EO</given-names></name>, <name name-style="western"><surname>Almeida</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Decoupling dynamical systems for pathway identification from metabolic profiles</article-title>. <source>Bioinformatics</source> <volume>20</volume>: <fpage>1670</fpage>–<lpage>1681</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Vohradsk1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vohradský</surname><given-names>J</given-names></name> (<year>2001</year>) <article-title>Neural network model of gene expression</article-title>. <source>FASEB Journal</source> <volume>15</volume>: <fpage>846</fpage>–<lpage>854</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Palafox1"><label>30</label>
+<mixed-citation publication-type="other" xlink:type="simple">Palafox L, Iba H (2012) On the use of population based incrementasl learning to do reverse engineering on gene regulatory networks. In: Proc. 2012 Congress on Evolutionary Computation: 2012; Brisbane. pp. 1865–1872.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Xu1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Venayagamoorthy</surname><given-names>GK</given-names></name>, <name name-style="western"><surname>Wunsch II</surname><given-names>DC</given-names></name> (<year>2007</year>) <article-title>Inference of gene regulatory networks with hybrid differential evolution and particle swarm optimization</article-title>. <source>Neural Networks</source> <volume>20</volume>: <fpage>917</fpage>–<lpage>927</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Xu2"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Wunsch II</surname><given-names>DC</given-names></name>, <name name-style="western"><surname>Frank</surname><given-names>RL</given-names></name> (<year>2007</year>) <article-title>Inference of genetic regulatory networks with recurrent neural network models using particle swarm optimization</article-title>. <source>IEEE/ACM Transactions on Computational Biology and Bioinformatics</source> <volume>4</volume>: <fpage>681</fpage>–<lpage>692</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Williams1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Williams</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Peng</surname><given-names>J</given-names></name> (<year>1990</year>) <article-title>An efficient gradient-based algorithm for on-line training of recurrent network trajectories</article-title>. <source>Neural Computation</source> <volume>2</volume>: <fpage>490</fpage>–<lpage>501</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Press1"><label>34</label>
+<mixed-citation publication-type="other" xlink:type="simple">Press WH, Teukolsky SA, Vetterling WT, Flannery BP (1995) Numerical Recipes in C, 2nd Edition. Cambridge: Cambridge University Press.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Cleveland1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cleveland</surname><given-names>WS</given-names></name> (<year>1979</year>) <article-title>Robust locally weight regression and smoothing scatterplots</article-title>. <source>Journal of American Statistical Association</source> <volume>79</volume>: <fpage>829</fpage>–<lpage>836</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Vilela2"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vilela</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Borges</surname><given-names>CCH</given-names></name>, <name name-style="western"><surname>Vinga</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Vasconcelos</surname><given-names>ATR</given-names></name>, <name name-style="western"><surname>Santos</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Automated smoother for the numerical decoupling of dynamics models</article-title>. <source>BMC Bioinformatics</source> <volume>3</volume>: <fpage>305</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Chou2"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chou</surname><given-names>IC</given-names></name>, <name name-style="western"><surname>Martens</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Voit</surname><given-names>EO</given-names></name> (<year>2006</year>) <article-title>Parameter estimation in biochemical systems models with alternating regression</article-title>. <source>Theoretical Biology and Medical Modelling</source> <volume>3</volume>: <fpage>25</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Kobayashi1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kobayashi</surname><given-names>S</given-names></name> (<year>2009</year>) <article-title>The frontiers of real-coded genetic algorithms (in japanese)</article-title>. <source>Transactions of the Japanese Society for Artificial Intelligence</source> <volume>24</volume>: <fpage>147</fpage>–<lpage>162</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Thieffry1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Thieffry</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Huerta</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Pérez-Rueda</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Collado-Vides</surname><given-names>J</given-names></name> (<year>1998</year>) <article-title>From specific gene regulation to genomic networks: a global analysis of transcriptional regulation in escherichia coli</article-title>. <source>BioEssays</source> <volume>20</volume>: <fpage>433</fpage>–<lpage>440</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Mehrotra1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mehrotra</surname><given-names>S</given-names></name> (<year>1992</year>) <article-title>On the implementation of a primal-dual interior point method</article-title>. <source>SIAM Journal on Optimization</source> <volume>2</volume>: <fpage>575</fpage>–<lpage>601</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Sutton1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sutton</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>BT</given-names></name>, <name name-style="western"><surname>Godoy</surname><given-names>VG</given-names></name>, <name name-style="western"><surname>Walker</surname><given-names>GC</given-names></name> (<year>2000</year>) <article-title>The sos response: Recent insights into umudc-dependent mutagenesis and dna damage tolerance</article-title>. <source>Annual Review of Genetics</source> <volume>34</volume>: <fpage>479</fpage>–<lpage>497</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Ronen1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ronen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Rosenberg</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Shraiman</surname><given-names>BI</given-names></name>, <name name-style="western"><surname>Alon</surname><given-names>U</given-names></name> (<year>2002</year>) <article-title>Assigning numbers to the arrows: Parameterizing a gene regulation network by using accurate expression kinetics</article-title>. <source>Proc National Academy of Sciences of USA</source> <volume>99</volume>: <fpage>10555</fpage>–<lpage>10560</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Dream1"><label>43</label>
+<mixed-citation publication-type="other" xlink:type="simple">Dream project. available: <ext-link ext-link-type="uri" xlink:href="http://wiki.c2b2.columbia.edu/dream/index.php/the" xlink:type="simple">http://wiki.c2b2.columbia.edu/dream/index.php/the</ext-link> dream project. Accessed 2013 Nov 13.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Prill1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prill</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Saez-Rodriguez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sorger</surname><given-names>PK</given-names></name>, <name name-style="western"><surname>Alexopoulos</surname><given-names>LG</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Towards a rigorous assessment of systems biology models: The dream3 challanges</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e9202</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0083308-Schaffter1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schaffter</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Marbach</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name> (<year>2011</year>) <article-title>Genenetweaver: in silico benchmark generation and performance profiling of network inference methods</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2263</fpage>–<lpage>2270</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>
