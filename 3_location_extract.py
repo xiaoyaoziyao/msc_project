@@ -116,7 +116,7 @@ def standard_loc(collection,i):
     cursor = collection.find({'cited_no': {'$gt': (i-1)*10 ,'$lte': i*10},"cited_location" : {'$exists': True }})    
     for docu in cursor:
         try:
-            stand_loc = [] 
+            stand_loc = []
             stand_num = []
             path = docu["content_path"]
             location = docu["cited_location"]
@@ -142,7 +142,7 @@ def main_function(i):
 #main_function(7)
 
     
-#client = pymongo.MongoClient('localhost:27017',connect = True)
-#db = client['msc_project']
-#collection = db['citations'] 
-print(collection.find({"cited_no":{"$gt":20},"location_num":{"$exists":True}}).count())
+client = pymongo.MongoClient('localhost:27017',connect = True)
+db = client['msc_project']
+collection = db['citations']
+print(collection.find({"cited_no":{"$gt":20},"location_num":{"$exists":False}}).count())
