@@ -147,7 +147,7 @@ def model_score_visualize(range_max):
 
 
 # print(data_remove(110))
-parameter_tune(110)
-# model_score_visualize(110)
+# parameter_tune(110)
+model_score_visualize(110)
 
 
