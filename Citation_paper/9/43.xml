@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+   <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+         <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+         <publisher-name>Public Library of Science</publisher-name>
+         <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+   </journal-meta>
+   <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-38706</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0060667</article-id>
+      <article-categories>
+         <subj-group subj-group-type="heading">
+            <subject>Research Article</subject>
+         </subj-group>
+<subj-group subj-group-type="Discipline-v2"><subject>Biology</subject>
+<subj-group>
+<subject>Computational biology</subject>
+<subj-group>
+<subject>Evolutionary modeling</subject>
+<subject>Population genetics</subject>
+<subject>Sequence analysis</subject>
+</subj-group>
+</subj-group>
+<subj-group>
+<subject>Evolutionary biology</subject>
+<subj-group>
+<subject>Evolutionary systematics</subject>
+<subj-group>
+<subject>Phylogenetics</subject>
+</subj-group>
+</subj-group>
+<subj-group>
+<subject>Population genetics</subject>
+</subj-group>
+</subj-group>
+<subj-group>
+<subject>Population biology</subject>
+<subj-group>
+<subject>Population genetics</subject>
+</subj-group>
+</subj-group>
+</subj-group>
+<subj-group subj-group-type="Discipline-v2"><subject>Computer science</subject>
+<subj-group>
+<subject>Algorithms</subject>
+</subj-group>
+<subj-group>
+<subject>Computer modeling</subject>
+</subj-group>
+<subj-group>
+<subject>Software engineering</subject>
+<subj-group>
+<subject>Software design</subject>
+</subj-group>
+</subj-group>
+</subj-group>
+      </article-categories>
+      <title-group>
+         <article-title>MrBayes tgMC<sup>3</sup>: A Tight GPU Implementation of MrBayes</article-title>
+         <alt-title alt-title-type="running-head">tgMC<sup>3</sup>: A Tight GPU Implementation of MrBayes</alt-title>
+      </title-group>
+      <contrib-group>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Ling</surname><given-names>Cheng</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Hamada</surname>
+<given-names>Tsuyoshi</given-names>
+            </name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Bai</surname>
+<given-names>Jianing</given-names>
+            </name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Li</surname>
+<given-names>Xianbin</given-names>
+            </name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Chesters</surname>
+<given-names>Douglas</given-names>
+            </name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff4"><sup>4</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Zheng</surname>
+<given-names>Weimin</given-names>
+            </name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Shi</surname><given-names>Weifeng</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+         </contrib>
+      </contrib-group>
+      <aff id="aff1"><label>1</label><addr-line>Guangzhou Institute of Advanced Technology, Chinese Academy of Science, Guangzhou, China</addr-line></aff>
+      <aff id="aff2"><label>2</label><addr-line>Department of Computer and Information Science, Nagasaki University, Nagasaki, Japan</addr-line></aff>
+      <aff id="aff3"><label>3</label><addr-line>University of Chinese Academy of Sciences, Beijing, China</addr-line></aff>
+      <aff id="aff4"><label>4</label><addr-line>Key Laboratory of Zoological Systematics and Evolution, Institute of Zoology, Chinese Academy of Sciences, Beijing, China</addr-line></aff>
+      <aff id="aff5"><label>5</label><addr-line>School of Basic Medical Sciences, Taishan Medical College, Taian, Shandong, China</addr-line></aff>
+      <contrib-group>
+         <contrib contrib-type="editor" xlink:type="simple">
+            <name name-style="western"><surname>Martin</surname>
+<given-names>Darren P.</given-names>
+            </name><role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+         </contrib>
+      </contrib-group>
+      <aff id="edit1"><addr-line>Institute of Infectious Disease and Molecular Medicine, South Africa</addr-line></aff>
+      <author-notes>
+         <corresp id="cor1">* E-mail: <email xlink:type="simple">c.ling@giat.ac.cn</email> (CL); <email xlink:type="simple">wfshi.tsmc@gmail.com</email> (WS)</corresp>
+         <fn fn-type="conflict">
+            <p>The authors have declared that no competing interests exist.</p>
+         </fn>
+         <fn fn-type="con">
+            <p>Conceived and designed the experiments: CL WS. Performed the experiments: CL TH JB XL WZ WS. Analyzed the data: CL JB XL WS DC. Wrote the paper: CL TH WS DC.</p>
+         </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+         <year>2013</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+         <day>9</day>
+         <month>4</month>
+         <year>2013</year>
+      </pub-date>
+      <volume>8</volume>
+      <issue>4</issue>
+      <elocation-id>e60667</elocation-id>
+      <history>
+         <date date-type="received">
+            <day>6</day>
+            <month>12</month>
+            <year>2012</year>
+         </date>
+         <date date-type="accepted">
+            <day>1</day>
+            <month>3</month>
+            <year>2013</year>
+         </date>
+      </history>
+      <permissions>
+         <copyright-year>2013</copyright-year>
+         <copyright-holder>Ling et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+      <abstract>
+         <p>MrBayes is model-based phylogenetic inference tool using Bayesian statistics. However, model-based assessment of phylogenetic trees adds to the computational burden of tree-searching, and so poses significant computational challenges. Graphics Processing Units (GPUs) have been proposed as high performance, low cost acceleration platforms and several parallelized versions of the Metropolis Coupled Markov Chain Mote Carlo (MC<sup>3</sup>) algorithm in MrBayes have been presented that can run on GPUs. However, some bottlenecks decrease the efficiency of these implementations. To address these bottlenecks, we propose a tight GPU MC<sup>3</sup> (tgMC<sup>3</sup>) algorithm. tgMC<sup>3</sup> implements a different architecture from the one-to-one acceleration architecture employed in previously proposed methods. It merges multiply discrete GPU kernels according to the data dependency and hence decreases the number of kernels launched and the complexity of data transfer. We implemented tgMC<sup>3</sup> and made performance comparisons with an earlier proposed algorithm, nMC<sup>3</sup>, and also with MrBayes MC<sup>3</sup> under serial and multiply concurrent CPU processes. All of the methods were benchmarked on the same computing node from DEGIMA. Experiments indicate that the tgMC<sup>3</sup> method outstrips nMC<sup>3</sup> (v1.0) with speedup factors from 2.1 to 2.7×. In addition, tgMC<sup>3</sup> outperforms the serial MrBayes MC<sup>3</sup> by a factor of 6 to 30× when using a single GTX480 card, whereas a speedup factor of around 51× can be achieved by using two GTX 480 cards on relatively long sequences. Moreover, tgMC<sup>3</sup> was compared with MrBayes accelerated by BEAGLE, and achieved speedup factors from 3.7 to 5.7×. The reported performance improvement of tgMC<sup>3</sup> is significant and appears to scale well with increasing dataset sizes. In addition, the strategy proposed in tgMC<sup>3</sup> could benefit the acceleration of other Bayesian-based phylogenetic analysis methods using GPUs.</p>
+      </abstract>
+      <funding-group>
+         <funding-statement>The authors have no support or funding to report.</funding-statement>
+      </funding-group>
+<counts>
+<page-count count="9"/>
+</counts>
+</article-meta>
+</front>
+<body>
+   <sec id="s1">
+      <title>Introduction</title>
+      <p>In biology, the evolutionary relationships between groups of organisms or families of related genes and proteins can be inferred from the pattern of states at homologous characters, and represented as a tree structure. A number of algorithms have been developed to construct phylogenetic trees, such as Neighbour-Joining (NJ) <xref ref-type="bibr" rid="pone.0060667-Saitou1">[1]</xref> or Maximum Parsimony <xref ref-type="bibr" rid="pone.0060667-Fitch1">[2]</xref>, whereas methods that implement a model of sequence evolution, such as Maximum Likelihood <xref ref-type="bibr" rid="pone.0060667-Felsenstein1">[3]</xref> and Bayesian inference <xref ref-type="bibr" rid="pone.0060667-Hastings1">[4]</xref>, are more computationally demanding <xref ref-type="bibr" rid="pone.0060667-Yang1">[5]</xref>. MrBayes <xref ref-type="bibr" rid="pone.0060667-Huelsenbeck1">[6]</xref> is a popular tool that implements the Metropolis Coupled Markov Chain Monte Carlo (MC<sup>3</sup>) sampling method for Bayesian inference of phylogeny. Since each chain in MC<sup>3</sup> runs more or less independently, MrBayes is well suited to parallel implementation on multi-core systems as an approach to reduce computation time.</p>
+      <p>The programmable Graphics Processing Units (GPUs) have become very powerful many-core processors, driven by demand from various graphical, computational and engineering applications. Current GPUs can attain a peak float-point throughput of up to 3250 GFlop/s per chip, which is higher than that of the fastest CPU by a factor of over 10. Moreover, recent GPUs support Compute Unified Device Architecture (CUDA) <xref ref-type="bibr" rid="pone.0060667-NVIDIA1">[7]</xref>, which allows users to develop a wide range of applications under a high-level, general-purpose programming model. Such a general-purpose GPU computing (GPGPU) model significantly improves development productivity as it follows the traditional software programming flow. CUDA is the programming environment for NVIDIA GPUs. CUDA C is an extension of C programming language and follows an SPMD execution model with a thread as the basic unit for parallel computations. Tens of thousands of threads can be launched concurrently, all executing the same program, but on different data packets. Threads in the same block can share data using fast on-chip memory (shared memory). Threads in different blocks can only share data using relatively slow on-board memory (global memory) on a GPU card. During execution, every 32 threads in a block (a warp) follow exactly the same instruction schedule.</p>
+      <p>To increase efficiency of GPU implementation of MrBayes MC<sup>3</sup>, we propose a new implementation architecture, tgMC<sup>3</sup>. A performance comparison between tgMC<sup>3</sup>, BEAGLE-based MrBayes MC<sup>3</sup> <xref ref-type="bibr" rid="pone.0060667-Ayres1">[8]</xref>, nMC<sup>3</sup> (v1.0) <xref ref-type="bibr" rid="pone.0060667-Zhou1">[9]</xref>, nMC<sup>3</sup> (v2.1, the latest version so far), as well as the multi-core parallel MrBayes MC<sup>3</sup>, is performed.</p>
+   </sec>
+   <sec id="s2">
+      <title>Approach</title>
+      <sec id="s2a">
+         <title>Overview of MrBayes MC<sup>3</sup></title>
+         <p>MrBayes MC<sup>3</sup> is a computer package for the Bayesian inference of phylogeny, which has a command-line interface and performs phylogenetic analysis under various evolutionary models. For the purpose of a standardized evaluation against other implementations, we used MrBayes v3.1.2 (unless stated otherwise) under a commonly applied model which is set using the following command:<disp-formula id="pone.0060667.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0060667.e001" xlink:type="simple"/></disp-formula></p>
+         <p>A detailed description of MrBayes MC<sup>3</sup> settings can be found elsewhere <xref ref-type="bibr" rid="pone.0060667-Huelsenbeck2">[10]</xref>, but briefly, this model allows gamma distributed variation in the rate of substitution over sites <xref ref-type="bibr" rid="pone.0060667-Felsenstein2">[11]</xref>, with six substitution rate parameters, four base frequencies, and a proportion of invariable positions. Both the sampling frequency and the diagnosis frequency were set to 1000. The total number of generations for each dataset in our experiments can be found in section 4. For each dataset, two independent runs were performed, each with four Markov chains (three heated chains and one cold chain). Multiple chains can be used for fast mixing <xref ref-type="bibr" rid="pone.0060667-Altekar1">[12]</xref>. For individual run, each chain is operated one by one as depicted in <xref ref-type="fig" rid="pone-0060667-g001">Figure 1</xref>. We let <italic>T<sub>N</sub></italic> denote the initial tree of chain <italic>N</italic>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060667.e002" xlink:type="simple"/></inline-formula> denote the new group of trees modified from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060667.e003" xlink:type="simple"/></inline-formula> by proposed moves in iteration <italic>j</italic>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060667.e004" xlink:type="simple"/></inline-formula>denote the seed value of chain <italic>N</italic> in iteration <italic>j</italic> and <italic>Q</italic> denote whether the move is aborted.</p>
+         <fig id="pone-0060667-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g001</object-id><label>Figure 1</label>
+            <caption>
+               <title>The flow diagram of MrBayes MC<sup>3</sup>.</title>
+               <p>The gray box indicates the detailed operation of each procedure, and the arrow indicates the required parameters in a given procedure.</p>
+            </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g001" position="float" xlink:type="simple"/></fig>
+         <p>For each chain, we let <italic>M</italic> denote the mutation matrix, <italic>D<sub>z</sub></italic> denote the DNA data at site <italic>z</italic>, <italic>L<sub>z</sub></italic> denote the number of site <italic>z</italic>, <italic>P<sup>j</sup></italic> denote the proportion of invariable sites and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0060667.e005" xlink:type="simple"/></inline-formula> denote the base frequency of character state in DNA sequence in iteration <italic>j</italic>, where <italic>m∈{A, C, G, T}.</italic> The computation order of nodes in MrBayes MC<sup>3</sup> uses the recursive algorithm <xref ref-type="bibr" rid="pone.0060667-Felsenstein1">[3]</xref>. In each procedure, the parameter <italic>Q</italic> needs to be verified in advance.</p>
+         <p>Since Markov chains in MrBayes MC<sup>3</sup> are scheduled serially, and the run-time of each tree can be considered identical, the elapsed time can be regarded proportional to the number of chains. In addition, the number of unobserved tree nodes in an arbitrary tree topology and the computations of conditional likelihood probabilities of non-terminal node in each chain can be deemed as constant and performed independently.</p>
+      </sec>
+      <sec id="s2b">
+         <title>Overview of Parallel MrBayes MC<sup>3</sup> on GPUs</title>
+         <p>To our knowledge, the first parallel version of MrBayes MC<sup>3</sup> was gMC<sup>3</sup> <xref ref-type="bibr" rid="pone.0060667-Pratas1">[13]</xref>, <xref ref-type="bibr" rid="pone.0060667-Pratas2">[14]</xref>. Since the transfer of the transition probability (<italic>tip)</italic> matrix between CPU and GPU is very frequently, it meets a large transfer overhead. Based on the gMC<sup>3</sup>, an improved parallel version of MrBayes MC<sup>3</sup> was proposed (nMC<sup>3</sup> <xref ref-type="bibr" rid="pone.0060667-Zhou1">[9]</xref>). In the initial version of nMC<sup>3</sup>, the authors decreased the frequency of <italic>tip</italic> matrix uploading and made both the CPU and GPU perform computations in parallel. This results in improved overlap in CPU-GPU data communication. In addition, site likelihood computation was performed in parallel by GPUs, which gives a delay in GPU to CPU transfer and decreases the amount of data transferred. Further speedups were achieved as a result of these modifications. In subsequent versions of nMC<sup>3</sup>, the authors optimized the stream order and thread parallelization strategy for large datasets. However, these various nMC<sup>3</sup> implementations all used traditional one-to-one acceleration architecture, thus giving complex kernel launches. For the purpose of avoiding redundant computations and data transfer, we propose a new improved architecture for applying MrBayes MC<sup>3</sup> to GPUs. Furthermore, Ayres and colleagues implemented an open API library, BEAGLE, to speed up likelihood calculations <xref ref-type="bibr" rid="pone.0060667-Ayres1">[8]</xref>. The BEAGLE library is now supported in MrBayes (v3.2.1), and is also included in this article for the performance comparisons.</p>
+      </sec>
+   </sec>
+   <sec id="s3">
+      <title>Design and Implementation</title>
+      <sec id="s3a">
+         <title>1. The MrBayes nMC<sup>3</sup> Method</title>
+         <p>The two most time-consuming aspects of MrBayes MC<sup>3</sup> are the calculation of <italic>tip</italic>, and the calculation of <italic>clp.</italic> Since the implementation of the former on GPUs is identical in both tgMC<sup>3</sup> and nMC<sup>3</sup>, we will not introduce this process here (for more details, see <xref ref-type="bibr" rid="pone.0060667-Zhou1">[9]</xref>).</p>
+         <p>Whereas GPU computation of <italic>clp</italic> under nMC<sup>3</sup> is as follows. We assume that the transition probability matrix for each non-terminal node has already been calculated and transferred to GPU memory. As in <xref ref-type="fig" rid="pone-0060667-g002">Figure 2</xref>, the implementation architecture of nMC<sup>3</sup> can be grouped into five modules according to the associated procedures in MrBayes MC<sup>3</sup>, with each module implemented by a single kernel which is labeled in a rectangle by dashed line. We will first introduce the essential function of each kernel, and then give the potentially redundant procedures in nMC<sup>3</sup> by discussing the data relevance among the kernels.</p>
+         <fig id="pone-0060667-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g002</object-id><label>Figure 2</label>
+            <caption>
+               <title>GPU implementation architecture in nMC<sup>3</sup>.</title>
+               <p>Each module is implemented by a single kernel which is labeled in a rectangle by dashed line.</p>
+            </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g002" position="float" xlink:type="simple"/></fig>
+         <sec id="s3a1">
+            <title>kernel1</title>
+            <p>Transform <italic>tip</italic> matrix of non-terminal nodes and pad the transformed matrix (<italic>prelike</italic> matrix) with new <italic>tip</italic> for ambiguity data in parallel by GPU threads. Not all non-terminal nodes need to perform the procedure, as some of them may not have terminal node.</p>
+         </sec>
+         <sec id="s3a2">
+            <title>kernel2</title>
+            <p>Load <italic>tip</italic> or <italic>prelike</italic> matrix from global memory to shared memory, in addition to terminal states or <italic>clp</italic> of its descendents, and distribute the computation of <italic>clp</italic> among threads. The computed <italic>clp</italic> values need to be saved in global memory iteratively until reaching the root node.</p>
+         </sec>
+         <sec id="s3a3">
+            <title>kernel3</title>
+            <p>If the parameter <italic>scalarsSet</italic> of the node is activated, the <italic>lnscaler</italic> value of each site belonging to the node should be subtracted by old scaler, with kernel 3 used to implement this function. In the mean time, the CPU process flips the <italic>scalersSet</italic> bit alongside the GPU.</p>
+         </sec>
+         <sec id="s3a4">
+            <title>kernel4</title>
+            <p>For a scaler node, MrBayes MC<sup>3</sup> stipulates the maximum <italic>clp</italic> within each residue as the <italic>scaler</italic> of the residue, which is achieved simply by traversing all <italic>clp</italic>. The new scaler is then divided by all <italic>clp</italic> of that residue. The kernel employs multiple threads to traverse the corresponding <italic>clp</italic> and scale them in parallel, which requires reloading <italic>clp</italic> from global memory. Similarly, alongside the GPU, the CPU process flips the <italic>scalersSet</italic> bit.</p>
+         </sec>
+         <sec id="s3a5">
+            <title>kernel5</title>
+            <p>The kernel computes the <italic>clp</italic> of a root node, which requires the following new parameters: proportion of invariable sites, state frequencies and the weight of each site.</p>
+            <p>Kernels 3 and 4 may not occur in some non-terminal nodes. Therefore, if the node is non-scaling, only kernels 1, 2 and 5 will be implemented for a root node, and 1, 2 will be implemented for down nodes. Otherwise, the number of kernels for root and down node is 5 and 4<monospace>,</monospace> respectively. Besides, kernels 3 and 4 are two independent procedures. The bit switch operation of the former will not affect the computation of the latter, and the updated value only affects the computation of the new tree sample in the next generation. Therefore, kernels 3 and 4 can be merged into one module and the bit switch operations can be stacked and implemented together by CPU processes after these modules. Moreover, new parameters in kernel 5 can be calculated in advance and merged in kernel 2 for computing likelihoods of the root node.</p>
+         </sec>
+      </sec>
+      <sec id="s3b">
+         <title>2. An Improved GPU Implementation of MrBayes MC<sup>3</sup></title>
+         <p>Since the computation of <italic>clp</italic> can be regarded as a pipeline of several sequential steps, we put forward a tight GPU implementation of MrBayes MC<sup>3</sup>, tgMC<sup>3</sup>. The pseudo-code description of the <italic>clp</italic> computation for an arbitrary down node can be found in <xref ref-type="fig" rid="pone-0060667-g003">Figure 3</xref>. The single tight kernel integrates all kernel functions in earlier applications on GPUs. In tgMC<sup>3</sup>, we do not use global kernels to perform each function, but use device function in the kernel to process each step. The concise and explicit architecture of tgMC<sup>3</sup> is illustrated in <xref ref-type="fig" rid="pone-0060667-g004">Figure 4</xref>. The major advantages of tgMC<sup>3</sup> over nMC<sup>3</sup> are listed below:</p>
+         <fig id="pone-0060667-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g003</object-id><label>Figure 3</label>
+            <caption>
+               <title>Pseudo code of computing the conditional likelihood probability of down nodes implemented in tgMC<sup>3</sup>.</title>
+            </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g003" position="float" xlink:type="simple"/></fig>
+         <fig id="pone-0060667-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g004</object-id><label>Figure 4</label>
+            <caption>
+               <title>The proposed tight GPU (tgMC<sup>3</sup>) implementation architecture.</title>
+            </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g004" position="float" xlink:type="simple"/></fig>
+         <list list-type="bullet">
+            <list-item>
+               <p>By analyzing data dependencies in MrBayes MC<sup>3</sup>, tgMC<sup>3</sup> integrates multiple functions into a single tight GPU kernel, instead of using several discrete kernels, hence decreasing the complexity of kernel launching. Just one kernel is sufficient for likelihood computation of both down and root nodes. This is particularly useful for large datasets having a relatively small amount of unique sites.</p>
+            </list-item>
+            <list-item>
+               <p>In step 1, for terminal nodes, nMC<sup>3</sup> loads <italic>tip</italic> and the transition probability for ambiguity data initially into a <italic>prelike</italic> matrix, and then re-load the <italic>prelike</italic> matrix from global memory into shared memory for likelihoods computation. However, this is a redundant process on GPUs, which we have improved here. A direct multi-threaded data transfer of <italic>tip</italic> matrices is proposed in the tgMC<sup>3</sup> method.</p>
+            </list-item>
+            <list-item>
+               <p>For scaling nodes, the nMC<sup>3</sup> method accelerates steps 3 and 4 by two individual GPU kernels. However, the scaled data and scaler are closely connected with conditional likelihoods from step 2. Therefore, combined with the original down node types, a scaler shortcut is calculated by scaler parameters for the purpose of integrating these steps without adding branches, and the final number of down node kernel type is expanded from 4 to 16. These modifications improve the scaling node procedures on GPUs.</p>
+            </list-item>
+         </list>
+         <sec id="s3b1">
+            <title>2.1 A direct read of transition probability matrix</title>
+            <p>In MrBayes MC<sup>3</sup>, in the <italic>j<sup>th</sup></italic> generation of Markov chain <italic>i</italic>, on the newly proposed tree topology <italic>T</italic>, for non-terminal node <italic>k</italic>, site <italic>l</italic>, discrete rate <italic>r</italic> and nucleotide <italic>m</italic>, where <italic>m∈{A, C, G, T},</italic> before computing a conditional likelihood probability <italic>clp<sub>m</sub> = clP(T, k, l, r, m)</italic> of the node, the corresponding transition probability matrices <italic>tip</italic> for terminal node descendents should be transformed. Since each non-terminal node has two child nodes which are either terminal or non-terminal, non-terminal node can be classified into 4 groups. MrBayes MC<sup>3</sup> assesses the combinations of the node, and labels the node as one of <italic>down_0</italic>, <italic>down_1</italic>, <italic>down_2</italic> or <italic>down_3</italic>. The computation of <italic>clp</italic> is then distributed to the relevant pass.</p>
+            <p>In the nMC<sup>3</sup> algorithm, the procedure described above is split into two sections by first accelerating the transformation of <italic>tip</italic> matrices to <italic>prelike</italic> matrices, and then accelerates the computation of <italic>clp</italic>. These accelerations are implemented by two separate kernels. Assuming that both the left and right children of a node are terminal, i.e. the node belongs to <italic>down_3</italic>, <italic>tipL</italic> and <italic>tipR</italic> matrices need to be transformed into <italic>prelikeL</italic> and <italic>prelikeR</italic> matrices. For this, the implementation requires two global memory reads and writes. Since <italic>prelike</italic> matrices are in use in the computation of <italic>clp</italic>, one additional global memory read is needed.</p>
+            <p>In the tgMC<sup>3</sup> algorithm, to compute <italic>clp = CLP(T, k, l, r, m)</italic> over all <italic>l, r</italic> and <italic>m</italic> at non-terminal node <italic>k</italic> on the newly proposed tree topology <italic>T</italic>, nodes will be distributed into the relevant <italic>down_x</italic>, <italic>x∈ {0, 1, 2, 3}</italic> after assessment. The implementation is performed by transforming the <italic>tipL</italic> and <italic>tipR</italic> matrices to <italic>prelikeL</italic> and <italic>prelikeR</italic> matrices in shared memory directly for the computation of <italic>clp</italic>, instead of loading from global memory repeatedly. Hence, the whole procedure is performed within the same kernel on GPUs.</p>
+         </sec>
+         <sec id="s3b2">
+            <title>2.2 One tight kernel versus multiple discrete kernels</title>
+            <p>Some non-terminal nodes are specified to be scaled after the <italic>clp</italic> of these nodes are computed. In MrBayes MC<sup>3</sup>, scaling is performed either by subtracting the value of the old scaler or adding the new scaler to the <italic>lnScaler</italic> variable, or both steps are performed successively. These steps are followed by two bit switch operations. These operations actually block the scaling being performed in the same kernel on GPUs in the nMC<sup>3</sup> algorithm. As explained in section 3.1, these steps are independent and the bit switch operation of step 1 will not affect the input variables of step 2. Hence they can be grouped and performed after the two steps. Experimental results confirm that the accuracy of the results is not changed by porting these codes (<xref ref-type="supplementary-material" rid="pone.0060667.s002">Table S1</xref>). This principle is adopted for our tgMC<sup>3</sup> algorithm. Since the two steps may not occur on the same node, simply including these steps in the kernel will result in redundant branch judgments for GPU threads. Therefore, we develop a shortcut list helping the CPU decide which tight GPU kernel to be launched (<xref ref-type="table" rid="pone-0060667-t001">Table 1</xref>), where the values of <italic>S</italic> and <italic>N</italic> represent whether <italic>scalersSet</italic> or <italic>scalerNode</italic> is activated. <italic>T</italic> denotes the shortcut for each type of down node, i.e. a secondary classification of down nodes. With these improvements, a union implementation scheme is established so that the whole implementation architecture employs just one tight GPU kernel<monospace>. </monospace>This not only decreases the CPU-GPU communication overhead, but also affords new implementation architecture to avoid redundant data transfers. In particular, the tight GPU kernel is extremely useful for <italic>clp</italic>, as shared memory and registers can be fully utilized, instead of repeatedly loading the data from global memory.</p>
+            <table-wrap id="pone-0060667-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.t001</object-id><label>Table 1</label>
+               <caption>
+                  <title>Shortcut list of the tight GPU kernel.</title>
+               </caption><alternatives><graphic id="pone-0060667-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.t001" xlink:type="simple"/><table>
+                  <colgroup span="1">
+                     <col align="left" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                  </colgroup>
+                  <tbody>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">S</td>
+                        <td align="left" rowspan="1" colspan="1">N</td>
+                        <td align="left" rowspan="1" colspan="1">T</td>
+                        <td align="left" rowspan="1" colspan="1">down_0</td>
+                        <td align="left" rowspan="1" colspan="1">down_1</td>
+                        <td align="left" rowspan="1" colspan="1">down_2</td>
+                        <td align="left" rowspan="1" colspan="1">down_3</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">0</td>
+                        <td align="left" rowspan="1" colspan="1">0</td>
+                        <td align="left" rowspan="1" colspan="1">0</td>
+                        <td align="left" rowspan="1" colspan="1">down_0_0</td>
+                        <td align="left" rowspan="1" colspan="1">down_1_0</td>
+                        <td align="left" rowspan="1" colspan="1">down_2_0</td>
+                        <td align="left" rowspan="1" colspan="1">down_3_0</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">0</td>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">down_0_1</td>
+                        <td align="left" rowspan="1" colspan="1">down_1_1</td>
+                        <td align="left" rowspan="1" colspan="1">down_2_1</td>
+                        <td align="left" rowspan="1" colspan="1">down_3_1</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">0</td>
+                        <td align="left" rowspan="1" colspan="1">2</td>
+                        <td align="left" rowspan="1" colspan="1">down_0_2</td>
+                        <td align="left" rowspan="1" colspan="1">down_1_2</td>
+                        <td align="left" rowspan="1" colspan="1">down_2_2</td>
+                        <td align="left" rowspan="1" colspan="1">down_3_2</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">3</td>
+                        <td align="left" rowspan="1" colspan="1">down_0_3</td>
+                        <td align="left" rowspan="1" colspan="1">down_1_3</td>
+                        <td align="left" rowspan="1" colspan="1">down_2_3</td>
+                        <td align="left" rowspan="1" colspan="1">down_3_3</td>
+                     </tr>
+                  </tbody>
+               </table></alternatives>
+            </table-wrap>
+            <p><xref ref-type="table" rid="pone-0060667-t002">Table 2</xref> presents the data transfer complexity of the major parameters in the GPU-based implementation of MrBayes MC<sup>3</sup>, where the read and write operations on global memory are separately counted. Since the types of node and the scaler state are indeterminate, it is not feasible to calculate a completely accurate value. Hence, the statistics of data transfers are established in the case that each non-terminal node is composed of a terminal node and a non-terminal node descendent, and that all nodes are scaling-node. If the size per transfer is normalized to 1, transfer complexity can be decreased from <italic>O(4(N-2)+5) to O(2(N-2)+2)</italic> for <italic>clp</italic>, from <italic>O(3(N-2)+3)</italic> to <italic>O(N-1)</italic> for <italic>tip</italic> and from <italic>O(4(N-2)+4)</italic> to <italic>O(2(N-2)+2)</italic> for <italic>lnscaler</italic>. However, we will not claim that the improved method can achieve such improvements in practice, and the aim of such a comparison is primarily to highlight the differences between tgMC<sup>3</sup> and nMC<sup>3</sup>.</p>
+            <table-wrap id="pone-0060667-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.t002</object-id><label>Table 2</label>
+               <caption>
+                  <title>The complexity of data transfers in nMC<sup>3</sup> and tgMC<sup>3</sup><xref ref-type="table-fn" rid="nt101">*</xref>.</title>
+               </caption><alternatives><graphic id="pone-0060667-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.t002" xlink:type="simple"/><table>
+                  <colgroup span="1">
+                     <col align="left" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td colspan="2" align="left" rowspan="1">nMC<sup>3</sup></td>
+                        <td colspan="2" align="left" rowspan="1">tgMC<sup>3</sup></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1">down node</td>
+                        <td align="left" rowspan="1" colspan="1">root</td>
+                        <td align="left" rowspan="1" colspan="1">down node</td>
+                        <td align="left" rowspan="1" colspan="1">root</td>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">clp→g</td>
+                        <td align="left" rowspan="1" colspan="1">2(N-2)L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">2L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">L<italic>d(clp)</italic></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">clp←g</td>
+                        <td align="left" rowspan="1" colspan="1">2(N-2)L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">3L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)L<italic>d(clp)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">L<italic>d(clp)</italic></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">tip→g</td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)<italic>d(tip)</italic></td>
+                        <td align="left" rowspan="1" colspan="1"><italic>d(tip)</italic></td>
+                        <td align="left" rowspan="1" colspan="1"><italic>0</italic></td>
+                        <td align="left" rowspan="1" colspan="1"><italic>0</italic></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">tip←g</td>
+                        <td align="left" rowspan="1" colspan="1">2(N-2)<italic>d(tip)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">2<italic>d(tip)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)<italic>d(tip)</italic></td>
+                        <td align="left" rowspan="1" colspan="1"><italic>d(tip)</italic></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">ls→g</td>
+                        <td align="left" rowspan="1" colspan="1">2(N-2)L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">2L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">L<italic>d(f)</italic></td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">ls←g</td>
+                        <td align="left" rowspan="1" colspan="1">2(N-2)L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">2L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">(N-2)L<italic>d(f)</italic></td>
+                        <td align="left" rowspan="1" colspan="1">L<italic>d(f)</italic></td>
+                     </tr>
+                  </tbody>
+               </table></alternatives>
+               <table-wrap-foot>
+                  <fn id="nt101">
+                     <label>*</label>
+                     <p>N, number of taxa;</p>
+                  </fn>
+                  <fn id="nt102">
+                     <label/>
+                     <p>N-2, number of down node;</p>
+                  </fn>
+                  <fn id="nt103">
+                     <label/>
+                     <p>L, number of sites, i.e. length of compressed DNA sequences;</p>
+                  </fn>
+                  <fn id="nt104">
+                     <label/>
+                     <p>g, GPU global memory, →g denotes write operation on g and ←g denotes read operation on g;</p>
+                  </fn>
+                  <fn id="nt105">
+                     <label/>
+                     <p>ls, lnScaler;</p>
+                  </fn>
+                  <fn id="nt106">
+                     <label/>
+                     <p><italic>d(x)</italic>, memory space used to store x. Particularly, <italic>d(f)</italic> is memory space used to store a float variable, so d(f) is 4 bytes. A residue in <italic>d(clp)</italic> is 16<italic>d(f)</italic>, and <italic>d(tip)</italic> is 64d(f) bytes.</p>
+                  </fn>
+               </table-wrap-foot>
+            </table-wrap>
+         </sec>
+         <sec id="s3b3">
+            <title>2.3 Intra-task parallelization versus Inter-task parallelization</title>
+            <p>The proposed algorithm is implemented by two task parallelization strategies. The difference between these strategies is whether the computation of an individual nucleotide residue is performed by a single thread or by multiple threads. An intra-task parallelization strategy is normally used to process relatively short nucleotide sequences in order to utilize GPU resources to the greatest extent, whereas shared memory is commonly exploited for faster accession of data. The inter-task parallelization method is normally used to process relatively long nucleotide sequence, as the overlap of memory access is higher, which also reduces costs on dispatching threads. In the specified evolutionary model, 16 elements for each nucleotide need to be calculated in total, which is separated into 4 sets, each with four values corresponding to the <italic>A, C, G, T</italic> nucleotide states. In nMC<sup>3</sup> (v1.0), this is performed by a single parallelization strategy, the so-called Intra-task parallelization method, where the computation of each nucleotide residue is completed by 16 threads. In nMC<sup>3</sup> (v2.1), the situation appears quite complicated, as the module for computing <italic>clp</italic> (kernel 2) is performed by mixed parallelization strategies (<xref ref-type="fig" rid="pone-0060667-g002">Figure 2</xref>), where the inter-task parallelization strategy is directed against long sequences and the intra-task parallelization strategy is directed against short sequences. The module for scaling nodes (kernel 4) is performed simply using the inter-task parallelization strategy. The parallelization strategy used in version 1.0 is suitable for short sequences, since if there are only a few nucleotide residues, increased thread allocation makes efficient use of GPU resources, although there is cost in terms of coordination among threads. The fact that version 1.0 adopts a reduction method to find the maximum <italic>clp</italic> value of each nucleotide residue in module 4 results in 50% of threads working in an idle state during each iteration. Nonetheless, Intra-task parallelization is still more preferred than Inter-task parallelization on the implementation of relatively short sequences. For version 2.1, module 4 can be performed by two parallelization strategies, which we improved here. Therefore, tgMC<sup>3</sup> contains two parallelization strategies, and a threshold value regarding to the choice of parallelization strategy is empirically defined before running.</p>
+         </sec>
+      </sec>
+   </sec>
+   <sec id="s4">
+      <title>Experiments</title>
+      <sec id="s4a">
+         <title>1. Experimental Environments</title>
+         <p>All experiments were benchmarked on the same computing node of DEGIMA (Destination for Gpu intensive MAchine) <xref ref-type="bibr" rid="pone.0060667-The1">[15]</xref>, built by one of the authors of this article (TH) for high performance computing research in Nagasaki University. The process technology of the CPU used in <xref ref-type="bibr" rid="pone.0060667-Zhou1">[9]</xref> is less current than the GTX 480 card, and hence we used a relatively advanced processor based on 32 nm process technology for equivalent comparisons. The details of experimental environments are listed in <xref ref-type="table" rid="pone-0060667-t003">Table 3</xref>. The gcc version 4.4.4 with the –O<sub>3</sub> and <italic>–</italic>Wall flag was used for compiling MrBayes MC<sup>3</sup>, as well as the CPU-side code of tgMC<sup>3</sup>, nMC<sup>3</sup> and BEAGLE-based MrBayes. The GPU-side code of tgMC<sup>3</sup>, nMC<sup>3</sup> and BEAGLE-based MrBayes MC<sup>3</sup> were compiled using CUDA Toolkit, version 4.2. <italic>CUDA_INSTALL_PATH</italic> and <italic>SDK_INSTALL_PATH</italic> should be imported to environment before making the codes, more details can be found in the user manual of tgMC<sup>3</sup> (File S1).</p>
+         <table-wrap id="pone-0060667-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.t003</object-id><label>Table 3</label>
+            <caption>
+               <title>The experimental environments of host and device in the proposed method.</title>
+            </caption><alternatives><graphic id="pone-0060667-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.t003" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1">Host</td>
+                     <td align="left" rowspan="1" colspan="1">GPU device</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" rowspan="1" colspan="1"><italic>Operating system</italic>: Fedora Release 12<italic>CPU</italic>: Intel i7-3820 (4 cores, 3.6 GHz)<italic>Memory</italic>: 16 GB</td>
+                     <td align="left" rowspan="1" colspan="1"><italic>Graphic Driver:</italic> NVIDIA Driver version 4.2<italic>GPU</italic>: NVIDIA GeForce GTX 480 (15×32 cores, 1.4 GHz)<italic>GPU memory:</italic> 1.5 GB</td>
+                  </tr>
+               </tbody>
+            </table></alternatives>
+         </table-wrap>
+      </sec>
+      <sec id="s4b">
+         <title>2. Datasets</title>
+         <p>The nucleotide datasets used in experiments can be placed into three categories according to their unique sites: short (datasets 1 and 2), medium (dataset 3) and long sequence length (datasets 4 and 5). We briefly list them below, and the details of these datasets can be found in <xref ref-type="bibr" rid="pone.0060667-Xie1">[16]</xref>–<xref ref-type="bibr" rid="pone.0060667-Xie3">[18]</xref>.</p>
+         <p>Dataset 1: A group of Trichophora 18S rDNA including 26 taxa.</p>
+         <p>Dataset 2: A group of Euhemiptera 18S rDNA including 33 taxa.</p>
+         <p>Dataset 3: A group of metazoan 18S rDNA including 111 taxa.</p>
+         <p>Dataset 4: A group of eukaryotic 18S rDNA including 234 taxa.</p>
+         <p>Dataset 5: A group of 23 - 28S rDNA from Bacteria, Archaea, and Eukaryota including 288 taxa.</p>
+      </sec>
+      <sec id="s4c">
+         <title>3. Results</title>
+         <sec id="s4c1">
+            <title>3.1 Run-time</title>
+            <p>The run-time gives elapsed time for the whole analysis. <xref ref-type="table" rid="pone-0060667-t004">Table 4</xref> presents the run-time required to analyze the datasets on the platforms described in Section 4.2 with 1) serial MrBayes MC<sup>3</sup> using one CPU process, 2) MrBayes MC<sup>3</sup> using two concurrent CPU processes, 3) BEAGLE-based MrBayes MC<sup>3</sup> using one GTX 480 card, 4) nMC<sup>3</sup> (v1.0 and 2.1) using one GTX 480 card, 5) tgMC<sup>3</sup> using either one GPU or two GPUs. From <xref ref-type="table" rid="pone-0060667-t004">Table 4</xref> we can see that tgMC<sup>3</sup> takes the least time in our test.</p>
+            <table-wrap id="pone-0060667-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.t004</object-id><label>Table 4</label>
+               <caption>
+                  <title>Dataset information.</title>
+               </caption><alternatives><graphic id="pone-0060667-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.t004" xlink:type="simple"/><table>
+                  <colgroup span="1">
+                     <col align="left" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">Dataset</td>
+                        <td align="left" rowspan="1" colspan="1">No.of taxa</td>
+                        <td align="left" rowspan="1" colspan="1">Alignmentlength (nt)</td>
+                        <td align="left" rowspan="1" colspan="1">No.of generations</td>
+                        <td colspan="7" align="left" rowspan="1">Run-time(s)</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1">MrBayes1 core</td>
+                        <td align="left" rowspan="1" colspan="1">MrBayes2 cores</td>
+                        <td align="left" rowspan="1" colspan="1">BEAGLEwith1 GPU</td>
+                        <td align="left" rowspan="1" colspan="1">nMC<sup>3</sup>(1.0) with1 GPU</td>
+                        <td align="left" rowspan="1" colspan="1">nMC<sup>3</sup> (2.1) with1 GPU</td>
+                        <td align="left" rowspan="1" colspan="1">tgMC<sup>3</sup>with1 GPU</td>
+                        <td align="left" rowspan="1" colspan="1">tgMC<sup>3</sup>with2 GPUs</td>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">26</td>
+                        <td align="left" rowspan="1" colspan="1">1546</td>
+                        <td align="left" rowspan="1" colspan="1">1,000,000</td>
+                        <td align="left" rowspan="1" colspan="1">2485</td>
+                        <td align="left" rowspan="1" colspan="1">1285</td>
+                        <td align="left" rowspan="1" colspan="1">2338</td>
+                        <td align="left" rowspan="1" colspan="1">1117</td>
+                        <td align="left" rowspan="1" colspan="1">724</td>
+                        <td align="left" rowspan="1" colspan="1">412</td>
+                        <td align="left" rowspan="1" colspan="1">244</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">2</td>
+                        <td align="left" rowspan="1" colspan="1">37</td>
+                        <td align="left" rowspan="1" colspan="1">2238</td>
+                        <td align="left" rowspan="1" colspan="1">1,000,000</td>
+                        <td align="left" rowspan="1" colspan="1">8729</td>
+                        <td align="left" rowspan="1" colspan="1">4529</td>
+                        <td align="left" rowspan="1" colspan="1">3502</td>
+                        <td align="left" rowspan="1" colspan="1">1653</td>
+                        <td align="left" rowspan="1" colspan="1">1035</td>
+                        <td align="left" rowspan="1" colspan="1">749</td>
+                        <td align="left" rowspan="1" colspan="1">420</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">3</td>
+                        <td align="left" rowspan="1" colspan="1">111</td>
+                        <td align="left" rowspan="1" colspan="1">1506</td>
+                        <td align="left" rowspan="1" colspan="1">500,000</td>
+                        <td align="left" rowspan="1" colspan="1">10155</td>
+                        <td align="left" rowspan="1" colspan="1">5178</td>
+                        <td align="left" rowspan="1" colspan="1">3265</td>
+                        <td align="left" rowspan="1" colspan="1">1870</td>
+                        <td align="left" rowspan="1" colspan="1">1194</td>
+                        <td align="left" rowspan="1" colspan="1">765</td>
+                        <td align="left" rowspan="1" colspan="1">436</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">4</td>
+                        <td align="left" rowspan="1" colspan="1">234</td>
+                        <td align="left" rowspan="1" colspan="1">1790</td>
+                        <td align="left" rowspan="1" colspan="1">100,000</td>
+                        <td align="left" rowspan="1" colspan="1">7979</td>
+                        <td align="left" rowspan="1" colspan="1">4050</td>
+                        <td align="left" rowspan="1" colspan="1">1490</td>
+                        <td align="left" rowspan="1" colspan="1">858</td>
+                        <td align="left" rowspan="1" colspan="1">545</td>
+                        <td align="left" rowspan="1" colspan="1">402</td>
+                        <td align="left" rowspan="1" colspan="1">228</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">5</td>
+                        <td align="left" rowspan="1" colspan="1">288</td>
+                        <td align="left" rowspan="1" colspan="1">3386</td>
+                        <td align="left" rowspan="1" colspan="1">100,000</td>
+                        <td align="left" rowspan="1" colspan="1">17984</td>
+                        <td align="left" rowspan="1" colspan="1">9101</td>
+                        <td align="left" rowspan="1" colspan="1">2662</td>
+                        <td align="left" rowspan="1" colspan="1">1492</td>
+                        <td align="left" rowspan="1" colspan="1">734</td>
+                        <td align="left" rowspan="1" colspan="1">610</td>
+                        <td align="left" rowspan="1" colspan="1">352</td>
+                     </tr>
+                  </tbody>
+               </table></alternatives>
+            </table-wrap>
+         </sec>
+         <sec id="s4c2">
+            <title>3.2 Speedup</title>
+            <p>We made the following definitions:</p>
+            <list list-type="order">
+               <list-item>
+                  <p>The <italic>b-m speedup</italic> is the number of times faster that BEAGLE-based MrBayes MC<sup>3</sup> using one CPU process and one GPU device performs when compared with MrBayes MC<sup>3</sup> implemented by either one CPU process or two concurrent CPU processes.</p>
+               </list-item>
+               <list-item>
+                  <p>The <italic>n-m speedup</italic> is the number of times faster that the nMC<sup>3</sup> (v2.1) algorithm using one CPU process and one GPU device performs when compared with MrBayes MC<sup>3</sup> implemented by either one CPU process or two concurrent CPU processes.</p>
+               </list-item>
+               <list-item>
+                  <p>The <italic>t-m speedup</italic> is the number of times faster that the tgMC<sup>3</sup> algorithm using one CPU process and one GPU device performs when compared with MrBayes MC<sup>3</sup> implemented by either one CPU process or two concurrent CPU processes.</p>
+               </list-item>
+            </list>
+            <p><xref ref-type="table" rid="pone-0060667-t005">Table 5</xref> presents the speedups, computed from the data in <xref ref-type="table" rid="pone-0060667-t004">Table 4</xref>. The tgMC<sup>3</sup> method outperforms the serial MrBayes MC<sup>3</sup> by a factor between 6 to 30 times when using a single GTX480 card, whereas a speedup factor around 51 times can be achieved by using two GTX 480 cards on relatively long sequences (<xref ref-type="table" rid="pone-0060667-t004">Table 4</xref>). The number of times faster between each GPU-based MrBayes MC<sup>3</sup> can also be computed from <xref ref-type="table" rid="pone-0060667-t004">Table 4</xref>. <xref ref-type="sec" rid="s4">Experiments</xref> indicate that the tgMC<sup>3</sup> method outstrips nMC<sup>3</sup> (v1.0) with speedup factors from 2.1 to 2.7 times and nMC<sup>3</sup> (v2.1) from 1.2 to 1.7 times. Moreover, tgMC<sup>3</sup> outperforms the BEAGLE-lib based method from 3.7 to 5.7 times. For all the five test datasets, tgMC<sup>3</sup> always achieves the greatest speedup factor when using one core or two cores (<xref ref-type="table" rid="pone-0060667-t005">Table 5</xref>).</p>
+            <table-wrap id="pone-0060667-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.t005</object-id><label>Table 5</label>
+               <caption>
+                  <title>Speedup comparisons to MrBayes MC<sup>3</sup>.</title>
+               </caption><alternatives><graphic id="pone-0060667-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.t005" xlink:type="simple"/><table>
+                  <colgroup span="1">
+                     <col align="left" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                     <col align="center" span="1"/>
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">Dataset</td>
+                        <td colspan="2" align="left" rowspan="1">b-m speedup</td>
+                        <td colspan="2" align="left" rowspan="1">n-m speedup</td>
+                        <td colspan="2" align="left" rowspan="1">t-m speedup</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1"/>
+                        <td align="left" rowspan="1" colspan="1">1-core</td>
+                        <td align="left" rowspan="1" colspan="1">2-cores</td>
+                        <td align="left" rowspan="1" colspan="1">1-core</td>
+                        <td align="left" rowspan="1" colspan="1">2-cores</td>
+                        <td align="left" rowspan="1" colspan="1">1-core</td>
+                        <td align="left" rowspan="1" colspan="1">2-cores</td>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">1</td>
+                        <td align="left" rowspan="1" colspan="1">1.06</td>
+                        <td align="left" rowspan="1" colspan="1">0.55</td>
+                        <td align="left" rowspan="1" colspan="1">3.43</td>
+                        <td align="left" rowspan="1" colspan="1">1.77</td>
+                        <td align="left" rowspan="1" colspan="1">6.03</td>
+                        <td align="left" rowspan="1" colspan="1">3.12</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">2</td>
+                        <td align="left" rowspan="1" colspan="1">2.49</td>
+                        <td align="left" rowspan="1" colspan="1">1.29</td>
+                        <td align="left" rowspan="1" colspan="1">8.43</td>
+                        <td align="left" rowspan="1" colspan="1">4.44</td>
+                        <td align="left" rowspan="1" colspan="1">11.65</td>
+                        <td align="left" rowspan="1" colspan="1">6.05</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">3</td>
+                        <td align="left" rowspan="1" colspan="1">3.11</td>
+                        <td align="left" rowspan="1" colspan="1">1.59</td>
+                        <td align="left" rowspan="1" colspan="1">8.51</td>
+                        <td align="left" rowspan="1" colspan="1">4.34</td>
+                        <td align="left" rowspan="1" colspan="1">13.43</td>
+                        <td align="left" rowspan="1" colspan="1">6.77</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">4</td>
+                        <td align="left" rowspan="1" colspan="1">5.36</td>
+                        <td align="left" rowspan="1" colspan="1">2.72</td>
+                        <td align="left" rowspan="1" colspan="1">14.64</td>
+                        <td align="left" rowspan="1" colspan="1">7.43</td>
+                        <td align="left" rowspan="1" colspan="1">19.85</td>
+                        <td align="left" rowspan="1" colspan="1">10.07</td>
+                     </tr>
+                     <tr>
+                        <td align="left" rowspan="1" colspan="1">5</td>
+                        <td align="left" rowspan="1" colspan="1">6.76</td>
+                        <td align="left" rowspan="1" colspan="1">3.42</td>
+                        <td align="left" rowspan="1" colspan="1">24.5</td>
+                        <td align="left" rowspan="1" colspan="1">12.4</td>
+                        <td align="left" rowspan="1" colspan="1">29.5</td>
+                        <td align="left" rowspan="1" colspan="1">14.92</td>
+                     </tr>
+                  </tbody>
+               </table></alternatives>
+            </table-wrap>
+         </sec>
+         <sec id="s4c3">
+            <title>3.3 Scalability</title>
+            <p>The sequence length discussed in this section is the number of unique sites per dataset, as opposed to the complete length of sequences, since only unique sites affect the computation complexity in MrBayes MC<sup>3</sup>. We normalized the speedup comparisons of the GPU-based implementation of MrBayes MC<sup>3</sup> to serial MrBayes MC<sup>3</sup>. <xref ref-type="fig" rid="pone-0060667-g005">Figures 5</xref> and <xref ref-type="fig" rid="pone-0060667-g006">6</xref> illustrate the speedup comparisons between these methods when using the first <italic>N</italic> taxa of datasets 4 and 5. These datasets are composed of relatively long sequences, with 1790 nt and 3386 nt. From these figures, it is apparent that the speedup factors of tgMC3 and nMC3 (v2.1) show better scalability than the remaining methods. In particular, tgMC<sup>3</sup> runs at least 1.2 times faster than nMC3 (v2.1). <xref ref-type="fig" rid="pone-0060667-g007">Figure 7</xref> illustrates the speedup of a group of simulated datasets composed of 60 taxa, which were generated with Seq-Gen version 1.3.2 <xref ref-type="bibr" rid="pone.0060667-Rambaut1">[19]</xref>, consisting <italic>L</italic> unique sites. In each case, we run serial MrBayes MC<sup>3</sup>, BEAGLE, nMC<sup>3</sup> (v1.0), nMC<sup>3</sup> (v2.1) and tgMC<sup>3</sup> for 10000 generations. The speedup of each GPU-version of MrBayes MC<sup>3</sup> is normalized by the run-time of serial MrBayes MC<sup>3</sup>. Likewise, tgMC<sup>3</sup> outperforms other methods and shows the best scalability as sequence length is increased (<xref ref-type="fig" rid="pone-0060667-g007">Figure 7</xref>).</p>
+            <fig id="pone-0060667-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g005</object-id><label>Figure 5</label>
+               <caption>
+                  <title>Speedup comparisons between BEAGLE, nMC<sup>3</sup>(v1.0), nMC<sup>3</sup>(v2.1) and tgMC<sup>3</sup> on the first <italic>N</italic> taxa in dataset 4, where <italic>N∈</italic> {40, 60, …, 220}.</title>
+               </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g005" position="float" xlink:type="simple"/></fig>
+            <fig id="pone-0060667-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g006</object-id><label>Figure 6</label>
+               <caption>
+                  <title>Speedup comparisons between, BEAGLE, nMC<sup>3</sup>(v1.0), nMC<sup>3</sup>(v2.1) and tgMC<sup>3</sup> on the first <italic>N</italic> taxa in dataset 5, where <italic>N∈</italic> {40, 60, …, 220}.</title>
+                                 </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g006" position="float" xlink:type="simple"/></fig>
+            <fig id="pone-0060667-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0060667.g007</object-id><label>Figure 7</label>
+               <caption>
+                  <title>Speedup comparisons between BEAGLE, nMC<sup>3</sup>(v1.0), nMC<sup>3</sup>(v2.1) and tgMC<sup>3</sup> on a group of 60 taxa, consisting <italic>L</italic> unique sites, where <italic>L∈</italic> {1000, 2000, …, 10000}.</title>
+               </caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0060667.g007" position="float" xlink:type="simple"/></fig>
+         </sec>
+      </sec>
+   </sec>
+   <sec id="s5">
+      <title>Discussion</title>
+      <p>While there have been a number of versions of MrBayes MC<sup>3</sup> accelerated with GPUs, several bottlenecks still exist. Firstly, data transfer can impose a substantial overhead in GPU-CPU heterogeneous computing for MrBayes MC<sup>3</sup> if calculation times are not well synchronized. Secondly, the adoption of several CUDA kernels to accelerate each sub-function in MrBayes MC<sup>3</sup> can be inefficient. The use of multiple CUDA kernels may reduce speedup as there are redundant global memory accesses between kernels. Thirdly, the size of the input data influences the degree of acceleration, particularly with insufficient computational load reducing the efficiency of GPU hardware usage. Previous methods fail to take these into account.</p>
+      <p>To address these bottlenecks and further accelerate MrBayes MC<sup>3</sup> on GPUs, we propose a tight GPU MC<sup>3</sup> (tgMC<sup>3</sup>) algorithm with three key features; i) the algorithm applies a tight GPU kernel to avoid data transfer overhead between CPU and GPU; ii) it encapsulates conditional likelihood probability estimation in a single CUDA kernel, also reducing the run-time consumed on GPU device memory access; iii) it employs two different task parallelization strategies to make full use of GPU hardware resources. Thus, tgMC<sup>3</sup> can outperform the serial MrBayes MC<sup>3</sup> by considerable speedup factors on empirical and simulated datasets.</p>
+      <p><xref ref-type="fig" rid="pone-0060667-g005">Figures 5</xref> and <xref ref-type="fig" rid="pone-0060667-g006">6</xref> illustrate that the outperformance of tgMC<sup>3</sup> compared to other acceleration methods with datasets of various size, although the scalability is similar to nMC<sup>3</sup> (v2.1) for long sequences. tgMC<sup>3</sup> and nMC<sup>3</sup> (v2.1) also show similar scalability with the increase of alignment length (<xref ref-type="fig" rid="pone-0060667-g007">Figure 7</xref>). The reason is associated with the task parallelization strategies. In tgMC<sup>3</sup>, two different task parallelization strategies are used to accelerate the computation of <italic>clp</italic>. Intra-task parallelization is used for short and medium alignments, with the aim to fully utilize GPU resources by allocating as many threads as possible, whereas inter-task parallelization is performed for long sequences to avoid redundant computation. An alignment length threshold is defined to select amongst these two strategies. However, in nMC3 (v2.1), only inter-task parallelization is adopted. As datasets 4 (results shown in <xref ref-type="fig" rid="pone-0060667-g005">Figure 5</xref>) and 5 (results shown in <xref ref-type="fig" rid="pone-0060667-g006">Figure 6</xref>) are composed of long sequences, both tgMC3 and nMC3 (v2.1) apply the same strategy, inter-task parallelization. This accounts for similar performance with increasing alignment length.</p>
+      <p>As can be seen from <xref ref-type="table" rid="pone-0060667-t004">Table 4</xref>, the performance of the BEAGLE-based (1 GPU) implementation and MrBayes MC<sup>3</sup> (1 CPU core) is very similar when using dataset 1. Performance differs for all remaining datasets, with BEAGLE running in a much shorter time. While a GPU has many cores, the frequency of each core is relatively low. In cases where there is a small amount of data for computation, there is no advantage for parallel computing compared with serial computing. In addition, CPU-GPU data transfer could be a big overhead. If there is not enough data within each CUDA kernel or the data transfer frequency is continual, GPU-based heterogeneous computing is not a good option. BEAGLE-based implementation only parallelizes the computation of conditional likelihood probability, while the chains are still scheduled serially. Therefore, it cannot achieve much speedup on datasets with short alignments as there is insufficient computation load. When the alignment length increases, higher speedup can be achieved by BEAGLE. This also can be seen from the performance of other GPU-based implementations.</p>
+      <p>The experimental results show that the proposed tgMC<sup>3</sup> algorithm achieves increasing speedup as the number of unique sites increases, compared with serial GPU-based MrBayes MC<sup>3</sup>. In addition, tgMC<sup>3</sup> outperforms other GPU-based MrBayes MC<sup>3</sup>, by a speedup factor of 3.7–5.7 times to the BEAGLE-based method, and 2.1–2.7 times to the nMC<sup>3</sup> algorithm (v1.0). Moreover, the tgMC<sup>3</sup> algorithm achieves a speedup factor of up to 1.7 times compared with nMC<sup>3</sup> (v2.1). A minimum speedup factor of 1.2 times can be achieved when computing sufficiently long sequences.</p>
+      <sec id="s5a">
+         <title>Conclusions</title>
+         <p>We presented an accelerated implementation of MrBayes MC<sup>3</sup> by employing an encapsulated GPU-based implementation architecture, tgMC<sup>3</sup>. Besides the acceleration strategies implemented in nMC<sup>3</sup>, the proposed tgMC<sup>3</sup> further reduces the run-time of MrBayes MC<sup>3</sup> by decreasing data transfer overhead, and accelerating the computation of conditional likelihood probabilities of sampling trees by two different task parallelization strategies. A number of empirical and simulated datasets are used to assess the speedup and scalability of the algorithm. The experiments indicate that one GTX 480 card can improve the performance of serial MrBayes MC<sup>3</sup> running on a start-of-the-art general purpose processor by a factor of 6 for datasets with short sequences, and up to roughly 30 for datasets with long sequences. Moreover, tgMC<sup>3</sup> outperforms the nMC<sup>3</sup> algorithm (v1.0) from 2.1 to 2.7 times and the latest version (v2.1) from 1.2 to 1.7 times depending on the alignment length. In addition, tgMC<sup>3</sup> shows similar scalability to the nMC<sup>3</sup> algorithm (v2.1), with increasing data size and alignment length. To conclude, tgMC<sup>3</sup> achieves better acceleration than previously proposed GPU-based optimization strategies of MrBayes MC<sup>3</sup>. In particular, our method could benefit the acceleration of the latest version of MrBayes (v3.2.1) and other Bayesian-based methods for phylogenetic analysis.</p>
+      </sec>
+   </sec>
+   <sec id="s6">
+      <title>Supporting Information</title>
+<supplementary-material id="pone.0060667.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0060667.s001" position="float" xlink:type="simple">
+<label>File S1</label>
+<caption><p>User manual.</p>
+      <p>(DOCX)</p>
+</caption></supplementary-material>
+<supplementary-material id="pone.0060667.s002" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pone.0060667.s002" position="float" xlink:type="simple">
+<label>Table S1</label>
+<caption><p>Split frequency comparisons after resolving scaler code.</p>
+      <p>(XLSX)</p>
+</caption></supplementary-material>
+   </sec>
+</body>
+<back>
+   <ack>
+      <p>The authors would like to express their thanks to Xiaoguang Liu and Qiang Xie for their helpful comments on the nMC<sup>3</sup> algorithm, Hongju Xia for providing valuable parallelization strategy, Hehui Zou for his assistance on writing the article.</p>
+      <p><bold>Availability</bold>: An open source MrBayes tgMC<sup>3</sup> (GNU GPL v.2) is available from: <ext-link ext-link-type="uri" xlink:href="http://code.google.com/p/a-tight-gpu-implementation-of-mrbayes/" xlink:type="simple">http://code.google.com/p/a-tight-gpu-implementation-of-mrbayes/</ext-link></p>
+   </ack>
+   <ref-list>
+      <title>References</title>
+      <ref id="pone.0060667-Saitou1"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saitou</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Nei</surname><given-names>M</given-names></name> (<year>1987</year>) <article-title>The neighbor-joining method: a new method for reconstructing phylogenetic trees</article-title>. <source>Mol Biol Evol</source> <volume>4</volume>: <fpage>406</fpage>–<lpage>425</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Fitch1"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fitch</surname><given-names>WM</given-names></name> (<year>1971</year>) <article-title>Toward defining the course of evolution: minimum change for a specific tree topology</article-title>. <source>Syst Zool</source> <volume>20</volume>: <fpage>406</fpage>–<lpage>416</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Felsenstein1"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Felsenstein</surname><given-names>J</given-names></name> (<year>1981</year>) <article-title>Evolutionary trees from DNA sequences: a maximum likelihood approach</article-title>. <source>Mol Biol Evol</source> <volume>17</volume>: <fpage>368</fpage>–<lpage>376</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Hastings1"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hastings</surname><given-names>WK</given-names></name> (<year>1970</year>) <article-title>Monte Carlo Sampling Methods Using Markov Chains and Their Applications</article-title>. <source>Biometrika</source> <volume>57(1)</volume>: <fpage>97</fpage>–<lpage>109</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Yang1"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yang</surname><given-names>ZH</given-names></name>, <name name-style="western"><surname>Rannala</surname><given-names>B</given-names></name> (<year>2012</year>) <article-title>Molecular phylogenetics: principles and practice</article-title>. <source>Nat Rev Genet</source> <volume>13</volume>: <fpage>303</fpage>–<lpage>314</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Huelsenbeck1"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huelsenbeck</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Ronquist</surname><given-names>F</given-names></name> (<year>2001</year>) <article-title>MRBAYES: Bayesian inference of phylogenetic trees</article-title>. <source>Bioinformatics</source> <volume>17</volume>: <fpage>754</fpage>–<lpage>755</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-NVIDIA1"><label>7</label><mixed-citation publication-type="other" xlink:type="simple">NVIDIA Corporation (2009) NVIDIA CUDA Programming Guide Version 2.3.1. NVIDIA Corporation, 2701 San Tomas Expressway, Santa Clara, CA.</mixed-citation></ref>
+      <ref id="pone.0060667-Ayres1"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ayres</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Darling</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Zwickl</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Beerli</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Holder</surname><given-names>MT</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>BEAGLE: an application programming interface and high-performance computing library for statistical phylogenetics</article-title>. <source>Syst Biol</source> <volume>61(1)</volume>: <fpage>170</fpage>–<lpage>173</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Zhou1"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhou</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>XG</given-names></name>, <name name-style="western"><surname>Stones</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Xie</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>G</given-names></name> (<year>2011</year>) <article-title>MrBayes on a Graphics Processing Unit</article-title>. <source>Bioinformatics</source> <volume>27(9)</volume>: <fpage>1255</fpage>–<lpage>1261</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Huelsenbeck2"><label>10</label><mixed-citation publication-type="other" xlink:type="simple">Huelsenbeck JP, Ronquist F (2005) Bayesian analysis of molecular evolution using MrBayes. In Statistical Methods in Molecular Evolution, Springer, New York, 183–226.</mixed-citation></ref>
+      <ref id="pone.0060667-Felsenstein2"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Felsenstein</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Churchill</surname><given-names>GA</given-names></name> (<year>1996</year>) <article-title>A Hidden Markov Model approach to variation among sites in rate of evolution, and the branching order in hominoidea</article-title>. <source>Mol Biol Evol</source> <volume>13(1)</volume>: <fpage>93</fpage>–<lpage>104</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Altekar1"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Altekar</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Dwarkadas</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Huelsenbeck</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Ronquist</surname><given-names>F</given-names></name> (<year>2004</year>) <article-title>Parallel Metropolis coupled Markov chain Monte Carlo for Bayesian phylogenetic inference</article-title>. <source>Bioinformatics</source> <volume>20(3)</volume>: <fpage>407</fpage>–<lpage>415</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Pratas1"><label>13</label><mixed-citation publication-type="other" xlink:type="simple">Pratas F, Sousa L (2009) Applying the stream-based computing model to design hardware accelerators: a case study. In Embedded Computer Systems: Architectures, Modeling, and Simulation, Proceedings of SAMOS 2009.Vol. 5657 of Lecture Notes in Computer Science, Springer, Berlin/Heidelberg, 237–246.</mixed-citation></ref>
+      <ref id="pone.0060667-Pratas2"><label>14</label><mixed-citation publication-type="other" xlink:type="simple">Pratas F, Trancoso P, Stamatakis A, Sousa L (2009) Fine-grain parallelism using multi-core, cell/BE, and GPU systems: accelerating the phylogenetic likelihood function. In 2009 International Conference on Parallel Processing, IEEE Computer Society, Los Alamitos, CA, USA, 9–17.</mixed-citation></ref>
+      <ref id="pone.0060667-The1"><label>15</label><mixed-citation publication-type="other" xlink:type="simple">The Green500 List. (2011) Environmentally Responsible Supercomputing.</mixed-citation></ref>
+      <ref id="pone.0060667-Xie1"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Tian</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Zheng</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Bu</surname><given-names>W</given-names></name> (<year>2005</year>) <article-title>The Bayesian phylogenetic analysis of the 18S rRNA sequences from the main lineages of Trichophora (Insecta: Heteroptera: pentatomomorpha)</article-title>. <source>Mol Phylogenet Evol</source> <volume>34</volume>: <fpage>448</fpage>–<lpage>451</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Xie2"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Bu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Zheng</surname><given-names>L</given-names></name> (<year>2008</year>) <article-title>18S rRNA hyper-elongation and the phylogeny of Euhemiptera (Insecta: Hemiptera)</article-title>. <source>Mol Phylogenet Evol</source> <volume>47</volume>: <fpage>463</fpage>–<lpage>471</lpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Xie3"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Qin</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Potential key bases of ribosomal RNA to Kingdom-specific spectra of antibiotic susceptibility and the possible Archaeal origin of Eukaryotes</article-title>. <source>PLoS ONE</source> <volume>7(1)</volume>: <fpage>e29468</fpage>.</mixed-citation></ref>
+      <ref id="pone.0060667-Rambaut1"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rambaut</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Grassly</surname><given-names>NC</given-names></name> (<year>1997</year>) <article-title>Seq-Gen: an application for the Monte Carlo simulation of DNA sequence evolution along phylogenetic trees</article-title>. <source>Comp App Biosci</source> <volume>13</volume>: <fpage>235</fpage>–<lpage>238</lpage>.</mixed-citation></ref>
+   </ref-list>
+</back>
+</article>

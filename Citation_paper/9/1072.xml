@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-35882</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0104254</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Computer and information sciences</subject><subj-group><subject>Computerized simulations</subject></subj-group><subj-group><subject>Computer modeling</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine and health sciences</subject><subj-group><subject>Epidemiology</subject><subj-group><subject>Environmental epidemiology</subject><subject>Epidemiological methods and statistics</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Statistics (mathematics)</subject><subj-group><subject>Statistical methods</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Research and analysis methods</subject><subj-group><subject>Research design</subject><subj-group><subject>Clinical research design</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>New Insights into Handling Missing Values in Environmental Epidemiological Studies</article-title>
+<alt-title alt-title-type="running-head">Missing Data in Environmental Epidemiology</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Roda</surname><given-names>Célina</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nicolis</surname><given-names>Ioannis</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Momas</surname><given-names>Isabelle</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Guihenneuc</surname><given-names>Chantal</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Laboratoire Santé Publique et Environnement, EA 4064, Faculté de Pharmacie, Université Paris Descartes, Sorbonne Paris Cité, Paris, France</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Mairie de Paris, Direction de l′Action Sociale de l′Enfance et de la Santé, Cellule Cohorte, Paris, France</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Brock</surname><given-names>Guy</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Louisville, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">isabelle.momas@parisdescartes.fr</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: CR IM CG. Analyzed the data: CR IN CG. Contributed reagents/materials/analysis tools: CR IN IM CG. Wrote the paper: CR IN IM CG.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>16</day><month>9</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>9</issue>
+<elocation-id>e104254</elocation-id>
+<history>
+<date date-type="received"><day>29</day><month>8</month><year>2013</year></date>
+<date date-type="accepted"><day>11</day><month>7</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Roda et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Missing data are unavoidable in environmental epidemiologic surveys. The aim of this study was to compare methods for handling large amounts of missing values: omission of missing values, single and multiple imputations (through linear regression or partial least squares regression), and a fully Bayesian approach. These methods were applied to the PARIS birth cohort, where indoor domestic pollutant measurements were performed in a random sample of babies' dwellings. A simulation study was conducted to assess performances of different approaches with a high proportion of missing values (from 50% to 95%). Different simulation scenarios were carried out, controlling the true value of the association (odds ratio of 1.0, 1.2, and 1.4), and varying the health outcome prevalence. When a large amount of data is missing, omitting these missing data reduced statistical power and inflated standard errors, which affected the significance of the association. Single imputation underestimated the variability, and considerably increased risk of type I error. All approaches were conservative, except the Bayesian joint model. In the case of a common health outcome, the fully Bayesian approach is the most efficient approach (low root mean square error, reasonable type I error, and high statistical power). Nevertheless for a less prevalent event, the type I error is increased and the statistical power is reduced. The estimated posterior distribution of the OR is useful to refine the conclusion. Among the methods handling missing values, no approach is absolutely the best but when usual approaches (e.g. single imputation) are not sufficient, joint modelling approach of missing process and health association is more efficient when large amounts of data are missing.</p>
+</abstract>
+<funding-group><funding-statement>The PARIS cohort is supported by the Paris council, within its Social, Childhood and Health Direction (DASES). The environmental investigation of the cohort received financial support from the French National Agency for Food, Environment, and Occupational health Safety (Anses) and the French Institute for Public Health Surveillance (InVS). Célina Roda received a doctoral grant from the French Environment and Energy Management Agency (ADEME) and the French Scientific and Technical Construction Center (CSTB). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="8"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>In epidemiological studies, accurate estimate of exposure is very important for assessment of health risk. However missing data are often unavoidable, resulting from loss to follow-up in longitudinal studies, or non-responses in questionnaires. In large scale studies, certain strategies have been developed reducing the high cost of environmental measurements, e.g. collecting exposure surrogates for all subjects generally by questionnaires, and performing exact personal or environmental measurements only in subsamples of population <xref ref-type="bibr" rid="pone.0104254-Vach1">[1]</xref>; most of the time these subsamples are small due to economic and logistic reasons (high cost, noise, bulk samplers…). For instance, in the National health and nutrition examination survey (NHANES), personal exposure to volatile organic compounds was assessed in a subsample of 851 adults, i.e. 8.5% of the population study <xref ref-type="bibr" rid="pone.0104254-Jia1">[2]</xref>. Furthermore, even these specific studies can suffer from missing data due to measuring instrument failure, routine maintenance of monitors, and human error. Whatever the reasons for incomplete data, it can be a significant obstacle for researchers.</p>
+<p>Most statistical software omits records with missing values by default, and analysis is conducted on a subset with the available data. This approach is commonly used for handling missing data, but can lead to loss of statistical power which can be problematic in environmental surveys where associations between environmental factors and health outcome are generally weak. Furthermore, the results of the complete cases analyses are imprecise, given that part of the data is not considered.</p>
+<p>An alternative is to use measurements issued from subsamples to build predictive models and then, apply them to the whole population. Among these imputation techniques, single imputation approach is the most common and easily conducted as standard methodology <xref ref-type="bibr" rid="pone.0104254-Fusco1">[3]</xref>, it involves a single estimated value for each missing value. It can be applied directly without loss of power due to the sample size being brought back to its original size. However, single imputation ignores the uncertainty of estimation due to the imputation.</p>
+<p>Consequently, in 1987, Rubin proposed multiple imputation <xref ref-type="bibr" rid="pone.0104254-Rubin1">[4]</xref>, where each missing value is imputed by multiple simulated data leading to multiple “completed datasets”. Each generated dataset is analyzed by standard methodology and the results combined, enabling the uncertainty attached to missing data to be assessed. Whilst several authors have declared multiple imputation their method of choice <xref ref-type="bibr" rid="pone.0104254-Barzi1">[5]</xref>, <xref ref-type="bibr" rid="pone.0104254-Schafer1">[6]</xref>, a recent review has suggested that its use is still quite rare: less than 2% of papers published in epidemiology journals have used multiple imputation and often omitting important details of the methodology used <xref ref-type="bibr" rid="pone.0104254-Klebanoff1">[7]</xref>.</p>
+<p>Another more recent alternative for dealing with missing data is to jointly model through a Bayesian approach the missing process and the association between health outcome and covariates <xref ref-type="bibr" rid="pone.0104254-Carrigan1">[8]</xref>, <xref ref-type="bibr" rid="pone.0104254-Gryparis1">[9]</xref>. This kind of models is a part of more general approaches referred to hierarchical Bayesian modelling <xref ref-type="bibr" rid="pone.0104254-Gelman1">[10]</xref> which combines several sub-models. In our case, there are two sub-models where the first one connects missing exposure and predictive factors, and the second one assesses the association between health outcome and covariates including missing exposure. These two sub-models could be implemented separately but the estimated exposure by the first sub-model would be used in the second sub-model of disease as if it had been measured without uncertainty. Through the Bayesian modelling, the sub-models are integrated together allowing to take into account all uncertainty.</p>
+<p>The aim of this paper is to examine performances of several approaches for handling large amounts of missing data in environmental epidemiological surveys when the data are missing completely at random (MCAR) using both a case study and a simulation study. Omitting missing values, imputation techniques (single and multiple imputation) and fully Bayesian approach are considered.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>In order to compare results from methods for handling missing values, a real dataset was used. In the PARIS (Pollution and Asthma Risk: an Infant Study) cohort, measurements were performed and pollutant levels, such as formaldehyde levels, are available in a subset of the population, but missing for infants not involved in the environmental investigation <xref ref-type="bibr" rid="pone.0104254-Roda1">[11]</xref>.</p>
+<sec id="s2a">
+<title>Data</title>
+<p>The cohort enrolled 3 840 full-term healthy babies, recruited between February 2003 and June 2006. The study protocol is described elsewhere <xref ref-type="bibr" rid="pone.0104254-Clarisse1">[12]</xref>. At birth, an interview with the mother was conducted to collect data about the history of allergic conditions in both parents. Gender, parity, anthropometric parameters of the child, maternal history of pregnancy and delivery were also registered from newborn's and mother's medical records. Parents regularly documented health outcomes in mailed questionnaires. The health outcomes of interest were defined by the occurrence of lower respiratory infection (LRI) and a dry night cough (DNC) during the first twelve months of life <xref ref-type="bibr" rid="pone.0104254-Roda1">[11]</xref>, <xref ref-type="bibr" rid="pone.0104254-Roda2">[13]</xref>.</p>
+<p>Concerning environmental and lifestyle data, a trained interviewer interviewed parents by phone during maternity leave to describe in detail home characteristics (construction date, number of occupants, home surface area, heating and cooking appliances, presence of mechanical ventilation and double glazing, wall and floor coverings and signs of dampness) and family living conditions (duration of breastfeeding, information on day-care attendance, keeping of pets, aeration, smoking, use of air fresheners, do-it-yourself (DIY)). Any changes were assessed by mailed questionnaires at each time points.</p>
+<p>Aldehyde air sampling measurements were performed in a random sample of 196 babies'dwellings using a passive sampler <xref ref-type="bibr" rid="pone.0104254-Dassonville1">[14]</xref>. Predictive factors of formaldehyde levels were previously identified: sources (presence and age of wall coating, wood-pressed products for flooring or varnished parquet floor, and particle board furniture), parameters of aeration and air stuffiness (length of window opening, presence of mechanical ventilation and double glazing), and home characteristics (construction date, housing area, and number of occupants) <xref ref-type="bibr" rid="pone.0104254-Roda1">[11]</xref>.</p>
+<p>This study was approved by the National Ethics Committee (permissions 031153 and 051289), and parents of participating infants gave their written informed consent. Data are stored in the Paris council, within its Social, Childhood and Health Direction (DASES). All data were anonymized before statistical analysis.</p>
+</sec><sec id="s2b">
+<title>Association between formaldehyde, including missing values, and health outcomes in the PARIS cohort</title>
+<p>In the context of the study of formaldehyde exposure impact (variable including missing values) on LRI (a relative common health outcome in infancy) or DNC (a less prevalent event), results from methods for handling missing values were compared. All infants who move during the first year of life and those with no data on health outcome were excluded from the analyses.</p>
+<p>Unmeasured formaldehyde values are assumed MCAR <xref ref-type="bibr" rid="pone.0104254-Rubin2">[15]</xref> since families where measurements were carried out were selected at random, values are missing by design. The methods for dealing with missing data that we considered were: omitting missing data, imputation methodologies, and a fully Bayesian approach. For the first one, as its name implies, only cases with available information are considered, with cases with missing data being discarded. Concerning the imputation approach, missing data are imputed from the available information. Whatever the choice between single or multiple, an imputation model has to be established. Two approaches imputing missing formaldehyde values were examined, the linear regression model (LM), and the partial least squares (PLS) model. PLS regression is particularly suited when there are more predictors variables than observations, and contrary to LM, it allows multicolinearity between variables <xref ref-type="bibr" rid="pone.0104254-Tenenhaus1">[16]</xref>. PLS method is based on the reduction of predictor variables dimension by using techniques near principal component analysis. As recommended in the literature, the imputation model includes variables that are used in subsequent analyses such as the outcome <xref ref-type="bibr" rid="pone.0104254-Gilks1">[17]</xref>, <xref ref-type="bibr" rid="pone.0104254-Carpenter1">[18]</xref>. Therefore, the imputation model included formaldehyde predictive factors and LRI or DNC. The predicted formaldehyde mean was used in the single imputation. Note that other approaches exist for single imputation where, for instance, the missing value is replaced by local or adaptative estimate <xref ref-type="bibr" rid="pone.0104254-Bo1">[19]</xref>, <xref ref-type="bibr" rid="pone.0104254-Brock1">[20]</xref>, <xref ref-type="bibr" rid="pone.0104254-Kim1">[21]</xref> and not by the global mean. Whatever the chosen technique, the missing value is always replaced by a single value underestimating the variability due to this estimation. As the health outcomes are binary variables, the association between formaldehyde levels and LRI or DNC was then examined using logistic regression whatever the imputed model approach.</p>
+<p>In the multiple imputation approach, several imputations are generated for given missing data. As previously described by Little and Rubin <xref ref-type="bibr" rid="pone.0104254-Little1">[22]</xref>, “m completed datasets” were firstly created by filling in the missing values through the imputation model: missing formaldehyde values were imputed randomly from an approximate predictive distribution based on the fitted regression. For example in the case of LM, regression coefficients were sampled from their multivariate Gaussian distribution obtained on observed data and then missing formaldehyde values were replaced by their corresponding predicted values. This procedure was repeated m times. Here 10 000 imputed datasets were fitted. The completed datasets were analyzed separately, the association between formaldehyde levels (observed and imputed) and health was examined using logistic regression, and the results of all datasets were then combined, applying Rubin's rules, to yield final inference on the parameters of interest. The variance for the combined parameter estimates included between and within imputation variation.</p>
+<p>Finally, a fully Bayesian model was implemented, as suggested by Carpenter and Kenward <xref ref-type="bibr" rid="pone.0104254-Carpenter1">[18]</xref>. Two sub-models were fitted jointly using Markov Chain Monte Carlo methods <xref ref-type="bibr" rid="pone.0104254-Gilks1">[17]</xref>. The first one modelled the association between health indicator and exposure, and the second one modelled the relation between missing and observed exposure measurements including covariates supposed to be linked to exposure. Such joint modelling has advantages as mutually enhanced estimates precision of two sub-models parameters, extending multiple imputation methodology. The algorithm was run for 10 000 iterations with 1000 iterations discarded for burn-in. Inspection of posterior time series plots for the parameters as well as autocorrelation plots indicated that the model mixed well. For each model, posterior mean of OR with 95% credibility interval (95% Cr) is shown for the formaldehyde exposure. Note that since the PLS approach is not based on a probability model, Bayesian modelling cannot be used.</p>
+</sec><sec id="s2c">
+<title>Simulation study</title>
+<p>Facing missing data, the choice of approach is crucial in terms of the conclusion, particularly when there is a high proportion of missing data (near 94% in our case), and weak associations. Comparisons between approaches have to be based on the quality of estimates, and on the ability to conclude or not a significant association. Simulation studies with characteristics near those of real data but controlling the true value of OR without omitting the case of no association (OR = 1.0) were therefore conducted. Two cases were considered: one frequent outcome similar to LRI (named “event 1”), and a second case close to DNC (“event 2”). Sample sizes are similar to those in real data sets (n = 2 551 for event 1 and n = 2 342 for event 2).</p>
+<p>Datasets were simulated from the following steps: <italic>ln E ∼ Ν(X φ; σ<sup>2</sup> Id)</italic> and <italic>Y<sub>i</sub> ∼ B(π<sub>i</sub>)</italic> with <italic>logit(π<sub>i</sub>)  =  α + β E<sub>i</sub> + γ Z<sub>i</sub></italic>, <italic>β  =  ln OR<sub>true</sub></italic> and <italic>i  =  1, …, n</italic>, and where formaldehyde factors are denoted by <italic>X</italic>, exposure variable by <italic>E</italic>, covariates by <italic>Z</italic> and health indicator by <italic>Y</italic>. Exposure variable (corresponding to formaldehyde in real dataset) was simulated on a logarithmic scale from a linear model with formaldehyde predictors obtained from real data <xref ref-type="bibr" rid="pone.0104254-Roda1">[11]</xref>, and coefficients <italic>φ</italic> were equal to those estimated in this study. Then, the health indicator was simulated from a logistic model with the resulting formaldehyde levels and covariates from real data (coefficients <italic>γ</italic> associated with covariates were those estimated on real data as well as the residual variance <italic>σ</italic><sup>2</sup>). Formaldehyde predictors and covariates are given in <xref ref-type="supplementary-material" rid="pone.0104254.s003">Table S1</xref>.</p>
+<p>Three different <italic>OR<sub>true</sub></italic> (and then three <italic>β<sub>true</sub></italic> = ln <italic>OR<sub>true</sub></italic>) between formaldehyde and event 1 or event 2 were considered: 1.0, 1.2, and 1.4. Missing values for formaldehyde were assigned at random. A case of 95% missing values was considered. To assess the robustness of our conclusions, simulations with different missing values percentages (85%, 75% and 50%) were also conducted. For each scenario, a total of 100 datasets were generated. This number of simulations is required to obtain an estimate of the regression coefficient associated with formaldehyde exposure within 10% of its true value when missing values are omitted in the real data. Indeed, the equation given by Burton et al. <xref ref-type="bibr" rid="pone.0104254-Burton1">[23]</xref> for the number of simulations <italic>B</italic> is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e001" xlink:type="simple"/></inline-formula> here <italic>δ</italic> is the specified level of accuracy of the estimate of interest “accepted”, <italic>σ</italic>, the standard error for the parameter of interest and, <italic>Z<sub>1-α/2</sub></italic>, the (<italic>1-α/2</italic>) quantile of the standard normal distribution. When <italic>B</italic> = 100, <italic>α</italic> = 0.05 and <italic>σ</italic><sup>2</sup> = 0.26 (estimated variance on real data set), <italic>δ</italic> is equal to 10%.</p>
+<p>The quality of estimates for the different approaches was assessed by the root mean square error of beta coefficients (RMSE, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e002" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e003" xlink:type="simple"/></inline-formula> is estimated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e004" xlink:type="simple"/></inline-formula> on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e005" xlink:type="simple"/></inline-formula> dataset <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e006" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e007" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e008" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e009" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e010" xlink:type="simple"/></inline-formula>). The proportion of “significant” associations (PS, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e011" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e012" xlink:type="simple"/></inline-formula>, if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e013" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0104254.e014" xlink:type="simple"/></inline-formula>, otherwise) i.e. of confidence or credibility interval of OR excluding 1 was also calculated. This criterion assesses risk of type I error when <italic>OR<sub>true</sub></italic> = 1, and statistical power when <italic>OR<sub>true</sub></italic> was different from 1.</p>
+<p>Confidence intervals for RMSE were based on a Gaussian approximation using the empirical standard deviation of the MSE, and confidence intervals for the PS were based on the Clopper-Pearson “exact” confidence intervals <xref ref-type="bibr" rid="pone.0104254-Clopper1">[24]</xref> avoiding the Gaussian approximation. As the question is basically if formaldehyde exposure increased LRI and DNC risk according to previous studies in literature, the one-sided approach was chosen. Statistical analyses were conducted using R 2.14.0 <xref ref-type="bibr" rid="pone.0104254-R1">[25]</xref> and WinBUGS software <xref ref-type="bibr" rid="pone.0104254-Lunn1">[26]</xref>.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Results on real data</title>
+<p>In this study, 2 551 infants of the PARIS birth cohort were completely observed, independently of health outcomes and formaldehyde levels, and pollutant levels were available for 142 of them. Most of infants lived in apartments. Nearly 30% of buildings were built after 1975, and two-thirds were equipped with double glazing. Around half of babies had wood-pressed products for flooring or varnished parquet floor in their bedroom. Recent (less than one year old) particle board furniture was present in 49.8% dwellings. About half of infants (46.9%) had at least one LRI during their first year of life and the prevalence of DNC was 14.9%.</p>
+<p>OR estimates between LRI or DNC occurrence and formaldehyde exposure levels are given in <xref ref-type="table" rid="pone-0104254-t001">Table 1</xref>. The single imputation techniques (LM or PLS) clearly induced high estimates of association compared to all other approaches. The estimated OR with fully Bayesian approach was similar to that obtained with multiple imputation particularly for LRI, but lower than that with PLS imputation. However, intervals were different leading to a significant association with Bayesian modelling for LRI and nearly significant for DNC but not significant with both multiple imputation.</p>
+<table-wrap id="pone-0104254-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0104254.t001</object-id><label>Table 1</label><caption>
+<title>Associations between environmental risk factor<xref ref-type="table-fn" rid="nt102">a</xref> including missing values, and health outcomes, by different methods handling missing values (OR [95% CI or 95% Cr]).</title>
+</caption><alternatives><graphic id="pone-0104254-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0104254.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">LRI<xref ref-type="table-fn" rid="nt103">b</xref></td>
+<td align="left" rowspan="1" colspan="1">DNC<xref ref-type="table-fn" rid="nt104">c</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na omitted</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.11 [0.55, +∞)</td>
+<td align="left" rowspan="1" colspan="1">1.31 [0.45, +∞)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Single imputation</bold></td>
+<td align="left" rowspan="1" colspan="1">LM</td>
+<td align="left" rowspan="1" colspan="1">1.91 [1.53, +∞)</td>
+<td align="left" rowspan="1" colspan="1">5.63 [3.69, +∞)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PLS<xref ref-type="table-fn" rid="nt105">d</xref></td>
+<td align="left" rowspan="1" colspan="1">3.27 [1.61, +∞)</td>
+<td align="left" rowspan="1" colspan="1">3.69 [2.57, +∞)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Multiple imputation</bold></td>
+<td align="left" rowspan="1" colspan="1">LM</td>
+<td align="left" rowspan="1" colspan="1">1.28 [0.91, +∞)</td>
+<td align="left" rowspan="1" colspan="1">1.35 [0.14, +∞)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PLS<xref ref-type="table-fn" rid="nt105">d</xref></td>
+<td align="left" rowspan="1" colspan="1">2.81 [0.35, +∞)</td>
+<td align="left" rowspan="1" colspan="1">2.69 [0.39, +∞)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Bayesian approach</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.27 [1.10, +∞)</td>
+<td align="left" rowspan="1" colspan="1">1.16 [0.95, +∞)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Abbreviations: CI, 95% confidence interval; Cr, 95% credibility interval, LM, linear regression model; OR, odds ratio; PLS, partial least squares.</p></fn><fn id="nt102"><label>a</label><p>: Environmental factor: formaldehyde exposure, expressed in µg/m<sup>3</sup>, (for one unit increase in the logarithmic scale), and health outcome: lower respiratory infection (LRI) or dry nigh cough (DNC).</p></fn><fn id="nt103"><label>b</label><p>: Association was adjusted for gender, socio-economic status, siblings, parental history of asthma, breastfeeding, daycare attendance, pre/postnatal tobacco smoke exposure, sign(s) of dampness, and presence of pets at home.</p></fn><fn id="nt104"><label>c</label><p>: Association was adjusted for gender, socio-economic status, parental history of allergy, breastfeeding, pre/postnatal tobacco smoke exposure, gas heating, cockroaches, infant's mattress age, family events, and number of episodes of lower respiratory infections.</p></fn><fn id="nt105"><label>d</label><p>: PLS imputation with two components.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3b">
+<title>Simulations results</title>
+<p>From the 100 simulated datasets, the resulting mean prevalence of event 1 was 29.6% (range: 18.4%–41.3%) and of event 2 was 12.3% (range: 6.8%–18.5%). <xref ref-type="table" rid="pone-0104254-t002">Table 2</xref> shows RMSE and PS assessed on simulated data when no data are missing. Results were quasi similar for all approaches. As RMSE depends on <italic>OR<sub>true</sub></italic> and on prevalence of event, it increased between events 1 and 2 and slightly with <italic>OR<sub>true</sub></italic>. Concerning event 1, frequentist and Bayesian approaches always concluded a significant association when <italic>OR<sub>true</sub></italic> = 1.4 while when <italic>OR<sub>true</sub></italic> = 1.2, statistic power was near 60%. For an infrequent event as event 2, statistical power decreased being near 85% when <italic>OR<sub>true</sub></italic> = 1.4 and near 40% when <italic>OR<sub>true</sub></italic> = 1.2. When <italic>OR<sub>true</sub></italic> = 1.0, PS had to be equal to 5%, which was the case for the two approaches even if there was a slight increase for the less frequent event. These results can be considered as reference results as no data are missing.</p>
+<table-wrap id="pone-0104254-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0104254.t002.</object-id><label>Table 2</label><caption>
+<title>Root mean square error, and proportion of “significant” association with 95% confidence interval or credibility interval, on 100 replicates with no missing values.</title>
+</caption><alternatives><graphic id="pone-0104254-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0104254.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">OR = 1.0</td>
+<td colspan="2" align="left" rowspan="1">OR = 1.2</td>
+<td colspan="2" align="left" rowspan="1">OR = 1.4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RMSE</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Frequentist</bold></td>
+<td align="left" rowspan="1" colspan="1">0.10 [0.09, 0.11]</td>
+<td align="left" rowspan="1" colspan="1">0.17 [0.15, 0.19]</td>
+<td align="left" rowspan="1" colspan="1">0.10 [0.09, 0.11]</td>
+<td align="left" rowspan="1" colspan="1">0.12 [0.11, 0.13]</td>
+<td align="left" rowspan="1" colspan="1">0.09 [0.08, 0.10]</td>
+<td align="left" rowspan="1" colspan="1">0.12 [0.11, 0.13]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>Bayesian</bold></td>
+<td align="left" rowspan="1" colspan="1">0.10 [0.10, 0.11]</td>
+<td align="left" rowspan="1" colspan="1">0.17 [0.15, 0.19]</td>
+<td align="left" rowspan="1" colspan="1">0.10 [0.08, 0.11]</td>
+<td align="left" rowspan="1" colspan="1">0.12 [0.10, 0.14]</td>
+<td align="left" rowspan="1" colspan="1">0.09 [0.08, 0.11]</td>
+<td align="left" rowspan="1" colspan="1">0.12 [0.11, 0.14]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PS</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Frequentist</bold></td>
+<td align="left" rowspan="1" colspan="1">5 [1.6, 11.3]</td>
+<td align="left" rowspan="1" colspan="1">8 [3.5, 15.2]</td>
+<td align="left" rowspan="1" colspan="1">59 [48.7, 68.7]</td>
+<td align="left" rowspan="1" colspan="1">40 [30.3, 50.2]</td>
+<td align="left" rowspan="1" colspan="1">100</td>
+<td align="left" rowspan="1" colspan="1">83 [74.2, 89.8]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>Bayesian</bold></td>
+<td align="left" rowspan="1" colspan="1">4 [1.1, 9.9]</td>
+<td align="left" rowspan="1" colspan="1">7 [2.9, 13.9]</td>
+<td align="left" rowspan="1" colspan="1">61 [50.7, 70.6]</td>
+<td align="left" rowspan="1" colspan="1">39 [29.4, 49.3]</td>
+<td align="left" rowspan="1" colspan="1">100</td>
+<td align="left" rowspan="1" colspan="1">86 [77.6, 92.1]</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt106"><label/><p>Abbreviations: RMSE, root mean square error; OR, odds ratio; PS, proportion of “significant” association.</p></fn><fn id="nt107"><label/><p>Sample size for each simulated dataset: event 1 N = 2 551/event 2 N = 2 342.</p></fn></table-wrap-foot></table-wrap>
+<p><xref ref-type="table" rid="pone-0104254-t003">Table 3</xref> provides results of the RMSE on replicates with 95% of missing values. RMSE values ranged from 0.18 to 0.83 for event 1, and from 0.09 to 1.06 for event 2. For each event, RMSE slightly increased with OR. RMSE values were always lower in multiple imputation than in single imputation, whatever the imputation model (LM or PLS). Single imputation led to huge RMSE reflecting poor qualities of estimates. All results were confirmed with proportion of missing values of 75% and 85% (<xref ref-type="supplementary-material" rid="pone.0104254.s004">Table S2</xref>).</p>
+<table-wrap id="pone-0104254-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0104254.t003</object-id><label>Table 3</label><caption>
+<title>Root mean square error of beta coefficients with 95% confidence interval based on 100 replicates with 95% of missing values.</title>
+</caption><alternatives><graphic id="pone-0104254-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0104254.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">OR = 1.0</td>
+<td colspan="2" align="left" rowspan="1">OR = 1.2</td>
+<td colspan="2" align="left" rowspan="1">OR = 1.4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+<td align="left" rowspan="1" colspan="1">event 1</td>
+<td align="left" rowspan="1" colspan="1">event 2</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na omitted</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.33 [0.29, 0.36]</td>
+<td align="left" rowspan="1" colspan="1">0.11 [0.10, 0.12]</td>
+<td align="left" rowspan="1" colspan="1">0.22 [0.20, 0.24]</td>
+<td align="left" rowspan="1" colspan="1">0.09 [0.08, 0.10]</td>
+<td align="left" rowspan="1" colspan="1">0.18 [0.17, 0.20]</td>
+<td align="left" rowspan="1" colspan="1">0.17 [0.15, 0.18]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Single imputation</bold></td>
+<td align="left" rowspan="1" colspan="1">LM</td>
+<td align="left" rowspan="1" colspan="1">0.46 [0.42, 0.50]</td>
+<td align="left" rowspan="1" colspan="1">1.06 [0.95, 1.16]</td>
+<td align="left" rowspan="1" colspan="1">0.57 [0.52, 0.61]</td>
+<td align="left" rowspan="1" colspan="1">0.96 [0.89, 1.03]</td>
+<td align="left" rowspan="1" colspan="1">0.70 [0.66, 0.74]</td>
+<td align="left" rowspan="1" colspan="1">1.02 [0.95, 1.09]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PLS</td>
+<td align="left" rowspan="1" colspan="1">0.58 [0.47, 0.67]</td>
+<td align="left" rowspan="1" colspan="1">0.89 [0.75, 1.01]</td>
+<td align="left" rowspan="1" colspan="1">0.63 [0.52, 0.73]</td>
+<td align="left" rowspan="1" colspan="1">0.81 [0.70, 0.91]</td>
+<td align="left" rowspan="1" colspan="1">0.83 [0.71, 0.94]</td>
+<td align="left" rowspan="1" colspan="1">0.99 [0.82, 1.13]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Multiple imputation</bold></td>
+<td align="left" rowspan="1" colspan="1">LM</td>
+<td align="left" rowspan="1" colspan="1">0.30 [0.27, 0.32]</td>
+<td align="left" rowspan="1" colspan="1">0.33 [0.30, 0.36]</td>
+<td align="left" rowspan="1" colspan="1">0.29 [0.26, 0.32]</td>
+<td align="left" rowspan="1" colspan="1">0.29 [0.26, 0.32]</td>
+<td align="left" rowspan="1" colspan="1">0.30 [0.27, 0.33]</td>
+<td align="left" rowspan="1" colspan="1">0.29 [0.26, 0.31]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PLS</td>
+<td align="left" rowspan="1" colspan="1">0.48 [0.40, 0.56]</td>
+<td align="left" rowspan="1" colspan="1">0.75 [0.62, 0.85]</td>
+<td align="left" rowspan="1" colspan="1">0.49 [0.41, 0.56]</td>
+<td align="left" rowspan="1" colspan="1">0.66 [0.57, 0.74]</td>
+<td align="left" rowspan="1" colspan="1">0.65 [0.57, 0.73]</td>
+<td align="left" rowspan="1" colspan="1">0.76 [0.65, 0.86]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Bayesian approach</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.18 [0.16, 0.20]</td>
+<td align="left" rowspan="1" colspan="1">0.26 [0.23, 0.29]</td>
+<td align="left" rowspan="1" colspan="1">0.18 [0.16, 0.20]</td>
+<td align="left" rowspan="1" colspan="1">0.24 [0.20, 0.27]</td>
+<td align="left" rowspan="1" colspan="1">0.19 [0.17, 0.22]</td>
+<td align="left" rowspan="1" colspan="1">0.24 [0.21, 0.26]</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt108"><label/><p>Abbreviations: LM, linear model; OR, odds ratio; PLS, partial least squares.</p></fn><fn id="nt109"><label/><p>Sample size for each simulated dataset: event 1 N = 2 551/event 2 N = 2 342.</p></fn></table-wrap-foot></table-wrap>
+<p><xref ref-type="supplementary-material" rid="pone.0104254.s001">Figure S1</xref> shows boxplots of beta estimates obtained from Bayesian approach, from 100 simulations for the three different values of <italic>OR<sub>true</sub></italic>. When <italic>OR<sub>true</sub></italic> is equal to 1.0, the range of estimates increased with the proportion of missing values and with the decrease of event prevalence. These results were also observed when <italic>OR<sub>true</sub></italic> = 1.2 and <italic>OR<sub>true</sub></italic> = 1.4. Moreover, an underestimation of beta (and so of OR) was obtained when <italic>OR<sub>true</sub></italic> = 1.4.</p>
+<p>When <italic>OR<sub>true</sub></italic> is equal to 1, real risk of type I error is assessed by PS while the theoretical one was fixed at 5% (<xref ref-type="supplementary-material" rid="pone.0104254.s005">Table S3</xref>). For event 1 with 95% of missing data, single imputation led to very high risks (23% [15.2, 32.5] and 21% [13.5, 30.3] for LM and PLS, respectively). If missing proportion is 75% or 85%, huge risks of type I error were again found for single imputation. For event 2, PS considerably increased for single imputation, 35% [25.7, 45.2] and 42% [32.2, 52.3] for LM and PLS, respectively. This increase was confirmed with 75% and 85% of missing values. Multiple imputation led to always conservative results explained by large confidence intervals of OR obtained with this approach whether for event 1 or 2. Bayesian approach led to increase risk of type I error. For event 1, this increase seems reasonable because 5% is always in the confidence interval (7% [2.9, 13.9] with 95% missing values). For the infrequent event 2, risk of type I error increases and excluding 5% from confidence intervals when 85% and 95% of data are missing (e.g. 16% [9.4, 24.7] with 95% missing values).</p>
+<p><xref ref-type="fig" rid="pone-0104254-g001">Figure 1</xref> presents PS when <italic>OR<sub>true</sub></italic> is greater than 1 and 95% of missing values for two events and for all approaches, excluding single imputation which had given a weak quality on estimates and overestimated risk of type I error. As expected, statistical power increased with <italic>OR<sub>true</sub></italic> and decreased for infrequent event. Weak performances were obtained for multiple linear and PLS imputation. This figure clearly shows highest PS for Bayesian model near reference power on complete data (<xref ref-type="table" rid="pone-0104254-t001">Table 1</xref>) especially for event 1, all other approaches giving a null or quasi null power for <italic>OR<sub>true</sub></italic> = 1.2 and <italic>OR<sub>true</sub></italic> = 1.4, respectively. <xref ref-type="supplementary-material" rid="pone.0104254.s002">Figure S2</xref> presents PS when <italic>OR<sub>true</sub></italic> is greater than 1 for 85% and 75% of missing values. Highest PS were clearly obtained for Bayesian model.</p>
+<fig id="pone-0104254-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0104254.g001</object-id><label>Figure 1</label><caption>
+<title>Proportions of significant associations based on 100 replicates, for each approach dealing with 95% missing values.</title>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0104254.g001" position="float" xlink:type="simple"/></fig>
+<p>And with 50% of missing data, statistical power increased remaining the best for Bayesian approach especially for infrequent event (near 80% by Bayesian approach against 53% by LM multiple imputation when <italic>OR<sub>true</sub></italic> = 1.4).</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>This paper addresses the crucial question of how to handle large amounts of missing data in environmental epidemiological surveys. Till now, as far as we know, very few teams have compared performances of approaches handling missing values with a proportion of missingness above 75% <xref ref-type="bibr" rid="pone.0104254-Scheffer1">[27]</xref>, <xref ref-type="bibr" rid="pone.0104254-Lee1">[28]</xref>. To solve this question, we used both real and simulated data to determine the most appropriate approach when there is a large amount of missing data. Results on RMSE and PS showed poor performances with single imputation. Fully Bayesian approach seems better, followed by imputation approaches, which in turn gave better results than omitting missing observations.</p>
+<p>As expected, we found that omitting missing values is less efficient than single and multiple imputations. Even if it is the easiest approach for handling missing values, it should be used only in presence of less than 5% of missing values <xref ref-type="bibr" rid="pone.0104254-Rubin3">[29]</xref> because it should induce a significant loss of statistical power: unrealistic when the health outcome is infrequent and problematic in environmental studies where pollutants have often a weak impact.</p>
+<p>Another common approach for handling missing values is to impute them before any analysis which is commonly used in environmental epidemiological studies to estimate exposure levels for all study members. An increase in power is the substantial benefit of this alternative over omitting missing values. Nevertheless, the specification of the imputation model is an important step. As previously demonstrated, if the imputation model is not properly specified the imputation approach could introduce a bias which is not present in omitting missing values when missingness is MCAR <xref ref-type="bibr" rid="pone.0104254-Lee1">[28]</xref>. It has been observed that including many relevant variables in the imputation model tends to make the missing at random assumption more plausible <xref ref-type="bibr" rid="pone.0104254-Steyerberg1">[30]</xref>, even if computational problems could occur such as multicollinearity and a large number of predictors might provide instable estimates. Previous authors showed the importance of including the health outcome because regression coefficients came close to the truth <xref ref-type="bibr" rid="pone.0104254-Moons1">[31]</xref>, <xref ref-type="bibr" rid="pone.0104254-Sterne1">[32]</xref>. Note that inclusion of the health outcome implies that the imputation procedure has to be renewed for each new health outcome.</p>
+<p>Single imputation is easy to implement, but the major disadvantage is the overestimation of association between exposure and health outcome increasing with the strength of the association. As explained by Rubin <xref ref-type="bibr" rid="pone.0104254-Rubin1">[4]</xref>, this overstatement is certainly due to that one imputed value cannot itself represent uncertainty about imputed value.</p>
+<p>Conversely, multiple imputation takes into account the uncertainty and thus, does not underestimate the variance of estimates. But this approach is conservative. In fact, as previously described in the literature <xref ref-type="bibr" rid="pone.0104254-Moons1">[31]</xref>, large imprecision of OR estimates was observed, thus yielding to no significant associations. Moreover, concerning the choice of the number of imputations, it has been suggested <xref ref-type="bibr" rid="pone.0104254-Rubin1">[4]</xref>, that less than 10 imputed datasets are useful compared with an infinite number of imputations. However, when the percentage of missing values is huge, more than 10 imputations may be needed and the number of imputed data should approximate the number of observations with missing data, as previously suggested <xref ref-type="bibr" rid="pone.0104254-Bodner1">[33]</xref>. Although 2 000 imputations could have been sufficient in this study, we fitted 10 000 imputed datasets as a precaution even if it was time consuming. Bayesian joint modelling appears to be less conservative with a statistical power near 75% for event 1 (near 55% for the infrequent event 2) when <italic>OR<sub>true</sub></italic> = 1.4 with 95% of missing data. Nevertheless, it is important to notice that risk of type I error tends to increase, slightly for event 1 (near 7%) and much more for the infrequent event 2 (near 16%). Even if the RMSE is always smaller for the Bayesian approach compared to the other approaches and indicates a better performance in terms of estimates, boxplots of the beta estimates from 100 simulations under <italic>OR<sub>true</sub></italic> = 1.0 clearly show that the range of estimates increases with decrease of event prevalence and with increase in the missing values proportion. This result is confirmed when OR is greater than one but a bias appears when <italic>OR<sub>true</sub></italic> increases. Thus, caution should be taken when interpreting results for an infrequent event with high proportion of missing values. In addition, the use of empirical approaches (e.g. bootstrap, Monte Carlo study) could be useful to assess the real risk of type I error.</p>
+<p>For infrequent events (for instance with prevalence less than 10%) and high proportion of missing values, statistical power remains too weak. Bayesian approach offers the possibility to obtain easily estimated posterior distribution of OR which could be a useful tool to refine conclusions. Posterior probability of OR being smaller than 1 can indeed be deduced and such probability between 5% and 10% could be considered weak enough to conclude an “almost significant” association. This strategy would lead to three possible conclusions: “not significant”, “significant” or “almost significant”. Thus, for event 2, the classical approach yields 46 non significant associations when <italic>OR<sub>true</sub></italic> = 1.4, but among them, 7 would be declared as “almost significant”. It is noteworthy that the proportion of non significant associations now labeled “almost significant” increases with <italic>OR<sub>true</sub></italic> from 8.8% (<italic>OR<sub>true</sub></italic> = 1.2) to 15.2% (<italic>OR<sub>true</sub></italic> = 1.4). If the type I error is assessed only among associations not declared “almost significant”, it remains stable (16% and 17.8% for classical and this new strategy, respectively).</p>
+<p>In conclusion, among the methods dealing with missing data, no approach is absolutely better than the others in all circumstances. In the presence of high proportions of missing values, using only complete data yields to a significant loss of statistical power. Single imputation underestimates the variance, thus overestimating the association between environmental factor and health outcome. Multiple imputation, due to overcoverage, is too conservative and unable to show significant associations. When the health outcome is frequent, joint modelling seems to be more efficient than other approaches, combining low RMSE, limited increase of risk of type I error, and high statistical power. The simulation study is useful for explaining the disparity of associations found in the real data, for example for LRI (<xref ref-type="table" rid="pone-0104254-t001">Table 1</xref>) corresponding to a frequent event. Indeed, the characteristics of each method highlighted by the simulation study are found in the real case, i.e. bias using simple imputation, lack of power using multiple imputation, and significant association using Bayesian approach. The conclusion of a significant association between formaldehyde exposure and LRI is strengthened. With regards to the infrequent event, DNC, only a tendency of an association is observed. No approach gives completely satisfactory results when the health outcome is infrequent and the proportion of missing values is high. Though the Bayesian modelling has the best power and precision of estimates, this comes at a cost of inflated risk of type I error. However, estimated posterior distribution of OR would be helpful to refine the conclusion by introducing a new category of “almost significant association” when probability of OR less than 1 is between 5% and 10%. Concerning inflation of risk of type I error, correcting methodology as bootstrap could be implemented. This would lead certainly to very huge computer time as MCMC iterative algorithm would be used on each bootstrapped sample. An alternative approach to MCMC in repeated Bayesian estimations such as “Importance Sampling” could be envisaged <xref ref-type="bibr" rid="pone.0104254-Gajda1">[34]</xref>.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0104254.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0104254.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Boxplots of </bold><bold><italic>β</italic></bold><bold> (</bold><bold><italic>β  =  ln OR</italic></bold><bold>) estimates under Bayesian approach from 100 simulated datasets for the three different values of true OR dealing with no missing values, 75%, 85% and 95% of missing values.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0104254.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0104254.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>Proportions of significant associations based on 100 replicates, for each approach dealing with 85%, and 75% of missing values.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0104254.s003" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pone.0104254.s003" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Predictive factors of formaldehyde exposure and covariates used for adjustment in the model relating formaldehyde exposure and health indicator.</bold></p>
+<p>(DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0104254.s004" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pone.0104254.s004" position="float" xlink:type="simple"><label>Table S2</label><caption>
+<p><bold>Root mean square error of beta coefficients with 95% confidence interval based on 100 replicates with 85%, and 75% of missing values.</bold></p>
+<p>(DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0104254.s005" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pone.0104254.s005" position="float" xlink:type="simple"><label>Table S3</label><caption>
+<p><bold>Proportions of significant associations with 95% confidence interval based on 100 replicates with 95%, 85% and 75% of missing values when </bold><bold><italic>OR<sub>true</sub></italic></bold><bold> = 1.</bold></p>
+<p>(DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors wish to thank the families for their participation and the administrative staff for their involvement in the PARIS study. The authors would like to thank the editor and the referees for helpful suggestions that lead to significant improvements.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0104254-Vach1"><label>1</label>
+<mixed-citation publication-type="other" xlink:type="simple">Vach W, Blettner M (2005) Missing data in epidemiologic studies. Encyclopedia of Biostatistics: John Wiley &amp; Sons.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Jia1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jia</surname><given-names>C</given-names></name>, <name name-style="western"><surname>D'Souza</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Batterman</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Distributions of personal VOC exposures: a population-based analysis</article-title>. <source>Environ Int</source> <volume>34</volume>: <fpage>922</fpage>–<lpage>931</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Fusco1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fusco</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Forastiere</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Michelozzi</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Spadea</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ostro</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Air pollution and hospital admissions for respiratory conditions in Rome, Italy</article-title>. <source>Eur Respir J</source> <volume>17</volume>: <fpage>1143</fpage>–<lpage>1150</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Rubin1"><label>4</label>
+<mixed-citation publication-type="other" xlink:type="simple">Rubin DB (2004) Multiple imputation for nonresponse in surveys: Wiley.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Barzi1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barzi</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Woodward</surname><given-names>M</given-names></name> (<year>2004</year>) <article-title>Imputations of missing values in practice: results from imputations of serum cholesterol in 28 cohort studies</article-title>. <source>Am J Epidemiol</source> <volume>160</volume>: <fpage>34</fpage>–<lpage>45</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Schafer1"><label>6</label>
+<mixed-citation publication-type="other" xlink:type="simple">Schafer J (1997) Analysis of incomplete multivariate data. Monographs on statistics and applied probability.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Klebanoff1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Klebanoff</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Cole</surname><given-names>SR</given-names></name> (<year>2008</year>) <article-title>Use of multiple imputation in the epidemiologic literature</article-title>. <source>Am J Epidemiol</source> <volume>168</volume>: <fpage>355</fpage>–<lpage>357</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Carrigan1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carrigan</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Barnett</surname><given-names>AG</given-names></name>, <name name-style="western"><surname>Dobson</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Mishra</surname><given-names>G</given-names></name> (<year>2007</year>) <article-title>Compensating for Missing Data from Longitudinal Studies Using WinBUGS</article-title>. <source>J Stat Softw</source> <volume>19</volume>: <fpage>1</fpage>–<lpage>17</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Gryparis1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gryparis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Paciorek</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Zeka</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Schwartz</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Coull</surname><given-names>BA</given-names></name> (<year>2009</year>) <article-title>Measurement error caused by spatial misalignment in environmental epidemiology</article-title>. <source>Biostatistics</source> <volume>10</volume>: <fpage>258</fpage>–<lpage>274</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Gelman1"><label>10</label>
+<mixed-citation publication-type="other" xlink:type="simple">Gelman A, Carlin JB, Stern HS, Rubin DB (2003) Bayesian Data Analysis. 2nd Edition. CRC Press.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Roda1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roda</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Kousignian</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Guihenneuc-Jouyaux</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Dassonville</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Nicolis</surname><given-names>I</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Formaldehyde Exposure and Lower Respiratory Infections in Infants: Findings from the PARIS Cohort Study</article-title>. <source>Environ Health Perspect</source> <volume>119</volume>: <fpage>1653</fpage>–<lpage>1658</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Clarisse1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clarisse</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Nikasinovic</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Poinsard</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Just</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Momas</surname><given-names>I</given-names></name> (<year>2007</year>) <article-title>The Paris prospective birth cohort study: which design and who participates?</article-title> <source>Eur J Epidemiol</source> <volume>22</volume>: <fpage>203</fpage>–<lpage>210</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Roda2"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roda</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Guihenneuc-Jouyaux</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Momas</surname><given-names>I</given-names></name> (<year>2013</year>) <article-title>Environmental triggers of nocturnal dry cough in infancy: New insights about chronic domestic exposure to formaldehyde in the PARIS birth cohort</article-title>. <source>Environ Res</source> <volume>123</volume>: <fpage>46</fpage>–<lpage>51</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Dassonville1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dassonville</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Demattei</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Laurent</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Le Moullec</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Seta</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Assessment and predictor determination of indoor aldehyde levels in Paris newborn babies' homes</article-title>. <source>Indoor Air</source> <volume>19</volume>: <fpage>314</fpage>–<lpage>323</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Rubin2"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rubin</surname><given-names>DB</given-names></name> (<year>1976</year>) <article-title>Inference and missing data</article-title>. <source>Biometrika</source> <volume>63</volume>: <fpage>581</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Tenenhaus1"><label>16</label>
+<mixed-citation publication-type="other" xlink:type="simple">Tenenhaus M (1998) [La régression PLS: théorie et pratique]: Technip.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Gilks1"><label>17</label>
+<mixed-citation publication-type="other" xlink:type="simple">Gilks WR, Richardson S, Spiegelhalter DJ (1996) Markov Chain Monte Carlo in Practice. London, UK: Chapman &amp; Hall.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Carpenter1"><label>18</label>
+<mixed-citation publication-type="other" xlink:type="simple">Carpenter J, Kenward M (2005) Example Analyses Using WinBUGS 1.4. Available: <ext-link ext-link-type="uri" xlink:href="http://www.missingdata.org.uk/" xlink:type="simple">http://www.missingdata.org.uk/</ext-link>. Accessed 2011 Feb 2.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Bo1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bo</surname><given-names>TH</given-names></name>, <name name-style="western"><surname>Dysvik</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Jonassen</surname><given-names>I</given-names></name> (<year>2004</year>) <article-title>LSimpute: accurate estimation of missing values in microarray data with least squares methods</article-title>. <source>Nucleic Acids Res</source> <volume>32</volume>: <fpage>e34</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Brock1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brock</surname><given-names>GN</given-names></name>, <name name-style="western"><surname>Shaffer</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Blakesley</surname><given-names>RE</given-names></name>, <name name-style="western"><surname>Lotz</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Tseng</surname><given-names>GC</given-names></name> (<year>2008</year>) <article-title>Which missing value imputation method to use in expression profiles: a comparative study and two selection schemes</article-title>. <source>BMC Bioinformatics</source> <volume>9</volume>: <fpage>12</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Kim1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Golub</surname><given-names>GH</given-names></name>, <name name-style="western"><surname>Park</surname><given-names>H</given-names></name> (<year>2005</year>) <article-title>Missing value estimation for DNA microarray gene expression data: local least squares imputation</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>187</fpage>–<lpage>198</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Little1"><label>22</label>
+<mixed-citation publication-type="other" xlink:type="simple">Little RJA, Rubin DB (2002) Statistical analysis with missing data, 2nd edition. New York: John Wiley.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Burton1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Burton</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Altman</surname><given-names>DG</given-names></name>, <name name-style="western"><surname>Royston</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Holder</surname><given-names>RL</given-names></name> (<year>2006</year>) <article-title>The design of simulation studies in medical statistics</article-title>. <source>Stat Med</source> <volume>25</volume>: <fpage>4279</fpage>–<lpage>4292</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Clopper1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clopper</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pearson</surname><given-names>E</given-names></name> (<year>1934</year>) <article-title>The use of confidence or fiducial limits illustrated in the case of the binomial</article-title>. <source>Biometrika</source> <volume>26</volume>: <fpage>404</fpage>–<lpage>413</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-R1"><label>25</label>
+<mixed-citation publication-type="other" xlink:type="simple">R Development Core Team (2011) R: A language and environment for statistical computing. In: R Foundation for Statistical Computing, editor. Vienna, Austria.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Lunn1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lunn</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Thomas</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Best</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Spiegelhalter</surname><given-names>D</given-names></name> (<year>2000</year>) <article-title>WinBUGS-A Bayesian modelling framework: Concepts, structure, and extensibility</article-title>. <source>Stat Comput</source> <volume>10</volume>: <fpage>325</fpage>–<lpage>337</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Scheffer1"><label>27</label>
+<mixed-citation publication-type="other" xlink:type="simple">Scheffer J (2002) Dealing with Missing Data. Res Lett Inf Math Sci: 153–160.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Lee1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>KJ</given-names></name>, <name name-style="western"><surname>Carlin</surname><given-names>JB</given-names></name> (<year>2012</year>) <article-title>Recovery of information from multiple imputation: a simulation study</article-title>. <source>Emerg Themes Epidemiol</source> <volume>9</volume>: <fpage>3</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Rubin3"><label>29</label>
+<mixed-citation publication-type="other" xlink:type="simple">Rubin DB (1987) Multiple imputation for nonresponse in surveys. New York, NY: John Wiley and Sons, Inc.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Steyerberg1"><label>30</label>
+<mixed-citation publication-type="other" xlink:type="simple">Steyerberg EW (2009) Clinical prediction models: A practical approach to development, validation, and updating: Springer.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Moons1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moons</surname><given-names>KG</given-names></name>, <name name-style="western"><surname>Donders</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Stijnen</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Harrell</surname><given-names>FE</given-names><suffix>Jr</suffix></name> (<year>2006</year>) <article-title>Using the outcome for imputation of missing predictor values was preferred</article-title>. <source>J Clin Epidemiol</source> <volume>59</volume>: <fpage>1092</fpage>–<lpage>1101</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Sterne1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sterne</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>White</surname><given-names>IR</given-names></name>, <name name-style="western"><surname>Carlin</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Spratt</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Royston</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Multiple imputation for missing data in epidemiological and clinical research: potential and pitfalls</article-title>. <source>BMJ</source> <volume>338</volume>: <fpage>b2393</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Bodner1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bodner</surname><given-names>TE</given-names></name> (<year>2008</year>) <article-title>What improves with increased missing data imputations?</article-title> <source>Struct Equ Modeling-a Multidisciplinary Journal</source> <volume>15</volume>: <fpage>651</fpage>–<lpage>675</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0104254-Gajda1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gajda</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Guihenneuc-Jouyaux</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Rousseau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Mengersen</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Nur</surname><given-names>D</given-names></name> (<year>2010</year>) <article-title>Use in practice of importance sampling for repeated MCMC for Poisson models</article-title>. <source>Electron J Stat</source> <volume>4</volume>: <fpage>361</fpage>–<lpage>383</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

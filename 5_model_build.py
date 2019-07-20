@@ -31,6 +31,7 @@ def data_get(condition):
     cited_years = []
     cited_nos = []
     pub_years = []
+    year_diff = []
     locations = []
     for docu in cursor:
         cited_year = docu["cited_year"]
@@ -41,19 +42,20 @@ def data_get(condition):
             cited_years.append(cited_year)
             pub_years.append(pub_year)
             cited_nos.append(cited_no)
+            year_diff.append(pub_year-cited_year)
         for loc in location:
             locations.append(loc)        
     print(all_list(locations))
-    return (cited_nos,cited_years,pub_years,locations)
+    return (year_diff,cited_years,locations)
 
 
-def data_remove():
+def data_remove(range_max):
     remove_list = []
     client = pymongo.MongoClient('localhost:27017', connect=True)
     db = client['msc_project']
     collection = db['citations']
-    for i in range(21,71):
-        condition = {'$and':[{"cited_no": i },{"location_num":{'$exists':True}}]}
+    for i in range(21, range_max+1):
+        condition = {'$and': [{"cited_no": i}, {"location_num": {'$exists': True}}]}
         cursor = collection.find(condition)
         locations = []
         for docu in cursor:
@@ -64,7 +66,7 @@ def data_remove():
         for k,v in loc_list.items():
             if v/len(locations) >= 0.7:
                 remove_list.append(i)
-    return (remove_list)
+    return remove_list
 
 
 def model_svm(X,y):
@@ -86,6 +88,21 @@ def model_svm(X,y):
     # plt.legend(loc="best")
     # plt.show()
 
+def parameter_tune(range_max):
+    client = pymongo.MongoClient('localhost:27017', connect=True)
+    db = client['msc_project']
+    collection = db['citations']
+    condition = {'$and': [{"cited_no": {"$gt": 20, "$lte": range_max}}, {"location_num": {'$exists': True}}]}
+    year_diff, cited_years, locations = data_get(condition)
+    X = list(zip(cited_years, year_diff))
+    y = locations
+    tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
+                         'C': [1, 10, 100, 1000]},
+                        {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
+    grid = GridSearchCV(SVC(), tuned_parameters, cv=5)
+    grid.fit(X, y)
+    print("The best parameters are %s with a score of %0.2f"% (grid.best_params_, grid.best_score_))
+
 
 # def model_bayes(X,y):
 #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
@@ -97,42 +114,40 @@ def model_svm(X,y):
 #     print(score.mean())
 
 
-# print(data_remove())
-citation_num = []
-score = []
-cv_score = []
-for a in range(21):
-    highly_cited = []
-    for i in range(21,71):
-        if i not in data_remove():
-            condition = {'$and':[{"cited_no": i },{"location_num":{'$exists':True}}]}
-            client = pymongo.MongoClient('localhost:27017',connect = True)
-            db = client['msc_project']
-            collection = db['citations']
-            if collection.find(condition).count() > a*10:
+def model_score_visualize(range_max):
+    citation_num = []
+    score = []
+    cv_score = []
+    client = pymongo.MongoClient('localhost:27017', connect=True)
+    db = client['msc_project']
+    collection = db['citations']
+    for a in range(22):
+        highly_cited = []
+        for i in range(21, range_max+1):
+            condition = {'$and': [{"cited_no": i}, {"location_num": {'$exists': True}}]}
+            if collection.find(condition).count() >= a * 10:
                 highly_cited.append(i)
-    print(highly_cited)
-    condition = {'$and':[{"cited_no": {"$in":highly_cited} },{"location_num":{'$exists':True}}]}
-    cited_nos,cited_years,pub_years,locations = data_get(condition)
-    X = list(zip(cited_years, pub_years))
-    y = locations
-    model = model_svm(X, y)
-    citation_num.append(a*10)
-    score.append(model[0])
-    cv_score.append(model[1])
-print(score)
-print(cv_score)
-plt.plot(citation_num, score, label = 'Accuracy')
-plt.plot(citation_num, cv_score, label ='Cross-Validation Accuracy')
-plt.xlabel('Number of Citations')
-plt.ylabel('Score')
-plt.legend()
-plt.show()
+        print(highly_cited)
+        condition = {'$and': [{"cited_no": {"$in": highly_cited}}, {"location_num": {'$exists': True}}]}
+        year_diff, cited_years, locations = data_get(condition)
+        X = list(zip(cited_years, year_diff))
+        y = locations
+        model = model_svm(X, y)
+        citation_num.append(a * 10)
+        score.append(model[0])
+        cv_score.append(model[1])
+    print(score)
+    print(cv_score)
+    plt.plot(citation_num, score, label='Accuracy')
+    plt.plot(citation_num, cv_score, label='Cross-Validation Accuracy')
+    plt.xlabel('Number of Citations')
+    plt.ylabel('Score')
+    plt.legend()
+    plt.show()
 
 
-    # tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
-    #                      'C': [1, 10, 100, 1000]},
-    #                     {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
-    # grid = GridSearchCV(SVC(), tuned_parameters, cv=5)
-    # grid.fit(X, y)
-    # print("The best parameters are %s with a score of %0.2f"% (grid.best_params_, grid.best_score_))
+# print(data_remove(110))
+parameter_tune(110)
+# model_score_visualize(110)
+
+

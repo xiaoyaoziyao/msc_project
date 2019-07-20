@@ -62,5 +62,4 @@ def main_function(i):
             DOI_find_highpaper(collection,file,num)
     client.close()
     
-# main_function(6)
-# main_function(7)
+main_function(11)

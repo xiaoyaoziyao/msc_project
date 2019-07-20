@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+	<front>
+		<journal-meta>
+    <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+    <journal-id journal-id-type="publisher-id">plos</journal-id>
+    <journal-id journal-id-type="pmc">plosone</journal-id>
+    <journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group>
+    <issn pub-type="epub">1932-6203</issn>
+    <publisher><publisher-name>Public Library of Science</publisher-name>
+    <publisher-loc>San Francisco, USA</publisher-loc></publisher>
+    </journal-meta><article-meta>
+			<article-id pub-id-type="publisher-id">PONE-D-13-18197</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0071496</article-id><article-categories><subj-group subj-group-type="heading">
+    <subject>Research Article</subject></subj-group></article-categories><title-group>
+				<article-title>A Monte Carlo Permutation Test for Random Mating Using Genome Sequences</article-title>
+			<alt-title alt-title-type="running-head">Random Mating Test of Sequencing Data</alt-title>
+      </title-group>
+			<contrib-group>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Li</surname>
+						<given-names>Ran</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Wang</surname>
+						<given-names>Minxian</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Jin</surname>
+						<given-names>Li</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+					<xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>He</surname>
+						<given-names>Yungang</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1"><label>1</label> <addr-line>Chinese Academy of Sciences and Max Planck Society (CAS-MPG) Partner Institute for Computational Biology, Shanghai Institutes for Biological Sciences, Chinese Academy of Sciences, Shanghai, China</addr-line></aff>
+			<aff id="aff2"><label>2</label> <addr-line>Key Laboratory of Computational Biology, Chinese Academy of Sciences and Max Planck Society (CAS-MPG) Partner Institute for Computational Biology, Chinese Academy of Sciences, Shanghai, China</addr-line></aff>
+			<aff id="aff3"><label>3</label> <addr-line>State Key Laboratory of Genetic Engineering and Ministry of Education Key Laboratory of Contemporary Anthropology, School of Life Sciences and Institutes of Biomedical Sciences, Fudan University, Shanghai, China</addr-line></aff>
+			<contrib-group><contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zhang</surname>
+            <given-names>Ge</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+        </contrib-group><aff id="edit1"><addr-line>Cincinnati Children's Hospital Medical Center, United States of America</addr-line></aff><author-notes>
+				<corresp id="cor1">* E-mail: <email xlink:type="simple">lijin.fudan@gmail.com</email> (LJ); <email xlink:type="simple">yunganghe@picb.ac.cn</email> (YH)</corresp>
+			<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn><fn fn-type="con"><p>Conceived and designed the experiments: YH LJ. Performed the experiments: RL. Analyzed the data: RL MW. Wrote the manuscript: RL YH. </p></fn></author-notes>
+			<pub-date pub-type="collection"><year>2013</year></pub-date><pub-date pub-type="epub">
+        <day>5</day>
+        <month>8</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume><issue>8</issue><elocation-id>e71496</elocation-id><history><date date-type="received">
+          <day>3</day>
+          <month>5</month>
+          <year>2013</year>
+        </date>
+        <date date-type="accepted">
+          <day>5</day>
+          <month>7</month>
+          <year>2013</year>
+        </date>
+      </history>
+    	<permissions>
+    		<copyright-year>2013</copyright-year>
+    		<copyright-holder>Li et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+				<p>Testing for random mating of a population is important in population genetics, because deviations from randomness of mating may indicate inbreeding, population stratification, natural selection, or sampling bias. However, current methods use only observed numbers of genotypes and alleles, and do not take advantage of the fact that the advent of sequencing technology provides an opportunity to investigate this topic in unprecedented detail. To address this opportunity, a novel statistical test for random mating is required in population genomics studies for which large sequencing datasets are generally available. Here, we propose a Monte-Carlo-based-permutation test (MCP) as an approach to detect random mating. Computer simulations used to evaluate the performance of the permutation test indicate that its type I error is well controlled and that its statistical power is greater than that of the commonly used chi-square test (CHI). Our simulation study shows the power of our test is greater for datasets characterized by lower levels of migration between subpopulations. In addition, test power increases with increasing recombination rate, sample size, and divergence time of subpopulations. For populations exhibiting limited migration and having average levels of population divergence, the statistical power approaches 1 for sequences longer than 1Mbp and for samples of 400 individuals or more. Taken together, our results suggest that our permutation test is a valuable tool to detect random mating of populations, especially in population genomics studies.</p>
+			</abstract>
+		<funding-group><funding-statement>This work was supported by grants from the National Natural Science Foundation of China (81100997 and 31171279 to YH; 30890034 and 30625016 to LJ). LJ was also supported by the Shanghai Leading Academic Discipline Project (B111) and the Center for Evolutionary Biology at Fudan University. YH gratefully acknowledges the supports of SA-SIBS scholarship program and the Youth Innovation Promotion Association of Chinese Academy of Science. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1" sec-type="introduction">
+			<title>Introduction</title>
+			<p>In a random mating population all individuals have an equal chance of being a mating partner. In population genetics, deviations from random mating may indicate inbreeding, population stratification, natural selection or sampling bias. Extensive association studies have been conducted on population samples to search for genes underlying complex traits through linkage disequilibrium of these genes with markers [<xref ref-type="bibr" rid="B1">1</xref>–<xref ref-type="bibr" rid="B8">8</xref>]. However, when samples originate from a non-random mating population, spurious associations may arise between marker loci and complex traits. In evolutionary studies, it is important to determine whether a given locus is under random mating since deviations may be due to natural or artificial selection [<xref ref-type="bibr" rid="B9">9</xref>]. In population genetics, samples are usually tested to determine if they are derived from the same random mating population [<xref ref-type="bibr" rid="B9">9</xref>], since the samples might exhibit signs of genetic stratification even if they are from one locality.</p>
+			<p>Many methods have been proposed to test for random mating. They can be divided into two categories: asymptotic and exact tests. Several asymptotic tests (also know as “goodness-of-fit” or<italic>χ</italic><sup>2</sup> tests) have been developed based on asymptotic theory. They perform well when considering independent loci having a small number of alleles [<xref ref-type="bibr" rid="B10">10</xref>–<xref ref-type="bibr" rid="B12">12</xref>]. However, for loci having a large number of alleles, the contingency table used to implement asymptotic tests usually contains too many empty cells and the number of individuals in the sample is insufficient for large sample theory to be applied [<xref ref-type="bibr" rid="B13">13</xref>–<xref ref-type="bibr" rid="B24">24</xref>]. Although the “single allele test” addresses the problem of sparse tables by analyzing each allele separately, the statistical power of this approach is limited because multiple comparisons are made [<xref ref-type="bibr" rid="B9">9</xref>]. With the advent of dense genome-wide sequencing, loci having large numbers of alleles, and the genome as a whole, are now available for populations genomics investigation [<xref ref-type="bibr" rid="B25">25</xref>]. These studies generate sparse-matrix data for which asymptotic methods are not reliable. In such cases, exact methods are necessary.</p>
+			<p>Exact tests use the exact probability of potential outcomes rather than using an asymptotic probability distribution. The p-value of the exact test is given by the sum of the exact probabilities of the allele combinations that deviate from the null hypothesis of random mating by at least as much as the observed sample. The idea of the exact test was first proposed by Fisher (1935) and subsequently advocated by Levene (1949) and Haldane (1954) in genetics [<xref ref-type="bibr" rid="B26">26</xref>,<xref ref-type="bibr" rid="B27">27</xref>]. However, the application of the exact test was hindered by its computational complexity until Louis and Dempster (1987) proposed a complete enumeration algorithm to compute the p-value for this test [<xref ref-type="bibr" rid="B15">15</xref>]. Unfortunately, this method is computationally impractical when the number of alleles is large. This prompted the development of Monte Carlo (MC) and Markov chain Monte Carlo (MCMC) methods, which are easy to perform and have become widely used in population genetics [<xref ref-type="bibr" rid="B16">16</xref>,<xref ref-type="bibr" rid="B17">17</xref>].</p>
+			<p>In addition to the above statistical tests, some other methods, such as STRUCTURE analysis and PCA analysis, can be used to infer possible genetic substructure of populations, thus providing evidence of random mating [<xref ref-type="bibr" rid="B4">4</xref>,<xref ref-type="bibr" rid="B28">28</xref>–<xref ref-type="bibr" rid="B30">30</xref>]. However, these methods cannot act as a substitute for statistical tests of random mating.</p>
+			<p>Neither asymptotic nor exact tests possess enough statistical power to take advantage of the large amount of polymorphism data made available by genome-wide sequencing. Therefore, there is considerable interest in novel statistical tests for detecting random mating using large-scale sequencing data. In this study, we address the shortcomings of the existing methods by developing a Monte-Carlo-based-permutation (MCP) test to detect random mating. Using computer simulations, we demonstrate that the MCP test performs well on large-scale sequencing data and that its statistical power is greater than that of the classical chi-square test (CHI test). Here, we discuss the influence of genetic and demographic parameters, such as sequence length, sample size, mutation rate, recombination rate, divergence time, and migration rate, on the performance of the MCP test.</p>
+		</sec>
+		<sec id="s2" sec-type="materials|methods">
+			<title>Materials and Methods</title>
+			<sec id="s2.1">
+				<title>Model of random mating for sequence data</title>
+				<p>A random mating population is one in which all individuals have the same probability of being mating partners. In other words, potential mates have an equal chance of being chosen, without being influenced by environmental, hereditary, or social factors. In this context, the process of random mating can be treated as a random sampling process. In our MCP method, we simulated random mating as the pairing of sequences from randomly selected individuals. Random mating was simulated for a sample of individuals as follows: (i) two gametes from these individuals, which were not necessarily from the same individual, were randomly chosen without replacement to generate a new individual; (ii) further two gametes were then randomly chosen from the remaining pool of gametes to generate another new individual; (iii) this process was repeated until every gamete had been chosen. By treating this process as a simple Monte Carlo permutation procedure, individuals from a random mating population were simulated. After choosing an appropriate statistic, the null distribution of this statistic from a random mating sample can be obtained. By comparing the observed statistic to its null distribution, standard hypothesis testing can be performed to determine if the sample is derived from a random mating population. This approach resembles an exact test which randomly samples alleles [<xref ref-type="bibr" rid="B17">17</xref>].</p>
+			</sec>
+			<sec id="s2.2">
+				<title>Average Pairwise difference within individuals as a statistic</title>
+				<p>Pairwise difference, denoted by ξ in this study, is the number of different nucleotides between aligned sequence pair. The expected pairwise difference for a pair of sequences (<italic>E</italic>(<italic>ξ</italic>)) is proportional to the mutation rate (<italic>μ</italic>) and expected coalescence time (<italic>T</italic>) for that pair of sequences (i.e.<italic>E</italic>(<italic>ξ</italic>)=2<italic>μT</italic>). In a population under random mating conditions, the expected pairwise difference is the same for all randomly selected pairs of sequences. However, for a non-random mating population, the expected pairwise differences for randomly selected pairs of sequences differ according to the population substructure. For simplicity, we assume that sequences are sampled from two homogeneous subpopulations called A and B. <italic>T</italic><sub><italic>AB</italic></sub> denotes the expected coalescence time of any pair of sequences, of which one sequence comes from subpopulation A, the other from B. Similarly, <italic>T</italic><sub><italic>AA</italic></sub> and <italic>T</italic><sub><italic>BB</italic></sub> denote the expected coalescence time of any two sequences both coming from subpopulation A or B, respectively. <italic>ξ</italic><sub><italic>AB</italic></sub> is the pairwise difference of two sequences coming from two different subpopulations, and <italic>ξ</italic><sub><italic>AA</italic></sub>, <italic>ξ</italic><sub><italic>BB</italic></sub> are the pairwise differences when both come from subpopulation A or B, respectively. We can infer that <italic>E(ξ</italic><sub><italic>AB</italic></sub><italic>)</italic> &gt; <italic>E(ξ</italic><sub><italic>AA</italic></sub><italic>)</italic> and <italic>E(ξ</italic><sub><italic>AB</italic></sub><italic>)</italic> &gt; <italic>E(ξ</italic><sub><italic>BB</italic></sub><italic>)</italic> in the case of a non-random mating population, since <italic>T</italic><sub><italic>AB</italic></sub> &gt;<italic>T</italic><sub><italic>AA</italic></sub> and <italic>T</italic><sub><italic>AB</italic></sub> &gt;<italic>T</italic><sub><italic>BB</italic></sub>.</p>
+				<p>We suppose that a sample of size n individuals is drawn from a population of interest. Sequences of the individuals are denoted by C<sub>1</sub>, C<sub>2</sub>…, to C<sub>2n</sub> where C<sub>1</sub> and C<sub>2</sub> are from individual 1, C<sub>3</sub> and C<sub>4</sub> are from individual 2, and so on. Under random mating, a sample of size n has an observed average pairwise difference within individuals as defined by: </p>
+				<p>ξ<sub>observe</sub>=(ξ<sub>C1C2</sub> + ξ<sub>C3C4</sub> +……+ξ<sub>C(2n-1)C(2n)</sub> )<italic>/n</italic>,</p>
+				<p>where <italic>ξ</italic><sub><italic>C</italic>1<italic>C</italic>2</sub> is the pairwise difference between sequences C<sub>1</sub> and C<sub>2</sub>, and so on. When these sequences are randomly permuted and divided into n pairs, we obtain a simulated sample where the average pairwise difference within individuals is defined as </p>
+				<p>ξ<sub>permute</sub>=(ξ<sub>Cs1Cs2</sub> + ξ<sub>Cs3Cs4</sub> +……+ξ<sub>Cs(2n-1)Cs(2n)</sub> )<italic>/n</italic>,</p>
+				<p>where, <italic>s</italic><sub>1</sub>, <italic>s</italic><sub>2</sub>…, until <italic>s</italic><sub>2<italic>n</italic></sub> is an order of one permutation of sequence 1 to 2n. When a sample of sequences is collected from a random mating population, <italic>E(ξ</italic><sub><italic>observe</italic></sub><italic>)</italic> = <italic>E(ξ</italic><sub><italic>permute</italic></sub><italic>)</italic>, since all sequence pairs have the same expected coalescence time. However, if sequences are chosen from a non-random mating population, containing two subpopulations A and B, there are three possible pairwise differences for the simulated samples: ξ<sub>AA</sub>, ξ<sub>BB</sub>, and ξ<sub>AB</sub>. Thus <italic>ξ</italic><sub><italic>permute</italic></sub> is a combination of these three different pairwise differences, whereas in the real sample, <italic>ξ</italic><sub><italic>observe</italic></sub> is only a combination of ξ<sub>AA</sub> and ξ<sub>BB</sub>. Because <italic>E(ξ</italic><sub><italic>AB</italic></sub><italic>)</italic> &gt; <italic>E(ξ</italic><sub><italic>AA</italic></sub><italic>)</italic> and <italic>E(ξ</italic><sub><italic>AB</italic></sub><italic>)</italic> &gt; <italic>E(ξ</italic><sub><italic>BB</italic></sub><italic>)</italic>, it follows that <italic>E(ξ</italic><sub><italic>permute</italic></sub><italic>)</italic> &gt; <italic>E(ξ</italic><sub><italic>observe</italic></sub><italic>)</italic>. Therefore, the test of whether the sample is from a random mating population can be formulated as</p>
+				<p>H<sub>0</sub>: ξ<sub>observe</sub> = ξ<sub>permute</sub></p>
+				<p>H<sub>1</sub>: ξ<sub>observe</sub> &lt; ξ<sub>permute</sub></p>
+				
+				<p>According to the null hypothesis (H<sub><italic>0</italic></sub>), the sample is from a population under random mating whereas according to the alternative hypothesis (H<sub><italic>1</italic></sub>), the population is not randomly mating.</p>
+			</sec>
+			<sec id="s2.3">
+				<title>Hypothesis testing</title>
+				<p>Under the null hypothesis of random mating, the distribution of average pairwise sequence differences within individuals is equivalent to that of a simulated sample obtained by the permutation procedures described above. In statistical hypothesis testing, many permutations are conducted to obtain the null distribution of average pairwise differences within individuals. In other words, the null distribution of <italic>ξ</italic><sub><italic>observe</italic></sub> can be obtained by calculating <italic>ξ</italic><sub><italic>permute</italic></sub> for each of the simulated samples generated in the permutation procedure. For a given permutation test, the significance level (p-value) of the null hypothesis is the probability that <italic>ξ</italic><sub><italic>permute</italic></sub> is equal to, or less than, <italic>ξ</italic><sub><italic>observe</italic></sub>. The hypothesis testing procedure is graphically outlined in <xref ref-type="fig" rid="pone-0071496-g001">Figure 1</xref>.</p>
+				<fig id="pone-0071496-g001" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0071496.g001</object-id><label>Figure 1</label>
+					<caption>
+						<title>A diagram of the MCP method.</title><p>In this case, a sample of n = 4 individuals was drawn from a population of interest. Gamete sequences (2n) of the individuals are denoted by C<sub>1</sub>-C<sub>8</sub> as follows: C<sub>1</sub> and C<sub>2</sub> are from individual 1, C<sub>3</sub> and C<sub>4</sub> are from individual 2 and so on. After permuting these sequences N times (where N is any positive integer), N new datasets were obtained by dividing each permuted sequence into n consecutive pairs. For each permutation, the <italic>ξ</italic><sub><italic>permute</italic></sub> statistic could be calculated. This allowed us to derived the null distribution of the statistic. After locating <italic>ξ</italic><sub><italic>observe</italic></sub> on the null distribution, a p value of the test could be obtained.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0071496.g001"/>
+				</fig>
+				<p>To ensure that the obtained p-value is within δ units of the true significance level, at a (1-γ) % confidence level, the required number of permutations is given by<inline-formula><mml:math id="m4" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>N</mml:mi><mml:mo>≥</mml:mo><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>Z</mml:mi><mml:mrow><mml:mi>γ</mml:mi><mml:mo>/</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mn>2</mml:mn><mml:mi>δ</mml:mi></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:semantics></mml:math></inline-formula>, where <italic>Z</italic> is the z-score of a standard normal distribution [<xref ref-type="bibr" rid="B31">31</xref>]. In this case, for <italic>δ</italic>=0.01 and a confidence level of 99%, <inline-formula><mml:math id="m5" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>N</mml:mi><mml:mo>≥</mml:mo><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:mn>2.576</mml:mn></mml:mrow><mml:mrow><mml:mn>2</mml:mn><mml:mi>δ</mml:mi></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>≈</mml:mo><mml:mn>17000</mml:mn></mml:mrow></mml:semantics></mml:math></inline-formula> permutations are sufficient. Therefore, to obtain reliable p-values in the present study, we performed 20,000 permutations for each statistical hypothesis test.</p>
+			</sec>
+			<sec id="s2.4">
+				<title>Performance evaluation</title>
+				<p>To evaluate the performance of our statistical test for random mating, simulated genomic sequences in multiple genetic scenarios were generated using the MS software program [<xref ref-type="bibr" rid="B32">32</xref>]. Both type I error rate (i.e. false positive rate) and type II error rate (i.e. 1-statistical power) were evaluated. Experimental parameters (e.g. sample size <italic>n</italic> and sequence length <italic>l</italic>), and inherent parameters (e.g. mutation rate and recombination rate), may affect the type I error of the MCP test. Under the alternative hypothesis that mating is non-random, the power of this test may also be affected by two parameters related to demographic history: the divergence time of the subpopulations and the migration rate between them.</p>
+				<p>Simulated datasets of genomic sequences were generated using the “control of variables” strategy [<xref ref-type="bibr" rid="B33">33</xref>]. To evaluate how a specific parameter affects the type I or type ΙI error of the MCP test, the parameter’s values were varied in the simulation while all other parameters were kept constant (we refer to these as “steady states”) (<xref ref-type="table" rid="tab1">Table 1</xref>). For example, we tested how sequence length affects the performance of MCP when all other parameters (e.g. sample size, recombination rate, and mutation rate) were kept in a “steady state”. In each case, 1000 replicates were generated, thus yielding 1000 p-values in statistical tests for which type I and type II errors could be examined. Notations used in this report and the values of parameters in “steady states” are presented in <xref ref-type="table" rid="tab1">Table 1</xref>.</p>
+				<table-wrap id="tab1" position="float">
+					<label>Table 1</label>
+					<caption>
+						<title>Parameters and terminology.</title>
+					</caption>
+					<table cellpadding="1">
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1">Symbols</th>
+								<th rowspan="1" colspan="1">Explanation</th>
+								<th rowspan="1" colspan="1">“Steady states”</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">N</td>
+								<td rowspan="1" colspan="1">Effective population size</td>
+								<td rowspan="1" colspan="1">5000</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">r</td>
+								<td rowspan="1" colspan="1">Recombination rate per site per generation</td>
+								<td rowspan="1" colspan="1">10<sup>-8</sup></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>l</italic></td>
+								<td rowspan="1" colspan="1">Sequence length</td>
+								<td rowspan="1" colspan="1">1Mbp</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">μ</td>
+								<td rowspan="1" colspan="1">Mutation rate (per generation per site)</td>
+								<td rowspan="1" colspan="1">10<sup>-8</sup></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>T</italic></td>
+								<td rowspan="1" colspan="1">Divergence time of two subpopulations (generations).</td>
+								<td rowspan="1" colspan="1">400</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>n</italic></td>
+								<td rowspan="1" colspan="1">Sample size (number of individuals)</td>
+								<td rowspan="1" colspan="1">400</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">θ</td>
+								<td rowspan="1" colspan="1">4Nμ<italic>l</italic></td>
+								<td rowspan="1" colspan="1">200</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">ρ</td>
+								<td rowspan="1" colspan="1">4Nr<italic>l</italic></td>
+								<td rowspan="1" colspan="1">200</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>m</italic></td>
+								<td rowspan="1" colspan="1">Migration rate per generation</td>
+								<td rowspan="1" colspan="1">0</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><italic>M</italic></td>
+								<td rowspan="1" colspan="1">4N<italic>m</italic></td>
+								<td rowspan="1" colspan="1">0</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">β</td>
+								<td rowspan="1" colspan="1">Significance level</td>
+								<td rowspan="1" colspan="1">0.05 or 0.01</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+		</sec>
+		<sec id="s3" sec-type="results">
+			<title>Results</title>
+			<sec id="s3.1">
+				<title>Evaluation of type I error</title>
+				<p>To evaluate the influence of experimental and inherent parameters on the MCP test, we estimated the type I error rate of the MCP test by simulations in which individual parameters were varied using the “control of variables” strategy (see Materials and Methods for details). In these simulations, sequence length was varied from 5kb to 2Mb and sample size was varied from 50 to 800 individuals. Since different genome regions differ in their recombination (<italic>ρ=4Nrl</italic>) and mutation rates (<italic>θ=4Nμl</italic>), we assessed both to evaluate their influence on the type I error of our method (<xref ref-type="table" rid="tab2">Table 2</xref>).</p>
+				<table-wrap id="tab2" position="float">
+					<label>Table 2</label>
+					<caption>
+						<title>Type 1 error of the MCP method with different parameters.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1">Significance levels</th>
+								<th rowspan="1" colspan="1"><italic>l</italic> = 5kb</th>
+								<th rowspan="1" colspan="1"><italic>l</italic> = 50kb</th>
+								<th rowspan="1" colspan="1"><italic>l</italic> = 500kb</th>
+								<th rowspan="1" colspan="1"><italic>l</italic> =1Mb</th>
+								<th rowspan="1" colspan="1"><italic>l</italic> = 2Mb</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1">0.05</td>
+								<td rowspan="1" colspan="1">0.034</td>
+								<td rowspan="1" colspan="1">0.054</td>
+								<td rowspan="1" colspan="1">0.041</td>
+								<td rowspan="1" colspan="1">0.069</td>
+								<td rowspan="1" colspan="1">0.048</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.01</td>
+								<td rowspan="1" colspan="1">0.004</td>
+								<td rowspan="1" colspan="1">0.016</td>
+								<td rowspan="1" colspan="1">0.004</td>
+								<td rowspan="1" colspan="1">0.016</td>
+								<td rowspan="1" colspan="1">0.015</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Significance levels</td>
+								<td rowspan="1" colspan="1"><italic>n</italic> = 50</td>
+								<td rowspan="1" colspan="1"><italic>n</italic> = 100</td>
+								<td rowspan="1" colspan="1"><italic>n</italic>= 200</td>
+								<td rowspan="1" colspan="1"><italic>n</italic> =400</td>
+								<td rowspan="1" colspan="1"><italic>n</italic> =800</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.05</td>
+								<td rowspan="1" colspan="1">0.027</td>
+								<td rowspan="1" colspan="1">0.048</td>
+								<td rowspan="1" colspan="1">0.048</td>
+								<td rowspan="1" colspan="1">0.048</td>
+								<td rowspan="1" colspan="1">0.054</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.01</td>
+								<td rowspan="1" colspan="1">0.0047</td>
+								<td rowspan="1" colspan="1">0.011</td>
+								<td rowspan="1" colspan="1">0.012</td>
+								<td rowspan="1" colspan="1">0.011</td>
+								<td rowspan="1" colspan="1">0.017</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Significance levels</td>
+								<td rowspan="1" colspan="1">ρ = 100</td>
+								<td rowspan="1" colspan="1">ρ = 200</td>
+								<td rowspan="1" colspan="1">ρ = 400</td>
+								<td rowspan="1" colspan="1">ρ = 800</td>
+								<td rowspan="1" colspan="1">ρ = 1000</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.05</td>
+								<td rowspan="1" colspan="1">0.048</td>
+								<td rowspan="1" colspan="1">0.051</td>
+								<td rowspan="1" colspan="1">0.039</td>
+								<td rowspan="1" colspan="1">0.043</td>
+								<td rowspan="1" colspan="1">0.038</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.01</td>
+								<td rowspan="1" colspan="1">0.004</td>
+								<td rowspan="1" colspan="1">0.011</td>
+								<td rowspan="1" colspan="1">0.010</td>
+								<td rowspan="1" colspan="1">0.007</td>
+								<td rowspan="1" colspan="1">0.005</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">Significance levels</td>
+								<td rowspan="1" colspan="1">θ = 100</td>
+								<td rowspan="1" colspan="1">θ= 200</td>
+								<td rowspan="1" colspan="1">θ= 400</td>
+								<td rowspan="1" colspan="1">θ= 800</td>
+								<td rowspan="1" colspan="1">θ= 1000</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.05</td>
+								<td rowspan="1" colspan="1">0.054</td>
+								<td rowspan="1" colspan="1">0.057</td>
+								<td rowspan="1" colspan="1">0.043</td>
+								<td rowspan="1" colspan="1">0.042</td>
+								<td rowspan="1" colspan="1">0.061</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1">0.01</td>
+								<td rowspan="1" colspan="1">0.010</td>
+								<td rowspan="1" colspan="1">0.012</td>
+								<td rowspan="1" colspan="1">0.008</td>
+								<td rowspan="1" colspan="1">0.004</td>
+								<td rowspan="1" colspan="1">0.010</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn>
+							<p>We used control variable strategy to detect type Ι error of MCP test in different sequence length <italic>l</italic>, sample size <italic>n</italic>, recombination rate ρ = 4Nr<italic>l</italic> and mutation rate θ = 4Nμ<italic>l</italic>, corresponding to two significance levels 0.05 and 0.01. When detecting the effects of one specific parameter, the values of the other parameters kept in “steady states” were as follows: sequence length <italic>l</italic>= 1Mbp; effective population size N=5000; recombination rate ρ=4Nrl=4×5000×10<sup>-8</sup><italic>l</italic> ; sample size <italic>n</italic>=400 individuals from a random mating population and mutation rate θ=4Nμl=4×5000×10<sup>-8</sup><italic>l</italic>.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+				<p>Our simulations indicate that type Ι error is well controlled in the MCP test (<xref ref-type="table" rid="tab2">Table 2</xref>). At a significance level of 0.05, type I error rate ranged from 0.027 (for <italic>n</italic>=50) to 0.069 (for <italic>l</italic>=1Mb) (<xref ref-type="table" rid="tab2">Table 2</xref>). In simulations of the MCP test, under the null hypothesis of a randomly mating population, the number of the p-values smaller than a threshold <italic>p</italic> followed a binomial distribution <bold>B</bold>(<italic>m</italic>, <italic>p</italic>), where <italic>m</italic> is the number of replicates. Therefore, when <italic>m</italic>=1000 and <italic>p</italic>=0.05, 95% of estimated type I error rates are expected to lie in the range 0.0373 to 0.0654. In our evaluations, all the estimated type I error rates lie in this range, except for the two extreme cases noted above. Furthermore, when <italic>m</italic>=1000 and <italic>p</italic>=0.01, 95% of the estimations are expected to fall between 0.0048 and 0.0183. In this study, most of the corresponding estimations fell into the expected range and none of them exceeded the upper boundary (<xref ref-type="table" rid="tab2">Table 2</xref>). Test for type I error for more scenarios are presented in <xref ref-type="table" rid="tab1">Tables S1-S4</xref>.</p>
+			</sec>
+			<sec id="s3.2">
+				<title>Evaluation of statistical power</title>
+				<p>Given the generally favorable evaluation of type Ι error rate, we sought to examine the statistical power of the MCP test at significance levels of 0.05 and 0.01. We considered experimental, inherent, and demographic parameters under the alternative hypothesis to determine their effect on statistical power.</p>
+				<p>We compared our MCP test to the CHI test. Since the CHI test uses numbers of genotypes and alleles, it cannot be directly implemented using real sequences. Therefore, we chose a fixed number of equally distanced SNPs, treating them as independent loci. We also evaluated the influence of locus number (from 1 to 100 in increments of 10) on the performance of the CHI test. When <italic>n</italic> loci (<italic>n</italic>&gt;1) were available in the CHI test, we calculated Pearson’s chi-statistic for each locus and summarized this to obtain a summary statistic following a standard central chi-square distribution with <italic>n</italic> degrees of freedom [<xref ref-type="bibr" rid="B34">34</xref>]. In simulations, we found that the type Ι error rate of the CHI test was greater than expected, which may be due to the interdependence of the loci involved (<xref ref-type="supplementary-material" rid="pone.0071496.s005">Tables S5-S8</xref>). To compensate for the inflated type I error in the CHI test power evaluation, we replaced the standard rejection criteria with empirical thresholds for significance levels 0.01 and 0.05, represented respectively by the 10<sup>th</sup> and 50<sup>th</sup> ranked values of the CHI test summary statistic in 1000 simulated tests under the null hypothesis. This allowed us to calculate the statistical power of the CHI test at different loci. The highest statistical power of the CHI test using different numbers of loci was chosen for comparison to our method (<xref ref-type="supplementary-material" rid="pone.0071496.s009">Tables S9-S12</xref>).</p>
+				<p>Our investigation showed that the MCP test has more statistical power than the CHI test in experimental designs with different sequence lengths and sample sizes. For sequence length, the statistical power of the MCP and CHI tests was compared for eight lengths, in the range of 1kb to 2Mb (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2A</xref>). The statistical power of both tests increased with an increase in sequence length, however, the power of the MCP test was consistently much higher than that of the CHI test. For example, when <italic>l</italic>=1Mbp, the power of the MCP test reached 0.8 or higher, whereas the power of the CHI test was only around 0.2. Furthermore, for sequence lengths greater than 1.5Mb, the power of the MCP test exceeded 0.9.</p>
+				<fig id="pone-0071496-g002" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0071496.g002</object-id><label>Figure 2</label>
+					<caption>
+						<title>Statistical power of MCP and CHI tests under varying: (A) sequence length, (B) recombination rate, (C) sample size, (D) migration rate, (E) population divergence, and (F) mutation rate.</title>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0071496.g002"/>
+				</fig>
+				<p>For sample sizes ranging from 100 to 1000 individuals, the power of both tests increased with larger sample size, with the power of the MCP test consistently greater than that of the CHI test. For samples of more than 400 individuals, the power of the MCP test exceeded 0.8 for a significance level of 0.05, but the power of the CHI test never exceeded this value, even for sample sizes greater than 1000 individuals (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2B</xref>).</p>
+				<p>The MCP test outperformed the CHI test in genome regions subject to a variety of mutation and recombination rates. We found that statistical power did not vary for mutation rates θ ranging from 50 to 1000 (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2C</xref>). However, at a significance level of 0.05, the power of the MCP method consistently exceeded 0.8, whereas the power of the CHI test was approximately 0.6. Furthermore, at a significance level of 0.01, the power of the MCP test was approximately 0.6, whereas that of the CHI test was only 0.3. The power of both tests at different recombination rates ρ ranging from 50 to 1000 was evaluated (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2D</xref>). The power of the MCP test increased with increasing recombination rate, whereas that of the CHI test remained relatively constant. With a recombination rate per generation per site of 10<sup>-8</sup> (ρ=200 when μ=10<sup>-8</sup>), which is the most commonly used recombination rate [<xref ref-type="bibr" rid="B35">35</xref>–<xref ref-type="bibr" rid="B38">38</xref>], the power of the MCP test exceeded 0.4, but that of the CHI test was less than 0.2, at a significance level of 0.05.</p>
+				<p>We further compared the statistical power of the MCP and CHI tests in demographic scenarios having different population divergence times and gene migration rates (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2E and Figure 2F</xref>). Statistical power increased with divergence time for both methods. Interestingly, for a population divergence of 400 generations, the power of the MCP test was greater than 0.9 at a significance level of 0.05, and approached 1 when population divergence increased to 600 generations whereas the power of the CHI test never exceeded 0.8. The power of both methods was highly dependent on the migration rate between subpopulations. The power was high for small or no migration rates, but declined with increasing migration rate, resulting in no power at the highest migration rates (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2F</xref>).</p>
+			</sec>
+		</sec>
+		<sec id="s4" sec-type="discussion">
+			<title>Discussion</title>
+			<p>Here we report a Monte Carlo permutation-based (MCP) statistical test for detecting random mating in a population of interest. Computer simulation showed that the type Ι error behaved well in the MCP testing and statistical power of the method compared favorably with the CHI test in most cases. Moreover, this method can be used not only to detect population stratification of genetic samples, but also to test for random mating at specific regions of the genome or multiple tightly linked loci.</p>
+			<p>Using the average pairwise difference within individuals has the advantage of allowing the MCP test to consider multiple loci without assuming independence between them, since recombination has no effect on this measure in a homogenous population. Linkage disequilibrium (LD), which can even occur between loci situated several kilobases apart, can inflate the type Ι error in statistical tests. Accordingly, we found that the type I error for the CHI test was highly inflated when more markers were used in order to increase statistical power (<xref ref-type="supplementary-material" rid="pone.0071496.s005">Tables S5-S8</xref>). In inference-based approaches for detecting population stratification, LD is also problematic. For example, STRUCTURE does not fully eliminate the effects of strong LD, which may produce inaccurate results [<xref ref-type="bibr" rid="B39">39</xref>–<xref ref-type="bibr" rid="B41">41</xref>]. Therefore, it was suggested that loci used as input for STRUCTURE analysis should be separated by at least 1 cM [<xref ref-type="bibr" rid="B39">39</xref>–<xref ref-type="bibr" rid="B41">41</xref>]. However, this constraint is an obvious drawback in the analysis of genome-wide sequencing data.</p>
+			<p>In contrast to other methods for detecting random mating [<xref ref-type="bibr" rid="B15">15</xref>,<xref ref-type="bibr" rid="B27">27</xref>], we found that the performance of our MCP method is not diminished by increasing the number of alleles or haplotypes. In fact, higher statistical power is achieved with longer sequence lengths. Moreover, power increases rapidly especially in cases with larger sample sizes, lower migration rates, higher recombination rates, and larger divergence time between subpopulations (<xref ref-type="fig" rid="pone-0071496-g002">Figure 2</xref>). When the inherent genetic and demographic parameters are fixed, higher statistical power of the MCP test can be achieved by increasing the sample size or sequence length. In the worst case, when only a single polymorphic locus is available for random mating tests, the statistical power of the MCP test is still comparable to that of the classical CHI test. Hence, the MCP test is preferable to the CHI test for a broad range of genetic studies. Obviously, false positive result of CHI test is well controlled in scenario with only unlinked loci. Therefore, CHI test is still a good choice in such scenario.</p>
+			<p>The MCP test is presented in this report as a single-tailed test, rather than a two-tailed test, since inbreeding is common in population genetic history whereas outbreeding is relatively rare [<xref ref-type="bibr" rid="B42">42</xref>,<xref ref-type="bibr" rid="B43">43</xref>]. Notably, the MCP test can be conveniently modified to form a two-tailed test when necessary. However, a two-tailed version of the MCP test is likely to be impractical for quality control of sequencing projects. This is because when sequencing errors are randomly introduced into sequence products, the errors have little impact on the average pairwise difference. Therefore, a two-tailed MCP test may lack power in detecting sequencing errors. Furthermore, a two-tailed MCP test may not be a good choice for detecting balancing selection because detecting extra heterozygosity has been suggested to be lack of power in simulation study [<xref ref-type="bibr" rid="B44">44</xref>,<xref ref-type="bibr" rid="B45">45</xref>].</p>
+			<p>The time complexity of the entire MCP test calculation process is O(mn<sup>2</sup> +Nn), where m is the number of SNPs, n is the number of individuals and N is the number of permutations. On a cluster machine with 4G RAM, with 4 CPU cores (Dual-Core AMD Opteron(tm) Processor2214, 2194 MHz), with each test executed using a single CPU, it would require about 10 minutes with 2000 individuals and a window size of 2Mbp, using a R script. Thus, the MCP test is suitable for large data sets.</p>
+		</sec>
+		<sec sec-type="supplementary-material">
+			<title>Supporting Information</title>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s001" xlink:href="info:doi/10.1371/journal.pone.0071496.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S1</label>
+				<caption>
+					<p><bold>We detected type 1 error of the MCP test in different sequence length l corresponding to two different significance levels 0.05 and 0.01.</bold></p><p>Other parameters in “steady states” were as follows: sample size n=400 individuals; effective population size N=5000; recombination rate ρ = 4Nrl=4×5000×10-8l; mutation rate θ = 4Nμl=4×5000×10-8l.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s002" xlink:href="info:doi/10.1371/journal.pone.0071496.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S2</label>
+				<caption>
+					<p><bold>We detected type 1 error of the MCP test in different sample size n corresponding to two different significance levels 0.05 and 0.01.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mb; effective population size N=5000; recombination rate ρ=4Nrl=4×5000×10-8×106=200; mutation rate θ=4Nμl=4×5000×10-8×106=200.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s003" xlink:href="info:doi/10.1371/journal.pone.0071496.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S3</label>
+				<caption>
+					<p><bold>We detected type 1 error of the MCP test in different recombination ρ corresponding to two different significance levels 0.05 and 0.01.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mb; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8=200; sample size n=400 individuals.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s004" xlink:href="info:doi/10.1371/journal.pone.0071496.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S4</label>
+				<caption>
+					<p><bold>We detected type 1 error of the MCP test in different mutation rate θ corresponding to two significance different levels 0.05 and 0.01.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mb; effective population size N=5000; recombination rate ρ=4Nrl=4×5000×10-8×106=200, sample size n=400 individuals.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s005" xlink:href="info:doi/10.1371/journal.pone.0071496.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S5</label>
+				<caption>
+					<p><bold>We compared the type Ι error rate of the MCP test with the CHI test in different recombination rate ρ corresponding to two different significance levels 0.05 and 0.01.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mb; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8×106=200; sample size n=400 individuals.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s006" xlink:href="info:doi/10.1371/journal.pone.0071496.s006" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S6</label>
+				<caption>
+					<p><bold>We detected the type 1 error of the CHI test in different sequence length l with certain numbers of loci.</bold></p><p>The longer the sequences, the more loci we could use. Empty cells meant we did not do the experiments because of limited SNPs. Other parameters in “steady states” were as follows: sample size n=400 individual from a random mating population; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8×106=200; recombination rate ρ=4Nrl=4×5000×10-8×106=200.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s007" xlink:href="info:doi/10.1371/journal.pone.0071496.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S7</label>
+				<caption>
+					<p><bold>We detected the type 1 error of the CHI test in different sample size n with certain numbers of loci.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mbp; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8×106=200; recombination rate ρ=4Nrl=4×5000×10-8×106=200.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s008" xlink:href="info:doi/10.1371/journal.pone.0071496.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S8</label>
+				<caption>
+					<p><bold>We detected the type 1 error of the CHI test in different mutation rate with certain numbers of loci.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mbp; sample size n=400 individuals from a random mating population; effective population size N=5000; recombination rate ρ=4Nrl=4×5000×10-8×106=200.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s009" xlink:href="info:doi/10.1371/journal.pone.0071496.s009" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S9</label>
+				<caption>
+					<p><bold>We detected the power of CHI test in different migration rate M=4Nm with certain numbers of loci.</bold></p><p>(m is the fraction of each subpopulation made up of new migrants each generation.) Other parameters in “steady states” were as follows: sample size n=400 individuals, in which half of them came from subpopulation 1 and the other half came from subpopulation 2; sequence length l = 1Mbp; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8×106=200; divergence time T = 10000 years, recombination rate ρ=4Nrl=4×5000×10-8×106=200.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s010" xlink:href="info:doi/10.1371/journal.pone.0071496.s010" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S10</label>
+				<caption>
+					<p><bold>We detected the power of the CHI test in different sequence length l with certain numbers of loci.</bold></p><p>Empty cells meant we did not do the experiments because of limited SNPs. Other parameters in “steady states” were as follows: sample size n=400 individuals, in which half of them came from subpopulation 1 and the other half came from subpopulation 2; effective population size N=5000; mutation rate θ = 4Nμl=4×5000×10-8l; divergence time T = 10000 years, recombination rate ρ = 4Nrl=4×5000×10-8l and no migration.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s011" xlink:href="info:doi/10.1371/journal.pone.0071496.s011" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S11</label>
+				<caption>
+					<p><bold>We detected the power of the CHI test in different sample size n with certain numbers of loci.</bold></p><p>Other parameters in “steady states” were as follows: sample size n=400 individuals, in which half of them came from subpopulation 1 and the other half came from subpopulation 2; the divergence time of the two subpopulations T=10000 years; effective population size N=5000; mutation rate θ=4Nμl=4×5000×10-8×106=200; recombination rate ρ=4Nrl=4×5000×10-8×106=200 and no migration.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+			<supplementary-material xlink:type="simple" position="float" id="pone.0071496.s012" xlink:href="info:doi/10.1371/journal.pone.0071496.s012" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+				<label>Table S12</label>
+				<caption>
+					<p><bold>We detected the power of the CHI test in different mutation rate θ with certain numbers of loci.</bold></p><p>Other parameters in “steady states” were as follows: sequence length l = 1Mbp; sample size n=400 individuals, in which half of them came from subpopulation 1 and the other half came from subpopulation 2; effective population size N=5000; recombination rate ρ=4Nrl=4×5000×10-8×106=200; divergence time of the two subpopulations is T=10000 years and no migration.</p>
+				<p>(DOCX)</p></caption>
+				</supplementary-material>
+		</sec>
+	</body>
+	<back>
+		<ref-list>
+			<title>References</title>
+			<ref id="B1">
+				<label>1</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chakraborty</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Weiss</surname><given-names>KM</given-names></name> (<year>1988</year>) <article-title>Admixture as a tool for finding linked genes and detecting that difference from allelic association between loci</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>85</volume>: <fpage>9119</fpage>–<lpage>9123</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.85.23.9119" xlink:type="simple">10.1073/pnas.85.23.9119</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/3194414" xlink:type="simple">3194414</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B2">
+				<label>2</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lander</surname><given-names>ES</given-names></name>, <name name-style="western"><surname>Schork</surname><given-names>NJ</given-names></name> (<year>1994</year>) <article-title>Genetic dissection of complex traits</article-title>. <source>Science (New York, NY)</source> <volume>265</volume>: <fpage>2037</fpage>–<lpage>2048</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.8091226" xlink:type="simple">10.1126/science.8091226</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/8091226" xlink:type="simple">8091226</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B3">
+				<label>3</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Freedman</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Reich</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Penney</surname><given-names>KL</given-names></name>, <name name-style="western"><surname>McDonald</surname><given-names>GJ</given-names></name>, <name name-style="western"><surname>Mignault</surname><given-names>AA</given-names></name> <etal>et al.</etal> (<year>2004</year>) <article-title>Assessing the impact of population stratification on genetic association studies</article-title>. <source>Nature genetics</source> <volume>36</volume>: <fpage>388</fpage>–<lpage>393</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B4">
+				<label>4</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Patterson</surname><given-names>NJ</given-names></name>, <name name-style="western"><surname>Plenge</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Weinblatt</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Shadick</surname></name> Na et al. (<year>2006</year>) <article-title>Principal components analysis corrects for stratification in genome-wide association studies</article-title>. <source>Nat Genet</source> <volume>38</volume>: <fpage>904</fpage>–<lpage>909</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng1847" xlink:type="simple">10.1038/ng1847</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16862161" xlink:type="simple">16862161</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B5">
+				<label>5</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Zaitlen</surname><given-names>NA</given-names></name>, <name name-style="western"><surname>Reich</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Patterson</surname><given-names>N</given-names></name> (<year>2010</year>) <article-title>New approaches to population stratification in genome-wide association studies</article-title>. <source>Nat Rev Genet</source> <volume>11</volume>: <fpage>459</fpage>–<lpage>463</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrn2867" xlink:type="simple">10.1038/nrn2867</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20548291" xlink:type="simple">20548291</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B6">
+				<label>6</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hirschhorn</surname><given-names>JN</given-names></name>, <name name-style="western"><surname>Gajdos</surname><given-names>ZKZ</given-names></name> (<year>2011</year>) <article-title>Genome-wide association studies: results from the first few years and potential implications for clinical medicine</article-title>. <source>Annu Rev Med</source> <volume>62</volume>: <fpage>11</fpage>–<lpage>24</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.med.091708.162036" xlink:type="simple">10.1146/annurev.med.091708.162036</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21226609" xlink:type="simple">21226609</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B7">
+				<label>7</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Korte</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Vilhjálmsson</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Segura</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Platt</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Long</surname><given-names>Q</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>A mixed-model approach for genome-wide association studies of correlated traits in structured populations</article-title>. <source>Nat Genet</source> <volume>44</volume>: <fpage>1066</fpage>–<lpage>1071</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.2376" xlink:type="simple">10.1038/ng.2376</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22902788" xlink:type="simple">22902788</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B8">
+				<label>8</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Jorjani</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Carlborg</surname><given-names>O</given-names></name> (<year>2012</year>) <article-title>A genome-wide association study using international breeding-evaluation data identifies major loci affecting production traits and stature in the Brown Swiss cattle breed</article-title>. <source>BMC Genet</source> <volume>13</volume>: <fpage>82</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2350-13-82" xlink:type="simple">10.1186/1471-2350-13-82</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/23031427" xlink:type="simple">23031427</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B9">
+				<label>9</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jin</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Speed</surname><given-names>TP</given-names></name>, <name name-style="western"><surname>Thomson</surname><given-names>G</given-names></name> (<year>1995</year>) <article-title>Tests of Random Mating for a Highly Polymorphic Locus : Application to HLA Data</article-title>. <source>Biometrics</source> <volume>51</volume>: <fpage>1064</fpage>–<lpage>1076</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2533005" xlink:type="simple">10.2307/2533005</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/7548691" xlink:type="simple">7548691</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B10">
+				<label>10</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>CC</given-names></name> (<year>1955</year>) <article-title>The stability of an equilibrium and the average fitness of a population</article-title>. <source>The American Society of Naturalists</source> <volume>89</volume>: <fpage>281</fpage>–<lpage>295</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B11">
+				<label>11</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>CAB</given-names></name> (<year>1970</year>) <article-title>A note on testing the Hardy-Weinberg Law</article-title>. <source>Ann Hum Genet</source> <volume>33</volume>: <fpage>377</fpage>–<lpage>383</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1469-1809.1970.tb01664.x" xlink:type="simple">10.1111/j.1469-1809.1970.tb01664.x</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B12">
+				<label>12</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mantel</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>CC</given-names></name> (<year>1974</year>) <article-title>Estimation and testing of a measure of non-random mating</article-title>. <source>Ann Hum Genet</source> <volume>37</volume>: <fpage>445</fpage>–<lpage>454</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1469-1809.1974.tb01849.x" xlink:type="simple">10.1111/j.1469-1809.1974.tb01849.x</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/4413281" xlink:type="simple">4413281</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B13">
+				<label>13</label>
+				<mixed-citation publication-type="other" xlink:type="simple"><comment>Elston Forthofer</comment> <comment>(1977) Testing for Hardy- Weinberg Equilibrium in Small Samples. Biometrics 33: 536–542</comment> doi:10.2307/2529370.</mixed-citation>
+			</ref>
+			<ref id="B14">
+				<label>14</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Emigh</surname><given-names>TH</given-names></name> (<year>1980</year>) <article-title>A Comparison of Tests for Hardy-Weinberg Equilibrium</article-title>. <source>Biometrics</source> <volume>36</volume>: <fpage>627</fpage>–<lpage>642</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2556115" xlink:type="simple">10.2307/2556115</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B15">
+				<label>15</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Louis</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Dempster</surname><given-names>ER</given-names></name> (<year>1987</year>) <article-title>An exact test for Hardy-Weinberg and multiple alleles</article-title>. <source>Biometrics</source> <volume>43</volume>: <fpage>805</fpage>–<lpage>811</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2531534" xlink:type="simple">10.2307/2531534</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/3427165" xlink:type="simple">3427165</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B16">
+				<label>16</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hernández</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Weir</surname><given-names>BS</given-names></name> (<year>1989</year>) <article-title>A disequilibrium coefficient approach to Hardy-Weinberg testing</article-title>. <source>Biometrics</source> <volume>45</volume>: <fpage>53</fpage>–<lpage>70</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2532034" xlink:type="simple">10.2307/2532034</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/2720060" xlink:type="simple">2720060</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B17">
+				<label>17</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname><given-names>SW</given-names></name>, <name name-style="western"><surname>Thompson</surname><given-names>EA</given-names></name> (<year>1992</year>) <article-title>Proportion Performing the Exact Test of Hardy-Weinberg Alleles for Multiple</article-title>. <source>Biometrics</source> <volume>48</volume>: <fpage>361</fpage>–<lpage>372</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2532296" xlink:type="simple">10.2307/2532296</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/1637966" xlink:type="simple">1637966</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B18">
+				<label>18</label>
+				<mixed-citation publication-type="book-series" xlink:type="simple"><name name-style="western"><surname>Raymond</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Rousset</surname><given-names>F</given-names></name> (<year>1995</year>) <source>n Exact Test for Population Differentiation</source>. <volume>49</volume>: <fpage>1280</fpage>–<lpage>1283</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B19">
+				<label>19</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chakraborty</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Zhong</surname><given-names>Y</given-names></name> (<year>1994</year>) <article-title>Statistical power of an exact test of Hardy-Weinberg proportions of genotypic data at a multiallelic locus</article-title>. <source>Hum Hered</source> <volume>44</volume>: <fpage>1</fpage>–<lpage>9</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1159/000154181" xlink:type="simple">10.1159/000154181</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/8163285" xlink:type="simple">8163285</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B20">
+				<label>20</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aoki</surname><given-names>S</given-names></name> (<year>2003</year>) <article-title>Network algorithm for the Exact Test of Hardy-Weinberg Proportion for Multiple Alleles</article-title>. <source>Biometrical J</source> <volume>45</volume>: <fpage>471</fpage>–<lpage>490</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/bimj.200390026" xlink:type="simple">10.1002/bimj.200390026</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B21">
+				<label>21</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maiste</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Weir</surname><given-names>BS</given-names></name> (<year>2004</year>) <article-title>Optimal testing strategies for large, sparse multinomial models</article-title>. <source>Comput Statist Data Anal</source> <volume>46</volume>: <fpage>605</fpage>–<lpage>620</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.csda.2003.08.002" xlink:type="simple">10.1016/j.csda.2003.08.002</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B22">
+				<label>22</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wigginton</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Cutler</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Abecasis</surname><given-names>GR</given-names></name> (<year>2005</year>) <article-title>A note on exact tests of Hardy-Weinberg equilibrium</article-title>. <source>Am J Hum Genet</source> <volume>76</volume>: <fpage>887</fpage>–<lpage>893</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/429864" xlink:type="simple">10.1086/429864</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15789306" xlink:type="simple">15789306</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B23">
+				<label>23</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kang</surname><given-names>S-H</given-names></name> (<year>2007</year>) <article-title>Which Exact Test is More Powerful in Testing the Hardy–Weinberg Law?</article-title> <source>Communications Statistics-Simulation Computation</source> <volume>37</volume>: <fpage>14</fpage>–<lpage>24</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/03610910701420065" xlink:type="simple">10.1080/03610910701420065</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B24">
+				<label>24</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rohlfs</surname><given-names>RV</given-names></name>, <name name-style="western"><surname>Weir</surname><given-names>BS</given-names></name> (<year>2008</year>) <article-title>Distributions of Hardy-Weinberg equilibrium test statistics</article-title>. <source>Genetics</source> <volume>180</volume>: <fpage>1609</fpage>–<lpage>1616</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.108.088005" xlink:type="simple">10.1534/genetics.108.088005</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18791257" xlink:type="simple">18791257</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B25">
+				<label>25</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weir</surname><given-names>BS</given-names></name> (<year>1992</year>) <article-title>Review Population genetics in the forensic DNA debate</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>89</volume>: <fpage>11654</fpage>–<lpage>11659</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.89.24.11654" xlink:type="simple">10.1073/pnas.89.24.11654</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/1465380" xlink:type="simple">1465380</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B26">
+				<label>26</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Levene</surname><given-names>H</given-names></name> (<year>1949</year>) <article-title>On a matching problem arising in genetics</article-title>. <source>Ann Math Statist</source> <volume>20</volume>: <fpage>91</fpage>–<lpage>94</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/aoms/1177730093" xlink:type="simple">10.1214/aoms/1177730093</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B27">
+				<label>27</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Haldane</surname><given-names>JBS</given-names></name> (<year>1954</year>) <article-title>Department of Biometry, University College, London</article-title>. <source>J Genet</source> <volume>52</volume>: <fpage>631</fpage>–<lpage>635</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/BF02981502" xlink:type="simple">10.1007/BF02981502</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B28">
+				<label>28</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huelsenbeck</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Andolfatto</surname><given-names>P</given-names></name> (<year>2007</year>) <article-title>Inference of population structure under a Dirichlet process model</article-title>. <source>Genetics</source> <volume>175</volume>: <fpage>1787</fpage>–<lpage>1802</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.106.061317" xlink:type="simple">10.1534/genetics.106.061317</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17237522" xlink:type="simple">17237522</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B29">
+				<label>29</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gao</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Williamson</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bustamante</surname><given-names>CD</given-names></name> (<year>2007</year>) <article-title>A Markov chain Monte Carlo approach for joint inference of population structure and inbreeding rates from multilocus genotype data</article-title>. <source>Genetics</source> <volume>176</volume>: <fpage>1635</fpage>–<lpage>1651</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.107.072371" xlink:type="simple">10.1534/genetics.107.072371</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17483417" xlink:type="simple">17483417</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B30">
+				<label>30</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hubisz</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Falush</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name> (<year>2009</year>) <article-title>Inferring weak population structure with the assistance of sample group information</article-title>. <source>Mol Ecol Resour</source> <volume>9</volume>: <fpage>1322</fpage>–<lpage>1332</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1755-0998.2009.02591.x" xlink:type="simple">10.1111/j.1755-0998.2009.02591.x</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21564903" xlink:type="simple">21564903</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B31">
+				<label>31</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Agresti</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Wackerly</surname><given-names>D</given-names></name> (<year>1979</year>) <article-title>Exact conditional tests for cross-classification: Approximation of attained significance levels</article-title>. <source>Psychometrika</source> <volume>44</volume>: <fpage>75</fpage>–<lpage>83</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/BF02293786" xlink:type="simple">10.1007/BF02293786</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B32">
+				<label>32</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hudson</surname><given-names>RR</given-names></name> (<year>2002</year>) <article-title>Generating samples under a Wright-Fisher neutral model of genetic variation</article-title>. <source>Bioinformatics</source> <volume>18</volume>: <fpage>337</fpage>–<lpage>338</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/18.suppl_1.S337" xlink:type="simple">10.1093/bioinformatics/18.suppl_1.S337</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/11847089" xlink:type="simple">11847089</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B33">
+				<label>33</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kuhn</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Dean</surname><given-names>D</given-names></name> (<year>2005</year>) <article-title>Is developing scientific thinking all about learning to control variables?</article-title> <source>Psychol Sci</source> <volume>16</volume>: <fpage>866</fpage>–<lpage>870</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1467-9280.2005.01628.x" xlink:type="simple">10.1111/j.1467-9280.2005.01628.x</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16262771" xlink:type="simple">16262771</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B34">
+				<label>34</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>, <name name-style="western"><surname>Rosenberg</surname><given-names>NA</given-names></name> (<year>1999</year>) <article-title>Use of unlinked genetic markers to detect population stratification in association studies</article-title>. <source>Am J Hum Genet</source> <volume>65</volume>: <fpage>220</fpage>–<lpage>228</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/302449" xlink:type="simple">10.1086/302449</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/10364535" xlink:type="simple">10364535</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B35">
+				<label>35</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McVean</surname><given-names>GAT</given-names></name>, <name name-style="western"><surname>Myers</surname><given-names>SR</given-names></name>, <name name-style="western"><surname>Hunt</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Deloukas</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Bentley</surname><given-names>DR</given-names></name> <etal>et al.</etal> (<year>2004</year>) <article-title>The fine-scale structure of recombination rate variation in the human genome</article-title>. <source>Science (New York, NY)</source> <volume>304</volume>: <fpage>581</fpage>–<lpage>584</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1092500" xlink:type="simple">10.1126/science.1092500</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15105499" xlink:type="simple">15105499</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B36">
+				<label>36</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Coop</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Ober</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>, <name name-style="western"><surname>Przeworski</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>High-resolution mapping of crossovers reveals extensive variation in fine-scale recombination patterns among humans</article-title>. <source>Science (New York, NY)</source> <volume>319</volume>: <fpage>1395</fpage>–<lpage>1398</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1151851" xlink:type="simple">10.1126/science.1151851</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18239090" xlink:type="simple">18239090</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B37">
+				<label>37</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kong</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Thorleifsson</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Gudbjartsson</surname><given-names>DF</given-names></name>, <name name-style="western"><surname>Masson</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Sigurdsson</surname><given-names>A</given-names></name> <etal>et al.</etal> (<year>2010</year>) <article-title>Fine-scale recombination rate differences between sexes, populations and individuals</article-title>. <source>Nature</source> <volume>467</volume>: <fpage>1099</fpage>–<lpage>1103</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09525" xlink:type="simple">10.1038/nature09525</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20981099" xlink:type="simple">20981099</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B38">
+				<label>38</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frazer</surname><given-names>KA</given-names></name>, <name name-style="western"><surname>Ballinger</surname><given-names>DG</given-names></name>, <name name-style="western"><surname>Cox</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Hinds</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Stuve</surname><given-names>LL</given-names></name> <etal>et al.</etal> (<year>2007</year>) <article-title>A second generation human haplotype map of over 3.1 million SNPs</article-title>. <source>Nature</source> <volume>449</volume>: <fpage>851</fpage>–<lpage>861</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature06258" xlink:type="simple">10.1038/nature06258</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17943122" xlink:type="simple">17943122</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B39">
+				<label>39</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kaeuffer</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Réale</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Coltman</surname><given-names>DW</given-names></name>, <name name-style="western"><surname>Pontier</surname><given-names>D</given-names></name> (<year>2007</year>) <article-title>Detecting population structure using STRUCTURE software: effect of background linkage disequilibrium</article-title>. <source>Heredity</source> <volume>99</volume>: <fpage>374</fpage>–<lpage>380</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/sj.hdy.6801010" xlink:type="simple">10.1038/sj.hdy.6801010</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17622269" xlink:type="simple">17622269</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B40">
+				<label>40</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Donnelly</surname><given-names>P</given-names></name> (<year>2000</year>) <article-title>Inference of population structure using multilocus genotype data</article-title>. <source>Genetics</source> <volume>155</volume>: <fpage>945</fpage>–<lpage>959</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/10835412" xlink:type="simple">10835412</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B41">
+				<label>41</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Falush</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name> (<year>2003</year>) <article-title>Inference of population structure using multilocus genotype data: linked loci and correlated allele frequencies</article-title>. <source>Genetics</source> <volume>164</volume>: <fpage>1567</fpage>–<lpage>1587</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12930761" xlink:type="simple">12930761</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B42">
+				<label>42</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Handley</surname><given-names>LJL</given-names></name>, <name name-style="western"><surname>Manica</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Goudet</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Balloux</surname><given-names>F</given-names></name> (<year>2007</year>) <article-title>Going the distance: human population genetics in a clinal world</article-title>. <source>Trends Genet</source> <volume>23</volume>: <fpage>432</fpage>–<lpage>439</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tig.2007.07.002" xlink:type="simple">10.1016/j.tig.2007.07.002</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17655965" xlink:type="simple">17655965</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B43">
+				<label>43</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pemberton</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Absher</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Feldman</surname><given-names>MW</given-names></name>, <name name-style="western"><surname>Myers</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Rosenberg</surname><given-names>NA</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Genomic patterns of homozygosity in worldwide human populations</article-title>. <source>Am J Hum Genet</source> <volume>91</volume>: <fpage>275</fpage>–<lpage>292</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ajhg.2012.06.014" xlink:type="simple">10.1016/j.ajhg.2012.06.014</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22883143" xlink:type="simple">22883143</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B44">
+				<label>44</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kummerfeld</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Teichmann</surname><given-names>SA</given-names></name> (<year>2005</year>) <article-title>Relative rates of gene fusion and fission in multi-domain proteins</article-title>. <source>Trends Genet TIG</source> <volume>21</volume>: <fpage>25</fpage>–<lpage>30</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tig.2004.11.007" xlink:type="simple">10.1016/j.tig.2004.11.007</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15680510" xlink:type="simple">15680510</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B45">
+				<label>45</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bubb</surname><given-names>KL</given-names></name>, <name name-style="western"><surname>Bovee</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Buckley</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Haugen</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Kibukawa</surname><given-names>M</given-names></name> <etal>et al.</etal> (<year>2006</year>) <article-title>Scan of human genome reveals no new Loci under ancient balancing selection</article-title>. <source>Genetics</source> <volume>173</volume>: <fpage>2165</fpage>–<lpage>2177</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1534/genetics.106.055715" xlink:type="simple">10.1534/genetics.106.055715</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16751668" xlink:type="simple">16751668</ext-link>.</mixed-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>

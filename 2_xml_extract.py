@@ -77,22 +77,20 @@ def main_revise(i,t_links):
     
     path = "Citation_paper\\"+str(i)
     PLOS_revise(t_links,path,collection)
-    
-#pool = multiprocessing.Pool()
-#func = partial(PLOS_get,path,0)
-#pool.map(func, cursor)
-#pool.close()
-#pool.join()
 
-#main_function(6)
-#main_function(7)        
+# t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
+# t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
+# t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
+# t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
+# t_links5 = ["10.1371/journal.pone.0187044"]
+# t_links6 = ["10.1371/journal.pone.0187044"]
+# t_links7 = ["10.1371/journal.pone.0177179"]
+# t_links8 = ["10.1371/journal.pone.0204714","10.1371/journal.pone.0181873","10.1371/journal.pcbi.0030141","10.1371/journal.pcbi.0020165"]
+# t_links9 = ["10.1371/journal.pone.0176993","10.1371/journal.pone.0191812"]
+# t_links10 = ["10.1371/journal.pcbi.0020165","10.1371/journal.pone.0208196"]
+# t_links11 = ["10.1371/journal.pone.0186168", "10.1371/journal.pone.0197103"]
 
-    
-#t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
-#t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
-#t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
-#t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
-#t_links5 = ["10.1371/journal.pone.0187044"]
-#t_links6 = ["10.1371/journal.pone.0187044"]
-#t_links7 = ["10.1371/journal.pone.0177179"]
-
+# main_function(8)
+# main_function(9)
+# main_function(10)
+# main_function(11)

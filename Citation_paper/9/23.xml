@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0135028</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-14-39178</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>gPGA: GPU Accelerated Population Genetics Analyses</article-title>
+<alt-title alt-title-type="running-head">GPU Accelerated Population Genetics Analyses</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Zhou</surname>
+<given-names>Chunbao</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Lang</surname>
+<given-names>Xianyu</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Wang</surname>
+<given-names>Yangang</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Zhu</surname>
+<given-names>Chaodong</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Supercomputing Center, Computer Network Information Center, Chinese Academy of Sciences, Beijing, 100190, China</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Key Laboratory of Zoological Systematics and Evolution, Institute of Zoology, Chinese Academy of Sciences, Beijing, 100101, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Wu</surname>
+<given-names>Rongling</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Pennsylvania State University, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: CBZ XYL YGW CDZ. Performed the experiments: CBZ YGW. Analyzed the data: CBZ XYL. Wrote the paper: CBZ XYL YGW CDZ.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">wangyg@sccas.cn</email> (YGW); <email xlink:type="simple">zhucd@ioz.ac.cn</email> (CDZ)</corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>6</day>
+<month>8</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>8</issue>
+<elocation-id>e0135028</elocation-id>
+<history>
+<date date-type="received">
+<day>2</day>
+<month>9</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>16</day>
+<month>7</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Zhou et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0135028" xlink:type="simple"/>
+<abstract>
+<sec id="sec001">
+<title>Background</title>
+<p>The isolation with migration (IM) model is important for studies in population genetics and phylogeography. IM program applies the IM model to genetic data drawn from a pair of closely related populations or species based on Markov chain Monte Carlo (MCMC) simulations of gene genealogies. But computational burden of IM program has placed limits on its application.</p>
+</sec>
+<sec id="sec002">
+<title>Methodology</title>
+<p>With strong computational power, Graphics Processing Unit (GPU) has been widely used in many fields. In this article, we present an effective implementation of IM program on one GPU based on Compute Unified Device Architecture (CUDA), which we call gPGA.</p>
+</sec>
+<sec id="sec003">
+<title>Conclusions</title>
+<p>Compared with IM program, gPGA can achieve up to 52.30X speedup on one GPU. The evaluation results demonstrate that it allows datasets to be analyzed effectively and rapidly for research on divergence population genetics. The software is freely available with source code at <ext-link ext-link-type="uri" xlink:href="https://github.com/chunbaozhou/gPGA" xlink:type="simple">https://github.com/chunbaozhou/gPGA</ext-link>.</p>
+</sec>
+</abstract>
+<funding-group>
+<funding-statement>XYL, YGW and CBZ were supported by Informatization Special Program of Chinese Academy of Sciences “Construction and Application for the Supercomputing Environment of Cloud Oriented Service” (XXH2503-02) and Around Five Top Priorities of “One-Three-Five” Strategic Planning, CNIC (Grant No. CNIC_PY-1404). CDZ was supported by the National Natural Science Foundation of China (No. J1210002) and the grant from Key Laboratory of Zoological Systematics and Evolution, Chinese Academy of Sciences (No. Y229YX5105).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="9"/>
+<table-count count="2"/>
+<page-count count="15"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>gPGA is available from <ext-link ext-link-type="uri" xlink:href="https://github.com/chunbaozhou/gPGA" xlink:type="simple">https://github.com/chunbaozhou/gPGA</ext-link> and the simulation datasets are available from <ext-link ext-link-type="uri" xlink:href="https://github.com/chunbaozhou/simulation-datasets" xlink:type="simple">https://github.com/chunbaozhou/simulation-datasets</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec004" sec-type="intro">
+<title>Introduction</title>
+<p>The study of speciation at the population level, or divergence population genetics, is a major focus of evolutionary research. Studies in this area typically involve sampling genes from populations and species of interest, then analyzing the patterns of genetic variation to gain insight into the processes responsible for population divergence [<xref rid="pone.0135028.ref001" ref-type="bibr">1</xref>]. Estimates of population parameters can be substantially improved by sampling multiple genetic markers, especially unlinked loci. Large, multilocus or genomic data sets present a rich source of information for studying population processes [<xref rid="pone.0135028.ref002" ref-type="bibr">2</xref>, <xref rid="pone.0135028.ref003" ref-type="bibr">3</xref>].</p>
+<p>There are many methods can be applied to population genetics analyses, such as Linkage disequilibrium, Gametic phase estimation method, Molecular diversity method and so no [<xref rid="pone.0135028.ref004" ref-type="bibr">4</xref>–<xref rid="pone.0135028.ref015" ref-type="bibr">15</xref>]. But when apply to population subdivision analyses, above methods make one of two rather extreme assumptions: (1) the diverged populations have equilibrium migration rate; (2) the diverged populations have gene flow only before they descended from a common ancestral population at some time in the past [<xref rid="pone.0135028.ref016" ref-type="bibr">16</xref>]. The isolation with migration (IM) model is a framework that enables the divergence time and migration rates between two populations to be estimated jointly from an alignment DNA sequences [<xref rid="pone.0135028.ref016" ref-type="bibr">16</xref>]. Using various parameters, IM model can capture the effects of different factors that have a role in population divergence. IM program applies the IM model to genetic data drawn from a pair of closely related populations or species based on Markov chain Monte Carlo (MCMC) simulations of gene genealogies and were originally described in reference [<xref rid="pone.0135028.ref017" ref-type="bibr">17</xref>]. IM program has been applied to a wide range of questions in population genetics, speciation, and hybridization [<xref rid="pone.0135028.ref018" ref-type="bibr">18</xref>–<xref rid="pone.0135028.ref021" ref-type="bibr">21</xref>]. Population parameters estimation in IM program is based on MCMC method. MCMC method is a random-walk algorithm that allows sampling from the posterior distribution [<xref rid="pone.0135028.ref022" ref-type="bibr">22</xref>, <xref rid="pone.0135028.ref023" ref-type="bibr">23</xref>]. MCMC method is a computationally intensive method, so this places a limit on the application of IM program for population genetics analyses.</p>
+<p>GPU is designed specifically for graphics originally. With powerful computing capacity using hundreds of processing units, General-purpose computing on graphics processing units (GPGPU) is proposed. GPGPU is the utilization of a GPU to perform computation in applications traditionally handled by the central processing unit (CPU). The dominant proprietary framework for GPGPU is CUDA which is a general purpose parallel computing platform and programming model. We can leverage the parallel compute engine in NVIDIA GPU to solve many complex computational problems in a more efficient way than on a CPU. GPU as a coprocessor of CPU is a powerful supplement for the performance of the primary processor and is popular in evolutionary biology now [<xref rid="pone.0135028.ref024" ref-type="bibr">24</xref>–<xref rid="pone.0135028.ref026" ref-type="bibr">26</xref>]. The function implementation on GPU called kernel executed <italic>N</italic> times in parallel using <italic>N</italic> different CUDA threads, as opposed to the function implementation on CPU executed only once. CUDA threads can be organized in one-dimension, two-dimension and three-dimension for different applications. CUDA threads are organized by blocks in GPU. GPU have its independent memory called global memory, and there are also shared memory, local memory, constant memory and texture memory on GPU which are similar to cache on CPU for performance promotion of different applications [<xref rid="pone.0135028.ref027" ref-type="bibr">27</xref>].</p>
+<p>With strong computational power, GPU has been widely used in many fields. In this article, we present an effective implementation of IM program on one GPU based on CUDA, which we call gPGA. gPGA only implements two of the five mutation models in IM program, including Hasegawa-Kishino-Yano (HKY) model [<xref rid="pone.0135028.ref028" ref-type="bibr">28</xref>] and Infinite Sites (IS) model [<xref rid="pone.0135028.ref029" ref-type="bibr">29</xref>]. Compared with IM program, gPGA can achieve up to 52.30X speedup on one GPU. The evaluation results demonstrate that gPGA allows datasets to be analyzed effectively and rapidly for research on divergence population genetics.</p>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>Method</title>
+<sec id="sec006">
+<title>Isolation with migration model</title>
+<p>IM model includes parameters for effective population sizes (N<sub>1</sub>, N<sub>2</sub>, and N<sub>A</sub>), rates of gene flow (m<sub>1</sub> and m<sub>2</sub>), time of population divergence (t) and proportion of the ancestral population that forms one of the founding populations (s) (<xref rid="pone.0135028.g001" ref-type="fig">Fig 1</xref>). In IM model, the founding sizes of the descendent populations are sN<sub>A</sub> and (1-s)N<sub>A</sub> respectively, where 0&lt;s&lt;1. Population parameters are all scaled by the neutral mutation rate (u) in IM program [<xref rid="pone.0135028.ref030" ref-type="bibr">30</xref>].</p>
+<fig id="pone.0135028.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Isolation with Migration model [<xref rid="pone.0135028.ref030" ref-type="bibr">30</xref>].</title>
+<p>The parameters are effective population sizes (N<sub>1</sub>, N<sub>2</sub>, and N<sub>A</sub>), rates of gene flow (m<sub>1</sub> and m<sub>2</sub>), time of population divergence (t) and proportion of N<sub>A</sub> that forms the founding population of N<sub>1</sub> (s). So the founding sizes of the descendent populations are sN<sub>A</sub> and (1-s)N<sub>A</sub> respectively, where 0&lt;s&lt;1. Parameters are all scaled by the neutral mutation rate (u) in IM program, including θ<sub>1</sub> = 4N<sub>1</sub><italic>u</italic>, θ<sub>2</sub> = 4N<sub>2</sub><italic>u</italic>, θ<sub>A</sub> = 4N<sub><italic>A</italic></sub><italic>u</italic>, <italic>m</italic><sub>1</sub> = m<sub>1</sub> / <italic>u</italic>, <italic>m</italic><sub>2</sub> = m<sub>2</sub> / <italic>u</italic>, <italic>t</italic> = <italic>t</italic> / <italic>u</italic>.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g001" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec007">
+<title>MCMC method</title>
+<p>The posterior probability of parameter is calculated through <xref rid="pone.0135028.e001" ref-type="disp-formula">Eq 1</xref>, where D denotes sequences, T denotes phylogenetic tree, τ denotes branch lengths, and θ is the set of model parameters, where <italic>θ</italic> = {<italic>θ</italic><sub>1</sub>, <italic>θ</italic><sub>2</sub>, <italic>θ</italic><sub><italic>A</italic></sub>, <italic>m</italic><sub>1</sub>, <italic>m</italic><sub>2</sub>, <italic>t</italic>}.</p>
+<disp-formula id="pone.0135028.e001">
+<alternatives>
+<graphic id="pone.0135028.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi>P</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo>,</mml:mo><mml:mi>τ</mml:mi><mml:mo>,</mml:mo><mml:mi>θ</mml:mi><mml:mo>|</mml:mo><mml:mi>D</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>P</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>D</mml:mi><mml:mo>|</mml:mo><mml:mi>T</mml:mi><mml:mo>,</mml:mo><mml:mi>τ</mml:mi><mml:mo>,</mml:mo><mml:mi>θ</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>•</mml:mo><mml:mi>P</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo>,</mml:mo><mml:mi>τ</mml:mi><mml:mo>,</mml:mo><mml:mi>θ</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mrow><mml:mi>P</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>D</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+<p>The Metropolis-Hastings algorithm [<xref rid="pone.0135028.ref022" ref-type="bibr">22</xref>, <xref rid="pone.0135028.ref023" ref-type="bibr">23</xref>] is used for MCMC method in IM program and works as follows: where <italic>x</italic> denotes the current state of the Markov chain, <italic>x</italic><sup>’</sup> denotes the proposed state, <italic>g</italic>(<italic>x</italic>→<italic>x’</italic>) denotes the conditional probability of proposing a state <italic>x</italic><sup>’</sup> given <italic>x</italic>.</p>
+<list list-type="order">
+<list-item><p>randomly propose a new state <italic>x</italic><sup>’</sup> according to <italic>g</italic>(<italic>x</italic>→<italic>x’</italic>)</p></list-item>
+<list-item><p>the probability (<italic>R</italic>) of accepting the new state <italic>x</italic><sup>’</sup> is
+<disp-formula id="pone.0135028.e002">
+<alternatives>
+<graphic id="pone.0135028.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mi>R</mml:mi><mml:mo>=</mml:mo><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mfrac><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>D</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo>′</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>D</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mfrac><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>x</mml:mi><mml:mo>′</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>x</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>×</mml:mo><mml:mfrac><mml:mrow><mml:mi>g</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>x</mml:mi><mml:mo>′</mml:mo><mml:mo>→</mml:mo><mml:mi>x</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>g</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>x</mml:mi><mml:mo>→</mml:mo><mml:mi>x</mml:mi><mml:mo>′</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow><mml:mo>]</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+</p></list-item>
+<list-item><p>Generate a random variable <italic>U</italic> which is uniformly distributed on the interval (0,1). If <italic>U</italic>&lt;<italic>R</italic>, accept the proposed state <italic>x</italic><sup>’</sup>. Otherwise, continue with the current state <italic>x</italic>.</p></list-item>
+<list-item><p>Go back to step 1).</p></list-item>
+</list>
+<p>This process is repeated for a sufficiently large number of iterations until there are sufficient samples that have been drawn from Markov chain.</p>
+</sec>
+<sec id="sec008">
+<title>Likelihood computations</title>
+<p>The likelihood evaluation is part of MCMC method and the details of likelihood computations are shown in <xref rid="pone.0135028.g002" ref-type="fig">Fig 2</xref>. When given sequences (<italic>S</italic>), phylogenetic tree (<italic>T</italic>) and branch length (<italic>t</italic>), the likelihood evaluation for HKY model in IM program is shown in <xref rid="pone.0135028.g002" ref-type="fig">Fig 2A</xref>. Firstly computing the conditional likelihoods (<italic>CL</italic>) for all the non-leaf nodes in <italic>T</italic>, then computing the site likelihoods (<italic>SL</italic>) for root node in <italic>T</italic>, finally computing the global likelihood (<italic>GL</italic>). Illustration of likelihood evaluation for HKY model is shown in <xref rid="pone.0135028.g003" ref-type="fig">Fig 3A</xref>. There are <italic>N</italic> = 6 individuals for analyses, and the length of <italic>S</italic> is <italic>n</italic>. The circles in shadow are the non-leaf nodes and the circles within red are the leaf nodes in <italic>T</italic>. Firstly for node <italic>i</italic> (1≤<italic>i</italic>≤<italic>N</italic>), if the descendants (<italic>d</italic><sub><italic>l</italic></sub>,<italic>d</italic><sub><italic>r</italic></sub>) of <italic>i</italic> are leaf nodes then computing <italic>CL</italic>(<italic>i</italic>,<italic>j</italic>) based on <italic>S(d</italic><sub><italic>l</italic></sub>,<italic>j)</italic> and <italic>S(d</italic><sub><italic>r</italic></sub>,<italic>j)</italic>, if the descendants (<italic>d</italic><sub><italic>l</italic></sub>,<italic>d</italic><sub><italic>r</italic></sub>) of <italic>i</italic> are non-leaf nodes then computing <italic>CL(i</italic>,<italic>j)</italic> based on <italic>CL(d</italic><sub><italic>l</italic></sub>,<italic>j)</italic> and <italic>CL(d</italic><sub><italic>r</italic></sub>,<italic>j)</italic> we have got already (1≤<italic>j</italic>≤<italic>n</italic>). When computing <italic>CL</italic>(<italic>i</italic>,<italic>j</italic>), there are 4 situations depending on its descendants (leaf nodes or not). Further, when its descendants are not leaf nodes, we can use <italic>CL</italic> computed last generation or <italic>CL</italic> computed now. So there are 9 situations for computing <italic>CL</italic> depending on its descendants and we define 9 GPU kernels for computing <italic>CL</italic> also. Then computing <italic>SL</italic><sub><italic>j</italic></sub> = <italic>π</italic> × <italic>CL</italic>(<italic>root</italic>, <italic>j</italic>) 1≤<italic>j</italic>≤<italic>n</italic>. Finally computing <italic>GL</italic> through <inline-formula id="pone.0135028.e003"><alternatives><graphic id="pone.0135028.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e003" xlink:type="simple"/><mml:math display="inline" id="M3" overflow="scroll"><mml:mrow><mml:mi>f</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>S</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo>′</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext> </mml:mtext><mml:mo>=</mml:mo><mml:mtext> </mml:mtext><mml:mstyle displaystyle="true"><mml:munder><mml:mo>∑</mml:mo><mml:mi>n</mml:mi></mml:munder><mml:mrow><mml:mi>S</mml:mi><mml:msub><mml:mi>L</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:mstyle></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+<fig id="pone.0135028.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>The flow chart of likelihood evaluation for HKY model and IS model.</title>
+<p><italic>S</italic> denote the sequences with length <italic>n</italic>, <italic>T</italic> denote the phylogenetic tree, <italic>t</italic> denote the branch length, <italic>π</italic> denote the base frequencies of nucleotide, <italic>u</italic> denote neutral mutation rate, <italic>N</italic> denote the number of individuals for analyses. (A) <italic>CL</italic> denote conditional likelihood for non-leaf node in <italic>T</italic>, <italic>SL</italic> denote site likelihood for root node in <italic>T</italic>, <italic>f</italic>(<italic>S</italic> | <italic>x’</italic>) denote global likelihood. (B) <italic>M</italic> denote the number of mutations, <italic>B</italic> denote branch length, <italic>BT</italic> denote total branch length for <italic>T</italic>, <italic>f</italic>(<italic>S</italic> | <italic>x’</italic>) denote global likelihood.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g002" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pone.0135028.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Illustration of likelihood evaluation for HKY model and IS model.</title>
+<p><italic>N</italic> denote the number of individuals in population for analyses and <italic>n</italic> denote the length of sequences. The circles in shadow are the non-leaf nodes and the circles with red number are the leaf nodes in phylogenetic tree. (A) <italic>S</italic>(<italic>i</italic>,<italic>j</italic>) denote <italic>j</italic>th base of <italic>i</italic>th sequence, <italic>CL</italic>(<italic>i</italic>,<italic>j</italic>) denote conditional likelihood of <italic>j</italic>th base for <italic>i</italic>th node, <italic>SL</italic><sub><italic>j</italic></sub> denote site likelihood for <italic>j</italic>th base, <italic>f</italic>(<italic>S</italic> | <italic>x’</italic>) denote global likelihood. (B) <italic>S</italic>(<italic>i</italic>,<italic>j</italic>) denote the <italic>j</italic>th base of <italic>i</italic>th sequence, <italic>M</italic><sub><italic>j</italic></sub> denote the number of mutations of <italic>j</italic>th base, <italic>B</italic><sub><italic>j</italic></sub> denote branch length of <italic>j</italic>th base, <italic>t</italic><sub><italic>i</italic></sub> denote branch length of <italic>i</italic>th node, <italic>BT</italic> denote total branch length for phylogenetic tree, <italic>f</italic>(<italic>S</italic> | <italic>x’</italic>) denote global likelihood.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>When given sequences (<italic>S</italic>), phylogenetic tree (<italic>T</italic>) and branch length (<italic>t</italic>), the likelihood evaluation for IS model is shown in <xref rid="pone.0135028.g002" ref-type="fig">Fig 2B</xref>. Firstly computing the number of mutations (<italic>M</italic>) for all sites in <italic>S</italic>, computing the branch length (<italic>B</italic>) for all sites in <italic>S</italic> and computing the whole branch length (<italic>BT</italic>). Then computing <italic>GL</italic>. Illustration of likelihood evaluation for IS model is shown in <xref rid="pone.0135028.g003" ref-type="fig">Fig 3B</xref>. There are <italic>N</italic> = 6 individuals for analyses, and the length of <italic>S</italic> is <italic>n</italic>. The circles in shadow are the non-leaf nodes and the circles within red are the leaf nodes in <italic>T</italic>. Firstly computing <italic>BT</italic> for all the nodes in <italic>T</italic> and for each site <italic>j</italic> (1≤<italic>j</italic>≤<italic>n</italic>) of <italic>S</italic> computing <italic>M</italic><sub><italic>j</italic></sub> and <italic>B</italic><sub><italic>j</italic></sub> through all the nodes in <italic>T</italic>. Only thing to note here is that the computational process breaks immediately when there are more than one mutation at a site under the topology and return 0 as <italic>GL</italic>. Then computing <italic>GL</italic> through <inline-formula id="pone.0135028.e004"><alternatives><graphic id="pone.0135028.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e004" xlink:type="simple"/><mml:math display="inline" id="M4" overflow="scroll"><mml:mrow><mml:mi>f</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>S</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo>′</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext> </mml:mtext><mml:mo>=</mml:mo><mml:mtext> </mml:mtext><mml:mi>B</mml:mi><mml:mi>T</mml:mi><mml:mo>×</mml:mo><mml:mi>u</mml:mi><mml:mo>+</mml:mo><mml:mstyle displaystyle="true"><mml:munder><mml:mo>∑</mml:mo><mml:mi>n</mml:mi></mml:munder><mml:mrow><mml:mtext>log</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>×</mml:mo><mml:mi>u</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>×</mml:mo><mml:msub><mml:mi>M</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:mstyle><mml:mo>−</mml:mo><mml:mstyle displaystyle="true"><mml:munder><mml:mo>∑</mml:mo><mml:mi>n</mml:mi></mml:munder><mml:mrow><mml:mtext>log</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>M</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mstyle></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+<p>The likelihood evaluation for HKY model and IS model are sensitive to the length of sequence through above analyses, so we focus HKY model and IS model rather than other models in IM program. From <xref rid="pone.0135028.g003" ref-type="fig">Fig 3</xref> we also known that the computational order for node in <italic>T</italic> for HKY model is concerned, and this is unconcerned for IS model.</p>
+</sec>
+<sec id="sec009">
+<title>MCMC method on GPU</title>
+<p>Because of the different computational process for HKY and IS model in IM program, we designed different computational process for them on GPU. In order to accelerate the computation of likelihood using shared memory on GPU and reduce the communication cost between CPU and GPU, we acquire the block likelihoods (<italic>BL</italic>) for each block on GPU and transfer <italic>BL</italic> from GPU to CPU for <italic>GL</italic> computation. <italic>GL</italic> is the sum of <italic>SL</italic>, so we sum part of <italic>GL</italic> based on shared memory for each block on GPU and this is <italic>BL</italic>.</p>
+<p>Illustration of likelihood evaluation for HKY model on GPU is shown in <xref rid="pone.0135028.g004" ref-type="fig">Fig 4A</xref>. Considering computational order for nodes in <italic>T</italic>, we scheduled the order for nodes before computing likelihood on GPU. So <italic>T</italic> and <italic>t</italic> does not need to transfer to GPU. MCMC method for HKY model on GPU is as follows:</p>
+<fig id="pone.0135028.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Illustration of likelihood evaluation for HKY model and IS model on GPU.</title>
+<p>CPU memory denote the RAM of computer. (A) <italic>S</italic> denote the sequences used for analyses, <italic>π</italic> denote the base frequencies of nucleotide, <italic>CL</italic> denote the conditional likelihood for non-leaf nodes in phylogenetic tree, <italic>CL(root)</italic> denote the conditional likelihood for root node in phylogenetic tree, <italic>SL</italic> denote the site likelihoods for root node, <italic>BL</italic> denote the block likelihood for root node and <italic>GL</italic> denote the global likelihood. (B) <italic>S</italic> denote the sequences used for analyses, <italic>T</italic> denote the phylogenetic tree, <italic>t</italic> denote the branch length, <italic>M</italic> denote the number of mutations, <italic>BT</italic> denote total branch length for phylogenetic tree, <italic>SL</italic> denote the site likelihoods for root node, <italic>BL</italic> denote the block likelihood for root node and <italic>GL</italic> denote the global likelihood.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g004" position="float" xlink:type="simple"/>
+</fig>
+<list list-type="order">
+<list-item><p>Initialization stage
+<list list-type="simple">
+<list-item><label>1.1</label><p>Allocate GPU global memory for <italic>S</italic></p></list-item>
+<list-item><label>1.2</label><p>Transfer <italic>S</italic> from CPU memory to GPU global memory and transfer <italic>π</italic> from CPU memory to GPU constant memory</p></list-item>
+<list-item><label>1.3</label><p>Set <italic>g</italic> = 0</p></list-item>
+</list></p></list-item>
+<list-item><p>While (<italic>g</italic>&lt;maximum generation) do
+<list list-type="simple">
+<list-item><label>2.1</label><p>Propose a new <italic>T</italic></p></list-item>
+<list-item><label>2.2</label><p>For each non-leaf node <italic>i</italic> in <italic>T</italic> (1≤i≤<italic>N</italic>) do
+<list list-type="simple">
+<list-item><label>2.2.1</label><p>Call kernel (1–9) to compute <inline-formula id="pone.0135028.e005"><alternatives><graphic id="pone.0135028.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e005" xlink:type="simple"/><mml:math display="inline" id="M5" overflow="scroll"><mml:mrow><mml:mi>C</mml:mi><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mo>*</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext> = </mml:mtext><mml:mstyle displaystyle="true"><mml:munder><mml:mo>∑</mml:mo><mml:mi>n</mml:mi></mml:munder><mml:mrow><mml:mi>C</mml:mi><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mstyle></mml:mrow></mml:math></alternatives></inline-formula> on GPU and store it on GPU global memory</p></list-item>
+</list></p></list-item>
+<list-item><label>2.3</label><p>Call kernel (10) to compute <italic>SL</italic> and <italic>BL</italic> using GPU shared memory and store <italic>BL</italic> on GPU global memory</p></list-item>
+<list-item><label>2.4</label><p>Transfer <italic>BL</italic> from GPU global memory to CPU memory</p></list-item>
+<list-item><label>2.5</label><p>Compute <italic>GL</italic> on CPU</p></list-item>
+<list-item><label>2.6</label><p>Accept or reject <italic>T</italic></p></list-item>
+</list></p></list-item>
+</list>
+<p>Illustration of likelihood evaluation for IS model on GPU is in <xref rid="pone.0135028.g004" ref-type="fig">Fig 4B</xref>. MCMC method for IS model on GPU is as follows:
+<list list-type="order">
+<list-item><p>Initialization stage
+<list list-type="simple">
+<list-item><label>1.1</label><p>Allocate GPU global memory for <italic>S</italic></p></list-item>
+<list-item><label>1.2</label><p>Transfer <italic>S</italic> from CPU memory to GPU global memory</p></list-item>
+<list-item><label>1.3</label><p>Set <italic>g</italic> = 0</p></list-item>
+</list></p></list-item>
+<list-item><p>While (<italic>g</italic>&lt;maximum generation) do
+<list list-type="simple">
+<list-item><label>2.1</label><p>Propose a new <italic>T</italic></p></list-item>
+<list-item><label>2.2</label><p>Compute <italic>BT</italic> for <italic>T</italic></p></list-item>
+<list-item><label>2.3</label><p>Transfer <italic>T</italic>, <italic>t</italic> and <italic>BT</italic> from CPU memory to GPU constant memory</p></list-item>
+<list-item><label>2.4</label><p>Call kernel (1) to compute <italic>M</italic><sub><italic>j</italic></sub> (1≤<italic>j</italic>≤<italic>n</italic>) using GPU shared memory and store it on GPU global memory</p></list-item>
+<list-item><label>2.5</label><p>Call kernel (2) to compute <italic>BL</italic> using GPU shared memory and store <italic>BL</italic> on GPU global memory</p></list-item>
+<list-item><label>2.6</label><p>Transfer <italic>BL</italic> from GPU global memory to CPU memory</p></list-item>
+<list-item><label>2.7</label><p>Compute <italic>GL</italic> on CPU</p></list-item>
+<list-item><label>2.8</label><p>Accept or reject <italic>T</italic></p></list-item>
+</list></p></list-item>
+</list></p>
+<p>When <italic>BL</italic> for IS model on GPU is computed completely, we continue to check the number of mutations for each site and decide to if return 0 or not.</p>
+</sec>
+<sec id="sec010">
+<title>Communication between CPU and GPU</title>
+<sec id="sec011">
+<title>For HKY model</title>
+<p>Sequences transfer to GPU only once. If there are <italic>L</italic> locus data for analyses and there are <italic>N</italic> individuals for each locus data with sequence length <italic>n</italic>, the communication cost for sequences is <italic>L×N×n</italic>. In each generation, MCMC method proposes a new phylogenetic tree with new branch length. However, we scheduled the nodes of phylogenetic tree before calling kernels to compute conditional likelihoods. So phylogenetic tree and branch length only exist on CPU. <italic>π</italic> is fixed all the time, so we transfer <italic>π</italic> to GPU only once. The communication cost for <italic>π</italic> is <italic>L</italic>×4. The communication cost for site likelihoods is <italic>n</italic>. The threads are organized by blocks on GPU. In order to reduce the communication cost, we sum the site likelihoods in each block and acquired block likelihoods. The block likelihoods are only sensitive to the number of blocks on GPU. Further the number of blocks is far less than the length of sequences.</p>
+</sec>
+<sec id="sec012">
+<title>For IS model</title>
+<p>Sequences transfer to GPU only once. It is the same as HKY model, the communication cost for sequences is <italic>L×N×n</italic>. In each generation, MCMC method proposes a new phylogenetic tree with new branch length. So we need transfer them to GPU in each generation. The communication cost for phylogenetic tree is 3×<italic>×</italic>(2×<italic>N</italic>-1) for the node and its two descendants. The communication cost for branch length is <italic>N</italic>-1. It is the same as HKY model, we only transfer block likelihoods from GPU to CPU.</p>
+</sec>
+</sec>
+<sec id="sec013">
+<title>Memory usage on GPU</title>
+<p>Illustration of multiple memory spaces on GPU is shown in <xref rid="pone.0135028.g005" ref-type="fig">Fig 5</xref>. Global memory, local memory, constant memory and texture memory are all on the GPU card. Because there are on-chip caches for constant memory and texture memory, they have much higher bandwidth and much lower latency than local memory and global memory. Shared memory is on-chip, so it has much higher bandwidth and much lower latency than local memory and global memory. For performance promotion, the constant memory and shared memory are important for gPGA. Constant memory and shared memory are all far less than global memory, so the usage of them is careful. The content in constant memory is unchanged after kernel launch, so the read-only data can store in it. The shared memory is shared for all the threads in the same block on GPU, so the block-local data can store in it.</p>
+<fig id="pone.0135028.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Illustration of multiple memory spaces on GPU.</title>
+<p>Global memory, local memory, constant memory, and texture memory are all no GPU card and outside GPU chip. There are caches for constant and texture memory inside GPU chip. Shared memory is shared for each multiprocessor inside GPU chip.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g005" position="float" xlink:type="simple"/>
+</fig>
+<sec id="sec014">
+<title>For HKY model</title>
+<p>Because memory space of sequences and conditional likelihoods are all far more than the size of shared memory and constant memory, so they are in global memory. <italic>π</italic> is unchanged all the time and is frequently read-only data on GPU, so <italic>π</italic> is in constant memory for performance promotion. Global likelihoods are the sum of site likelihoods for root node in phylogenetic tree, we sum the site likelihoods in the same block based on shared memory and acquired block likelihoods for performance promotion.</p>
+</sec>
+<sec id="sec015">
+<title>For IS model</title>
+<p>Because memory space of sequences are far more than the size of shared memory and constant memory, so they are in global memory. Phylogenetic tree, branch length and total branch length are unchanged and frequently read-only data on GPU in each generation, so they are in constant memory for performance promotion. Because of the size of shared memory and constant memory is neither enough for numbers of mutations, so they are in global memory also. It is the same as HKY model, we acquired block likelihoods for performance promotion.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec016" sec-type="conclusions">
+<title>Results and Discussion</title>
+<p>We evaluated gPGA on the platform with Nvidia TESLA K20m GPU, the details are listed in <xref rid="pone.0135028.t001" ref-type="table">Table 1</xref>.</p>
+<table-wrap id="pone.0135028.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.t001</object-id>
+<label>Table 1</label> <caption><title>The host and device of platform.</title></caption>
+<alternatives>
+<graphic id="pone.0135028.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th colspan="2" align="center" rowspan="1">Host</th>
+<th colspan="2" align="center" rowspan="1">Device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">CPU</td>
+<td align="left" rowspan="1" colspan="1">2*Intel Xeon E5-2640 (6 cores, 2.50GHz)</td>
+<td align="left" rowspan="1" colspan="1">GPU</td>
+<td align="left" rowspan="1" colspan="1">2*Nvidia TESLA K20m GPU</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Memory</td>
+<td align="left" rowspan="1" colspan="1">8*4GB DDR3 1333MHz</td>
+<td align="left" rowspan="1" colspan="1">Memory</td>
+<td align="left" rowspan="1" colspan="1">5G</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Operating system</td>
+<td align="left" rowspan="1" colspan="1">Red Hat Enterprise Linux Server release 6.2</td>
+<td align="left" rowspan="1" colspan="1">Driver</td>
+<td align="left" rowspan="1" colspan="1">NVIDIA Driver version 4.2</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>MCMC method is sensitive to the sequence length used. So we firstly simulate datasets with the same population size and different sequence length (1000, 6000, 11000, 16000) for one locus data. The simulation datasets for HKY model are simulated by Seq-Gen [<xref rid="pone.0135028.ref031" ref-type="bibr">31</xref>] based on the gene tree that is built by <italic>ms</italic> [<xref rid="pone.0135028.ref032" ref-type="bibr">32</xref>]. The parameters for <italic>ms</italic> are the same with reference [<xref rid="pone.0135028.ref033" ref-type="bibr">33</xref>] except the population size. The simulation datasets for IS model are simulated based on the datasets for HKY model by ourselves. All the simulation datasets are with the same population size 190, population 1 has 150 individuals and population 2 has 40 individuals.</p>
+<p>We performed three replicate runs of IM and gPGA for each simulation dataset and the average execution time is calculated. The burn-in generation and MCMC generation are both 10,000. The upper bounds of the population mutation parameters for population 1, population 2 and ancestor population are all 10. Maximum migration rate from population 1 to population 2 and maximum migration rate from population 2 to population 1 are all 10. Maximum time of population splitting is 10. Then we got the speedups for likelihood evaluation and whole computational process shown in <xref rid="pone.0135028.g006" ref-type="fig">Fig 6</xref>. The speedup is defined as follows:
+<disp-formula id="pone.0135028.e006">
+<alternatives>
+<graphic id="pone.0135028.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>p</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>p</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula>
+where: <italic>S</italic><sub><italic>p</italic></sub> is the speedup for gPGA, <italic>T</italic><sub><italic>s</italic></sub> is the execution time of IM program using single CPU, and <italic>T</italic><sub><italic>p</italic></sub> is the execution time of gPGA using single CPU and single GPU. The implement time of different evaluation for IM program are shown in <xref rid="pone.0135028.t002" ref-type="table">Table 2</xref>, it is the benchmark for the comparison.</p>
+<fig id="pone.0135028.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Speedups of gPGA for different sequence length <italic>n</italic> on GPU, <italic>n</italic>∊{1000, 6000, 11000, 16000}.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g006" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pone.0135028.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.t002</object-id>
+<label>Table 2</label> <caption><title>Implement time (Second) of different evaluation for IM program.</title></caption>
+<alternatives>
+<graphic id="pone.0135028.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th rowspan="2" align="center" colspan="1">model</th>
+<th colspan="2" align="center" rowspan="1">sequence length</th>
+<th colspan="2" align="center" rowspan="1">generation</th>
+<th colspan="2" align="center" rowspan="1">locus</th>
+<th colspan="2" align="center" rowspan="1">Markov chain</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1">likelihood</th>
+<th align="left" rowspan="1" colspan="1">whole</th>
+<th align="left" rowspan="1" colspan="1">likelihood</th>
+<th align="left" rowspan="1" colspan="1">whole</th>
+<th align="left" rowspan="1" colspan="1">likelihood</th>
+<th align="left" rowspan="1" colspan="1">whole</th>
+<th align="left" rowspan="1" colspan="1">likelihood</th>
+<th align="left" rowspan="1" colspan="1">whole</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="4" align="center" colspan="1">HKY</td>
+<td align="right" rowspan="1" colspan="1">409</td>
+<td align="right" rowspan="1" colspan="1">447</td>
+<td align="right" rowspan="1" colspan="1">409</td>
+<td align="right" rowspan="1" colspan="1">447</td>
+<td align="right" rowspan="1" colspan="1">409</td>
+<td align="right" rowspan="1" colspan="1">447</td>
+<td align="right" rowspan="1" colspan="1">808</td>
+<td align="right" rowspan="1" colspan="1">1600</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">2505</td>
+<td align="right" rowspan="1" colspan="1">2696</td>
+<td align="right" rowspan="1" colspan="1">2246</td>
+<td align="right" rowspan="1" colspan="1">2450</td>
+<td align="right" rowspan="1" colspan="1">845</td>
+<td align="right" rowspan="1" colspan="1">922</td>
+<td align="right" rowspan="1" colspan="1">4792</td>
+<td align="right" rowspan="1" colspan="1">9321</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">4608</td>
+<td align="right" rowspan="1" colspan="1">4948</td>
+<td align="right" rowspan="1" colspan="1">20763</td>
+<td align="right" rowspan="1" colspan="1">22695</td>
+<td align="right" rowspan="1" colspan="1">2284</td>
+<td align="right" rowspan="1" colspan="1">2457</td>
+<td align="right" rowspan="1" colspan="1">8882</td>
+<td align="right" rowspan="1" colspan="1">17418</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">6871</td>
+<td align="right" rowspan="1" colspan="1">7352</td>
+<td align="right" rowspan="1" colspan="1">204007</td>
+<td align="right" rowspan="1" colspan="1">222711</td>
+<td align="right" rowspan="1" colspan="1">4582</td>
+<td align="right" rowspan="1" colspan="1">4926</td>
+<td align="right" rowspan="1" colspan="1">13193</td>
+<td align="right" rowspan="1" colspan="1">25782</td>
+</tr>
+<tr>
+<td rowspan="4" align="center" colspan="1">IS</td>
+<td align="right" rowspan="1" colspan="1">208</td>
+<td align="right" rowspan="1" colspan="1">218</td>
+<td align="right" rowspan="1" colspan="1">208</td>
+<td align="right" rowspan="1" colspan="1">218</td>
+<td align="right" rowspan="1" colspan="1">208</td>
+<td align="right" rowspan="1" colspan="1">218</td>
+<td align="right" rowspan="1" colspan="1">406</td>
+<td align="right" rowspan="1" colspan="1">856</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">1181</td>
+<td align="right" rowspan="1" colspan="1">1216</td>
+<td align="right" rowspan="1" colspan="1">1132</td>
+<td align="right" rowspan="1" colspan="1">1166</td>
+<td align="right" rowspan="1" colspan="1">282</td>
+<td align="right" rowspan="1" colspan="1">298</td>
+<td align="right" rowspan="1" colspan="1">2441</td>
+<td align="right" rowspan="1" colspan="1">5009</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">2269</td>
+<td align="right" rowspan="1" colspan="1">2329</td>
+<td align="right" rowspan="1" colspan="1">10759</td>
+<td align="right" rowspan="1" colspan="1">11028</td>
+<td align="right" rowspan="1" colspan="1">675</td>
+<td align="right" rowspan="1" colspan="1">708</td>
+<td align="right" rowspan="1" colspan="1">4458</td>
+<td align="right" rowspan="1" colspan="1">9116</td>
+</tr>
+<tr>
+<td align="right" rowspan="1" colspan="1">3248</td>
+<td align="right" rowspan="1" colspan="1">3333</td>
+<td align="right" rowspan="1" colspan="1">104942</td>
+<td align="right" rowspan="1" colspan="1">107578</td>
+<td align="right" rowspan="1" colspan="1">1244</td>
+<td align="right" rowspan="1" colspan="1">1309</td>
+<td align="right" rowspan="1" colspan="1">6466</td>
+<td align="right" rowspan="1" colspan="1">13128</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p>Sequence length denotes implement time of different sequence length.</p></fn>
+<fn id="t002fn002"><p>Generation denotes implement time of different MCMC generation.</p></fn>
+<fn id="t002fn003"><p>Locus denotes implement time of different number of locus data.</p></fn>
+<fn id="t002fn004"><p>Markov chain denotes implement time of different number of Markov chain.</p></fn>
+<fn id="t002fn005"><p>Likelihood denotes implement time of likelihood evaluation.</p></fn>
+<fn id="t002fn006"><p>Whole denotes implement time of IM program.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p><xref rid="pone.0135028.g006" ref-type="fig">Fig 6</xref> suggests that gPGA achieves increasing speedup as sequence length increases. According to Amdahl's Law, potential speedup is defined by the fraction of code that can be parallelized [<xref rid="pone.0135028.ref034" ref-type="bibr">34</xref>] as follows:
+<disp-formula id="pone.0135028.e007">
+<alternatives>
+<graphic id="pone.0135028.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>p</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mfrac><mml:mi>P</mml:mi><mml:mi>N</mml:mi></mml:mfrac><mml:mo>+</mml:mo><mml:mi>S</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula>
+Where: <italic>S</italic><sub><italic>p</italic></sub> is the speedup for gPGA, <italic>P</italic> is fraction that can be parallelized, <italic>S</italic> is fraction that can not be parallelized and <italic>N</italic> is the number of processors used. The likelihood evaluation is the crucial computational part of IM program and it is also the fraction that can be parallelized. This is consistent with the speedups shown in <xref rid="pone.0135028.g006" ref-type="fig">Fig 6</xref>. Likelihood evaluation for HKY model is more sensitive to the sequence length than IS model. According to the description of computational process for these two model above, likelihood evaluation for IS model may break off in IM program. But likelihood evaluation for IS model in gPGA is computed completely and then we continue to check number of mutations for each site in order to break off, so gPGA slow than IM program in this situation. So in <xref rid="pone.0135028.g006" ref-type="fig">Fig 6</xref>, speedups for IS model are less than HKY model.</p>
+<p>We secondly evaluate the influence of different MCMC generation for gPGA. The simulated datasets are that we have simulated above. They are with the same sequence length (1000) and population size (190) for one locus data. The speedups are shown in <xref rid="pone.0135028.g007" ref-type="fig">Fig 7</xref>, and the speedup is insensitive to the MCMC generation. The trends of speedups for HKY model and IS model are the same with speedups for sequence length 1000 in <xref rid="pone.0135028.g006" ref-type="fig">Fig 6</xref>. For stationary probability distribution, IM program and gPGA need sufficient MCMC generations. gPGA has stable performance when MCMC generation increasing. Performance of HKY model is more stable than IS model. This is relative to break off in likelihood evaluation for IS model we have mentioned in method section.</p>
+<fig id="pone.0135028.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Speedups of gPGA for different MCMC generation <italic>g</italic> on GPU, <italic>g</italic>∊{10000, 100000, 1000000, 10000000}.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g007" position="float" xlink:type="simple"/>
+</fig>
+<p>We thirdly evaluate the influence of different number of locus data. The simulated datasets are combined by datasets we have simulated above. They are with the same sequence length (1000) and population size (190) for different number of locus data (1, 2, 4, 8). The speedups are shown in <xref rid="pone.0135028.g008" ref-type="fig">Fig 8</xref>, and the speedup is insensitive to the number of locus data (2, 4, 8). Speedups for IS model decline for two loci data and slightly fluctuate after that. It is the same as <xref rid="pone.0135028.g007" ref-type="fig">Fig 7</xref>, gPGA has stable performance when number of locus data increasing. Performance of HKY model is more stable than IS model. This is relative to break off in likelihood evaluation for IS model we have mentioned in method section.</p>
+<fig id="pone.0135028.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Speedups of gPGA for different number of locus data <italic>l</italic> on GPU, <italic>l</italic>∊{1, 2, 4, 8}.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g008" position="float" xlink:type="simple"/>
+</fig>
+<p>To reduce the problem of sampling from local optima, the Metropolis-coupled MCMC (MC<sup>3</sup>) method [<xref rid="pone.0135028.ref035" ref-type="bibr">35</xref>] are used for IM program. The MC<sup>3</sup> method implements additional Markov chains with various degrees of ‘heating’. When add one Markov chain, the computation cost for IM program will be twice. So we also evaluate the speedups for different number of Markov chains. <xref rid="pone.0135028.g009" ref-type="fig">Fig 9</xref> suggests that gPGA achieves almost the same speedup when using two Markov chains. For good mixing and convergence, IM program and gPGA need increase number of Markov chains. In our previous work, we have applied IM program effectively on multiple CPU cores, even on cluster [<xref rid="pone.0135028.ref036" ref-type="bibr">36</xref>]. In future, we will apply gPGA to multiple GPUs on cluster for better speedup.</p>
+<fig id="pone.0135028.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0135028.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Speedups of gPGA for different number of Markov chains <italic>m</italic> on GPU, <italic>m</italic>∊{1, 2}.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0135028.g009" position="float" xlink:type="simple"/>
+</fig>
+<p>There are none optimization for IM program and the CPU code of gPGA for our evaluation. So the same amount of improvement on the realized computing time may not always be achievable with a different implementation, such as different platform used, different optimization of program and different parameters of program.</p>
+<p>The major limitation of IM program is the restriction to samples from two populations, and it has been extended to multiple populations that have a known phylogenetic history known as IMa2 [<xref rid="pone.0135028.ref037" ref-type="bibr">37</xref>]. The IM-based applications are all based on bayesian inference, so the likelihood evaluation is essential. The evaluation of gPGA has shown that likelihood can be calculated efficiently on one GPU, so we have strong confidence that GPU-based implementation of IM-based applications would achieve good performance.</p>
+</sec>
+<sec id="sec017" sec-type="conclusions">
+<title>Conclusions</title>
+<p>We present an effective implementation of IM program on one GPU based on CUDA, which we call gPGA. gPGA implements two of the five mutation models in IM program, HKY model and IS model. We evaluated gPGA for different sequence length, different MCMC generation, different number of locus data and different number of Markov chains. gPGA is sensitive to sequence length, but is insensitive to MCMC generation, number of locus data and number of Markov chains. The experiments suggest that a single GPU can improve the performance of IM program by up to a factor of roughly 52.</p>
+<p>We aim to solve the technical problems to speedup the data analyses. After examination of the additions and improvements of IMa2 program to IM program, we found the latter does not change many codes, which were found to be bottlenecks of the computation. So, we prefer to use the earlier version with simple models, parameters and distribution to focus on the efficiency. However, Dr. He, et al. [<xref rid="pone.0135028.ref018" ref-type="bibr">18</xref>] found results by both MPI and GPU versions fits well with what he concluded from biology. With experiences from this experiment on IM program, we will try to parallelize the IMa program or IMa2 program. Also, we will make gPGA effectively implementation on multiple GPUs including the parallelization of Metropolis-coupled chains for MC<sup>3</sup> method.</p>
+</sec>
+</body>
+<back>
+<ack>
+<p>We would like to thank Jody Hey and Rasmus Nielsen for permissions to use the source code of IM program. This program makes extensive used of the code for IM program by Jody Hey and Rasmus Nielsen, and was developed with their permission. Neither Dr. Hey nor Dr. Nielsen is involved in the development or maintenance of this program. Simon Ho, Arong Luo and Lijun He commented on the earlier version of the manuscript.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0135028.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kliman</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Andolfatto</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Coyne</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Depaulis</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Kreitman</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Berry</surname> <given-names>AJ</given-names></name>, <etal>et al</etal>. <article-title>The population genetics of the origin and divergence of the Drosophila simulans complex species</article-title>. <source>Genetics</source>. <year>2000</year>;<volume>156</volume>(<issue>4</issue>):<fpage>1913</fpage>–<lpage>31</lpage>. <object-id pub-id-type="pmid">11102384</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Allendorf</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Seeb</surname> <given-names>LW</given-names></name>. <article-title>Concordance of genetic divergence among sockeye salmon populations at allozyme, nuclear DNA, and mitochondrial DNA markers</article-title>. <source>Evolution</source>. <year>2000</year>;<volume>54</volume>(<issue>2</issue>):<fpage>640</fpage>–<lpage>51</lpage>. <object-id pub-id-type="pmid">10937239</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ott</surname> <given-names>J</given-names></name>. <article-title>Mathematical multi-locus approaches to localizing complex human trait genes</article-title>. <source>Nat Rev Genet</source>. <year>2003</year>;<volume>4</volume>(<issue>9</issue>):<fpage>701</fpage>–<lpage>9</lpage>. <object-id pub-id-type="pmid">12951571</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chakraborty</surname> <given-names>R</given-names></name>. <article-title>Mitochondrial DNA polymorphism reveals hidden heterogeneity within some Asian populations</article-title>. <source>Am J Hum Genet</source>. <year>1990</year>;<volume>47</volume>(<issue>1</issue>):<fpage>87</fpage>–<lpage>94</lpage>. <object-id pub-id-type="pmid">2349953</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Excoffier</surname> <given-names>L</given-names></name>. <article-title>Patterns of DNA sequence diversity and genetic structure after a range expansion: lessons from the infinite-island model</article-title>. <source>Mol Ecol</source>. <year>2004</year>;<volume>13</volume>(<issue>4</issue>):<fpage>853</fpage>–<lpage>64</lpage>. <object-id pub-id-type="pmid">15012760</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Excoffier</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Laval</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Balding</surname> <given-names>D</given-names></name>. <article-title>Gametic phase estimation over large genomic regions using an adaptive window approach</article-title>. <source>Hum Genomics</source>. <year>2003</year>;<volume>1</volume>(<issue>1</issue>):<fpage>7</fpage>–<lpage>19</lpage>. <object-id pub-id-type="pmid">15601529</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Excoffier</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Slatkin</surname> <given-names>M</given-names></name>. <article-title>Maximum-likelihood estimation of molecular haplotype frequencies in a diploid population</article-title>. <source>Mol Biol Evol</source>. <year>1995</year>;<volume>12</volume>(<issue>5</issue>):<fpage>921</fpage>–<lpage>7</lpage>. <object-id pub-id-type="pmid">7476138</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fu</surname> <given-names>YX</given-names></name>. <article-title>Statistical tests of neutrality of mutations against population growth, hitchhiking and background selection</article-title>. <source>Genetics</source>. <year>1997</year>;<volume>147</volume>(<issue>2</issue>):<fpage>915</fpage>–<lpage>25</lpage>. <object-id pub-id-type="pmid">9335623</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname> <given-names>SW</given-names></name>, <name name-style="western"><surname>Thompson</surname> <given-names>EA</given-names></name>. <article-title>Performing the exact test of Hardy-Weinberg proportion for multiple alleles</article-title>. <source>Biometrics</source>. <year>1992</year>;<volume>48</volume>(<issue>2</issue>):<fpage>361</fpage>–<lpage>72</lpage>. <object-id pub-id-type="pmid">1637966</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref010"><label>10</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Nei</surname> <given-names>M</given-names></name>. <source>Molecular Evolutionary Genetics</source>: <publisher-name>Columbia University Press</publisher-name>, <publisher-loc>New York, NY, USA</publisher-loc>; <year>1987</year>.</mixed-citation></ref>
+<ref id="pone.0135028.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ray</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Currat</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Excoffier</surname> <given-names>L</given-names></name>. <article-title>Intra-deme molecular diversity in spatially expanding populations</article-title>. <source>Mol Biol Evol</source>. <year>2003</year>;<volume>20</volume>(<issue>1</issue>):<fpage>76</fpage>–<lpage>86</lpage>. <object-id pub-id-type="pmid">12519909</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rohlf</surname> <given-names>F</given-names></name>. <article-title>Algorithm 76. Hierarchical clustering using the minimum spanning tree</article-title>. <source>The Computer Journal</source>. <year>1973</year>;<volume>16</volume>:<fpage>93</fpage>–<lpage>5</lpage>.</mixed-citation></ref>
+<ref id="pone.0135028.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Slatkin</surname> <given-names>M</given-names></name>. <article-title>Linkage disequilibrium in growing and stable populations</article-title>. <source>Genetics</source>. <year>1994</year>;<volume>137</volume>(<issue>1</issue>):<fpage>331</fpage>–<lpage>6</lpage>. <object-id pub-id-type="pmid">8056320</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tajima</surname> <given-names>F</given-names></name>. <article-title>Evolutionary relationship of DNA sequences in finite populations</article-title>. <source>Genetics</source>. <year>1983</year>;<volume>105</volume>(<issue>2</issue>):<fpage>437</fpage>–<lpage>60</lpage>. <object-id pub-id-type="pmid">6628982</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tajima</surname> <given-names>F</given-names></name>. <article-title>Statistical method for testing the neutral mutation hypothesis by DNA polymorphism</article-title>. <source>Genetics</source>. <year>1989</year>;<volume>123</volume>(<issue>3</issue>):<fpage>585</fpage>–<lpage>95</lpage>. <object-id pub-id-type="pmid">2513255</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nielsen</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wakeley</surname> <given-names>J</given-names></name>. <article-title>Distinguishing migration from isolation: a Markov chain Monte Carlo approach</article-title>. <source>Genetics</source>. <year>2001</year>;<volume>158</volume>(<issue>2</issue>):<fpage>885</fpage>–<lpage>96</lpage>. <object-id pub-id-type="pmid">11404349</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hey</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Nielsen</surname> <given-names>R</given-names></name>. <article-title>Multilocus methods for estimating population sizes, migration rates and divergence time, with applications to the divergence of Drosophila pseudoobscura and D. persimilis</article-title>. <source>Genetics</source>. <year>2004</year>;<volume>167</volume>(<issue>2</issue>):<fpage>747</fpage>–<lpage>60</lpage>. <object-id pub-id-type="pmid">15238526</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>He</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Weese</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Qiao</surname> <given-names>Z</given-names></name>. <article-title>Phylogeography of the mud crab (Scylla serrata) in the Indo-West Pacific reappraised from mitochondrial molecular and oceanographic clues: transoceanic dispersal and coastal sequential colonization</article-title>. <source>Marine Ecology</source>. <year>2011</year>;<volume>32</volume>(<issue>1</issue>):<fpage>52</fpage>–<lpage>64</lpage>.</mixed-citation></ref>
+<ref id="pone.0135028.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kronforst</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>LG</given-names></name>, <name name-style="western"><surname>Blume</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Gilbert</surname> <given-names>LE</given-names></name>. <article-title>Multilocus analyses of admixture and introgression among hybridizing Heliconius butterflies</article-title>. <source>Evolution</source>. <year>2006</year>;<volume>60</volume>(<issue>6</issue>):<fpage>1254</fpage>–<lpage>68</lpage>. <object-id pub-id-type="pmid">16892975</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stukenbrock</surname> <given-names>EH</given-names></name>, <name name-style="western"><surname>Banke</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Javan-Nikkhah</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>McDonald</surname> <given-names>BA</given-names></name>. <article-title>Origin and domestication of the fungal wheat pathogen Mycosphaerella graminicola via sympatric speciation</article-title>. <source>Mol Biol Evol</source>. <year>2007</year>;<volume>24</volume>(<issue>2</issue>):<fpage>398</fpage>–<lpage>411</lpage>. <object-id pub-id-type="pmid">17095534</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tishkoff</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Gonder</surname> <given-names>MK</given-names></name>, <name name-style="western"><surname>Henn</surname> <given-names>BM</given-names></name>, <name name-style="western"><surname>Mortensen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Gignoux</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>History of click-speaking populations of Africa inferred from mtDNA and Y chromosome genetic variation</article-title>. <source>Mol Biol Evol</source>. <year>2007</year>;<volume>24</volume>(<issue>10</issue>):<fpage>2180</fpage>–<lpage>95</lpage>. <object-id pub-id-type="pmid">17656633</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hastings</surname> <given-names>WK</given-names></name>. <article-title>Monte Carlo sampling methods using Markov chains and their application</article-title>. <source>Biometrika</source>. <year>1970</year>;<volume>57</volume>:<fpage>97</fpage>–<lpage>109</lpage>.</mixed-citation></ref>
+<ref id="pone.0135028.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Metropolis</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname> <given-names>AW</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Teller</surname> <given-names>AH</given-names></name>, <name name-style="western"><surname>Teller</surname> <given-names>E</given-names></name>. <article-title>Equations of State Calculations by Fast Computing Machines</article-title>. <source>Journal of Chemical Physics</source>. <year>1953</year>;<volume>21</volume>(<issue>6</issue>):<fpage>1087</fpage>–<lpage>92</lpage>.</mixed-citation></ref>
+<ref id="pone.0135028.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ayres</surname> <given-names>DL</given-names></name>, <name name-style="western"><surname>Darling</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Zwickl</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Beerli</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Holder</surname> <given-names>MT</given-names></name>, <name name-style="western"><surname>Lewis</surname> <given-names>PO</given-names></name>, <etal>et al</etal>. <article-title>BEAGLE: an application programming interface and high-performance computing library for statistical phylogenetics</article-title>. <source>Syst Biol</source>. <year>2012</year>;<volume>61</volume>(<issue>1</issue>):<fpage>170</fpage>–<lpage>3</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr100" xlink:type="simple">10.1093/sysbio/syr100</ext-link></comment> <object-id pub-id-type="pmid">21963610</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Drummond</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Suchard</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Rambaut</surname> <given-names>A</given-names></name>. <article-title>Bayesian phylogenetics with BEAUti and the BEAST 1.7</article-title>. <source>Mol Biol Evol</source>. <year>2012</year>;<volume>29</volume>(<issue>8</issue>):<fpage>1969</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/mss075" xlink:type="simple">10.1093/molbev/mss075</ext-link></comment> <object-id pub-id-type="pmid">22367748</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ronquist</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Teslenko</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>van der Mark</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Ayres</surname> <given-names>DL</given-names></name>, <name name-style="western"><surname>Darling</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hohna</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>MrBayes 3.2: efficient Bayesian phylogenetic inference and model choice across a large model space</article-title>. <source>Syst Biol</source>. <year>2012</year>;<volume>61</volume>(<issue>3</issue>):<fpage>539</fpage>–<lpage>42</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/sys029" xlink:type="simple">10.1093/sysbio/sys029</ext-link></comment> <object-id pub-id-type="pmid">22357727</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref027"><label>27</label><mixed-citation publication-type="other" xlink:type="simple">NVIDIA. NVIDIA CUDA C Programming Guide. 2013.</mixed-citation></ref>
+<ref id="pone.0135028.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hasegawa</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kishino</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Yano</surname> <given-names>T</given-names></name>. <article-title>Dating of the human-ape splitting by a molecular clock of mitochondrial DNA</article-title>. <source>J Mol Evol</source>. <year>1985</year>;<volume>22</volume>(<issue>2</issue>):<fpage>160</fpage>–<lpage>74</lpage>. <object-id pub-id-type="pmid">3934395</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kimura</surname> <given-names>M</given-names></name>. <article-title>The number of heterozygous nucleotide sites maintained in a finite population due to steady flux of mutations</article-title>. <source>Genetics</source>. <year>1969</year>;<volume>61</volume>(<issue>4</issue>):<fpage>893</fpage>–<lpage>903</lpage>. <object-id pub-id-type="pmid">5364968</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hey</surname> <given-names>J</given-names></name>. <article-title>On the number of New World founders: a population genetic portrait of the peopling of the Americas</article-title>. <source>PLoS Biol</source>. <year>2005</year>;<volume>3</volume>(<issue>6</issue>):<fpage>e193</fpage>. <object-id pub-id-type="pmid">15898833</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rambaut</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Grassly</surname> <given-names>NC</given-names></name>. <article-title>Seq-Gen: an application for the Monte Carlo simulation of DNA sequence evolution along phylogenetic trees</article-title>. <source>Comput Appl Biosci</source>. <year>1997</year>;<volume>13</volume>(<issue>3</issue>):<fpage>235</fpage>–<lpage>8</lpage>. <object-id pub-id-type="pmid">9183526</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hudson</surname> <given-names>RR</given-names></name>. <article-title>Generating samples under a Wright-Fisher neutral model of genetic variation</article-title>. <source>Bioinformatics</source>. <year>2002</year>;<volume>18</volume>(<issue>2</issue>):<fpage>337</fpage>–<lpage>8</lpage>. <object-id pub-id-type="pmid">11847089</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Strasburg</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Rieseberg</surname> <given-names>LH</given-names></name>. <article-title>How robust are "isolation with migration" analyses to violations of the im model? A simulation study</article-title>. <source>Mol Biol Evol</source>. <year>2010</year>;<volume>27</volume>(<issue>2</issue>):<fpage>297</fpage>–<lpage>310</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/msp233" xlink:type="simple">10.1093/molbev/msp233</ext-link></comment> <object-id pub-id-type="pmid">19793831</object-id></mixed-citation></ref>
+<ref id="pone.0135028.ref034"><label>34</label><mixed-citation publication-type="other" xlink:type="simple">Rodgers DP, editor Improvements in multiprocessor system design. ISCA '85 Proceedings of the 12th annual international symposium on Computer architecture; 1985; New York.</mixed-citation></ref>
+<ref id="pone.0135028.ref035"><label>35</label><mixed-citation publication-type="other" xlink:type="simple">Geyer CJ, editor Markov chain Monte Carlo maximum likelihood. Computing Science and Statistics: Proceedings of the 23rd Symposium of the Interface; 1991.</mixed-citation></ref>
+<ref id="pone.0135028.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhou</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Chi</surname> <given-names>X</given-names></name>. <article-title>Parallel Metropolis Coupled Markov Chain Monte Carlo for Isolation with Migration Model</article-title>. <source>Appl Math Inf Sci</source>. <year>2013</year>;<volume>7</volume>(<issue>1L</issue>):<fpage>219</fpage>–<lpage>24</lpage>.</mixed-citation></ref>
+<ref id="pone.0135028.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hey</surname> <given-names>J</given-names></name>. <article-title>Isolation with migration models for more than two populations</article-title>. <source>Mol Biol Evol</source>. <year>2010</year>;<volume>27</volume>(<issue>4</issue>):<fpage>905</fpage>–<lpage>20</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molbev/msp296" xlink:type="simple">10.1093/molbev/msp296</ext-link></comment> <object-id pub-id-type="pmid">19955477</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

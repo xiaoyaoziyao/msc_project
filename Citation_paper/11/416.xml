@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-40630</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0121002</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Fast Approximate Quadratic Programming for Graph Matching</article-title>
+<alt-title alt-title-type="running-head">Fast Approximate Quadratic Programming for Graph Matching</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Vogelstein</surname> <given-names>Joshua T.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Conroy</surname> <given-names>John M.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Lyzinski</surname> <given-names>Vince</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Podrazik</surname> <given-names>Louis J.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Kratzer</surname> <given-names>Steven G.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Harley</surname> <given-names>Eric T.</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Fishkind</surname> <given-names>Donniell E.</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Vogelstein</surname> <given-names>R. Jacob</given-names></name>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Priebe</surname> <given-names>Carey E.</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Biomedical Engineering, Johns Hopkins University, Baltimore, MD, USA</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Institute for Defense Analyses, Center for Computing Sciences, Bowie, MD, USA</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Johns Hopkins University Human Language Technology Center of Excellence, Baltimore, MD, USA</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Department of Applied Mathematics and Statistics, Johns Hopkins University, Baltimore, MD, USA</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>Johns Hopkins University Applied Physics Laboratory, Laurel, MD, USA</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Muldoon</surname> <given-names>Mark R.</given-names></name>
+<role>Academic Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Manchester University, UNITED KINGDOM</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: JV JC RJV SK LP CEP DEF EH. Performed the experiments: JC EH DEF JV SK LP. Analyzed the data: CEP JV JC DEF. Contributed reagents/materials/analysis tools: VL JV SK LP DEF EH. Wrote the paper: JV DEF VL.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">jovo@jhu.edu</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>17</day>
+<month>4</month>
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>4</issue>
+<elocation-id>e0121002</elocation-id>
+<history>
+<date date-type="received">
+<day>9</day>
+<month>9</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>9</day>
+<month>2</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<license xlink:href="https://creativecommons.org/publicdomain/zero/1.0/" xlink:type="simple">
+<license-p>This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/publicdomain/zero/1.0/" xlink:type="simple">Creative Commons CC0</ext-link> public domain dedication</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0121002" xlink:type="simple"/>
+<abstract>
+<p>Quadratic assignment problems arise in a wide variety of domains, spanning operations research, graph theory, computer vision, and neuroscience, to name a few. The graph matching problem is a special case of the quadratic assignment problem, and graph matching is increasingly important as graph-valued data is becoming more prominent. With the aim of efficiently and accurately matching the large graphs common in big data, we present our graph matching algorithm, the Fast Approximate Quadratic assignment algorithm. We empirically demonstrate that our algorithm is faster and achieves a lower objective value on over 80% of the QAPLIB benchmark library, compared with the previous state-of-the-art. Applying our algorithm to our motivating example, matching C. elegans connectomes (brain-graphs), we find that it efficiently achieves performance.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was partially supported by the Research Program in Applied Neuroscience (JV, RJV, CEP, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.jhuapl.edu/ourwork/red/an/">http://www.jhuapl.edu/ourwork/red/an/</ext-link>), a National Security Science and Engineering Faculty Fellowship (CEP, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.acq.osd.mil/rd/basic_research/program_info/nsseff.html">http://www.acq.osd.mil/rd/basic_research/program_info/nsseff.html</ext-link>), Johns Hopkins University Human Language Technology Center of Excellence (DEF, JV, CEP, VL, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://hltcoe.jhu.edu/">http://hltcoe.jhu.edu/</ext-link>), and the XDATA program of the Defense Advanced Research Projects Agency (CEP, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.darpa.mil/Our_Work/I2O/Programs/XDATA.aspx">http://www.darpa.mil/Our_Work/I2O/Programs/XDATA.aspx</ext-link>) administered through Air Force Research Laboratory contract FA8750-12-2-0303. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="2"/>
+<page-count count="17"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>The C. elegans connectome data can be found at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://github.com/jovo/FastApproximateQAP/tree/master/data/elegans">https://github.com/jovo/FastApproximateQAP/tree/master/data/elegans</ext-link>. The QAPLIB can be found at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://anjos.mgi.polymtl.ca/qaplib/">http://anjos.mgi.polymtl.ca/qaplib/</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>1 Introduction</title>
+<p>In its most general form, the graph matching problem (GMP)—finding an alignment of the vertices of two graphs which minimizes the number of induced edge disagreements—is equivalent to a quadratic assignment problem (QAP) [<xref ref-type="bibr" rid="pone.0121002.ref001">1</xref>]. QAPs were first devised by Koopmans and Beckmann in 1957 to solve a ubiquitous problem in distributed resource allocation [<xref ref-type="bibr" rid="pone.0121002.ref002">2</xref>], and many important problems in combinatorial optimization (for example, the “traveling salesman problem,” and the GMP) have been shown to be specialized QAPs. While QAPs are known to be <bold>NP</bold>-hard in general [<xref ref-type="bibr" rid="pone.0121002.ref003">3</xref>], they are widely applicable and there is a large literature devoted to their approximation and formulation; see [<xref ref-type="bibr" rid="pone.0121002.ref004">4</xref>] for a comprehensive literature survey. In casting the GMP as a QAP, we bring to bear a host of existing optimization theoretic tools and methodologies for addressing graph matching: Frank-Wolfe [<xref ref-type="bibr" rid="pone.0121002.ref005">5</xref>], gradient-descent [<xref ref-type="bibr" rid="pone.0121002.ref006">6</xref>], etc.</p>
+<p>Graph matching has applications in a wide variety of disciplines, spanning computer vision, image analysis, pattern recognition, and neuroscience; see [<xref ref-type="bibr" rid="pone.0121002.ref007">7</xref>] for a comprehensive survey of the graph matching literature. We are motivated by applications in “connectomics,” an emerging discipline within neuroscience devoted to the study of brain-graphs, where vertices represent (collections of) neurons and edges represent connections between them [<xref ref-type="bibr" rid="pone.0121002.ref008">8</xref>, <xref ref-type="bibr" rid="pone.0121002.ref009">9</xref>]. Analyzing connectomes is an important step for many neurobiological inference tasks. For example, it is becoming increasingly popular to diagnose neurological diseases via comparing brain images [<xref ref-type="bibr" rid="pone.0121002.ref010">10</xref>]. To date, however, these comparisons have largely rested on anatomical (e.g., shape) comparisons, not graph (e.g., structural) comparisons. This is despite the widely held doctrine that many psychiatric disorders are fundamentally “connectopathies,” i.e. disorders of the connections of the brain [<xref ref-type="bibr" rid="pone.0121002.ref011">11</xref>–<xref ref-type="bibr" rid="pone.0121002.ref014">14</xref>]. Thus, available tests for connectopic explanations of psychiatric disorders hinge on first choosing particular graph invariants to compare across populations, rather than comparing the graphs’ structure directly. Yet, recent results suggest that the graph invariant approach to classifying is both theoretically and practically inferior to comparing whole graphs via matching [<xref ref-type="bibr" rid="pone.0121002.ref015">15</xref>].</p>
+<p>Part of the reason for the lack of publications that structurally compare brain-graphs is that existing algorithms for matching very large graphs are largely ineffective, often sacrificing accuracy for efficiency. Indeed, available human connectomes have 𝒪(10<sup>6</sup>) vertices and 𝒪(10<sup>8</sup>) edges, and building them leverages state-of-the-art advances in DT-MRI imagery, big data processing and computer vision [<xref ref-type="bibr" rid="pone.0121002.ref016">16</xref>]. Contrast this with the fact that the human brain consists of approximately 86 billion neurons [<xref ref-type="bibr" rid="pone.0121002.ref017">17</xref>]. At the other end of the spectrum, the small hermaphroditic <italic>Caenorhabditis elegans</italic> worm (<italic>C. elegans</italic>) has only 302 neurons, with a fully mapped connectome. Consequently, these graphs demand GM algorithms that both accurately match small–to–moderately sized graphs and also scale to match very large graphs.</p>
+<p>When matching these large connectome graphs (and, more broadly, the large graphs common in big data [<xref ref-type="bibr" rid="pone.0121002.ref018">18</xref>]), we necessarily face an accuracy/efficiency trade-off when approximately solving these GMPs: slower algorithms could achieve better performance given more time (at the extreme, exhaustive search algorithms clearly have optimal performance). Our algorithm—the Fast Approximate QAP (FAQ) algorithm for approximate GM—achieves the best available trade-off between accuracy and efficiency, outperforming the existing state-of-the-art in both accuracy and efficiency on a large proportion of QAP benchmarks and biologically inspired network matching problems.</p>
+<p>The remainder of this paper is organized as follows. Section 2.1 formally defines the QAP and a relaxation thereof that we will operate under. Section 2.3 defines graph matching, and explains how it can be posed as a QAP.</p>
+<p>Section <xref ref-type="sec" rid="sec007">3</xref> describes the FAQ algorithm. Section <xref ref-type="sec" rid="sec011">4</xref> provides a number of theoretical and empirical results, and compares our algorithm to previous state-of-the-art algorithms. This section concludes with an analysis of FAQ on our motivating problem of matching worm brain connectomes. We conclude with a discussion of possible extensions of FAQ and related work in Section <xref ref-type="sec" rid="sec020">5</xref>.</p>
+</sec>
+<sec id="sec002">
+<title>2 Preliminaries</title>
+<p>In this section, we formally define the QAP and the GMP. We then show how the GMP can be recast as a special case of the QAP.</p>
+<sec id="sec003">
+<title>2.1 Quadratic Assignment Problems</title>
+<p>We first define the general quadratic assignment problem. Let <italic>A</italic> = (<italic>a</italic><sub><italic>uv</italic></sub>), <italic>B</italic> = (<italic>b</italic><sub><italic>uv</italic></sub>) ∈ ℝ<sup><italic>n</italic>×<italic>n</italic></sup> be two <italic>n</italic> × <italic>n</italic> real matrices. Let Π: = Π<sub><italic>n</italic></sub> be the set of permutation functions (bijections) of the set [<italic>n</italic>] = {1,…, <italic>n</italic>}. We define the Koopmans-Beckmann (KB) version QAP via:
+<disp-formula id="pone.0121002.e001"><alternatives><graphic id="pone.0121002.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e001"/><mml:math id="M1" display="block" overflow="scroll"><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mtext>(KB)</mml:mtext><mml:mo>  </mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mtext>minimize</mml:mtext></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∑</mml:mo><mml:mrow><mml:mi>u</mml:mi><mml:mo>,</mml:mo><mml:mi>v</mml:mi><mml:mo>∈</mml:mo><mml:mrow><mml:mo>[</mml:mo> <mml:mi>n</mml:mi> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:mrow><mml:mo> </mml:mo><mml:msub><mml:mi>b</mml:mi><mml:mrow><mml:mi>u</mml:mi><mml:mi>v</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mi>a</mml:mi><mml:mrow><mml:mi>π</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>u</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mi>π</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>v</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msub></mml:mrow></mml:mstyle></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext><mml:mo> </mml:mo><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mi>π</mml:mi><mml:mo>∈</mml:mo><mml:mi>Π</mml:mi><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>Note that occasionally an additional linear function is added, though we drop it here for brevity.</p>
+<p><xref ref-type="disp-formula" rid="pone.0121002.e001">Eq (1)</xref> can also be recast in matrix notation. Let 𝒫 be the set of <italic>n</italic> × <italic>n</italic> <italic>permutation matrices</italic>, <inline-formula id="pone.0121002.e002"><mml:math id="M2" display="inline" overflow="scroll"><mml:mrow><mml:mi>𝒫</mml:mi><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:mi>P</mml:mi><mml:mo>∈</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>n</mml:mi><mml:mo>×</mml:mo><mml:mi>n</mml:mi></mml:mrow></mml:msup><mml:mo>:</mml:mo><mml:msup><mml:mi>P</mml:mi><mml:mo>⊤</mml:mo></mml:msup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mn>1</mml:mn></mml:mstyle><mml:mo>=</mml:mo><mml:mi>P</mml:mi><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mn>1</mml:mn></mml:mstyle><mml:mo>=</mml:mo><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mn>1</mml:mn></mml:mstyle></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:math></inline-formula>, where <bold>1</bold> is the <italic>n</italic>-dimensional column vector consisting of all 1’s.</p>
+<p>Thus, <xref ref-type="disp-formula" rid="pone.0121002.e001">Eq (1)</xref> can be written more compactly in matrix notation via:
+<disp-formula id="pone.0121002.e003"><alternatives><graphic id="pone.0121002.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>(QAP)</mml:mtext> <mml:mspace width="2.em"/><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒫</mml:mo> <mml:mo>˙</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+We hereafter refer to (<xref ref-type="disp-formula" rid="pone.0121002.e003">2</xref>) as the QAP optimization function.</p>
+</sec>
+<sec id="sec004">
+<title>2.2 Relaxed Quadratic Assignment Problem</title>
+<p><xref ref-type="disp-formula" rid="pone.0121002.e003">Eq (2)</xref> is a binary quadratic program with linear constraints. Because of the combinatorial nature of the feasible region, finding a <italic>global</italic> optimum of (<xref ref-type="disp-formula" rid="pone.0121002.e003">2</xref>) is <bold>NP</bold>-hard. Rather than directly optimizing over the permutation matrices, we begin by relaxing the constraint set to the convex hull of 𝒫, the set of doubly stochastic matrices (i.e. the Birkhoff polytope),
+<disp-formula id="pone.0121002.e004"><alternatives><graphic id="pone.0121002.e004g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e004"/><mml:math id="M4" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mo>𝒟</mml:mo> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:msub><mml:mo>𝒟</mml:mo> <mml:mi>n</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mo>ℝ</mml:mo> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>×</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:msup> <mml:mo>:</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mn mathvariant="bold">1</mml:mn> <mml:mo>=</mml:mo> <mml:mi>P</mml:mi> <mml:mn mathvariant="bold">1</mml:mn> <mml:mo>=</mml:mo> <mml:mn mathvariant="bold">1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>P</mml:mi> <mml:mo>⪰</mml:mo> <mml:mn>0</mml:mn> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where ⪰ indicates an element-wise inequality. Relaxing 𝒫 to 𝒟 in (<xref ref-type="disp-formula" rid="pone.0121002.e003">2</xref>) yields the relaxed quadratic assignment problem (rQAP):
+<disp-formula id="pone.0121002.e005"><alternatives><graphic id="pone.0121002.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>(rQAP)</mml:mtext> <mml:mspace width="2.em"/><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒟</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mtd></mml:mtr></mml:mtable><mml:mo>.</mml:mo></mml:math></alternatives> <label>(3)</label></disp-formula>
+Note that, although rQAP is a quadratic program with linear constraints, it is <italic>not</italic> necessarily convex. Indeed, the objective function, <inline-formula id="pone.0121002.e006"><mml:math id="M6" display="inline" overflow="scroll"><mml:mrow><mml:mi>f</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>P</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mtext mathvariant="normal">trace</mml:mtext> <mml:mo stretchy="false">(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>, has a Hessian that is not necessarily positive definite: <inline-formula id="pone.0121002.e007"><mml:math id="M7" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mo>∇</mml:mo> <mml:mn>2</mml:mn></mml:msup> <mml:mi>f</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>P</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mi>B</mml:mi> <mml:mo>⊗</mml:mo> <mml:mi>A</mml:mi> <mml:mo>+</mml:mo> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>⊗</mml:mo> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup></mml:mrow></mml:math></inline-formula>, where ⊗ indicates the Kronecker product (note that if <italic>A</italic> and <italic>B</italic> are hollow matrices—as is common for graphs—then ∇<sup>2</sup> <italic>f</italic>(<italic>P</italic>) has trace equal to 0, and is indefinite).</p>
+<p>While nonconvex quadratic optimization is, in general, <bold>NP</bold>-hard, relaxing the feasible region allows us to employ the tools of continuous optimization to search for a <italic>local</italic> optima of (<xref ref-type="disp-formula" rid="pone.0121002.e005">3</xref>). These local optima can then be projected onto 𝒫, yielding an approximate solution of (<xref ref-type="disp-formula" rid="pone.0121002.e003">2</xref>). We also note that when relaxed to 𝒟, the QAP optimization function is often multimodal, making initialization important when solving (<xref ref-type="disp-formula" rid="pone.0121002.e005">3</xref>).</p>
+</sec>
+<sec id="sec005">
+<title>2.3 Graph Matching</title>
+<p>A labeled graph <italic>G</italic> = (𝒱,ℰ) consists of a vertex set 𝒱 = [<italic>n</italic>], and an edge set <inline-formula id="pone.0121002.e008"><mml:math id="M8" display="inline" overflow="scroll"><mml:mrow><mml:mo>ℰ</mml:mo> <mml:mo>⊂</mml:mo> <mml:mrow><mml:mo stretchy="true">(</mml:mo> <mml:mtable><mml:mtr><mml:mtd columnalign="center"><mml:mo>𝒱</mml:mo></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="center"><mml:mn>2</mml:mn></mml:mtd></mml:mtr></mml:mtable> <mml:mo stretchy="true">)</mml:mo></mml:mrow></mml:mrow></mml:math></inline-formula> in the undirected case, or ℰ ⊂ 𝒱 × 𝒱 in the directed case. For an <italic>n</italic>-vertex graph <italic>G</italic>, we define the associated adjacency matrix <italic>A</italic> = (<italic>a</italic><sub><italic>uv</italic></sub>) ∈ {0,1}<sup><italic>n</italic> × <italic>n</italic></sup> to be the binary <italic>n</italic> × <italic>n</italic> matrix with <italic>a</italic><sub><italic>uv</italic></sub> = 1if {<italic>u</italic>, <italic>v</italic>} ∈ ℰ in the undirected setting, or (<italic>u</italic>, <italic>v</italic>) ∈ ℰ in the directed setting. Given a pair of <italic>n</italic>-vertex graphs <italic>G</italic><sub><italic>A</italic></sub> = (𝒱<sub><italic>A</italic></sub>,ℰ<sub><italic>A</italic></sub>) and <italic>G</italic><sub><italic>B</italic></sub> = (𝒱<sub><italic>B</italic></sub>,ℰ<sub><italic>B</italic></sub>), with respective adjacency matrices <italic>A</italic> and <italic>B</italic>, we consider the following two closely related problems:
+<list list-type="bullet"><list-item><p><bold>Graph Isomorphism (GI)</bold>: Does there exist a <italic>P</italic> ∈ 𝒫 such that <inline-formula id="pone.0121002.e009"><mml:math id="M9" display="inline" overflow="scroll"><mml:mrow><mml:mi>A</mml:mi> <mml:mo>=</mml:mo> <mml:mi>P</mml:mi> <mml:mi>B</mml:mi> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup></mml:mrow></mml:math></inline-formula>.</p></list-item> <list-item><p><bold>Graph Matching</bold>: <inline-formula id="pone.0121002.e010"><mml:math id="M10" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>min</mml:mi> <mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒫</mml:mo></mml:mrow></mml:msub> <mml:mo stretchy="false">‖</mml:mo> <mml:mi>A</mml:mi> <mml:mo>−</mml:mo> <mml:mi>P</mml:mi> <mml:mi>B</mml:mi> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msub><mml:mo stretchy="false">‖</mml:mo> <mml:mi>F</mml:mi></mml:msub></mml:mrow></mml:math></inline-formula>, where ‖·‖<sub><italic>F</italic></sub> is the usual matrix Frobenius norm.</p></list-item></list>
+GI is one of few problems with unknown computational complexity in the <bold>NP</bold>-hierarchy [<xref ref-type="bibr" rid="pone.0121002.ref019">19</xref>]; indeed, if <bold>P</bold> ≠ <bold>NP</bold>, then GI might reside in an intermediate complexity class called <bold>GI</bold>-complete. Moreover, GI is, at worst, only moderately exponential, with complexity 𝒪(exp{<italic>n</italic><sup>1/2+<italic>o</italic>(1)</sup>}) [<xref ref-type="bibr" rid="pone.0121002.ref020">20</xref>]. On the other hand, the (harder) GMP—reducible to a QAP—is known to be <bold>NP</bold>-hard in general. Although polynomial time algorithms are available for GM (and GI) for large classes of problems (e.g., planar graphs, trees) [<xref ref-type="bibr" rid="pone.0121002.ref021">21</xref>], these algorithms often have lead constants which are very large. For example, if all vertices have degree less than <italic>k</italic>, there is a linear time algorithm for GI. However, the hidden constant in this algorithm is (512<italic>k</italic><sup>3</sup>)! [<xref ref-type="bibr" rid="pone.0121002.ref022">22</xref>]. Because we are interested in solving GM for graphs with <inline-formula id="pone.0121002.e011"><mml:math id="M11" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mo>≈</mml:mo> <mml:mo>.</mml:mo></mml:mover> <mml:msup><mml:mn>10</mml:mn> <mml:mn>6</mml:mn></mml:msup></mml:mrow></mml:math></inline-formula> or more vertices, exact GM solutions will be computationally intractable. As such, we develop a fast approximate graph matching algorithm. Our approach is based on formulating GM as a quadratic assignment problem.</p>
+</sec>
+<sec id="sec006">
+<title>2.4 Graph Matching as a Quadratic Assignment Problem</title>
+<p>Given a pair of <italic>n</italic>-vertex graphs <italic>G</italic><sub><italic>A</italic></sub> = (𝒱<sub><italic>A</italic></sub>, ℰ<sub><italic>A</italic></sub>) and <italic>G</italic><sub><italic>B</italic></sub> = (𝒱<sub><italic>B</italic></sub>, ℰ<sub><italic>B</italic></sub>), with respective adjacency matrices <italic>A</italic> and <italic>B</italic>, we can formally write the graph matching problem as an optimization problem:
+<disp-formula id="pone.0121002.e012"><alternatives><graphic id="pone.0121002.e012g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e012"/><mml:math id="M12" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:msubsup><mml:mrow><mml:mo>‖</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:mo>-</mml:mo> <mml:mi>P</mml:mi> <mml:mi>B</mml:mi> <mml:mo>‖</mml:mo></mml:mrow> <mml:mi>F</mml:mi> <mml:mn>2</mml:mn></mml:msubsup></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒫</mml:mo> <mml:mo>˙</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+Simple algebra yields that,
+<disp-formula id="pone.0121002.e013"><alternatives><graphic id="pone.0121002.e013g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e013"/><mml:math id="M13" display="block" overflow="scroll"><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:msubsup><mml:mrow><mml:mrow><mml:mo>‖</mml:mo> <mml:mrow><mml:mi>A</mml:mi><mml:mi>P</mml:mi><mml:mo>−</mml:mo><mml:mi>P</mml:mi><mml:mi>B</mml:mi></mml:mrow> <mml:mo>‖</mml:mo></mml:mrow></mml:mrow><mml:mi>F</mml:mi><mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:mtd><mml:mtd><mml:mo>=</mml:mo></mml:mtd><mml:mtd><mml:mrow><mml:mtext>trace</mml:mtext><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>A</mml:mi><mml:mi>P</mml:mi><mml:mo>−</mml:mo><mml:mi>P</mml:mi><mml:mi>B</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>⊤</mml:mo></mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>A</mml:mi><mml:mi>P</mml:mi><mml:mo>−</mml:mo><mml:mi>P</mml:mi><mml:mi>B</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow/></mml:mtd><mml:mtd><mml:mo>=</mml:mo></mml:mtd><mml:mtd><mml:mrow><mml:mtext>trace</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msup><mml:mi>A</mml:mi><mml:mo>⊤</mml:mo></mml:msup><mml:mi>A</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mtext>trace</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>B</mml:mi><mml:msup><mml:mi>B</mml:mi><mml:mo>⊤</mml:mo></mml:msup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>−</mml:mo><mml:mn>2</mml:mn><mml:mtext>trace</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>A</mml:mi><mml:mi>P</mml:mi><mml:msup><mml:mi>B</mml:mi><mml:mo>⊤</mml:mo></mml:msup><mml:msup><mml:mi>P</mml:mi><mml:mo>⊤</mml:mo></mml:msup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>·</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:math></alternatives> <label>(5)</label></disp-formula>
+The GMP is then equivalent (i.e. same argmin) to
+<disp-formula id="pone.0121002.e014"><alternatives><graphic id="pone.0121002.e014g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e014"/><mml:math id="M14" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>(GM)</mml:mtext> <mml:mspace width="2.em"/><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>-</mml:mo> <mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒫</mml:mo> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula>
+The objective function for GM is just the negative of the objective function for QAP. Thus, any descent algorithm for the former can be directly applied to the latter. Moreover, any QAP approximation algorithms also immediately yields an analogous GM approximation.</p>
+<p>As is common in solving general QAPs, GM algorithms often begin by first relaxing (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>) to a continuous problem (see, for example, [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>]). The resulting problem is a convex quadratic program and can be efficiently exactly solved. The obtained solution is then projected back onto 𝒫 yielding an approximate solution to (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>). Contrary to popular existing approaches, our FAQ algorithm first solves a relaxed version of (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>) and subsequently projects the solution back onto 𝒫. This relaxation yields an indefinite quadratic program, and indefinite quadratic programs are are <bold>NP</bold>-hard to solve in general. However, recent theory indicates that the indefinite relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>), and <italic>not</italic> the convex relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>) is the provably correct approach [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>]. Reflecting this theory, we find that FAQ obtains state-of-the-art performance in terms of both computational efficiency and objective function value for various QAPs (see Section <xref ref-type="sec" rid="sec011">4</xref>).</p>
+</sec>
+</sec>
+<sec id="sec007">
+<title>3 Fast Approximate QAP Algorithm</title>
+<p>Our algorithm, called FAQ, proceeds in three steps:
+<list list-type="alpha-upper"><list-item><p>Choose a suitable initial position</p></list-item> <list-item><p>Find a local solution to rQAP.</p></list-item> <list-item><p>Project back onto the set of permutation matrices.</p></list-item></list></p>
+<p>These steps are summarized in Algorithm 1. Below, we provide details for each step.</p>
+<p specific-use="line"><bold>Algorithm 1</bold> FAQ for finding a local optimum of rQAP</p>
+<p specific-use="line"><bold>Require</bold>: Graphs (adjacency matrices) <italic>A</italic> and <italic>B</italic> as well as a stopping criteria</p>
+<p specific-use="line"><bold>Ensure</bold>: <inline-formula id="pone.0121002.e015"><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>P</mml:mi><mml:mo>̂</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula>, an estimated permutation matrix</p>
+<p specific-use="line"> 1: Choose an initialization, <inline-formula id="pone.0121002.e016"><mml:math id="M16" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mn>0</mml:mn> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msup> <mml:mo>=</mml:mo> <mml:mtext mathvariant="bold">1</mml:mtext> <mml:msup><mml:mtext mathvariant="bold">1</mml:mtext> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>/</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:math></inline-formula></p>
+<p specific-use="line"> 2: <bold>while</bold> stopping criteria not met <bold>do</bold></p>
+<p specific-use="line"> 3: Compute the gradient of f at the current point via <xref ref-type="disp-formula" rid="pone.0121002.e005">Eq (3)</xref></p>
+<p specific-use="line"> 4: Compute the direction <italic>Q</italic><sup>(<italic>i</italic>)</sup> by solving <xref ref-type="disp-formula" rid="pone.0121002.e022">Eq (8)</xref> via the Hungarian algorithm</p>
+<p specific-use="line"> 5: Compute the step size <italic>α</italic><sup>(<italic>i</italic>)</sup> by solving <xref ref-type="disp-formula" rid="pone.0121002.e023">Eq (9)</xref></p>
+<p specific-use="line"> 6: Update <italic>P</italic><sup>(<italic>i</italic>)</sup> according to <xref ref-type="disp-formula" rid="pone.0121002.e024">Eq (10)</xref></p>
+<p specific-use="line"> 7: <bold>end while</bold></p>
+<p specific-use="line"> 8: Obtain <inline-formula id="pone.0121002.e017"><mml:math id="M17" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>P</mml:mi> <mml:mo>̂</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> by solving <xref ref-type="disp-formula" rid="pone.0121002.e025">Eq (11)</xref> via the Hungarian algorithm.</p>
+<list list-type="alpha-upper">
+<list-item><p><bold>Find a suitable initial position</bold>. While any doubly stochastic matrix would be a feasible initial point, we choose the noninformative “flat doubly stochastic matrix,” <inline-formula id="pone.0121002.e018"><mml:math id="M18" display="inline" overflow="scroll"><mml:mrow><mml:mi>J</mml:mi> <mml:mo>=</mml:mo> <mml:mtext mathvariant="bold">1</mml:mtext> <mml:mo>·</mml:mo> <mml:msup><mml:mtext mathvariant="bold">1</mml:mtext> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>/</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:math></inline-formula>, i.e. the barycenter of the feasible region. Alternately, we could use multiple restarts, each initial point near <italic>J</italic>. Specifically, we could sample <italic>K</italic>, a random doubly stochastic matrix using 10 iterations of Sinkhorn balancing [<xref ref-type="bibr" rid="pone.0121002.ref025">25</xref>], and let <italic>P</italic><sup>(0)</sup> = (<italic>J</italic>+<italic>K</italic>)/2. Given this initial estimate (or estimates), we would then iterate the following five steps until convergence.</p></list-item>
+<list-item><p><bold>Find a local solution to rQAP</bold>. As mentioned above, rQAP is a quadratic problem with linear constraints. A number of off-the-shelf algorithms are readily available for finding local optima in such problems. We utilize the Frank-Wolfe algorithm (FW), a successive first-order optimization procedure originally devised to solve convex quadratic programs [<xref ref-type="bibr" rid="pone.0121002.ref005">5</xref>, <xref ref-type="bibr" rid="pone.0121002.ref026">26</xref>]. Although FW is a relatively standard solver, especially as a subroutine for QAP algorithms [<xref ref-type="bibr" rid="pone.0121002.ref027">27</xref>], we provide a detailed view of applying FW to rQAP.</p>
+<p>Given an initial position, <italic>P</italic><sup>(0)</sup>, iterate the following four steps:</p>
+<p><italic>Step 1</italic>, <italic>Compute the gradient ∇<italic>f</italic>(<italic>P</italic><sup>(<italic>i</italic>)</sup>)</italic>: The gradient of <inline-formula id="pone.0121002.e019"><mml:math id="M19" display="inline" overflow="scroll"><mml:mrow><mml:mi>f</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>P</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mo>−</mml:mo> <mml:mtext mathvariant="normal">trace</mml:mtext> <mml:mo stretchy="false">(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> with respect to <italic>P</italic>, evaluated at <italic>P</italic><sup>(<italic>i</italic>)</sup>, is given by <inline-formula id="pone.0121002.e020"><mml:math id="M20" display="inline" overflow="scroll"><mml:mrow><mml:mo>∇</mml:mo> <mml:mi>f</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>i</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msup> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mo>−</mml:mo> <mml:mi>A</mml:mi> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>i</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msup> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>−</mml:mo> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>i</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msup> <mml:mi>B</mml:mi></mml:mrow></mml:math></inline-formula>.</p>
+<p><italic>Step 2</italic>, <italic>Compute the search direction <italic>Q</italic><sup>(<italic>i</italic>)</sup></italic>: The search direction is given by the argument that minimizes a first-order Taylor series approximation to <italic>f</italic>(<italic>P</italic>) around the current estimate, <italic>P</italic><sup>(<italic>i</italic>)</sup>:
+<disp-formula id="pone.0121002.e021"><alternatives><graphic id="pone.0121002.e021g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e021"/><mml:math id="M21" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>P</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:mi>f</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mo>∇</mml:mo> <mml:mi>f</mml:mi> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>P</mml:mi> <mml:mo>-</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+Dropping terms independent of <italic>P</italic>, we obtain the following sub-problem:
+<disp-formula id="pone.0121002.e022"><alternatives><graphic id="pone.0121002.e022g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e022"/><mml:math id="M22" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mo>∇</mml:mo> <mml:mi>f</mml:mi> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mi>P</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒟</mml:mo> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(8)</label></disp-formula>
+which is equivalent to a <italic>Linear Assignment Problem</italic> (LAP), and can therefore be solved in <italic>O</italic>(<italic>n</italic><sup>3</sup>) time via the “Hungarian Algorithm” of [<xref ref-type="bibr" rid="pone.0121002.ref028">28</xref>, <xref ref-type="bibr" rid="pone.0121002.ref029">29</xref>]. Let <italic>Q</italic><sup>(<italic>i</italic>)</sup> indicate the argmin of <xref ref-type="disp-formula" rid="pone.0121002.e022">Eq (8)</xref>.</p>
+<p><italic>Step 3</italic>, <italic>Compute the step size <italic>α</italic><sup>(<italic>i</italic>)</sup></italic>: Given <italic>Q</italic><sup>(<italic>i</italic>)</sup>, we minimize the original optimization problem, along the line segment from <italic>P</italic><sup>(<italic>i</italic>)</sup> to <italic>Q</italic><sup>(<italic>i</italic>)</sup>:
+<disp-formula id="pone.0121002.e023"><alternatives><graphic id="pone.0121002.e023g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e023"/><mml:math id="M23" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>f</mml:mi> <mml:mo>(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>+</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:msup><mml:mi>Q</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>α</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>[</mml:mo> <mml:mn>0</mml:mn> <mml:mo>,</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(9)</label></disp-formula>
+This can be solved exactly, as <italic>f</italic> is a quadratic function of <italic>α</italic>. Let <italic>α</italic><sup>(<italic>i</italic>)</sup> indicate the argmin of <xref ref-type="disp-formula" rid="pone.0121002.e023">Eq (9)</xref>.</p>
+<p><italic>Step 4</italic>, <italic>Update <italic>P</italic><sup>(<italic>i</italic>)</sup></italic>: Finally, the next iterate is the doubly stochastic matrix
+<disp-formula id="pone.0121002.e024"><alternatives><graphic id="pone.0121002.e024g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e024"/><mml:math id="M24" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>=</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>+</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:msup><mml:mi>Q</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(10)</label></disp-formula></p>
+<p><italic>Stopping criteria</italic>: Steps 1–4 are iterated until some stopping criterion is met. Often, a threshold <italic>ϵ</italic> &gt; 0 or an iteration limit is given, and the algorithm iterates until the iteration limit is reached, ‖<italic>P</italic><sup>(<italic>i</italic>)</sup>−<italic>P</italic><sup>(<italic>i</italic>−1)</sup>‖<sub><italic>F</italic></sub> &lt; <italic>ϵ</italic>, or ‖∇<italic>f</italic>(<italic>P</italic><sup>(<italic>i</italic>)</sup>)‖<sub><italic>F</italic></sub> &lt; <italic>ϵ</italic>. In practice, the algorithm often converges with a modest number of FW iterates.</p></list-item>
+<list-item><p><bold>Project onto the set of permutation matrices</bold>. Let <italic>P</italic><sup>(<italic>final</italic>)</sup> be the doubly stochastic matrix resulting from the final iteration of FW. We project <italic>P</italic><sup>(<italic>final</italic>)</sup> onto the set of permutation matrices via
+<disp-formula id="pone.0121002.e025"><alternatives><graphic id="pone.0121002.e025g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e025"/><mml:math id="M25" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mtable><mml:mtr><mml:mtd><mml:mtext>minimize</mml:mtext></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>-</mml:mo> <mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:msup><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>f</mml:mi> <mml:mi>i</mml:mi> <mml:mi>n</mml:mi> <mml:mi>a</mml:mi> <mml:mi>l</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd><mml:mrow><mml:mtext>subject</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>to</mml:mtext></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝒫</mml:mo> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(11)</label></disp-formula>
+Note that <xref ref-type="disp-formula" rid="pone.0121002.e025">Eq (11)</xref> is again equivalent to a LAP and can be solved in <italic>O</italic>(<italic>n</italic><sup>3</sup>) time.</p></list-item>
+</list>
+</sec>
+<sec id="sec011" sec-type="results">
+<title>4 Results</title>
+<p>Below we present a number of empirical and theoretical results demonstrating the state-of-the-art efficiency and accuracy of the FAQ algorithm.</p>
+<sec id="sec012">
+<title>4.1 Algorithm Complexity and leading constants</title>
+<p>As mentioned above, GM is computationally difficult, and even in the special cases for which polynomial time algorithms are available, the leading constants are intractably large. Given a bounded number of FW iterates, the FAQ algorithm has complexity <italic>O</italic>(<italic>n</italic><sup>3</sup>). However, a very large lead order constant could still render this algorithm practically infeasible. <xref ref-type="fig" rid="pone.0121002.g001">Fig 1</xref> suggests that FAQ has <italic>O</italic>(<italic>n</italic><sup>3</sup>) complexity, and also has very small leading constants (≈ 10<sup>−9</sup>). This suggests that this algorithm is feasible for matching even reasonably large graphs. Note that other state-of-the-art approximate graph matching algorithms also have cubic or worse time complexity in the number of vertices. We will describe these other algorithms and their time complexity in greater detail below.</p>
+<fig id="pone.0121002.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Running time of FAQ as function of number of vertices.</title>
+<p>Data was sampled from an Erdös-Rényi model with <italic>p</italic> = <italic>log</italic>(<italic>n</italic>)/<italic>n</italic>. Each dot represents a single simulation, with 100 simulations per <italic>n</italic>. The solid line is the best fit cubic function. Note the leading constant is ≈ 10<sup>−9</sup>. FAQ finds the optimal objective function value in every simulation.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.g001"/>
+</fig>
+</sec>
+<sec id="sec013">
+<title>4.2 QAP Benchmark Accuracy</title>
+<p>Having demonstrated both theoretically and empirically that FAQ has cubic time complexity, we evaluate the algorithms accuracy on a suite of standard benchmarks. More specifically, QAPLIB is a library of 137 quadratic assignment problems, ranging in size from 10 to 256 vertices [<xref ref-type="bibr" rid="pone.0121002.ref030">30</xref>]. Recent graph matching papers typically evaluate the performance of their algorithm on 16 of the benchmark QAPs that are known to be particularly difficult [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0121002.ref031">31</xref>]. We compare the results of FAQ to the results of four other state-of-the-art graph matching algorithms:
+<list list-type="order"><list-item><p>the PATH algorithm, which solves the relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>), and then solves a sequence of concave and convex problems to project the solution onto 𝒫 [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>];</p></list-item> <list-item><p>QCV which solves the relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>), and projects the obtained solution onto the closest permutation in 𝒫;</p></list-item> <list-item><p>the RANK algorithm [<xref ref-type="bibr" rid="pone.0121002.ref032">32</xref>], a spectral graph matching procedure;</p></list-item> <list-item><p>the Umeyama algorithm (denoted by U), another spectral graph matching procedure [<xref ref-type="bibr" rid="pone.0121002.ref001">1</xref>].</p></list-item></list>
+Note that the code for these four algorithms is freely available from the graphm package [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>].</p>
+<p>Performance is measured by minimizing the assignment cost <inline-formula id="pone.0121002.e026"><mml:math id="M26" display="inline" overflow="scroll"><mml:mrow><mml:mi>f</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>P</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mtext mathvariant="normal">trace</mml:mtext> <mml:mo stretchy="false">(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>B</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>. We write <inline-formula id="pone.0121002.e027"><mml:math id="M27" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>X</mml:mi></mml:msub></mml:mrow></mml:math></inline-formula> for the value of the local minimum of <italic>f</italic> obtained by the algorithm <italic>X</italic> ∈ {FAQ, PATH, QCV, RANK, U, all}, where “all” is just the best performer of all the non FAQ algorithms. <xref ref-type="fig" rid="pone.0121002.g002">Fig 2</xref> plots the logarithm (base 10, here and elsewhere) of the relative accuracy, i.e. <inline-formula id="pone.0121002.e028"><mml:math id="M28" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>log</mml:mi> <mml:mn>10</mml:mn></mml:msub> <mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>F</mml:mi> <mml:mi>AQ</mml:mi></mml:mrow></mml:msub> <mml:mo>/</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>X</mml:mi></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>, for <italic>X</italic> ∈ {PATH, QCV, RANK, U, all}. FAQ performs significantly better than the other algorithms, outperforming all of them on ≈ 94% of the problems, often by nearly an order of magnitude in terms of relative error.</p>
+<fig id="pone.0121002.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Relative accuracy—defined to be <inline-formula id="pone.0121002.e029"><mml:math id="M29" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>log</mml:mi> <mml:mn>10</mml:mn></mml:msub> <mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>F</mml:mi> <mml:mi>A</mml:mi> <mml:mi>Q</mml:mi></mml:mrow></mml:msub> <mml:mo>/</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>f</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>X</mml:mi></mml:msub> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>—of all the four algorithms compared with FAQ.</title>
+<p>Note that FAQ is better than all the other algorithms on ≈ 94% of the benchmarks. The abscissa is the log number of vertices. The gray dot indicates the mean improvement of FAQ over the other algorithms.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.g002"/>
+</fig>
+</sec>
+<sec id="sec014">
+<title>4.3 QAP Benchmark Efficiency</title>
+<p>The utility of an approximation algorithm depends not just on its accuracy, but also its efficiency. To empirically test these algorithms’ efficiency, we compare the wall time of each of the five algorithms on all 137 QAPS in QAPLIB in <xref ref-type="fig" rid="pone.0121002.g003">Fig 3</xref>. For each of the 5 algorithms, we fit an iteratively weighted least squares linear regression function (Matlab’s “robustfit”) to regress the logarithm of time (in seconds) onto the logarithm of the number of vertices being matched. The numbers beside the lines indicate the slopes of the regression functions.</p>
+<fig id="pone.0121002.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Absolute wall time for running each of the five algorithms on all 137 QAPLIB benchmarks.</title>
+<p>We fit a line on this log-log plot for each algorithm; the slope is displayed beside each line. The FAQ slope is much better than the PATH slope, and worse than the others. Note, however, the time for RANK and U appears to be superlinear on this log-log plot, suggesting that perhaps as the number of vertices increases, PATH might be faster.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.g003"/>
+</fig>
+<p>The figure demonstrates that the PATH algorithm has the largest slope, significantly larger than that of FAQ. QCV and FAQ have nearly identical slopes, which makes sense, given that the are solving very similar objective functions. Similarly, RANK and U have very similar slopes; they are both using spectral approaches. Note, however, that although the slope of RANK and U are smaller than that of FAQ, they both appear to be super linear in this log-log plot, suggesting that as the number of vertices increases, their compute time might exceed that of the other algorithms.</p>
+<p>Combined with <xref ref-type="fig" rid="pone.0121002.g002">Fig 2</xref>, this figure suggests that FAQ achieves the state-of-the-art trade-off between efficiency and accuracy. Of note is that the FAQ algorithm has a relatively high variance in wall time for these problems. This is due to the number of Hungarian algorithms performed in the FW subroutine. We could fix the number of Hungarian algorithms, in which case the variance would decrease dramatically. However, in application, this variance is not problematic.</p>
+</sec>
+<sec id="sec015">
+<title>4.4 QAP Benchmark Accuracy/Efficiency Trade-off</title>
+<p>In [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>], the authors demonstrated that PATH outperformed both QCV and U on a variety of simulated and real examples. <xref ref-type="fig" rid="pone.0121002.g004">Fig 4</xref> compares the performance of FAQ with PATH along both dimensions of performance—accuracy and efficiency—for all 137 benchmarks in the QAPLIB library. The right panel indicates that FAQ is <italic>both</italic> more accurate and more efficient on 80% of the problems (and is more accurate on 99% of the benchmarks). The middle plots the relative wall time of FAQ to PATH as a function of the number of vertices, also on a log-log scale. The gray line is the best fit slope on this plot, suggesting that FAQ is getting exponentially faster than PATH as the number of vertices gets larger.</p>
+<fig id="pone.0121002.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Comparison of FAQ with PATH in terms of both accuracy and efficiency.</title>
+<p>The left panel is the same as the left panel of <xref ref-type="fig" rid="pone.0121002.g002">Fig 2</xref>. The middle plots the relative wall time of FAQ to PATH as a function of the number of vertices, also on a log-log scale. The gray line is the best fit slope on this plot. Finally, the right panel plots log relative time versus log relative objective function value, demonstrating that FAQ outperforms PATH on both dimensions on 80% of the benchmarks.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.g004"/>
+</fig>
+</sec>
+<sec id="sec016">
+<title>4.5 QAP Directed Benchmarks</title>
+<p>Recently, Liu et al. [<xref ref-type="bibr" rid="pone.0121002.ref033">33</xref>] proposed a modification of the PATH algorithm that adjusted PATH to be more appropriate for directed graphs Note that our FAQ algorithm easily extend to directed or weighted graphs. Liu et al. compare the performance of their algorithm (EPATH) with U, QCV, and the GRAD algorithm of [<xref ref-type="bibr" rid="pone.0121002.ref034">34</xref>] on a set of 16 particularly difficult directed benchmarks from QAPLIB. The EPATH algorithm achieves at least as low objective value as the other algorithms on 15 of 16 benchmarks. Our algorithm, FAQ, performs at least as well as EPATH, U, QCV, and GRAD on all 16 benchmarks, and achieves the singular best performance on 8 of the benchmarks. <xref ref-type="table" rid="pone.0121002.t001">Table 1</xref> shows the numerical results comparing FAQ to EPATH and GRAD, the only algorithm considered in [<xref ref-type="bibr" rid="pone.0121002.ref033">33</xref>] to outperform EPATH. Note that some of the algorithms achieve the absolute minimum on 8 of the benchmark.</p>
+<table-wrap id="pone.0121002.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Comparison of FAQ with optimal objective function value and previous state-of-the-art for directed graphs.</title>
+<p>The best (lowest) value is in <bold>bold</bold>. Asterisks indicate achievement of the global minimum. The number of vertices for each problem is the number in its name (second column).</p>
+</caption>
+<alternatives>
+<graphic id="pone.0121002.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.t001"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">#</th>
+<th align="left" rowspan="1" colspan="1">Problem</th>
+<th align="left" rowspan="1" colspan="1">Optimal</th>
+<th align="left" rowspan="1" colspan="1">FAQ</th>
+<th align="left" rowspan="1" colspan="1">EPATH</th>
+<th align="left" rowspan="1" colspan="1">GRAD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">lipa20a</td>
+<td align="left" rowspan="1" colspan="1">3683</td>
+<td align="left" rowspan="1" colspan="1"><bold>3791</bold></td>
+<td align="left" rowspan="1" colspan="1">3885</td>
+<td align="left" rowspan="1" colspan="1">3909</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">lipa20b</td>
+<td align="left" rowspan="1" colspan="1">27076</td>
+<td align="left" rowspan="1" colspan="1"><bold>27076</bold>*</td>
+<td align="left" rowspan="1" colspan="1">32081</td>
+<td align="left" rowspan="1" colspan="1"><bold>27076</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">lipa30a</td>
+<td align="left" rowspan="1" colspan="1">13178</td>
+<td align="left" rowspan="1" colspan="1"><bold>13571</bold></td>
+<td align="left" rowspan="1" colspan="1">13577</td>
+<td align="left" rowspan="1" colspan="1">13668</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">lipa30b</td>
+<td align="left" rowspan="1" colspan="1">151426</td>
+<td align="left" rowspan="1" colspan="1"><bold>151426</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>151426</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>151426</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">lipa40a</td>
+<td align="left" rowspan="1" colspan="1">31538</td>
+<td align="left" rowspan="1" colspan="1"><bold>32109</bold></td>
+<td align="left" rowspan="1" colspan="1">32247</td>
+<td align="left" rowspan="1" colspan="1">32590</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">lipa40b</td>
+<td align="left" rowspan="1" colspan="1">476581</td>
+<td align="left" rowspan="1" colspan="1"><bold>476581</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>476581</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>476581</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">lipa50a</td>
+<td align="left" rowspan="1" colspan="1">62093</td>
+<td align="left" rowspan="1" colspan="1"><bold>62962</bold></td>
+<td align="left" rowspan="1" colspan="1">63339</td>
+<td align="left" rowspan="1" colspan="1">63730</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">lipa50b</td>
+<td align="left" rowspan="1" colspan="1">1210244</td>
+<td align="left" rowspan="1" colspan="1"><bold>1210244</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>1210244</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>1210244</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">lipa60a</td>
+<td align="left" rowspan="1" colspan="1">107218</td>
+<td align="left" rowspan="1" colspan="1"><bold>108488</bold></td>
+<td align="left" rowspan="1" colspan="1">109168</td>
+<td align="left" rowspan="1" colspan="1">109809</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">lipa60b</td>
+<td align="left" rowspan="1" colspan="1">2520135</td>
+<td align="left" rowspan="1" colspan="1"><bold>2520135</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>2520135</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>2520135</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">lipa70a</td>
+<td align="left" rowspan="1" colspan="1">169755</td>
+<td align="left" rowspan="1" colspan="1"><bold>171820</bold></td>
+<td align="left" rowspan="1" colspan="1">172200</td>
+<td align="left" rowspan="1" colspan="1">173172</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1">lipa70b</td>
+<td align="left" rowspan="1" colspan="1">4603200</td>
+<td align="left" rowspan="1" colspan="1"><bold>4603200</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>4603200</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>4603200</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">lipa80a</td>
+<td align="left" rowspan="1" colspan="1">253195</td>
+<td align="left" rowspan="1" colspan="1"><bold>256073</bold></td>
+<td align="left" rowspan="1" colspan="1">256601</td>
+<td align="left" rowspan="1" colspan="1">258218</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">lipa80b</td>
+<td align="left" rowspan="1" colspan="1">7763962</td>
+<td align="left" rowspan="1" colspan="1"><bold>7763962</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>7763962</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>7763962</bold>*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1">lipa90a</td>
+<td align="left" rowspan="1" colspan="1">360630</td>
+<td align="left" rowspan="1" colspan="1"><bold>363937</bold></td>
+<td align="left" rowspan="1" colspan="1">365233</td>
+<td align="left" rowspan="1" colspan="1">366743</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">16</td>
+<td align="left" rowspan="1" colspan="1">lipa90b</td>
+<td align="left" rowspan="1" colspan="1">12490441</td>
+<td align="left" rowspan="1" colspan="1"><bold>12490441</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>12490441</bold>*</td>
+<td align="left" rowspan="1" colspan="1"><bold>12490441</bold>*</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec017">
+<title>4.6 Theoretical properties of FAQ</title>
+<p>In addition to guarantees on computational time, we have a guarantee on performance:</p>
+<p><bold>Proposition 1</bold> <italic>If A is the adjacency matrix of an asymmetric simple graph G, then</italic>
+<disp-formula id="pone.0121002.e030"><alternatives><graphic id="pone.0121002.e030g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e030"/><mml:math id="M30" display="block" overflow="scroll"><mml:mrow><mml:munder><mml:mrow><mml:mtext>argmin</mml:mtext></mml:mrow><mml:mrow><mml:msub><mml:mrow/><mml:mrow><mml:mi>D</mml:mi><mml:mo>∈</mml:mo><mml:mi>𝒟</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:munder><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mo>−</mml:mo><mml:mi>t</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>c</mml:mi><mml:mi>e</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>A</mml:mi><mml:mi>D</mml:mi><mml:msup><mml:mi>A</mml:mi><mml:mo>⊤</mml:mo></mml:msup><mml:msup><mml:mi>D</mml:mi><mml:mo>⊤</mml:mo></mml:msup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mi>I</mml:mi> <mml:mo>}</mml:mo></mml:mrow><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:math></alternatives></disp-formula> <italic>Proof</italic> Let <italic>m</italic> denote the number of edges in <italic>G</italic>. As <italic>G</italic> is asymmetric,
+<disp-formula id="pone.0121002.e031"><alternatives><graphic id="pone.0121002.e031g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e031"/><mml:math id="M31" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>&lt;</mml:mo> <mml:mn>2</mml:mn> <mml:mi>m</mml:mi> <mml:mo>=</mml:mo> <mml:mtext>trace</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+for any <italic>P</italic> ≠ <italic>I</italic>. By the Birkhoff-von Neuman Theorem, 𝒟 is the convex hull of 𝒫, i.e., for all <italic>D</italic> ∈ 𝒟, there exists constants {<italic>α</italic><sub><italic>D</italic>, <italic>P</italic></sub>}<sub><italic>P</italic> ∈ 𝒫</sub> such that <italic>D</italic> = ∑<sub><italic>P</italic> ∈ 𝒫</sub> <italic>α</italic><sub><italic>D</italic>, <italic>P</italic></sub> <italic>P</italic> and ∑<sub><italic>P</italic> ∈ 𝒫</sub> <italic>α</italic><sub><italic>D</italic>, <italic>P</italic></sub> = 1. Thus, if <italic>D</italic> is not the identity matrix,
+<disp-formula id="pone.0121002.e032"><alternatives><graphic id="pone.0121002.e032g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e032"/><mml:math id="M32" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>D</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>D</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mi>P</mml:mi></mml:munder> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>Q</mml:mi></mml:munder> <mml:msub><mml:mi>α</mml:mi> <mml:mrow><mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>P</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>α</mml:mi> <mml:mrow><mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>Q</mml:mi></mml:mrow></mml:msub> <mml:mtext>trace</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>Q</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mi>P</mml:mi></mml:munder> <mml:msubsup><mml:mi>α</mml:mi> <mml:mrow><mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>P</mml:mi></mml:mrow> <mml:mn>2</mml:mn></mml:msubsup> <mml:munder><mml:munder accentunder="true"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>P</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>︸</mml:mo></mml:munder> <mml:mrow><mml:mo>&lt;</mml:mo> <mml:mn>2</mml:mn> <mml:mi>m</mml:mi> <mml:mspace width="4.pt"/><mml:mtext>if</mml:mtext> <mml:mspace width="4.pt"/><mml:mi>P</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>I</mml:mi></mml:mrow></mml:munder> <mml:mo>+</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>P</mml:mi></mml:munder> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>Q</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>P</mml:mi></mml:mrow></mml:munder> <mml:msub><mml:mi>α</mml:mi> <mml:mrow><mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>P</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>α</mml:mi> <mml:mrow><mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>Q</mml:mi></mml:mrow></mml:msub> <mml:munder><mml:munder accentunder="true"><mml:mrow><mml:mtext>trace</mml:mtext> <mml:mo>(</mml:mo> <mml:mi>A</mml:mi> <mml:mi>P</mml:mi> <mml:msup><mml:mi>A</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:msup><mml:mi>Q</mml:mi> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>︸</mml:mo></mml:munder> <mml:mrow><mml:mo>≤</mml:mo> <mml:mn>2</mml:mn> <mml:mi>m</mml:mi></mml:mrow></mml:munder></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>&lt;</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mn>2</mml:mn> <mml:mi>m</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+as <italic>D</italic> ≠ <italic>I</italic> implies that <italic>α</italic><sub><italic>D</italic>, <italic>P</italic></sub> &gt; 0 for some <italic>P</italic> ≠ <italic>I</italic>. ■</p>
+<p><bold>Remark 1</bold> Note that it trivially follows from Proposition 1 that if A and B are the adjacency matrices of asymmetric isomorphic simple graphs, then the minimum objective function value of rGMP is equal to the minimum objective function value of GMP.</p>
+<p><bold>Remark 2</bold> For the convex quadratic GM relaxation, <xref ref-type="disp-formula" rid="pone.0121002.e012">Eq (4)</xref>, in general <inline-formula id="pone.0121002.e033">
+<mml:math id="M33" display="inline" overflow="scroll">
+<mml:mrow>
+<mml:msub>
+<mml:mtext mathvariant="normal">argmin</mml:mtext>
+<mml:mrow>
+<mml:mi>D</mml:mi>
+<mml:mo>∈</mml:mo>
+<mml:mo>𝒟</mml:mo>
+</mml:mrow>
+</mml:msub>
+<mml:mo stretchy="false">‖</mml:mo>
+<mml:mi>A</mml:mi>
+<mml:mi>D</mml:mi>
+<mml:mo>−</mml:mo>
+<mml:mi>D</mml:mi>
+<mml:mi>A</mml:mi>
+<mml:msubsup>
+<mml:mo stretchy="false">‖</mml:mo>
+<mml:mi>F</mml:mi>
+<mml:mn>2</mml:mn>
+</mml:msubsup>
+<mml:mo>≠</mml:mo>
+<mml:mo stretchy="false">{</mml:mo>
+<mml:mi>I</mml:mi>
+<mml:mo stretchy="false">}</mml:mo>
+<mml:mo>,</mml:mo>
+</mml:mrow>
+</mml:math>
+</inline-formula> <italic>even if <italic>G</italic> (the graph with adjacency matrix <italic>A</italic>) is asymmetric. Indeed, degree regular graphs provide a simple counterexample, as in this case</italic> <inline-formula id="pone.0121002.e034">
+<mml:math id="M34" display="inline" overflow="scroll">
+<mml:mrow>
+<mml:mi>J</mml:mi>
+<mml:mo>∈</mml:mo>
+<mml:msub>
+<mml:mtext mathvariant="normal">argmin</mml:mtext>
+<mml:mrow>
+<mml:mi>D</mml:mi>
+<mml:mo>∈</mml:mo>
+<mml:mo>𝒟</mml:mo>
+</mml:mrow>
+</mml:msub>
+<mml:mo stretchy="false">‖</mml:mo>
+<mml:mi>A</mml:mi>
+<mml:mi>D</mml:mi>
+<mml:mo>−</mml:mo>
+<mml:mi>D</mml:mi>
+<mml:mi>A</mml:mi>
+<mml:msubsup>
+<mml:mo stretchy="false">‖</mml:mo>
+<mml:mi>F</mml:mi>
+<mml:mn>2</mml:mn>
+</mml:msubsup>
+</mml:mrow>
+</mml:math>
+</inline-formula>. We will empirically explore the ramifications of this phenomena further in Section 4.8</p>
+<p>This result says that, when solving the GI problem, nothing is lost by relaxing the indefinite GM problem as done by FAQ. Recent results also show this is almost surely the case (in a broad class of random graphs) when relaxing the indefinite GM problem, even in the non-isomorphic graph setting [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>] (and is again almost surely <italic>not</italic> the case when relaxing the convex GM formulation). Combined, this serve to provide theoretical justification for our FAQ procedure.</p>
+</sec>
+<sec id="sec018">
+<title>4.7 Multiple Restarts</title>
+<p>Due to the indefiniteness of the relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>), the feasible region may be rife with local minima. As a result, our FAQ procedure is sensitive to the chosen initial position. With this in mind, we propose a variant of the FAQ algorithm in which we run the FAQ procedure with multiple initializations. The algorithm outputs the best FAQ iterate over all the initializations. For each initialization, we sample <italic>K</italic> ∈ 𝒟, a random doubly stochastic matrix, using 10 iterations of Sinkhorn balancing [<xref ref-type="bibr" rid="pone.0121002.ref025">25</xref>], and let our initialization be <italic>P</italic><sup>(0)</sup> = (<italic>J</italic>+<italic>K</italic>)/2, where <italic>J</italic> is the doubly stochastic barycenter. Fixing the number of restarts, this variant of FAQ still has <italic>O</italic>(<italic>n</italic><sup>3</sup>) complexity.</p>
+<p><xref ref-type="table" rid="pone.0121002.t002">Table 2</xref> shows the performance of running FAQ 3 and 100 times, reporting only the best result (indicated by FAQ<sub>3</sub> and FAQ<sub>100</sub>, respectively), and comparing it to the best performing result of the five algorithms (including the original FAQ)—note that the best performing of the original five tested was always FAQ. Note that we only consider the 16 particularly difficult benchmarks for this evaluation. FAQ only required three restarts to outperform all other approximate algorithms on all 16 of 16 difficult benchmarks. Moreover, after 100 restarts, FAQ finds the absolute minimum on 3 of the 16 benchmarks. Note that no other algorithm ever achieved the absolute minimum on any of these benchmarks.</p>
+<table-wrap id="pone.0121002.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Comparison of FAQ with optimal objective function value and the best result on the undirected benchmarks.</title>
+<p>Note that FAQ restarted 100 times finds the optimal objective function value in 3 of 16 benchmarks, and that FAQ restarted 3 times finds a minimum better than the previous state-of-the-art on all 16 particularly difficult benchmarks.</p>
+</caption>
+<alternatives>
+<graphic id="pone.0121002.t002g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.t002"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">#</th>
+<th align="left" rowspan="1" colspan="1">Problem</th>
+<th align="left" rowspan="1" colspan="1">Optimal</th>
+<th align="left" rowspan="1" colspan="1">FAQ<sub>100</sub></th>
+<th align="left" rowspan="1" colspan="1">FAQ<sub>3</sub></th>
+<th align="left" rowspan="1" colspan="1">FAQ<sub>1</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">chr12c</td>
+<td align="left" rowspan="1" colspan="1">11156</td>
+<td align="left" rowspan="1" colspan="1"><bold>12176</bold></td>
+<td align="left" rowspan="1" colspan="1">13072</td>
+<td align="left" rowspan="1" colspan="1">13072</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">chr15a</td>
+<td align="left" rowspan="1" colspan="1">9896</td>
+<td align="left" rowspan="1" colspan="1"><bold>9896</bold>*</td>
+<td align="left" rowspan="1" colspan="1">17272</td>
+<td align="left" rowspan="1" colspan="1">19086</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">chr15c</td>
+<td align="left" rowspan="1" colspan="1">9504</td>
+<td align="left" rowspan="1" colspan="1"><bold>10960</bold></td>
+<td align="left" rowspan="1" colspan="1">14274</td>
+<td align="left" rowspan="1" colspan="1">16206</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">chr20b</td>
+<td align="left" rowspan="1" colspan="1">2298</td>
+<td align="left" rowspan="1" colspan="1"><bold>2786</bold></td>
+<td align="left" rowspan="1" colspan="1">3068</td>
+<td align="left" rowspan="1" colspan="1">3068</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">chr22b</td>
+<td align="left" rowspan="1" colspan="1">6194</td>
+<td align="left" rowspan="1" colspan="1"><bold>7218</bold></td>
+<td align="left" rowspan="1" colspan="1">7876</td>
+<td align="left" rowspan="1" colspan="1">8482</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1">esc16b</td>
+<td align="left" rowspan="1" colspan="1">292</td>
+<td align="left" rowspan="1" colspan="1"><bold>292</bold>*</td>
+<td align="left" rowspan="1" colspan="1">294</td>
+<td align="left" rowspan="1" colspan="1">296</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">rou12</td>
+<td align="left" rowspan="1" colspan="1">235528</td>
+<td align="left" rowspan="1" colspan="1"><bold>235528</bold>*</td>
+<td align="left" rowspan="1" colspan="1">238134</td>
+<td align="left" rowspan="1" colspan="1">253684</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">rou15</td>
+<td align="left" rowspan="1" colspan="1">354210</td>
+<td align="left" rowspan="1" colspan="1"><bold>356654</bold></td>
+<td align="left" rowspan="1" colspan="1">371458</td>
+<td align="left" rowspan="1" colspan="1">371458</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">rou20</td>
+<td align="left" rowspan="1" colspan="1">725522</td>
+<td align="left" rowspan="1" colspan="1"><bold>730614</bold></td>
+<td align="left" rowspan="1" colspan="1">743884</td>
+<td align="left" rowspan="1" colspan="1">743884</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">tai10a</td>
+<td align="left" rowspan="1" colspan="1">135028</td>
+<td align="left" rowspan="1" colspan="1"><bold>135828</bold></td>
+<td align="left" rowspan="1" colspan="1">148970</td>
+<td align="left" rowspan="1" colspan="1">152534</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">tai15a</td>
+<td align="left" rowspan="1" colspan="1">388214</td>
+<td align="left" rowspan="1" colspan="1"><bold>391522</bold></td>
+<td align="left" rowspan="1" colspan="1">397376</td>
+<td align="left" rowspan="1" colspan="1">397376</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1">tai17a</td>
+<td align="left" rowspan="1" colspan="1">491812</td>
+<td align="left" rowspan="1" colspan="1"><bold>496598</bold></td>
+<td align="left" rowspan="1" colspan="1">511574</td>
+<td align="left" rowspan="1" colspan="1">529134</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">tai20a</td>
+<td align="left" rowspan="1" colspan="1">703482</td>
+<td align="left" rowspan="1" colspan="1"><bold>711840</bold></td>
+<td align="left" rowspan="1" colspan="1">721540</td>
+<td align="left" rowspan="1" colspan="1">734276</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1">tai30a</td>
+<td align="left" rowspan="1" colspan="1">1818146</td>
+<td align="left" rowspan="1" colspan="1"><bold>1844636</bold></td>
+<td align="left" rowspan="1" colspan="1">1890738</td>
+<td align="left" rowspan="1" colspan="1">1894640</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1">tai35a</td>
+<td align="left" rowspan="1" colspan="1">2422002</td>
+<td align="left" rowspan="1" colspan="1"><bold>2454292</bold></td>
+<td align="left" rowspan="1" colspan="1">2460940</td>
+<td align="left" rowspan="1" colspan="1">2460940</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">16</td>
+<td align="left" rowspan="1" colspan="1">tai40a</td>
+<td align="left" rowspan="1" colspan="1">3139370</td>
+<td align="left" rowspan="1" colspan="1"><bold>3187738</bold></td>
+<td align="left" rowspan="1" colspan="1">3194826</td>
+<td align="left" rowspan="1" colspan="1">3227612</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p><bold>Remark 3</bold> Another natural starting position for FAQ is the doubly stochastic solution of rGMP, the relaxed <xref ref-type="disp-formula" rid="pone.0121002.e012">Eq (4)</xref>. Promising results in this direction are pursued further in [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>].</p>
+</sec>
+<sec id="sec019">
+<title>4.8 Brain-Graph Matching</title>
+<p>The <italic>Caenorhabditis elegans</italic> (<italic>C. elegans</italic>) is a small worm (nematode) with 302 labeled neurons (in the hermaphroditic sex). The chemical connectome of <italic>C. elegans</italic> is a weighted directed graph on 279 vertices, with edge weights in {0,1,2,…} counting the number of directed chemical synapses between the neurons [<xref ref-type="bibr" rid="pone.0121002.ref035">35</xref>, <xref ref-type="bibr" rid="pone.0121002.ref036">36</xref>]. We conduct the following synthetic experiments. For <italic>A</italic> = (<italic>A</italic><sub><italic>uv</italic></sub>) count the number of synapses (in {0,1,2,…}) from neuron <italic>u</italic> to neuron <italic>v</italic> in the C. elegans connectome, for all <italic>u</italic>, <italic>v</italic>. For <italic>k</italic> = 1,2,…,1000, we choose <italic>Q</italic><sub>(<italic>k</italic>)</sub> uniformly at random from 𝒫, and let <inline-formula id="pone.0121002.e035"><mml:math id="M35" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>B</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>k</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:msub><mml:mi>Q</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>k</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msub> <mml:mi>A</mml:mi> <mml:msup><mml:msub><mml:mi>Q</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>k</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msub> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msup></mml:mrow></mml:math></inline-formula>, effectively shuffling the vertex labels of the connectome. Then, we match graphs <italic>A</italic> to <italic>B</italic><sub>(<italic>k</italic>)</sub>. We define accuracy as the fraction of vertices correctly assigned (i.e. unshuffled).</p>
+<p><xref ref-type="fig" rid="pone.0121002.g005">Fig 5</xref> displays the results of FAQ (initialized at <italic>J</italic>) along with U, QCV, and PATH. The left panel indicates that FAQ <italic>always</italic> perfectly unshuffles the chemical connectome, whereas none of the other algorithms ever perfectly unshuffles the graph. In light of Proposition 1, this is unsurprising. Indeed, there is a unique automorphism for this connectome, and the graph is asymmetric. For any choice of <italic>Q</italic><sub>(<italic>k</italic>)</sub>, the indefinite problem (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>) therefore has a unique solution, namely <inline-formula id="pone.0121002.e036"><mml:math id="M36" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>Q</mml:mi> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>k</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow> <mml:mo mathvariant="sans-serif">⊤</mml:mo></mml:msubsup></mml:mrow></mml:math></inline-formula>. FAQ finds this global minima in all the cases. Contrast this with <xref ref-type="disp-formula" rid="pone.0121002.e012">Eq (4)</xref>—the objective function of PATH and QCV—which could have multiple global minima in 𝒟. This could account for the high variance in the performance of QCV and PATH in <xref ref-type="fig" rid="pone.0121002.g005">Fig 5</xref>.</p>
+<fig id="pone.0121002.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121002.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Performance of U, QCV, PATH, and FAQ on synthetic C. elegans connectome data, graph matching the true chemical connectome with permuted versions of itself.</title>
+<p>Error is the fraction of vertices incorrectly matched. Circle indicates the median, thick black bars indicate the quartiles, thin black lines indicate extreme but non-outlier points, and plus signs are outliers. The left panel indicate error (fraction of misassigned vertices), and the right panel indicates wall time on a 2.2 GHz Apple MacBook. FAQ always obtained the optimal solution, whereas none of the other algorithms ever found the optimal. FAQ also ran very quickly, nearly as quickly as U and QCV, and much faster than PATH, even though the FAQ implementation is in Matlab, and the others are in C.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121002.g005"/>
+</fig>
+<p>The right panel compares the wall time of the various algorithms, running on an 2.2 GHz Apple MacBook. Note that we only have a Matlab implementation of FAQ, whereas the other algorithms are implemented in C. Unlike in the QAPLIB benchmarks, FAQ runs nearly as quickly as both U and QCV; and as expected, FAQ runs significantly faster than PATH. We also ran FAQ on a binarized symmeterized versions of the chemical connectome graph <inline-formula id="pone.0121002.e037"><mml:math id="M37" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>A</mml:mi> <mml:mo>˜</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> (i.e. <inline-formula id="pone.0121002.e038"><mml:math id="M38" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>A</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mrow><mml:mi>u</mml:mi> <mml:mi>v</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:math></inline-formula> if and only if <italic>A</italic><sub><italic>uv</italic></sub> ≥ 1 or <italic>A</italic><sub><italic>vu</italic></sub> ≥ 1). The resulting errors are nearly identical to those presented in <xref ref-type="fig" rid="pone.0121002.g005">Fig 5</xref>, although speed increased for FAQ by more than a factor of two. Note that the number of vertices in this brain-graph matching problem—279—is larger than the largest of the 137 benchmarks used above.</p>
+</sec>
+</sec>
+<sec id="sec020" sec-type="conclusions">
+<title>5 Discussion</title>
+<p>This work presents the FAQ algorithm, a fast algorithm for approximately matching very large graphs. Our key insight was to continuously relax the <italic>indefinite</italic> formulation of the GMP in the FW implementation. We demonstrated that not only is FAQ cubic in time, but also its leading constant is quite small—10<sup>−9</sup>—suggesting that it can be used for graphs with hundreds or thousands of vertices (§4.1).</p>
+<p>Moreover, FAQ achieves better accuracy than previous state-of-the-art approximate algorithms on on over 93% of the 137 QAPLIB benchmarks (§4.2), is faster than the state-of-the-art PATH algorithm (§4.3), and is both faster and achieves at least as low performance as PATH on over 80% of the tested benchmarks (§4.4), including both directed and undirected graph matching problems (§4.5). In addition to the theoretical guarantees of cubic run time, we provide theoretical justification for optimizing the indefinite GM formulation, <xref ref-type="disp-formula" rid="pone.0121002.e014">Eq (6)</xref> as opposed to <xref ref-type="disp-formula" rid="pone.0121002.e012">Eq (4)</xref> (§4.6). Indeed, the indefinite formulation (and <italic>not</italic> the convex formulation) has the property that when matching asymmetric isomorphic graphs, the unique global minimum of the indefinite relaxation is the isomorphism between the two graphs.</p>
+<p>Because rQAP is indefinite, we also considered FAQ with multiple restarts, and achieve improved performance for the particularly difficult benchmarks using only three restarts (§4.7). Finally, we used FAQ to match permuted versions of the C. elegans connectomes (§4.8). Of the four state-of-the-art algorithms considered, FAQ achieved perfect performance 100% of the time, whereas none of the other three algorithms ever matched the connectomes perfectly. Moreover, FAQ ran comparably fast to U and QCV and significantly faster than PATH, even though FAQ is implemented in Matlab, and the others are implemented in C. Note that these connectomes have 279 vertices, more vertices than the largest QAP benchmarks.</p>
+<sec id="sec021">
+<title>5.1 Related Work</title>
+<p>Our approach is quite similar to other approaches that have recently appeared in the literature. Perhaps its closest cousins include [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0121002.ref037">37</xref>–<xref ref-type="bibr" rid="pone.0121002.ref039">39</xref>], which are all of the “PATH” following or FW varieties. These algorithms begin by relaxing the convex objective function in (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>), while FAQ begins by relaxing the indefinite objective function in (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>). Although the convex relaxation is efficiently solvable, the obtained solution is almost surely incorrect (for a broad class of random graphs) and the correct solution is often not obtained even post projection [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>]. The indefinite relaxation however, almost surely yields the correct solution when exactly solved (for a broad class of random graphs) [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>]. With this in mind, it is unsurprising that FAQ outperforms PATH on nearly all benchmark problems. Others have considered similar relaxations to PATH, but usually in the context of finding lower bounds [<xref ref-type="bibr" rid="pone.0121002.ref040">40</xref>] or as subroutines for finding exact solutions [<xref ref-type="bibr" rid="pone.0121002.ref041">41</xref>]. Our work seems to be the first to utilize the precise algorithm described in Algorithm 1 to find fast approximate solutions to GMP and QAP.</p>
+<p>We note that the work in [<xref ref-type="bibr" rid="pone.0121002.ref038">38</xref>] is a generalization of our FW approach. The authors of [<xref ref-type="bibr" rid="pone.0121002.ref038">38</xref>] apply FW with exact line search to find
+<disp-formula id="pone.0121002.e039"><alternatives><graphic id="pone.0121002.e039g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121002.e039"/><mml:math id="M39" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>x</mml:mi> <mml:mo>*</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:mtext>argmax</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>x</mml:mi> <mml:mo>⊤</mml:mo></mml:msup> <mml:mi>M</mml:mi> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mspace width="4.pt"/><mml:mtext>s.t.</mml:mtext> <mml:mspace width="4.pt"/><mml:mi>C</mml:mi> <mml:mi>x</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>x</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mrow><mml:mo>{</mml:mo> <mml:mn>0</mml:mn> <mml:mo>,</mml:mo> <mml:mn>1</mml:mn> <mml:mo>}</mml:mo></mml:mrow> <mml:mi>n</mml:mi></mml:msup> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(12)</label></disp-formula>
+where <italic>M</italic> is an <italic>n</italic><sup>2</sup> × <italic>n</italic><sup>2</sup> matrix whose <italic>M</italic><sub><italic>i</italic>, <italic>j</italic>;<italic>k</italic>,ℓ</sub> entry measures the similarity between the vertex pairs (<italic>i</italic>, <italic>k</italic>) and (<italic>j</italic>,ℓ), and <italic>C</italic> is a constraint matrix enforcing the one–to–one (easily generalizing to many–to–one) matching of vertices. Our GM formulation (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>), and our subsequent FW implementation, can be realized from (<xref ref-type="disp-formula" rid="pone.0121002.e039">12</xref>) by setting <italic>M</italic> = −<italic>B</italic><sup><italic>T</italic></sup> ⊗ <italic>A</italic><sup><italic>T</italic></sup>, and having <italic>C</italic> enforce a one–to–one matching of the vertices. Our approach offers several distinct advantages over the general approach of [<xref ref-type="bibr" rid="pone.0121002.ref038">38</xref>], namely:
+<list list-type="bullet"><list-item><p>The ability to efficiently employ multiple random restarts for enhanced performance (see Section 4.7 for detail);</p></list-item> <list-item><p>Our FW implementation exploits the Kronecker product structure of <italic>M</italic> which reduces the runtime of an <italic>O</italic>(<italic>n</italic><sup>4</sup>) procedure to <italic>O</italic>(<italic>n</italic><sup>3</sup>);</p></list-item> <list-item><p>Our final step is projected to the nearest permutation matrix, which is not part of the algorithm outlined in [<xref ref-type="bibr" rid="pone.0121002.ref038">38</xref>];</p></list-item> <list-item><p>In [<xref ref-type="bibr" rid="pone.0121002.ref038">38</xref>], they consider general <italic>M</italic>, and in so doing, they are considering all quadratic-objective optimizations (albeit without a linear and constant term). There are many quadratic formulations of GM, and our contribution is touting the efficiency and efficacy of solving our particular indefinite form.</p></list-item></list></p>
+</sec>
+<sec id="sec022">
+<title>5.2 Future Work</title>
+<p>Even with the very small lead order constant for FAQ, as <italic>n</italic> increases, the computational burden gets quite high. For example, extrapolating the curve of <xref ref-type="fig" rid="pone.0121002.g001">Fig 1</xref>, this algorithm would take about 20 years to finish (on a standard laptop) when <italic>n</italic> = 100,000. We hope to be able to approximately solve rQAP on graphs much larger than that, given that the number of neurons even in a fly brain, for example, is ≈ 250,000. More efficient algorithms and/or implementations are required for such massive graph matching. Although a few other state-of-the-art algorithms were more efficient than FAQ, their accuracy was significantly worse. We are actively working on combining FAQ with dimensionality reduction procedures to achieve the desired scaling from FAQ [<xref ref-type="bibr" rid="pone.0121002.ref042">42</xref>].</p>
+<p>We are also pursuing additional future work to generalize FAQ in a number of ways:
+<list list-type="bullet"><list-item><p>In addition to the theoretical results contained in Section 4.6, we have studied the properties of the convex and indefinite GMP relaxations in a very general random graph model [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>]. Under some general assumptions on the random graph model, the indefinite relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e014">6</xref>), and <italic>not</italic> the convex relaxation of (<xref ref-type="disp-formula" rid="pone.0121002.e012">4</xref>) is the provably correct approach [<xref ref-type="bibr" rid="pone.0121002.ref024">24</xref>].</p></list-item> <list-item><p>Many (brain-) graphs of interest will be errorfully observed [<xref ref-type="bibr" rid="pone.0121002.ref043">43</xref>], that is, vertices might be missing and putative edges might exhibit both false positives and negatives. Explicitly dealing with this error source is both theoretically and practically of interest [<xref ref-type="bibr" rid="pone.0121002.ref015">15</xref>].</p></list-item> <list-item><p>For many brain-graph matching problems, the number of vertices will not be the same across the brains. Recent work from [<xref ref-type="bibr" rid="pone.0121002.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0121002.ref037">37</xref>] and [<xref ref-type="bibr" rid="pone.0121002.ref039">39</xref>] suggest that extensions in this direction would be both relatively straightforward and effective.</p></list-item> <list-item><p>Often, a partial matching of the vertices is known a priori, and we can modify FAQ to leverage these seeded vertices to match the remaining unseeded vertices [<xref ref-type="bibr" rid="pone.0121002.ref044">44</xref>].</p></list-item> <list-item><p>The most costly subroutine in FAQ is solving LAPs. Fortunately, the LAP is a linear optimization problem with linear constraints. As a result, a number of parallelized optimization strategies could be implemented on this problem [<xref ref-type="bibr" rid="pone.0121002.ref045">45</xref>].</p></list-item> <list-item><p>Often, real data adjacency matrices have certain special properties, namely sparsity, which makes faster LAP subroutines [<xref ref-type="bibr" rid="pone.0121002.ref029">29</xref>] and more efficient algorithms (such as “active set” algorithms) readily available for further speed increases.</p></list-item> <list-item><p>In many graph settings, we have some prior information that could easily be incorporated into the GM problem in the form of vertex attributes and features. For example, in brain graphs we know the position of the vertex in the brain, the vertex’s cell type, etc. These could be used to measure a “dissimilarity” between vertices and are easily incorporated into FAQ’s objective function to better match the graphs.</p></list-item> <list-item><p>We are working to extend FAQ to match multiple graphs simultaneously.</p></list-item></list></p>
+</sec>
+<sec id="sec023">
+<title>5.3 Concluding Thoughts</title>
+<p>In conclusion, this manuscript has presented the FAQ algorithm for approximately solving the quadratic assignment problem. FAQ is theoretically justified, fast, effective, and easily generalizable. Our algorithm achieves state-of-the-art matching performance and efficiency on a host of benchmark QAP problems and connectome data sets. Yet, the 𝒪(<italic>n</italic><sup>3</sup>) complexity remains too slow to solve many problems of interest, and issues of scalability need be addressed. To facilitate further development and applications, all the code and data used in this manuscript is available from the first author’s website, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://jovo.me">http://jovo.me</ext-link>. We have further incorporated FAQ (as sgm.R) into the open-source R package, igraph, available for download at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://github.com/igraph/xdata-igraph/">https://github.com/igraph/xdata-igraph/</ext-link>. MATLAB code is also available at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://github.com/jovo/FastApproximateQAP/tree/master/code/FAQ">https://github.com/jovo/FastApproximateQAP/tree/master/code/FAQ</ext-link>.</p>
+</sec>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors would like to acknowledge Lav Varshney for providing the data.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0121002.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Umeyama</surname> <given-names>S</given-names></name> (<year>1988</year>) <article-title>An eigendecomposition approach to weighted graph matching problems</article-title>. <source>Pattern Analysis and Machine Intelligence, IEEE Transactions on</source> <volume>10</volume>: <fpage>695</fpage>–<lpage>703</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/34.6778" xlink:type="simple">10.1109/34.6778</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Koopmans</surname> <given-names>TC</given-names></name>, <name name-style="western"><surname>Beckman</surname> <given-names>M</given-names></name> (<year>1957</year>) <article-title>Assignment problems and the location of economic activities</article-title>. <source>The Econometric Society</source> <volume>25</volume>: <fpage>53</fpage>–<lpage>76</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/1907742" xlink:type="simple">10.2307/1907742</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Papadimitriou</surname> <given-names>CH</given-names></name>, <name name-style="western"><surname>Steiglitz</surname> <given-names>K</given-names></name> (<year>1998</year>) <source>Combinatorial Optimization: Algorithms and Complexity</source>. <publisher-name>Dover Publications</publisher-name>, <fpage>496</fpage> pp.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Burkard</surname> <given-names>RE</given-names></name> (<year>2013</year>) <chapter-title>The quadratic assignment problem</chapter-title>. In: <source>Handbook of Combinatorial Optimization</source>, <publisher-name>Springer</publisher-name>. pp. <fpage>2741</fpage>–<lpage>2814</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Frank</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wolfe</surname> <given-names>P</given-names></name> (<year>1956</year>) <article-title>An algorithm for quadratic programming</article-title>. <source>Naval Research Logistics Quarterly</source> <volume>3</volume>: <fpage>95</fpage>–<lpage>110</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/nav.3800030109" xlink:type="simple">10.1002/nav.3800030109</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Bazaraa</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Sherali</surname> <given-names>HD</given-names></name>, <name name-style="western"><surname>Shetty</surname> <given-names>CM</given-names></name> (<year>2013</year>) <source>Nonlinear programming: theory and algorithms</source>. <publisher-name>John Wiley &amp; Sons</publisher-name>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Conte</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Foggia</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Sansone</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vento</surname> <given-names>M</given-names></name> (<year>2004</year>) <article-title>Thirty years of graph matching in pattern recognition</article-title>. <source>International Journal of Pattern Recognition and Artificial Intelligence</source> <volume>18</volume>: <fpage>265</fpage>–<lpage>298</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1142/S0218001404003228" xlink:type="simple">10.1142/S0218001404003228</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Tononi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Kotter</surname> <given-names>R</given-names></name> (<year>2005</year>) <article-title>The human connectome: A structural description of the human brain</article-title>. <source>PLoS Computational Biology</source> <volume>1</volume>: <fpage>e42</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.0010042" xlink:type="simple">10.1371/journal.pcbi.0010042</ext-link></comment> <object-id pub-id-type="pmid">16201007</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="other">Hagmann P (2005) From diffusion MRI to brain connectomics. Ph.D. thesis, Institut de traitement des signaux.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Csernansky</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Joshi</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Ratnanather</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>MI</given-names></name> (<year>2004</year>) <article-title>Computational anatomy and neuropsychiatric disease: probabilistic assessment of variation and statistical inference of group difference, hemispheric asymmetry, and time-dependent change</article-title>. <source>NeuroImage</source> <volume>23</volume> <issue>Suppl 1</issue>: <fpage>S56</fpage>–<lpage>68</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2004.07.025" xlink:type="simple">10.1016/j.neuroimage.2004.07.025</ext-link></comment> <object-id pub-id-type="pmid">15501101</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kubicki</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>McCarley</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Westin</surname> <given-names>CF</given-names></name>, <name name-style="western"><surname>Park</surname> <given-names>HJ</given-names></name>, <name name-style="western"><surname>Maier</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kikinis</surname> <given-names>R</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>A review of diffusion tensor imaging studies in schizophrenia</article-title>. <source>Journal of Psychiatric Research</source> <volume>41</volume>: <fpage>15</fpage>–<lpage>30</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jpsychires.2005.05.005" xlink:type="simple">10.1016/j.jpsychires.2005.05.005</ext-link></comment> <object-id pub-id-type="pmid">16023676</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Calhoun</surname> <given-names>VD</given-names></name>, <name name-style="western"><surname>Sui</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kiehl</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Turner</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Allen</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Pearlson</surname> <given-names>G</given-names></name> (<year>2011</year>) <article-title>Exploring the psychosis functional connectome: Aberrant intrinsic networks in schizophrenia and bipolar disorder</article-title>. <source>Frontiers in Psychiatry / Frontiers Research Foundation</source> <volume>2</volume>: <fpage>75</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fornito</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bullmore</surname> <given-names>ET</given-names></name> (<year>2012</year>) <article-title>Connectomic intermediate phenotypes for psychiatric disorders</article-title>. <source>Frontiers in Psychiatry / Frontiers Research Foundation</source> <volume>3</volume>: <fpage>32</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fornito</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Zalesky</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Pantelis</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Bullmore</surname> <given-names>ET</given-names></name> (<year>2012</year>) <article-title>Schizophrenia, neuroimaging and connectomics</article-title>. <source>Neuroimage</source> <volume>62</volume>: <fpage>2296</fpage>–<lpage>2314</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2011.12.090" xlink:type="simple">10.1016/j.neuroimage.2011.12.090</ext-link></comment> <object-id pub-id-type="pmid">22387165</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Vogelstein</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Priebe</surname> <given-names>CE</given-names></name> (<year>2014</year>) <article-title>Shuffled graph classification: Theory and connectome applications</article-title>. <source>Journal of Classification</source>, <comment>In press.</comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="other">Gray Roncal W, Koterba ZH, Mhembere D, Kleissas DM, Vogelstein JT, Burns, R, et al. (2013) MIGRAINE: MRI graph reliability analysis and inference for connectomics. Global Conference on Signal and Information Processing.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Herculano-Houzel</surname> <given-names>S</given-names></name> (<year>2012</year>) <article-title>The remarkable, yet not extraordinary, human brain as a scaled-up primate brain and its associated cost</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>109</volume> <issue>Suppl</issue>: <fpage>10661</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1201895109" xlink:type="simple">10.1073/pnas.1201895109</ext-link></comment> <object-id pub-id-type="pmid">22723358</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Kolaczyk</surname> <given-names>ED</given-names></name> (<year>2009</year>) <source>Statistical analysis of network data</source>. <publisher-name>Springer</publisher-name>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Fortin</surname> <given-names>S</given-names></name> (<year>1996</year>) <source>The graph isomorphism problem</source>. <publisher-name>Technical Report, University of Alberta, Department of Computer Science</publisher-name>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="other">Babai L (1981) Moderately exponential bound for graph isomorphism: 34–50.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Babali</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Erds</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Selkow</surname> <given-names>SM</given-names></name> (<year>1980</year>) <article-title>Random graph isomorphism</article-title>. <source>SIAM Journal on Computing</source> <volume>9</volume>: <fpage>628</fpage>–<lpage>635</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1137/0209047" xlink:type="simple">10.1137/0209047</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chen</surname> <given-names>J</given-names></name> (<year>1994</year>) <article-title>A linear-time algorithm for isomorphism of graphs of bounded average genus</article-title>. <source>SIAM Journal on Discrete Mathematics</source> <volume>7</volume>: <fpage>614</fpage>–<lpage>631</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1137/S0895480191196769" xlink:type="simple">10.1137/S0895480191196769</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zaslavskiy</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bach</surname> <given-names>FR</given-names></name>, <name name-style="western"><surname>Vert</surname> <given-names>JPP</given-names></name> (<year>2009</year>) <article-title>A path following algorithm for the graph matching problem</article-title>. <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source> <volume>31</volume>: <fpage>2227</fpage>–<lpage>2242</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TPAMI.2008.245" xlink:type="simple">10.1109/TPAMI.2008.245</ext-link></comment> <object-id pub-id-type="pmid">19834143</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="other">Lyzinski V, Fishkind DE, Fiori M, Vogelstein JT, Priebe CE, Sapiro, G (2014) Graph matching: Relax at your own risk. arXiv preprint, arXiv: 14053133.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sinkhorn</surname> <given-names>R</given-names></name> (<year>1964</year>) <article-title>A relationship between arbitrary positive matrices and doubly stochastic matrices</article-title>. <source>The Annals of Mathematical Statistics</source> <volume>35</volume>: <fpage>876</fpage>–<lpage>879</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/aoms/1177703591" xlink:type="simple">10.1214/aoms/1177703591</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Bradley</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hax</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Magnanti</surname> <given-names>T</given-names></name> (<year>1977</year>) <source>Applied mathematical programming</source>. <publisher-name>Addison Wesley</publisher-name>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Anstreicher</surname> <given-names>KM</given-names></name> (<year>2003</year>) <article-title>Recent advances in the solution of quadratic assignment</article-title>. <source>SIAM Journal on Optimization</source> <volume>97</volume>: <fpage>27</fpage>–<lpage>42</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kuhn</surname> <given-names>HW</given-names></name> (<year>1955</year>) <article-title>The Hungarian method for the assignment problem</article-title>. <source>Naval Research Logistics Quarterly</source> <volume>2</volume>: <fpage>83</fpage>–<lpage>97</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/nav.3800020109" xlink:type="simple">10.1002/nav.3800020109</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jonker</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Volgenant</surname> <given-names>A</given-names></name> (<year>1987</year>) <article-title>A shortest augmenting path algorithm for dense and sparse linear assignment problems</article-title>. <source>Computing</source> <volume>38</volume>: <fpage>325</fpage>–<lpage>340</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/BF02278710" xlink:type="simple">10.1007/BF02278710</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Burkard</surname> <given-names>RE</given-names></name>, <name name-style="western"><surname>Karisch</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Rendl</surname> <given-names>F</given-names></name> (<year>1997</year>) <article-title>QAPLIB: A quadratic assignment problem library</article-title>. <source>Journal of Global Optimization</source> <volume>10</volume>: <fpage>391</fpage>–<lpage>403</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1023/A:1008293323270" xlink:type="simple">10.1023/A:1008293323270</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="other">Schellewald C, Roth S, Schnörr C (2001) Evaluation of convex optimization techniques for the weighted graph-matching problem in computer vision. In: Proceedings of the 23rd DAGMSymposium on Pattern Recognition. Springer-Verlag, pp. 361–368.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="other">Singh R, Xu J, Berger B (2007) Pairwise global alignment of protein interaction networks by matching neighborhood topology: 16–31.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Liu</surname> <given-names>ZY</given-names></name>, <name name-style="western"><surname>Qiao</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Xu</surname> <given-names>L</given-names></name> (<year>2012</year>) <article-title>An extended path following algorithm for graph matching problem</article-title>. <source>IEEE transactions on pattern analysis and machine intelligence</source> <volume>34</volume>: <fpage>1451</fpage>–<lpage>1456</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TPAMI.2012.45" xlink:type="simple">10.1109/TPAMI.2012.45</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gold</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Rangarajan</surname> <given-names>A</given-names></name> (<year>1996</year>) <article-title>A graduated assignment algorithm for graph matching</article-title>. <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source> <volume>18</volume>: <fpage>377</fpage>–<lpage>388</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/34.491619" xlink:type="simple">10.1109/34.491619</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>White</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Southgate</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Thomson</surname> <given-names>JN</given-names></name>, <name name-style="western"><surname>Brenner</surname> <given-names>S</given-names></name> (<year>1986</year>) <article-title>The structure of the nervous system of the nematode Caenorhabditis elegans</article-title>. <source>Philosophical Transactions of Royal Society London Series B, Biological Sciences</source> <volume>314</volume>: <fpage>1</fpage>–<lpage>340</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rstb.1986.0056" xlink:type="simple">10.1098/rstb.1986.0056</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Varshney</surname> <given-names>LR</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>BL</given-names></name>, <name name-style="western"><surname>Paniagua</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Hall</surname> <given-names>DH</given-names></name>, <name name-style="western"><surname>Chklovskii</surname> <given-names>DB</given-names></name> (<year>2011</year>) <article-title>Structural properties of the Caenorhabditis elegans neuronal network</article-title>. <source>PLoS Computational Biology</source> <volume>7</volume>: <fpage>1</fpage>–<lpage>41</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1001066" xlink:type="simple">10.1371/journal.pcbi.1001066</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zaslavskiy</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bach</surname> <given-names>FR</given-names></name>, <name name-style="western"><surname>Vert</surname> <given-names>JPP</given-names></name> (<year>2010</year>) <article-title>Many-to-many graph matching: A continuous relaxation approach</article-title>. <source>Machine Learning and Knowledge Discovery in Databases</source> <volume>6323</volume>: <fpage>515</fpage>–<lpage>530</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Leordeanu</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hebert</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Sukthankar</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>An integer projected fixed point method for graph matching and map inference</article-title>. <source>Advances in Neural Information Processing Systems</source>: <fpage>1114</fpage>–<lpage>1122</lpage>,</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Escolano</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Hancock</surname> <given-names>ER</given-names></name>, <name name-style="western"><surname>Lozano</surname> <given-names>M</given-names></name> (<year>2011</year>) <article-title>Graph matching through entropic manifold alignment</article-title>. <source>Computer Vision and Pattern Recognition</source>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Anstreicher</surname> <given-names>KM</given-names></name>, <name name-style="western"><surname>Brixius</surname> <given-names>NW</given-names></name> (<year>2001</year>) <article-title>A new bound for the quadratic assignment problem based on convex quadratic programming</article-title>. <source>Mathematical Programming</source> <volume>89</volume>: <fpage>341</fpage>–<lpage>357</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/PL00011402" xlink:type="simple">10.1007/PL00011402</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Brixius</surname> <given-names>NW</given-names></name> (<year>2000</year>) <article-title>Solving quadratic assignment problems using convex quadratic programming relaxations 1: Introduction</article-title>. <source>Management</source>: <fpage>1</fpage>–<lpage>20</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="other">Lyzinski V, Sussman DL, Fishkind DE, Pao H, Priebe CE (2013) Seeded graph matching for large stochastic block model graphs. arXiv preprint: 1310.1297.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Priebe</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Vogelstein</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bock</surname> <given-names>D</given-names></name> (<year>2013</year>) <article-title>Optimizing the quantity/quality trade-off in connectome inference</article-title>. <source>Communications in Statistics-Theory and Methods</source> <volume>42</volume>: <fpage>3455</fpage>–<lpage>3462</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/03610926.2011.630768" xlink:type="simple">10.1080/03610926.2011.630768</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121002.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lyzinski</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Fishkind</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Priebe</surname> <given-names>C</given-names></name> (<year>2014</year>) <article-title>Seeded graph matching for correlated Erdos-Renyi graphs</article-title>. <source>Journal of Machine Learning Research To appear</source>.</mixed-citation>
+</ref>
+<ref id="pone.0121002.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Boyd</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Vandenberghe</surname> <given-names>L</given-names></name> (<year>2004</year>) <source>Convex Optimization</source>. <publisher-name>Oxford University Press</publisher-name>.</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

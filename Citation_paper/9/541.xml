@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-11-00360</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0019259</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Genomics</subject>
+              <subj-group>
+                <subject>Metagenomics</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>jMOTU and Taxonerator: Turning DNA Barcode Sequences into Annotated
+                    Operational Taxonomic Units</article-title><alt-title alt-title-type="running-head">jMOTU &amp; Taxonnerator for DNA Barcode
+                    Analysis</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+          <name name-style="western">
+            <surname>Jones</surname>
+            <given-names>Martin</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+        <contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+          <name name-style="western">
+            <surname>Ghoorah</surname>
+            <given-names>Anisah</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="fn" rid="fn1">
+            <sup>¤</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Blaxter</surname>
+            <given-names>Mark</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">
+                <addr-line>Institute of Evolutionary Biology, University of Edinburgh, Edinburgh,
+                    United Kingdom</addr-line>
+            </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Poon</surname>
+            <given-names>Art F. Y.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">British Columbia Centre for Excellence in HIV/AIDS, Canada</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">mark.blaxter@ed.ac.uk</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: MJ AG MB. Analyzed the data: MB.
+                        Contributed reagents/materials/analysis tools: AG MJ. Wrote the paper: MJ
+                        MB.</p>
+        </fn>
+        <fn fn-type="current-aff" id="fn1">
+          <label>¤</label>
+          <p>Current address: LORIA - INRIA Nancy Grand Est, Vandoeuvre-lès-Nancy,
+                        France</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>25</day>
+        <month>4</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>4</issue><elocation-id>e19259</elocation-id><history>
+        <date date-type="received">
+          <day>21</day>
+          <month>12</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>31</day>
+          <month>3</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Jones et al</copyright-holder><license><license-p>This is an open-access article distributed under the
+                terms of the Creative Commons Attribution License, which permits unrestricted use,
+                distribution, and reproduction in any medium, provided the original author and
+                source are credited.</license-p></license></permissions><abstract>
+        <sec>
+          <title>Background</title>
+          <p>DNA barcoding and other DNA sequence-based techniques for investigating and
+                        estimating biodiversity require explicit methods for associating individual
+                        sequences with taxa, as it is at the taxon level that biodiversity is
+                        assessed. For many projects, the bioinformatic analyses required pose
+                        problems for laboratories whose prime expertise is not in bioinformatics.
+                        User-friendly tools are required for both clustering sequences into
+                        molecular operational taxonomic units (MOTU) and for associating these MOTU
+                        with known organismal taxonomies.</p>
+        </sec>
+        <sec>
+          <title>Results</title>
+          <p>Here we present jMOTU, a Java program for the analysis of DNA barcode
+                        datasets that uses an explicit, determinate algorithm to define MOTU. We
+                        demonstrate its usefulness for both individual specimen-based Sanger
+                        sequencing surveys and bulk-environment metagenetic surveys using long-read
+                        next-generation sequencing data. jMOTU is driven through a graphical user
+                        interface, and can analyse tens of thousands of sequences in a short time on
+                        a desktop computer. A companion program, Taxonerator, that adds traditional
+                        taxonomic annotation to MOTU, is also presented. Clustering and taxonomic
+                        annotation data are stored in a relational database, and are thus amenable
+                        to subsequent data mining and web presentation.</p>
+        </sec>
+        <sec>
+          <title>Conclusions</title>
+          <p>jMOTU efficiently and robustly identifies the molecular taxa present in
+                        survey datasets, and Taxonerator decorates the MOTU with putative
+                        identifications. jMOTU and Taxonerator are freely available from <ext-link ext-link-type="uri" xlink:href="http://www.nematodes.org/" xlink:type="simple">http://www.nematodes.org/</ext-link>.</p>
+        </sec>
+      </abstract><funding-group><funding-statement>Martin Jones is funded by the Leverhulme Trust (F/00158/BS). The funders had no
+                    role in study design, data collection and analysis, decision to publish, or
+                    preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="10"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The Linnaean project has already delivered species names for over a million taxa
+                    <xref ref-type="bibr" rid="pone.0019259-Species1">[1]</xref>, but
+                current estimates for the actual number of species on Earth range from 10 to 100
+                million <xref ref-type="bibr" rid="pone.0019259-May1">[2]</xref>, <xref ref-type="bibr" rid="pone.0019259-Blaxter1">[3]</xref>. Molecular
+                survey methods have been proposed as a practical solution to bridge the gulf between
+                the desire and need to describe diversity and the number of hands and minds
+                available to do the describing <xref ref-type="bibr" rid="pone.0019259-Floyd1">[4]</xref>, <xref ref-type="bibr" rid="pone.0019259-Hebert1">[5]</xref>, <xref ref-type="bibr" rid="pone.0019259-Hebert2">[6]</xref>, <xref ref-type="bibr" rid="pone.0019259-Blaxter2">[7]</xref>. These methods use the DNA sequence of a conserved gene or
+                gene fragment and objective clustering rules to group the sequences into molecular
+                operational taxonomic units (MOTU) <xref ref-type="bibr" rid="pone.0019259-Floyd1">[4]</xref>. We define MOTU as clusters of sequences (that act as
+                representatives of the genomes from which they are derived) that are generated by an
+                explicit algorithm. A dataset of sequences can be classified into MOTU at a number
+                of different similarity cutoffs, the cutoff value acting as a parameter to the
+                clustering algorithm. Initially applied in surveys of prokaryote diversity, these
+                methods have revealed a hyperdiverse uncultured biosphere <xref ref-type="bibr" rid="pone.0019259-Sogin1">[8]</xref>. Similar surveys have been
+                performed on microbial and meiobiotal eukaryotes, with the same summary findings:
+                extant diversity may be orders of magnitude greater than described diversity <xref ref-type="bibr" rid="pone.0019259-Creer1">[9]</xref>, <xref ref-type="bibr" rid="pone.0019259-Machida1">[10]</xref>, <xref ref-type="bibr" rid="pone.0019259-Zettler1">[11]</xref>. The Barcode
+                of Life project has proposed the use of such markers as useful species identifiers
+                    <xref ref-type="bibr" rid="pone.0019259-Stoeckle1">[12]</xref>, and
+                has embarked on a wide-ranging series of campaigns to collect ‘DNA
+                barcodes’ from all animal, fungal and plant species <xref ref-type="bibr" rid="pone.0019259-CBOL1">[13]</xref>, <xref ref-type="bibr" rid="pone.0019259-Hebert3">[14]</xref>, <xref ref-type="bibr" rid="pone.0019259-Stockinger1">[15]</xref>.</p>
+      <p>As promoted by the Consortium for the Barcode of Life <xref ref-type="bibr" rid="pone.0019259-Stoeckle1">[12]</xref>, a DNA barcode sequence is
+                only valid if it derives from a vouchered specimen that has been identified to
+                species. An unknown specimen can then be assigned to species if, and only if, its
+                DNA barcode sequence matches that of a reference DNA barcode. This
+                ‘Platonic’ approach has two (not insurmountable) problems <xref ref-type="bibr" rid="pone.0019259-Blaxter3">[16]</xref>, <xref ref-type="bibr" rid="pone.0019259-Blaxter4">[17]</xref>: how close
+                does a variant sequence have to be to the reference sequence to be assigned to a
+                named taxon, and what does the system do with sequences (and thus specimens) that do
+                not match to a known taxon? In prokaryotic DNA diversity surveys, the
+                ‘Platonic’ approach has in general been sidelined because of the
+                recognition that species-level description of Bacteria and Archaea lags far behind
+                the true diversity of these groups. It is estimated that over 99% of bacteria
+                are unculturable at present, and, as species descriptions generally require culture
+                and phenotypic assay, over 99% of bacterial species-level taxa do not have a
+                recognised name <xref ref-type="bibr" rid="pone.0019259-Sogin1">[8]</xref>. For prokaryotes therefore, analysis of sequence-based surveys
+                of diversity has focussed on clustering of the individual sequences into MOTU using
+                a sequence similarity cutoff derived from the known within-species diversity in the
+                surveyed gene. These MOTU can then be analysed in the same way one would
+                ‘true’ species. A similar approach can also be applied to non-prokaryote
+                DNA barcode sequences, and, if the estimates of the taxonomy deficit for eukaryotic
+                phyla are accurate, this approach may also be the only rational way of cataloguing
+                eukaryotic diversity <xref ref-type="bibr" rid="pone.0019259-Blaxter3">[16]</xref>, <xref ref-type="bibr" rid="pone.0019259-Blaxter4">[17]</xref>.</p>
+      <p>As the size of DNA barcoding or ‘metagenetic’ surveys have grown from a
+                few hundred dideoxy Sanger sequences to hundreds of thousands of Roche 454
+                pyrosequencing reads, the need for fast, accurate and robust algorithms for deriving
+                MOTU from sequences has become critical <xref ref-type="bibr" rid="pone.0019259-Schloss1">[18]</xref>, <xref ref-type="bibr" rid="pone.0019259-Schloss2">[19]</xref>, <xref ref-type="bibr" rid="pone.0019259-Schloss3">[20]</xref>, <xref ref-type="bibr" rid="pone.0019259-Caporaso1">[21]</xref>. There are three main
+                approaches to clustering, distinguished by how they treat distances between members
+                of a cluster with respect to the distance cutoff (see <xref ref-type="bibr" rid="pone.0019259-Schloss1">[18]</xref> for a concise exploration of
+                this). QIIME <xref ref-type="bibr" rid="pone.0019259-Caporaso1">[21]</xref>, ESPRIT <xref ref-type="bibr" rid="pone.0019259-Sun1">[22]</xref> and Mothur <xref ref-type="bibr" rid="pone.0019259-Schloss3">[20]</xref> are high-performance
+                workbenches for data analysis, but have significant dependencies. Here we present
+                jMOTU and Taxonerator, programs for MOTU definition and taxonomic assignment,
+                designed to be easy to install and use, and to be capable of analysing medium sized
+                datasets. We demonstrate the utility of jMOTU in analysis of Sanger and Roche 454
+                nuclear small subunit ribosomal RNA and cytochrome oxidase I datasets at multiple
+                distance cutoff values simultaneously. Taxonerator annotates MOTU with taxonomic
+                information in order to aid assignment of MOTU and the sequences they include to
+                traditional taxonomic identifiers.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>jMOTU algorithm</title>
+        <p>The workflow implemented in jMOTU is illustrated in <xref ref-type="fig" rid="pone-0019259-g001">Figure 1A</xref>. The input for jMOTU consists of
+                    one or more sequence files, and a set of parameters for MOTU definition
+                    (including one or more cutoff values). jMOTU does not use multiple sequence
+                    alignment, as this can introduce significant error <xref ref-type="bibr" rid="pone.0019259-Sun1">[22]</xref>, but derives distance data
+                    from pairwise NW alignments. To reduce the number of pairwise NW alignments
+                    required, jMOTU first removes redundancy in the input dataset by preclustering
+                    exact subsequence matches. It then chooses the pairs of preclusters to be NW
+                    aligned by performing all-against-all megablast <xref ref-type="bibr" rid="pone.0019259-Ye1">[23]</xref> comparison of these
+                    preclustered sequences using a custom nucleotide similarity matrix, and
+                    filtering the megablast matches by comparing the score achieved to that expected
+                    for two sequences given the largest similarity cutoff requested. This approach
+                    combines the speed of local alignment using BLAST and the accuracy of global NW
+                    algorithms to achieve both high throughput and high accuracy. A matrix of
+                    absolute distances, ignoring differences due to insertion-deletion events
+                    (indels) and unresolved base calls, is computed for all analysed pairs from the
+                    NW alignments and used to define single linkage clusters for each cutoff value.
+                    Because single-linkage clustering is “greedy” and determinate, the
+                    resulting clusters are not affected by sequence order, and none of the members
+                    of a given cluster are closer than the cutoff to any member of any other
+                    cluster.</p>
+        <fig id="pone-0019259-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019259.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Outline of the jMOTU and Taxonerator pipeline.</title>
+            <p>A: The jMOTU-Taxonerator workflow. The labelled grey boxes indicate the
+                            portions of the pipeline carried out by each program. Within jMOTU,
+                            input sequences are preclustered to remove exact subsequences, and
+                            representative sequences chosen for each precluster. Pairwise megablast
+                            scores are calculated for representative sequences, and exact distances
+                            between highly similar pairs are calculated using NW alignment. These
+                            exact distances are used to cluster the representative sequences into
+                            MOTU at various distance cutoff values. Within Taxonerator, each MOTU is
+                            processed separately. A representative sequence is chosen and used as
+                            the query in a megablast search of a preformatted database. The top 10
+                            hits are extracted and their taxonomic hierarchy is stored for further
+                            analysis. B: The structure of the jMOTU (upper part) and Taxonerator
+                            (lower part, boxed)SQL database.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.g001" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2b">
+        <title>jMOTU implementation</title>
+        <p>jMOTU is written in Java, and uses a graphical user interface to collect user
+                    input, display progress in analysis, and visualise outputs (<xref ref-type="fig" rid="pone-0019259-g002">Figure 2</xref>). jMOTU runs under Java 1.5 and 1.6.
+                    jMOTU requires that the BLAST suite of programs <xref ref-type="bibr" rid="pone.0019259-Ye1">[23]</xref> is available on the user's
+                    system, and optionally uses the PostgreSQL relational database management system
+                        (<ext-link ext-link-type="uri" xlink:href="http://www.postgresql.org/" xlink:type="simple">http://www.postgresql.org/</ext-link>) to store the results of
+                    analysis.</p>
+        <fig id="pone-0019259-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019259.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>jMOTU and Taxonerator in action.</title>
+            <p>Screeshots of (above) jMOTU's parameter pane, and display of MOTU
+                            numbers versus cutoff, and (below) Taxonerator's interactive data
+                            entry panel.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.g002" xlink:type="simple"/>
+        </fig>
+        <p>The user should prepare DNA barcode sequences trimmed of linkers, adapters and
+                    other non-barcode data, and, preferably, trimmed for sequence quality. The user
+                    selects a FASTA-format sequence file containing multiple sequences, a directory
+                    of FASTA files or a NEXUS format file as input. Multiple sequence files can be
+                    loaded and analysed together. The sequences are loaded, and the distribution of
+                    sequence lengths is displayed. The user can choose to filter out short sequences
+                    at this stage. The user then defines the cutoff values at which MOTU should be
+                    defined (<xref ref-type="fig" rid="pone-0019259-g002">Figure 2</xref>). As
+                    distance data are calculated for the largest cutoff, there is little additional
+                    time cost for performing clustering at multiple cutoff values below the maximum.
+                    Indeed we would recommend this approach, as it is often unknown a priori what
+                    the optimal cutoff should be. Assessing a range of plausible cutoff values is a
+                    useful step in data exploration.</p>
+        <p>The user also sets values for the minimum overlap required between sequences
+                    (usually set to a high [&gt; = 90%] value
+                    for barcode data where all sequences derive from the same PCR product) and a
+                    ‘gathering’ low megablast identity filter parameter (again usually
+                    set to a high [&gt;95%] value) permitting the inclusion of
+                    BLAST matches that are just above the maximum cutoff value in the NW stage. The
+                    program then carries out preclustering and performs the all-against-all
+                    megablast to identify sequence pairs for NW alignment. The NW alignments are
+                    performed and a matrix of sequence distances built. MOTU are then inferred for
+                    each cutoff value. The clusterings can then be viewed (<xref ref-type="fig" rid="pone-0019259-g002">Figure 2</xref>), output as text files for further
+                    analysis, and output as an SQL file.</p>
+        <p>The SQL file can be used to populate a PostgreSQL database (<xref ref-type="fig" rid="pone-0019259-g001">Figure 1B</xref>). A relational database is well
+                    suited for the task of data exploration and can be used to collate analyses from
+                    multiple sequence datasets. We provide some example queries in the user
+                    guide.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Taxonerator</title>
+        <p>Relating MOTU to classical taxonomy is an important step in integration of
+                    sequence-based surveys with classical knowledge of biology, life histories,
+                    feeding mode and distributions. Taxonerator adds taxonomic annotation to the
+                    PostgreSQL database generated by jMOTU (<xref ref-type="fig" rid="pone-0019259-g001">Figure 1</xref>, <xref ref-type="fig" rid="pone-0019259-g002">Figure 2</xref>). Taxonerator is written in Groovy,
+                    runs under Java 1.5 and 1.6, and requires a live internet connection, a
+                    preformatted database of taxonomically attributed reference sequences, a copy of
+                    the freely available text dump of the NCBI taxonomy hierarchy, and the BLAST
+                    suite of programs. We provide preformatted databases for cytochrome oxidase 1
+                    (COXI; derived from the National Center for Biotechnology Information
+                    [NCBI] ENTREZ interface) and nuclear small subunit ribosomal RNA
+                    markers (nSSU; derived from the SILVA database <xref ref-type="bibr" rid="pone.0019259-Pruesse1">[24]</xref>), and instructions for
+                    obtaining the NCBI taxonomy dump. Taxonerator queries the PostgreSQL database
+                    for the longest representative sequence for each MOTU, then identifies similar
+                    sequences in the reference database using megablast. The top ten matches are
+                    recorded, and their taxonomic assignment acquired by querying the NCBI EUtils
+                    web service. The full lineages (genus to kingdom) of the matches are obtained
+                    from the taxonomy dump. These annotations are then added to the PostgreSQL
+                    database (<xref ref-type="fig" rid="pone-0019259-g001">Figure 1B</xref>). Again,
+                    we provide example SQL queries that can be performed against the database to
+                    extract taxonomic information about MOTU.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Use examples</title>
+        <p>Use of jMOTU and Taxonerator enables analyses of small to medium-sized DNA
+                    barcode datasets, delivering MOTU sets at multiple cutoff values with taxonomic
+                    attributions and numbers of sequences clustered in each MOTU. The time taken for
+                    the jMOTU process depends largely on the number of unique sequences present in
+                    the dataset being analysed. On a desktop computer (Mac G5) with 8 Gbyte of RAM,
+                    analysis of 47,000 initial sequences that were preclustered into 4,100 unique
+                    sequences took ∼4 hr. Taxonerator analysis is also dependent on the number
+                    of representative sequences that must be compared, but the above dataset
+                    analysed at cutoffs from 3 to 10 bases required 4 hr on the same workstation. If
+                    the starting data include many more unique sequences than this (&gt;10,000) we
+                    recommend preclustering in batches, and combining preclustered sequences for a
+                    complete analysis (see the jMOTU user guide for details). Below we give two
+                    illustrative use examples.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Use case 1: Astraptes ‘fulgerator’ cytochrome oxidase I barcode
+                    sequences</title>
+        <p><italic>Astraptes fulgerator</italic> is a highly variable Neotropical skipper
+                    butterfly species that has been the focus of DNA barcoding research. In a
+                    landmark paper, Hebert and colleagues used COXI to investigate the taxonomic
+                    status of this species in Costa Rica <xref ref-type="bibr" rid="pone.0019259-Hebert4">[25]</xref>. Using DNA barcode,
+                    morphological and life history data, the single species <italic>A.
+                        fulgerator</italic> was proposed to contain at least ten distinct
+                    phylotypes, which were suggested to be ten species. While the species status of
+                    these groupings (and the taxonomic hypotheses used in their definition) have
+                    been criticised <xref ref-type="bibr" rid="pone.0019259-Brower1">[26]</xref>, the dataset remains a useful one for analysis. All
+                    1088 COXI sequences from taxon <italic>Astraptes</italic> (NCBI taxonomy
+                    identifier [taxid] 283716) were downloaded from GenBank/EMBL/DDBJ.
+                    These sequences include 837 from txid 310673, the ‘<italic>Astraptes
+                        fulgerator</italic> complex’, 175 sequences from 11 species other than
+                        <italic>A. fulgerator</italic>, and 76 sequences from 8 taxa identified as
+                    just <italic>Astraptes</italic> sp.. From these assignments, and the claim in
+                    Hebert <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pone.0019259-Hebert4">[25]</xref> that
+                        <italic>A. fulgerator</italic> comprises at least 10 phylotypes, we expect
+                    between 19 and 29 taxa.</p>
+        <p>The sequences were analysed using jMOTU at cutoffs from 0 to 30 bases (<xref ref-type="fig" rid="pone-0019259-g003">Figure 3</xref>). Seven sequences
+                    less than 400 bases were excluded from the analyses, and the mean length of
+                    those remaining was 647 bases. There were 162 distinct sequences in the dataset.
+                    As the base cutoff for MOTU definition was increased there was an initial sharp
+                    fall in number of MOTU inferred, dropping to 32 MOTU at 2 bases difference
+                    (∼0.3% difference across 600 bases). This steep drop is what would be
+                    expected from analysis of data that include rare stochastic sequencing error and
+                    within-population variability. A 2% cutoff has been proposed as a general
+                    rule-of-thumb for taxon discrimination with COXI. At the 12 base cutoff
+                    (∼2% difference) there were 16 MOTU. Closer analysis of the taxon
+                    assignment of the sequences included in each MOTU shows that within the
+                        <italic>A. fulgerator</italic> complex, the sequence data alone do not
+                    support the proposed taxa (<xref ref-type="table" rid="pone-0019259-t001">Table
+                        1</xref>). Thus at the 12 base cutoff, while most of the sequences from
+                        <italic>Astraptes</italic> named species cluster as single MOTU
+                    (12bp_MOTU0002 to 12bp_MOTU0016), all of the 835 <italic>A. fulgerator</italic>
+                    complex sequences form one, 924-member MOTU (12bp_MOTU0001) along with 45
+                    sequences assigned to <italic>A. creteus</italic>, 35 sequences in taxon
+                        <italic>Astraptes sp.</italic> Janzen02 and 9 sequences in <italic>Astraptes
+                        sp.</italic> hopfferiDHJ01. One sequence of three assigned to <italic>A.
+                        fulgerator</italic> with no subtaxon given forms a distinct singleton MOTU
+                    at the 12 base cutoff. Even at the 2 base cutoff, the <italic>A.
+                        fulgerator</italic> complex sequences lumped in 12bp_MOTU0001 do not
+                    robustly group by the names ascribed. Thus while most “SENNOV” and
+                    “YESENN” sequences are members of 2bp_MOTU0001 (along with sequences
+                    ascribed to LOHAMP and species <italic>A. creteus</italic>), other SENNOV and
+                    YESENN sequences form 2bp_MOTU0025, and a single SENNOV sequence forms
+                    2bp_MOTU0032. Similarly, 2bp_MOTU0005 contains sequences from taxa
+                    “FABOV”, “INGCUP”, “HIHAMP” and
+                    “MYST”, but other sequences ascribed to these taxa form distinct
+                    MOTU.</p>
+        <fig id="pone-0019259-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019259.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>MOTU inferred in 1081 <italic>Astraptes</italic> cytochrome oxidase 1
+                            sequences.</title>
+            <p>MOTU were inferred using jMOTU at a range of cutoffs (x-axis). There were
+                            162 0 bp MOTU, and 32 2 bp MOTU.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.g003" xlink:type="simple"/>
+        </fig>
+        <table-wrap id="pone-0019259-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019259.t001</object-id><label>Table 1</label><caption>
+            <title><italic>Astraptes</italic> MOTU.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019259-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.t001" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12 base MOTU</td>
+                <td align="left" colspan="1" rowspan="1">2 base MOTU</td>
+                <td align="left" colspan="1" rowspan="1"><italic>Astraptes</italic> species or taxon
+                                    assignment</td>
+                <td align="left" colspan="1" rowspan="1">Number of sequences</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0001</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0001</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>creteus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">45</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">LOHAMP</td>
+                <td align="left" colspan="1" rowspan="1">146</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">SENNOV</td>
+                <td align="left" colspan="1" rowspan="1">137</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">YESENN</td>
+                <td align="left" colspan="1" rowspan="1">262</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0002</td>
+                <td align="left" colspan="1" rowspan="1">CELT</td>
+                <td align="left" colspan="1" rowspan="1">44</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0004</td>
+                <td align="left" colspan="1" rowspan="1">Janzen02</td>
+                <td align="left" colspan="1" rowspan="1">35</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0005</td>
+                <td align="left" colspan="1" rowspan="1">FABOV</td>
+                <td align="left" colspan="1" rowspan="1">56</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">HIHAMP</td>
+                <td align="left" colspan="1" rowspan="1">22</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">INGCUP</td>
+                <td align="left" colspan="1" rowspan="1">94</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">MYST</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0006</td>
+                <td align="left" colspan="1" rowspan="1">LONCHO</td>
+                <td align="left" colspan="1" rowspan="1">49</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0008</td>
+                <td align="left" colspan="1" rowspan="1">hopfferiDHJ01</td>
+                <td align="left" colspan="1" rowspan="1">9</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0012</td>
+                <td align="left" colspan="1" rowspan="1">MYST</td>
+                <td align="left" colspan="1" rowspan="1">6</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0019</td>
+                <td align="left" colspan="1" rowspan="1">INGCUP</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0022</td>
+                <td align="left" colspan="1" rowspan="1">HIHAMP</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0024</td>
+                <td align="left" colspan="1" rowspan="1">CELT</td>
+                <td align="left" colspan="1" rowspan="1">2</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0025</td>
+                <td align="left" colspan="1" rowspan="1">SENNOV</td>
+                <td align="left" colspan="1" rowspan="1">4</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">YESENN</td>
+                <td align="left" colspan="1" rowspan="1">3</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0026</td>
+                <td align="left" colspan="1" rowspan="1">FABOV</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0029</td>
+                <td align="left" colspan="1" rowspan="1">ENTA</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0031</td>
+                <td align="left" colspan="1" rowspan="1">BYTTNER</td>
+                <td align="left" colspan="1" rowspan="1">4</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0032</td>
+                <td align="left" colspan="1" rowspan="1">SENNOV</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0002</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0003</td>
+                <td align="left" colspan="1" rowspan="1">egregiusDHJ02</td>
+                <td align="left" colspan="1" rowspan="1">5</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0018</td>
+                <td align="left" colspan="1" rowspan="1">egregiusDHJ01</td>
+                <td align="left" colspan="1" rowspan="1">3</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0003</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0007</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>tucuti</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">16</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0004</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0009</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>enotrus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">20</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0005</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0010</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>anaphus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">26</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0017</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>anaphus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">13</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0006</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0011</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>brevicauda</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">16</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0007</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0013</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>anaphus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">4</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0008</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0014</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>apastus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0009</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0015</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>talus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">10</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0010</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0016</td>
+                <td align="left" colspan="1" rowspan="1">janeiraDHJ02</td>
+                <td align="left" colspan="1" rowspan="1">9</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0011</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0020</td>
+                <td align="left" colspan="1" rowspan="1">cf creteus</td>
+                <td align="left" colspan="1" rowspan="1">10</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0012</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0021</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>aulus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">5</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0013</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0023</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>alardus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">13</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0014</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0027</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>chiriquensis</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">4</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0015</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0028</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>fulgerator</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12bp_MOTU0016</td>
+                <td align="left" colspan="1" rowspan="1">2bp_MOTU0030</td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>phalaecus</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>Thus objective clustering of the available COXI sequence data from the <italic>A.
+                        fulgerator</italic> complex does not offer independent support for the
+                    designation of distinct MOTU corresponding to those inferred by Hebert
+                        <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pone.0019259-Hebert4">[25]</xref>,
+                    supporting the inference that the other characters used in the study (namely
+                    host food plant and caterpillar colour patterning) are those used to define
+                    these taxa, whose reality remains questionable <xref ref-type="bibr" rid="pone.0019259-Brower1">[26]</xref>.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Use case 2: Roche 454 pyrosequencing analysis of meiofaunal diversity on a
+                    Scottish estuarine beach using nuclear small subunit ribosomal RNA</title>
+        <p>Roche 454 pyrosequencing can generate hundreds of thousands of sequences from
+                    target PCR amplicons in a single experiment. Roche 454 pyrosequencing data are
+                    known to be compromised by high systematic error rates associated in particular
+                    with difficulty in robustly measuring the length of homopolymeric nucleotide
+                    runs <xref ref-type="bibr" rid="pone.0019259-Huse1">[27]</xref>, <xref ref-type="bibr" rid="pone.0019259-Kunin1">[28]</xref>, <xref ref-type="bibr" rid="pone.0019259-Quince1">[29]</xref>, <xref ref-type="bibr" rid="pone.0019259-Huse2">[30]</xref>. These errors
+                    can result in significant inflation of taxon richness in deep-sequencing surveys
+                        <xref ref-type="bibr" rid="pone.0019259-Sogin1">[8]</xref>, <xref ref-type="bibr" rid="pone.0019259-Huse3">[31]</xref>, <xref ref-type="bibr" rid="pone.0019259-Hamp1">[32]</xref>, <xref ref-type="bibr" rid="pone.0019259-Dawson1">[33]</xref>, and have
+                    prompted the development of software to correct Roche 454 sequences before or
+                    during clustering into OTU <xref ref-type="bibr" rid="pone.0019259-Quince1">[29]</xref>. As the algorithm used by jMOTU ignores insertions
+                    and deletions (indels) in counting differences between sequences, jMOTU is
+                    relatively robust to homopolymer tract errors (which will appear as indels in a
+                    pairwise alignment).</p>
+        <p>We reanalysed the Roche 454 pyrosequencing dataset produced by Creer <italic>et
+                        al.</italic>
+                    <xref ref-type="bibr" rid="pone.0019259-Creer1">[9]</xref> from an
+                    ecosystem study of the meiobiota (mainly Metazoa) at the low tide line on an
+                    estuarine beach at Prestwick in west Scotland. Eight size-sieved samples were
+                    taken from a low tide transect along Prestwick beach, and a ninth from
+                    Littlehampton, on the south coast of England, for comparison. From 18,004 to
+                    51,952 sequences were generated per sample from bulk DNA extractions subjected
+                    to PCR amplification for the 5-prime end of nSSU (<xref ref-type="table" rid="pone-0019259-t002">Table 2</xref>) <xref ref-type="bibr" rid="pone.0019259-Creer1">[9]</xref>. In total, after filtering of
+                    short sequences (&lt;200 bases), there were 292,397 nSSU sequences.</p>
+        <table-wrap id="pone-0019259-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019259.t002</object-id><label>Table 2</label><caption>
+            <title>Beach meiofaunal ecosystem survey.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019259-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.t002" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">dataset</td>
+                <td align="left" colspan="1" rowspan="1">Number of sequences</td>
+                <td align="left" colspan="1" rowspan="1">Number of unique sequences (0 base MOTU)</td>
+                <td align="left" colspan="1" rowspan="1">Number of 4 base MOTU</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="4" rowspan="1">
+                  <bold>Individual Samples</bold>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 1</td>
+                <td align="left" colspan="1" rowspan="1">26120</td>
+                <td align="left" colspan="1" rowspan="1">3154</td>
+                <td align="left" colspan="1" rowspan="1">290</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 2</td>
+                <td align="left" colspan="1" rowspan="1">22995</td>
+                <td align="left" colspan="1" rowspan="1">2463</td>
+                <td align="left" colspan="1" rowspan="1">180</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 3</td>
+                <td align="left" colspan="1" rowspan="1">20127</td>
+                <td align="left" colspan="1" rowspan="1">2305</td>
+                <td align="left" colspan="1" rowspan="1">218</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 4</td>
+                <td align="left" colspan="1" rowspan="1">18004</td>
+                <td align="left" colspan="1" rowspan="1">2649</td>
+                <td align="left" colspan="1" rowspan="1">406</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 5</td>
+                <td align="left" colspan="1" rowspan="1">47144</td>
+                <td align="left" colspan="1" rowspan="1">4163</td>
+                <td align="left" colspan="1" rowspan="1">324</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 6</td>
+                <td align="left" colspan="1" rowspan="1">37285</td>
+                <td align="left" colspan="1" rowspan="1">5524</td>
+                <td align="left" colspan="1" rowspan="1">905</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 7</td>
+                <td align="left" colspan="1" rowspan="1">34140</td>
+                <td align="left" colspan="1" rowspan="1">5173</td>
+                <td align="left" colspan="1" rowspan="1">978</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Prestwick 8</td>
+                <td align="left" colspan="1" rowspan="1">51952</td>
+                <td align="left" colspan="1" rowspan="1">8667</td>
+                <td align="left" colspan="1" rowspan="1">1470</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Littlehampton</td>
+                <td align="left" colspan="1" rowspan="1">34630</td>
+                <td align="left" colspan="1" rowspan="1">4906</td>
+                <td align="left" colspan="1" rowspan="1">606</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Totals</td>
+                <td align="left" colspan="1" rowspan="1">292397</td>
+                <td align="left" colspan="1" rowspan="1">39004</td>
+                <td align="left" colspan="1" rowspan="1">5377</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="4" rowspan="1">
+                  <bold>Pooled representative
+                                        sequences</bold>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">3 base MOTU representatives</td>
+                <td align="left" colspan="1" rowspan="1">6475</td>
+                <td align="left" colspan="1" rowspan="1">6094</td>
+                <td align="left" colspan="1" rowspan="1">3982</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>Memory usage by jMOTU is conditional on the number (<italic>n</italic>) of unique
+                    sequences being compared, as this defines the size of the similarity matrix
+                        (<italic>n</italic> by <italic>n</italic>). On the 8 Gbyte RAM computer
+                    being used for these analyses, the effective limit was ∼10,000 unique
+                    sequences. The full dataset exceeded this limit several fold, and thus we used a
+                    divide-and-conquer approach to analyse it. Each sample was analysed separately
+                    for MOTU cutoffs from 0 bases to 40 bases, yielding from 2305 to 8667 unique
+                    sequences (0 base MOTU) and from 180 to 1470 4 base MOTU (<xref ref-type="table" rid="pone-0019259-t002">Table 2</xref> and <xref ref-type="fig" rid="pone-0019259-g004">Figure 4 A</xref>). These MOTU were annotated using
+                    Taxonerator, based on the curated SILVA dataset of annotated eukaryotic nSSU
+                    genes <xref ref-type="bibr" rid="pone.0019259-Pruesse1">[24]</xref>,
+                    revealing that the majority of MOTU in each dataset derived from phylum Nematoda
+                    (plotted for 4 base MOTU in <xref ref-type="fig" rid="pone-0019259-g004">Figure
+                        4B</xref>).</p>
+        <fig id="pone-0019259-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019259.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Analysis of community-sampled Roche 454 pyrosequencing barcode
+                            data.</title>
+            <p>A 292,397-sequence dataset of nuclear small subunit ribosomal RNA gene
+                            fragments <xref ref-type="bibr" rid="pone.0019259-Creer1">[9]</xref> was analysed using jMOTU and Taxonerator. A:
+                            For the 9 samples making up the dataset, the number of MOTU defined
+                            (y-axis; note log scale) at each base pair cutoff (x-axis) is shown. B:
+                            The numbers of 4 base MOTU inferred from each sample independently, and
+                            from the combined analysis of all representative sequences from each
+                            sample's 3 base MOTU. The stacked histogram bars indicate the
+                            assignment of these MOTU to animal phyla and other major taxa using
+                            Taxonerator (the key to colouration is in the lower right of the figure,
+                            and single-letter identifications for the major metazoan phyla are
+                            overlaid). C: Proportional presence in each sample of original sequences
+                            deriving from different animal phyla and other major taxa using
+                            Taxonerator annotations of the combined analysis 4 base MOTU (the key to
+                            colouration is in the lower right of the figure, and single-letter
+                            identifications for the major metazoan phyla are overlaid).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019259.g004" xlink:type="simple"/>
+        </fig>
+        <p>To analyse the complete dataset (all 9 samples) we used the jMOTU postgreSQL
+                    database to extract the representative sequences for all samples at the 3 base
+                    cutoff. These were then pooled, and second-tier jMOTU analysis was performed.
+                    The resulting MOTU were then annotated using Taxonerator and the SILVA
+                    eukaryotic nSSU database as before. As jMOTU and Taxonerator generate and store
+                    data at all requested cutoffs, it is possible to extract and further analyse at
+                    any chosen cutoff or taxonomic level. In <xref ref-type="fig" rid="pone-0019259-g004">Figure 4B</xref> we also show the analysis of the
+                    pooled dataset derived from the preclustered data. While eight of the nine
+                    samples came from an 800 m transect along the same beach, each sample contains a
+                    distinct subsampling of the overall diversity. Most of this unique diversity is
+                    present as MOTU with few sequences (the “rare biosphere”) but there
+                    are locally abundant MOTU. By cross-referencing from each input 3 base MOTU
+                    representative sequence to the number of original sequences that were present in
+                    the 3 base MOTU, we can sum the numbers of original sequences in each of the
+                    pooled analysis 4 base MOTU. Comparison between samples shows a consistent
+                    50–70% representation by Nematoda (193,323 sequences generating
+                    2367 4 base MOTU in the pooled samples), and high counts for Mollusca (25184
+                    sequences, 182 4 base MOTU), Platyhelminthes (25000 sequences, 393 4 base MOTU)
+                    and Arthropoda (18740 sequences, 205 4 base MOTU). In the Littlehampton sample,
+                    and one of the Prestwick samples (sample 1), there were many sequences deriving
+                    from Gastrotricha (8660 sequences, 70 4 base MOTU). The method used for sample
+                    processing (size-selective sieving and flotation) did not exclude non-metazoan
+                    organisms, and thus we also identify 552 ‘protozoan’
+                    (‘Protozoa’ is a paraphyletic assemblage; not figured in <xref ref-type="fig" rid="pone-0019259-g004">Figure 4</xref>), 23 fungal, and 65
+                    viridiplantal 4 base MOTU. A small number of sequences formed 4 base MOTU with
+                    best matches to <italic>Homo sapiens</italic>, a probable contamination from the
+                    sampling team. Some nSSU remained unassigned (matching only ‘unidentified
+                    eukaryote’ sequences derived from other similar surveys).</p>
+        <p>At 4 base cutoff, there were a total of 3982 second-tier MOTU, of which 3328 were
+                    assigned to Metazoa. The rate of evolution of the nSSU is significantly less
+                    than that of COX1, species from the same genus may share identical nSSU
+                    sequences across the region sequenced. A 4 base cutoff as figured here thus
+                    probably corresponds to at best generic or subgeneric distinctness. While the
+                    absolute number of MOTU may be inflated due to PCR chimaeras, these will tend to
+                    be individually rare, and will generate low-member MOTU. About 30% of
+                    each individual sample's 3 base MOTU comprised single sequences, 80%
+                    of the second-tier 4 base MOTU derived from a single site, and overall
+                    ∼50% of second-tier 4 base MOTU had 2 or fewer sequences. To avoid
+                    counting PCR error as biological signal, one could accept as ‘real’
+                    only MOTU that have at least a certain minimal number of members. However, the
+                    Taxonerator annotation of many of these low frequency sequences does not suggest
+                    chimaerism, and so a proportion does appear to derive from real, rare members of
+                    the meiofauna. These analyses are congruent with those performed by Creer
+                        <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pone.0019259-Creer1">[9]</xref> using
+                    OCTOPUS (<ext-link ext-link-type="uri" xlink:href="http://octupus.sourceforge.net/index.html" xlink:type="simple">http://octupus.sourceforge.net/index.html</ext-link>) in the original
+                    publication.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Availability</title>
+        <p>jMOTU and Taxonerator are available for download from <ext-link ext-link-type="uri" xlink:href="http://www.nematodes.org/bioinformatics/jMOTU" xlink:type="simple">http://www.nematodes.org/bioinformatics/jMOTU</ext-link>, including a
+                    virtual machine instance. The example datasets analysed in this paper are
+                    available on GenBank/EMBL/DDBJ; they are also available from the jMOTU
+                    website.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>jMOTU has several properties that make it attractive for clustering of barcode
+                datasets. It uses accurate pairwise distances, allows analysis of multiple cutoffs,
+                is optimised to reduce runtime, and is insensitive to input sequence order. It is
+                also easy to use.</p>
+      <p>jMOTU aims to use a distance metric that reflects the genuine genetic distance
+                between sequences, as this is most likely to give clusterings that correspond to
+                biological reality. To eliminate errors in distance estimation caused by alignment
+                error, an exact distance is used, derived from an alignment calculated by the
+                Needleman-Wunsch (NW) algorithm. Some existing clustering software calculates
+                distances from multiple alignments that may be sub-optimal. Another potential source
+                of error in distance estimations arises during sequencing. Pyrosequencing de-noising
+                algorithms such as Pyronoise <xref ref-type="bibr" rid="pone.0019259-Quince1">[29]</xref> aim to reduce this by within-dataset analysis, but are
+                computationally costly. To minimise the contribution of sequencing error to the
+                distance between two sequences, jMOTU only counts mismatches between nucleotides,
+                ignoring positions where one sequence has a gap or an undetermined base. This avoids
+                mistaking PCR or sequencing error for biological novelty, and, as MOTU clustering is
+                usually performed to identify taxa at close taxonomic levels, effectively deals with
+                the issue of how to code or score indels by assuming that most indels will be due to
+                error in sequencing, and that real indels in closely related taxon groups will be
+                rare. Since gapped positions are ignored, missing data is not taken into account,
+                and thus the number of clusters estimated by jMOTU is conservative in the presence
+                of missing data.</p>
+      <p>To accurately assess the distance between a pair of sequences, jMOTU uses the NW
+                algorithm, which is guaranteed to find the best global alignment. Although the NW
+                algorithm represents the gold standard for accuracy, it is computationally intensive
+                compared to approximate alignment methods. jMOTU uses two strategies to minimise the
+                number of global alignments that must be carried out. Preclustering reduces
+                redundancy in the input sequence set and minimises the numbers of sequences that are
+                involved in subsequent steps. Additionally, jMOTU avoids carrying out an
+                all-against-all pairwise alignment by taking advantage of the fact that the
+                clustering algorithm only requires exact distances between pairs of sequences that
+                are relatively similar (i.e. those that will be clustered together under the most
+                liberal cutoff). These pairs are identified using megablast, which, since it uses
+                approximate alignments, is rapid even for large datasets.</p>
+      <p>jMOTU is designed to allow the user to explore patterns of clustering at different
+                stringencies. Rather that choosing a single cutoff value to define the maximum
+                distance between clustered sequences, jMOTU makes it easy to investigate the
+                behaviour of the clustering algorithm using a range of cutoff values. It is able to
+                do this efficiently by reusing the pairwise distance matrix to cluster at different
+                cutoff values. The greedy clustering algorithm used by jMOTU ensures that clustering
+                is not sensitive to input sequence order. A disadvantage to this algorithm is that
+                new sequence data cannot currently be added to an existing dataset without
+                re-analysing the entire dataset.</p>
+      <p>While currently unsuitable for single-pass analysis of very large datasets (involving
+                more than ∼10<sup>4</sup> unique sequences), we have demonstrated that by
+                analysing subsets of the data individually, and then combining preclustered data in
+                an overall analysis, jMOTU can effectively and efficiently deliver MOTU from these
+                kinds of surveys.</p>
+      <p>Taxonerator represents an attempt to carry out first-pass taxonomic assignment of
+                MOTU. For enviromental samples, we expect to encounter sequences that have no exact
+                matches in known sequence databases, either due to sequencing error or true
+                biological novelty. Rather than looking for exact matches, Taxonerator uses the most
+                similar existing sequences to annotate a MOTU, which minimises the effect of
+                sequencing error on taxonomic conclusions, and allows accurate taxonomic placement
+                of true novel taxa. The user can specify a similarity cutoff for acceptance of
+                annotation commensurate with the diversity expected in the experiment. Because
+                Taxonerator stores information for multiple megablast hits, and for all nodes in
+                each species' lineage, taxonomic annotation can be obtained for clusters at any
+                taxonomic level. Importantly, for higher-level annotations (i.e. above the species
+                level) the presence of sequencing errors will not affect the ability of Taxonerator
+                to assign MOTU correctly, as the closest sequences will still be correctly
+                identified. Chimaeras derived from PCR errors will tend to score poorly in terms of
+                close matches to existing data, and thus are more likely to remain unannotated, or
+                only annotated at high taxonomic levels. Additionally, the diversity of taxonomic
+                annotation can be compared (e.g. across different sampling sites) at any taxonomic
+                level. The graphical user interfaces for both programs enhance usability and assist
+                the user in getting best practice analyses of their valuable data.</p>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>Anisah Ghoorah worked on jMOTU as part of her major dissertation for the Masters in
+                Bioinformatics at Edinburgh. Simon Creer collected the Prestwick beach 454 data. We
+                thank members of the Blaxter lab past and present, Graham Stone and Simon Creer for
+                data and comments on the software and this manuscript.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0019259-Species1">
+        <label>1</label>
+        <element-citation publication-type="other" xlink:type="simple">
+                    <collab xlink:type="simple">Species 2000</collab>
+                    <year>2010</year>
+                    <article-title>Catalogue of Life: 2010 Annual Checklist.</article-title>
+                    <comment>2010 ed: Species 2000</comment>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-May1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>May</surname><given-names>RM</given-names></name></person-group>
+                    <year>1988</year>
+                    <article-title>How many species are there on earth?</article-title>
+                    <source>Science</source>
+                    <volume>241</volume>
+                    <fpage>1441</fpage>
+                    <lpage>1449</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Blaxter1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Blaxter</surname><given-names>ML</given-names></name></person-group>
+                    <year>2004</year>
+                    <article-title>The promise of a DNA taxonomy.</article-title>
+                    <source>Philos Trans R Soc Lond B Biol Sci</source>
+                    <volume>359</volume>
+                    <fpage>669</fpage>
+                    <lpage>679</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Floyd1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Floyd</surname><given-names>R</given-names></name><name name-style="western"><surname>Abebe</surname><given-names>E</given-names></name><name name-style="western"><surname>Papert</surname><given-names>A</given-names></name><name name-style="western"><surname>Blaxter</surname><given-names>M</given-names></name></person-group>
+                    <year>2002</year>
+                    <article-title>Molecular barcodes for soil nematode
+                        identification.</article-title>
+                    <source>Mol Ecol</source>
+                    <volume>11</volume>
+                    <fpage>839</fpage>
+                    <lpage>850</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Hebert1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Hebert</surname><given-names>PD</given-names></name><name name-style="western"><surname>Ratnasingham</surname><given-names>S</given-names></name><name name-style="western"><surname>deWaard</surname><given-names>JR</given-names></name></person-group>
+                    <year>2003</year>
+                    <article-title>Barcoding animal life: cytochrome c oxidase subunit 1 divergences
+                        among closely related species.</article-title>
+                    <source>Proc R Soc Lond B Biol Sci</source>
+                    <volume>270</volume>
+                    <supplement>Suppl 1</supplement>
+                    <fpage>S96</fpage>
+                    <lpage>99</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Hebert2">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Hebert</surname><given-names>PDN</given-names></name><name name-style="western"><surname>Cywinska</surname><given-names>A</given-names></name><name name-style="western"><surname>Ball</surname><given-names>SL</given-names></name><name name-style="western"><surname>deWaard</surname><given-names>JR</given-names></name></person-group>
+                    <year>2003</year>
+                    <article-title>Biological identifications through DNA barcodes.</article-title>
+                    <source>Proceedings of the Royal Society of London, Series B</source>
+                    <volume>270</volume>
+                    <fpage>313</fpage>
+                    <lpage>321</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Blaxter2">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Blaxter</surname><given-names>M</given-names></name></person-group>
+                    <year>2003</year>
+                    <article-title>Molecular systematics: Counting angels with DNA.</article-title>
+                    <source>Nature</source>
+                    <volume>421</volume>
+                    <fpage>122</fpage>
+                    <lpage>124</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Sogin1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name><name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name><name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name><name name-style="western"><surname>Mark Welch</surname><given-names>D</given-names></name><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name><etal/></person-group>
+                    <year>2006</year>
+                    <article-title>Microbial diversity in the deep sea and the underexplored
+                        “rare biosphere”.</article-title>
+                    <source>Proc Natl Acad Sci U S A</source>
+                    <volume>103</volume>
+                    <fpage>12115</fpage>
+                    <lpage>12120</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Creer1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Creer</surname><given-names>S</given-names></name><name name-style="western"><surname>Fonseca</surname><given-names>VG</given-names></name><name name-style="western"><surname>Porazinska</surname><given-names>DL</given-names></name><name name-style="western"><surname>Giblin-Davis</surname><given-names>RM</given-names></name><name name-style="western"><surname>Sung</surname><given-names>W</given-names></name><etal/></person-group>
+                    <year>2010</year>
+                    <article-title>Ultrasequencing of the meiofaunal biosphere: practice, pitfalls
+                        and promises.</article-title>
+                    <source>Molecular Ecology</source>
+                    <volume>19</volume>
+                    <fpage>4</fpage>
+                    <lpage>20</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Machida1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Machida</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Hashiguchi</surname><given-names>Y</given-names></name><name name-style="western"><surname>Nishida</surname><given-names>M</given-names></name><name name-style="western"><surname>Nishida</surname><given-names>S</given-names></name></person-group>
+                    <year>2009</year>
+                    <article-title>Zooplankton diversity analysis through single-gene sequencing of
+                        a community sample.</article-title>
+                    <source>BMC Genomics</source>
+                    <volume>10</volume>
+                    <fpage>438</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Zettler1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Zettler</surname><given-names>LAA</given-names></name><name name-style="western"><surname>Gomez</surname><given-names>F</given-names></name><name name-style="western"><surname>Zettler</surname><given-names>E</given-names></name><name name-style="western"><surname>Keenan</surname><given-names>BG</given-names></name><name name-style="western"><surname>Amils</surname><given-names>R</given-names></name><etal/></person-group>
+                    <year>2002</year>
+                    <article-title>Eukaryotic diversity in Spain's River f
+                        Fire.</article-title>
+                    <source>Nature</source>
+                    <volume>417</volume>
+                    <fpage>137</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Stoeckle1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Stoeckle</surname><given-names>MY</given-names></name><name name-style="western"><surname>Hebert</surname><given-names>PD</given-names></name></person-group>
+                    <year>2008</year>
+                    <article-title>Barcode of life.</article-title>
+                    <source>Sci Am</source>
+                    <volume>299</volume>
+                    <lpage>82</lpage>
+                    <page-range>86, 88</page-range>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-CBOL1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <collab xlink:type="simple">CBOL Plant Working Group</collab>
+                    <year>2009</year>
+                    <article-title>A DNA barcode for land plants.</article-title>
+                    <source>Proc Natl Acad Sci U S A</source>
+                    <volume>106</volume>
+                    <fpage>12794</fpage>
+                    <lpage>12797</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Hebert3">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Hebert</surname><given-names>PD</given-names></name><name name-style="western"><surname>Stoeckle</surname><given-names>MY</given-names></name><name name-style="western"><surname>Zemlak</surname><given-names>TS</given-names></name><name name-style="western"><surname>Francis</surname><given-names>CM</given-names></name></person-group>
+                    <year>2004</year>
+                    <article-title>Identification of Birds through DNA Barcodes.</article-title>
+                    <source>PLoS Biol</source>
+                    <volume>2</volume>
+                    <fpage>e312</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Stockinger1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Stockinger</surname><given-names>H</given-names></name><name name-style="western"><surname>Kruger</surname><given-names>M</given-names></name><name name-style="western"><surname>Schussler</surname><given-names>A</given-names></name></person-group>
+                    <year>2010</year>
+                    <article-title>DNA barcoding of arbuscular mycorrhizal fungi.</article-title>
+                    <source>New Phytol</source>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Blaxter3">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Blaxter</surname><given-names>M</given-names></name><name name-style="western"><surname>Elsworth</surname><given-names>B</given-names></name><name name-style="western"><surname>Daub</surname><given-names>J</given-names></name></person-group>
+                    <year>2004</year>
+                    <article-title>DNA taxonomy of a neglected animal phylum: an unexpected
+                        diversity of tardigrades.</article-title>
+                    <source>Proc Biol Sci</source>
+                    <volume>271</volume>
+                    <supplement>Suppl 4</supplement>
+                    <fpage>S189</fpage>
+                    <lpage>192</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Blaxter4">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Blaxter</surname><given-names>M</given-names></name><name name-style="western"><surname>Mann</surname><given-names>J</given-names></name><name name-style="western"><surname>Chapman</surname><given-names>T</given-names></name><name name-style="western"><surname>Thomas</surname><given-names>F</given-names></name><name name-style="western"><surname>Whitton</surname><given-names>C</given-names></name><etal/></person-group>
+                    <year>2005</year>
+                    <article-title>Defining operational taxonomic units using DNA barcode
+                        data.</article-title>
+                    <source>Philos Trans R Soc Lond B Biol Sci</source>
+                    <volume>360</volume>
+                    <fpage>1935</fpage>
+                    <lpage>1943</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Schloss1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name><name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name></person-group>
+                    <year>2005</year>
+                    <article-title>Introducing DOTUR, a computer program for defining operational
+                        taxonomic units and estimating species richness.</article-title>
+                    <source>Appl Environ Microbiol</source>
+                    <volume>71</volume>
+                    <fpage>1501</fpage>
+                    <lpage>1506</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Schloss2">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name><name name-style="western"><surname>Handelsman</surname><given-names>J</given-names></name></person-group>
+                    <year>2006</year>
+                    <article-title>Introducing SONS, a tool for operational taxonomic unit-based
+                        comparisons of microbial community memberships and
+                        structures.</article-title>
+                    <source>Appl Environ Microbiol</source>
+                    <volume>72</volume>
+                    <fpage>6773</fpage>
+                    <lpage>6779</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Schloss3">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Schloss</surname><given-names>PD</given-names></name><name name-style="western"><surname>Westcott</surname><given-names>SL</given-names></name><name name-style="western"><surname>Ryabin</surname><given-names>T</given-names></name><name name-style="western"><surname>Hall</surname><given-names>JR</given-names></name><name name-style="western"><surname>Hartmann</surname><given-names>M</given-names></name><etal/></person-group>
+                    <year>2009</year>
+                    <article-title>Introducing mothur: open-source, platform-independent,
+                        community-supported software for describing and comparing microbial
+                        communities.</article-title>
+                    <source>Appl Environ Microbiol</source>
+                    <volume>75</volume>
+                    <fpage>7537</fpage>
+                    <lpage>7541</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Caporaso1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Caporaso</surname><given-names>JG</given-names></name><name name-style="western"><surname>Kuczynski</surname><given-names>J</given-names></name><name name-style="western"><surname>Stombaugh</surname><given-names>J</given-names></name><name name-style="western"><surname>Bittinger</surname><given-names>K</given-names></name><name name-style="western"><surname>Bushman</surname><given-names>FD</given-names></name><etal/></person-group>
+                    <year>2010</year>
+                    <article-title>QIIME allows analysis of high-throughput community sequencing
+                        data.</article-title>
+                    <source>Nat Methods</source>
+                    <volume>7</volume>
+                    <fpage>335</fpage>
+                    <lpage>336</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Sun1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Sun</surname><given-names>Y</given-names></name><name name-style="western"><surname>Cai</surname><given-names>Y</given-names></name><name name-style="western"><surname>Liu</surname><given-names>L</given-names></name><name name-style="western"><surname>Yu</surname><given-names>F</given-names></name><name name-style="western"><surname>Farrell</surname><given-names>ML</given-names></name><etal/></person-group>
+                    <year>2009</year>
+                    <article-title>ESPRIT: estimating species richness using large collections of
+                        16S rRNA pyrosequences.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>37</volume>
+                    <fpage>e76</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Ye1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Ye</surname><given-names>J</given-names></name><name name-style="western"><surname>McGinnis</surname><given-names>S</given-names></name><name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name></person-group>
+                    <year>2006</year>
+                    <article-title>BLAST: improvements for better sequence analysis.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>34</volume>
+                    <fpage>W6</fpage>
+                    <lpage>9</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Pruesse1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Pruesse</surname><given-names>E</given-names></name><name name-style="western"><surname>Quast</surname><given-names>C</given-names></name><name name-style="western"><surname>Knittel</surname><given-names>K</given-names></name><name name-style="western"><surname>Fuchs</surname><given-names>BM</given-names></name><name name-style="western"><surname>Ludwig</surname><given-names>W</given-names></name><etal/></person-group>
+                    <year>2007</year>
+                    <article-title>SILVA: a comprehensive online resource for quality checked and
+                        aligned ribosomal RNA sequence data compatible with ARB.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>35</volume>
+                    <fpage>7188</fpage>
+                    <lpage>7196</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Hebert4">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Hebert</surname><given-names>PD</given-names></name><name name-style="western"><surname>Penton</surname><given-names>EH</given-names></name><name name-style="western"><surname>Burns</surname><given-names>JM</given-names></name><name name-style="western"><surname>Janzen</surname><given-names>DH</given-names></name><name name-style="western"><surname>Hallwachs</surname><given-names>W</given-names></name></person-group>
+                    <year>2004</year>
+                    <article-title>Ten species in one: DNA barcoding reveals cryptic species in the
+                        neotropical skipper butterfly Astraptes fulgerator.</article-title>
+                    <source>Proc Natl Acad Sci U S A</source>
+                    <volume>101</volume>
+                    <fpage>14812</fpage>
+                    <lpage>14817</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Brower1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Brower</surname><given-names>AV</given-names></name></person-group>
+                    <year>2006</year>
+                    <article-title>Problems with DNA barcodes for species delimitation: ‘ten
+                        species’ of Astraptes fulgerator reassessed (Lepidoptera:
+                        Hesperiidae).</article-title>
+                    <source>Systematics and Biodiversity</source>
+                    <volume>4</volume>
+                    <fpage>127</fpage>
+                    <lpage>132</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Huse1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name><name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name><name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name><name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name></person-group>
+                    <year>2010</year>
+                    <article-title>Ironing out the wrinkles in the rare biosphere through improved
+                        OTU clustering.</article-title>
+                    <source>Environ Microbiol</source>
+                    <comment>[Epub ahead of print]</comment>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Kunin1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Kunin</surname><given-names>V</given-names></name><name name-style="western"><surname>Engelbrektson</surname><given-names>A</given-names></name><name name-style="western"><surname>Ochman</surname><given-names>H</given-names></name><name name-style="western"><surname>Hugenholtz</surname><given-names>P</given-names></name></person-group>
+                    <year>2010</year>
+                    <article-title>Wrinkles in the rare biosphere: pyrosequencing errors can lead to
+                        artificial inflation of diversity estimates.</article-title>
+                    <source>Environ Microbiol</source>
+                    <volume>12</volume>
+                    <fpage>118</fpage>
+                    <lpage>123</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Quince1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Quince</surname><given-names>C</given-names></name><name name-style="western"><surname>Lanzen</surname><given-names>A</given-names></name><name name-style="western"><surname>Curtis</surname><given-names>TP</given-names></name><name name-style="western"><surname>Davenport</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Hall</surname><given-names>N</given-names></name><etal/></person-group>
+                    <year>2009</year>
+                    <article-title>Accurate determination of microbial diversity from 454
+                        pyrosequencing data.</article-title>
+                    <source>Nat Methods</source>
+                    <volume>6</volume>
+                    <fpage>639</fpage>
+                    <lpage>641</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Huse2">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name><name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name><name name-style="western"><surname>Morrison</surname><given-names>HG</given-names></name><name name-style="western"><surname>Sogin</surname><given-names>ML</given-names></name><name name-style="western"><surname>Welch</surname><given-names>DM</given-names></name></person-group>
+                    <year>2007</year>
+                    <article-title>Accuracy and quality of massively parallel DNA
+                        pyrosequencing.</article-title>
+                    <source>Genome Biol</source>
+                    <volume>8</volume>
+                    <fpage>R143</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Huse3">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Huse</surname><given-names>SM</given-names></name><name name-style="western"><surname>Dethlefsen</surname><given-names>L</given-names></name><name name-style="western"><surname>Huber</surname><given-names>JA</given-names></name><name name-style="western"><surname>Mark Welch</surname><given-names>D</given-names></name><name name-style="western"><surname>Relman</surname><given-names>DA</given-names></name><etal/></person-group>
+                    <year>2008</year>
+                    <article-title>Exploring microbial diversity and taxonomy using SSU rRNA
+                        hypervariable tag sequencing.</article-title>
+                    <source>PLoS Genet</source>
+                    <volume>4</volume>
+                    <fpage>e1000255</fpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Hamp1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Hamp</surname><given-names>TJ</given-names></name><name name-style="western"><surname>Jones</surname><given-names>WJ</given-names></name><name name-style="western"><surname>Fodor</surname><given-names>AA</given-names></name></person-group>
+                    <year>2009</year>
+                    <article-title>Effects of experimental choices and analysis noise on surveys of
+                        the “rare biosphere”.</article-title>
+                    <source>Appl Environ Microbiol</source>
+                    <volume>75</volume>
+                    <fpage>3263</fpage>
+                    <lpage>3270</lpage>
+                </element-citation>
+      </ref>
+      <ref id="pone.0019259-Dawson1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author"><name name-style="western"><surname>Dawson</surname><given-names>SC</given-names></name><name name-style="western"><surname>Hagen</surname><given-names>KD</given-names></name></person-group>
+                    <year>2009</year>
+                    <article-title>Mapping the protistan ‘rare
+                        biosphere’.</article-title>
+                    <source>J Biol</source>
+                    <volume>8</volume>
+                    <fpage>105</fpage>
+                </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

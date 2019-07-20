@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+	<front>
+		<journal-meta>
+    <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+    <journal-id journal-id-type="publisher-id">plos</journal-id>
+    <journal-id journal-id-type="pmc">plosone</journal-id>
+    <journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group>
+    <issn pub-type="epub">1932-6203</issn>
+    <publisher><publisher-name>Public Library of Science</publisher-name>
+    <publisher-loc>San Francisco, USA</publisher-loc></publisher>
+    </journal-meta><article-meta>
+			<article-id pub-id-type="publisher-id">PONE-D-13-35848</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0083996</article-id><article-categories><subj-group subj-group-type="heading">
+    <subject>Research Article</subject></subj-group></article-categories><title-group>
+				<article-title>Efficient Modeling and Active Learning Discovery of Biological Responses</article-title>
+			<alt-title alt-title-type="running-head">Active Learning Discovery of Biological Responses</alt-title>
+      </title-group>
+			<contrib-group>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Naik</surname>
+						<given-names>Armaghan W.</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Kangas</surname>
+						<given-names>Joshua D.</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Langmead</surname>
+						<given-names>Christopher J.</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Murphy</surname>
+						<given-names>Robert F.</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+					<xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1"><label>1</label> <addr-line>Lane Center for Computational Biology, Carnegie Mellon University, Pittsburgh, Pennsylvania, United States of America</addr-line></aff>
+			<aff id="aff2"><label>2</label> <addr-line>Departments of Biological Sciences, Biomedical Engineering and Machine Learning, Carnegie Mellon University, Pittsburgh, Pennsylvania, United States of America</addr-line></aff>
+			<aff id="aff3"><label>3</label> <addr-line>Freiburg Institute for Advanced Studies and Faculty of Biology, Albert Ludwig University of Freiburg, Freiburg, Germany</addr-line></aff>
+			<contrib-group><contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Pappalardo</surname>
+            <given-names>Francesco</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+        </contrib-group><aff id="edit1"><addr-line>University of Catania, Italy</addr-line></aff><author-notes>
+				<corresp id="cor1">* E-mail: <email xlink:type="simple">murphy@cmu.edu</email></corresp>
+			<fn fn-type="conflict"><p>Some of the technology described in this article is included under a pending patent application. There are no further patents, products in development or marketed products to declare. This does not alter the authors' adherence to all the PLOS ONE policies on sharing data and materials.</p></fn><fn fn-type="con"><p>Conceived and designed the experiments: AWN JDK CJL RFM. Performed the experiments: AWN. Analyzed the data: AWN JDK CJL RFM. Wrote the manuscript: AWN RFM. </p></fn></author-notes>
+			<pub-date pub-type="collection"><year>2013</year></pub-date><pub-date pub-type="epub">
+        <day>17</day>
+        <month>12</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume><issue>12</issue><elocation-id>e83996</elocation-id><history><date date-type="received">
+          <day>31</day>
+          <month>8</month>
+          <year>2013</year>
+        </date>
+        <date date-type="accepted">
+          <day>11</day>
+          <month>11</month>
+          <year>2013</year>
+        </date>
+      </history><permissions>
+    <copyright-year>2013</copyright-year><copyright-holder>Naik et al</copyright-holder><license xlink:type="simple" xlink:href="http://creativecommons.org/licenses/by/4.0/"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license>
+    </permissions><abstract>
+				<p>High throughput and high content screening involve determination of the effect of many compounds on a given target. As currently practiced, screening for each new target typically makes little use of information from screens of prior targets. Further, choices of compounds to advance to drug development are made without significant screening against off-target effects.  The overall drug development process could be made more effective, as well as less expensive and time consuming, if potential effects of all compounds on all possible targets could be considered, yet the cost of such full experimentation would be prohibitive.  In this paper, we describe a potential solution: probabilistic models that can be used to predict results for unmeasured combinations, and active learning algorithms for efficiently selecting which experiments to perform in order to build those models and determining when to stop. Using simulated and experimental data, we show that our approaches can produce powerful predictive models without exhaustive experimentation and can learn them much faster than by selecting experiments at random. </p>
+			</abstract>
+		<funding-group><funding-statement>Research reported in this publication was supported by the National Institutes of Health under Award Numbers R01 GM075205 and T32 EB009403-01. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.</funding-statement></funding-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1" sec-type="introduction">
+			<title>Introduction</title>
+			<p>It is increasingly accepted that the study of biology requires a paradigm shift from a reductionist framework to a complex systems approach [<xref ref-type="bibr" rid="B1">1</xref>-<xref ref-type="bibr" rid="B3">3</xref>]. Reductionist frameworks implicitly assume that the object of study is comprised of a finite set of subsystems, each functionally and essentially physically distinct. In this case there is a reasonable upper bound for the total number of experiments necessary to characterize the whole, one experiment per component per subsystem. For complex systems the upper bound on the total number of experiments is the number of ways in which the components can be taken in combinations up to some maximum number per experiment (ten thousand components even taken only five at a time would require over 10<sup>17</sup> experiments). </p>
+			<p>This problem is manifest when trying to determine the effects of potential drugs on complex systems, since drugs with desired effects often have undesired side effects. It has been argued that these constitute the greatest component of risk in drug development since unforeseen deleterious behaviors are costly to correct [<xref ref-type="bibr" rid="B4">4</xref>,<xref ref-type="bibr" rid="B5">5</xref>]. The only way to be sure that a drug does not have side effects is to measure its effect in assays for all potential targets.  Since explicit characterization in this manner is infeasible, approaches that do not require exhaustive experimentation need to be considered [<xref ref-type="bibr" rid="B6">6</xref>].  To do this, we must assume some structure or correlations exist within the complete data, and that predictive models can be used to capture them and guide future experimentation.  Algorithms for this type of problem are termed Active Learning in the machine learning literature [<xref ref-type="bibr" rid="B7">7</xref>-<xref ref-type="bibr" rid="B10">10</xref>]. There have been limited applications of these methods to biological problems [<xref ref-type="bibr" rid="B11">11</xref>-<xref ref-type="bibr" rid="B15">15</xref>], but none in the context of multi-target, multi-drug analysis.  Furthermore, the methods we present here are equally applicable to more general conditions than just drugs. In this paper, we show in extensive computational experiments that a combination of a structure learning method and active learning can achieve high accuracy of prediction of condition-specific effects on targets with significantly fewer experiments than a random learner, in many cases with perfect accuracy without exhaustive experimentation.  The experiments were done with both synthetic and experimental data.  Further, we provide a method for learning when to stop experimentation, a critical step for practical use of active learning.  </p>
+		</sec>
+		<sec id="s2" sec-type="materials|methods">
+			<title>Materials and Methods</title>
+			<sec id="s2.1">
+				<title>Definitions</title>
+				<p>We consider a general problem consisting of finite sets of <italic>targets</italic> and conditions, combinations of which define an <italic>experiment</italic>, whose outcome is an <italic>experimental result</italic> (<xref ref-type="fig" rid="pone-0083996-g001">Figure 1</xref>). This is expressed as a categorical <italic>phenotype</italic>, and we are interested in knowing the phenotype for all possible experiments.</p>
+				<fig id="pone-0083996-g001" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g001</object-id><label>Figure 1</label>
+					<caption>
+						<title>Active Learning Process.</title><p>(A) An experiment is a combination of a target and a condition; observed experiments (filled circles) associate a target and condition with a vector encoding an experiment result. (B) Phenotypes (filled colored circles) are identified by cluster analysis of the experiment results. (C) From the arrangement of phenotypes across targets and conditions, a small set of correlations ϕ (distributions of phenotypes across targets) are identified which are then used to impute unobserved experiments. (D) A batch of experiments (filled grey circles) is selected based in part on predictions (outlined colored circles) from the identified correlations. The process (B-D) is repeated until a desired goal is met.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g001"/>
+				</fig>
+				<p>The inputs to the learning procedures considered here are a set of targets <italic>T</italic>, discrete conditions <italic>C</italic> and a procedure <italic>F</italic> which is used to form phenotypes from a space of observations <italic>O</italic>; <italic>T</italic> and <italic>C</italic> are fixed and finite. Observations arise by performing <italic>experiments</italic> taken from <italic>T</italic>x<italic>C</italic> (the <italic>experiment space</italic>). Observations are interpreted by <italic>F</italic> to produce <italic>categorical phenotypes</italic> F(O). Collectively, these define the <italic>experiment result space</italic> Ω=<italic>T</italic>x<italic>C</italic>x<italic>F</italic>(<italic>O</italic>); for convenience we also define a function <italic>E</italic> which returns the experiment of an experiment result: <italic>E</italic>(ω) = (<italic>t</italic>,<italic>c</italic>) when ω=(<italic>t</italic>,<italic>c</italic>,o).</p>
+				<p>The learners considered here do not initially assume that targets may be directly compared among themselves, nor that conditions may be directly compared among themselves. This allows us to consider potentially complicated experiment spaces. For instance, conditions may consist of addition of drugs, knockdown of gene expression, or changes in temperature – it is not clear how to directly compare (or express similarity between) temperature changes to drugs or drugs to gene knockdowns. Likewise, the targets may also be heterogeneous: some of the targets may be proteins, some may be RNAs and again it is not clear how to directly compare these. The phenotypes F(O) are therefore the sole basis of comparison: two experiments (<italic>t</italic><sub>1</sub>,c<sub>1</sub>) and (<italic>t</italic><sub>2</sub>, <italic>c</italic><sub>2</sub>) are considered similar if they have the same phenotype. Various ways of extending this concept produces a way of measuring similarity of two targets across different conditions or vice versa.</p>
+				<p>The <italic>learning process</italic> constructs a sequence of predictive models over <italic>E</italic>(Ω) by iteratively performing <italic>batches</italic> of experiments; each step in the sequence is called a <italic>round</italic> of experimentation.  We consider the case where experiments are acquired in batches of fixed size <italic>S</italic>; this models the case where it is cost-effective to perform several experiments at a time such as for high-throughput technologies. Each batch of experiments is disjoint to experiments already observed. The sequence of models progressively identifies nested subsets of Ω (and <italic>E</italic>(Ω)); after <italic>n</italic> rounds of experiments the collected data are Σ<sub>n</sub> ⊆ Ω.</p>
+				<p>At each round the <italic>structure learning problem</italic> is to identify a predictive model <italic>M</italic><sub>n</sub> (<italic>M</italic><sub>n</sub>[Σ<sub>n</sub>]). This may be used to propose a next batch of experiments <italic>B</italic><sub>n+1</sub> ⊆ <italic>E</italic>(Ω)<italic>\E</italic>(Σ<sub>n</sub>). Active learning strategies choose experiments based on observed data: <italic>B</italic><sub>n+1</sub>|Σ<sub>n</sub> <sup>~</sup> <italic>f</italic>(Σ<sub>n</sub>) for some function <italic>f</italic>, whereas a random learner ignores the dependence and uniformly samples <italic>S</italic> experiments from the remainder: <italic>B</italic><sub>n+1</sub>|Σ<sub>n</sub> <sup>~</sup> Uniform[<italic>E</italic>(Ω)<italic>\E</italic>(Σ<sub>n</sub>)].</p>
+			</sec>
+		</sec>
+		<sec id="s3">
+			<title>Structure Learning</title>
+			<p>We introduce a model class which assumes that observations <italic>O</italic> are distributed in condition-specific manners.  That is, we will estimate a set of distributions Φ, the size of which is re-estimated each round.  Each distribution ϕ is a function from a subset of the targets <italic>T</italic> (called its “support”) to the set of phenotypes F(O); for targets not in the support of a distribution, no phenotype is associated. For each condition <italic>c</italic>, there is at least one distribution that can make predictions for some of the targets. Informally, since several conditions can be associated with the same distributions, these <italic>correlations</italic> describe mutual predictions from one target-phenotype pair to another across conditions.  From these we can build an asymmetric model of the distribution <bold>P</bold>[F(O) | (<italic>t</italic>,<italic>c</italic>)]. </p>
+			<p>The conditional independence structure is encoded by a <italic>valuation</italic> Γ which indicates which distributions each experiment (<italic>t</italic>,<italic>c</italic>)∈<italic>E</italic>(Ω) depends on. For convenience, we assume an indexing of the distributions. Formally, a valuation Γ :<italic>T x C</italic> → 2<sup>[|Φ|]</sup> maps an experiment to a set of indices over the distributions. Independence of two experiments <italic>e</italic><sub>1</sub>,e<sub>2</sub>∈<italic>E</italic>(Ω) is expressed as disjoint valuations, <bold>P</bold>[<italic>e</italic><sub>1</sub>] ⊥ <bold>P</bold>[e<sub>2</sub>] ⇒ Γ(<italic>e</italic><sub>1</sub>) ∩ Γ(e<sub>2</sub>) =∅; informally this means that these two experiments were estimated to have their phenotypes by unrelated causes. A <italic>choice operator</italic> ε resolves cases where an unobserved (predicted) experiment has multiple valuations (|Γ(<italic>e</italic>)|&gt;1) to form coherent predictions; different ε lead to different generalizations.</p>
+			<p>Choices for these form a model <italic>M</italic> = (Φ,Γ,ε). Predictions for an observed experiment ω=(<italic>t</italic>,<italic>c</italic>,o) in Σ are produced through Γ:</p>
+			<disp-formula><mml:math id="m1" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mstyle><mml:mi>P</mml:mi></mml:mstyle><mml:mo>[</mml:mo><mml:mi>F</mml:mi><mml:mo>(</mml:mo><mml:mi>O</mml:mi><mml:mo>)</mml:mo><mml:mo>|</mml:mo><mml:mi>E</mml:mi><mml:mo>(</mml:mo><mml:mi>ω</mml:mi><mml:mo>)</mml:mo><mml:mo>,</mml:mo><mml:mi>M</mml:mi><mml:mo>]</mml:mo><mml:mo>=</mml:mo><mml:msub><mml:mi>ϕ</mml:mi><mml:mrow><mml:mi>Γ</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:msub><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>]</mml:mo><mml:mo>=</mml:mo><mml:mi>F</mml:mi><mml:mo>(</mml:mo><mml:mi>o</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:semantics></mml:math></disp-formula>
+			<p>In words, the predicted phenotype of an observed experiment is such that the valuation of the experiment is a distribution that maps the target to the observed phenotype. Estimates for observed data do not depend on ε. Predictions for unobserved (<italic>t</italic>,<italic>c</italic>) ∈ <italic>E</italic>(Ω)\<italic>E</italic>(Σ) are also constructed over Φ and Γ. To do this, for every condition we identify the distributions that could be used to make predictions for unobserved targets in that condition. These sets Γ<sup>(c)</sup> are given by the common refinement
+				<disp-formula><mml:math id="m2" overflow="scroll">
+					<mml:semantics definitionURL="" encoding="">
+						<mml:mrow>
+							<mml:mstyle displaystyle="true">
+								<mml:munder>
+									<mml:mo>∪</mml:mo>
+									<mml:mrow>
+										<mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:mi>E</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>Σ</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+								</mml:munder>
+								<mml:mrow>
+									<mml:mi>Γ</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+							</mml:mstyle></mml:mrow>
+					</mml:semantics>
+				</mml:math>
+				</disp-formula> Since the correlations in Γ<sup>(c)</sup> may make different phenotype predictions for the same target, the choice operator will pick one of them. Taken together, given a model <italic>M</italic> = (Φ,Γ,ε), predictions (when they exist) are defined as</p>
+			<disp-formula><mml:math id="m3" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mstyle><mml:mi>P</mml:mi></mml:mstyle><mml:mo>[</mml:mo><mml:mi>F</mml:mi><mml:mo>(</mml:mo><mml:mi>O</mml:mi><mml:mo>)</mml:mo><mml:mo>|</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>,</mml:mo><mml:mi>M</mml:mi><mml:mo>]</mml:mo><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>ϕ</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>]</mml:mo></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>if </mml:mtext><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mi>Γ</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mtext> and </mml:mtext><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>∈</mml:mo><mml:mi>E</mml:mi><mml:mo>(</mml:mo><mml:mi>Σ</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>ϕ</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>]</mml:mo></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>if </mml:mtext><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mi>ε</mml:mi><mml:mo>(</mml:mo><mml:msup><mml:mi>Γ</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:msup><mml:mo>)</mml:mo><mml:mtext> and </mml:mtext><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>∉</mml:mo><mml:mi>E</mml:mi><mml:mo>(</mml:mo><mml:mi>Σ</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow></mml:semantics></mml:math></disp-formula>
+			<p>These predictions may be augmented by various data imputation methods (described below).  In their absence, we choose ε to be the function such that we predict the most common correlation for each target to make a phenotype prediction.</p>
+			<p>We considered two methods, a “Greedy Merge” and a Quantified Boolean Formula Satisfaction (QBF/SAT) [<xref ref-type="bibr" rid="B16">16</xref>] based estimation procedure termed “B-Clustering.” </p>
+			<sec id="s3.1">
+				<title>Greedy Merge Structure Learning</title>
+				<p>Greedy Merge produces Φ and Γ from data and a clustering of observations by iteratively combining condition-specific distributions under the assumption that some of the conditions affect all targets in the same ways. These are determined by iteratively computing model estimates M<sub>z</sub> = (Φ<sub>z</sub>, Γ<sub>z</sub>, ε) which are monotone decreasing in the size of Φ. We considered two variants, one variant considered performs the first two steps below and the second variant, Greedy Merge which is used throughout our work, performs all three steps below.</p>
+				<sec id="s3.1.1">
+					<title>Initialization</title>
+					<p>Let M<sub>0</sub> = (Φ<sub>0</sub>, Γ<sub>0</sub>, ε). Associate a ϕ<sub>c</sub> with every <italic>c</italic> ∈ C such that for all observed (<italic>t</italic>,<italic>c</italic>,o) ∈ Σ, ϕ<sub>c</sub>[<italic>t</italic>] = F(O). Set Φ<sub>0</sub> to be the set of all ϕ<sub>c</sub>, and Γ<sub>0</sub>(<italic>t</italic>,<italic>c</italic>) = <italic>c</italic>.  This produces an initial model estimate where observed experiments are assumed conditionally independent if they differ in condition. </p>
+				</sec>
+				<sec id="s3.1.2">
+					<title>Merge Overlapping</title>
+					<p>To produce M<sub>z+1</sub> from M<sub>z</sub> = (Φ<sub>z</sub>, Γ<sub>z</sub>, ε), arbitrarily choose two different ϕ<sub>i</sub> ,ϕ<sub>j</sub> ∈ Φ<sub>z</sub> such that their supports overlap and in the overlap predictions do not differ (ϕ<sub>i</sub>[t] = ϕ<sub>j</sub>[t] for <italic>t</italic> in the common support). Set fresh ϕ<sub>z</sub> = ϕ<sub>i</sub> ∪ ϕ<sub>j</sub>. Replace ϕ<sub>i</sub>, ϕ<sub>j</sub> with ϕ<sub>z</sub> to make a new Φ<sub>z+1</sub>. Likewise, update references to <italic>i</italic> and <italic>j</italic> in Γ with <italic>z</italic>.  This step is iteratively applied. At termination there are no more overlapping ϕ<sub>i</sub>,ϕ<sub>j</sub> to merge and so <italic>M</italic><sub>z</sub> distinguishes between two experiments <italic>e</italic><sub>1</sub>, e<sub>2</sub> if the distributions they are assigned to in Γ differ in any target’s phenotype. <italic>M</italic><sub>z</sub> may produce identical predictions for some target <italic>t</italic> across two conditions c<sub>1</sub>, <italic>c</italic><sub>2</sub> (<bold>P</bold>[F(O)|(<italic>t,c</italic><sub><italic>1</italic></sub>)] = <bold>P</bold>[F(O)| (<italic>t,c</italic><sub><italic>2</italic></sub>)]) but treat them as conditionally independent events (Γ(<italic>t</italic>,c<sub>1</sub>) ∩ Γ(<italic>t</italic>,<italic>c</italic><sub>2</sub>) = ∅) if there is some other <italic>t</italic>' where <bold>P</bold>[F(O)| (<italic>t</italic>',c<sub>1</sub>)] ≠ <bold>P</bold>[F(O)| (<italic>t</italic>',<italic>c</italic><sub>2</sub>)].  </p>
+				</sec>
+				<sec id="s3.1.3">
+					<title>Merge Nonconflicting</title>
+					<p>This step is similar to Merge Overlapping, but the requirement that two distributions have common support is removed and any two nonconflicting distributions can be merged.</p>
+				</sec>
+			</sec>
+			<sec id="s3.2">
+				<title>B-Clustering</title>
+				<p>An alternative procedure would be to define properties that are believed to describe “good” models of the data, and then use an efficient search procedure (a satisfiability solver) to find examples of those models. This is most helpful when it is unclear how to construct an algorithm that directly estimates models which will satisfy the desired properties. We considered the use of Quantified Boolean Formula (QBF/SAT) methods built using the MiniSat solver [<xref ref-type="bibr" rid="B17">17</xref>] to identify a model subject to constraints defining an optimum. In this framework, each observed target and phenotype pair is associated with an index of a distribution. This implicitly defines distributions (which map targets to phenotypes) as the collection of target and phenotype pairs with the same index. To do this, each unique observed target and phenotype pair (<italic>t</italic>,<italic>F</italic>(<italic>o</italic>)) is associated with a vector of literals ν<sub>t,o</sub> which encodes in two's complement the index of a distribution in Φ (e.g. a binary encoding of a natural number). Legal assignments of each of these literals to true or false will define the distributions. The set of legal assignments is constrained by introducing logical formulas which encode different criteria. </p>
+				<p>An example criterion is to constrain the choice of model such that each (<italic>t,F</italic>(<italic>o</italic>)) is described by exactly one distribution ϕ<sub>I</sub>; ensures that each distribution predicts at most one phenotype per target, and that all occurrences of a particular target and phenotype pair must have a common cause. This is encoded in a per-target constraint SingleOwner(t) which asserts that for the set Ξ[t] of all (<italic>t</italic>, <italic>F</italic>(<italic>o</italic>)) with the same target, their distribution indices ν<sub>t,o</sub> must be different.</p>
+				<disp-formula><mml:math id="m4" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mi>g</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mi>O</mml:mi><mml:mi>w</mml:mi><mml:mi>n</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>)</mml:mo><mml:mo>=</mml:mo><mml:mo>∧</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow></mml:msub><mml:mo>≠</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo></mml:mrow></mml:msub><mml:mtext> if </mml:mtext><mml:mo>{</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>)</mml:mo><mml:mo>,</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo><mml:mo>)</mml:mo><mml:mo>}</mml:mo><mml:mo>∈</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>Ξ</mml:mi><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>]</mml:mo></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mn>2</mml:mn></mml:mtd></mml:mtr></mml:mtable></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:semantics></mml:math></disp-formula>
+				<p>Another criterion (Coobserved(<italic>t</italic>,o)) is that for each distribution ϕ<sub>I</sub>, each pair of distinct targets <italic>t</italic>,<italic>t</italic>’ in the support is coobserved at least once in some condition <italic>c</italic>. That is, we disallow distributions which make predictions that are totally unsupported by mutual observations. Let β(<italic>t,F</italic>(<italic>o</italic>)) be the set of conditions that a pair (<italic>t,F</italic>(<italic>o</italic>)) was observed in.</p>
+				<disp-formula><mml:math id="m5" overflow="scroll">
+				<mml:semantics definitionURL="" encoding="">
+					<mml:mrow>
+						<mml:mi>C</mml:mi><mml:mi>o</mml:mi><mml:mi>o</mml:mi><mml:mi>b</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mi>v</mml:mi><mml:mi>e</mml:mi><mml:mi>d</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mtable>
+							<mml:mtr>
+								<mml:mtd>
+									<mml:mrow>
+										<mml:mrow><mml:mo>(</mml:mo>
+											<mml:mrow>
+												<mml:mo>∨</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow>
+													<mml:msub>
+														<mml:mi>v</mml:mi>
+														<mml:mrow>
+															<mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow>
+													</mml:msub>
+													<mml:mo>≠</mml:mo><mml:msub>
+														<mml:mi>v</mml:mi>
+														<mml:mrow>
+															<mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo></mml:mrow>
+													</mml:msub>
+													<mml:mtext> for all </mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo><mml:mo stretchy="false">)</mml:mo><mml:mo>.</mml:mo><mml:mrow><mml:mo>|</mml:mo> <mml:mrow>
+														<mml:mi>β</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>∩</mml:mo><mml:mi>β</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow> <mml:mo>|</mml:mo></mml:mrow><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn><mml:mtext> and </mml:mtext><mml:mi>t</mml:mi><mml:mo>≠</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow>
+											<mml:mo>)</mml:mo></mml:mrow><mml:mo>∨</mml:mo></mml:mrow>
+								</mml:mtd>
+							</mml:mtr>
+							<mml:mtr>
+								<mml:mtd>
+									<mml:mrow>
+										<mml:mrow><mml:mo>(</mml:mo>
+											<mml:mrow>
+												<mml:mo>∧</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow>
+													<mml:msub>
+														<mml:mi>v</mml:mi>
+														<mml:mrow>
+															<mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow>
+													</mml:msub>
+													<mml:mo>≠</mml:mo><mml:msub>
+														<mml:mi>v</mml:mi>
+														<mml:mrow>
+															<mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo></mml:mrow>
+													</mml:msub>
+													<mml:mtext> for all </mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo><mml:mo stretchy="false">)</mml:mo><mml:mo>≠</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow>
+											<mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+								</mml:mtd>
+							</mml:mtr>
+							
+						</mml:mtable></mml:mrow>
+				</mml:semantics>
+				</mml:math>
+				</disp-formula>
+				
+				<p>A third criterion restricts the valuations of each condition (Γ<sup>(c)</sup>) to be disjoint, so that predictions of unobserved targets for each condition are always unique.</p>
+				<disp-formula><mml:math id="m6" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>N</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>d</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mo>(</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>)</mml:mo><mml:mo>,</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo><mml:mo>)</mml:mo><mml:mo>)</mml:mo><mml:mo>=</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow></mml:msub><mml:mo>≠</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo></mml:mrow></mml:msub><mml:mo>⇒</mml:mo><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mo>∧</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>≠</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow></mml:msub><mml:mtext> if </mml:mtext><mml:mi>x</mml:mi><mml:mo>∈</mml:mo><mml:mi>Ξ</mml:mi><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>]</mml:mo></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>∧</mml:mo></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mo>∧</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>≠</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo>'</mml:mo></mml:mrow></mml:msub><mml:mtext> if </mml:mtext><mml:mi>x</mml:mi><mml:mo>∈</mml:mo><mml:mi>Ξ</mml:mi><mml:mo>[</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>]</mml:mo></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:semantics></mml:math></disp-formula>
+				<p>Other conditions may be applied. The model estimate chosen is found by identifying the least number of distributions <italic>N</italic> such that the SAT solver finds a solution where all of the above hold:</p>
+				<disp-formula><mml:math id="m7" overflow="scroll">
+				<mml:semantics definitionURL="" encoding="">
+					<mml:mrow>
+						<mml:munder>
+							<mml:mrow>
+								<mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>g</mml:mi><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi></mml:mrow>
+							<mml:mi>N</mml:mi>
+						</mml:munder>
+						<mml:mo>∃</mml:mo><mml:mi>N</mml:mi><mml:mo>.</mml:mo><mml:mtable>
+							<mml:mtr>
+								<mml:mtd>
+									<mml:mrow>
+										<mml:mrow><mml:mo>(</mml:mo>
+											<mml:mrow>
+												<mml:munder>
+													<mml:mo>∧</mml:mo>
+													<mml:mi>t</mml:mi>
+												</mml:munder>
+												<mml:mtext>SingleOwner</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+											<mml:mo>)</mml:mo></mml:mrow><mml:mo>∧</mml:mo><mml:mrow><mml:mo>(</mml:mo>
+												<mml:mrow>
+													<mml:munder>
+														<mml:mo>∧</mml:mo>
+														<mml:mrow>
+															<mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:mi>Ξ</mml:mi></mml:mrow>
+													</mml:munder>
+													<mml:mi>C</mml:mi><mml:mi>o</mml:mi><mml:mi>o</mml:mi><mml:mi>b</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>r</mml:mi><mml:mi>v</mml:mi><mml:mi>e</mml:mi><mml:mi>d</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+												<mml:mo>)</mml:mo></mml:mrow><mml:mo>∧</mml:mo></mml:mrow>
+								</mml:mtd>
+							</mml:mtr>
+							<mml:mtr>
+								<mml:mtd>
+									<mml:mrow>
+										<mml:mrow><mml:mo>(</mml:mo>
+											<mml:mrow>
+												<mml:munder>
+													<mml:mo>∧</mml:mo>
+													<mml:mrow>
+														<mml:mrow><mml:mo>|</mml:mo> <mml:mrow>
+															<mml:mi>β</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>∩</mml:mo><mml:mi>β</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow> <mml:mo>|</mml:mo></mml:mrow></mml:mrow>
+												</mml:munder>
+												<mml:mi>N</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>d</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+											<mml:mo>)</mml:mo></mml:mrow><mml:mo>∧</mml:mo><mml:mrow><mml:mo>(</mml:mo>
+												<mml:mrow>
+													<mml:munder>
+														<mml:mo>∧</mml:mo>
+														<mml:mrow>
+															<mml:mo stretchy="false">(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:mi>Ξ</mml:mi></mml:mrow>
+													</mml:munder>
+													<mml:msub>
+														<mml:mi>v</mml:mi>
+														<mml:mrow>
+															<mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>o</mml:mi></mml:mrow>
+													</mml:msub>
+													<mml:mo>&lt;</mml:mo><mml:mi>N</mml:mi></mml:mrow>
+												<mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+								</mml:mtd>
+							</mml:mtr>
+						</mml:mtable></mml:mrow>
+				</mml:semantics>
+				</mml:math>
+				</disp-formula>
+			</sec>
+			<sec id="s3.3">
+				<title>Imputation as Model Augmentation</title>
+				<p>Ordinarily data or model imputation methods attempt to correct situations where most data are available and only a very small set are missing at random. In these situations, it may be reasonable to impute missing data by marginal estimates. Our learning problem is diametric: most of the data are missing and not at random. We therefore chose two alternate imputation rules to augment the model.  For each we modify ε to either be the unique imputed phenotype (if it exists) for some (<italic>t</italic>,<italic>c</italic>) or the imputation arising from the most common correlation for that <italic>t</italic>.  However, we keep all possible imputations for each (<italic>t</italic>,<italic>c</italic>) in a relation <italic>I</italic> which maps from <italic>T</italic>x<italic>C</italic> to subsets of the phenotypes F(O).</p>
+			</sec>
+			<sec id="s3.4">
+				<title>Target Equivalence Estimation</title>
+				<p>A simple imputation procedure estimates equivalence classes of targets as measured by common or similar observations. If two targets agree in their observations everywhere that they are coobserved then we may reduce the model by associating the predictions of one with the other, possibly leading to a larger set of concrete predictions for both.</p>
+			</sec>
+			<sec id="s3.5">
+				<title>Three-Point Imputation</title>
+				<p>Deductive reasoning produces other structural assumptions. We can interpret each distribution ϕ∈Φ as an assertion that for any two distinct targets <italic>t</italic>,<italic>t</italic>' in its support, whenever we observe in a condition <italic>c</italic> that one target <italic>t</italic> had phenotype ϕ[t] we may predict that an unobserved experiment (<italic>t</italic>',<italic>c</italic>) has phenotype ϕ[<italic>t</italic>']. If we iterate these predictions by assuming the largest set possible of them, we can potentially make many more predictions than are immediately justified by the model. Formally, for each distribution ϕ<sub>i</sub> we form the relation</p>
+				<disp-formula><mml:math id="m8" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>R</mml:mi><mml:mo>[</mml:mo><mml:msub><mml:mi>φ</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>]</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>⇐</mml:mo><mml:mo>∃</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mtext>. </mml:mtext><mml:mi>Γ</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mtext> and </mml:mtext><mml:mo>∃</mml:mo><mml:mi>c</mml:mi><mml:mo>'</mml:mo><mml:mtext>. </mml:mtext><mml:mi>Γ</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>'</mml:mo><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>'</mml:mo><mml:mo>)</mml:mo><mml:mtext> and </mml:mtext><mml:mi>Γ</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>'</mml:mo><mml:mo>)</mml:mo></mml:mrow></mml:semantics></mml:math></disp-formula>
+				<p>An experiment (<italic>t</italic>,<italic>c</italic>) is in R[ϕ<sub>i</sub>] if there was a way to obtain pairwise target predictions of ϕ<sub>i</sub> as described above from some other condition <italic>c</italic>'. We write the transitive closure of R[ϕ<sub>i</sub>] as cl R[ϕ<sub>i</sub>]; this relation captures the logical extension of ϕ<sub>i</sub> to as many (<italic>t</italic>,<italic>c</italic>)∈<italic>E</italic>(Ω) as possible by iterating until no new experiments are added. These are computed for each distribution ϕ separately. We interpret the case where (<italic>t</italic>,<italic>c</italic>)∈<bold>cl</bold> R[ϕ] as weak predictions: “the phenotype of experiment (<italic>t</italic>,<italic>c</italic>) <italic>might</italic> be ϕ[t].” Since an unobserved experiment (<italic>t</italic>,<italic>c</italic>) can be in the closure of R for different distributions, it is sometimes the case that there are multiple and distinct weak predictions for that experiment. That is, if (<italic>t</italic>,<italic>c</italic>)∈ cl R[ϕ<sub>1</sub>] and (<italic>t</italic>,<italic>c</italic>)∈ cl R[ϕ<sub>2</sub>] it can be the case that ϕ<sub>1</sub>[t]≠ϕ<sub>2</sub>[t]. The set of unobserved experiments that have multiple weak predictions are where the model may be considered <italic>concretely uncertain</italic> as opposed to simply latent.</p>
+			</sec>
+			<sec id="s3.6">
+				<title>Active Learner</title>
+				<p>A batch learner sequentially proposes experiments for observation given observed data. At batch step <italic>n</italic>, given data Σ<sub>n</sub>, the following are provided: model <italic>M</italic> = <italic>M</italic><sub>n</sub>[Σ] = (Φ,Γ,ε), the collection of all possible imputations <italic>I</italic> and the model reductions <italic>R</italic> ⊆ 2<sup>T</sup> used to form <italic>I</italic>. The goal is to balance choosing experiments amongst all those with imputations in <italic>I</italic>, and all possible refutations of identified correlations, taking into account any symmetry relationships induced by <italic>R</italic> and their refutations. Each unobserved experiment is given a rank reflecting the number of distinct imputed observations and through R, I and Φ forms a set system.  The next batch <italic>B</italic><sub>n+1</sub> is computed as a weighted <italic>S</italic>-hitting set so as to minimize the number of experiments expected to be imputable from each other and to refute the greatest number of assumed conditional independences. </p>
+			</sec>
+			<sec id="s3.7">
+				<title>Ranking Experiments and Symmetry Breaking</title>
+				<p>We partition <italic>E</italic>(<italic>U</italic><sub>n</sub>) into disjoint subsets, <italic>U</italic><sup>I</sup>, <italic>U</italic><sup>\I</sup> where U<sup>I</sup> = <italic>E</italic>(<italic>U</italic><sub>n</sub>)∪<italic>E</italic>(<italic>I</italic>) and U<sup>\I</sup> is the remainder (slightly abusing notation for <italic>E</italic>). We form a lookup <italic>R</italic> which returns all the targets which are in the same model reduction equivalence class; if one was not estimated, then <italic>R</italic> is just the identity map. Let C<sub>u</sub> be those <italic>c</italic>∈<italic>C</italic> with no observations in Σ<sub>n</sub>; this set is usually empty after learner initialization. A weak association on <italic>C</italic> x 2<sup>C</sup> is introduced in the following manner: for each <italic>c</italic>, let <italic>Q</italic>(<italic>c</italic>) be the relation that identifies those <italic>c</italic>'≠<italic>c</italic> whose model predictions are equal for some <italic>t</italic>∈<italic>T</italic>. <italic>Q</italic>(<italic>c</italic>) need not be symmetric and is always irreflexive. <italic>Q</italic> is used to break symmetry through <italic>R</italic> in batch selection by the relation <italic>W</italic>, which identifies those unobserved (<italic>t</italic>,<italic>c</italic>) with any (<italic>t</italic>',<italic>c</italic>') such that <italic>c</italic> is weakly associated to <italic>c</italic>' (<italic>c</italic>R<italic>c</italic>') and the model predictions differ (<bold>P</bold>[F(O)|(<italic>t</italic>,<italic>c</italic>)]≠ <bold>P</bold>[F(O)| (<italic>t</italic>',<italic>c</italic>')]). In words, <italic>W</italic> marks those experiments which have shown any variation amongst similar conditions.</p>
+				<p>Given the above, a rank <italic>z</italic>(<italic>t</italic>,<italic>c</italic>) is computed over <italic>E</italic>(<italic>U</italic><sub>n</sub>). For each (<italic>t</italic>,<italic>c</italic>), define the pre-rank <italic>z</italic>’ to be the number of imputations for (<italic>t</italic>,<italic>c</italic>) that have different phenotype predictions:<italic>z</italic>'(<italic>t</italic>,<italic>c</italic>)=|{<italic>φ</italic><sub><italic>i</italic></sub>[<italic>t</italic>] for (<italic>t</italic>,<italic>c</italic>,<italic>φ</italic>)∈<italic>I</italic>}|. Rank is defined as:</p>
+				<disp-formula><mml:math id="m9" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>z</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>W</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>if </mml:mtext><mml:mi>z</mml:mi><mml:mo>'</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>W</mml:mi><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>+</mml:mo><mml:mi>z</mml:mi><mml:mo>'</mml:mo><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo><mml:mo>+</mml:mo><mml:mn>3</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>otherwise</mml:mtext></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow></mml:semantics></mml:math></disp-formula>
+				<p>Notice that this ranks all elements in U<sup>\I</sup> over experiments with a single concrete imputation.  Informally this chooses experiments that have many possible imputations, and then those with no imputations and only then consider choosing experiments that have single imputations.  </p>
+			</sec>
+			<sec id="s3.8">
+				<title>Batch Selection</title>
+				<p>From these ranks, a weighted <italic>S</italic>-hitting set is computed as <italic>B</italic><sub>n+1</sub> so as to minimize the number of experiments expected to be imputable from each other through <italic>R</italic> and Γ<sup>(c)</sup>. This is done greedily, starting from the set of greatest rank, choosing an unobserved experiment uniformly at random, and then (temporarily) eliminating from consideration all those experiments reachable through <italic>R</italic> and then selecting a next experiment from the greatest nonempty rank set by repeating.  If <italic>S</italic> many elements have not been selected, then the temporarily removed experiments are placed back into consideration and the selection process is again applied; this case generally only occurs when the apparent uniqueness of the data is very low.  </p>
+			</sec>
+			<sec id="s3.9">
+				<title>Learner Initialization</title>
+				<p>The learning process initializes from an empty Σ<sub>0</sub> to request <inline-formula><mml:math id="m10" overflow="scroll"><mml:semantics definitionURL="" encoding=""><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mrow><mml:mo>⌈</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mi>T</mml:mi><mml:mo>|</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mi>T</mml:mi><mml:mo>|</mml:mo></mml:mrow><mml:mo>,</mml:mo><mml:mrow><mml:mo>|</mml:mo><mml:mi>C</mml:mi><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mi>S</mml:mi><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow><mml:mo>⌉</mml:mo></mml:mrow></mml:mrow></mml:semantics></mml:math></inline-formula>many batches of experiments. These <italic>S</italic> x <italic>i</italic> many experiments will cover two sample sets. The first is all targets under the unperturbed condition. The remaining initializing experiments consists of a scoreboard of max(|<italic>T</italic>|,|<italic>C</italic>|) points chosen such that each target and each condition is sampled at least once, with the possibility of padding points chosen at random to fill a complete batch <italic>B</italic><sub>i</sub>. This starting choice for Σ<sub>i</sub> allows Target Equivalence Estimation to produce a maximal (but not necessarily accurate) upper bound equivalence reduction and observes every target at least twice which provides a reasonable initial minimum bound estimate of the number and partial identity of correlations.</p>
+			</sec>
+			<sec id="s3.10">
+				<title>Parameterization of Experiment Problem Space</title>
+				<p>A description of experimental spaces with an equal number <italic>N</italic> of targets <italic>T</italic> and conditions <italic>C</italic> can be parameterized in three terms θ=(m, λ<sub>r</sub>, λ<sub>u</sub>) as follows. For convenience, fix an ordering of <italic>T</italic> and <italic>C</italic> each over [N] with condition <italic>c</italic>=1 as the unperturbed condition. Influenced conditions <italic>c</italic>∈2..<italic>N</italic> are perturbations from the unperturbed condition. Let <italic>m</italic> be the size of F(O). When the observation for a particular <italic>t</italic> differs in condition <italic>c</italic>≠1 from condition <italic>c</italic>=1 we say that the experiment was <italic>responsive</italic>; let λ<sub>r</sub> be the expected fraction of targets that are responsive. Different <italic>t</italic> may have identical response across <italic>C</italic> and likewise different <italic>c</italic> may similarly perturb <italic>T</italic>; let λ<sub>u</sub> be the expected fraction of each of <italic>T</italic>,<italic>C</italic> that are unique up to equivalence through phenotypes. λ<sub>r</sub> and λ<sub>u</sub> are therefore rate parameters for a truncated Poisson distribution.</p>
+				<p>A choice of θ generates data Ω = Ω [θ] by the following process. Let <italic>n</italic><sub>T</sub>, <italic>n</italic><sub>C</sub> be the number of underlying (to be replicated) targets and conditions respectively, <italic>n</italic><sub><italic>T</italic></sub>=⌈(<italic>N</italic>−1)<italic>λ</italic><sub><italic>u</italic></sub>+1⌉and similarly for <italic>n</italic><sub>C</sub>. For each unperturbed experiment (<italic>t</italic>,1) sample uniformly with replacement from [m]. Sample <italic>n</italic><sub>C</sub>-1 times from the truncated Poisson distribution to determine the number of responses per responsive condition. For each condition c ∈ 2..<italic>n</italic><sub>C</sub> choose <italic>d</italic><sub>c</sub> many indices in [<italic>n</italic><sub>T</sub>]; observations for these indices are set distinct from the unperturbed condition. The data are completed by sampling with replacement from [<italic>n</italic><sub>T</sub>] to fill out the N - <italic>n</italic><sub>T</sub> many replicated <italic>T</italic>, and similarly for <italic>C</italic>.</p>
+			</sec>
+			<sec id="s3.11">
+				<title>Predicted Accuracy Score Regression and Stopping Rule Construction</title><p>To characterize a model learned at a particular batch, we measured several features on both that model and on differences between that model and the model learned at the previous batch.  All of these features are based on data available to the model; in particular, the parameterization of data used was not included.  These features fell into several broad categories.</p>
+				<p>The first set of features measured simple counts: (1) the current batch number, (2) the number of distributions in the model, (3) the number of unique phenotypes observed, (4) the number of experiments whose (predicted) phenotype is in agreement between the previous model and the current model and (5) the number of experimental conditions that differ within a target.</p>
+				<p>The next set of features measures aspects of the model as a Markov hypergraph system: (6) the minimum fraction of each <italic>current</italic> distribution that was observed in the <italic>previous batch</italic> a particular condition, (7) the maximum fraction as above (6), (8) the maximum of the fraction of <italic>current</italic> imputations or distributions that the <italic>previous batch</italic> covered (e.g. how good an ε-approximation the last model was to the current model) (9), the difference of the average number of each phenotype observed between the <italic>previous</italic> and <italic>current</italic> models and (10) the size of the maximal matching of distributions between the <italic>previous</italic> and <italic>current</italic> models.</p>
+				<p>These features were combined with their pairwise products and z-scored and formed the design matrix for regression.  The dependent variable was the measured accuracy was adjusted by subtracting the percentage of the population observed per-batch; this essentially removes the expected fraction of accuracy one would expect at random.  The design matrix was regressed in logistic lasso [<xref ref-type="bibr" rid="B18">18</xref>] against the adjusted measured accuracy; the choice of regularization constant was determined by minimizing 10-fold cross validation (folds formed over the whole of the data).  Loadings were computed by ordinary least squares fit using the nonzero features identified by lasso regression, and used to produce predicted accuracy scores from the design matrix.  The resulting scores were then re-adjusted by adding back in the percentage of population observed per-batch and normalized so that the maximum was 1.0 instead of ~1.1.</p>
+			</sec>
+			<sec id="s3.12">
+				<title>Gene Expression Analysis</title>
+				<p>Normalized gene expression data were taken from the Connectivity Map [<xref ref-type="bibr" rid="B19">19</xref>,<xref ref-type="bibr" rid="B20">20</xref>] dataset (available at http://lincscloud.org as of time of writing).  The dataset consists of gene expression profiles in 48 cell lines under treatment by 280 drugs.  We identified a completely observed submatrix of 50 highly drug-responsive genes (targets), 280 drugs (conditions) and formed phenotypes of the measured gene expressions across the 48 cell lines by <italic>k</italic>-means clustering.  To identify the 50 genes, expression levels were z-scored per-gene and ranked by variance explained by 280 treatments (variance of gene expression levels conditioned on drug).  The 50 genes most varying according to treatment were chosen so the resulting dataset was not trivial (i.e. there would likely be more than one phenotype) and to limit computational requirements for simulation.  A (280x50, 48)-matrix of observations across cell lines was formed with averages of technical replicates and clustered with varying <italic>k-</italic>means; for each <italic>k</italic> the model that minimized reconstruction error from 200 seeds was used.  For each of these, a (280, 50)-matrix was formed from the phenotypes for the simulations to query.</p>
+			</sec>
+			<sec id="s3.13">
+				<title>Availability</title>
+				<p>Scripts for setting up the simulations and generating figures from the results are available from <ext-link ext-link-type="uri" xlink:href="http://murphylab.web.cmu.edu/software" xlink:type="simple"><underline>http://murphylab.web.cmu.edu/software</underline></ext-link>.  Active learning software will be made available for non-commercial use upon request.</p>
+			</sec>
+		</sec>
+		<sec id="s4" sec-type="results">
+			<title>Results</title>
+			<sec id="s4.1">
+				<title>Learning Problem</title>
+				<p>As described in the Methods, we consider a general problem consisting of learning a model for the effects of different <italic>conditions</italic> upon different <italic>targets</italic> (the combination of which define an <italic>experiment</italic>) (<xref ref-type="fig" rid="pone-0083996-g001">Figure 1a</xref>). The result of each experiment is expressed as a categorical <italic>phenotype</italic>.  Given some initial data, either in the form of phenotypes or other measurements from which we can obtain phenotypes (<xref ref-type="fig" rid="pone-0083996-g001">Figure 1b</xref>), we learn correlations between the behaviors of targets and conditions that allow us to make predictions for unobserved experiments (<xref ref-type="fig" rid="pone-0083996-g001">Figure 1c</xref>).  We then construct a <italic>batch</italic> of experiments to observe next in order to improve the model (<xref ref-type="fig" rid="pone-0083996-g001">Figure 1d</xref>).</p>
+				<p>For this task, we considered different possible <italic>learning processes</italic>, each comprised of (i) a <italic>probabilistic model</italic>, (ii) a <italic>structure learning</italic> method for the model, (iii) a choice of data <italic>imputation</italic> methods and (iv) a choice of <italic>active</italic> or <italic>random learning strategy</italic> along with (v) a <italic>stopping rule</italic> which gives an estimate for when a ‘good enough’ model has been learned (Methods).</p>
+			</sec>
+			<sec id="s4.2">
+				<title>Model Selection</title>
+				<p>In order to test the ability of the models described above to support active learning, we performed computational experiments for several model designs. For these simulations, we generated datasets consisting of <italic>m</italic> phenotypes for a set of targets and conditions. Each target was assigned a base (unperturbed) phenotype; the probability that a target would change phenotype for other conditions was given by a parameter λ<sub>r</sub> (“responsiveness”). The extent to which targets showed the same responses across all conditions, and the extent to which conditions had the same effect on all targets, was controlled by a parameter λ<sub>u</sub> (“uniqueness”). For illustration, λ<sub>u</sub>=1 would correspond to all targets and conditions showing a unique combination of phenotypes, and λ<sub>u</sub>=0.1 would correspond to an average of 10% of targets and conditions showing the same combination.</p>
+				<p>We performed computational experiments for several model designs, each consisting of a choice between two structure learning methods (<italic>Greedy Merge</italic> and <italic>B-Clustering</italic>) with predictions augmented with one of four combinations of imputations. The simulations were evaluated for 100 targets and 100 conditions with parameterization θ=(<italic>m</italic>=8, λ<sub>r</sub>=80%, λ<sub>u</sub>=40%) with a fixed batch size of 100 (Methods). At each batch the best accuracy for either the random or active learning strategy was chosen as an indication of how well that design can perform. These are displayed in <xref ref-type="fig" rid="pone-0083996-g002">Figure 2A</xref>. Most model designs showed linear increase in accuracy with batches as would be expected for a model-free random sampler. Only five model designs showed learning that was superlinear. The batch-wise difference between active and random learning accuracies for these five designs are shown in <xref ref-type="fig" rid="pone-0083996-g002">Figure 2B</xref>. Different designs show peaks in improvement over random after different numbers of batches have been observed.</p>
+				<fig id="pone-0083996-g002" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g002</object-id><label>Figure 2</label>
+					<caption>
+						<title>Learning performance dependence on model design: structure learning and imputation rule choice.</title><p>(A) Each model design was evaluated with both active and random learners on two simulated 100 target x 100 condition datasets, each having eight phenotypes, 80% responsiveness and 40% uniqueness. For each model design the best average accuracy for either the active or random learner is plotted at each batch. For six cases displaying superlinear performance, structure learning methods are indicated in color, with different design variations plotted as separate lines and with filled circles to indicate batches where the active learner had higher accuracy: Greedy Merge (blue), a ‘strict’ variation of Greedy Merge (red), and B-Clustering (green, one design).  These each had both Target Equivalence Class and Three-Point Imputation rules. (B) The difference in random and active learner accuracies for the superlinear model designs with structure learning method plotted by color as above; filled circles at tails indicate that the active learner had reached 100% accuracy.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g002"/>
+				</fig>
+			</sec>
+			<sec id="s4.3">
+				<title>Model Performance</title>
+				<p>We then evaluated the performance of active and random learning methods for each of these model designs across a broad range of λ<sub>r</sub> and λ<sub>u</sub> for 32 phenotypes. We measured the difference in the number of batches required to achieve 100% predictive accuracy between active and random learning methods. As <xref ref-type="fig" rid="pone-0083996-g003">Figure 3A</xref> indicates, our active learning strategy with Greedy Merge structure learning achieved 100% predictive accuracy more rapidly than random learning over the majority of the sampled range of λ<sub>u</sub> and λ<sub>r</sub>, with qualitatively similar behavior for 90% accuracy (<xref ref-type="fig" rid="pone-0083996-g003">Figure 3B</xref>). The improvement is much less for B-Clustering (<xref ref-type="fig" rid="pone-0083996-g003">Figure 3C,D</xref>). However, as discussed below, there are cases where each method dramatically outperforms random sampling.</p>
+				<fig id="pone-0083996-g003" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g003</object-id><label>Figure 3</label>
+					<caption>
+						<title>Active learning performance for different model designs.</title><p>Performance was measured as the difference in the number of batches to achieve (A,B) 100% or (C,D) 90% accuracy between active and random learning. (A,C) Greedy Merge, (B,D) B-Clustering. Warmer colors indicate greater experiment savings with an active learner.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g003"/>
+				</fig>
+				<p><xref ref-type="fig" rid="pone-0083996-g004">Figure 4</xref> shows example learning curves for specific combinations of λ<sub>u</sub> and λ<sub>r</sub>.  The most striking conclusion (echoing <xref ref-type="fig" rid="pone-0083996-g002">Figure 2</xref>) is that the models learn much more rapidly than random sampling.  <xref ref-type="fig" rid="pone-0083996-g004">Figure 4A</xref> shows a case that with a high λ<sub>r</sub> and low λ<sub>u</sub>. The initial models are poor in these cases as predictions from the unperturbed condition do not generalize well, but rapidly improve as correlations are learned, generalized and used to identify likely responsive experiments. The combination of the Greedy Merge model with active learning gives a perfect accuracy after only about 30% of the data have been sampled. By contrast, the “needle in the haystack” case in <xref ref-type="fig" rid="pone-0083996-g004">Figure 4B</xref> (small λ<sub>r</sub> and large λ<sub>u</sub>) is initially predicted well by either learner with either structure learning method but further progress is slow and occasionally leads to poor models. Nonetheless, high accuracy is achieved before full sampling.  Overall, while the efficacy of different active learning methods varies somewhat for different λ<sub>u</sub> and λ<sub>r</sub> values, the results of <xref ref-type="fig" rid="pone-0083996-g003">Figures 3</xref> and <xref ref-type="fig" rid="pone-0083996-g004">4</xref> show a significant benefit in sampling with our active learners for the same number of batches as compared to a random learner in almost all cases (an important conclusion since λ<sub>u</sub> and λ<sub>r</sub> will not usually be known).</p>
+				<fig id="pone-0083996-g004" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g004</object-id><label>Figure 4</label>
+					<caption>
+						<title>Example learning curves.</title><p>Mean learning rates for active (solid) and random (dashed) learners across structure learning methods, Full Greedy Merge (blue) and B-Clustering (green). Data from experiments in <xref ref-type="fig" rid="pone-0083996-g003">Figure 3</xref> for (A) (λ<sub>r</sub>=90%, λ<sub>u</sub>=25%); (B) (λ<sub>r</sub>=10%, λ<sub>u</sub>=70%).</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g004"/>
+				</fig>
+			</sec>
+			<sec id="s4.4">
+				<title>Probability of Approximate Correctness</title>
+				<p>One potential problem with using active learning to perform only selected experiments is knowing when to stop.  We therefore asked if it is possible for an experimenter to estimate the predictive accuracy of an actively learned model without completing all experiments. One way to do this would be to form a prediction of the accuracy of a model and a <italic>confidence</italic> that measures how likely the true accuracy (which the experimenter does not know) meets or exceeds the predicted accuracy.</p>
+				<p>We empirically evaluated this possibility for the Greedy Merge model by simulating a broad range of data with dimensions as before. These data were formed by randomly and uniformly sampling parameters in the cube (<italic>m</italic>=18..100, λ<sub>r</sub>=5..95%, λu=5..95%).  For each of these, we measured <italic>features</italic> at every batch that described differences between the model learned at the previous and current batches.  Features were limited to knowledge available to the learner at a particular batch and not reliant on unseen data, or on the parameters the data were drawn from.  These features were then collected and regressed against the true model accuracy to produce a predicted accuracy score (Methods)<italic>.</italic></p>
+				<p>The predicted accuracy score is in general a conservative estimate of accuracy, with the highest correspondences at higher true accuracies (<xref ref-type="fig" rid="pone-0083996-g005">Figure 5A</xref>).  On the whole (<xref ref-type="fig" rid="pone-0083996-g005">Figure 5B</xref>) extremes in the true accuracy are identified with high confidence.  A practitioner may then be confident that a model with a predicted accuracy score above ~80% is almost certainly at least that good.  Furthermore the per-batch and predicted accuracy score confidences (<xref ref-type="fig" rid="pone-0083996-g005">Figure 5C</xref>) are conservative estimates everywhere.  As an example, for a model acquired early in the learning process (batch 10) if we obtain a predicted accuracy score of 70%, we can be ~90% certain that the true model accuracy is in excess of 70%.  Likewise, hard to learn cases are identified as such with low predicted accuracy scores or low confidence.  With these a practitioner may choose a minimum target accuracy, or limit the total number of experiments performed, and still assert a quantitative bound on the accuracy of the model.</p>
+				<fig id="pone-0083996-g005" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g005</object-id><label>Figure 5</label>
+					<caption>
+						<title>Probability of approximate correctness over a broad range of data.</title><p>(A) The empirical density of the correspondence between the predicted accuracy score and the true (latent) accuracy; lighter colors indicate greater frequency.  (B) Confidence (in units of probability) per level set of predicted accuracy score.  (C) Per-batch and (1% binned) predicted accuracy score confidences; color indicates confidence (in units of probability).</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g005"/>
+				</fig>
+			</sec>
+			<sec id="s4.5">
+				<title>Application: Learning the Effects of Drugs on Gene Expression Levels across Cell Lines</title>
+				<p>In order to demonstrate the utility of this approach using experimental data rather than simulated data, we applied the Greedy Merge model to a dataset of gene expression profiles in 48 cell lines under treatment by 280 drugs.  An unresolved issue is how to decompose these profiles into distinct phenotypes.  To avoid justifying a specific choice, we considered a wide range of possible values (2.73) for the number <italic>m</italic> of distinct expression phenotypes and formed them by <italic>k-</italic>means clustering.  For a given number of phenotypes, we can calculate the average λ<sub>r</sub> and λ<sub>u</sub>.  <xref ref-type="fig" rid="pone-0083996-g006">Figure 6</xref> shows the improvement of Greedy Merge with Active learning over Random learning as a function of these average λ<sub>r</sub> and λ<sub>u</sub> values.  Consistent with <xref ref-type="fig" rid="pone-0083996-g003">Figure 3, a</xref> 21%-40% reduction in the percent of experiment space required to achieve 95% accuracy was observed.</p>
+				<fig id="pone-0083996-g006" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0083996.g006</object-id><label>Figure 6</label>
+					<caption>
+						<title>Learning the effects of drugs on gene expression levels across cell lines.</title><p>Gene expression levels of the genes that varied most across drug treatments were used to form experimental observations across 48 cell lines.  Each point represents a different number of phenotypes, varying from two (bottom left hand point) to 73 (upper right hand point).  Warmer colors indicate greater experiment savings with an active learner.</p>
+					</caption>
+					<graphic xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0083996.g006"/>
+				</fig>
+			</sec>
+		</sec>
+		<sec id="s5" sec-type="discussion">
+			<title>Discussion</title>
+			<p>We have described a learning approach suitable for the study of large, complex systems where the constituents have unknown or incomparable relationships. We have developed and presented empirical characterization of a class of models that capture the structure which target-condition dependence exhibits, structure inference algorithms for the class of models that are suitable for sparse data and methods for imputing missing values based on the structure of the learned models. Importantly, since different targets may be part of very different biological mechanisms, and yet have correlated responses in various conditions, the models capture patterns in the phenotypes without assuming a causal structure among the targets. From these we have described and evaluated a batch active learner capable of sequentially proposing informative experiments. Our results show that it is possible to learn highly accurate models without exhaustive experimentation.</p>
+			<p>Critically, we have also shown that it is possible to produce an estimate of probable approximate correctness of the learning process without access to complete data.  To the best of our knowledge, this is the first nontrivial active learner that (empirically) enjoys useful learning guarantees analogous to classical random sampling methods. This permits a decision about when an active learning process can safely be stopped.</p>
+			<p>An important application of this work will be to efficiently identify and model the dependencies of cellular targets upon potential drugs or drug cocktails; we are unaware of previous methods approaching the efficiencies reported here. Towards this, we were able to show that the expression levels of genes across diverse cell types under different drugs can form consistent patterns whose emergent structure can be accurately and rapidly learned. Interestingly, our results indicate that while it is possible to learn efficiently even for the binarized case (two phenotypes), there are may be even greater efficiencies when considering finer granularity of drug responses.</p>
+			<p>The learning problem here is similar to other well-studied problems.  DNF formula learning [<xref ref-type="bibr" rid="B21">21</xref>] and multiarm bandit optimization [<xref ref-type="bibr" rid="B8">8</xref>] commonly consider categorical constituents and restrictions to equality comparisons. Furthermore, as with black-box optimization [<xref ref-type="bibr" rid="B22">22</xref>], we make very weak assumptions on the structure of the data and rely on nonparametric estimates. The tradeoff for weak data assumptions is that nonparametric methods are generally data biased predictors [<xref ref-type="bibr" rid="B23">23</xref>]. Close alternatives to our approach generally make parametric assumptions on the structure and topology of data. In particular, matrix completion [<xref ref-type="bibr" rid="B24">24</xref>,<xref ref-type="bibr" rid="B25">25</xref>] and similar regression-based methods are the natural extension of our models but require algebraic invariants on the marginal distributions of data [<xref ref-type="bibr" rid="B26">26</xref>,<xref ref-type="bibr" rid="B27">27</xref>]. We were motivated to explore the approaches presented here as we thought they would perform better in cases with sparse, not missing at random data that would be expected to be obtained from an active learning process. </p>
+			<p>Our formulation of the target-compound problem intentionally ignores any prior information about similarities among targets and among compounds (i.e., since they are potentially inaccurate). However, in separate work we have demonstrated that including it with active learning can increase the learning rate (Kangas, Naik, Murphy, submitted). The availability of both types of methods will be important to future work in this area.</p>
+		</sec>
+	</body>
+	<back>
+		<ref-list>
+			<title>References</title>
+			<ref id="B1">
+				<label>1</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ideker</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Galitski</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hood</surname><given-names>L</given-names></name> (<year>2001</year>) <article-title>A new approach to decoding life</article-title>. <source>Systems Biology - Annu Rev Genomics Hum Genet</source> <volume>2</volume>: <fpage>343</fpage>-<lpage>372</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.genom.2.1.343" xlink:type="simple">10.1146/annurev.genom.2.1.343</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B2">
+				<label>2</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kitano</surname><given-names>H</given-names></name> (<year>2002</year>) <article-title>Computational systems biology</article-title>. <source>Nature</source> <volume>420</volume>: <fpage>206</fpage>-<lpage>210</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature01254" xlink:type="simple">10.1038/nature01254</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12432404" xlink:type="simple">12432404</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B3">
+				<label>3</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Westerhoff</surname><given-names>HV</given-names></name>, <name name-style="western"><surname>Palsson</surname><given-names>BO</given-names></name> (<year>2004</year>) <article-title>The evolution of molecular biology into systems biology</article-title>. <source>Nat Biotechnol</source> <volume>22</volume>: <fpage>1249</fpage>-<lpage>1252</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt1020" xlink:type="simple">10.1038/nbt1020</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15470464" xlink:type="simple">15470464</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B4">
+				<label>4</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lounkine</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Keiser</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Whitebread</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mikhailov</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Hamon</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Large-scale prediction and testing of drug activity on side-effect targets</article-title>. <source>Nature</source> <volume>486</volume>: <fpage>361</fpage>-<lpage>367</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22722194" xlink:type="simple">22722194</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B5">
+				<label>5</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Merino</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Bronowska</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Jackson</surname><given-names>DB</given-names></name>, <name name-style="western"><surname>Cahill</surname><given-names>DJ</given-names></name> (<year>2010</year>) <article-title>Drug profiling: knowing where it hits</article-title>. <source>Drug Discov Today</source> <volume>15</volume>: <fpage>749</fpage>-<lpage>756</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.drudis.2010.06.006" xlink:type="simple">10.1016/j.drudis.2010.06.006</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20601095" xlink:type="simple">20601095</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B6">
+				<label>6</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Murphy</surname><given-names>RF</given-names></name> (<year>2011</year>) <article-title>An active role for machine learning in drug development</article-title>. <source>Nat Chem Biol</source> <volume>7</volume>: <fpage>327</fpage>-<lpage>330</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nchembio.576" xlink:type="simple">10.1038/nchembio.576</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21587249" xlink:type="simple">21587249</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B7">
+				<label>7</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohn</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Ghahramani</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Jordan</surname><given-names>MI</given-names></name> (<year>1996</year>) <article-title>Active Learning with Statistical Models</article-title>. <source>Journal of Artificial Intelligence Research</source> <volume>4</volume>: <fpage>129</fpage>-<lpage>145</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B8">
+				<label>8</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Even-Dar</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Mannor</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mansour</surname><given-names>Y</given-names></name> (<year>2002</year>) <article-title>PAC Bounds for Multi-armed Bandit and Markov Decision Processes</article-title>. In: <person-group person-group-type="editor"><name name-style="western"><surname>Kivinen</surname><given-names>J</given-names></name><name name-style="western"><surname>Sloan</surname><given-names>R</given-names></name></person-group>. <source>Computational Learning Theory</source>. <publisher-name>Springer</publisher-name> <publisher-loc>Berlin / Heidelberg</publisher-loc>. pp. <fpage>193</fpage>-<lpage>209</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B9">
+				<label>9</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saar-Tsechansky</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Provost</surname><given-names>F</given-names></name> (<year>2004</year>) <article-title>Active Sampling for Class Probability Estimation and Ranking</article-title>. <source>Mach Learn</source> <volume>54</volume>: <fpage>153</fpage>-<lpage>178</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1023/B:MACH.0000011806.12374.c3" xlink:type="simple">10.1023/B:MACH.0000011806.12374.c3</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B10">
+				<label>10</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Balcan</surname><given-names>MF</given-names></name>, <name name-style="western"><surname>Beygelzimer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Langford</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>Agnostic active learning</article-title>. <source>Journal of Computer and System Sciences</source> <volume>75</volume>: <fpage>78</fpage>-<lpage>89</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jcss.2008.07.003" xlink:type="simple">10.1016/j.jcss.2008.07.003</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B11">
+				<label>11</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Danziger</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Baronio</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Ho</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Hall</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Salmon</surname><given-names>K</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>Predicting positive p53 cancer rescue regions using Most Informative Positive (MIP) active learning</article-title>. <source>PLoS Comput Biol</source> <volume>5</volume>: <fpage>e1000498</fpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19756158" xlink:type="simple">19756158</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B12">
+				<label>12</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Warmuth</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Liao</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Rätsch</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Mathieson</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Putta</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2003</year>) <article-title>Active learning with support vector machines in the drug discovery process</article-title>. <source>J Chem Inf Comput Sci</source> <volume>43</volume>: <fpage>667</fpage>-<lpage>673</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci025620t" xlink:type="simple">10.1021/ci025620t</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12653536" xlink:type="simple">12653536</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B13">
+				<label>13</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fujiwara</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Yamashita</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Osoda</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Asogawa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Fukushima</surname><given-names>C</given-names></name> <etal>et al.</etal> (<year>2008</year>) <article-title>Virtual screening system for finding structurally diverse hits by active learning</article-title>. <source>J Chem Inf Model</source> <volume>48</volume>: <fpage>930</fpage>-<lpage>940</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci700085q" xlink:type="simple">10.1021/ci700085q</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18351729" xlink:type="simple">18351729</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B14">
+				<label>14</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name> (<year>2004</year>) <article-title>Active learning with support vector machine applied to gene expression data for cancer classification</article-title>. <source>J Chem Inf Comput Sci</source> <volume>44</volume>: <fpage>1936</fpage>-<lpage>1941</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci049810a" xlink:type="simple">10.1021/ci049810a</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15554662" xlink:type="simple">15554662</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B15">
+				<label>15</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mohamed</surname><given-names>TP</given-names></name>, <name name-style="western"><surname>Carbonell</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Ganapathiraju</surname><given-names>MK</given-names></name> (<year>2010</year>) <article-title>Active learning for human protein-protein interaction prediction</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume> <supplement>Suppl 1</supplement>: <fpage>S57</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-11-S1-S57" xlink:type="simple">10.1186/1471-2105-11-S1-S57</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20122232" xlink:type="simple">20122232</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B16">
+				<label>16</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Pan</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Vardi</surname><given-names>MY</given-names></name> (<year>2004</year>) <source>Symbolic decision procedures for QBF. Principles and Practice of Constraint Programming–CP 2004</source>. <publisher-name>Springer</publisher-name>. pp. <fpage>453</fpage>-<lpage>467</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B17">
+				<label>17</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Eén</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Sörensson</surname><given-names>N</given-names></name> (<year>2004</year>) <article-title>An Extensible SAT-solver</article-title>. In: <person-group person-group-type="editor"><name name-style="western"><surname>Giunchiglia</surname><given-names>E</given-names></name><name name-style="western"><surname>Tacchella</surname><given-names>A</given-names></name></person-group>. <source>Theory and Applications of Satisfiability Testing</source>: <publisher-name>Springer</publisher-name> <publisher-loc>Berlin</publisher-loc> <comment>Heidelberg. pp. 502-518</comment></mixed-citation>
+			</ref>
+			<ref id="B18">
+				<label>18</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>1996</year>) <article-title>Regression shrinkage and selection via the lasso</article-title>. <source>J Royal Statistical Soc B: Statistical Methodology</source> <volume>58</volume>: <fpage>267</fpage>-<lpage>288</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B19">
+				<label>19</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lamb</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Crawford</surname><given-names>ED</given-names></name>, <name name-style="western"><surname>Peck</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Modell</surname><given-names>JW</given-names></name>, <name name-style="western"><surname>Blat</surname><given-names>IC</given-names></name> <etal>et al.</etal> (<year>2006</year>) <article-title>The Connectivity Map: Using Gene-Expression Signatures to Connect Small Molecules, Genes, and Disease</article-title>. <source>Science</source> <volume>313</volume>: <fpage>1929</fpage>-<lpage>1935</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1132939" xlink:type="simple">10.1126/science.1132939</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17008526" xlink:type="simple">17008526</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B20">
+				<label>20</label>
+				<mixed-citation publication-type="book" xlink:type="simple">(<year>2013</year>) <source>Connectivity Map</source>. <publisher-name>Broad Institute</publisher-name>.</mixed-citation>
+			</ref>
+			<ref id="B21">
+				<label>21</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Angluin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Eisenstat</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Kontorovich</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Reyzin</surname><given-names>L</given-names></name> (<year>2010</year>) <article-title>Lower Bounds on Learning Random Structures with Statistical Queries</article-title>. In: <person-group person-group-type="editor"><name name-style="western"><surname>Hutter</surname><given-names>M</given-names></name><name name-style="western"><surname>Stephan</surname><given-names>F</given-names></name><name name-style="western"><surname>Vovk</surname><given-names>V</given-names></name><name name-style="western"><surname>Zeugmann</surname><given-names>T</given-names></name></person-group>. <source>Algorithmic Learning Theory</source>. <publisher-name>Springer</publisher-name> <publisher-loc>Berlin / Heidelberg</publisher-loc>. pp. <fpage>194</fpage>-<lpage>208</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B22">
+				<label>22</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sahinidis</surname><given-names>NV</given-names></name> (<year>2003</year>) <article-title>Global Optimization and Constraint Satisfaction: The Branch-and-Reduce Approach. Lect Notes</article-title>. <source>Comp Sci</source> <volume>2861</volume>: <fpage>1</fpage>-<lpage>16</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B23">
+				<label>23</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heckman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ichimura</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Todd</surname><given-names>P</given-names></name> (<year>1998</year>) <article-title>Characterizing selection bias using experimental data</article-title>. <source>Econometrica</source> <volume>66</volume>: <fpage>1017</fpage>-<lpage>1098</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2999630" xlink:type="simple">10.2307/2999630</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B24">
+				<label>24</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Candes</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Recht</surname><given-names>B</given-names></name> (<year>2009</year>) <article-title>Exact Matrix Completion via Convex</article-title>. <source>Optimization - Found Comput Math</source> <volume>9</volume>: <fpage>717</fpage>-<lpage>772</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10208-009-9045-5" xlink:type="simple">10.1007/s10208-009-9045-5</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B25">
+				<label>25</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Suter</surname><given-names>D</given-names></name> (<year>2004</year>) <article-title>Recovering the missing components in a large noisy low-rank matrix: application to SFM</article-title>. <source>Pattern Analysis and Machine Intelligence, IEEE Transactions On</source> <volume>26</volume>: <fpage>1051</fpage>-<lpage>1063</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TPAMI.2004.52" xlink:type="simple">10.1109/TPAMI.2004.52</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B26">
+				<label>26</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Allison</surname><given-names>P</given-names></name> (<year>2000</year>) <article-title>Multiple imputation for missing data: A cautionary tale</article-title>. <source>Sociological Methods and Research</source> <volume>28</volume>: <fpage>301</fpage>-<lpage>309</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1177/0049124100028003003" xlink:type="simple">10.1177/0049124100028003003</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B27">
+				<label>27</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rubin</surname><given-names>DB</given-names></name> (<year>1976</year>) <article-title>Inference and missing data</article-title>. <source>Biometrika</source> <volume>63</volume>: <fpage>581</fpage>-<lpage>592</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/biomet/63.3.581" xlink:type="simple">10.1093/biomet/63.3.581</ext-link>.</mixed-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>

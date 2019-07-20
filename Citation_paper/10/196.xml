@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-17293</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0107957</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Computational biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Research and analysis methods</subject><subj-group><subject>Mathematical and statistical techniques</subject></subj-group><subj-group><subject>Research design</subject></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Simulation Studies as Designed Experiments: The Comparison of Penalized Regression Models in the “Large <italic>p,</italic> Small <italic>n</italic>” Setting</article-title>
+<alt-title alt-title-type="running-head">Design of Simulation Experiments</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Chaibub Neto</surname><given-names>Elias</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Bare</surname><given-names>J. Christopher</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Margolin</surname><given-names>Adam A.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+</contrib-group>
+<aff id="aff1"><addr-line>Sage Bionetworks, Seattle, Washington, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Stolovitzky</surname><given-names>Gustavo</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Thomas J. Watson Research Center, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">elias.chaibub.neto@sagebase.org</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: ECN AAM. Performed the experiments: ECN JCB. Analyzed the data: ECN JCB AAM. Wrote the paper: ECN JCB AAM.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>7</day><month>10</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>10</issue>
+<elocation-id>e107957</elocation-id>
+<history>
+<date date-type="received"><day>18</day><month>4</month><year>2014</year></date>
+<date date-type="accepted"><day>17</day><month>8</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Chaibub Neto et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>New algorithms are continuously proposed in computational biology. Performance evaluation of novel methods is important in practice. Nonetheless, the field experiences a lack of rigorous methodology aimed to systematically and objectively evaluate competing approaches. Simulation studies are frequently used to show that a particular method outperforms another. Often times, however, simulation studies are not well designed, and it is hard to characterize the particular conditions under which different methods perform better. In this paper we propose the adoption of well established techniques in the design of computer and physical experiments for developing effective simulation studies. By following best practices in planning of experiments we are better able to understand the strengths and weaknesses of competing algorithms leading to more informed decisions about which method to use for a particular task. We illustrate the application of our proposed simulation framework with a detailed comparison of the ridge-regression, lasso and elastic-net algorithms in a large scale study investigating the effects on predictive performance of sample size, number of features, true model sparsity, signal-to-noise ratio, and feature correlation, in situations where the number of covariates is usually much larger than sample size. Analysis of data sets containing tens of thousands of features but only a few hundred samples is nowadays routine in computational biology, where “omics” features such as gene expression, copy number variation and sequence data are frequently used in the predictive modeling of complex phenotypes such as anticancer drug response. The penalized regression approaches investigated in this study are popular choices in this setting and our simulations corroborate well established results concerning the conditions under which each one of these methods is expected to perform best while providing several novel insights.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported by the National Cancer Institute (NCI) Integrative Cancer Biology Program (ICBP) grant U54-CA149237 (<ext-link ext-link-type="uri" xlink:href="http://icbp.nci.nih.gov/" xlink:type="simple">http://icbp.nci.nih.gov/</ext-link>). The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="21"/></counts><custom-meta-group><custom-meta id="data-availability" xlink:type="simple"><meta-name>Data Availability</meta-name><meta-value>The authors confirm that all data underlying the findings are fully available without restriction. The code used to generate the simulate data and the simulation results are available at <ext-link ext-link-type="uri" xlink:href="http://www.synapse.org/#!Synapse:syn2177826" xlink:type="simple">www.synapse.org/#!Synapse:syn2177826</ext-link>. doi:10.7303/syn2177826.</meta-value></custom-meta></custom-meta-group></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Computational biology thrives on a continuous flux of newly proposed algorithms. Methodological developments to solve new problems or improve well established algorithms lie at the heart of the field. Nonetheless, we observe a serious lack in rigorous methodology to objectively and systematically evaluate the performance of competing algorithms. Simulation studies are frequently used to show that a particular method outperforms another. In this context, simulation studies usually involve the generation of a large number of synthetic data sets followed by application and performance comparison of competing methods in each one of the simulated data sets. In principle, this strategy can be used to determine the specific conditions under which a given method outperforms a competing one, and can help guide a user to select an appropriate method based on characteristics of the data. However, in practice, simulation studies often fail to incorporate basic principles of design recommended in the planing of experiments.</p>
+<p>In this paper we advocate the use of sound experimental design principles when outlining a simulation study. We adapt well established design techniques, originally developed in the context of physical <xref ref-type="bibr" rid="pone.0107957-Box1">[1]</xref> and computer experiments <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>, <xref ref-type="bibr" rid="pone.0107957-Pronzato1">[3]</xref>, to simulation studies. As we explain in the detail in the <xref ref-type="sec" rid="s4">Methods</xref> section, a simulation experiment represents a middle ground between computer and physical experiments, and requires the adoption of design techniques from both fields. We denote the Design Of Simulation Experiments by DOSE. We illustrate an application of DOSE to a large scale simulation study comparing ridge <xref ref-type="bibr" rid="pone.0107957-Hoerl1">[4]</xref>, lasso <xref ref-type="bibr" rid="pone.0107957-Tibshirani1">[5]</xref>, and elastic-net <xref ref-type="bibr" rid="pone.0107957-Zou1">[6]</xref> regression in situations where the number of features, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e001" xlink:type="simple"/></inline-formula>, is larger than the number of samples, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e002" xlink:type="simple"/></inline-formula>.</p>
+<p>There are two main motivations for this particular choice of methods. First, predictive modeling in the “large p, small n” setting <xref ref-type="bibr" rid="pone.0107957-West1">[7]</xref> is an important practical problem in computational biology, with relevant applications in the pharmacogenomics field, where genomic features such as from gene expression, copy number variation, and sequence data have been used, for example, in the predictive modeling of anticancer drug sensitivity <xref ref-type="bibr" rid="pone.0107957-Barretina1">[8]</xref>, <xref ref-type="bibr" rid="pone.0107957-Garnett1">[9]</xref>. The availability of data sets with large numbers of variables but comparatively small sample sizes has increased the interest in penalized regression models as tools for prediction and variable selection. Standard approaches such as ridge-regression and lasso are commonly used in the analysis of such data sets, and the development of novel approaches, such as elastic-net, have been motivated by applications in the genomic sciences, were the “large <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e003" xlink:type="simple"/></inline-formula>, small <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e004" xlink:type="simple"/></inline-formula>” paradigm is routine.</p>
+<p>Second, while these methods are widely used in practice, and their behavior under different conditions is relatively well understood (for instance, the predictive performance of lasso is expected to be better than of ridge-regression in sparse situations, while the reverse is true when the true model is saturated), simulation studies comparing their performance have been limited, focusing on a small number of variables <xref ref-type="bibr" rid="pone.0107957-Tibshirani1">[5]</xref>, <xref ref-type="bibr" rid="pone.0107957-Zou1">[6]</xref>. These characteristics make comparison of regularized regression methods particularly well suited for illustrating DOSE, since we would expect our designed experiment to be able to detect well known behaviors, while also providing novel insights.</p>
+<p>As an example of a limited, yet typical, simulation study, consider a fictitious experiment whose objective is to compare the predictive ability of two penalized regression methods, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e005" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e006" xlink:type="simple"/></inline-formula>. Suppose that method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e007" xlink:type="simple"/></inline-formula> has some theoretical properties that suggest it should outperform method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e008" xlink:type="simple"/></inline-formula> in sparse situations. To empirically test this hypothesis, a researcher designs two simulation experiments. In the first, she/he generates data from 50 correlated covariates and a single response variable associated with all covariates. In the second, the researcher again simulates data from 50 correlated covariates, but with the response variable affected by only 10 covariates. In both simulation studies, he/she fixes the values of the non-zero regression coefficients to 2, sets the residual variance to 1, and generates the covariates from a multivariate normal distribution with mean 0 and correlation matrix with entries given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e009" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e010" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e011" xlink:type="simple"/></inline-formula> indexes the rows and columns, respectively. For each simulation experiment, she/he generates 100 separate training and test data sets of sample size 300. The researcher optimizes the method's tuning parameters in the training set using 10-fold cross-validation, and evaluates the prediction mean squared error (MSE) using the test set. Finally, suppose that, as a matter of fact, method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e012" xlink:type="simple"/></inline-formula> outperformed method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e013" xlink:type="simple"/></inline-formula> in the sparse setting, whereas the reverse holds in the saturated setting.</p>
+<p>No doubt the above simulation result provides some evidence that method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e014" xlink:type="simple"/></inline-formula> outperforms method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e015" xlink:type="simple"/></inline-formula> in sparse situations, but can the researcher claim that this simulation demonstrates that method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e016" xlink:type="simple"/></inline-formula> works better than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e017" xlink:type="simple"/></inline-formula> in sparse conditions? In this paper, we argue he/she can not. Because the researcher tested only single, fixed values for the correlation structure among covariates, sample size, residual error, and non-zero regression coefficients, it is not possible to make claims about the relative performance of A and B for parameter regimes not tested in the simulation study. All the researcher can say is that for that particular choice of sample size, signal-to-noise ratio, etc, method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e018" xlink:type="simple"/></inline-formula> outperforms <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e019" xlink:type="simple"/></inline-formula> in sparse settings. It is possible the researcher could have observed a different result if she/he had chosen a different combination of simulation parameter values. In other words, the effect of sparsity on the predictive performance, as measured by the difference in MSE of methods <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e020" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e021" xlink:type="simple"/></inline-formula>, cannot be teased apart from the effects of the other simulation parameters.</p>
+<p>To circumvent this problem, we: (i) select simulation parameter values spread as uniformly as possible over the entire parameter space (so that our simulations gather information about all portions of the parameter space); and (ii) generate each simulated data set with a unique combination of simulation parameters. In other words, we adopt a space filling design <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref> in our simulations (see <xref ref-type="sec" rid="s4">Methods</xref> section for details). Note that by spreading out the parameter values homogeneously across the parameter space, a space filling design achieves near orthogonality and keeps confounding to a minimum.</p>
+<p>In the next section we present the results from our simulation study. See the <xref ref-type="sec" rid="s4">Methods</xref> section for: (i) a brief background on the penalized regression methods studied in this paper; (ii) a comparison of the similarities and differences between computer and simulation experiments; (iii) a description of the space filling experimental design and stochastic data generation process used to generate the simulated data; (iv) details on model fitting and performance evaluation; and (v) a description of the statistical tools used in the analysis of simulation results.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>In order to investigate the absolute and relative predictive ability of penalized regression methods we designed a simulation study focusing on the effects of five distinct simulation parameters, namely: (i) sample size, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e022" xlink:type="simple"/></inline-formula>; (ii) number of covariates, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e023" xlink:type="simple"/></inline-formula>; (iii) the saturation parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e024" xlink:type="simple"/></inline-formula>, that specifies the probability that a covariate enters the regression model; (iv) signal-to-noise ratio, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e025" xlink:type="simple"/></inline-formula>, defined as the average of the absolute values of the non-zero regression coefficients divided by the residual variance; and (v) correlation, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e026" xlink:type="simple"/></inline-formula>, controlling the correlation structure of random blocks of covariates. We concentrate our simulations on situations where the number of covariates (up to 40,000) is usually much larger than the sample size (up to 1,000), since this is usually the case in genomic applications. To the best of our knowledge the present study represents the largest and most systematic simulation experiment comparing regularized regression approaches.</p>
+<p>In the <xref ref-type="sec" rid="s4">Methods</xref> section we provide details on simulation parameter ranges and the stochastic data generation process employed in the generation of the simulated data sets. <xref ref-type="fig" rid="pone-0107957-g001">Figure 1</xref> presents a graphical model representation and overview of the data generation process. In total, we generated 10,000 distinct simulated data sets according to a space filling design.</p>
+<fig id="pone-0107957-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g001</object-id><label>Figure 1</label><caption>
+<title>Plate representation of the stochastic data generation process employed in the generation of the simulation study data.</title>
+<p>Circles represent stochastic variables. Double circles represent functions of the stochastic variables. For each simulation, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e027" xlink:type="simple"/></inline-formula>, we generate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e028" xlink:type="simple"/></inline-formula> samples <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e029" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e030" xlink:type="simple"/></inline-formula>. For each sample, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e031" xlink:type="simple"/></inline-formula>, we simulate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e032" xlink:type="simple"/></inline-formula> correlated features, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e033" xlink:type="simple"/></inline-formula>, conforming to a covariance matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e034" xlink:type="simple"/></inline-formula> parameterized according to the correlation parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e035" xlink:type="simple"/></inline-formula>. The response, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e036" xlink:type="simple"/></inline-formula>, is generated from a linear regression model with residual variance, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e037" xlink:type="simple"/></inline-formula>, set to 1. The indicator variables, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e038" xlink:type="simple"/></inline-formula>, control which features influence the response, according to the inclusion probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e039" xlink:type="simple"/></inline-formula> (which controls the saturation of the model). The regression coefficients, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e040" xlink:type="simple"/></inline-formula>, are obtained by re-scaling the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e041" xlink:type="simple"/></inline-formula> values, in order to control the signal-to-noise ratio, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e042" xlink:type="simple"/></inline-formula>. See the <xref ref-type="sec" rid="s4">Methods</xref> section for details, including the distributional assumptions associated with these quantities.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g001" position="float" xlink:type="simple"/></fig>
+<p><xref ref-type="fig" rid="pone-0107957-g002">Figure 2</xref> presents scatter plots of the MSEs of ridge-regression, lasso and elastic-net. Overall, ridge showed smaller MSE than lasso in 90.46% of the simulations (panel a). This result is not unexpected since the maximum number of covariates that can be selected by lasso cannot be larger than the sample size, and in 95.24% of the simulations the true model contained more than <italic>n</italic> covariates. Most of the cases were lasso outperformed ridge-regression (below diagonal dots) correspond to the simulations where the sample size was larger than the number of covariates in the true model; that is, where the true model was sparse (see <xref ref-type="supplementary-material" rid="pone.0107957.s001">Figure S1a</xref> in the Supplement for further details).</p>
+<fig id="pone-0107957-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g002</object-id><label>Figure 2</label><caption>
+<title>Scatter plots comparing the MSE scores produced by ridge-regression, lasso, and elastic-net.</title>
+<p>Panel a shows the comparison of ridge-regression vs lasso, panel b compares ridge-regression vs elastic-net, and panel c compares lasso vs elastic-net.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g002" position="float" xlink:type="simple"/></fig>
+<p>The comparative performance of elastic-net and ridge-regression was quite balanced (panel b), with elastic-net outperforming ridge in 52.74% of the simulations, and most of the simulations showing close MSE values (note the concentration of points along the diagonal red curve). The simulations where elastic-net performed considerably better than ridge, i.e., the points dispersed to the lower right of the diagonal, correspond to sparse true models (see <xref ref-type="supplementary-material" rid="pone.0107957.s001">Figure S1b</xref> for details).</p>
+<p>Elastic-net outperformed lasso in 86.80% of the simulations (panel c). Again, this is not an unexpected result since, as described above, the performance of lasso is compromised when the number of covariates in the true model is larger than sample size, whereas elastic net can select more than <italic>n</italic> covariates <xref ref-type="bibr" rid="pone.0107957-Zou1">[6]</xref>. In the next subsections we investigate in detail the absolute and relative predictive performances of these three penalized regression methods.</p>
+<sec id="s2a">
+<title>Ridge-regression</title>
+<p>In this section, we investigate the effect of the simulation parameters on the mean squared error of the ridge model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e043" xlink:type="simple"/></inline-formula>). <xref ref-type="fig" rid="pone-0107957-g003">Figure 3</xref> presents the response distributions for each one of the five simulation parameters across their respective ranges (represented by 10 equally spaced bins). The red horizontal line represents the median of the response distribution. Inspection of the plots shows clear shifts in location and/or spread for the number of features, correlation, and sample size parameters, but practically constant distributions across the binned groups for the saturation parameter and (slightly less so) for the signal-to-noise parameter. Permutation tests for the equality of group distributions null hypothesis (using distance component analysis <xref ref-type="bibr" rid="pone.0107957-Rizzo1">[10]</xref> - see the “Data analysis” subsection on Methods for details) presented in <xref ref-type="table" rid="pone-0107957-t001">Table 1</xref>, confirm that the group differences are highly significant (p-value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e044" xlink:type="simple"/></inline-formula>) for the number of features, correlation, and sample size parameters (note the high values of the observed test statistics), but non-significant for saturation, and marginally significant for the signal-to-noise parameter. <xref ref-type="table" rid="pone-0107957-t001">Table 1</xref> also shows highly significant interactions for number of features vs correlation, sample size vs number of features, and sample size vs correlation. <xref ref-type="fig" rid="pone-0107957-g004">Figure 4</xref> shows the respective interaction plots.</p>
+<fig id="pone-0107957-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g003</object-id><label>Figure 3</label><caption>
+<title>Distributions of the absolute performance response for ridge-regression, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the absolute performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e045" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g003" position="float" xlink:type="simple"/></fig><fig id="pone-0107957-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g004</object-id><label>Figure 4</label><caption>
+<title>Interaction plots for ridge-regression.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g004" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t001</object-id><label>Table 1</label><caption>
+<title>Ridge-regression.</title>
+</caption><alternatives><graphic id="pone-0107957-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e046" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">76.980</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e047" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">450.212</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e048" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.651</td>
+<td align="left" rowspan="1" colspan="1">0.939</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e049" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.354</td>
+<td align="left" rowspan="1" colspan="1">0.098</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e050" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">141.839</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e051" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">20.778</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e052" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.559</td>
+<td align="left" rowspan="1" colspan="1">0.998</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e053" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.593</td>
+<td align="left" rowspan="1" colspan="1">0.998</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e054" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">3.785</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e055" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.553</td>
+<td align="left" rowspan="1" colspan="1">1.000</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e056" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.139</td>
+<td align="left" rowspan="1" colspan="1">0.207</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e057" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">27.951</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e058" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.760</td>
+<td align="left" rowspan="1" colspan="1">0.952</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e059" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.677</td>
+<td align="left" rowspan="1" colspan="1">0.980</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e060" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.727</td>
+<td align="left" rowspan="1" colspan="1">0.965</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16). Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p>As expected, <xref ref-type="fig" rid="pone-0107957-g003">Figure 3</xref> shows improvement in predictive performance as the sample size increases, the number of features decreases and the amount of correlation increases (panels a, b, and e, respectively). Furthermore, the interaction plots in <xref ref-type="fig" rid="pone-0107957-g004">Figure 4</xref> show synergistic effects of these parameters, with larger improvements in performance achieved by combinations of larger sample sizes with smaller number of features and with larger correlation values. Note that the strong decrease in MSE as a function of the amount of correlation among the features is expected since ridge-regression is highly effective in ameliorating multi-collinearity problems (the purpose for which it was originally developed). The lack of influence of the saturation parameter on the predictive performance is expected for ridge-regression, whereas the marginal influence of the signal-to-noise parameter is investigated in more detail in <xref ref-type="supplementary-material" rid="pone.0107957.s003">Text S1</xref>.</p>
+</sec><sec id="s2b">
+<title>Lasso</title>
+<p>For lasso, <xref ref-type="fig" rid="pone-0107957-g005">Figure 5</xref> shows strong shifts in location and/or spread for all parameters, except for the signal-to-noise. The permutation tests (<xref ref-type="table" rid="pone-0107957-t002">Table 2</xref>) confirms these results, and shows that even the much weaker group differences for the signal-to-noise parameter are statistically significant. Highly significant interaction terms included: sample size vs number of features, number of features vs saturation, number of features vs correlation, sample size vs saturation, and sample size vs correlation. <xref ref-type="fig" rid="pone-0107957-g006">Figure 6</xref> shows the respective interaction plots.</p>
+<fig id="pone-0107957-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g005</object-id><label>Figure 5</label><caption>
+<title>Distributions of the absolute performance response for lasso, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the absolute performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e061" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g005" position="float" xlink:type="simple"/></fig><fig id="pone-0107957-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g006</object-id><label>Figure 6</label><caption>
+<title>Interaction plots for lasso.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g006" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t002</object-id><label>Table 2</label><caption>
+<title>Lasso.</title>
+</caption><alternatives><graphic id="pone-0107957-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e062" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">38.094</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e063" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">328.013</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e064" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">50.773</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e065" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">2.379</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e066" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">34.313</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e067" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">20.147</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e068" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">3.777</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e069" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.864</td>
+<td align="left" rowspan="1" colspan="1">0.813</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e070" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.600</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e071" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">19.349</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e072" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.222</td>
+<td align="left" rowspan="1" colspan="1">0.092</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e073" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">11.155</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e074" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.963</td>
+<td align="left" rowspan="1" colspan="1">0.581</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e075" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.569</td>
+<td align="left" rowspan="1" colspan="1">0.999</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e076" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.620</td>
+<td align="left" rowspan="1" colspan="1">0.997</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16). Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p><xref ref-type="fig" rid="pone-0107957-g005">Figure 5</xref> shows improvement in predictive performance as the sample size increases, the number of features decreases, the saturation decreases, and the amount of correlation increases (panels a, b, c, and e, respectively). Once again, the interaction plots in <xref ref-type="fig" rid="pone-0107957-g006">Figure 6</xref> show synergistic effects of these parameters, with larger improvements in performance achieved by combinations of larger sample sizes with smaller number of features, smaller saturation and with larger correlation values. For lasso too, we observe a considerable decrease in MSE as a function of the amount of correlation in the features (although not as strong as in ridge-regression) corroborating empirical observations that although lasso can combat multi-collinearity problems it is not as effective as ridge-regression. On the other hand, and contrary to ridge-regression that is insensitive to the influence of the saturation parameter, we clearly observe an improvement in MSE as a function of decreasing saturation values for the lasso. The marginal influence of the signal-to-noise parameter is again investigated in more detail in <xref ref-type="supplementary-material" rid="pone.0107957.s003">Text S1</xref>.</p>
+</sec><sec id="s2c">
+<title>Elastic-net</title>
+<p>For elastic-net, <xref ref-type="fig" rid="pone-0107957-g007">Figure 7</xref> shows clear shifts in location and/or spread for all parameters, except for the signal-to-noise. <xref ref-type="table" rid="pone-0107957-t003">Table 3</xref>, confirms these results, and shows that even the much weaker group differences for the signal-to-noise parameter are statistically significant. <xref ref-type="table" rid="pone-0107957-t003">Table 3</xref> also shows highly significant interactions for sample size vs number of features, number of features vs saturation, number of features vs correlation, sample size vs saturation, and sample size vs correlation. <xref ref-type="fig" rid="pone-0107957-g008">Figure 8</xref> shows the respective interaction plots.</p>
+<fig id="pone-0107957-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g007</object-id><label>Figure 7</label><caption>
+<title>Distributions of the absolute performance response for elastic-net, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the absolute performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e077" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g007" position="float" xlink:type="simple"/></fig><fig id="pone-0107957-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g008</object-id><label>Figure 8</label><caption>
+<title>Interaction plots for elastic-net.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g008" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t003</object-id><label>Table 3</label><caption>
+<title>Elastic-net.</title>
+</caption><alternatives><graphic id="pone-0107957-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e078" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">92.070</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e079" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">393.980</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e080" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">18.031</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e081" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.882</td>
+<td align="left" rowspan="1" colspan="1">0.006</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e082" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">97.958</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e083" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">16.881</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e084" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">2.235</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e085" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.776</td>
+<td align="left" rowspan="1" colspan="1">0.927</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e086" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">2.176</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e087" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">9.345</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e088" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.245</td>
+<td align="left" rowspan="1" colspan="1">0.076</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e089" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">8.518</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e090" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.014</td>
+<td align="left" rowspan="1" colspan="1">0.445</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e091" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.605</td>
+<td align="left" rowspan="1" colspan="1">0.997</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e092" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.665</td>
+<td align="left" rowspan="1" colspan="1">0.994</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16). Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p>As expected, <xref ref-type="fig" rid="pone-0107957-g007">Figure 7</xref> shows improvement in predictive performance as the sample size increases, the number of features decreases, the saturation decreases, and the amount of correlation increases (panels a, b, c, and e, respectively). Furthermore, the interaction plots in <xref ref-type="fig" rid="pone-0107957-g008">Figure 8</xref> show, once again, synergistic effects of these parameters with larger improvements in performance achieved by combinations of larger sample sizes with smaller number of features, smaller saturation and with larger correlation values. For elastic-net, we observe a strong decrease in MSE as a function of the amount of correlation in the features (comparable to ridge-regression) corroborating empirical observations that elastic-net can be as efficient as ridge-regression in the combat multi-collinearity problems. Furthermore, and similarly to lasso, we clearly observe improvement in MSE as a function of decreasing saturation values for the elastic-net. The marginal influence of the signal-to-noise parameter is investigated in detail in <xref ref-type="supplementary-material" rid="pone.0107957.s003">Text S1</xref>.</p>
+</sec><sec id="s2d">
+<title>Ridge-regression versus lasso</title>
+<p>In order to compare the predictive performance of ridge-regression against lasso we defined the response as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e093" xlink:type="simple"/></inline-formula>. Note that positive values of the response represent the simulations where ridge-regression outperforms lasso, and vice-versa. <xref ref-type="fig" rid="pone-0107957-g009">Figure 9</xref> presents the response distributions for each one of the five simulation parameters. Inspection of the plots shows clear shifts in location and/or spread for the number of features, correlation, saturation, and sample size, but practically constant distribution across the bins for the signal-to-noise parameter. Permutation tests for the equality of group distributions null hypothesis, presented in <xref ref-type="table" rid="pone-0107957-t004">Table 4</xref>, confirm that the group differences are highly significant (p-value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e094" xlink:type="simple"/></inline-formula>) for the number of features, correlation, saturation, and sample size parameters (note the high values of the observed test statistics), but non-significant for signal-to-noise. <xref ref-type="table" rid="pone-0107957-t004">Table 4</xref> also shows highly significant interactions for number of features vs saturation, sample size vs saturation, and sample size vs number of features. <xref ref-type="fig" rid="pone-0107957-g010">Figure 10</xref> shows the respective interaction plots.</p>
+<fig id="pone-0107957-g009" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g009</object-id><label>Figure 9</label><caption>
+<title>Distributions of the relative performance response in the ridge-regression vs lasso comparison, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the relative performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e095" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g009" position="float" xlink:type="simple"/></fig><fig id="pone-0107957-g010" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g010</object-id><label>Figure 10</label><caption>
+<title>Interaction plots for the ridge-regression vs lasso comparison.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g010" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t004</object-id><label>Table 4</label><caption>
+<title>Ridge-regression vs lasso.</title>
+</caption><alternatives><graphic id="pone-0107957-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e096" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">28.003</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e097" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">99.312</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e098" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">78.062</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e099" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.949</td>
+<td align="left" rowspan="1" colspan="1">0.541</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e100" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">85.745</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e101" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">3.948</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e102" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">8.321</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e103" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.002</td>
+<td align="left" rowspan="1" colspan="1">0.482</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e104" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.996</td>
+<td align="left" rowspan="1" colspan="1">0.490</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e105" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">41.886</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e106" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.023</td>
+<td align="left" rowspan="1" colspan="1">0.426</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e107" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.393</td>
+<td align="left" rowspan="1" colspan="1">0.017</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e108" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.017</td>
+<td align="left" rowspan="1" colspan="1">0.443</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e109" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.570</td>
+<td align="left" rowspan="1" colspan="1">1.000</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e110" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.695</td>
+<td align="left" rowspan="1" colspan="1">0.986</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16), in the comparison of ridge-regression vs lasso. Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p>Comparison of ridge-regression against lasso corroborate two well known results, namely: (i) that lasso outperforms ridge when the true model is sparse, whereas the converse holds true for saturated models (<xref ref-type="fig" rid="pone-0107957-g009">Figure 9c</xref>); and (ii) for highly correlated features, ridge tends to dominate lasso in terms of predictive performance (<xref ref-type="fig" rid="pone-0107957-g009">Figure 9e</xref>). More interestingly, our simulations also detected a couple of less appreciated patterns. First, <xref ref-type="fig" rid="pone-0107957-g009">Figure 9a</xref> shows that the average advantage of ridge-regression over lasso tends to increase as the sample size gets larger. Nonetheless, the interaction plots in <xref ref-type="fig" rid="pone-0107957-g010">Figures 10b and c</xref> show that this advantage is larger in moderate to highly saturated models, but that lasso tends to outperform ridge-regression when sample size is large, but number of features and saturation are small. Second, <xref ref-type="fig" rid="pone-0107957-g009">Figure 9b</xref> shows an interesting pattern for the number of features, where the advantage of ridge-regression over lasso tends to increase at first, and then decreases as the number of covariates increases further. <xref ref-type="fig" rid="pone-0107957-g010">Figure 10a</xref> provides an explanation for this curious trend. Lasso is clearly better for small number of features if the saturation is also small, but ridge is better if the saturation is moderate to large. The advantage of ridge decreases with the number of features (for moderate or large saturation). With small saturation, increasing the number of features makes ridge more competitive, since at some point the number of features entering the model (i.e. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e111" xlink:type="simple"/></inline-formula>, on average) become larger than the sample size.</p>
+</sec><sec id="s2e">
+<title>Ridge-regression versus elastic-net</title>
+<p>For the comparison of ridge-regression against elastic-net we defined the response as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e112" xlink:type="simple"/></inline-formula>, so that positive values show the simulations where ridge-regression outperforms elastic-net, and vice-versa. <xref ref-type="fig" rid="pone-0107957-g011">Figure 11</xref> shows clear shifts in location and spread of the boxplots for saturation, number of features, sample size, and correlation, but considerably constant distribution for the signal-to-noise parameter. Overall, we see that the predictive performances of ridge and elastic-net tend to be closer to each other than the performances of ridge and lasso (note the small spread of most of the boxplots, and the closeness of the boxplot medians to 0). The permutation tests (<xref ref-type="table" rid="pone-0107957-t005">Table 5</xref>) detected highly significant differences in group distributions for saturation, number of features, sample size, and correlation, and marginally significant differences for signal-to-noise. Highly significant interaction terms included: number of features vs saturation, sample size vs saturation, and sample size vs number of features. <xref ref-type="fig" rid="pone-0107957-g012">Figure 12</xref> shows the respective interaction plots.</p>
+<fig id="pone-0107957-g011" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g011</object-id><label>Figure 11</label><caption>
+<title>Distributions of the relative performance response in the ridge-regression vs elastic-net comparison, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the relative performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e113" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g011" position="float" xlink:type="simple"/></fig><fig id="pone-0107957-g012" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g012</object-id><label>Figure 12</label><caption>
+<title>Interaction plots for the ridge-regression vs elastic-net comparison.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g012" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t005</object-id><label>Table 5</label><caption>
+<title>Ridge-regression vs elastic-net.</title>
+</caption><alternatives><graphic id="pone-0107957-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e114" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">42.231</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e115" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">61.468</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e116" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">82.652</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e117" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.515</td>
+<td align="left" rowspan="1" colspan="1">0.023</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e118" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">6.099</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e119" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">2.335</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e120" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">6.994</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e121" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.049</td>
+<td align="left" rowspan="1" colspan="1">0.365</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e122" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.675</td>
+<td align="left" rowspan="1" colspan="1">0.996</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e123" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">30.782</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e124" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.239</td>
+<td align="left" rowspan="1" colspan="1">0.075</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e125" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.685</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e126" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.417</td>
+<td align="left" rowspan="1" colspan="1">0.009</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e127" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.539</td>
+<td align="left" rowspan="1" colspan="1">1.000</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e128" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.739</td>
+<td align="left" rowspan="1" colspan="1">0.967</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt105"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16), in the comparison of ridge-regression vs elastic-net. Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p>Comparison of ridge-regression against elastic-net corroborates the well known result that elastic-net tends to show much better performance than ridge-regression when the true model is sparse, while these methods tend to be comparable for saturated models (<xref ref-type="fig" rid="pone-0107957-g011">Figure 11c</xref>). Novel insights uncovered by our simulations include that: (i) ridge tends to outperform elastic-net when sample size is small, but the reverse is true for larger sample sizes (<xref ref-type="fig" rid="pone-0107957-g011">Figure 11a</xref>). Furthermore, the interaction plots in <xref ref-type="fig" rid="pone-0107957-g012">Figure 12</xref> show that the better performance of elastic-net is accentuated when sample size is large but number of features and saturation are small; (ii) elastic-net tends to outperform ridge when number of features is small, but both methods tend to become comparable (with ridge being slightly better) for larger number of features (<xref ref-type="fig" rid="pone-0107957-g011">Figure 11b</xref>). This pattern is explained by a strong interaction between number of features and saturation (<xref ref-type="fig" rid="pone-0107957-g012">Figure 12a</xref>), which shows that the elastic-net performs much better than ridge when the number of features is small and the true model is sparse; and (iii) elastic-net tends to perform slightly better than ridge when the covariates are highly correlated (<xref ref-type="fig" rid="pone-0107957-g011">Figure 11e</xref>).</p>
+</sec><sec id="s2f">
+<title>Lasso versus elastic-net</title>
+<p>For the comparison of lasso against elastic-net we defined the response as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e129" xlink:type="simple"/></inline-formula>. Hence, positive values of the response show the simulations where lasso outperforms elastic-net, and vice-versa. <xref ref-type="fig" rid="pone-0107957-g013">Figure 13</xref> shows clear distribution differences for the number of features, correlation, sample size, and saturation parameters, but practically no differences for signal-to-noise. <xref ref-type="table" rid="pone-0107957-t006">Table 6</xref> corroborates these findings showing a non-significant p-value for signal-to-noise, but highly significant results for all other parameters. The permutation tests also detected highly significant interactions for: number of features vs saturation, sample size vs number of features, number of features vs correlation, sample size vs saturation, and sample size vs correlation.</p>
+<fig id="pone-0107957-g013" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g013</object-id><label>Figure 13</label><caption>
+<title>Distributions of the relative performance response in the elastic-net vs lasso comparison, across 10 equally spaced bins of the parameters ranges.</title>
+<p>The x-axis show the parameter ranges comprised by each of the 10 bins. The y-axis shows the relative performance response <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e130" xlink:type="simple"/></inline-formula>. The red horizontal line represents the median of the response distribution. The dotted line is set at zero.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g013" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0107957-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.t006</object-id><label>Table 6</label><caption>
+<title>Lasso vs elastic-net.</title>
+</caption><alternatives><graphic id="pone-0107957-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.t006" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">par.</td>
+<td align="left" rowspan="1" colspan="1">obs. stat.</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e131" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">78.683</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e132" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">123.014</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e133" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">26.688</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e134" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.804</td>
+<td align="left" rowspan="1" colspan="1">0.781</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e135" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">115.291</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs number of features (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e136" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">6.341</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e137" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">2.212</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e138" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.771</td>
+<td align="left" rowspan="1" colspan="1">0.932</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sample size vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e139" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.821</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs saturation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e140" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">9.788</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e141" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.652</td>
+<td align="left" rowspan="1" colspan="1">0.991</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">number of features vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e142" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">6.168</td>
+<td align="left" rowspan="1" colspan="1">&lt;0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs signal-to-noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e143" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.735</td>
+<td align="left" rowspan="1" colspan="1">0.971</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">saturation vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e144" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">1.233</td>
+<td align="left" rowspan="1" colspan="1">0.084</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">signal-to-noise vs correlation (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e145" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" rowspan="1" colspan="1">0.544</td>
+<td align="left" rowspan="1" colspan="1">0.999</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt106"><label/><p>Permutation tests for equality of the group distributions using distance components analysis (lines 2 to 6), and permutation F-tests for the presence of 2-by-2 interactions (lines 7 to 16), in the comparison of lasso vs elastic-net. Results based on 999 permutations.</p></fn></table-wrap-foot></table-wrap>
+<p>Comparison of lasso versus elastic-net also corroborates the well established results that: (i) lasso and elastic-net show comparable performances when the true model is sparse, whereas elastic-net outperforms lasso when the true model is saturated; and (ii) elastic-net outperforms lasso when the covariates are highly correlated. Furthermore, our simulations generated a couple of new insights. First, the advantage of elastic-net over lasso increases as the sample size gets larger (<xref ref-type="fig" rid="pone-0107957-g013">Figure 13a</xref>). <xref ref-type="fig" rid="pone-0107957-g014">Figures 14b, d and e</xref>, show that this advantage of elastic-net is more accentuated: for smaller number of features (red curve in <xref ref-type="fig" rid="pone-0107957-g014">Figure 14b</xref>); for moderate to larger saturations (green and blue curves in <xref ref-type="fig" rid="pone-0107957-g014">Figure 14d</xref>); and for larger correlations (blue curve in <xref ref-type="fig" rid="pone-0107957-g014">Figure 14e</xref>). Together, these results explain the larger spread of the boxplots on <xref ref-type="fig" rid="pone-0107957-g013">Figure 13a</xref> as sample size gets larger. Second, <xref ref-type="fig" rid="pone-0107957-g013">Figure 13b</xref> shows that, relative to number of features, the advantage of elastic-net tends to increase at first, but then starts to decrease as the number of features increases. <xref ref-type="fig" rid="pone-0107957-g014">Figures 14a and 14c</xref> provide an explanation for this curious trend. <xref ref-type="fig" rid="pone-0107957-g014">Figure 14a</xref> shows that elastic-net is clearly better than lasso for smaller number of features, if saturation is moderate or large, but lasso becomes more competitive when saturation is small, and that the advantage of elastic-net decreases with the number of features. <xref ref-type="fig" rid="pone-0107957-g014">Figure 14c</xref> shows that, when the correlation is high, the advantage of elastic-net tends to increase rapidly (as the number of features reaches approximately 8,800), before it starts to decrease with increasing number of features.</p>
+<fig id="pone-0107957-g014" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0107957.g014</object-id><label>Figure 14</label><caption>
+<title>Interaction plots for the lasso vs elastic-net comparison.</title>
+<p>The values of the interaction test statistics are shown on the top of the figures.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0107957.g014" position="float" xlink:type="simple"/></fig></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>In this paper we propose running simulation studies as designed experiments. We argue that, when comparing the performance of alternative methods in a simulation study, it is important to use well established design principles and follow best practices in planning of experiments, such as choosing relevant simulation parameters, adopting realistic ranges of parameter values, and making use of pilot studies to improve the design of the actual simulation experiment (see subsection “Choice of simulation parameters and parameter ranges” in <xref ref-type="sec" rid="s4">Methods</xref> for details).</p>
+<p>We illustrate the application of DOSE in a large scale simulation study comparing the relative performance of popular penalized regression methods as a function of sample size, number of features, model saturation, signal-to-noise ratio, and strength of correlation between groups of covariates organized in a blocked structure. We restricted our simulations to the case where the number of features is larger than the number of samples, since this is the usual setting in the analysis of real genomic data. Our simulations corroborated all well-established results concerning the conditions under which ridge-regression, lasso, and elastic-net are expected to perform best, but also provided several novel insights, described in the <xref ref-type="sec" rid="s2">Results</xref> section.</p>
+<p>In the present work we adopted MSE as the scoring metric since it is widely used in practice and is the metric adopted in the original papers proposing the lasso and elastic-net approaches. Nonetheless, it is important to point out that the results presented in this paper could be metric dependent, as alternative metrics might rank competing models differently. Interesting alternatives to the MSE metric include: concordance correlation coefficient <xref ref-type="bibr" rid="pone.0107957-Lin1">[11]</xref>, Pearson correlation, and mean absolute error. We point out, however, that an in-depth robustness investigation of our results with respect to alternative scoring metrics is out of the scope of the present paper, and is left as an interesting future research project.</p>
+<p>The incorporation of experimental design techniques in simulation studies can be useful in computational biology for three main reasons. (1) First, it provides increased objectivity and thoroughness in the assessment of competing methods/algorithms. (2) Second, it might improve our ability to select existing methods based on characteristics of a given data set. For instance, suppose that a researcher is working in a pharmacogenomics data set, aiming to perform predictive modeling of drug response sensitivity. Suppose further that comparison of ridge-regression and lasso model fits shows a better predictive performance by ridge (as is often the case in pharmacogenomic data sets <xref ref-type="bibr" rid="pone.0107957-ChaibubNeto1">[12]</xref>, <xref ref-type="bibr" rid="pone.0107957-Jang1">[13]</xref>). Next the researcher needs to decide between ridge-regression and elastic-net. At this point, instead of running elastic-net, a computationally expensive approach which requires performing cross-validation for two tuning parameters, the researcher can guide his/her choice based on readily observable characteristics of the data set, such as, sample size, number of features, and amount of correlation among the features (or assumptions about unobserved characteristics, such as underlying model sparsity). For instance, if her/his data has a small number of samples and a large number of weakly correlated features, our simulations suggest (see panels a, b, and e, on <xref ref-type="fig" rid="pone-0107957-g011">Figure 11</xref> and <xref ref-type="fig" rid="pone-0107957-g012">Figure 12</xref>) that ridge-regression is more likely to outperform elastic-net than the converse. (3) Third, the adoption of design techniques improves our ability to demonstrate the strengths of a method under specific conditions. This point is important, since it is unrealistic to expect any given method to outperform its competitors across a large panel of data sets, with diverse characteristics such as different sample sizes, amount of signal, correlation structures, etc. A more realistic goal is to demonstrate the improved performance of the given method under specific conditions, i.e., in a subspace of data set characteristics.</p>
+<p>This third point closely resonates with the celebrated No Free Lunch (NFL) theorems <xref ref-type="bibr" rid="pone.0107957-Wolpert1">[14]</xref>–<xref ref-type="bibr" rid="pone.0107957-Wolpert3">[16]</xref>, which can be interpreted as a formalization of David Hume's critique of the inductive method in science. More formally, in the context of supervised learning with zero-one loss, Wolpert <xref ref-type="bibr" rid="pone.0107957-Wolpert2">[15]</xref> shows that, if we don't make any assumptions (or, have no prior information) about the target input-output relationship we are trying to learn, than for any two algorithms A and B there are as many targets for which A outperforms B as vice versa. Extensions of NFL theorems for other loss functions are discussed in <xref ref-type="bibr" rid="pone.0107957-Wolpert3">[16]</xref>, which provides analogous (although weaker) NFL-type theorems applicable to the quadratic loss function. The NFL theorems address “the mathematical ‘skeleton’ of supervised learning, before the ‘flesh’ of particular priors” (i.e., assumptions) concerning the target input-output relationship are introduced <xref ref-type="bibr" rid="pone.0107957-Wolpert2">[15]</xref>. As pointed out in <xref ref-type="bibr" rid="pone.0107957-Schaffer1">[17]</xref>, the practical consequence of the NFL theorems is that every demonstration that the generalization performance of one algorithm is better than another in a given suite of test data sets, is also an implied demonstration that it is worse on an alternative suite. In short, empirical success in supervised learning is always due to problem selection. So, even though it is tempting to interpret good generalization performance as a characteristic of the algorithm, in reality it only means that the algorithm was well matched to the suite of test data sets. In this sense, the DOSE framework can be seen as a principled approach to empirically investigate which combinations of data set characteristics are best matched (in a statistical sense) by specific algorithms.</p>
+<p>Note that we do not observe an approximately balanced proportion of simulations in which one of the methods outperformed the other, as might seem to be implied by the NFL theorem. This is because, even though our simulations encompass a broad range of data set characteristics, they did not induce a uniform distribution over the space of target input-output relationships (i.e., the linear predictor in our case). For instance, the proportion of simulations where the linear predictor involved fewer features than the number of samples was highly skewed by our focus in the “large <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e146" xlink:type="simple"/></inline-formula>, small <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e147" xlink:type="simple"/></inline-formula>” setting. In other words, the very fact that we chose the parameter ranges for our simulations based on values observed in real genomic data sets imposes strong assumptions over the distribution of targets investigated in our simulations, skewing it away from a uniform distribution.</p>
+<p>In the statistical analyses of the simulation results, we divided the ranges of the simulation parameters into ten equally spaced bins, and applied distance component analysis to test for differences in the response distributions of the groups, and permutation F-tests to detect the presence of 2-by-2 interactions between simulation parameters. Although our choice of 10 groups was arbitrary, we repeated our analyses using 5 and 15 groups as well (see Supplementary Tables in <xref ref-type="supplementary-material" rid="pone.0107957.s007">Text S5</xref>), and observed qualitatively similar results, suggesting that our analyses were robust to the number of bins used.</p>
+<p>As pointed out in the <xref ref-type="sec" rid="s4">Methods</xref> section, a simulation experiment represents a middle ground between computer and physical experiments. In particular, given the stochastic nature of the data generation process, replication might be a beneficial technique in the context of simulation experiments. However, because of limitations in time and computational resources, a question arises about whether is it better to adopt a single large design with, say, 10,000 input points or to run the simulations on 10 replicates of a smaller design with only 1,000 input points. In this work we choose to allocate our resources to a more detailed exploration of the experimental region by adopting a larger space filling design at the expense of performing replications.</p>
+<p>The ability to clearly evaluate the relative merits of sophisticated statistical methods and machine learning algorithms in systematic and unbiased manner should be of broad utility to the computational biology community. In this paper, we proposed the use of DOSE as a general framework for the comparison of distinct algorithms used to solve a common machine learning problem and illustrate its application with the comparison of three widely used methods, whose predictive performance behavior is relatively well known. By showing that our simulations were able to provide new insights and recover expected behaviors, we demonstrate the value of adopting experimental design principles for the study of penalized regression models. A demonstration of the practical usefulness of DOSE in the comparison of a larger number of competing algorithms for regression (or classification) problems is, nonetheless, yet to be done.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Brief background on the methods under comparison</title>
+<p>Ridge-regression <xref ref-type="bibr" rid="pone.0107957-Hoerl1">[4]</xref> is a continuous shrinkage method that minimizes the residual sum of squares subject to a bound on the <italic>L</italic><sub>2</sub>-norm of the coefficients. In ill defined problems, where the number of covariates, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e148" xlink:type="simple"/></inline-formula>, is larger than the sample size, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e149" xlink:type="simple"/></inline-formula>, or where the covariates suffer from strong multi-collinearity, ridge-regression can be used to regularize the regression estimates, achieving better prediction accuracy through a bias-variance trade-off. Nonetheless, ridge-regression does not set any coefficients to 0 and does not produce an easily interpretable model.</p>
+<p>The lasso <xref ref-type="bibr" rid="pone.0107957-Tibshirani1">[5]</xref> circumvents this problem by minimizing the residual sum of squares constrained to a bound on the <italic>L</italic><sub>1</sub>-norm of the coefficients. The lasso penalty allows both continuous shrinkage and automatic variable selection to happen at the same time. However, it has been pointed out <xref ref-type="bibr" rid="pone.0107957-Zou1">[6]</xref> that the lasso has three important limitations. First, when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e150" xlink:type="simple"/></inline-formula>, the lasso can select at most <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e151" xlink:type="simple"/></inline-formula> variables before it saturates. Second, if there is a group of covariates that are highly correlated the lasso tends to select a single variable. Third, when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e152" xlink:type="simple"/></inline-formula> and the covariates are highly correlated, it has been shown empirically <xref ref-type="bibr" rid="pone.0107957-Tibshirani1">[5]</xref> that the predictive performance of the lasso is dominated by ridge-regression.</p>
+<p>The elastic-net addresses these three problems by minimizing the residual sum of squares constrained by a penalty term that is a convex combination of the <italic>L</italic><sub>1</sub>- and <italic>L</italic><sub>2</sub>-norms, and thus is capable of performing automatic variable selection by setting some coefficients to 0, but can also select groups of correlated variables, and no longer suffers from the saturation issue that plagues the lasso.</p>
+</sec><sec id="s4b">
+<title>Computer experiments versus simulation experiments</title>
+<p>Computer experiments <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>, <xref ref-type="bibr" rid="pone.0107957-Pronzato1">[3]</xref> are routinely used as a substitute for physical experiments when the latter are too expensive, unethical or infeasible. In computer experiments, a program is used to generate a response value associated with a set of input values. The program is deterministic, i.e., we obtain identical answers if we run the computer experiment twice using the same set of inputs. A consequence of this deterministic nature is that strategies employed in the design and analysis of computer experiments differ from the ones used in traditional physical experiments. For instance, well established practices in physical experiments such as replication, randomization and blocking are irrelevant in computer experiments. (In a computer experiment, a single observation at a given set of inputs gives us perfect information about the response at that particular set of inputs, hence replication is irrelevant. Furthermore, all experimental factors are known and randomization and blocking are not needed, since there are no uncontrolled variables that might affect the response in a systematic fashion, or might create uncontrolled heterogeneity.)</p>
+<p>A simulation experiment represents a middle ground between computer and physical experiments. In simulation experiments, the inputs (simulation parameters) are used in the generation of the simulated data sets to which we apply and evaluate the performance of competing algorithms. The response variable is generally defined as a measure of relative performance of the competing methods, and our interest is to model the response as a function of the simulation parameters. Because the simulated data sets are generated from probability distributions, simulation experiments are not deterministic. Hence (and similarly to physical experiments) the use of replications might be helpful. On the other hand (and similarly to computer experiments) randomization and blocking are still irrelevant since all uncontrolled variables are represented by random noise associated with the generation process employed in the production of the simulated data sets, and cannot affect the response in any systematic fashion.</p>
+<p>Similarly to both physical and computer experiments, where the scientific question to be answered determines the characteristics of the designed experiment, the types of statistical methods and algorithms to be compared dictate the specifics of the experimental design for a simulation study. Hence, the choice of simulation parameters (the inputs of the computer experiment) and the ranges of values investigated in the simulation study are case specific.</p>
+</sec><sec id="s4c">
+<title>Design of simulation experiments (DOSE)</title>
+<sec id="s4c1">
+<title>Space filling design</title>
+<p>In the context of design and analysis of computer experiments <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>, an experimental design consists of a matrix of input values, with columns indexing the input types, and each row storing the input values for each simulation run. The region comprising the input values we want to study is called the experimental region. A multi-dimensional point in the experimental region corresponds to a specific set of input values. In situations were we don't know a priori the true relation between input values and the response variable under study, it is reasonable to adopt a design that provides information about all portions of the experimental region. Space filling designs are a popular choice in this context since they attempt to spread out the input values as evenly as possible across the entire experimental region. Furthermore, because of the deterministic nature of computer experiments, space filling designs use a single observation at any set of inputs so that each simulation is run with a unique combination of parameter values. (We point out, however, that in the context of a simulation experiment, it makes sense to have replications of the parameter value combinations, due to the stochastic nature of the simulated data.)</p>
+<p>For our simulation study, we adopted a space filling design composed of 10,000 5-dimensional input points representing sample size, number of covariates, true model sparsity, signal-to-noise ratio, and correlation. Among the several available strategies to create a space filling design <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>, we adopted a Latin hypercube design (LHD) optimized according to the maximin distance criterium <xref ref-type="bibr" rid="pone.0107957-Johnson1">[18]</xref>, since it is relatively simple to draw samples from Latin hypercubes and there are robust and publicly available implementations of Latin hypercube samplers (namely, the <bold>lhs</bold> and <bold>DiceDesign</bold> R packages <xref ref-type="bibr" rid="pone.0107957-Carnell1">[19]</xref>, <xref ref-type="bibr" rid="pone.0107957-Franco1">[20]</xref>). Furthermore, LHD possess attractive properties under marginalization <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>, making LHDs one of the most popular designs for computer experiments.</p>
+<p>In a nutshell, a LHD in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e153" xlink:type="simple"/></inline-formula> dimensions and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e154" xlink:type="simple"/></inline-formula> points is generated in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e155" xlink:type="simple"/></inline-formula> experimental region by dividing each one of its <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e156" xlink:type="simple"/></inline-formula> dimensions into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e157" xlink:type="simple"/></inline-formula> intervals, and selecting each one of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e158" xlink:type="simple"/></inline-formula> points in the experimental region such that, when projected onto any of the marginal dimensions, exactly one point is in each of the intervals for that dimension. In spite of this desirable marginalization property, a LHD will not necessarily represent a space filling design. Therefore, the usual practice in the design of computer experiments is to use a second criterium in order to select a LHD with good space filling properties <xref ref-type="bibr" rid="pone.0107957-Santner1">[2]</xref>. Here, we adopt the maximin distance criterium which attempts to maximize the minimal distance between any two points in the design.</p>
+<p>In the present study, we generated over 20 distinct design matrices using the maximin Latin hypercube sampler implemented in the <bold>lhs</bold> package (due to its computational efficiency and scalability), and selected the one with the best space filling properties measured according to the coverage and maximin distance metrics provided by the <bold>DiceDesign</bold> R package. The coverage criterion is defined as<disp-formula id="pone.0107957.e159"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0107957.e159" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e160" xlink:type="simple"/></inline-formula> is the minimal distance between point <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e161" xlink:type="simple"/></inline-formula> and the other points in the design, and measures the deviation of the design from a regular mesh (with smaller coverage values indicating more regular designs). The mindist criterium is defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e162" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e163" xlink:type="simple"/></inline-formula> represents the minimal distance between the point <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e164" xlink:type="simple"/></inline-formula> and the other points of the design. Higher mindist values correspond to more regular scaterring of design points. After we generated a space filling design on the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e165" xlink:type="simple"/></inline-formula> hypercube, we transformed the design points to the range of parameter values we are actually interested in studying.</p>
+</sec><sec id="s4c2">
+<title>A note on alternative designs involving categorical simulation parameters</title>
+<p>The construction of the maximin Latin hypercube design adopted in this paper depends on a measure of distance between the input points. Therefore, it cannot be directly applied when some of the simulation parameters are categorical variables. In situations where all the simulation parameters are categorical we can use a full multifactorial experiment with crossed factors as an alternative to a space filling design. By adopting such a balanced full factorial design we ensure the orthogonality of the factors and protection against confounding of the simulation parameter effects on the relative performance response. The problem with such an approach is that the number of combinations of the crossed factors might be forbiddingly high even for a moderate number of simulation parameters and parameter levels. For instance, with 5 simulation parameters, and 10 levels per parameter, we would need to perform 10<sup>5</sup> simulations in order to sample each one of the possible parameter level combinations. Hence, full factorials are only feasible when the number of levels per parameter is small. When this is not the case, a fractional factorial design might be used.</p>
+<p>In situations where some of the parameters are categorical, while others are continuous, we have a few options. For instance, if we are willing to consider a factorial design with a small number of levels, we can divide the range of the continuous parameters into a small number of equally spaced discrete values, and treat the resulting ordinal variables as categorical factors in a full factorial design. For instance, if the range of a given continuous simulation parameter is [0, 3] we can divide this range into 3 equally spaced bins, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e166" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e167" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e168" xlink:type="simple"/></inline-formula>, and use the midpoints 0.5, 1.5, and 2.5 as “categorical” parameter values in the simulation study. Alternatively, we can combine a space filling design generated from the continuous variables, with all possible level combinations of the categorical variables. For example, suppose we have two categorical inputs with two levels each, and three continuous parameters. We can generate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e169" xlink:type="simple"/></inline-formula> points from a space filling approach, using the three continuous parameters, in order to generate a <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e170" xlink:type="simple"/></inline-formula> design matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e171" xlink:type="simple"/></inline-formula>, and then create a combined design, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e172" xlink:type="simple"/></inline-formula>, with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e173" xlink:type="simple"/></inline-formula> rows and 5 columns where each row of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e174" xlink:type="simple"/></inline-formula>, is combined with each one of the four combinations of the two categorical parameters levels in order to generate four rows in the design <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e175" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s4c3">
+<title>Choice of simulation parameters and parameter ranges</title>
+<p>An important step in the design of a simulation experiment is the choice of the relevant input simulation parameters, and the careful selection of the ranges of the simulation parameters to be investigated in the simulation study. Any characteristic of a data set that might impact the performance of a computational algorithm should be considered in the simulation study. For penalized regression models it is reasonable to expect that the sample size, the number of features, the sparsity of the true model generating the data, the amount of signal, the residual noise, and the amount of correlation between features, might affect the methods performance. For some of these parameters, it might be more natural to consider the ratio of two simulation parameters than each of the parameters on their own. For example, it is reasonable to expect the signal-to-noise ratio to capture the information provided by the signal and the noise parameters separately. In other cases, it is not completely clear whether the ratio would capture all the information provided by each of the parameters separately. For instance, even though we are frequently most interested in the number of features by sample size ratio, it is not clear whether the performance of the prediction algorithms would be the same in a data set containing 300 features and 100 samples, as in a data set containing 3,000 features and 1,000 samples. In these situations it is often advisable to run a pilot simulation study to investigate the issue. In the Supplement (<xref ref-type="supplementary-material" rid="pone.0107957.s004">Text S2</xref>) we present such a study, showing that, in fact, we can safely replace the signal and noise parameters by their ratios, whereas we should keep the number of features and sample size parameters separate.</p>
+<p>Once we decide which parameters should be used as inputs in the simulation study, we need to carefully determine the experimental region to be explored in the study. Our approach was to select the parameter ranges to be as realistic and consistent as possible with observed ranges in real genomic data applications. For each one of the five inputs in our simulation study, we selected the parameter value ranges as follows:</p>
+<list list-type="order"><list-item>
+<p>Sample size, <italic>n</italic>, was selected in the discrete range <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e176" xlink:type="simple"/></inline-formula>. Note that sample sizes in genomic studies in the “large <italic>p</italic>, small <italic>n</italic>” setting, using high throughput “omics” data sets, typically comprise a few hundred samples, with few studies having more than 1,000 samples.</p>
+</list-item><list-item>
+<p>Number of features, <italic>p</italic>, was selected in the discrete range <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e177" xlink:type="simple"/></inline-formula>. The upper limit on this range encompasses the number of probes generally sampled in RNA microarrays. Even though some technologies, such as SNP arrays, can produce much larger number of genomic features, it is often the case that some filtering is applied to screen out non-informative features, so that the selection of 40,000 as an upper bound for the range of <italic>p</italic>, is still a realistic choice.</p>
+</list-item><list-item>
+<p>Saturation parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e178" xlink:type="simple"/></inline-formula>, that specifies the probability that a covariate enters the regression model, was selected in the continuous interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e179" xlink:type="simple"/></inline-formula>. This choice ensures we are able to simulate from highly sparse to highly saturated models.</p>
+</list-item><list-item>
+<p>Signal-to-noise parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e180" xlink:type="simple"/></inline-formula>, was selected in the continuous range <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e181" xlink:type="simple"/></inline-formula>, with one half of the simulations in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e182" xlink:type="simple"/></inline-formula> interval addressing the cases where the noise was higher than the signal, and the other half in the interval <xref ref-type="bibr" rid="pone.0107957-Box1">[1]</xref>, <xref ref-type="bibr" rid="pone.0107957-Rizzo1">[10]</xref> addressing the cases where signal was higher than the noise. This range cover cases where the signal is 10 times lower to 10 times higher than the noise.</p>
+</list-item><list-item>
+<p>Feature correlation parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e183" xlink:type="simple"/></inline-formula>, was selected in the continuous range <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e184" xlink:type="simple"/></inline-formula>. This parameter controls the amount of correlation between feature blocks according to a Toeplitz structure (see next section for further details). This range covers the full spectrum from weak to strong correlation structures.</p>
+</list-item></list>
+<p>As described previously, we first generated a maximin LHD in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e185" xlink:type="simple"/></inline-formula> hypercube, and then mapped the values in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e186" xlink:type="simple"/></inline-formula> intervals back to the range of each of the simulation parameters we are interested to study. For <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e187" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e188" xlink:type="simple"/></inline-formula> we adopted a simple linear transformation<disp-formula id="pone.0107957.e189"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0107957.e189" xlink:type="simple"/><label>(1)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e190" xlink:type="simple"/></inline-formula> represents the transformed parameter value, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e191" xlink:type="simple"/></inline-formula> represents the original value in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e192" xlink:type="simple"/></inline-formula> scale, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e193" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e194" xlink:type="simple"/></inline-formula> represent, respectively, the upper and lower bounds of the parameter range of interest. For <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e195" xlink:type="simple"/></inline-formula> and <italic>p</italic>, we adopt the same linear transformation with the additional step of rounding the transformed parameter value to an integer. For <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e196" xlink:type="simple"/></inline-formula> we apply the following transformation<disp-formula id="pone.0107957.e197"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0107957.e197" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e198" xlink:type="simple"/></inline-formula> represents the indicator function. Observe that this transformation maps <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e199" xlink:type="simple"/></inline-formula> into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e200" xlink:type="simple"/></inline-formula>. The transformed simulation parameter values are then combined into the experimental design matrix, <italic>D</italic>, with columns indexing the simulation parameters, and rows indexing the input sets for each simulation.</p>
+</sec><sec id="s4c4">
+<title>Stochastic data generation process</title>
+<p>After we generated the experimental design, <italic>D</italic>, as explained in the previous sections, we generated the response and covariates data sets, for each simulation, as follows (see <xref ref-type="fig" rid="pone-0107957-g001">Figure 1</xref> for a graphical model representation of our data generation process):</p>
+<list list-type="order"><list-item>
+<p>Given the values of <italic>n</italic>, <italic>p</italic>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e201" xlink:type="simple"/></inline-formula>, in a particular row of the design <italic>D</italic>, we simulate the covariate data matrix, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e202" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e203" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e204" xlink:type="simple"/></inline-formula>, as <italic>K</italic> separate matrices, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e205" xlink:type="simple"/></inline-formula>, generated independently from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e206" xlink:type="simple"/></inline-formula> distributions, where the covariance matrix was generated according to a Toeplitz structure with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e207" xlink:type="simple"/></inline-formula>, for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e208" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e209" xlink:type="simple"/></inline-formula>, for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e210" xlink:type="simple"/></inline-formula>. The number of covariates, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e211" xlink:type="simple"/></inline-formula>, in each of these matrices were randomly chosen between 20 and 300 under the constraint that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e212" xlink:type="simple"/></inline-formula>.</p>
+</list-item><list-item>
+<p>Given the values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e213" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e214" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e215" xlink:type="simple"/></inline-formula>, we computed each regression coefficient, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e216" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e217" xlink:type="simple"/></inline-formula>, as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e218" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e219" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e220" xlink:type="simple"/></inline-formula>. Note that, by defining <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e221" xlink:type="simple"/></inline-formula> as above, we guarantee that the signal-to-noise ratio (defined as the average signal, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e222" xlink:type="simple"/></inline-formula>, divided by the residual noise, set to 1, in this case), is equal to the sampled value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e223" xlink:type="simple"/></inline-formula>, and that, on average, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e224" xlink:type="simple"/></inline-formula> regression coefficients will be non-zero.</p>
+</list-item><list-item>
+<p>Finally, given the computed covariates matrix and regression coefficients vector, we computed the independent variable vector, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e225" xlink:type="simple"/></inline-formula>, as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e226" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e227" xlink:type="simple"/></inline-formula> is a vector of standard normal error variables, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e228" xlink:type="simple"/></inline-formula> is set to 1.</p>
+</list-item></list>
+<p>Each simulated data set was composed of the independent variable vector, and the matrix of covariates. Each data set was split in two parts, generating independent training and testing data sets (we actually simulated data-sets of size 2<italic>n</italic>, so that the training and testing data sets had <italic>n</italic> samples, ranging from 100 to 1000). Both response and covariates were centered and scaled. Finally, we would like to point out that we generate the covariates data using the blocked correlation structure described in item 1 above for two reasons: (i) blocked structures are often seen in real data sets, where variables are usually grouped in blocks with different sizes; and (ii) it is computationally more efficient to simulate the covariate data as blocks of correlated variables, since data generation from a multivariate normal distribution involves performing a Choleski decomposition of the associated covariance matrix, a computationally challenging task for large matrices (recall that covariance matrices dimensions would range from 1,001 to 40,000 in our simulations). At this point, a natural question is whether the blocking structure in addition to the strength of the correlation (as measured by the simulation parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e229" xlink:type="simple"/></inline-formula>) can affect predictive performance of the methods under study. To address this question we performed a pilot simulation study (see <xref ref-type="supplementary-material" rid="pone.0107957.s005">Text S3</xref> in the Supplement for details). We found out that blocking has a minor effect on the predictive performance of ridge-regression, lasso, and elastic-net, but no effect in their relative performance, as measured by differences in MSE scores. In view of these findings, we decided to leave the blocking structure as an uncontrolled variable, and randomly select the block sizes (as described in item 1 above) in a range where the Choleski decomposition can be performed efficiently.</p>
+</sec></sec><sec id="s4d">
+<title>Model fitting and performance evaluation details</title>
+<p>The lasso and elastic-net fits were performed with the <bold>glmnet</bold> R package <xref ref-type="bibr" rid="pone.0107957-Friedman1">[21]</xref>. Following the parametrization of the elastic-net penalty in <xref ref-type="bibr" rid="pone.0107957-Friedman1">[21]</xref>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e230" xlink:type="simple"/></inline-formula>, we adopted the default <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e231" xlink:type="simple"/></inline-formula> grid of 100 values generated automatically by the <bold>cv.glmnet</bold> function (for both the lasso and elastic-net), and an <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e232" xlink:type="simple"/></inline-formula> grid given by the sequence 0.001, 0.01, 0.10, 0.15, 0.20,…, 0.95, for the elastic-net. (For the lasso we set <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e233" xlink:type="simple"/></inline-formula>.) The ridge regression model fit was performed with a modified version of the <bold>ridge.lm</bold> function from the <bold>MASS</bold> R package <xref ref-type="bibr" rid="pone.0107957-Venables1">[22]</xref>, and the determination of the tuning parameter grid for its penalty is described in <xref ref-type="supplementary-material" rid="pone.0107957.s006">Text S4</xref> on the Supplement. For all methods we optimized the tuning parameters in the training data set using 10-fold cross-validation, and evaluated their predictive ability in the testing data set, using the MSE, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e234" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e235" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e236" xlink:type="simple"/></inline-formula> represent the response and covariate testing data, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e237" xlink:type="simple"/></inline-formula> is estimated from the training data. Because we scale the response variables, the predictions from an intercept-only model (which contains no features and, therefore, completely ignores the information contained in the input variables) will generate a MSE score close to 1.</p>
+</sec><sec id="s4e">
+<title>Data analysis</title>
+<p>In order to understand how the simulation parameters affect the absolute performance of a given method <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e238" xlink:type="simple"/></inline-formula> we adopted <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e239" xlink:type="simple"/></inline-formula> as the response (output variable), and the simulation parameters as the input variables. For the relative performance comparison of any two distinct methods, we again used the simulation parameters as the input variables but defined the response, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e240" xlink:type="simple"/></inline-formula>, as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e241" xlink:type="simple"/></inline-formula>. In both cases we assume that the response is affected by an unknown error term, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e242" xlink:type="simple"/></inline-formula>, such that E<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e243" xlink:type="simple"/></inline-formula> and Var<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e244" xlink:type="simple"/></inline-formula>, and is related to the covariates (i.e, our simulation parameters) by a function, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e245" xlink:type="simple"/></inline-formula>, according to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e246" xlink:type="simple"/></inline-formula>. For the examples presented in the Results section we observed that the simulation parameters and the response values were related in a non-linear fashion (see <xref ref-type="fig" rid="pone-0107957-g003">Figures 3</xref>, <xref ref-type="fig" rid="pone-0107957-g005">5</xref>, <xref ref-type="fig" rid="pone-0107957-g007">7</xref>, <xref ref-type="fig" rid="pone-0107957-g009">9</xref>, <xref ref-type="fig" rid="pone-0107957-g011">11</xref>, and <xref ref-type="fig" rid="pone-0107957-g013">13</xref>). Furthermore, the distribution of our response variables is not Gaussian (<xref ref-type="supplementary-material" rid="pone.0107957.s002">Figure S2</xref> in the Supplement). Therefore, assuming a linear model with Gaussian errors is inadequate.</p>
+<p>In order to account for non-linearity and lack of normality, we discretize the ranges of simulation parameters into a number of equally spaced groups, and assess the statistical significance of trends observed in the data using distance components analysis (DISCO) <xref ref-type="bibr" rid="pone.0107957-Rizzo1">[10]</xref>. While standard one-way ANOVA tests the null hypothesis that the group means are zero, DISCO tests the more general null that the groups distributions are equal, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e247" xlink:type="simple"/></inline-formula>, versus the composite alternative <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e248" xlink:type="simple"/></inline-formula> for some <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e249" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e250" xlink:type="simple"/></inline-formula> represents the number of groups and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e251" xlink:type="simple"/></inline-formula> the distribution function of the <italic>k</italic>th group. While ANOVA is only able to detect shifts in mean, DISCO can detect changes in the dispersion of the groups as well. The DISCO test statistic is a function of powered Euclidean norms between all pairs of sample elements, for any power <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e252" xlink:type="simple"/></inline-formula>. In the special case of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e253" xlink:type="simple"/></inline-formula> the DISCO test statistic reduces to the usual ANOVA F-statistic (which measures dispersion by considering squared distances of sample elements from the sample mean). P-values for the DISCO null hypothesis are computed via a permutation test, and hence is a non-parametric test. DISCO is implemented in the <bold>energy</bold> R package <xref ref-type="bibr" rid="pone.0107957-Rizzo2">[25]</xref>, and we adopted <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e254" xlink:type="simple"/></inline-formula> in our analyzes.</p>
+<p>Except for the signal-to-noise parameter, <xref ref-type="fig" rid="pone-0107957-g003">Figures 3</xref>, <xref ref-type="fig" rid="pone-0107957-g005">5</xref>, <xref ref-type="fig" rid="pone-0107957-g007">7</xref>, <xref ref-type="fig" rid="pone-0107957-g009">9</xref>, <xref ref-type="fig" rid="pone-0107957-g011">11</xref>, and <xref ref-type="fig" rid="pone-0107957-g013">13</xref> show a fair amount of variation in the shapes of the boxplots across the binned parameter ranges. This heterogeneity in the distributional form of the response variable suggests the presence of parameter interactions <xref ref-type="bibr" rid="pone.0107957-Cox1">[23]</xref>. Although DISCO analysis readily generalizes to the analysis of multifactorial-ANOVA with interactions <xref ref-type="bibr" rid="pone.0107957-Rizzo1">[10]</xref>, the current R implementation only handles one-way models. In order to test for the presence of 2-by-2 interactions we adopted permutation tests based on the two-way ANOVA interaction F-statistic to check whether the curves in an interaction plot are parallel.</p>
+<p>Following reference <xref ref-type="bibr" rid="pone.0107957-Davison1">[24]</xref>, the permutation p-values for our non-parametric interaction tests (and for DISCO as well) are computed as<disp-formula id="pone.0107957.e255"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0107957.e255" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e256" xlink:type="simple"/></inline-formula> represents the number of permutations, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e257" xlink:type="simple"/></inline-formula> represents the test statistic computed at permutation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e258" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e259" xlink:type="simple"/></inline-formula> represents the observed test statistic. Observe that the assumption of exchangeability of observations under the null (required by the permutation tests) seems reasonable in our context.</p>
+</sec><sec id="s4f">
+<title>Data and code availability</title>
+<p>Given the scale of our study, the simulations were performed with cluster computing in the AWS cloud using the <bold>rredis</bold> <xref ref-type="bibr" rid="pone.0107957-Lewis1">[26]</xref> and <bold>doRedis</bold> <xref ref-type="bibr" rid="pone.0107957-Lewis2">[27]</xref> R packages. The predictive performance data used in the paper, that is, the MSE values derived from the 10,000 simulations, is available in Synapse under the project DOSE (<ext-link ext-link-type="uri" xlink:href="https://www.synapse.org/#!Synapse:syn2177826" xlink:type="simple">https://www.synapse.org/#!Synapse:syn2177826</ext-link>). All the open-source code to simulate the data sets, fit the penalized regression models, and analyze the predictive performance results is deposited in Github and can be accessed from the DOSE project in Synapse.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0107957.s001" mimetype="application/postscript" xlink:href="info:doi/10.1371/journal.pone.0107957.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Performance of ridge-regression, lasso, and elastic-net under sparse and saturated models.</bold> Scatter plots of the MSE<italic><sub>R</sub></italic> versus MSE<italic><sub>L</sub></italic> (panel a) and MSE<italic><sub>R</sub></italic> versus MSE<italic><sub>E</sub></italic> (panel b) colored according to the true model sparsity. Blue dots show the simulations where the number of covariates entering the true model was equal or smaller than the sample size. In total, only 476 (out of the 10,000) simulations showed this pattern. Red dots show the reverse situation (9,524 simulations). Note that in both panels a and b, the red dots tend to be concentrated above (but close) to the diagonal line, whereas the blue dots tend to be located below but dispersed away from the diagonal. This suggests that for sparse models lasso and elastic net tend to perform better than ridge, and often times considerably better (note the concentration of points close to 0 in the y-axis, but ranging from 0 to 1 in the x-axis). For more saturated models, on the other hand, ridge regression tends to be better, but the difference in performance is not accentuated (especially for the elastic net - panel b). Panel c shows the distribution of the actual number of covariates that entered the true model across the 10,000 simulations. At each simulation, the actual number of covariates was sampled from a binomial distribution with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e260" xlink:type="simple"/></inline-formula> trials and probability of success given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e261" xlink:type="simple"/></inline-formula>.</p>
+<p>(EPS)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s002" mimetype="application/postscript" xlink:href="info:doi/10.1371/journal.pone.0107957.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>Response distributions.</bold> Panels a, c, and e show, respectively, the response distributions of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e262" xlink:type="simple"/></inline-formula> (ridge-regression), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e263" xlink:type="simple"/></inline-formula> (lasso), and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e264" xlink:type="simple"/></inline-formula> (elastic-net), used in the absolute performance analyses. Panels b, d, and f show, respectively, the response distributions <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e265" xlink:type="simple"/></inline-formula> (lasso vs ridge), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e266" xlink:type="simple"/></inline-formula> (elastic-net vs ridge), and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e267" xlink:type="simple"/></inline-formula> (elastic-net vs lasso), used in the relative performance analyses. In all cases the responses do not follow a normal distribution.</p>
+<p>(EPS)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s003" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0107957.s003" position="float" xlink:type="simple"><label>Text S1</label><caption>
+<p><bold>Additional investigations on the </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e268" xlink:type="simple"/></inline-formula><bold> parameter.</bold> Additional simulation experiments investigating the effect of the signal-to-noise parameter under four distinct ranges of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0107957.e269" xlink:type="simple"/></inline-formula> ratios.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s004" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0107957.s004" position="float" xlink:type="simple"><label>Text S2</label><caption>
+<p><bold>Pilot studies: original parameters versus parameter ratios.</bold> Pilot simulation study investigating whether the signal-to-noise and number-of-features-to-sample-size ratio parameters could be used in place of the respective original parameters.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s005" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0107957.s005" position="float" xlink:type="simple"><label>Text S3</label><caption>
+<p><bold>Pilot studies: the effect of blocked correlation structure.</bold> Pilot simulation study investigating whether blocking structure, in addition to correlation strength, can affect predictive performance of the methods under study.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s006" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0107957.s006" position="float" xlink:type="simple"><label>Text S4</label><caption>
+<p><bold>Tuning parameter grid for the ridge-regression.</bold> Description of the automatic/data-driven approach used to determine the tuning parameter grid for ridge-regression.</p>
+<p>(PDF)</p>
+</caption></supplementary-material><supplementary-material id="pone.0107957.s007" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0107957.s007" position="float" xlink:type="simple"><label>Text S5</label><caption>
+<p><bold>Supplementary tables.</bold> Permutation tests for equality of the group distributions using distance components analysis, and permutation F-tests for the presence of 2-by-2 interactions, using 5, 10, and 15 bins. Table S1 compares ridge-regression vs lasso. Table S2 compares ridge-regression vs elastic-net. Table S3 compares lasso vs elastic-net.</p>
+<p>(PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We would like to thank the editor and the anonymous reviewers for the several comments/suggestions that greatly improved this work.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0107957-Box1"><label>1</label>
+<mixed-citation publication-type="other" xlink:type="simple">Box EP, Hunter WG, Hunter JS (1978) Statistics for experimenters. Jon Wiley and Sons, New York.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Santner1"><label>2</label>
+<mixed-citation publication-type="other" xlink:type="simple">Santner TJ, Williams BJ, Notz WI (2003) The design and analysis of computer experiments. Springer Verlag, New York.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Pronzato1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pronzato</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Muller</surname><given-names>WG</given-names></name> (<year>2012</year>) <article-title>Design of computer experiments: space filling and beyond</article-title>. <source>Statistics and Computing</source> <volume>22</volume>: <fpage>681</fpage>–<lpage>701</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Hoerl1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoerl</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Kennard</surname><given-names>RW</given-names></name> (<year>1970</year>) <article-title>Ridge regression: applications to non-orthogonal problems</article-title>. <source>Technometrics</source> <volume>12</volume>: <fpage>55</fpage>–<lpage>68</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Tibshirani1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>1996</year>) <article-title>Regression Shrinkage and selection via the lasso</article-title>. <source>Journal of the Royal Statistical Association, Series B</source> <volume>58</volume>: <fpage>267</fpage>–<lpage>288</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Zou1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zou</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name> (<year>2005</year>) <article-title>Regularization and variable selection via the elastic net</article-title>. <source>Journal of the Royal Statistical Association, Series B</source> <volume>67</volume>: <fpage>301</fpage>–<lpage>320</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-West1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>West</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Blanchette</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Dressman</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Ishida</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Predicting the clinical status of human breast cancer using gene expression profiles. Proc. Natn. Acad. of Sci</article-title>. <source>USA</source> <volume>98</volume>: <fpage>11462</fpage>–<lpage>11467</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Barretina1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barretina</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Caponigro</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Stransky</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Venkatesan</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity</article-title>. <source>Nature</source> <volume>483</volume>: <fpage>603</fpage>–<lpage>607</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Garnett1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garnett</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Edelman</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Heidorn</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Greenman</surname><given-names>CD</given-names></name>, <name name-style="western"><surname>Dastur</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Systematic identification of genomic markers of drug sensitivity in cancer cells</article-title>. <source>Nature</source> <volume>483</volume>: <fpage>570</fpage>–<lpage>577</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Rizzo1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rizzo</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Szekely</surname><given-names>GJ</given-names></name> (<year>2010</year>) <article-title>Disco analysis: a nonparametric extension of analysis of variance</article-title>. <source>Annals of Applied Statistics</source> <volume>4</volume>: <fpage>1034</fpage>–<lpage>1055</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Lin1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname><given-names>LI</given-names></name> (<year>1989</year>) <article-title>A concordance correlation coefficient to evaluate reproducibility</article-title>. <source>Biometrics</source> <volume>45</volume>: <fpage>255</fpage>–<lpage>268</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-ChaibubNeto1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chaibub Neto</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Jang</surname><given-names>IS</given-names></name>, <name name-style="western"><surname>Friend</surname><given-names>SH</given-names></name>, <name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name> (<year>2014</year>) <article-title>The stream algorithm: computationally efficient ridge-regression via Bayesian model averaging, and applications to pharmacogenomic prediction of cancer cell line sensitivity</article-title>. <source>Pacific Symposium on Biocomputing</source> <volume>19</volume>: <fpage>27</fpage>–<lpage>38</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Jang1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jang</surname><given-names>IS</given-names></name>, <name name-style="western"><surname>Chaibub Neto</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Guinney</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Friend</surname><given-names>SH</given-names></name>, <name name-style="western"><surname>Margolin</surname><given-names>AA</given-names></name> (<year>2014</year>) <article-title>Systematic assessment of analytical methods for drug sensitivity prediction from cancer cell line data</article-title>. <source>Pacific Symposium on Biocomputing</source> <volume>19</volume>: <fpage>63</fpage>–<lpage>74</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Wolpert1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wolpert</surname><given-names>DH</given-names></name>, <name name-style="western"><surname>Macready</surname><given-names>WG</given-names></name> (<year>1997</year>) <article-title>No free lunch theorems for optimization</article-title>. <source>IEEE Transactions on Evolutionary Computation</source> <volume>1</volume>: <fpage>67</fpage>–<lpage>82</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Wolpert2"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wolpert</surname><given-names>DH</given-names></name> (<year>1996</year>) <article-title>The lack of a priori distinctions between learning algorithms</article-title>. <source>Neural Computation</source> <volume>8</volume>: <fpage>1341</fpage>–<lpage>1390</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Wolpert3"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wolpert</surname><given-names>DH</given-names></name> (<year>1996</year>) <article-title>The existence of a priori distinctions between learning algorithms</article-title>. <source>Neural Computation</source> <volume>8</volume>: <fpage>1391</fpage>–<lpage>1421</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Schaffer1"><label>17</label>
+<mixed-citation publication-type="other" xlink:type="simple">Schaffer C (1994) A conservation law for generalization performance. International Conference on Machine Learning, Morgan Kauffman, 295–265.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Johnson1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Johnson</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Moore</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Ylvisaker</surname><given-names>D</given-names></name> (<year>1990</year>) <article-title>Minimax and maximin distance designs</article-title>. <source>Journal of Statistical Planning and Inference</source> <volume>26</volume>: <fpage>131</fpage>–<lpage>148</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Carnell1"><label>19</label>
+<mixed-citation publication-type="other" xlink:type="simple">Carnell R (2012) lhs: Latin Hypercube Samples. R package version 0.10. Available: <ext-link ext-link-type="uri" xlink:href="http://CRAN.R-project.org/package=lhs" xlink:type="simple">http://CRAN.R-project.org/package=lhs</ext-link>. Accessed 18 September 2014.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Franco1"><label>20</label>
+<mixed-citation publication-type="other" xlink:type="simple">Franco J, Dupuy D, Roustant O, Damblin G, Iooss B (2014) DiceDesign: designs of computer experiments. R package version 1.4. Available: <ext-link ext-link-type="uri" xlink:href="http://CRAN.R-project.org/package=DiceDesign" xlink:type="simple">http://CRAN.R-project.org/package=DiceDesign</ext-link>. Accessed 18 September 2014.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Friedman1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Regularization paths for generalized linear models via coordinate descent</article-title>. <source>Journal of Statistical Software</source> <volume>33</volume>: <fpage>1</fpage>–<lpage>22</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Venables1"><label>22</label>
+<mixed-citation publication-type="other" xlink:type="simple">Venables WN, Ripley BD (2002) Modern Applied Statistics with S. Fourth Edition. Springer, New York.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Cox1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cox</surname><given-names>RD</given-names></name> (<year>1984</year>) <article-title>Interaction</article-title>. <source>International Statistical Review</source> <volume>52</volume>: <fpage>1</fpage>–<lpage>31</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Davison1"><label>24</label>
+<mixed-citation publication-type="other" xlink:type="simple">Davison AC, Hinkley DV (1997) Bootstrap methods and their application. Cambridge University Press, United Kingdom.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Rizzo2"><label>25</label>
+<mixed-citation publication-type="other" xlink:type="simple">Rizzo ML, Szekely GJ (2014) energy: E-statistics (energy statistics). R package version 1.6.1. Available: <ext-link ext-link-type="uri" xlink:href="http://CRAN.R-project.org/package=energy" xlink:type="simple">http://CRAN.R-project.org/package=energy</ext-link>. Accessed 18 September 2014.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Lewis1"><label>26</label>
+<mixed-citation publication-type="other" xlink:type="simple">Lewis BW (2013) rredis: Redis client for R. R package version 1.6.8. Available: <ext-link ext-link-type="uri" xlink:href="http://CRAN.R-project.org/package=rredis" xlink:type="simple">http://CRAN.R-project.org/package=rredis</ext-link>. Accessed 18 September 2014.</mixed-citation>
+</ref>
+<ref id="pone.0107957-Lewis2"><label>27</label>
+<mixed-citation publication-type="other" xlink:type="simple">Lewis BW (2014) doRedis: Foreach parallel adapter for the rredis package. R package version 1.1.1. Available: <ext-link ext-link-type="uri" xlink:href="http://CRAN.R-project.org/package=doRedis" xlink:type="simple">http://CRAN.R-project.org/package=doRedis</ext-link>. Accessed 18 September 2014.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

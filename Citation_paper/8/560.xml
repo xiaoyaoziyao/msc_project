@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PONE-RA-04473R2</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0003697</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology</subject><subject>Computer Science</subject><subject>Computational Biology/Computational Neuroscience</subject><subject>Computational Biology/Evolutionary Modeling</subject><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Population Genetics</subject><subject>Neuroscience/Neurodevelopment</subject><subject>Neuroscience/Theoretical Neuroscience</subject></subj-group></article-categories><title-group><article-title>Evolving Synaptic Plasticity with an Evolutionary Cellular Development Model</article-title><alt-title alt-title-type="running-head">Synaptic Plasticity Evolution</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Yerushalmi</surname><given-names>Uri</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Teicher</surname><given-names>Mina</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>The Leslie and Susan Gonda Interdisciplinary Brain Research Center, Bar-Ilan University, Ramat-Gan, Israel</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>The Leslie and Susan Gonda Interdisciplinary Brain Research, Center, Bar-Ilan University, Ramat-Gan, Israel</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Sporns</surname><given-names>Olaf</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Indiana University, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">uri.yerushalmi@gmail.com</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: UY. Performed the experiments: UY. Analyzed the data: UY. Contributed reagents/materials/analysis tools: UY MT. Wrote the paper: UY.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2008</year></pub-date><pub-date pub-type="epub"><day>11</day><month>11</month><year>2008</year></pub-date><volume>3</volume><issue>11</issue><elocation-id>e3697</elocation-id><history>
+<date date-type="received"><day>26</day><month>4</month><year>2008</year></date>
+<date date-type="accepted"><day>17</day><month>10</month><year>2008</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Yerushalmi et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Since synaptic plasticity is regarded as a potential mechanism for memory formation and learning, there is growing interest in the study of its underlying mechanisms. Recently several evolutionary models of cellular development have been presented, but none have been shown to be able to evolve a range of biological synaptic plasticity regimes. In this paper we present a biologically plausible evolutionary cellular development model and test its ability to evolve different biological synaptic plasticity regimes. The core of the model is a genomic and proteomic regulation network which controls cells and their neurites in a 2D environment. The model has previously been shown to successfully evolve behaving organisms, enable gene related phenomena, and produce biological neural mechanisms such as temporal representations. Several experiments are described in which the model evolves different synaptic plasticity regimes using a direct fitness function. Other experiments examine the ability of the model to evolve simple plasticity regimes in a task -based fitness function environment. These results suggest that such evolutionary cellular development models have the potential to be used as a research tool for investigating the evolutionary aspects of synaptic plasticity and at the same time can serve as the basis for novel artificial computational systems.</p>
+</abstract><funding-group><funding-statement>This work was supported by a DIP grant for compositionality.</funding-statement></funding-group><counts><page-count count="18"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Much recent effort has been directed towards understanding the mechanisms that underlie neural system development and plasticity by simulating biological processes at a time- scale of individual development. Intensive attempts are also under way to develop models that evolve artificial neural networks. However, most models evolving neural systems either lack the flexibility to handle a wide range of biological phenomena or do not have the requisite foundation to be considered biologically plausible.</p>
+<p>The most common encoding used to evolve neural networks from genotypes is known as “direct encoding” where the phenotype information is directly encoded in the genome <xref ref-type="bibr" rid="pone.0003697-Montana1">[1]</xref>. Other methods include parameterized encoding <xref ref-type="bibr" rid="pone.0003697-Harp1">[2]</xref>–<xref ref-type="bibr" rid="pone.0003697-Rust2">[4]</xref>, which is usually restricted to predefined architectures, and non- modularity and grammar encoding <xref ref-type="bibr" rid="pone.0003697-Kitano1">[5]</xref>–<xref ref-type="bibr" rid="pone.0003697-Sims2">[7]</xref>, where the genome encodes a set of grammar rules that are used to build the phenotype.</p>
+<p>Recently, several artificial evolutionary systems that incorporate a developmental phase have been presented. Various names have been suggested for such systems, including Artificial Ontogeny <xref ref-type="bibr" rid="pone.0003697-Bongard1">[8]</xref>, Computational Embryogeny <xref ref-type="bibr" rid="pone.0003697-Bentley1">[9]</xref>, Cellular Encoding <xref ref-type="bibr" rid="pone.0003697-Gruau1">[10]</xref>, <xref ref-type="bibr" rid="pone.0003697-Belew1">[11]</xref>, Morphogenesis <xref ref-type="bibr" rid="pone.0003697-Jakobi1">[12]</xref>, and Artificial Embryogeny <xref ref-type="bibr" rid="pone.0003697-Stanley1">[13]</xref>. Some of these computational models enable evolving neural networks by simulating metabolic and cellular development processes <xref ref-type="bibr" rid="pone.0003697-Astor1">[14]</xref>–<xref ref-type="bibr" rid="pone.0003697-Kitano2">[17]</xref>.</p>
+<p>In <xref ref-type="bibr" rid="pone.0003697-Reil1">[18]</xref>, an artificial genome entirely based on template matching in a nucleotide-like sequence was presented and used to study the dynamics of gene expression. In this model, as in the model presented in this paper, genes activate or inhibit other genes by producing products that bind to their regulatory sequences. However, this model has not been used for examining phenomena on a larger scale, such as at the tissue or neural level.</p>
+<p>In <xref ref-type="bibr" rid="pone.0003697-Dellaert2">[19]</xref>, a simulation of complex biologically- inspired development was shown to be possible by evolving an organism through many cycles of cell division, differentiation and axonal growth. However, hand- written genetic instructions were used to control the organism's development.</p>
+<p>In <xref ref-type="bibr" rid="pone.0003697-Gruau1">[10]</xref>, grammatical rules were used to build the phenotype, but unlike grammar encoding <xref ref-type="bibr" rid="pone.0003697-Kitano1">[5]</xref>–<xref ref-type="bibr" rid="pone.0003697-Sims2">[7]</xref>, the grammatical rules were applied to a neural cell rather than a matrix. Each cell had a copy of the genome, which directly encoded a grammar tree. Each cell reads the grammar tree at a different position. Depending on what the cell reads, it can divide, change its internal parameters, and take on its final form as a neuron.</p>
+<p>A similar grammar-based model for generating a neural phenotype was presented in <xref ref-type="bibr" rid="pone.0003697-Belew2">[20]</xref>. The development starts with a germ cell that is represented by the start symbol of the grammar. However, these grammar based and cellular based encodings lack the ability to deal with complex interactions among the different developmental phenomena.</p>
+<p>A model of neural network biological development based on a regulatory genome was presented in <xref ref-type="bibr" rid="pone.0003697-Cangelosi1">[21]</xref>. The NN was evolved as the controller of a virtual foraging organism.. In this model, an organism's NN development starts with a single cell that has 23 ‘proteins’. Some of these are extra-cellular signaling receptors, whereas others are responsible for the execution of developmental events, and still others are regulatory elements for the modulation of gene expression.</p>
+<p>In <xref ref-type="bibr" rid="pone.0003697-Dellaert2">[19]</xref>, organisms evolve through many cycles of cell division, differentiation, and axonal growth. This study shows that a simulation of complex biologically inspired development is possible and can be successful. However, many of the genetic instructions to control the organism's development were hand-written.</p>
+<p>A computational model of neurogenesis based on metabolitic processes was tested in <xref ref-type="bibr" rid="pone.0003697-Kitano2">[17]</xref>. The model could evolve large neural networks. Another system for evolving 3D organisms using gene expression mechanisms was presented in <xref ref-type="bibr" rid="pone.0003697-Eggenberger1">[16]</xref>.</p>
+<p>However, the drawback of all the encodings presented above is that they are either not based on biological processes, or lack the multiple interactions among different developmental phenomena that result in the emergence of biologically plausible models. Thus, despite promising progress, none of these models has succeeded in replicating a wide range of biological phenomena, including ones that demonstrate synaptic plasticity.</p>
+<p>It has been argued elsewhere <xref ref-type="bibr" rid="pone.0003697-Ruppin1">[22]</xref>, that success in finding an efficient indirect biological encoding model should provide us with simulation tools that can teach us a great deal about the organization and functioning of biological systems.</p>
+<p>Synaptic plasticity has long been regarded as a potential mechanism for memory formation and learning. The most famous synaptic plasticity principle is known as Hebbian learning <xref ref-type="bibr" rid="pone.0003697-Hebb1">[23]</xref>, where modifications in synaptic transmission efficacy are driven by correlations in the firing activity of presynaptic and postsynaptic neurons.</p>
+<p>Over the last 30 years, a large body of experimental results on synaptic plasticity has been accumulated. The long- lasting enhancement of synaptic transmission, Long Term Potentiation (LTP) first reported in 1973 <xref ref-type="bibr" rid="pone.0003697-Bliss1">[24]</xref>, along with its counterpart Long-Term Depression (LTD), has been the focus of an enormous amount of investigation. Several experiments on various neuronal systems have found that synaptic plasticity may also depend on accurate spike timing; Spike Timing Dependent Plasticity (STDP) <xref ref-type="bibr" rid="pone.0003697-Debanne1">[25]</xref>–<xref ref-type="bibr" rid="pone.0003697-Bi1">[29]</xref>.</p>
+<p>The field of evolutionary robotics provides interesting approaches to evolving synaptic plasticity. In <xref ref-type="bibr" rid="pone.0003697-Floreano1">[30]</xref> a model that genetically encodes rules of synaptic plasticity with rules of neural morphogenesis was shown to be feasible.</p>
+<p>In <xref ref-type="bibr" rid="pone.0003697-Federici1">[31]</xref> an evolutionary model combines an integrate and fire neuron with a correlation-based synaptic plasticity model and developmental encoding. The results on a simple robot navigation task indicate that such a system may allow for the efficient evolution of large networks.</p>
+<p>However, these models are usually not designed to be based on biological specifics either at the gene to protein transcription functionality level or at the level of neural mechanisms and are usually restricted to correlation based plasticity regimes alone. To this day no evolutionary biological model has been shown to have the ability to evolve different biological synaptic plasticity rules.</p>
+<p>In our previous papers, we presented an indirect encoding framework <xref ref-type="bibr" rid="pone.0003697-Yerushalmi1">[32]</xref> capable of evolving behaving organisms with regulated mitosis and differentiated cells. We showed that the model is capable of evolving behaviors based on neural control <xref ref-type="bibr" rid="pone.0003697-Yerushalmi1">[32]</xref>, <xref ref-type="bibr" rid="pone.0003697-Yerushalmi2">[33]</xref>. The same model has been shown to evolve gene- related phenomena such as functional gene clustering <xref ref-type="bibr" rid="pone.0003697-Yerushalmi3">[34]</xref>, and produce biological neural mechanisms such as temporal representations <xref ref-type="bibr" rid="pone.0003697-Yerushalmi2">[33]</xref>.</p>
+<p>In this paper we examine the model's ability to evolve simple virtual organisms with different biological synaptic plasticity rules, and show that the model can evolve various plasticity regimes observed in nature.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>In the next sections we present an evolutionary simulation model. The first section describes the chromosome model that is based on DNA and protein-like sequences. Two such chromosomes can reproduce an offspring chromosome, as detailed in the <xref ref-type="sec" rid="s4">materials and methods</xref> section. The translation model for chromosomes to gene-protein networks and the gene-network dynamic system model is detailed later, preceding sections describing the way the cellular dynamics are translated into organism and cellular functionality. After presenting the model we report the results of several experiments. The first experiments use fitness functions that were directly designed to develop various synaptic plasticity regimes. The final, more complex, experiment uses a fitness function based on behavior.</p>
+<p>More information about the framework, together with biological rationale for the model, can be found in <xref ref-type="bibr" rid="pone.0003697-Yerushalmi1">[32]</xref>–<xref ref-type="bibr" rid="pone.0003697-Yerushalmi3">[34]</xref>.</p>
+<sec id="s2a">
+<title>Chromosome</title>
+<p>Each organism in the model expresses a phenotype derived from a chromosome structured according to biological conventions. Each chromosome includes a sequence of genes, in which each gene starts with a promoter sequence followed by a messenger RNA sequence.</p>
+<p>Each promoter sequence has 1–3 cis-regulatory elements which are used as binding sites that regulate the expression of the gene, and a parameter block that includes the gene parameters. The parameter block of a gene/protein represents the properties derived specifically from its spatial structure. The use of gene and protein parameters in building the network is detailed later. <xref ref-type="table" rid="pone-0003697-t001">Table 1</xref> presents a list of all the parameters. Each mRNA sequence starts with a cis-regulatory element which is used as binding site that regulates the activation of the protein, followed by a parameter sequence, which in turn is followed by a trans-acting element which binds to other cis-regulatory elements to control their expression and activation; all represent the translated protein. All the cis-regulatory elements, trans-acting elements and parameter sequences are represented as sequences of real numbers, with the chromosome composed of a long sequence of real numbers <italic>r<sub>1…</sub>r<sub>n</sub></italic>. The chromosome is translated into a gene-protein network as detailed in the following sections.</p>
+<table-wrap id="pone-0003697-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.t001</object-id><label>Table 1</label><caption>
+<title>Molecule parameters used in the gene-protein network dynamics.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003697-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Symbol</td>
+<td align="left" colspan="1" rowspan="1">Description</td>
+<td align="left" colspan="1" rowspan="1">Value Origin</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e001" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Production time constant for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>1</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e002" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Activation time constant for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>2</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e003" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Production threshold for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>3</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e004" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Activation threshold for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>4</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e005" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Production slope for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>5</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e006" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">Activation slope for molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>6</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>k<sub>i</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">Diffusion coefficient of molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>7</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>α<sub>j</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">Intrinsic activity level of molecule <italic>i</italic>.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>8</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>b</bold></td>
+<td align="left" colspan="1" rowspan="1">A vector of 2 Boolean values indicating whether molecule <italic>j</italic> produces proteins inside the cell or whether it is bound to the membrane and affects external concentrations and whether molecule <italic>i</italic> is activated from the internal or external side of the membrane.</td>
+<td align="left" colspan="1" rowspan="1">P<sub>9</sub>,P<sub>10</sub></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold><italic>k<sub>type</sub></italic></bold></td>
+<td align="left" colspan="1" rowspan="1">A vector of Boolean parameters that governs the translated protein's ability to diffuse between soma-axon, soma-dendrite, synapsed dendrite-axon.</td>
+<td align="left" colspan="1" rowspan="1">P11,P12</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>w<sub>ij</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">Connection strength between molecules <italic>i</italic> and <italic>j</italic>.</td>
+<td align="left" colspan="1" rowspan="1">Hamming distance between rounded off values of the <italic>〈trans〉</italic> element of <italic>j</italic> and the <italic>〈cis〉</italic> element of <italic>i</italic>.</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><p>Each parameter value is derived from the chromosome, either directly through the parameter element, as most of the table entries, or using a Hamming distance function, as in wij. The parameters above are encoded for each gene/protein in the chromosome as a “parameter block” and govern the gene and its derived protein dynamics in the gene-protein network. The model separates the activation dynamics, controlling the ability of the gene-protein to affect other gene-proteins, and the production dynamics that control the protein's concentration, by having different slopes <italic>β</italic><sup>•</sup>, thresholds <italic>θ</italic><sup>•</sup>, and time constants <italic>τ</italic><sup>•</sup> : <italic>β<sup>a</sup></italic>, <italic>θ<sup>a</sup></italic>, <italic>τ<sup>a</sup></italic> for each gene/protein to control the dynamics of the activation and <italic>θ<sup>p</sup></italic>, <italic>β<sup>p</sup></italic>, <italic>τ<sup>p</sup></italic> to control the dynamics of the protein production.</p></fn></table-wrap-foot></table-wrap>
+<p>All experiments mentioned in this paper are based on simulations of evolutionary processes using genetic algorithm manipulations of such chromosomes. Mutation and crossover methods are discussed in the Reproduction subsection in <xref ref-type="sec" rid="s4">Materials and Methods</xref>.</p>
+<p>The chromosome structure described above can also be represented as a formal artificial chemistry grammar <xref ref-type="bibr" rid="pone.0003697-Dittrich1">[35]</xref>–<xref ref-type="bibr" rid="pone.0003697-Gerard1">[37]</xref> in which the derivation rules are as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e007" xlink:type="simple"/></disp-formula></p>
+<p>The language <italic>L(〈gene〉)</italic> created from the grammar based on the derivation rules above and <italic>〈gene〉</italic> as the start variable represents all possible genes in the chemistry. The language <italic>L(〈mRNA〉)</italic> is based on the same grammar, but with <italic>〈mRNA〉</italic> as a start variable and represents all possible proteins in the chemistry.</p>
+<p>A molecule in the chemistry can either be a protein or a gene. Consequently, the set of possible molecules S can be written as:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e008" xlink:type="simple"/></disp-formula></p>
+<p>The model assumes that the set of molecules in an organism or cell is composed solely of the individual's genes and transcripted proteins.</p>
+</sec><sec id="s2b">
+<title>Gene-Protein network</title>
+<p>The chromosome presented above is translated into a gene-protein network as illustrated in <xref ref-type="fig" rid="pone-0003697-g001">Figure 1</xref>. The network connection strengths <italic>w<sub>ij</sub></italic> are assigned according to the Hamming distance <italic>d<sub>ij</sub></italic> between cis-regulatory elements and trans-acting elements. Each gene and each transcribed protein has 12 parameters (P<sub>1</sub>…P<sub>12</sub>) that are read from the chromosome and control its dynamics as detailed in <xref ref-type="table" rid="pone-0003697-t001">Table 1</xref>.</p>
+<fig id="pone-0003697-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g001</object-id><label>Figure 1</label><caption>
+<title>Example of a schematic simple-regulation network derived from a 6-gene chromosome.</title>
+<p>gA–gF are genes and A–F are their corresponding transcripted proteins. Proteins B, D &amp; F act as productive proteins of C, B &amp; E respectively. The white arrows represent production connections whereas the black arrows represent activation connections. Protein E can be produced inside the cell by its gene gE, and out of the cell by protein F, generating a cascading information system where E plays the role of a ligand, D is its receptor, and B and C are the internal messengers that eventually activate gene gC.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g001" xlink:type="simple"/></fig>
+<p>The gene-protein network controls three dynamic values for each protein <italic>i</italic>:</p>
+<p><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e009" xlink:type="simple"/></inline-formula> - Protein <italic>i</italic>'s concentration inside the cell. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e010" xlink:type="simple"/></inline-formula> - Protein <italic>i</italic>'s concentration outside the cell, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e011" xlink:type="simple"/></inline-formula> - the activity level of protein <italic>i</italic> in the cell. This value represents the extent to which the current spatial structure of the protein enables it to act on other genes and proteins.</p>
+<p>The dynamics of the system are based on the following reaction rules:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e012" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e013" xlink:type="simple"/></inline-formula>,</p>
+<p>The equations above are based on a threshold logic paradigm commonly used in simulations of genetic regulatory circuits <xref ref-type="bibr" rid="pone.0003697-McAdams1">[38]</xref>, <xref ref-type="bibr" rid="pone.0003697-Mjolsness1">[39]</xref>, and neural networks <xref ref-type="bibr" rid="pone.0003697-Hopfield1">[40]</xref>, <xref ref-type="bibr" rid="pone.0003697-Hertz1">[41]</xref>, where the basic differential equation is of the form:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e014" xlink:type="simple"/></disp-formula></p>
+<p>In such an equation the dynamics of a node value <italic>x</italic> are controlled by a time constant <italic>τ</italic>, and an activation function <italic>f</italic> that processes the cumulative field induced by the other nodes.</p>
+<p>In the model, the field induced by a node <italic>j</italic> on node <italic>i</italic> is the product its dynamic activity level <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e015" xlink:type="simple"/></inline-formula>, its concentration <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e016" xlink:type="simple"/></inline-formula>, its static activity factor <italic>α<sub>j</sub></italic>, and the connection between the nodes <italic>w<sub>ij</sub></italic>.</p>
+<p>To enable the model to separate the activation dynamics and the production dynamics, for example to affect a protein's concentration without affecting its spatial structure and vice versa, each gene/protein possesses different slopes <italic>β</italic><sup>•</sup>, thresholds <italic>θ</italic><sup>•</sup>, and time constants <italic>τ</italic><sup>•</sup>: <italic>β<sup>a</sup></italic>, <italic>θ<sup>a</sup></italic>, <italic>τ<sup>a</sup></italic> to control the dynamics of activation and <italic>θ<sup>p</sup></italic>, <italic>β<sup>p</sup></italic>, <italic>τ<sup>p</sup></italic> to control the dynamics of protein production.</p>
+<p>The model enables the external concentration <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e017" xlink:type="simple"/></inline-formula> of each protein to play a role in the network dynamics by incorporating the expression <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e018" xlink:type="simple"/></inline-formula> in the equations above. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e019" xlink:type="simple"/></inline-formula> is either the internal <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e020" xlink:type="simple"/></inline-formula> or external concentration <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e021" xlink:type="simple"/></inline-formula>, according to the values of x and b, which makes the model capable of evolving receptor-ligand relationships, based on the Boolean parameter b.</p>
+<p>In order to permit tissue related dynamics, the external concentration equation contains a diffusion expression. <italic>k<sub>i</sub></italic> is the diffusion coefficient of <italic>i</italic>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e022" xlink:type="simple"/></inline-formula>, so that the expression <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e023" xlink:type="simple"/></inline-formula> represents the contribution of diffusion to the change in external concentration, according to the diffusion equation <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e024" xlink:type="simple"/></inline-formula>.</p>
+<p>An example of a schematic simple-regulation network derived from a small chromosome is shown in <xref ref-type="fig" rid="pone-0003697-g001">Figure 1</xref>.</p>
+</sec><sec id="s2c">
+<title>Cell functionality</title>
+<p>In order to enable the gene-protein network presented above to model processes at the tissue level, output nodes were added to the gene-protein network. A similar component was introduced in <xref ref-type="bibr" rid="pone.0003697-Mjolsness1">[39]</xref> as a grammar of rules which describe inter- cell interactions and changes in number, type and state of cells. In our model, there is an output node <italic>m</italic> representing (i) a cellular- related event that can be triggered by the network (such as apoptosis, mitosis, cellular migration), or (ii) values that need to be derived from the network (e.g. Na conductivity, synaptic weight regulation), including modeling directional receptors for axon guidance, or (iii) values that need to be derived from the genome (such as translocation probability). The full list is shown in <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref>.</p>
+<table-wrap id="pone-0003697-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.t002</object-id><label>Table 2</label><caption>
+<title>List of all functions used in the direct fitness function experiments.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003697-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Description</td>
+<td align="left" colspan="1" rowspan="1">Symbol</td>
+<td align="left" colspan="1" rowspan="1">Output Type</td>
+<td align="left" colspan="1" rowspan="1">Predefined Range</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Mitosis messenger</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Apoptosis messenger</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Migration speed soma</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,0.1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Migration speed neurite</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,0.1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Sprout axon messenger</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Sprout dendrite messenger</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Translocation Probability</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Soma Migration Directional Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">C</td>
+<td align="left" colspan="1" rowspan="1">(0,<italic>2π</italic>)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Axon Migration Directional Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">C</td>
+<td align="left" colspan="1" rowspan="1">(0,<italic>2π</italic>)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Dendrite Migration Directional Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">C</td>
+<td align="left" colspan="1" rowspan="1">(0,<italic>2π</italic>)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Crossover Probability</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Axon Target Select Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Synapse Weight Axon</td>
+<td align="left" colspan="1" rowspan="1"><italic>ω<sub>axon</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Synapse Weight Dendrite</td>
+<td align="left" colspan="1" rowspan="1"><italic>ω<sub>dendrite</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Inhibitory Neuron Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Threshold potential</td>
+<td align="left" colspan="1" rowspan="1"><italic>θ</italic><sub>0</sub></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(-60E-3,-70E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Threshold adaptivity factor</td>
+<td align="left" colspan="1" rowspan="1"><italic>α</italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0.005, 0.05)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Threshold time constant</td>
+<td align="left" colspan="1" rowspan="1"><italic>τ<sub>θ</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(15E-3,50E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">gNa in open channel state</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(4.0,4.4)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">gNa in closed channel state</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(20E-3,50E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Action Potential Refractory Time</td>
+<td align="left" colspan="1" rowspan="1"><italic>τ<sub>ref</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(2E-3,5E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">k Refractory Time</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e025" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(4E-3,6E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">gk in open channel state</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(200E-3, 500E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">gk in closed channel state</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(2.3,2.6)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Synaptic current rise time</td>
+<td align="left" colspan="1" rowspan="1"><italic>τ<sub>s</sub></italic><sub>1</sub></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0.5E-3,2E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Synaptic current decay time</td>
+<td align="left" colspan="1" rowspan="1"><italic>τ<sub>s</sub></italic><sub>2</sub></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(3E-3,7E-3)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Membrane time constant at rest:</td>
+<td align="left" colspan="1" rowspan="1"><italic>C</italic>/Σ<italic><sub>g</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0.005, 0.02)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Neural noise time constant</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0, 1E-2)</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><p>The function values were limited to be in the ranges above. Type ‘A’ functions transform u<sub>m</sub> linearly to be in a predefined (min,max) range. Type ‘B’ functions are Boolean functions based on a u<sub>m</sub>&gt;0 test. Output Type ‘C’ functions are directional functions and are based on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e026" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e027" xlink:type="simple"/></inline-formula> &amp; umy detailed earlier and produce an angle. All predefined ranges were chosen to cover reasonable biological values. Migration speed values are given in cell diameters per epoch. Neural electric properties are given in OASM (Ohm, Ampere, Second, Meter) like units, in the simulations each epoch represented half a millisecond. Only symbols of values that are referred to by symbol in the text are presented.</p></fn></table-wrap-foot></table-wrap>
+<p>Each such output node <italic>m</italic> is represented by a random-generated bit string <italic>s<sub>m</sub></italic>. The protein nodes <italic>j</italic> in the gene-protein network that are close enough to string <italic>s<sub>m</sub></italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e028" xlink:type="simple"/></inline-formula>) are connected to output node <italic>m</italic>. According to the threshold logic paradigm, an internal value <italic>u<sub>m</sub></italic> is calculated for each output node:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e029" xlink:type="simple"/></disp-formula></p>
+<p>For nodes that trigger an event (e.g., occurrence of mitosis, cell death, migration, differentiation event), the event is triggered when the value <italic>u<sub>m</sub></italic> exceeds a predefined threshold (0.5). When managing scalar values such as a translocation probability, the internal value <italic>u<sub>m</sub></italic> may be multiplied by another pre-defined factor to obtain the actual scalar value as detailed in <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref>.</p>
+<p>In cases where a receptor-ligand relationship was needed to obtain directional quantification (the ability to choose a direction, as in axon guidance or cell migration), a two dimensional version of the above value was used, where the effect of internal factors was replaced by the effect of external gradient factors:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e030" xlink:type="simple"/></disp-formula></p>
+<p>A list of all functions used in this paper is detailed in <xref ref-type="table" rid="pone-0003697-t002">Tables 2</xref> and <xref ref-type="table" rid="pone-0003697-t003">3</xref>. As seen in all tables, all parameters were allowed to evolve within a biologically reasonable range, and no parameter was pinned to a specific value.</p>
+<table-wrap id="pone-0003697-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.t003</object-id><label>Table 3</label><caption>
+<title>List of additional functions used in the behavior based fitness function experiments.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0003697-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Description</td>
+<td align="left" colspan="1" rowspan="1">Symbol</td>
+<td align="left" colspan="1" rowspan="1">Output Type</td>
+<td align="left" colspan="1" rowspan="1">Predefined Range</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Cell differentiation messenger</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">{T,F}</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Sensory neuron marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Motor neuron marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Hidden neuron marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Odor A Sensor Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Odor B Sensor Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Sight Sensor Marker</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0,1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Photoreceptor sight angle</td>
+<td align="left" colspan="1" rowspan="1"><italic>α<sub>pr</sub></italic></td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1">(0, <italic>π/2</italic>)</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><p>These functions were added to the ones detailed in <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref> in the behavior- based experiments. The function values were limited to be in the ranges above. Type ‘A’ functions transform u<sub>m</sub> linearly to be in a predefined (min,max) range. Type ‘B’ functions are Boolean functions based on a u<sub>m</sub>&gt;0 test. All predefined ranges were chosen to cover reasonable biological values. Only symbols of values that are referred to by symbol in the text are presented.</p></fn></table-wrap-foot></table-wrap>
+<p>In this paper the term ‘organism’ refers to the group of all cells that are repeated-mitosis results of the same zygote cell. Since during mitosis the gene-protein network is copied from the parent cell, all organism cells are controlled by the same network structure, but since each cell is situated in a different location, it may possess different internal and external protein concentrations.</p>
+<p>To control dendrites and axons separately from their soma, we needed a mechanism to separate the dynamic values of the cell's soma from those of a neurite. Therefore, another basic parameter (P<sub>11</sub>) was added to control the protein's ability to diffuse between a cell's soma and neurite. Based on this diffusion parameter, the system decides whether a given protein in a neurite will have the same dynamic properties as the soma's and be presented by the same node in the regulatory network, or whether it will have separate properties based on a different node connected to the same regulatory network. A simple example of synapsogenesis is illustrated in <xref ref-type="fig" rid="pone-0003697-g002">Figure 2</xref>. In the experiments, the weight value of a synapse connecting axon A to dendrite B is the sum of the axon's and dendrite's synapse weight functions <italic>ω<sub>axon</sub></italic> and <italic>ω<sub>dendrite</sub></italic> as indicated in <xref ref-type="table" rid="pone-0003697-t002">Table 2:</xref><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e031" xlink:type="simple"/></disp-formula></p>
+<fig id="pone-0003697-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g002</object-id><label>Figure 2</label><caption>
+<title>Synapsogenesis scheme example.</title>
+<p>A) The basic building plan for the cellular tissue is the chromosome. B) The chromosome is translated into a zygote controlled by a regulatory network. C) A mitosis event splits the zygote into two separate cells, where each cell has its own instance of the same regulatory network template. D) Neurite sprouting events occur in both cells. An axon is branched from the left cell, and a dendrite – from the right cell. Proteins a and b are marked in P11 as ones that cannot diffuse from neurite to soma. Therefore, their instances are separated into neurites with the same connectivity. E) After the axon is guided by external protein concentrations towards the right cell's dendrite, a ‘synapsogenesis’ event occurs. A synapse is formed, allowing proteins marked as synapse-diffusible (in their ktype parameter) to move from one cell to another.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g002" xlink:type="simple"/></fig></sec><sec id="s2d">
+<title>Organism development</title>
+<p>Each organism is initially made up of a single cell that has no initial external or internal concentrations. The initial cell's genes can produce proteins that change its internal and external concentrations and may cause some functional events such as mitosis or cell migration. The cells can repeat mitosis events, so eventually the organism can consist of several cells, where each cell is controlled by the same chromosome and has the same controlling regulatory network, but may have different internal and external concentrations. The internal and external concentrations are changed dynamically by the regulation network and diffusion rules presented above. The cells are represented as circles on a two- dimensional grid and can move to continuous position values. In a cell division event, the daughter cell is adjacently located on an axis according to the “Soma Migration Directional Marker” (see <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref>) of the mother cell. When a “Sprout axon/dendrite Messenger” is triggered, a neurite is sprouted from the soma. All cell elements (soma, axon and dendrite) can migrate on the grid according to their migration speed and directional marker (see <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref>). When an “Axon Target Select Marker” event is triggered in an axon, and the axon has a dendrite at a distance of less than one cell radius, the axon synapses to the nearby dendrites that have the same flag are turned on.</p>
+<p>The organism has a certain period of time in which it has to stop mitosis; only then will the organism be an adult that may reproduce. If the organism does not stop mitosis during the predefined period, it is regarded as a cancerous tissue and removed from the environment without reproduction. <xref ref-type="fig" rid="pone-0003697-g003">Figure 3</xref> illustrates an organism developed in the direct fitness function experiments presented in this paper. An example of an organism that can develop in the behavior- based experiments is illustrated in <xref ref-type="fig" rid="pone-0003697-g004">Figure 4</xref>.</p>
+<fig id="pone-0003697-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g003</object-id><label>Figure 3</label><caption>
+<title>Outcome of the first period in the direct fitness function experiments.</title>
+<p>The outcome of the first period in the direct fitness function experiments is a dual cell organism in which a synapse was formed between an axon of one cell and the dendrite of the other. The grey circles represent the somas of two cells. The smaller white circles represent axons and dendrites. The internal networks represent the gene-protein networks in each soma, axon or dendrite that all have the same connections, but may have different states.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g003" xlink:type="simple"/></fig><fig id="pone-0003697-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g004</object-id><label>Figure 4</label><caption>
+<title>An example of a simple organism developed in the behavior- based experiment.</title>
+<p>A simple organism developed in the behavior- based experiment. This specific organism has two (bottom) motor cells, which synapse to a hidden cell (middle), which synapse to a sensor cell (top). The large circles represent somas of cells, the smaller white circles represent axons and dendrites. The internal networks represent the gene-protein networks in each soma, axon or dendrite that all have the same connections, but may have different states.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g004" xlink:type="simple"/></fig></sec><sec id="s2e">
+<title>Direct Fitness Function Experiments</title>
+<p>In these experiments, the ability of the model to evolve different synaptic plasticity regimes was tested on a two- dimensional 10×10 cellular grid. The physical environment included action molecules <italic>m</italic> as detailed in <xref ref-type="table" rid="pone-0003697-t002">Table 2</xref>. All guidance actions were based on chemical attraction in the extra-cellular environment.</p>
+<p>Forty-five evolutionary sessions were run, with a fixed population size of 100 and simple roulette wheel selection <xref ref-type="bibr" rid="pone.0003697-Goldberg1">[42]</xref>, where the probability <italic>p<sub>i</sub></italic> of an organism <italic>i</italic> to be selected is associated to its fitness <italic>f<sub>i</sub></italic> according to:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e032" xlink:type="simple"/></disp-formula></p>
+<p>A two- period fitness function was defined:</p>
+<list list-type="alpha-lower"><list-item>
+<p>First period, evolving organisms with only two neurons and a single synapse between them:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e033" xlink:type="simple"/></disp-formula>where <italic>f</italic> is the fitness value, <italic>s</italic> is the number of synapses between two different cells, and <italic>n</italic> is number of neurons. The optimal organism structure in this fitness landscape is an organism with two neurons connected by a single synapse. This period was run until the entire population reached maximal fitness. A sample fitness curve for a first period session is presented in <xref ref-type="fig" rid="pone-0003697-g005">Figure 5</xref>.</p>
+</list-item><list-item>
+<p>Second period, evolving the first period organisms to achieve target synaptic plasticity properties.</p>
+</list-item></list>
+<fig id="pone-0003697-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g005</object-id><label>Figure 5</label><caption>
+<title>The first evolution period in the direct fitness function experiments.</title>
+<p>The process of evolving organisms in the first period in the direct fitness function experiments. Twenty eight generations were randomly selected through evolution. Blue line indicates the average fitness in each generation; purple lines indicate error range of one standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g005" xlink:type="simple"/></fig>
+<p>As will be detailed later, the fitness function in the second period was changed every 8 evolutionary sessions and included a regression calculation (see regression calculation section in <xref ref-type="sec" rid="s4">Materials and Methods</xref>) of samples based on:</p>
+<list list-type="bullet"><list-item>
+<p>Δ<italic>w<sub>t</sub></italic> - Synaptic change at time <italic>t</italic> compared to the next system epoch. Δ<italic>w<sub>t</sub></italic> = <italic>w<sub>t+1</sub>-w<sub>t</sub></italic>.</p>
+</list-item><list-item>
+<p><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e034" xlink:type="simple"/></inline-formula> - Time interval from last pre-synaptic cell spike up to time <italic>t</italic>.</p>
+</list-item><list-item>
+<p><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e035" xlink:type="simple"/></inline-formula> - Time interval between last post-synaptic cell spike up to time <italic>t</italic>.</p>
+</list-item><list-item>
+<p><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e036" xlink:type="simple"/></inline-formula>. The interval from the last pre- and post -synaptic cell spikes at time <italic>t</italic>.</p>
+</list-item></list>
+<p>Organisms that did not have exactly two connected neurons were not allowed to reproduce in this period.</p>
+</sec><sec id="s2f">
+<title>Evolving Hebbiann LTP and Anti-Hebbiann LTD Synapses</title>
+<p>The Hebbian postulate assumes an increase in synaptic strength when the pre-synaptic cell “takes part” in the firing of the post-synaptic cell <xref ref-type="bibr" rid="pone.0003697-Hebb1">[23]</xref>. Assuming that times <italic>t</italic> with small values of Δ<italic>s<sub>t</sub></italic> are characterized by spikes of the post-synaptic cell affected by the pre-synaptic cell, we examined the model's ability to evolve synapses when the synaptic change Δ<italic>w<sub>t</sub></italic> is dependent on the interval between the pre- and post- synaptic spikes. We defined the following fitness function to evolve Hebbian LTP synapses:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e037" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e038" xlink:type="simple"/></inline-formula> is the regression coefficient of samples that meet condition <italic>x</italic>. An example of such a synapse is presented in <xref ref-type="fig" rid="pone-0003697-g006">Figure 6</xref>.</p>
+<fig id="pone-0003697-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g006</object-id><label>Figure 6</label><caption>
+<title>Average synaptic change plotted against spike time measures in Hebbian- like LTP fitness sessions.</title>
+<p>Hebbian- like LTP plasticity; synaptic change plotted against Δ<italic>s<sub>t</sub></italic> (defined as the interval between the pre-synaptic spike and the post-synaptic spike), taken from a 30th generation virtual organism evolved in a session with fitness function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e039" xlink:type="simple"/></inline-formula>. Spike time measures are given in system epochs, synaptic change Δ<italic>w<sub>t</sub></italic> is given in absolute synaptic weight values. Each plot presents the average synaptic change values from 24 sessions of 1000 epochs. The error bars are set at one standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g006" xlink:type="simple"/></fig>
+<p>We also assumed that the opposite function may generate Anti-Hebbian LTD synapses:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e040" xlink:type="simple"/></disp-formula>An example of such a synapse is presented in <xref ref-type="fig" rid="pone-0003697-g007">Figure 7</xref>. Eight sessions were run in each evolutionary session. The fitness curves are presented in <xref ref-type="fig" rid="pone-0003697-g008">Figures 8</xref> and <xref ref-type="fig" rid="pone-0003697-g009">9</xref>. Statistical tests of all populations at the 100<sup>th</sup> generation showed that in all sessions the proportion of organisms where the regression was significantly (P&lt;0.05) negative (LTP) or positive (LTD) was above 81%. In the above sessions we ignored samples in which Δ<italic>s<sub>t</sub></italic>≤0.</p>
+<fig id="pone-0003697-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g007</object-id><label>Figure 7</label><caption>
+<title>Average synaptic change plotted against spike time measures in the Anti-Hebbian-like LTD fitness sessions.</title>
+<p>Anti-Hebbian-like LTD plasticity; synaptic change plotted against Δ<italic>s<sub>t</sub></italic>, taken from a 30th generation virtual organism evolved in a session with fitness function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e041" xlink:type="simple"/></inline-formula>. Spike time measures are given in system epochs; synaptic change Δ<italic>w<sub>t</sub></italic> is given in absolute synaptic weight values. Each plot presents the average synaptic change values from 24 sessions of 1000 epochs. The error bars are set at one standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g007" xlink:type="simple"/></fig><fig id="pone-0003697-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g008</object-id><label>Figure 8</label><caption>
+<title>Fitness curve of evolving Hebbian LTP synapses using the direct fitness function.</title>
+<p>Average fitness values in every generation for the eight sessions running the Hebbian- like LTP fitness function. The first generation is the outcome of an evolutionary session designed to evolve organisms with only two neurons and a single synapse between them as detailed in the text.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g008" xlink:type="simple"/></fig><fig id="pone-0003697-g009" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g009</object-id><label>Figure 9</label><caption>
+<title>Fitness curve of evolving Anti-Hebbian LTD synapses using the direct fitness function.</title>
+<p>Average fitness values in every generation for the 8 sessions running the Hebbian- like LTD fitness function. The first generation is the outcome of an evolutionary session designed to evolve organisms with only two neurons and a single synapse between them as detailed in the text.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g009" xlink:type="simple"/></fig></sec><sec id="s2g">
+<title>Evolving Non-Hebbian LTP Synapses</title>
+<p>After the model successfully evolved synaptic plasticity based on pre-to-post synaptic correlations, we examined the ability of the model to evolve synaptic plasticity that was not connected to such a correlation by defining a fitness function that prefers a dependence of synaptic change on the interval since last pre- or post- synaptic spike.</p>
+<p>The following fitness functions were set to evolve synapses that strengthen upon single neural activity of the pre-synaptic cell:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e042" xlink:type="simple"/></disp-formula>or the post-synaptic cell:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e043" xlink:type="simple"/></disp-formula>In these experiments the fitness function was based on the regression coefficient of the synaptic change vs. the time interval since the last spike. To control that the synaptic change was not connected to a pre- or post- synaptic correlation, the measurements to test synaptic plasticity were made after stopping the supplementary cell's activity. Examples of evolved Non-Hebbian pre- and post- synaptic LTP synapses are shown in <xref ref-type="fig" rid="pone-0003697-g010">Figures 10</xref> and <xref ref-type="fig" rid="pone-0003697-g011">11</xref> respectively. The fitness curves are presented in <xref ref-type="fig" rid="pone-0003697-g012">Figures 12</xref> and <xref ref-type="fig" rid="pone-0003697-g013">13</xref>. Statistical tests of all populations in the 70<sup>th</sup> generation showed that in all sessions the proportion of organisms where the regression was significantly (P&lt;0.05) negative was above 93%.</p>
+<fig id="pone-0003697-g010" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g010</object-id><label>Figure 10</label><caption>
+<title>Average synaptic change plotted against spike time measures in Non-Hebbian LTP pre-synaptic plasticity fitness sessions.</title>
+<p>Non-Hebbian LTP pre-synaptic plasticity; synaptic change plotted against <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e044" xlink:type="simple"/></inline-formula> (defined as the time interval since the last pre-synaptic spike), taken from a 20th generation virtual organism evolved in a session with fitness function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e045" xlink:type="simple"/></inline-formula>. The post-synaptic cell was set as non-active during measurements. Spike time measures are given in system epochs; synaptic change Δ<italic>w<sub>t</sub></italic> is given in absolute synaptic weight values. Each plot presents the average synaptic change values from 24 sessions of 1000 epochs. The error bars are of one standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g010" xlink:type="simple"/></fig><fig id="pone-0003697-g011" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g011</object-id><label>Figure 11</label><caption>
+<title>Average synaptic change plotted against spike time measures in Non-Hebbian LTP post synaptic plasticity fitness sessions.</title>
+<p>Non-Hebbian LTP post-synaptic plasticity; synaptic change plotted against <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e046" xlink:type="simple"/></inline-formula> (defined as the time interval since the last post-synaptic spike), taken from a 20th generation virtual organism evolved in a session with fitness function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e047" xlink:type="simple"/></inline-formula>. The pre-synaptic cell was set as non -active during measurements. Spike time measures are given in system epochs; synaptic change Δ<italic>w<sub>t</sub></italic> is given in absolute synaptic weight values. Each plot presents the average synaptic change values from 24 sessions of 1000 epochs. The error bars are set atone standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g011" xlink:type="simple"/></fig><fig id="pone-0003697-g012" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g012</object-id><label>Figure 12</label><caption>
+<title>Fitness curve of evolving Non-Hebbian LTP pre- synaptic synapses using the direct fitness function.</title>
+<p>Average fitness values in every generation for the eight sessions running the Non-Hebbian pre-synaptic LTP fitness function. The first generation is the outcome of an evolutionary session designed to evolve organisms with only two neurons and a single synapse between them as detailed in the text.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g012" xlink:type="simple"/></fig><fig id="pone-0003697-g013" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g013</object-id><label>Figure 13</label><caption>
+<title>Fitness curve of evolving Non-Hebbian LTP pre synaptic synapses using the direct fitness function.</title>
+<p>Average fitness values in every generation for the eight sessions running the Non-Hebbian post-synaptic LTP fitness function. The first generation is the outcome of an evolutionary session designed to evolve organisms with only two neurons and a single synapse between them as detailed in the text.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g013" xlink:type="simple"/></fig></sec><sec id="s2h">
+<title>Evolving Time Dependent Synaptic Plasticity</title>
+<p>Finally, eight sessions were run in an attempt to evolve a more complicated form of synaptic plasticity which was time-dependent (STDP). By contrast to the previous plasticity regimes which evolved in fewer than 100 generations, we did not obtain such a clear plasticity rule in the STDP case using the following fitness function:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e048" xlink:type="simple"/></disp-formula>As seen in <xref ref-type="fig" rid="pone-0003697-g014">Figure 14</xref>, after 881 generations, seven out of eight evolutionary sessions produced a satisfactory plasticity regime. Statistical tests on seven out of the eight populations at the 881<sup>th</sup> generation showed that in these sessions the proportion of organisms where the synaptic change was significantly (P&lt;0.05) positive or negative when the interval between the pre-synaptic and post- synaptic spikes was small and positive or negative respectively and where the regression was only significantly (P&lt;0.05) negative in small intervals was above 83%. The STDP of one of the evolved synapses is shown in <xref ref-type="fig" rid="pone-0003697-g015">Figure 15</xref>, and is comparable to previous biological findings <xref ref-type="bibr" rid="pone.0003697-Bi1">[29]</xref>.</p>
+<fig id="pone-0003697-g014" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g014</object-id><label>Figure 14</label><caption>
+<title>Fitness curve of evolving STDP synapses.</title>
+<p>Average fitness values in every generation for the eight sessions running the STDP fitness function. The first generation is the outcome of an evolutionary session designed to evolve organisms with only two neurons and a single synapse between them as detailed in the text.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g014" xlink:type="simple"/></fig><fig id="pone-0003697-g015" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g015</object-id><label>Figure 15</label><caption>
+<title>Hebbian- like STDP.</title>
+<p>Synaptic change plotted against Δ<italic>s<sub>t</sub></italic>, taken from a 400<sup>th</sup> generation virtual organism evolved in a session with fitness function:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e049" xlink:type="simple"/></disp-formula>Spike time measures are given in system epochs; synaptic change Δ<italic>w<sub>t</sub></italic> is given in absolute synaptic weight values. Each plot presents the average synaptic change values from 24 sessions of 1000 epochs. The error bars are set at one standard deviation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g015" xlink:type="simple"/></fig></sec><sec id="s2i">
+<title><bold><italic>k<sub>type</sub></italic></bold> as an essential model component</title>
+<p>The <italic>k<sub>type</sub></italic> parameter (see <xref ref-type="table" rid="pone-0003697-t001">Table 1</xref>) that regulates the protein's ability to diffuse between axon-soma-dendrite is a relatively new element in our model. Since the previous fitness curves implied that the Non-Hebbian LTP synapses were relatively easy to evolve we examined whether this parameter was essential for evolving these synapses. We ran four evolutionary sessions of 100 generations each, where <bold><italic>k<sub>type</sub></italic></bold> was not used in the model and all proteins were allowed to diffuse freely between soma-axon and soma-dendrite. In all four sessions, the population could not evolve a clear positive fitness value.</p>
+</sec><sec id="s2j">
+<title>Behavior Based Experiments</title>
+<p>We next examined whether any of the plasticity regimes could evolve in an environment where the evolutionary pressure was based on the organism's behavior.</p>
+<p>In this experiment, each virtual organism was randomly set to be a male or a female, and could move in the environment by using its sensor neurons (that cannot have dendrites), motor neurons (that cannot have axons) and hidden neurons (that can have both dendrites and neurons) as detailed later. In order to encourage the virtual organisms to develop neural networks, they were given a life span proportional to the different cellular types they developed: a sensory neuron, a motor neuron, a hidden neuron, a dendrite, an axon, and a synapse. Hence, a maximal time span was assigned to every virtual organism that possessed a “basic” neural network, which was defined as having at least one instance of each of the six elements mentioned above. Since the system was defined as having only dendrite-to-axon synapses, the “basic” network can also be seen as a network that included at least a motor, a hidden, and a sensory neuron and one synapse. The virtual organisms were removed from the environment after completing their life span period.</p>
+<p>The population size was restricted to a predefined range by removing the eldest virtual organisms from the environment when the number of virtual organisms reached the upper bound (due to crowding), and by randomly choosing two parents from the environment and producing their offspring as a new individual in the environment when the number of virtual organisms reached the lower bound.</p>
+<p>Each virtual organism in the behavioral based experiments was developed on a two-dimensional 20×20 cellular grid. The physical environment included action molecules <italic>m</italic> as detailed in <xref ref-type="table" rid="pone-0003697-t002">Tables 2</xref> and <xref ref-type="table" rid="pone-0003697-t003">3</xref>.</p>
+<p>The lower and upper bounds of the population size were set to 90 and 110. Unlike previous evolutionary sessions, in this session a specific fitness function was not set and therefore a roulette wheel selection <xref ref-type="bibr" rid="pone.0003697-Goldberg1">[42]</xref> was not used. The evolutionary pressure was set only by including the life-span period in the environment as a function of the neural network structure, and introducing a “mating rule” (see below). Unlike the previous experiments, in this experiment successive generations could overlap.</p>
+</sec><sec id="s2k">
+<title>Cell Differentiation</title>
+<p>In order to incorporate behavior into the model, we needed to include the possibility for cell differentiation so that the organism could include sensor and motor cells in addition to its hidden neural cells. Briefly, when a cell differentiation messenger is triggered, the cell differentiates into one of three cell types according to its differentiation marker with the highest level (as detailed in <xref ref-type="table" rid="pone-0003697-t003">Table 3</xref>):</p>
+<list list-type="bullet"><list-item>
+<p><bold>A motor cell</bold>. Upon firing, motor cells cause the virtual organism to move in the <italic>l<sub>m</sub>-l<sub>c</sub></italic> direction, where <italic>l<sub>m</sub></italic> is the motor cell location, and <italic>l<sub>c</sub></italic> is the virtual organism's centroid.</p>
+</list-item><list-item>
+<p><bold>A sensor cell</bold>. Sensor cells are either sensitive to an odorant (A or B), or act as a photoreceptor. Odor A is emitted into the environment by potential mate organisms, odor B is emitted by non mate organisms; the secreted current <italic>I</italic> from an odor sensitive cell is proportional to the distance between the odorant origin and the cell. Photoreceptor cells secrete a constant current if any virtual organism is placed in a region subsumed by <italic>α<sub>pr</sub></italic> radians.</p>
+</list-item><list-item>
+<p><bold>A hidden cell</bold> – that will embed a neural model as detailed in previous sections.</p>
+</list-item></list>
+</sec><sec id="s2l">
+<title>The Evolutionary Session</title>
+<p>In order to evolve neural based behavior, a “mating rule” was introduced in the environment, where two virtual organisms that contacted each other produced offspring according to the reproduction equation presented in the <xref ref-type="sec" rid="s4">Materials and Methods</xref> section. Hence we expected the virtual organisms to develop neural mechanisms that would maximize their contacts with virtual organisms of the opposite sex.</p>
+<p>As a first step, we tested for changes in the virtual organisms' behavior along generations. As shown in <xref ref-type="fig" rid="pone-0003697-g016">Figure 16</xref>, the percentage of reproduction resulting from virtual organism contact rose over generations, which cannot be ascribed to a change in the population size (which, as detailed earlier, was always between 90 and 110).</p>
+<fig id="pone-0003697-g016" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g016</object-id><label>Figure 16</label><caption>
+<title>Evolution in behavioral experiment.</title>
+<p>Green: Proportion of reproduction triggered by virtual organisms contacting each other (as opposed to reproductions initiated by the system when the number of virtual organisms hit the lower bound). Blue: Proportion of virtual organisms that developed a basic network as defined in the text. Red: Proportion of virtual organism death events triggered by the system because of crowding (as opposed to deaths due to completing the life span period). The values are average proportions measured every 10 generations.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g016" xlink:type="simple"/></fig>
+<p>In order to examine whether any of the synaptic plasticity regimes evolved in the behavioral experiment, every 0.5 generations (where the population generation was calculated as the average generation of the individuals in the population) an organism was randomly chosen from the population and tested to see whether it included (1) synapses, where the value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e050" xlink:type="simple"/></inline-formula> was negative at P&lt;0.05. These synapses are termed Hebbian LTP synapses; (2) synapses where the value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e051" xlink:type="simple"/></inline-formula> was positive at P&lt;0.05, and are referred to as Anti-Hebbian LTD synapses, (3) synapses where the value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e052" xlink:type="simple"/></inline-formula> was negative at P&lt;0.05, termed Hebbian pre-synaptic LTP synapses, (4) synapses where the value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e053" xlink:type="simple"/></inline-formula> was negative at P&lt;0.05, termed Non-Hebbian pre-synaptic LTP synapses. We did not control for STDP synapses in this experiment.</p>
+<p>For each of the four synapse types above we examined whether there was an increase in the proportion of virtual organisms with the specific synapse type in the first 1000 generations compared to the second 1000 generation. There was an increase in the proportion of virtual organisms that had at least one Non-Hebbian pre-synaptic LTP synapse (P&lt;9×10<sup>−10</sup>, T-test). No such findings were observed for the other synaptic plasticity types (P&gt;0.1, T-test).</p>
+</sec><sec id="s2m">
+<title>Non-Hebbian pre-synaptic LTP synapse as a memory mechanism</title>
+<p>This finding could be explained by (1) the tendency of the evolution to use Non-Hebbian pre-synaptic LTP synapses in this early stage for mating functionality or (2) some unrelated mechanism preferring such organisms in the latter period, such as a tendency of the organisms to include more synapses, which would increase their likelihood of including at least one instance of a specific synapse type.</p>
+<p>A manual examination of the virtual organisms that included a Non-Hebbian pre-synaptic LTP synapse gave us a clue to the use of these synapses. As illustrated in <xref ref-type="fig" rid="pone-0003697-g017">Figure 17</xref>, in some of the cases the Non-Hebbian pre-synaptic LTP synapse was in a path connecting asensors sensitive to a “mate” odor to a motor neuron. This caused the organism to turn around, resulting in a behavior where the synapse “remembered” that there had just been a potential mate nearby, causing the organism to remain in its vicinity and hence increasing the probability of encountering the previously sensed mate.</p>
+<fig id="pone-0003697-g017" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g017</object-id><label>Figure 17</label><caption>
+<title>An organism with a simple memory mechanism of sensed potential mates.</title>
+<p>One of the developed organisms included a sensory neuron A that was sensitive to mate odors, synapsing a hidden neuron B, synapsing using a Non-Hebbian pre-synaptic LTP synapse S, a hidden neuron C, synapsing a motor neuron D. Neuron B firing at a high rate as a result of a proximal mate potentiates synapse S and immediately raises the firing rate of D , causing the organism to turn around and stay in the same area.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g017" xlink:type="simple"/></fig>
+<p>We tested the mutual information between synapse potentiation and the existence of a mate nearby. If the synapses function as a memory mechanism for “remembering” whether there are mates the virtual organism just sensed, we should observe higher mutual information values in cases of synapses recognized as Non-Hebbian pre-synaptic LTP synapses compared to randomly chosen synapses. We compared 250 virtual organisms with a Non-Hebbian pre-synaptic LTP synapse (group B) to 250 randomly chosen virtual organisms (group A). Each virtual organism was placed in an environment and we sampled 1000 instances of:</p>
+<list list-type="simple"><list-item>
+<p><italic>d<sub>t</sub></italic>: the distance of the nearest mate at time <italic>t</italic>.</p>
+</list-item><list-item>
+<p><italic>w<sub>t</sub></italic>: the value of the Non-Hebbian pre-synaptic LTP synapse weight value at time <italic>t</italic>. For Group A organisms, a synapse was chosen that had some variance in the <italic>w<sub>t</sub></italic> values (<italic>Var(w<sub>t</sub>)&gt;0</italic>).</p>
+</list-item></list>
+<p>For each organism the <italic>d<sub>t</sub></italic>, <italic>w<sub>t</sub></italic> values were converted to Boolean values <italic>D = {d<sup>1</sup>,d<sup>2</sup>}</italic> and <italic>W = {w<sup>1</sup>, w<sup>2</sup>}</italic>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e054" xlink:type="simple"/></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e055" xlink:type="simple"/></disp-formula></p>
+<p>As shown in <xref ref-type="fig" rid="pone-0003697-g018">Figure 18</xref>, there was a significant difference in mutual information <italic>I(D;W)</italic> between Group A and Group B.(T-test P&lt;10<sup>−16</sup>). This suggests that the Non-Hebbian pre-synaptic LTP synapses tend to contain more information about the existence of potential mates in the immediate vicinity.</p>
+<fig id="pone-0003697-g018" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0003697.g018</object-id><label>Figure 18</label><caption>
+<title>Histogram of mutual information values of virtual organisms with Non-Hebbian LTP synapses compared to randomly chosen synapses.</title>
+<p>A. Histogram of I(D;W) values of 250 randomly chosen synapses with var(W)&gt;0 of different virtual organisms randomly chosen from the behavior- based evolutionary session. B. Histogram of I(D;W) values of 250 randomly chosen Non-Hebbian LTP pre- synaptic synapses of different virtual organisms randomly chosen from the behavior- based evolutionary session. I(D;W) is the mutual information between the synapse state and the distance of the closest mate. The Non-Hebbian LTP pre- synaptic synapses contained more information about the closest mate (T-test P&lt;10<sup>−16</sup>). For more information about the way I(D;W) was calculated see the <xref ref-type="sec" rid="s4">Materials and Methods</xref> sections.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.g018" xlink:type="simple"/></fig></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>The experiments presented in this paper were designed to examine the ability of an evolutionary cellular development model to evolve various synaptic plasticity regimes. The approach described in this paper is based on a model that is both feasible in terms of running relatively complex evolutionary simulations and includes a biologically plausible gene-protein regulation functionality with an integrate-and-fire neural mechanism.</p>
+<p>By applying different fitness functions to the model in separate evolutionary sessions, different synaptic plasticity rules could be evolved by the system: Hebbian- like LTP plasticity, Anti-Hebbian-like LTD plasticity, Non-Hebbian LTP pre- and post- synaptic plasticity and Hebbian- like STDP. We also showed how Non-Hebbian LTP pre- synaptic plasticity can evolve in an evolutionary system that has no direct fitness function, but is based on behavior selection, and how this plasticity can serve as a simple memory mechanism.</p>
+<p>According to the fitness curves in the direct fitness function experiments, anti-Hebbian like plasticity regimes converge for most runs quite well, especially compared to the fitness curves of the other plasticity types, and therefore might have a selectional advantage in the last experiment.</p>
+<p>Although in this paper we focused on the model's ability to evolve various synaptic plasticity regimes, we also examined the model as a whole and did not derive the specific features in the model that enable evolving synaptic plasticity. For example, even though the diffusion functionality does not seem to be related to the abilities of the model as presented in this paper, our attempts to evolve the simplest plasticity regime without diffusion did not succeed, suggesting that the ability to regulate protein diffusion between neurites and soma is essential. We believe that future studies should examine the ability of simplified models to evolve various synaptic plasticity regimes to discover new essential components of complex mechanisms.</p>
+<p>The ability of the model to evolve various biological plasticity regimes, together with its ability to present genomic and neuronal phenomena suggest that this simulation approach can serve as a tool for investigating evolutionary aspects of synaptic plasticity. One example for such future examination is related to the connection between the time when STDP emerges on the biological phylogenetic tree and the number of generations needed to evolve it in the model. The fact that some synaptic plasticity rules such as time dependent plasticity evolved much more slowly than others as seen in the results presented here can be ascribed to unsuitable fitness functions.</p>
+<p>A different conclusion relates to synaptic plasticity as a mechanism for memory formation and learning. The fact that the model is capable of evolving a biological synaptic plasticity rule as a pre- synaptic LTP synapse in an environment where selection is based on behavior and not directly designed to evolve this specific plasticity should encourage the computational applications of such an approach. We believe that future experiments using this and similar models can shed more light on other synaptic plasticity rules and their relationship to memory and learning, both for future artificial intelligence systems, and as a research tool to account for existing neural systems. Nevertheless, the fact that some synaptic plasticity rules, such as time dependent plasticity, evolved in the direct fitness experiments much more slowly than others, implies possible computation power difficulties in larger and more complex models. We believe that statistical examination of the artificial mechanisms that lead to the creation of more complex synaptic regimes in an evolutionary environment with behavior based selection has the potential to better understand synaptic plasticity both as a biological and computational research tool.</p>
+</sec><sec id="s4">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Reproduction</title>
+<p>Reproduction of a child chromosome from its parent chromosomes is based on a self adaptive method <xref ref-type="bibr" rid="pone.0003697-Thomas1">[43]</xref>, avoiding linkage of the experimental results to specific crossover and mutation values. Each real value <italic>r<sub>i</sub></italic> (<italic>P<sub>i</sub></italic>, <italic>T<sub>i</sub></italic>, <italic>C<sub>i</sub></italic> in the grammar above) of the chromosome is surrounded by three other values: a crossover probability value <italic>c<sub>i</sub></italic>, and two mutability values <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e056" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e057" xlink:type="simple"/></inline-formula> that control the extent to which parameters <italic>r<sub>i</sub></italic> and <italic>c<sub>i</sub></italic> respectively are likely to change (for more information see <xref ref-type="bibr" rid="pone.0003697-Thomas1">[43]</xref>). The values of <italic>r<sub>i</sub></italic>, <italic>c<sub>i</sub></italic>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e058" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e059" xlink:type="simple"/></inline-formula> are mutated self-adaptively:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e060" xlink:type="simple"/></disp-formula>where <italic>n</italic> is the number of genes, <italic>x</italic>∈{<italic>r</italic>, <italic>c</italic>}, <italic>i</italic>∈{1‥<italic>n</italic>}, <italic>N</italic>(0, 1) is a standard normal random number, <italic>N<sub>i</sub></italic>(0, 1) represents a new random number generated for each component, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e061" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e062" xlink:type="simple"/></inline-formula> are the new values for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e063" xlink:type="simple"/></inline-formula>, <italic>x<sub>i</sub></italic>.</p>
+<p>Before mutation takes place, the parent chromosomes are aligned using a dynamic programming algorithm <xref ref-type="bibr" rid="pone.0003697-Gotoh1">[44]</xref> and recombined, where the probability for a crossover point to occur on the aligned chromosomes at location <italic>i</italic> &amp; <italic>j</italic> of the parents is <italic>c<sub>i</sub>+c<sub>j</sub></italic>.</p>
+</sec><sec id="s4b">
+<title>Neural activity</title>
+<p>All cells in the experiments detailed in this paper were embedded with an integrate and fire <xref ref-type="bibr" rid="pone.0003697-Hopfield2">[45]</xref> neural model, where the membrane potential of the cell body behaved according to:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e064" xlink:type="simple"/></disp-formula>where <italic>C</italic> is the membrane capacitance, <italic>I</italic> is the total current injected into the cell, and <italic>g</italic> and <italic>V</italic> values are the ion channel conductivity and reversal potential.</p>
+<p>When the membrane potential reaches threshold <italic>θ</italic>, and the cell is not refractory, it fires an action potential, <italic>g<sub>Na</sub></italic>. It is then raised for one system epoch, and immediately switches to a refractory state for <italic>τ<sub>ref</sub></italic> seconds, where it cannot fire and <italic>g<sub>k</sub></italic> is raised and later decayed back with a <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0003697.e065" xlink:type="simple"/></inline-formula> time constant. In the simulations each epoch represented half a millisecond.</p>
+<p>Current <italic>I</italic> injected into the cell consists of a noise current <italic>I<sub>noise</sub></italic>, and incoming synapse current <italic>I<sub>exc</sub></italic>, where <italic>I<sub>noise</sub></italic> is a Gaussian noise causing a cell without external input to fire randomly. The noise of the various cells is uncorrelated.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e066" xlink:type="simple"/></disp-formula></p>
+<p>Excitatory <italic>I<sub>exc</sub></italic> current injected by a pre-synaptic cell <italic>i</italic> into a postsynaptic cell <italic>j</italic> has a rise and decay time as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e067" xlink:type="simple"/></disp-formula>where <italic>t</italic> is the time elapsed from the last action potential in the pre-synaptic cell, and <italic>τ</italic><sub>1</sub> &amp; <italic>τ</italic><sub>2</sub> are the rise and decay time constants.</p>
+<p>The threshold level depends on the membrane potential level, according to:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e068" xlink:type="simple"/></disp-formula></p>
+</sec><sec id="s4c">
+<title>Chromosome model</title>
+<p>We used cis- and trans- elements as sequences of 16 real numbers. Since the connection strength between molecules <italic>i</italic> and <italic>j</italic>, <italic>w<sub>ij</sub></italic> is calculated by the Hamming distance between rounded off values of the <italic>trans</italic> element of <italic>j</italic> and the <italic>cis</italic> element of <italic>i</italic>, the length of cis and trans elements controls the resolution in which <italic>w<sub>ij</sub></italic> can be calculated.</p>
+<p>Two evolutionary simulations were conducted to evolve Non-Hebbian pre-synaptic LTP synapses using 8 and 32 cis- and trans- lengths, and in both cases the sessions succeeded in evolving the synapses.</p>
+</sec><sec id="s4d">
+<title>Generating output nodes</title>
+<p>Bitstrings <italic>s<sub>m</sub></italic> representing the output nodes are set randomly during initialization of each evolutionary session.</p>
+</sec><sec id="s4e">
+<title>Calculating Regression</title>
+<p>All regression coefficients and regression significance values presented in this paper were values derived from tests where the organism was placed in its environment and there were at least 2000 pre-synaptic and 2000 post-synaptic spikes from both sides of the synapse while sampling. No external current was injected into the neurons so as to collect spike related data. Synapses that did not have any pre-synaptic or post-synaptic spikes during the experiment were not included in the regression calculations.</p>
+</sec><sec id="s4f">
+<title>Mutual information</title>
+<p>The mutual information <italic>I(W;D)</italic> was calculated according to:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0003697.e069" xlink:type="simple"/></disp-formula>where <italic>p</italic>(<italic>w</italic>,<italic>d</italic>) is the number of samples of the joint <italic>w</italic>,<italic>d</italic> divided by the total number of joint samples. <italic>p</italic>(d) and <italic>p</italic>(w) are the number of samples of d and <italic>w</italic> respectively, divided by the total number of samples. The number of samples used was 1000. By letting the simulation progress between each two samples, two consecutive samples were not allowed to have the same closest “mate” to the examined organism.</p>
+</sec></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pone.0003697-Montana1"><label>1</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Montana</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Lawrance</surname><given-names>D</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Training Feed Forward networks using genetic algorithms.</article-title>             <comment>Proc. of Int. Joint Conf. on Artificial Intelligence; Detroit, Michigan, USA</comment>          </element-citation></ref>
+<ref id="pone.0003697-Harp1"><label>2</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harp</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Samad</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Guha</surname><given-names>A</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Toward the genetic synthesis of neural networks.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>S</surname><given-names>DJ</given-names></name>
+</person-group>             <source>Third Intl. Conf. on Genetic Algorithms;</source>             <publisher-loc>Virginia, USA</publisher-loc>             <publisher-name>Morgan Kaufmann</publisher-name>             <fpage>360</fpage>             <lpage>369</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Rust1"><label>3</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rust</surname><given-names>AG</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Developmental self Organization in Artificial Neural Networks.</article-title>             <comment>Ph.D: University of Hertfordshire</comment>          </element-citation></ref>
+<ref id="pone.0003697-Rust2"><label>4</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rust</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Adams</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Bolouri</surname><given-names>H</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Evolutionary neural topiary: Growing and sculpting artificial neurons to order.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>MAB</surname></name>
+<name name-style="western"><surname>JSM</surname></name>
+<name name-style="western"><surname>NHP</surname></name>
+<name name-style="western"><surname>SR</surname></name>
+</person-group>             <source>Artificial Life VII: The 7<sup>th</sup> International Conference.</source>             <publisher-loc>Cambridge, MA</publisher-loc>             <publisher-name>MIT Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Kitano1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kitano</surname><given-names>H</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Designing neural networks using genetic algorithms with graph generation system.</article-title>             <source>Complex Systems</source>             <volume>4</volume>             <fpage>461</fpage>             <lpage>476</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Sims1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sims</surname><given-names>K</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Evolving virtual creatures.</article-title>             <source>Computer Graphics</source>             <volume>28</volume>             <fpage>15</fpage>             <lpage>22</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Sims2"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sims</surname><given-names>K</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Evolving 3D Morphology and Behavior by Competition.</article-title>             <source>Artificial Life</source>             <volume>1</volume>             <fpage>535</fpage>             <lpage>372</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Bongard1"><label>8</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bongard</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Pfeifer</surname><given-names>R</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Repeated structure and dissociation of genotypic and phenotypic complexity in artificial ontogeny.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Spector</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Goodman</surname><given-names>ED</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Langdon</surname><given-names>WB</given-names></name>
+<name name-style="western"><surname>Voigt</surname><given-names>H-M</given-names></name>
+<etal/></person-group>             <publisher-loc>San Francisco, CA</publisher-loc>             <publisher-name>Morgan Kaufmann</publisher-name>             <fpage>829</fpage>             <lpage>836</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Bentley1"><label>9</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bentley</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>
+</person-group>             <year>1999</year>             <source>The ways to grow designs: A comparison of embryogenies for an evolutionary design problem</source>             <publisher-loc>San Francisco, CA</publisher-loc>             <publisher-name>Morgan Kaufmann</publisher-name>             <fpage>35</fpage>             <lpage>43</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Gruau1"><label>10</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gruau</surname><given-names>F</given-names></name>
+</person-group>             <year>1992</year>             <article-title>Genetic synthesis of Boolean neural networks with a cell rewriting developmental process.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Schaffer</surname><given-names>JD</given-names></name>
+</person-group>             <publisher-loc>Baltimore, MD, USA</publisher-loc>             <publisher-name>IEEE Computer society press</publisher-name>             <fpage>55</fpage>             <lpage>74</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Belew1"><label>11</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Belew</surname><given-names>RK</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Interposing an ontogenetic model between genetic algorithms and neural networks.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>C</surname><given-names>J</given-names></name>
+</person-group>             <publisher-loc>San Mateo, CA, USA</publisher-loc>             <publisher-name>Morgan Caufman</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Jakobi1"><label>12</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jakobi</surname><given-names>N</given-names></name>
+</person-group>             <article-title>Harnessing Morphogenesis.;</article-title>             <comment>1995; Liverpool</comment>          </element-citation></ref>
+<ref id="pone.0003697-Stanley1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stanley</surname><given-names>KO</given-names></name>
+<name name-style="western"><surname>Miikkulainen</surname><given-names>R</given-names></name>
+</person-group>             <year>2003</year>             <article-title>A Taxonomy for artificial embryogeny.</article-title>             <source>Artificial Life</source>             <volume>9</volume>             <fpage>93</fpage>             <lpage>130</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Astor1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Astor</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Adami</surname><given-names>C</given-names></name>
+</person-group>             <year>2000</year>             <article-title>A Developmental Model for the Evolution of Artificial Neural Networks.</article-title>             <source>Artificial Life</source>             <volume>6</volume>             <fpage>189</fpage>             <lpage>218</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Dellaert1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dellaert</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Beer</surname><given-names>RD</given-names></name>
+</person-group>             <year>1996</year>             <article-title>A Developmental Model for the Evolution of Complete Autonomous Agents.</article-title>             <source>SAB96</source>          </element-citation></ref>
+<ref id="pone.0003697-Eggenberger1"><label>16</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eggenberger</surname><given-names>P</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Evolving Morphologies of Simulated 3d Organisms Based on Differential Gene Expression.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Husbands</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Harvey</surname><given-names>I</given-names></name>
+</person-group>             <publisher-loc>Cambridge</publisher-loc>             <publisher-name>MIT Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Kitano2"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kitano</surname><given-names>H</given-names></name>
+</person-group>             <year>1995</year>             <article-title>A simple model of neurogenesis and cell differentiation based on evolutionary large-scale chaos.</article-title>             <source>Artificial Life</source>             <volume>2</volume>             <fpage>79</fpage>             <lpage>99</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Reil1"><label>18</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Reil</surname><given-names>T</given-names></name>
+</person-group>             <year>1999</year>             <source>Dynamics of gene expression in an artificial genome - implications for biological and artificial ontogency</source>             <publisher-name>Springer</publisher-name>             <fpage>457</fpage>             <lpage>466</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Dellaert2"><label>19</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dellaert</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Beer</surname><given-names>RD</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Co-evolving Body and Brain in Autonomous Agents using a Developmental Model.</article-title>             <comment>Cleveland, OH 44106</comment>          </element-citation></ref>
+<ref id="pone.0003697-Belew2"><label>20</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Belew</surname><given-names>R</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Interposing an ontogenetic model between genetic algorithms and neural networks.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>C</surname><given-names>J</given-names></name>
+</person-group>             <publisher-loc>San Mateo, CA, USA</publisher-loc>             <publisher-name>Morgan Caufman</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Cangelosi1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cangelosi</surname><given-names>AP</given-names></name>
+<name name-style="western"><surname>D</surname></name>
+</person-group>             <year>1997</year>             <article-title>A Neural Network Model of Caenorhabditis Elegans: The Circuit of Tough Sensitivity.</article-title>             <source>Neural Processing Letters</source>             <volume>6</volume>             <fpage>91</fpage>             <lpage>98</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Ruppin1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ruppin</surname><given-names>E</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Evolutionary autonomous agents: A neuroscience perspective.</article-title>             <source>Nature Reviews Neuroscience</source>             <volume>3</volume>             <fpage>132</fpage>             <lpage>141</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Hebb1"><label>23</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hebb</surname><given-names>DO</given-names></name>
+</person-group>             <year>1949</year>             <source>The Organization of Behavior: A Neuropsychological Theory</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Wiley</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Bliss1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bliss</surname><given-names>TV</given-names></name>
+<name name-style="western"><surname>Lomo</surname><given-names>T</given-names></name>
+</person-group>             <year>1973</year>             <article-title>Long-lasting potentiation of synaptic transmission in the dentate area of the anaesthetized rabbit following stimulation of the perforant path.</article-title>             <source>J Physiol</source>             <volume>232</volume>             <fpage>331</fpage>             <lpage>356</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Debanne1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Debanne</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Gahwiler</surname><given-names>BH</given-names></name>
+<name name-style="western"><surname>Thompson</surname><given-names>SM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Long-term synaptic plasticity between pairs of individual CA3 pyramidal cells in rat hippocampal slice cultures.</article-title>             <source>J Physiol</source>             <volume>507</volume>             <issue>(Pt 1)</issue>             <fpage>237</fpage>             <lpage>247</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Zhang1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhang</surname><given-names>LI</given-names></name>
+<name name-style="western"><surname>Tao</surname><given-names>HW</given-names></name>
+<name name-style="western"><surname>Holt</surname><given-names>CE</given-names></name>
+<name name-style="western"><surname>Harris</surname><given-names>WA</given-names></name>
+<name name-style="western"><surname>Poo</surname><given-names>M</given-names></name>
+</person-group>             <year>1998</year>             <article-title>A critical window for cooperation and competition among developing retinotectal synapses.</article-title>             <source>Nature</source>             <volume>395</volume>             <fpage>37</fpage>             <lpage>44</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Markram1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Markram</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Lubke</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Frotscher</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Sakmann</surname><given-names>B</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Regulation of synaptic efficacy by coincidence of postsynaptic APs and EPSPs.</article-title>             <source>Science</source>             <volume>275</volume>             <fpage>213</fpage>             <lpage>215</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Egger1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Egger</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Feldmeyer</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Sakmann</surname><given-names>B</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Coincidence detection and changes of synaptic efficacy in spiny stellate neurons in rat barrel cortex.</article-title>             <source>Nat Neurosci</source>             <volume>2</volume>             <fpage>1098</fpage>             <lpage>1105</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Bi1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bi</surname><given-names>GQ</given-names></name>
+<name name-style="western"><surname>Poo</surname><given-names>MM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Synaptic modifications in cultured hippocampal neurons: dependence on spike timing, synaptic strength, and postsynaptic cell type.</article-title>             <source>J Neurosci</source>             <volume>18</volume>             <fpage>10464</fpage>             <lpage>10472</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Floreano1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Floreano</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Urzelai</surname><given-names>J</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Neural Morphogenesis, Synaptic Plasticity, and Evolution.</article-title>             <source>Theory in Biosciences</source>             <volume>120</volume>             <fpage>225</fpage>             <lpage>240</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Federici1"><label>31</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Federici</surname><given-names>D</given-names></name>
+</person-group>             <year>2005</year>             <comment>Evolving developing spiking neural networks</comment>          </element-citation></ref>
+<ref id="pone.0003697-Yerushalmi1"><label>32</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yerushalmi</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Teicher</surname><given-names>MA</given-names></name>
+</person-group>             <year>2006</year>             <comment>Regulation Network based Framework for Evolving Biological Models; Aguascalientes, México</comment>          </element-citation></ref>
+<ref id="pone.0003697-Yerushalmi2"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yerushalmi</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Teicher</surname><given-names>M</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Inevitable Evolutionary Temporal Elements in Neural Processing: A Study based on Evolutionary Simulations.</article-title>             <source>PLoS One</source>             <volume>3</volume>             <fpage>e1863</fpage>          </element-citation></ref>
+<ref id="pone.0003697-Yerushalmi3"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yerushalmi</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Teicher</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Examining Emergence of Functional Gene Clustering in a Simulated Evolution.</article-title>             <source>Bull Math Biol</source>             <volume>69</volume>             <fpage>2261</fpage>             <lpage>2280</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Dittrich1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dittrich</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Ziegler</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Banzhaf</surname><given-names>W</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Artificial chemistries–a review.</article-title>             <source>Artif Life</source>             <volume>7</volume>             <fpage>225</fpage>             <lpage>275</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Turing1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Turing</surname><given-names>AM</given-names></name>
+</person-group>             <year>1953</year>             <article-title>The chemical basis of morphogenesis.</article-title>             <source>Philosophical Transactions of the Royal Society (part B)</source>             <volume>237</volume>             <fpage>37</fpage>             <lpage>72</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Gerard1"><label>37</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gerard</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Gerard</surname><given-names>B</given-names></name>
+</person-group>             <year>1990</year>             <source>The chemical abstract machine. Proceedings of the 17th ACM SIGPLAN-SIGACT symposium on Principles of programming languages %@ 0-89791-343-4</source>             <publisher-loc>San Francisco, California, United States</publisher-loc>             <publisher-name>ACM</publisher-name>             <fpage>81</fpage>             <lpage>94</lpage>          </element-citation></ref>
+<ref id="pone.0003697-McAdams1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McAdams</surname><given-names>HH</given-names></name>
+<name name-style="western"><surname>Arkin</surname><given-names>A</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Simulation of prokaryotic genetic circuits.</article-title>             <source>Annu Rev Biophys Biomol Struct</source>             <volume>27</volume>             <fpage>199</fpage>             <lpage>224</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Mjolsness1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mjolsness</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Sharp</surname><given-names>DH</given-names></name>
+<name name-style="western"><surname>Reinitz</surname><given-names>J</given-names></name>
+</person-group>             <year>1991</year>             <article-title>A connectionist model of development.</article-title>             <source>J Theor Biol</source>             <volume>152</volume>             <fpage>429</fpage>             <lpage>453</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Hopfield1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hopfield</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Neurons with graded response have collective computational properties like those of two-state neurons.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>81</volume>             <fpage>3088</fpage>             <lpage>3092</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Hertz1"><label>41</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hertz</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Palmer</surname><given-names>RG</given-names></name>
+<name name-style="western"><surname>Krogh</surname><given-names>AS</given-names></name>
+</person-group>             <year>1991</year>             <source>Introduction to the Theory of Neural Computation</source>             <publisher-loc>Mass</publisher-loc>             <publisher-name>Addison-Wesley</publisher-name>          </element-citation></ref>
+<ref id="pone.0003697-Goldberg1"><label>42</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Goldberg</surname><given-names>DE</given-names></name>
+</person-group>             <year>1989</year>             <source>Genetic algorithms in search, optimization, and machine learning</source>             <publisher-loc>Reading, Mass</publisher-loc>             <publisher-name>Addison-Wesley Pub. Co</publisher-name>             <fpage>xiii, 412</fpage>          </element-citation></ref>
+<ref id="pone.0003697-Thomas1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thomas</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Hans-Paul</surname><given-names>S</given-names></name>
+</person-group>             <year>1993</year>             <article-title>An overview of evolutionary algorithms for parameter optimization.</article-title>             <source>Evol Comput</source>             <volume>1</volume>             <fpage>1</fpage>             <lpage>23</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Gotoh1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gotoh</surname><given-names>O</given-names></name>
+</person-group>             <year>1982</year>             <article-title>An improved algorithm for matching biological sequences.</article-title>             <source>J Mol Biol</source>             <volume>162</volume>             <fpage>705</fpage>             <lpage>708</lpage>          </element-citation></ref>
+<ref id="pone.0003697-Hopfield2"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hopfield</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Neurons, dynamics and computation.</article-title>             <source>Physics Today</source>             <volume>47</volume>             <fpage>40</fpage>             <lpage>46</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

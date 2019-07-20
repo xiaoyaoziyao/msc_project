@@ -1,0 +1,1557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-14486R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0009266</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Evolutionary Biology</subject><subject>Genetics and Genomics</subject><subject>Evolutionary Biology/Bioinformatics</subject></subj-group></article-categories><title-group><article-title>Structural Analysis of Biodiversity</article-title><alt-title alt-title-type="running-head">Analysis of Biodiversity</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sirovich</surname><given-names>Lawrence</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Stoeckle</surname><given-names>Mark Y.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Yu</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Laboratory of Applied Mathematics, Mount Sinai School of Medicine, New York, New York, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Program for the Human Environment, The Rockefeller University, New York, New York, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Thattai</surname><given-names>Mukund</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Tata Institute of Fundamental Research, India</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">lsirovich@rockefeller.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: LS MYS YZ. Performed the experiments: MYS YZ. Analyzed the data: LS MYS YZ. Contributed reagents/materials/analysis tools: LS YZ. Wrote the paper: LS MYS.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>24</day><month>2</month><year>2010</year></pub-date><volume>5</volume><issue>2</issue><elocation-id>e9266</elocation-id><history>
+<date date-type="received"><day>25</day><month>11</month><year>2009</year></date>
+<date date-type="accepted"><day>28</day><month>1</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Sirovich et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Large, recently-available genomic databases cover a wide range of life forms, suggesting opportunity for insights into genetic structure of biodiversity. In this study we refine our recently-described technique using indicator vectors to analyze and visualize nucleotide sequences. The indicator vector approach generates correlation matrices, dubbed Klee diagrams, which represent a novel way of assembling and viewing large genomic datasets. To explore its potential utility, here we apply the improved algorithm to a collection of almost 17000 DNA barcode sequences covering 12 widely-separated animal taxa, demonstrating that indicator vectors for classification gave correct assignment in all 11000 test cases. Indicator vector analysis revealed discontinuities corresponding to species- and higher-level taxonomic divisions, suggesting an efficient approach to classification of organisms from poorly-studied groups. As compared to standard distance metrics, indicator vectors preserve diagnostic character probabilities, enable automated classification of test sequences, and generate high-information density single-page displays. These results support application of indicator vectors for comparative analysis of large nucleotide data sets and raise prospect of gaining insight into broad-scale patterns in the genetic structure of biodiversity.</p>
+</abstract><funding-group><funding-statement>The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. LS received funding from NIH/NEI EY16224, NIH/NIGMS 1 P50 GM071558 and The Alfred P. Sloan Foundation, 2009-5-22 DNAB. YZ received funding from NIH/NIGMS 1 P50 GM071558 and The Alfred P. Sloan Foundation, 2009-5-22 DNAB.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Genetic study of biodiversity has been hampered by the relatively small number of species represented in databases. For example, the largest set of alignable sequences in GenBank (small subunit ribosomal RNA) represents fewer than 21,000 species and the second largest (cytochrome b) includes fewer than 14,000 <xref ref-type="bibr" rid="pone.0009266-Goloboff1">[1]</xref>. This is modest coverage compared to the approximately 1.9 million named species of plants and animals and likely much larger numbers of protozoa, fungi, bacteria, and archaea <xref ref-type="bibr" rid="pone.0009266-Chapman1">[2]</xref>. Usually, a primary goal of comparative genetic study is assembling a Tree of Life that represents the temporal sequence of evolutionary divergences. As it is computationally difficult to construct a phylogenetic tree for more than a few thousand taxa, most analyses focus on a taxonomically-restricted subset and select a few exemplars from each group (e.g., <xref ref-type="bibr" rid="pone.0009266-Caterino1">[3]</xref>, <xref ref-type="bibr" rid="pone.0009266-Hackett1">[4]</xref>). Beyond computational challenges, potential limitations to tree representations include difficulty in representing discontinuities among species or groups of species, as all taxa are linked in a continuous structure; visualizing horizontal affinities across groups, as taxa within each group are joined in a single branch; and comparing data sets such as from ecological surveys, as branching diagrams challenge visual comparison.</p>
+<p>Large, newly-available data sets <xref ref-type="bibr" rid="pone.0009266-Hebert1">[5]</xref> offer the possibility of studying genetic diversity on a wide scale. In an earlier paper, we described a method for creating “indicator vectors” representative of sets of nucleotide sequences <xref ref-type="bibr" rid="pone.0009266-Sirovich1">[6]</xref>. Our aim is to develop an approach to genetic biodiversity that is computationally efficient and enables quantitative display of affinities at various taxonomic scales. Here we extend and refine this method and first apply it to large-scale differences, using sequences drawn from 12 diverse sets of animal species. On a finer scale we apply this mathematical apparatus to delineate affinities within one of the groups, North American birds, and examine biological implications of discontinuities that appear in structural representations of nucleotide sequence correlations.</p>
+<sec id="s1a">
+<title>Data Preparation</title>
+<p>We considered the 648-nucleotide region of COI employed as a standard for distinguishing animal species <xref ref-type="bibr" rid="pone.0009266-Hebert1">[5]</xref>. Inspection of terminal regions of barcode sequence alignments deposited in (BOLD) <ext-link ext-link-type="uri" xlink:href="http://www.barcodinglife.org" xlink:type="simple">http://www.barcodinglife.org</ext-link> showed a high degree of ambiguous or missing nucleotides, presumably reflecting incomplete sequencing runs. To reduce this noise we restricted attention to base pair (bp) positions 100 through 600 in the downloaded alignments, a 501-nucleotide span representing 167 complete codons.</p>
+<p>For the correlation analysis of the present framework nucleotide positions that are conserved lead to an uninformative increase in correlation, i.e., these carry no differential information. Among the 16,876 sequences of the 12 groupings considered below, we found that 161 of the 501 positions were conserved (<xref ref-type="table" rid="pone-0009266-t001">Table 1</xref>); for the purposes of this analysis, these were dropped from analysis.</p>
+<table-wrap id="pone-0009266-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.t001</object-id><label>Table 1</label><caption>
+<title>Conserved sites in 501-bp sequences used for the 12-group analysis.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0009266-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">143</td>
+<td align="left" colspan="1" rowspan="1">145</td>
+<td align="left" colspan="1" rowspan="1">146</td>
+<td align="left" colspan="1" rowspan="1">147</td>
+<td align="left" colspan="1" rowspan="1">149</td>
+<td align="left" colspan="1" rowspan="1">151</td>
+<td align="left" colspan="1" rowspan="1">152</td>
+<td align="left" colspan="1" rowspan="1">155</td>
+<td align="left" colspan="1" rowspan="1">157</td>
+<td align="left" colspan="1" rowspan="1">160</td>
+<td align="left" colspan="1" rowspan="1">161</td>
+<td align="left" colspan="1" rowspan="1">170</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">172</td>
+<td align="left" colspan="1" rowspan="1">173</td>
+<td align="left" colspan="1" rowspan="1">178</td>
+<td align="left" colspan="1" rowspan="1">179</td>
+<td align="left" colspan="1" rowspan="1">181</td>
+<td align="left" colspan="1" rowspan="1">185</td>
+<td align="left" colspan="1" rowspan="1">188</td>
+<td align="left" colspan="1" rowspan="1">190</td>
+<td align="left" colspan="1" rowspan="1">191</td>
+<td align="left" colspan="1" rowspan="1">193</td>
+<td align="left" colspan="1" rowspan="1">194</td>
+<td align="left" colspan="1" rowspan="1">196</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">197</td>
+<td align="left" colspan="1" rowspan="1">199</td>
+<td align="left" colspan="1" rowspan="1">200</td>
+<td align="left" colspan="1" rowspan="1">203</td>
+<td align="left" colspan="1" rowspan="1">208</td>
+<td align="left" colspan="1" rowspan="1">209</td>
+<td align="left" colspan="1" rowspan="1">211</td>
+<td align="left" colspan="1" rowspan="1">212</td>
+<td align="left" colspan="1" rowspan="1">215</td>
+<td align="left" colspan="1" rowspan="1">218</td>
+<td align="left" colspan="1" rowspan="1">221</td>
+<td align="left" colspan="1" rowspan="1">223</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">224</td>
+<td align="left" colspan="1" rowspan="1">226</td>
+<td align="left" colspan="1" rowspan="1">227</td>
+<td align="left" colspan="1" rowspan="1">229</td>
+<td align="left" colspan="1" rowspan="1">230</td>
+<td align="left" colspan="1" rowspan="1">232</td>
+<td align="left" colspan="1" rowspan="1">233</td>
+<td align="left" colspan="1" rowspan="1">235</td>
+<td align="left" colspan="1" rowspan="1">236</td>
+<td align="left" colspan="1" rowspan="1">238</td>
+<td align="left" colspan="1" rowspan="1">242</td>
+<td align="left" colspan="1" rowspan="1">245</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">247</td>
+<td align="left" colspan="1" rowspan="1">248</td>
+<td align="left" colspan="1" rowspan="1">251</td>
+<td align="left" colspan="1" rowspan="1">256</td>
+<td align="left" colspan="1" rowspan="1">257</td>
+<td align="left" colspan="1" rowspan="1">258</td>
+<td align="left" colspan="1" rowspan="1">260</td>
+<td align="left" colspan="1" rowspan="1">262</td>
+<td align="left" colspan="1" rowspan="1">263</td>
+<td align="left" colspan="1" rowspan="1">268</td>
+<td align="left" colspan="1" rowspan="1">269</td>
+<td align="left" colspan="1" rowspan="1">271</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">272</td>
+<td align="left" colspan="1" rowspan="1">274</td>
+<td align="left" colspan="1" rowspan="1">275</td>
+<td align="left" colspan="1" rowspan="1">280</td>
+<td align="left" colspan="1" rowspan="1">283</td>
+<td align="left" colspan="1" rowspan="1">284</td>
+<td align="left" colspan="1" rowspan="1">287</td>
+<td align="left" colspan="1" rowspan="1">290</td>
+<td align="left" colspan="1" rowspan="1">292</td>
+<td align="left" colspan="1" rowspan="1">293</td>
+<td align="left" colspan="1" rowspan="1">295</td>
+<td align="left" colspan="1" rowspan="1">296</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">299</td>
+<td align="left" colspan="1" rowspan="1">301</td>
+<td align="left" colspan="1" rowspan="1">302</td>
+<td align="left" colspan="1" rowspan="1">304</td>
+<td align="left" colspan="1" rowspan="1">305</td>
+<td align="left" colspan="1" rowspan="1">307</td>
+<td align="left" colspan="1" rowspan="1">308</td>
+<td align="left" colspan="1" rowspan="1">311</td>
+<td align="left" colspan="1" rowspan="1">314</td>
+<td align="left" colspan="1" rowspan="1">323</td>
+<td align="left" colspan="1" rowspan="1">326</td>
+<td align="left" colspan="1" rowspan="1">332</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">335</td>
+<td align="left" colspan="1" rowspan="1">361</td>
+<td align="left" colspan="1" rowspan="1">362</td>
+<td align="left" colspan="1" rowspan="1">367</td>
+<td align="left" colspan="1" rowspan="1">368</td>
+<td align="left" colspan="1" rowspan="1">370</td>
+<td align="left" colspan="1" rowspan="1">371</td>
+<td align="left" colspan="1" rowspan="1">373</td>
+<td align="left" colspan="1" rowspan="1">374</td>
+<td align="left" colspan="1" rowspan="1">376</td>
+<td align="left" colspan="1" rowspan="1">377</td>
+<td align="left" colspan="1" rowspan="1">379</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">380</td>
+<td align="left" colspan="1" rowspan="1">383</td>
+<td align="left" colspan="1" rowspan="1">385</td>
+<td align="left" colspan="1" rowspan="1">386</td>
+<td align="left" colspan="1" rowspan="1">388</td>
+<td align="left" colspan="1" rowspan="1">389</td>
+<td align="left" colspan="1" rowspan="1">391</td>
+<td align="left" colspan="1" rowspan="1">392</td>
+<td align="left" colspan="1" rowspan="1">395</td>
+<td align="left" colspan="1" rowspan="1">412</td>
+<td align="left" colspan="1" rowspan="1">413</td>
+<td align="left" colspan="1" rowspan="1">425</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">430</td>
+<td align="left" colspan="1" rowspan="1">431</td>
+<td align="left" colspan="1" rowspan="1">434</td>
+<td align="left" colspan="1" rowspan="1">436</td>
+<td align="left" colspan="1" rowspan="1">437</td>
+<td align="left" colspan="1" rowspan="1">438</td>
+<td align="left" colspan="1" rowspan="1">442</td>
+<td align="left" colspan="1" rowspan="1">443</td>
+<td align="left" colspan="1" rowspan="1">445</td>
+<td align="left" colspan="1" rowspan="1">446</td>
+<td align="left" colspan="1" rowspan="1">452</td>
+<td align="left" colspan="1" rowspan="1">454</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">455</td>
+<td align="left" colspan="1" rowspan="1">463</td>
+<td align="left" colspan="1" rowspan="1">464</td>
+<td align="left" colspan="1" rowspan="1">469</td>
+<td align="left" colspan="1" rowspan="1">470</td>
+<td align="left" colspan="1" rowspan="1">472</td>
+<td align="left" colspan="1" rowspan="1">473</td>
+<td align="left" colspan="1" rowspan="1">475</td>
+<td align="left" colspan="1" rowspan="1">476</td>
+<td align="left" colspan="1" rowspan="1">479</td>
+<td align="left" colspan="1" rowspan="1">485</td>
+<td align="left" colspan="1" rowspan="1">490</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">491</td>
+<td align="left" colspan="1" rowspan="1">493</td>
+<td align="left" colspan="1" rowspan="1">494</td>
+<td align="left" colspan="1" rowspan="1">496</td>
+<td align="left" colspan="1" rowspan="1">497</td>
+<td align="left" colspan="1" rowspan="1">502</td>
+<td align="left" colspan="1" rowspan="1">503</td>
+<td align="left" colspan="1" rowspan="1">509</td>
+<td align="left" colspan="1" rowspan="1">511</td>
+<td align="left" colspan="1" rowspan="1">512</td>
+<td align="left" colspan="1" rowspan="1">514</td>
+<td align="left" colspan="1" rowspan="1">515</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">539</td>
+<td align="left" colspan="1" rowspan="1">548</td>
+<td align="left" colspan="1" rowspan="1">551</td>
+<td align="left" colspan="1" rowspan="1">559</td>
+<td align="left" colspan="1" rowspan="1">560</td>
+<td align="left" colspan="1" rowspan="1">563</td>
+<td align="left" colspan="1" rowspan="1">566</td>
+<td align="left" colspan="1" rowspan="1">572</td>
+<td align="left" colspan="1" rowspan="1">574</td>
+<td align="left" colspan="1" rowspan="1">575</td>
+<td align="left" colspan="1" rowspan="1">581</td>
+<td align="left" colspan="1" rowspan="1">584</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">587</td>
+<td align="left" colspan="1" rowspan="1">590</td>
+<td align="left" colspan="1" rowspan="1">593</td>
+<td align="left" colspan="1" rowspan="1">596</td>
+<td align="left" colspan="1" rowspan="1">599</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>Position 1 in table corresponds to position 5433 in mouse mitochondrial genome.</p></fn></table-wrap-foot></table-wrap>
+<p>The stretch of 501 nucleotide characters can each be uniquely translated into a digital vector under the nucleotide convention as follows.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e001" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>In schematic form a sequence <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e002" xlink:type="simple"/></inline-formula> transforms to a vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e003" xlink:type="simple"/></inline-formula> as follows<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e004" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>There are various metrics for calculating sequence distances based on models of nucleotide substitution. Among these the Hamming distance, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e005" xlink:type="simple"/></inline-formula>, i.e., the number of substitutions required to bring two sequences of like length into agreement, is the freest of additional assumptions. More complex distances distinguish between transitions and transversions, codon positions, and equilibrium based frequencies, as for example <xref ref-type="bibr" rid="pone.0009266-Kimura1">[7]</xref>–<xref ref-type="bibr" rid="pone.0009266-Hasegawa1">[10]</xref>. These forms are based on evolutionary considerations, while for our approach, which is based on the present state of correlations, the Hamming distance is the metric of choice. Each COI sequence thus becomes a vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e006" xlink:type="simple"/></inline-formula> of 2004 entries; after removal of the 161 conserved nucleotides, 1,360 entries remain. The transformation of eq. (2) is not unique. An alternate transformation is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e007" xlink:type="simple"/><label>(3)</label></disp-formula>which doubles, instead of quadrupling the sequence length as in eq. (2). This does not lead to the desired form of eq. (5) given below. Other alternatives that have been tried also lead to problems.</p>
+</sec></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Distances</title>
+<p>If two sequences of length <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e008" xlink:type="simple"/></inline-formula> disagree at <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e009" xlink:type="simple"/></inline-formula> positions the Hamming distance is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e010" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+<p>On the other hand from eq. (2) the square of its Euclidean distance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e011" xlink:type="simple"/></inline-formula> is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e012" xlink:type="simple"/><label>(5)</label></disp-formula>and therefore<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e013" xlink:type="simple"/><label>(6)</label></disp-formula></p>
+<p>In normalized form this can be written as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e014" xlink:type="simple"/><label>(7)</label></disp-formula>which places the sequences vectors measured from a zero origin on the unit sphere and also uniquely associates the correlation coefficient <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e015" xlink:type="simple"/></inline-formula>, and the angle <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e016" xlink:type="simple"/></inline-formula>, as a consequence of the law of cosines, i.e., the right hand side of eq. (7). <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e017" xlink:type="simple"/></inline-formula> is the ratio of substitutions to site number, a customary representation.</p>
+<p>Equations (6) &amp; (7) are special cases of a more general recipe for associating a correlation coefficient with a metric. If <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e018" xlink:type="simple"/></inline-formula> denotes a metric (distance function), then we recall that for elements <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e019" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e020" xlink:type="simple"/></inline-formula> &amp; <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e021" xlink:type="simple"/></inline-formula> by definition the triangle inequality is satisfied<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e022" xlink:type="simple"/><label>(8)</label></disp-formula>where<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e023" xlink:type="simple"/><label>(9)</label></disp-formula></p>
+<p>One may then show from eq. (8) that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e024" xlink:type="simple"/><label>(10)</label></disp-formula>which fulfills the requirement of a correlation. And if the ratio in eq. (10) is written as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e025" xlink:type="simple"/></inline-formula> we obtain the law of cosines.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e026" xlink:type="simple"/><label>(11)</label></disp-formula></p>
+<p>In a vector space this is exactly the case. In the construction eq. (7) <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e027" xlink:type="simple"/></inline-formula> is taken as the origin.</p>
+</sec><sec id="s2b">
+<title>Indicator Vectors</title>
+<p>For purposes of exposition consider the particular grouping of “Canadian freshwater fish” see <xref ref-type="table" rid="pone-0009266-t002">Table 2</xref>. After the above preparation of sequence data we denote a typical fish sequence by the row vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e028" xlink:type="simple"/></inline-formula>. The Canadian fish dataset has 1,324 members. Next we chose <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e029" xlink:type="simple"/></inline-formula> distinct sequences at random from this set and form the fish set.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e030" xlink:type="simple"/><label>(12)</label></disp-formula></p>
+<table-wrap id="pone-0009266-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.t002</object-id><label>Table 2</label><caption>
+<title>COI datasets used in the 12-group analysis.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0009266-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">No.</td>
+<td align="left" colspan="1" rowspan="1">BOLD Project</td>
+<td align="left" colspan="1" rowspan="1">Group Designation</td>
+<td align="left" colspan="1" rowspan="1">No. sequences</td>
+<td align="left" colspan="1" rowspan="1">No. test sequences</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">GenBank-Amphibia</td>
+<td align="left" colspan="1" rowspan="1">Amphibians</td>
+<td align="left" colspan="1" rowspan="1">520</td>
+<td align="left" colspan="1" rowspan="1">20</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">Barcoding of Canadian freshwater fishes</td>
+<td align="left" colspan="1" rowspan="1">Fish</td>
+<td align="left" colspan="1" rowspan="1">1324</td>
+<td align="left" colspan="1" rowspan="1">824</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">Bats of Guyana</td>
+<td align="left" colspan="1" rowspan="1">Bats</td>
+<td align="left" colspan="1" rowspan="1">819</td>
+<td align="left" colspan="1" rowspan="1">319</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">Birds of North America, General sequences</td>
+<td align="left" colspan="1" rowspan="1">Birds</td>
+<td align="left" colspan="1" rowspan="1">1688</td>
+<td align="left" colspan="1" rowspan="1">1188</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">ACG Generalist Tachinidae</td>
+<td align="left" colspan="1" rowspan="1">Flies</td>
+<td align="left" colspan="1" rowspan="1">1981</td>
+<td align="left" colspan="1" rowspan="1">1481</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">Hesperiidae of the ACG 1</td>
+<td align="left" colspan="1" rowspan="1">Butterflies</td>
+<td align="left" colspan="1" rowspan="1">1581</td>
+<td align="left" colspan="1" rowspan="1">1081</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">ACG Microgastrinae</td>
+<td align="left" colspan="1" rowspan="1">Wasps</td>
+<td align="left" colspan="1" rowspan="1">1895</td>
+<td align="left" colspan="1" rowspan="1">1395</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">Ants of the World, merged project</td>
+<td align="left" colspan="1" rowspan="1">Ants</td>
+<td align="left" colspan="1" rowspan="1">1799</td>
+<td align="left" colspan="1" rowspan="1">1299</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">Barcoding the Aphididae</td>
+<td align="left" colspan="1" rowspan="1">Aphids</td>
+<td align="left" colspan="1" rowspan="1">666</td>
+<td align="left" colspan="1" rowspan="1">166</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">GenBank-Crustacea Malac.-Decapoda</td>
+<td align="left" colspan="1" rowspan="1">Crayfish</td>
+<td align="left" colspan="1" rowspan="1">2068</td>
+<td align="left" colspan="1" rowspan="1">1568</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">Marine Life, merged project</td>
+<td align="left" colspan="1" rowspan="1">Mollusks</td>
+<td align="left" colspan="1" rowspan="1">1652</td>
+<td align="left" colspan="1" rowspan="1">1152</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">Genbank Cnidaria</td>
+<td align="left" colspan="1" rowspan="1">Jellyfish</td>
+<td align="left" colspan="1" rowspan="1">883</td>
+<td align="left" colspan="1" rowspan="1">383</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Total</td>
+<td align="left" colspan="1" rowspan="1">16876</td>
+<td align="left" colspan="1" rowspan="1">10876</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label/><p>Datasets used to calculate and test group indicator vectors.</p></fn></table-wrap-foot></table-wrap>
+<p>In general if there are <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e031" xlink:type="simple"/></inline-formula> groupings we consider <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e032" xlink:type="simple"/></inline-formula> sets <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e033" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e034" xlink:type="simple"/></inline-formula> ranges over the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e035" xlink:type="simple"/></inline-formula> groupings.</p>
+<p>An indicator unit vector <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e036" xlink:type="simple"/></inline-formula> for each set is then determined on the basis that it have a maximal correlation with the selected <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e037" xlink:type="simple"/></inline-formula> taxon, and minimal correlation with all other taxa <xref ref-type="bibr" rid="pone.0009266-Sirovich1">[6]</xref>. As a simple but useful illustration consider <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e038" xlink:type="simple"/></inline-formula> sequence vectors <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e039" xlink:type="simple"/></inline-formula>, say one representative from each of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e040" xlink:type="simple"/></inline-formula> groups, or each an average of each group. We then seek <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e041" xlink:type="simple"/></inline-formula>, the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e042" xlink:type="simple"/></inline-formula> indicator vector such that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e043" xlink:type="simple"/><label>(13)</label></disp-formula>is a maximum,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e044" xlink:type="simple"/><label>(14)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e045" xlink:type="simple"/></inline-formula> signifies the average. It is straightforward to show that under the reasonable assumption that if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e046" xlink:type="simple"/></inline-formula> are linearly independent then the criterion function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e047" xlink:type="simple"/></inline-formula> has a positive maximum and that it is determined as the eigenvector with the largest (positive) eigenvalue of<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e048" xlink:type="simple"/><label>(15)</label></disp-formula></p>
+<p>One consequence of the particular criterion for choosing the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e049" xlink:type="simple"/></inline-formula> is that it provides a natural structural representation expressed as auto- and cross-correlations, given by<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e050" xlink:type="simple"/><label>(16)</label></disp-formula>and referred to as the structure matrix. We also define the diversity matrix as given by<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e051" xlink:type="simple"/><label>(17)</label></disp-formula></p>
+<p>This notation denotes the mean over all <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e052" xlink:type="simple"/></inline-formula> inner products pairs of the members of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e053" xlink:type="simple"/></inline-formula> with those of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e054" xlink:type="simple"/></inline-formula>, which thus gives a depiction of within and among group correlations.</p>
+<p>A fixed number of members, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e055" xlink:type="simple"/></inline-formula>, in the sets <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e056" xlink:type="simple"/></inline-formula> confers equal weights on each of the taxa. These may be considered as the “training set,” for the indicator vector and the remaining sequences are used as a “test set.” There is reason to make <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e057" xlink:type="simple"/></inline-formula> relatively small in initial calculations. Once past the testing stage there may be reason to take <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e058" xlink:type="simple"/></inline-formula> as large as possible within the restriction of equal weightings.</p>
+</sec><sec id="s2c">
+<title>Probabilities</title>
+<p>Another consequence of embedding a character sequence into a vector space, eq. (2), is that the average of an ensemble of sequences <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e059" xlink:type="simple"/></inline-formula> can be defined as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e060" xlink:type="simple"/><label>(18)</label></disp-formula>Which through the inverse operation of eq. (2) furnishes the probability of occurrence of (A,T,C,G) at each nucleotide position and that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e061" xlink:type="simple"/><label>(19)</label></disp-formula>which is a consequence of eq. (2).</p>
+<sec id="s2c1">
+<title>Conservation of Probability</title>
+<p>Eq. (4) allows us to regard the 4-vectors as specifying the probabilities of the associated symbols. We now demonstrate that this property is inherited by the indicator vectors, i.e., its 4-vectors sum to unity. To see this define<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e062" xlink:type="simple"/><label>(20)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e063" xlink:type="simple"/></inline-formula>, the number of rows, is also the number of bps. Multiplication of (15) by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e064" xlink:type="simple"/></inline-formula> yields<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e065" xlink:type="simple"/><label>(21)</label></disp-formula>but<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e066" xlink:type="simple"/><label>(22)</label></disp-formula>for any <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e067" xlink:type="simple"/></inline-formula> and from this it follows that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e068" xlink:type="simple"/><label>(23)</label></disp-formula>which proves the assertion. (This proof depends specifically on regarding an unknown bp as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e069" xlink:type="simple"/></inline-formula>, which we deem to be reasonable.) Therefore each indicator vector can be regarded as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e070" xlink:type="simple"/></inline-formula> quartets of probability in the four possible symbols.</p>
+</sec></sec><sec id="s2d">
+<title>Tree Construction</title>
+<p>A customary practice is to express sequence separations as distances, which play a role in the construction of trees. It is straightforward to show the connection of distances to the correlations contained in eq. (16) and of eq. (17). In fact it directly follows from eq. (7) that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e071" xlink:type="simple"/><label>(24)</label></disp-formula>is the matrix of average Hamming distances between taxons <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e072" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e073" xlink:type="simple"/></inline-formula>. By the same token<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e074" xlink:type="simple"/><label>(25)</label></disp-formula>is the distance matrix between the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e075" xlink:type="simple"/></inline-formula> &amp; <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e076" xlink:type="simple"/></inline-formula> indicator vectors. It is important to note that evolutionary considerations do not figure in the calculation of the above distances.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>We first considered 12 animal groups, using COI sequences deposited in BOLD taxon-specific projects (<xref ref-type="table" rid="pone-0009266-t002">Table 2</xref>). In all cases analysis was restricted to sequences of sufficient length, and excluded those containing excessive blank positions.</p>
+<p>The structure matrix for the 12 groups displays correlations among their respective indicator vectors (<xref ref-type="fig" rid="pone-0009266-g001">Figure 1A</xref>). These are arranged in large-scale taxonomic divisions [Chordata, Arthropoda (Insecta, Malacostraca), Mollusca, Cnidaria], and sub-ordered based on correlations, e.g., within the upper <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e077" xlink:type="simple"/></inline-formula> matrix (Chordata), groups are ordered by vector correlation as quantified by<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.e078" xlink:type="simple"/><label>(26)</label></disp-formula></p>
+<p>Thus amphibians have the highest relationships with the others in this set. The next <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e079" xlink:type="simple"/></inline-formula> block representing Class Insecta, are ordered by relationship as above. The diversity matrix eq. (17) quantifies the degree of diversity within and among data sets (<xref ref-type="fig" rid="pone-0009266-g001">Figure 1B</xref>), and has an impressionistic similarity to the structure matrix of unitary indicator vectors (<xref ref-type="fig" rid="pone-0009266-g001">Figure 1A</xref>). The diagonal elements of <xref ref-type="fig" rid="pone-0009266-g001">Figure 1B</xref> illustrate the high internal diversity of amphibians, ants, crayfish, and jellyfish, and relative lack of internal diversity for flies, butterflies, wasps, and aphids. Numerical equivalents of <xref ref-type="fig" rid="pone-0009266-g001">Figure 1</xref> are given in <xref ref-type="table" rid="pone-0009266-t003">Table 3</xref>. Lack of diversity might be consistent with these data being drawn from single families or subfamilies. Diversity as defined by (24) introduces an objective measure of diversity based on variance.</p>
+<fig id="pone-0009266-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g001</object-id><label>Figure 1</label><caption>
+<title>Correlations among indicator vectors for 12 animal groups.</title>
+<p>(A) Structure matrix eq. (16). (B) Diversity matrix eq. (17). Numerical forms of matrices given in <xref ref-type="table" rid="pone-0009266-t003">Table 3</xref>. Differing color bar scales in (A) and (B) are used to emphasize off diagonal resemblance between matrices.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g001" xlink:type="simple"/></fig><table-wrap id="pone-0009266-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.t003</object-id><label>Table 3</label><caption>
+<title>Numerical representations of <xref ref-type="fig" rid="pone-0009266-g001">Figure 1A and 1B</xref>, respectively.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0009266-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="12" rowspan="1"><bold>(A)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.8060</td>
+<td align="left" colspan="1" rowspan="1">0.6799</td>
+<td align="left" colspan="1" rowspan="1">0.7221</td>
+<td align="left" colspan="1" rowspan="1">0.2215</td>
+<td align="left" colspan="1" rowspan="1">0.2201</td>
+<td align="left" colspan="1" rowspan="1">0.1594</td>
+<td align="left" colspan="1" rowspan="1">0.1754</td>
+<td align="left" colspan="1" rowspan="1">0.1920</td>
+<td align="left" colspan="1" rowspan="1">0.3220</td>
+<td align="left" colspan="1" rowspan="1">0.3252</td>
+<td align="left" colspan="1" rowspan="1">0.2894</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.8060</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.7146</td>
+<td align="left" colspan="1" rowspan="1">0.7260</td>
+<td align="left" colspan="1" rowspan="1">0.2169</td>
+<td align="left" colspan="1" rowspan="1">0.2209</td>
+<td align="left" colspan="1" rowspan="1">0.1021</td>
+<td align="left" colspan="1" rowspan="1">0.1432</td>
+<td align="left" colspan="1" rowspan="1">0.1587</td>
+<td align="left" colspan="1" rowspan="1">0.3199</td>
+<td align="left" colspan="1" rowspan="1">0.2898</td>
+<td align="left" colspan="1" rowspan="1">0.2706</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.6799</td>
+<td align="left" colspan="1" rowspan="1">0.7146</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.7458</td>
+<td align="left" colspan="1" rowspan="1">0.2477</td>
+<td align="left" colspan="1" rowspan="1">0.2662</td>
+<td align="left" colspan="1" rowspan="1">0.1729</td>
+<td align="left" colspan="1" rowspan="1">0.1792</td>
+<td align="left" colspan="1" rowspan="1">0.1754</td>
+<td align="left" colspan="1" rowspan="1">0.3498</td>
+<td align="left" colspan="1" rowspan="1">0.3565</td>
+<td align="left" colspan="1" rowspan="1">0.2872</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.7221</td>
+<td align="left" colspan="1" rowspan="1">0.7260</td>
+<td align="left" colspan="1" rowspan="1">0.7458</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.1900</td>
+<td align="left" colspan="1" rowspan="1">0.1806</td>
+<td align="left" colspan="1" rowspan="1">0.0787</td>
+<td align="left" colspan="1" rowspan="1">0.1372</td>
+<td align="left" colspan="1" rowspan="1">0.1284</td>
+<td align="left" colspan="1" rowspan="1">0.3841</td>
+<td align="left" colspan="1" rowspan="1">0.2514</td>
+<td align="left" colspan="1" rowspan="1">0.2225</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.2215</td>
+<td align="left" colspan="1" rowspan="1">0.2169</td>
+<td align="left" colspan="1" rowspan="1">0.2477</td>
+<td align="left" colspan="1" rowspan="1">0.1900</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.6219</td>
+<td align="left" colspan="1" rowspan="1">0.4446</td>
+<td align="left" colspan="1" rowspan="1">0.3790</td>
+<td align="left" colspan="1" rowspan="1">0.3526</td>
+<td align="left" colspan="1" rowspan="1">0.5245</td>
+<td align="left" colspan="1" rowspan="1">0.4358</td>
+<td align="left" colspan="1" rowspan="1">0.3034</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.2201</td>
+<td align="left" colspan="1" rowspan="1">0.2209</td>
+<td align="left" colspan="1" rowspan="1">0.2662</td>
+<td align="left" colspan="1" rowspan="1">0.1806</td>
+<td align="left" colspan="1" rowspan="1">0.6219</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.4708</td>
+<td align="left" colspan="1" rowspan="1">0.4775</td>
+<td align="left" colspan="1" rowspan="1">0.3794</td>
+<td align="left" colspan="1" rowspan="1">0.4120</td>
+<td align="left" colspan="1" rowspan="1">0.3648</td>
+<td align="left" colspan="1" rowspan="1">0.2397</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.1594</td>
+<td align="left" colspan="1" rowspan="1">0.1021</td>
+<td align="left" colspan="1" rowspan="1">0.1729</td>
+<td align="left" colspan="1" rowspan="1">0.0787</td>
+<td align="left" colspan="1" rowspan="1">0.4446</td>
+<td align="left" colspan="1" rowspan="1">0.4708</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.5160</td>
+<td align="left" colspan="1" rowspan="1">0.4222</td>
+<td align="left" colspan="1" rowspan="1">0.3455</td>
+<td align="left" colspan="1" rowspan="1">0.3363</td>
+<td align="left" colspan="1" rowspan="1">0.2616</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.1754</td>
+<td align="left" colspan="1" rowspan="1">0.1432</td>
+<td align="left" colspan="1" rowspan="1">0.1792</td>
+<td align="left" colspan="1" rowspan="1">0.1372</td>
+<td align="left" colspan="1" rowspan="1">0.3790</td>
+<td align="left" colspan="1" rowspan="1">0.4775</td>
+<td align="left" colspan="1" rowspan="1">0.5160</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.4753</td>
+<td align="left" colspan="1" rowspan="1">0.2803</td>
+<td align="left" colspan="1" rowspan="1">0.2062</td>
+<td align="left" colspan="1" rowspan="1">0.1844</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.1920</td>
+<td align="left" colspan="1" rowspan="1">0.1587</td>
+<td align="left" colspan="1" rowspan="1">0.1754</td>
+<td align="left" colspan="1" rowspan="1">0.1284</td>
+<td align="left" colspan="1" rowspan="1">0.3526</td>
+<td align="left" colspan="1" rowspan="1">0.3794</td>
+<td align="left" colspan="1" rowspan="1">0.4222</td>
+<td align="left" colspan="1" rowspan="1">0.4753</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.1980</td>
+<td align="left" colspan="1" rowspan="1">0.2540</td>
+<td align="left" colspan="1" rowspan="1">0.2043</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.3220</td>
+<td align="left" colspan="1" rowspan="1">0.3199</td>
+<td align="left" colspan="1" rowspan="1">0.3498</td>
+<td align="left" colspan="1" rowspan="1">0.3841</td>
+<td align="left" colspan="1" rowspan="1">0.5245</td>
+<td align="left" colspan="1" rowspan="1">0.4120</td>
+<td align="left" colspan="1" rowspan="1">0.3455</td>
+<td align="left" colspan="1" rowspan="1">0.2803</td>
+<td align="left" colspan="1" rowspan="1">0.1980</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.4127</td>
+<td align="left" colspan="1" rowspan="1">0.2409</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.3252</td>
+<td align="left" colspan="1" rowspan="1">0.2898</td>
+<td align="left" colspan="1" rowspan="1">0.3565</td>
+<td align="left" colspan="1" rowspan="1">0.2514</td>
+<td align="left" colspan="1" rowspan="1">0.4358</td>
+<td align="left" colspan="1" rowspan="1">0.3648</td>
+<td align="left" colspan="1" rowspan="1">0.3363</td>
+<td align="left" colspan="1" rowspan="1">0.2062</td>
+<td align="left" colspan="1" rowspan="1">0.2540</td>
+<td align="left" colspan="1" rowspan="1">0.4127</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+<td align="left" colspan="1" rowspan="1">0.3756</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.2894</td>
+<td align="left" colspan="1" rowspan="1">0.2706</td>
+<td align="left" colspan="1" rowspan="1">0.2872</td>
+<td align="left" colspan="1" rowspan="1">0.2225</td>
+<td align="left" colspan="1" rowspan="1">0.3034</td>
+<td align="left" colspan="1" rowspan="1">0.2397</td>
+<td align="left" colspan="1" rowspan="1">0.2616</td>
+<td align="left" colspan="1" rowspan="1">0.1844</td>
+<td align="left" colspan="1" rowspan="1">0.2043</td>
+<td align="left" colspan="1" rowspan="1">0.2409</td>
+<td align="left" colspan="1" rowspan="1">0.3756</td>
+<td align="left" colspan="1" rowspan="1">1.0000</td>
+</tr>
+<tr>
+<td align="left" colspan="12" rowspan="1"><bold>(B)</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.6826</td>
+<td align="left" colspan="1" rowspan="1">0.6633</td>
+<td align="left" colspan="1" rowspan="1">0.6545</td>
+<td align="left" colspan="1" rowspan="1">0.6567</td>
+<td align="left" colspan="1" rowspan="1">0.5603</td>
+<td align="left" colspan="1" rowspan="1">0.5500</td>
+<td align="left" colspan="1" rowspan="1">0.4977</td>
+<td align="left" colspan="1" rowspan="1">0.4793</td>
+<td align="left" colspan="1" rowspan="1">0.4885</td>
+<td align="left" colspan="1" rowspan="1">0.5547</td>
+<td align="left" colspan="1" rowspan="1">0.5577</td>
+<td align="left" colspan="1" rowspan="1">0.4916</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.6633</td>
+<td align="left" colspan="1" rowspan="1">0.7144</td>
+<td align="left" colspan="1" rowspan="1">0.6686</td>
+<td align="left" colspan="1" rowspan="1">0.6715</td>
+<td align="left" colspan="1" rowspan="1">0.5464</td>
+<td align="left" colspan="1" rowspan="1">0.5413</td>
+<td align="left" colspan="1" rowspan="1">0.4682</td>
+<td align="left" colspan="1" rowspan="1">0.4611</td>
+<td align="left" colspan="1" rowspan="1">0.4656</td>
+<td align="left" colspan="1" rowspan="1">0.5494</td>
+<td align="left" colspan="1" rowspan="1">0.5447</td>
+<td align="left" colspan="1" rowspan="1">0.4842</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.6545</td>
+<td align="left" colspan="1" rowspan="1">0.6686</td>
+<td align="left" colspan="1" rowspan="1">0.7433</td>
+<td align="left" colspan="1" rowspan="1">0.6877</td>
+<td align="left" colspan="1" rowspan="1">0.5783</td>
+<td align="left" colspan="1" rowspan="1">0.5731</td>
+<td align="left" colspan="1" rowspan="1">0.5055</td>
+<td align="left" colspan="1" rowspan="1">0.4905</td>
+<td align="left" colspan="1" rowspan="1">0.4877</td>
+<td align="left" colspan="1" rowspan="1">0.5726</td>
+<td align="left" colspan="1" rowspan="1">0.5767</td>
+<td align="left" colspan="1" rowspan="1">0.5031</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.6567</td>
+<td align="left" colspan="1" rowspan="1">0.6715</td>
+<td align="left" colspan="1" rowspan="1">0.6877</td>
+<td align="left" colspan="1" rowspan="1">0.7600</td>
+<td align="left" colspan="1" rowspan="1">0.5295</td>
+<td align="left" colspan="1" rowspan="1">0.5191</td>
+<td align="left" colspan="1" rowspan="1">0.4453</td>
+<td align="left" colspan="1" rowspan="1">0.4527</td>
+<td align="left" colspan="1" rowspan="1">0.4433</td>
+<td align="left" colspan="1" rowspan="1">0.5616</td>
+<td align="left" colspan="1" rowspan="1">0.5279</td>
+<td align="left" colspan="1" rowspan="1">0.4680</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.5603</td>
+<td align="left" colspan="1" rowspan="1">0.5464</td>
+<td align="left" colspan="1" rowspan="1">0.5783</td>
+<td align="left" colspan="1" rowspan="1">0.5295</td>
+<td align="left" colspan="1" rowspan="1">0.8623</td>
+<td align="left" colspan="1" rowspan="1">0.7314</td>
+<td align="left" colspan="1" rowspan="1">0.6482</td>
+<td align="left" colspan="1" rowspan="1">0.5874</td>
+<td align="left" colspan="1" rowspan="1">0.5971</td>
+<td align="left" colspan="1" rowspan="1">0.6521</td>
+<td align="left" colspan="1" rowspan="1">0.6366</td>
+<td align="left" colspan="1" rowspan="1">0.5323</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.5500</td>
+<td align="left" colspan="1" rowspan="1">0.5413</td>
+<td align="left" colspan="1" rowspan="1">0.5731</td>
+<td align="left" colspan="1" rowspan="1">0.5191</td>
+<td align="left" colspan="1" rowspan="1">0.7314</td>
+<td align="left" colspan="1" rowspan="1">0.8306</td>
+<td align="left" colspan="1" rowspan="1">0.6480</td>
+<td align="left" colspan="1" rowspan="1">0.6083</td>
+<td align="left" colspan="1" rowspan="1">0.6000</td>
+<td align="left" colspan="1" rowspan="1">0.6148</td>
+<td align="left" colspan="1" rowspan="1">0.6034</td>
+<td align="left" colspan="1" rowspan="1">0.5021</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.4977</td>
+<td align="left" colspan="1" rowspan="1">0.4682</td>
+<td align="left" colspan="1" rowspan="1">0.5055</td>
+<td align="left" colspan="1" rowspan="1">0.4453</td>
+<td align="left" colspan="1" rowspan="1">0.6482</td>
+<td align="left" colspan="1" rowspan="1">0.6480</td>
+<td align="left" colspan="1" rowspan="1">0.8185</td>
+<td align="left" colspan="1" rowspan="1">0.6034</td>
+<td align="left" colspan="1" rowspan="1">0.6025</td>
+<td align="left" colspan="1" rowspan="1">0.5632</td>
+<td align="left" colspan="1" rowspan="1">0.5663</td>
+<td align="left" colspan="1" rowspan="1">0.4897</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.4793</td>
+<td align="left" colspan="1" rowspan="1">0.4611</td>
+<td align="left" colspan="1" rowspan="1">0.4905</td>
+<td align="left" colspan="1" rowspan="1">0.4527</td>
+<td align="left" colspan="1" rowspan="1">0.5874</td>
+<td align="left" colspan="1" rowspan="1">0.6083</td>
+<td align="left" colspan="1" rowspan="1">0.6034</td>
+<td align="left" colspan="1" rowspan="1">0.6920</td>
+<td align="left" colspan="1" rowspan="1">0.5857</td>
+<td align="left" colspan="1" rowspan="1">0.5198</td>
+<td align="left" colspan="1" rowspan="1">0.4936</td>
+<td align="left" colspan="1" rowspan="1">0.4360</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.4885</td>
+<td align="left" colspan="1" rowspan="1">0.4656</td>
+<td align="left" colspan="1" rowspan="1">0.4877</td>
+<td align="left" colspan="1" rowspan="1">0.4433</td>
+<td align="left" colspan="1" rowspan="1">0.5971</td>
+<td align="left" colspan="1" rowspan="1">0.6000</td>
+<td align="left" colspan="1" rowspan="1">0.6025</td>
+<td align="left" colspan="1" rowspan="1">0.5857</td>
+<td align="left" colspan="1" rowspan="1">0.8671</td>
+<td align="left" colspan="1" rowspan="1">0.5039</td>
+<td align="left" colspan="1" rowspan="1">0.5144</td>
+<td align="left" colspan="1" rowspan="1">0.4487</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.5547</td>
+<td align="left" colspan="1" rowspan="1">0.5494</td>
+<td align="left" colspan="1" rowspan="1">0.5726</td>
+<td align="left" colspan="1" rowspan="1">0.5616</td>
+<td align="left" colspan="1" rowspan="1">0.6521</td>
+<td align="left" colspan="1" rowspan="1">0.6148</td>
+<td align="left" colspan="1" rowspan="1">0.5632</td>
+<td align="left" colspan="1" rowspan="1">0.5198</td>
+<td align="left" colspan="1" rowspan="1">0.5039</td>
+<td align="left" colspan="1" rowspan="1">0.6820</td>
+<td align="left" colspan="1" rowspan="1">0.5828</td>
+<td align="left" colspan="1" rowspan="1">0.4826</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.5577</td>
+<td align="left" colspan="1" rowspan="1">0.5447</td>
+<td align="left" colspan="1" rowspan="1">0.5767</td>
+<td align="left" colspan="1" rowspan="1">0.5279</td>
+<td align="left" colspan="1" rowspan="1">0.6366</td>
+<td align="left" colspan="1" rowspan="1">0.6034</td>
+<td align="left" colspan="1" rowspan="1">0.5663</td>
+<td align="left" colspan="1" rowspan="1">0.4936</td>
+<td align="left" colspan="1" rowspan="1">0.5144</td>
+<td align="left" colspan="1" rowspan="1">0.5828</td>
+<td align="left" colspan="1" rowspan="1">0.7585</td>
+<td align="left" colspan="1" rowspan="1">0.5286</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.4916</td>
+<td align="left" colspan="1" rowspan="1">0.4842</td>
+<td align="left" colspan="1" rowspan="1">0.5031</td>
+<td align="left" colspan="1" rowspan="1">0.4680</td>
+<td align="left" colspan="1" rowspan="1">0.5323</td>
+<td align="left" colspan="1" rowspan="1">0.5021</td>
+<td align="left" colspan="1" rowspan="1">0.4897</td>
+<td align="left" colspan="1" rowspan="1">0.4360</td>
+<td align="left" colspan="1" rowspan="1">0.4487</td>
+<td align="left" colspan="1" rowspan="1">0.4826</td>
+<td align="left" colspan="1" rowspan="1">0.5286</td>
+<td align="left" colspan="1" rowspan="1">0.6680</td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>We applied the 12 indicator vectors to the remaining set of 10,876 test sequences, generating a structure matrix of correlations, (<xref ref-type="fig" rid="pone-0009266-g002">Figure 2</xref>). With one interesting set of exceptions, there were no assignment errors, i.e., each individual test sequence was most highly correlated with its respective group-level vector. The exceptions were 33 sequences, .09% of all sequences, in the fish dataset which, according to the metric, were more closely correlated with the amphibian than the fish indicator vector. Inspection revealed that each error was caused by a lamprey (Class Cephalospidomorphi) sequence and all lamprey sequences produced this erroneous assignment. The remaining sequences in the Canadian fish dataset represented ray-finned fishes (Class Actinopterygii). Viewed taxonomically, the lampreys appear to be inadvertently included in fish dataset; when removed there was 100% accuracy of assignment of test sequences plus training sequences.</p>
+<fig id="pone-0009266-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g002</object-id><label>Figure 2</label><caption>
+<title>Prediction matrix with 10,876 individual sequence vectors (rows) applied to 12 group-level indicator vectors (columns).</title>
+<p>Test sequences are arranged to follow order of indicator vectors, such that blocks of high correlation near diagonal represent affinity with their respective group vector. Available test sequences ranged from 20 (amphibians) to 1,568 (crayfish), thus generating blocks of varying sizes as shown.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g002" xlink:type="simple"/></fig>
+<p>We applied the indicator vector approach at a finer scale, analyzing differences within the dataset of North American birds, which contained 1,693 sequences representing 558 species. As a compromise between a large <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e080" xlink:type="simple"/></inline-formula> and a large test set, we chose <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e081" xlink:type="simple"/></inline-formula>, giving 262 admissible species and 471 test sequences. With the input ordered alphabetically by taxonomic genus, the resulting structure matrix appears to be disordered with small regions of high correlation (<xref ref-type="fig" rid="pone-0009266-g003">Figure 3A</xref>). When arranged in a taxonomic order representing phylogenetic relationships <xref ref-type="bibr" rid="pone.0009266-1">[11]</xref> (<xref ref-type="table" rid="pone-0009266-t004">Table 4</xref>), these correlations coalesced into a coherent picture (<xref ref-type="fig" rid="pone-0009266-g003">Figure 3B</xref>), which could be viewed as taxonomy organizing the structure matrix according to closeness of correlations. Discontinuities in the correlation among North American birds, evident as “boxes” or “blocks” in the color matrix, corresponded to avian taxonomic divisions (<xref ref-type="fig" rid="pone-0009266-g004">Figure 4</xref>). Most of the blocks represented families, with some blocks corresponding to lower (genera) or higher (suborder) groupings (<xref ref-type="fig" rid="pone-0009266-g004">Figure 4</xref>).</p>
+<fig id="pone-0009266-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g003</object-id><label>Figure 3</label><caption>
+<title>Correlations among indicator vectors for 262 species of North American birds.</title>
+<p>(A) Species alphabetically ordered by genus. (B) Species ordered by established taxonomic order <xref ref-type="bibr" rid="pone.0009266-1">[11]</xref>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g003" xlink:type="simple"/></fig><fig id="pone-0009266-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g004</object-id><label>Figure 4</label><caption>
+<title>Annotated structure matrix of 262 North American bird species arranged in taxonomic order reflecting phylogenetic relationships.</title>
+<p>Representational fractures define “boxes” which correspond to taxonomic divisions.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g004" xlink:type="simple"/></fig><table-wrap id="pone-0009266-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.t004</object-id><label>Table 4</label><caption>
+<title>List of North American bird species arranged according to AOU Check-list(2009).</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0009266-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">Anser albifrons</td>
+<td align="left" colspan="1" rowspan="1">67</td>
+<td align="left" colspan="1" rowspan="1">Pandion haliaetus</td>
+<td align="left" colspan="1" rowspan="1">133</td>
+<td align="left" colspan="1" rowspan="1">Selasphorus rufus</td>
+<td align="left" colspan="1" rowspan="1">199</td>
+<td align="left" colspan="1" rowspan="1">Catharus fuscescens</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">Chen caerulescens</td>
+<td align="left" colspan="1" rowspan="1">68</td>
+<td align="left" colspan="1" rowspan="1">Accipiter striatus</td>
+<td align="left" colspan="1" rowspan="1">134</td>
+<td align="left" colspan="1" rowspan="1">Megaceryle torquata</td>
+<td align="left" colspan="1" rowspan="1">200</td>
+<td align="left" colspan="1" rowspan="1">Catharus bicknelli</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">Branta bernicla</td>
+<td align="left" colspan="1" rowspan="1">69</td>
+<td align="left" colspan="1" rowspan="1">Accipiter cooperii</td>
+<td align="left" colspan="1" rowspan="1">135</td>
+<td align="left" colspan="1" rowspan="1">Megaceryle alcyon</td>
+<td align="left" colspan="1" rowspan="1">201</td>
+<td align="left" colspan="1" rowspan="1">Catharus ustulatus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">Branta hutchinsii</td>
+<td align="left" colspan="1" rowspan="1">70</td>
+<td align="left" colspan="1" rowspan="1">Accipiter gentilis</td>
+<td align="left" colspan="1" rowspan="1">136</td>
+<td align="left" colspan="1" rowspan="1">Chloroceryle americana</td>
+<td align="left" colspan="1" rowspan="1">202</td>
+<td align="left" colspan="1" rowspan="1">Catharus guttatus PS-1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">Branta canadensis</td>
+<td align="left" colspan="1" rowspan="1">71</td>
+<td align="left" colspan="1" rowspan="1">Buteo swainsoni</td>
+<td align="left" colspan="1" rowspan="1">137</td>
+<td align="left" colspan="1" rowspan="1">Melanerpes lewis</td>
+<td align="left" colspan="1" rowspan="1">203</td>
+<td align="left" colspan="1" rowspan="1">Catharus guttatus PS-2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">Aix sponsa</td>
+<td align="left" colspan="1" rowspan="1">72</td>
+<td align="left" colspan="1" rowspan="1">Falco columbarius</td>
+<td align="left" colspan="1" rowspan="1">138</td>
+<td align="left" colspan="1" rowspan="1">Melanerpes formicivorus</td>
+<td align="left" colspan="1" rowspan="1">204</td>
+<td align="left" colspan="1" rowspan="1">Hylocichla mustelina</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">Anas strepera</td>
+<td align="left" colspan="1" rowspan="1">73</td>
+<td align="left" colspan="1" rowspan="1">Gallinula chloropus</td>
+<td align="left" colspan="1" rowspan="1">139</td>
+<td align="left" colspan="1" rowspan="1">Melanerpes carolinus</td>
+<td align="left" colspan="1" rowspan="1">205</td>
+<td align="left" colspan="1" rowspan="1">Oreoscoptes montanus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">Anas americana</td>
+<td align="left" colspan="1" rowspan="1">74</td>
+<td align="left" colspan="1" rowspan="1">Fulica americana</td>
+<td align="left" colspan="1" rowspan="1">140</td>
+<td align="left" colspan="1" rowspan="1">Sphyrapicus thyroideus</td>
+<td align="left" colspan="1" rowspan="1">206</td>
+<td align="left" colspan="1" rowspan="1">Toxostoma rufum</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">Anas rubripes</td>
+<td align="left" colspan="1" rowspan="1">75</td>
+<td align="left" colspan="1" rowspan="1">Grus americana</td>
+<td align="left" colspan="1" rowspan="1">141</td>
+<td align="left" colspan="1" rowspan="1">Sphyrapicus varius</td>
+<td align="left" colspan="1" rowspan="1">207</td>
+<td align="left" colspan="1" rowspan="1">Sturnus vulgaris</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">Anas platyrhynchos</td>
+<td align="left" colspan="1" rowspan="1">76</td>
+<td align="left" colspan="1" rowspan="1">Pluvialis dominica</td>
+<td align="left" colspan="1" rowspan="1">142</td>
+<td align="left" colspan="1" rowspan="1">Sphyrapicus nuchalis</td>
+<td align="left" colspan="1" rowspan="1">208</td>
+<td align="left" colspan="1" rowspan="1">Motacilla tschutschensis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">Anas discors</td>
+<td align="left" colspan="1" rowspan="1">77</td>
+<td align="left" colspan="1" rowspan="1">Charadrius semipalmatus</td>
+<td align="left" colspan="1" rowspan="1">143</td>
+<td align="left" colspan="1" rowspan="1">Sphyrapicus ruber</td>
+<td align="left" colspan="1" rowspan="1">209</td>
+<td align="left" colspan="1" rowspan="1">Motacilla alba</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">Anas clypeata</td>
+<td align="left" colspan="1" rowspan="1">78</td>
+<td align="left" colspan="1" rowspan="1">Charadrius melodus</td>
+<td align="left" colspan="1" rowspan="1">144</td>
+<td align="left" colspan="1" rowspan="1">Picoides nuttallii</td>
+<td align="left" colspan="1" rowspan="1">210</td>
+<td align="left" colspan="1" rowspan="1">Bombycilla cedrorum</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">Anas acuta</td>
+<td align="left" colspan="1" rowspan="1">79</td>
+<td align="left" colspan="1" rowspan="1">Haematopus bachmani</td>
+<td align="left" colspan="1" rowspan="1">145</td>
+<td align="left" colspan="1" rowspan="1">Picoides villosus</td>
+<td align="left" colspan="1" rowspan="1">211</td>
+<td align="left" colspan="1" rowspan="1">Peucedramus taeniatus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">Anas carolinensis</td>
+<td align="left" colspan="1" rowspan="1">80</td>
+<td align="left" colspan="1" rowspan="1">Actitis macularius</td>
+<td align="left" colspan="1" rowspan="1">146</td>
+<td align="left" colspan="1" rowspan="1">Picoides albolarvatus</td>
+<td align="left" colspan="1" rowspan="1">212</td>
+<td align="left" colspan="1" rowspan="1">Parula americana</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">Aythya valisineria</td>
+<td align="left" colspan="1" rowspan="1">81</td>
+<td align="left" colspan="1" rowspan="1">Tringa glareola</td>
+<td align="left" colspan="1" rowspan="1">147</td>
+<td align="left" colspan="1" rowspan="1">Picoides dorsalis</td>
+<td align="left" colspan="1" rowspan="1">213</td>
+<td align="left" colspan="1" rowspan="1">Dendroica caerulescens</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">Aythya americana</td>
+<td align="left" colspan="1" rowspan="1">82</td>
+<td align="left" colspan="1" rowspan="1">Limnodromus griseus</td>
+<td align="left" colspan="1" rowspan="1">148</td>
+<td align="left" colspan="1" rowspan="1">Colaptes auratus</td>
+<td align="left" colspan="1" rowspan="1">214</td>
+<td align="left" colspan="1" rowspan="1">Dendroica coronata</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">Aythya collaris</td>
+<td align="left" colspan="1" rowspan="1">83</td>
+<td align="left" colspan="1" rowspan="1">Gallinago delicata</td>
+<td align="left" colspan="1" rowspan="1">149</td>
+<td align="left" colspan="1" rowspan="1">Contopus sordidulus</td>
+<td align="left" colspan="1" rowspan="1">215</td>
+<td align="left" colspan="1" rowspan="1">Dendroica nigrescens</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">Aythya fuligula</td>
+<td align="left" colspan="1" rowspan="1">84</td>
+<td align="left" colspan="1" rowspan="1">Scolopax minor</td>
+<td align="left" colspan="1" rowspan="1">150</td>
+<td align="left" colspan="1" rowspan="1">Empidonax flaviventris</td>
+<td align="left" colspan="1" rowspan="1">216</td>
+<td align="left" colspan="1" rowspan="1">Dendroica townsendi</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">Aythya marila</td>
+<td align="left" colspan="1" rowspan="1">85</td>
+<td align="left" colspan="1" rowspan="1">Phalaropus lobatus</td>
+<td align="left" colspan="1" rowspan="1">151</td>
+<td align="left" colspan="1" rowspan="1">Empidonax alnorum</td>
+<td align="left" colspan="1" rowspan="1">217</td>
+<td align="left" colspan="1" rowspan="1">Dendroica occidentalis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">Aythya affinis</td>
+<td align="left" colspan="1" rowspan="1">86</td>
+<td align="left" colspan="1" rowspan="1">Rissa tridactyla</td>
+<td align="left" colspan="1" rowspan="1">152</td>
+<td align="left" colspan="1" rowspan="1">Empidonax traillii</td>
+<td align="left" colspan="1" rowspan="1">218</td>
+<td align="left" colspan="1" rowspan="1">Dendroica graciae</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">Somateria fischeri</td>
+<td align="left" colspan="1" rowspan="1">87</td>
+<td align="left" colspan="1" rowspan="1">Larus ridibundus</td>
+<td align="left" colspan="1" rowspan="1">153</td>
+<td align="left" colspan="1" rowspan="1">Empidonax minimus</td>
+<td align="left" colspan="1" rowspan="1">219</td>
+<td align="left" colspan="1" rowspan="1">Dendroica pinus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">22</td>
+<td align="left" colspan="1" rowspan="1">Somateria spectabilis</td>
+<td align="left" colspan="1" rowspan="1">88</td>
+<td align="left" colspan="1" rowspan="1">Larus atricilla</td>
+<td align="left" colspan="1" rowspan="1">154</td>
+<td align="left" colspan="1" rowspan="1">Empidonax hammondii</td>
+<td align="left" colspan="1" rowspan="1">220</td>
+<td align="left" colspan="1" rowspan="1">Protonotaria citrea</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">Somateria mollissima</td>
+<td align="left" colspan="1" rowspan="1">89</td>
+<td align="left" colspan="1" rowspan="1">Larus heermanni</td>
+<td align="left" colspan="1" rowspan="1">155</td>
+<td align="left" colspan="1" rowspan="1">Empidonax difficilis</td>
+<td align="left" colspan="1" rowspan="1">221</td>
+<td align="left" colspan="1" rowspan="1">Seiurus aurocapilla</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">24</td>
+<td align="left" colspan="1" rowspan="1">Histrionicus histrionicus</td>
+<td align="left" colspan="1" rowspan="1">90</td>
+<td align="left" colspan="1" rowspan="1">Larus canus</td>
+<td align="left" colspan="1" rowspan="1">156</td>
+<td align="left" colspan="1" rowspan="1">Pyrocephalus rubinus</td>
+<td align="left" colspan="1" rowspan="1">222</td>
+<td align="left" colspan="1" rowspan="1">Oporornis philadelphia</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25</td>
+<td align="left" colspan="1" rowspan="1">Melanitta fusca</td>
+<td align="left" colspan="1" rowspan="1">91</td>
+<td align="left" colspan="1" rowspan="1">Larus occidentalis</td>
+<td align="left" colspan="1" rowspan="1">157</td>
+<td align="left" colspan="1" rowspan="1">Myiarchus tuberculifer</td>
+<td align="left" colspan="1" rowspan="1">223</td>
+<td align="left" colspan="1" rowspan="1">Geothlypis trichas</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">26</td>
+<td align="left" colspan="1" rowspan="1">Melanitta nigra</td>
+<td align="left" colspan="1" rowspan="1">92</td>
+<td align="left" colspan="1" rowspan="1">Larus californicus</td>
+<td align="left" colspan="1" rowspan="1">158</td>
+<td align="left" colspan="1" rowspan="1">Myiarchus cinerascens</td>
+<td align="left" colspan="1" rowspan="1">224</td>
+<td align="left" colspan="1" rowspan="1">Piranga rubra</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">27</td>
+<td align="left" colspan="1" rowspan="1">Clangula hyemalis</td>
+<td align="left" colspan="1" rowspan="1">93</td>
+<td align="left" colspan="1" rowspan="1">Larus smithsonianus</td>
+<td align="left" colspan="1" rowspan="1">159</td>
+<td align="left" colspan="1" rowspan="1">Myiarchus tyrannulus</td>
+<td align="left" colspan="1" rowspan="1">225</td>
+<td align="left" colspan="1" rowspan="1">Pipilo erythrophthalmus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">Bucephala albeola</td>
+<td align="left" colspan="1" rowspan="1">94</td>
+<td align="left" colspan="1" rowspan="1">Larus fuscus</td>
+<td align="left" colspan="1" rowspan="1">160</td>
+<td align="left" colspan="1" rowspan="1">Pitangus sulphuratus</td>
+<td align="left" colspan="1" rowspan="1">226</td>
+<td align="left" colspan="1" rowspan="1">Aimophila cassinii</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">29</td>
+<td align="left" colspan="1" rowspan="1">Bucephala clangula</td>
+<td align="left" colspan="1" rowspan="1">95</td>
+<td align="left" colspan="1" rowspan="1">Larus glaucescens</td>
+<td align="left" colspan="1" rowspan="1">161</td>
+<td align="left" colspan="1" rowspan="1">Myiodynastes luteiventris</td>
+<td align="left" colspan="1" rowspan="1">227</td>
+<td align="left" colspan="1" rowspan="1">Spizella pallida</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">30</td>
+<td align="left" colspan="1" rowspan="1">Bucephala islandica</td>
+<td align="left" colspan="1" rowspan="1">96</td>
+<td align="left" colspan="1" rowspan="1">Onychoprion aleuticus</td>
+<td align="left" colspan="1" rowspan="1">162</td>
+<td align="left" colspan="1" rowspan="1">Lanius ludovicianus</td>
+<td align="left" colspan="1" rowspan="1">228</td>
+<td align="left" colspan="1" rowspan="1">Spizella breweri</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">31</td>
+<td align="left" colspan="1" rowspan="1">Lophodytes cucullatus</td>
+<td align="left" colspan="1" rowspan="1">97</td>
+<td align="left" colspan="1" rowspan="1">Thalasseus maximus</td>
+<td align="left" colspan="1" rowspan="1">163</td>
+<td align="left" colspan="1" rowspan="1">Vireo griseus</td>
+<td align="left" colspan="1" rowspan="1">229</td>
+<td align="left" colspan="1" rowspan="1">Spizella pusilla</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">32</td>
+<td align="left" colspan="1" rowspan="1">Mergus merganser</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">Thalasseus sandvicensis</td>
+<td align="left" colspan="1" rowspan="1">164</td>
+<td align="left" colspan="1" rowspan="1">Vireo solitarius</td>
+<td align="left" colspan="1" rowspan="1">230</td>
+<td align="left" colspan="1" rowspan="1">Amphispiza bilineata</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">33</td>
+<td align="left" colspan="1" rowspan="1">Mergus serrator</td>
+<td align="left" colspan="1" rowspan="1">99</td>
+<td align="left" colspan="1" rowspan="1">Thalasseus elegans</td>
+<td align="left" colspan="1" rowspan="1">165</td>
+<td align="left" colspan="1" rowspan="1">Vireo huttoni</td>
+<td align="left" colspan="1" rowspan="1">231</td>
+<td align="left" colspan="1" rowspan="1">Amphispiza belli</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">34</td>
+<td align="left" colspan="1" rowspan="1">Perdix perdix</td>
+<td align="left" colspan="1" rowspan="1">100</td>
+<td align="left" colspan="1" rowspan="1">Stercorarius pomarinus</td>
+<td align="left" colspan="1" rowspan="1">166</td>
+<td align="left" colspan="1" rowspan="1">Vireo philadelphicus</td>
+<td align="left" colspan="1" rowspan="1">232</td>
+<td align="left" colspan="1" rowspan="1">Calamospiza melanocorys</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">35</td>
+<td align="left" colspan="1" rowspan="1">Bonasa umbellus</td>
+<td align="left" colspan="1" rowspan="1">101</td>
+<td align="left" colspan="1" rowspan="1">Stercorarius parasiticus</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">Vireo olivaceus</td>
+<td align="left" colspan="1" rowspan="1">233</td>
+<td align="left" colspan="1" rowspan="1">Passerculus sandwichensis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">36</td>
+<td align="left" colspan="1" rowspan="1">Centrocercus urophasianus</td>
+<td align="left" colspan="1" rowspan="1">102</td>
+<td align="left" colspan="1" rowspan="1">Stercorarius longicaudus</td>
+<td align="left" colspan="1" rowspan="1">168</td>
+<td align="left" colspan="1" rowspan="1">Vireo flavoviridis</td>
+<td align="left" colspan="1" rowspan="1">234</td>
+<td align="left" colspan="1" rowspan="1">Passerella iliaca</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">37</td>
+<td align="left" colspan="1" rowspan="1">Falcipennis canadensis</td>
+<td align="left" colspan="1" rowspan="1">103</td>
+<td align="left" colspan="1" rowspan="1">Uria aalge</td>
+<td align="left" colspan="1" rowspan="1">169</td>
+<td align="left" colspan="1" rowspan="1">Cyanocitta cristata</td>
+<td align="left" colspan="1" rowspan="1">235</td>
+<td align="left" colspan="1" rowspan="1">Melospiza lincolnii</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">38</td>
+<td align="left" colspan="1" rowspan="1">Lagopus lagopus</td>
+<td align="left" colspan="1" rowspan="1">104</td>
+<td align="left" colspan="1" rowspan="1">Alca torda</td>
+<td align="left" colspan="1" rowspan="1">170</td>
+<td align="left" colspan="1" rowspan="1">Aphelocoma californica PS-1</td>
+<td align="left" colspan="1" rowspan="1">236</td>
+<td align="left" colspan="1" rowspan="1">Melospiza georgiana</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">39</td>
+<td align="left" colspan="1" rowspan="1">Lagopus muta</td>
+<td align="left" colspan="1" rowspan="1">105</td>
+<td align="left" colspan="1" rowspan="1">Cepphus grylle</td>
+<td align="left" colspan="1" rowspan="1">171</td>
+<td align="left" colspan="1" rowspan="1">Gymnorhinus cyanocephalus</td>
+<td align="left" colspan="1" rowspan="1">237</td>
+<td align="left" colspan="1" rowspan="1">Zonotrichia albicollis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">40</td>
+<td align="left" colspan="1" rowspan="1">Lagopus leucura</td>
+<td align="left" colspan="1" rowspan="1">106</td>
+<td align="left" colspan="1" rowspan="1">Brachyramphus marmoratus</td>
+<td align="left" colspan="1" rowspan="1">172</td>
+<td align="left" colspan="1" rowspan="1">Nucifraga columbiana</td>
+<td align="left" colspan="1" rowspan="1">238</td>
+<td align="left" colspan="1" rowspan="1">Zonotrichia atricapilla</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">41</td>
+<td align="left" colspan="1" rowspan="1">Dendragapus obscurus</td>
+<td align="left" colspan="1" rowspan="1">107</td>
+<td align="left" colspan="1" rowspan="1">Brachyramphus brevirostris</td>
+<td align="left" colspan="1" rowspan="1">173</td>
+<td align="left" colspan="1" rowspan="1">Pica nuttalli</td>
+<td align="left" colspan="1" rowspan="1">239</td>
+<td align="left" colspan="1" rowspan="1">Junco hyemalis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">42</td>
+<td align="left" colspan="1" rowspan="1">Tympanuchus phasianellus</td>
+<td align="left" colspan="1" rowspan="1">108</td>
+<td align="left" colspan="1" rowspan="1">Cerorhinca monocerata</td>
+<td align="left" colspan="1" rowspan="1">174</td>
+<td align="left" colspan="1" rowspan="1">Corvus caurinus</td>
+<td align="left" colspan="1" rowspan="1">240</td>
+<td align="left" colspan="1" rowspan="1">Junco phaeonotus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">43</td>
+<td align="left" colspan="1" rowspan="1">Tympanuchus pallidicinctus</td>
+<td align="left" colspan="1" rowspan="1">109</td>
+<td align="left" colspan="1" rowspan="1">Fratercula arctica</td>
+<td align="left" colspan="1" rowspan="1">175</td>
+<td align="left" colspan="1" rowspan="1">Corvus corax PS-1</td>
+<td align="left" colspan="1" rowspan="1">241</td>
+<td align="left" colspan="1" rowspan="1">Calcarius mccownii</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">44</td>
+<td align="left" colspan="1" rowspan="1">Meleagris gallopavo</td>
+<td align="left" colspan="1" rowspan="1">110</td>
+<td align="left" colspan="1" rowspan="1">Zenaida macroura</td>
+<td align="left" colspan="1" rowspan="1">176</td>
+<td align="left" colspan="1" rowspan="1">Tachycineta bicolor</td>
+<td align="left" colspan="1" rowspan="1">242</td>
+<td align="left" colspan="1" rowspan="1">Calcarius ornatus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">45</td>
+<td align="left" colspan="1" rowspan="1">Oreortyx pictus</td>
+<td align="left" colspan="1" rowspan="1">111</td>
+<td align="left" colspan="1" rowspan="1">Columbina inca</td>
+<td align="left" colspan="1" rowspan="1">177</td>
+<td align="left" colspan="1" rowspan="1">Poecile gambeli PS-1</td>
+<td align="left" colspan="1" rowspan="1">243</td>
+<td align="left" colspan="1" rowspan="1">Cardinalis cardinalis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">46</td>
+<td align="left" colspan="1" rowspan="1">Gavia pacifica</td>
+<td align="left" colspan="1" rowspan="1">112</td>
+<td align="left" colspan="1" rowspan="1">Columbina passerina</td>
+<td align="left" colspan="1" rowspan="1">178</td>
+<td align="left" colspan="1" rowspan="1">Poecile gambeli PS-2</td>
+<td align="left" colspan="1" rowspan="1">244</td>
+<td align="left" colspan="1" rowspan="1">Pheucticus melanocephalus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">47</td>
+<td align="left" colspan="1" rowspan="1">Gavia adamsii</td>
+<td align="left" colspan="1" rowspan="1">113</td>
+<td align="left" colspan="1" rowspan="1">Myiopsitta monachus</td>
+<td align="left" colspan="1" rowspan="1">179</td>
+<td align="left" colspan="1" rowspan="1">Poecile sclateri</td>
+<td align="left" colspan="1" rowspan="1">245</td>
+<td align="left" colspan="1" rowspan="1">Passerina amoena</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">48</td>
+<td align="left" colspan="1" rowspan="1">Podiceps grisegena</td>
+<td align="left" colspan="1" rowspan="1">114</td>
+<td align="left" colspan="1" rowspan="1">Coccyzus erythropthalmus</td>
+<td align="left" colspan="1" rowspan="1">180</td>
+<td align="left" colspan="1" rowspan="1">Poecile rufescens</td>
+<td align="left" colspan="1" rowspan="1">246</td>
+<td align="left" colspan="1" rowspan="1">Passerina versicolor</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">49</td>
+<td align="left" colspan="1" rowspan="1">Fulmarus glacialis PS-1</td>
+<td align="left" colspan="1" rowspan="1">115</td>
+<td align="left" colspan="1" rowspan="1">Crotophaga ani</td>
+<td align="left" colspan="1" rowspan="1">181</td>
+<td align="left" colspan="1" rowspan="1">Poecile cincta</td>
+<td align="left" colspan="1" rowspan="1">247</td>
+<td align="left" colspan="1" rowspan="1">Passerina ciris</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">50</td>
+<td align="left" colspan="1" rowspan="1">Puffinus creatopus</td>
+<td align="left" colspan="1" rowspan="1">116</td>
+<td align="left" colspan="1" rowspan="1">Tyto alba</td>
+<td align="left" colspan="1" rowspan="1">182</td>
+<td align="left" colspan="1" rowspan="1">Auriparus flaviceps</td>
+<td align="left" colspan="1" rowspan="1">248</td>
+<td align="left" colspan="1" rowspan="1">Dolichonyx oryzivorus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">51</td>
+<td align="left" colspan="1" rowspan="1">Puffinus carneipes</td>
+<td align="left" colspan="1" rowspan="1">117</td>
+<td align="left" colspan="1" rowspan="1">Megascops kennicottii PS-1</td>
+<td align="left" colspan="1" rowspan="1">183</td>
+<td align="left" colspan="1" rowspan="1">Sitta canadensis</td>
+<td align="left" colspan="1" rowspan="1">249</td>
+<td align="left" colspan="1" rowspan="1">Agelaius phoeniceus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">52</td>
+<td align="left" colspan="1" rowspan="1">Puffinus pacificus</td>
+<td align="left" colspan="1" rowspan="1">118</td>
+<td align="left" colspan="1" rowspan="1">Megascops kennicottii PS-2</td>
+<td align="left" colspan="1" rowspan="1">184</td>
+<td align="left" colspan="1" rowspan="1">Sitta carolinensis</td>
+<td align="left" colspan="1" rowspan="1">250</td>
+<td align="left" colspan="1" rowspan="1">Xanthocephalus xanthocephalus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">53</td>
+<td align="left" colspan="1" rowspan="1">Puffinus bulleri</td>
+<td align="left" colspan="1" rowspan="1">119</td>
+<td align="left" colspan="1" rowspan="1">Megascops asio</td>
+<td align="left" colspan="1" rowspan="1">185</td>
+<td align="left" colspan="1" rowspan="1">Sitta pygmaea</td>
+<td align="left" colspan="1" rowspan="1">251</td>
+<td align="left" colspan="1" rowspan="1">Euphagus cyanocephalus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">54</td>
+<td align="left" colspan="1" rowspan="1">Puffinus tenuirostris</td>
+<td align="left" colspan="1" rowspan="1">120</td>
+<td align="left" colspan="1" rowspan="1">Bubo virginianus</td>
+<td align="left" colspan="1" rowspan="1">186</td>
+<td align="left" colspan="1" rowspan="1">Campylorhynchus brunneicapillus</td>
+<td align="left" colspan="1" rowspan="1">252</td>
+<td align="left" colspan="1" rowspan="1">Quiscalus major</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">55</td>
+<td align="left" colspan="1" rowspan="1">Oceanodroma leucorhoa</td>
+<td align="left" colspan="1" rowspan="1">121</td>
+<td align="left" colspan="1" rowspan="1">Strix occidentalis</td>
+<td align="left" colspan="1" rowspan="1">187</td>
+<td align="left" colspan="1" rowspan="1">Salpinctes obsoletus</td>
+<td align="left" colspan="1" rowspan="1">253</td>
+<td align="left" colspan="1" rowspan="1">Quiscalus mexicanus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">56</td>
+<td align="left" colspan="1" rowspan="1">Morus bassanus</td>
+<td align="left" colspan="1" rowspan="1">122</td>
+<td align="left" colspan="1" rowspan="1">Strix varia</td>
+<td align="left" colspan="1" rowspan="1">188</td>
+<td align="left" colspan="1" rowspan="1">Thryothorus ludovicianus</td>
+<td align="left" colspan="1" rowspan="1">254</td>
+<td align="left" colspan="1" rowspan="1">Molothrus aeneus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">57</td>
+<td align="left" colspan="1" rowspan="1">Phalacrocorax penicillatus</td>
+<td align="left" colspan="1" rowspan="1">123</td>
+<td align="left" colspan="1" rowspan="1">Strix nebulosa</td>
+<td align="left" colspan="1" rowspan="1">189</td>
+<td align="left" colspan="1" rowspan="1">Thryomanes bewickii PS-1</td>
+<td align="left" colspan="1" rowspan="1">255</td>
+<td align="left" colspan="1" rowspan="1">Icterus cucullatus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">58</td>
+<td align="left" colspan="1" rowspan="1">Phalacrocorax carbo</td>
+<td align="left" colspan="1" rowspan="1">124</td>
+<td align="left" colspan="1" rowspan="1">Asio otus</td>
+<td align="left" colspan="1" rowspan="1">190</td>
+<td align="left" colspan="1" rowspan="1">Cinclus mexicanus</td>
+<td align="left" colspan="1" rowspan="1">256</td>
+<td align="left" colspan="1" rowspan="1">Icterus bullockii</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">59</td>
+<td align="left" colspan="1" rowspan="1">Phalacrocorax pelagicus</td>
+<td align="left" colspan="1" rowspan="1">125</td>
+<td align="left" colspan="1" rowspan="1">Asio flammeus</td>
+<td align="left" colspan="1" rowspan="1">191</td>
+<td align="left" colspan="1" rowspan="1">Regulus satrapa</td>
+<td align="left" colspan="1" rowspan="1">257</td>
+<td align="left" colspan="1" rowspan="1">Icterus gularis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">60</td>
+<td align="left" colspan="1" rowspan="1">Ardea herodias</td>
+<td align="left" colspan="1" rowspan="1">126</td>
+<td align="left" colspan="1" rowspan="1">Aegolius acadicus</td>
+<td align="left" colspan="1" rowspan="1">192</td>
+<td align="left" colspan="1" rowspan="1">Regulus calendula</td>
+<td align="left" colspan="1" rowspan="1">258</td>
+<td align="left" colspan="1" rowspan="1">Leucosticte tephrocotis</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">61</td>
+<td align="left" colspan="1" rowspan="1">Ardea alba</td>
+<td align="left" colspan="1" rowspan="1">127</td>
+<td align="left" colspan="1" rowspan="1">Nyctidromus albicollis</td>
+<td align="left" colspan="1" rowspan="1">193</td>
+<td align="left" colspan="1" rowspan="1">Polioptila caerulea</td>
+<td align="left" colspan="1" rowspan="1">259</td>
+<td align="left" colspan="1" rowspan="1">Carpodacus cassinii</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">62</td>
+<td align="left" colspan="1" rowspan="1">Egretta tricolor</td>
+<td align="left" colspan="1" rowspan="1">128</td>
+<td align="left" colspan="1" rowspan="1">Phalaenoptilus nuttallii</td>
+<td align="left" colspan="1" rowspan="1">194</td>
+<td align="left" colspan="1" rowspan="1">Luscinia svecica</td>
+<td align="left" colspan="1" rowspan="1">260</td>
+<td align="left" colspan="1" rowspan="1">Carpodacus mexicanus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">63</td>
+<td align="left" colspan="1" rowspan="1">Bubulcus ibis</td>
+<td align="left" colspan="1" rowspan="1">129</td>
+<td align="left" colspan="1" rowspan="1">Chaetura vauxi</td>
+<td align="left" colspan="1" rowspan="1">195</td>
+<td align="left" colspan="1" rowspan="1">Sialia sialis</td>
+<td align="left" colspan="1" rowspan="1">261</td>
+<td align="left" colspan="1" rowspan="1">Carduelis hornemanni</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">64</td>
+<td align="left" colspan="1" rowspan="1">Eudocimus albus</td>
+<td align="left" colspan="1" rowspan="1">130</td>
+<td align="left" colspan="1" rowspan="1">Archilochus colubris</td>
+<td align="left" colspan="1" rowspan="1">196</td>
+<td align="left" colspan="1" rowspan="1">Sialia mexicana</td>
+<td align="left" colspan="1" rowspan="1">262</td>
+<td align="left" colspan="1" rowspan="1">Passer domesticus</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">65</td>
+<td align="left" colspan="1" rowspan="1">Plegadis chihi</td>
+<td align="left" colspan="1" rowspan="1">131</td>
+<td align="left" colspan="1" rowspan="1">Stellula calliope</td>
+<td align="left" colspan="1" rowspan="1">197</td>
+<td align="left" colspan="1" rowspan="1">Sialia currucoides</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">66</td>
+<td align="left" colspan="1" rowspan="1">Coragyps atratus</td>
+<td align="left" colspan="1" rowspan="1">132</td>
+<td align="left" colspan="1" rowspan="1">Selasphorus platycercus</td>
+<td align="left" colspan="1" rowspan="1">198</td>
+<td align="left" colspan="1" rowspan="1">Myadestes townsendi</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>Among the 471 test bird sequences, there were 16 apparently incorrect assignments distributed among 4 species pairs (<italic>Junco phaneotus/J. hyemalis; Anas platyrhynchos/A. rubripes; Larus smithsonianus/L. glaucescens; Sphyrapicus ruber/S. nuchalis</italic>). In the first instance each sequence set of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e082" xlink:type="simple"/></inline-formula> were identical so that the indicator vectors were also identical. In the remaining cases the indicator vectors were close but not equal reflecting the fact that the defining sequence sets shared some identical members. While such singular behavior is revealed by the present algorithm, these sets of species were previously noted to be indistinguishable by COI barcode <xref ref-type="bibr" rid="pone.0009266-Kerr1">[12]</xref>.</p>
+<p>As indicated in eq. (24) the structure matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e083" xlink:type="simple"/></inline-formula> can be directly associated with a matrix of inter-species distances <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e084" xlink:type="simple"/></inline-formula>. Since such a matrix can be made the basis of tree constructions we can apply the neighbor joining (NJ) algorithm of Saitou and Nei <xref ref-type="bibr" rid="pone.0009266-Saitou1">[13]</xref> to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e085" xlink:type="simple"/></inline-formula>. Using consistency arguments <xref ref-type="bibr" rid="pone.0009266-Atteson1">[14]</xref>, <xref ref-type="bibr" rid="pone.0009266-Gascuel1">[15]</xref>, Bryant <xref ref-type="bibr" rid="pone.0009266-Bryant1">[16]</xref> has demonstrated that the NJ construction is a unique clustering algorithm of the distance matrix <xref ref-type="bibr" rid="pone.0009266-Mihaescu1">[17]</xref>. Since the distance matrix is based on genomic distances, and not on evolutionary hypotheses, we can view the resulting NJ tree as intrinsic to the data. The species ordering according to this tree produces the structure matrix shown in <xref ref-type="fig" rid="pone-0009266-g005">Figure 5</xref>. This demonstrated the same set of clusters as seen in <xref ref-type="fig" rid="pone-0009266-g004">Figure 4</xref>; only the order of clusters differed. Thus at this level of resolution the indicator vector approach to classification coupled with NJ provides a self-generating ranking that is in general agreement with established taxonomy. <xref ref-type="fig" rid="pone-0009266-g006">Figure 6</xref> compares the NJ tree that emerges from the structure matrix with the tree that derives from the averaged Hamming distance matrix between species, is equivalent to the diversity matrix (17).</p>
+<fig id="pone-0009266-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g005</object-id><label>Figure 5</label><caption>
+<title>Annotated structure matrix of 262 North American bird species according to NJ tree ranking.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g005" xlink:type="simple"/></fig><fig id="pone-0009266-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g006</object-id><label>Figure 6</label><caption>
+<title>Comparison of NJ trees based on the structure matrix right, and on the diversity matrix, left.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g006" xlink:type="simple"/></fig></sec><sec id="s4">
+<title>Discussion</title>
+<p>This paper describes a mathematical approach to comparative analysis of nucleotide sequences using digital transformation in vector space. We term the resulting structure matrices “Klee diagrams”, in acknowledgement of the geometric paintings of artist Paul Klee (see <xref ref-type="fig" rid="pone-0009266-g007">Figure 7</xref>). This approach is of general utility and could be applied to any set of aligned sequences. In this study we explore its potential by analyzing a large, diverse set of DNA barcodes, the short segment of mitochondrial COI gene employed as a standard for identification of animal species (6). The resulting Klee diagrams display the structure of present-day mitochondrial genetic diversity, a “macroscopic” view of the products of evolution <xref ref-type="bibr" rid="pone.0009266-deRosnay1">[18]</xref>, <xref ref-type="bibr" rid="pone.0009266-Ausubel1">[19]</xref>. This approach is akin to a distance metric (see <xref ref-type="sec" rid="s2">Methods</xref>), and in fact the matrix of indicator vector correlations can be used to generate an NJ tree (<xref ref-type="fig" rid="pone-0009266-g006">Figure 6</xref>).</p>
+<fig id="pone-0009266-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g007</object-id><label>Figure 7</label><caption>
+<title>Flora on Sand by Paul Klee.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g007" xlink:type="simple"/></fig>
+<p>As compared to standard distance metrics with neighbor-joining, indicator vectors preserve character probabilities that distinguish sequence sets, enable automated classification of test sequences, and generate high-information density displays without constraints of tree diagrams. Regarding the latter point, as one example, the 12-group Klee diagram displays affinity among flies and crayfish, a finding which might be of interest for further exploration, and yet this sort of horizontal similarity is not represented in the NJ tree diagram, shown in <xref ref-type="fig" rid="pone-0009266-g008">Figure 8</xref>. Discontinuities in indicator vector correlations, evident as blocks in Klee diagrams, corresponded to branches in the tree; for example, in North American bird matrix, these blocks represent families, genera, and sub-orders (<xref ref-type="fig" rid="pone-0009266-g004">Figures 4</xref>, <xref ref-type="fig" rid="pone-0009266-g005">5</xref>). These results, generated with a small sample of world birds, suggest that this approach might be usefully applied to generate a classification for poorly-studied groups by combining DNA barcodes with indicator vector analysis. Such a classification could be refined when additional morphologic, ecological, and genetic study was available.</p>
+<fig id="pone-0009266-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0009266.g008</object-id><label>Figure 8</label><caption>
+<title>The NJ tree corresponding to the structure matrix depicted in <xref ref-type="fig" rid="pone-0009266-g002">Figure 2</xref>.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0009266.g008" xlink:type="simple"/></fig>
+<p>The results so far suggest natural discontinuities, or fractures, in the genetic structure of biodiversity, at least as reflected in animal mitochondrial genomes. In quantitative terms, blocks represent higher correlation within than among sets of sequences. Further study will help determine the nature of underlying mitochondrial differences, for instance whether species- and family-level blocks, for example, reflect differences in coding or non-coding positions. The present-day discontinuities seen in Klee diagrams may not be evident from a historical perspective, such as in a phylogenetic tree which links all forms in a continuous structure. It is of interest to reconcile these two perspectives, namely the continuous nature of evolution with the fractures in present-day genetic biodiversity; these might be viewed, respectively, as “time-like” and “space-like”. One may speculate on the relation of such jump phenomena to adaptive radiations and the punctuated equilibrium model of evolution <xref ref-type="bibr" rid="pone.0009266-Eldredge1">[20]</xref>. It may be possible to make useful observations for time-like behavior from space-like behavior as was done through the ergodic theory of statistical physics, <xref ref-type="bibr" rid="pone.0009266-Petersen1">[21]</xref>.</p>
+<p>As currently developed, our approach is limited to complete sets of homologous sequences, rather than overlapping sets of incomplete data as are often used in phylogenetic inference. In addition, the present analysis employing COI shares problems inherent to mitochondrial biology, including maternal inheritance, introgression, hybridization, male-biased dispersal patterns, and recent speciation among others <xref ref-type="bibr" rid="pone.0009266-Moritz1">[22]</xref>; most of these are likely to apply only at the fine-scale level of distinguishing closely-related species. As noted, the indicator method is of general utility and could readily be applied to longer sequences or concatenated multi-gene alignments without substantially increasing computation time, which might address some of these limitations. In this regard, it of interest to compare indicator vector affinities using mitochondrial and nuclear genes in puzzling cases that appear to represent convergent evolution <xref ref-type="bibr" rid="pone.0009266-Castoe1">[23]</xref>.</p>
+<p>Although the output is different, it may be revealing to compare the efficiency of the indicator vector approach to that of phylogenetic treebuilding programs. Due to computational demands, data sets in analyses beyond 1000 species are exceptional (e.g., <xref ref-type="bibr" rid="pone.0009266-Kallersjo1">[24]</xref>–<xref ref-type="bibr" rid="pone.0009266-Sanderson1">[26]</xref>) and calculation times for larger studies are typically several CPU-months. The largest published phylogenetic tree includes 73,060 eukaryote taxa <xref ref-type="bibr" rid="pone.0009266-Goloboff1">[1]</xref> and took 2.5 months with 16 processors, and the next largest analyzed 13,533 plant taxa <xref ref-type="bibr" rid="pone.0009266-Smith1">[27]</xref>. The present study ranks with the largest biodiversity analyses in terms of number of organisms, and is at least two orders of magnitude faster. For example, the case of 12 animal groups deals with almost 17,000 sequences and required times of roughly 10–20 minutes on an ordinary desktop computer. This suggests the potential for analyzing the largest datasets available, including, for example, BOLD (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e086" xlink:type="simple"/></inline-formula> sequences) <ext-link ext-link-type="uri" xlink:href="http://www.barcodinglife.org" xlink:type="simple">http://www.barcodinglife.org</ext-link>, NCBI Influenza Virus Resource (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e087" xlink:type="simple"/></inline-formula> complete genomes) <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/genomes/FLU/FLU.html" xlink:type="simple">http://www.ncbi.nlm.nih.gov/genomes/FLU/FLU.html</ext-link>, or Los Alamos HIV Sequence Database (<ext-link ext-link-type="uri" xlink:href="http://www.hiv.lanl.gov" xlink:type="simple">http://www.hiv.lanl.gov</ext-link>).</p>
+<p>In addition to animals, cytochrome <italic>c</italic> oxidase is present in plants, protozoa, fungi, and some bacteria, which raises the prospect of insight into broad-scale patterns in the genetic structure of biodiversity. Also, the methodology as present here applies to nucleotide sequences of any sort and so might usefully be applied to a variety of questions.</p>
+<p>From the point of view of accuracy, density of information and assimilation it would seem compelling that any properly ordered <italic>distance</italic> matrix should be viewed as a Klee diagram. It may be that the focus on evolution and therefore trees impeded this direction. In this connection we note that the distance matrix for a species count of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e088" xlink:type="simple"/></inline-formula> contains <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e089" xlink:type="simple"/></inline-formula> distances and for large <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e090" xlink:type="simple"/></inline-formula> a tree-building algorithm cannot accommodate this number of conditions, and an increasing number of larger and larger errors occur with increasing <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0009266.e091" xlink:type="simple"/></inline-formula>. Klee diagrams accurately display distances for any species count.</p>
+<p>An important advance in the present treatment derives from the vectorization of nucleotide sequences, (1), which has been accomplished with the exact preservation of Hamming distances. Advantages flow from a vector space framework, an example of which is the optimization procedure leading to the indicator vectors. Another consequence is that bps occupation is rigorously transformed to the probability of occurrence of the four nucleotides, which opens the possibility of introducing information theory into these considerations.</p>
+</sec></body>
+<back>
+<ack>
+<p>We thank Jesse Ausubel, Ehud Kaplan, and Bruce Knight for helpful comments. Thanks also to Ellen Paley for her careful and patient preparation of this manuscript.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0009266-Goloboff1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Goloboff</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Catalano</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Mirande</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Szumik</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Arias</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Phylogenetic analysis of 73 060 taxa corroborates major eukaryotic groups.</article-title>             <source>Cladistics</source>             <volume>25</volume>             <fpage>1</fpage>             <lpage>20</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Chapman1"><label>2</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chapman</surname><given-names>A</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Numbers of living Species in Australia and the World.</article-title>             <comment>Canberra: Australia: Australian Biological Resources Study, 2nd ed. edition. <ext-link ext-link-type="uri" xlink:href="http://www.environment.gov.au/biodiversity/abrs/publications/other/species-numbers/2009/pubs/nlsaw-2nd-complete.pdf" xlink:type="simple">http://www.environment.gov.au/biodiversity/abrs/publications/other/species-numbers/2009/pubs/nlsaw-2nd-complete.pdf</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0009266-Caterino1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Caterino</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Reed</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Kuo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>FAH</surname><given-names>S</given-names></name>
+</person-group>             <year>2001</year>             <article-title>A partitioned likelihood analysis of swallowtail butterfly phylogeny (lepidoptera: Papilionidae).</article-title>             <source>Syst Biol</source>             <volume>50</volume>             <fpage>106</fpage>             <lpage>127</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Hackett1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hackett</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Kimball</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Reddy</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Bowie</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Braun</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>A phylogenomic study of birds reveals their evolutionary history.</article-title>             <source>Science</source>             <volume>320</volume>             <fpage>1763</fpage>             <lpage>1768</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Hebert1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hebert</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Cywinska</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ball</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>deWaard</surname><given-names>J</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Biological identifications through DNA barcodes.</article-title>             <source>Proc R Sci B</source>             <volume>270</volume>             <fpage>313</fpage>             <lpage>321</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Sirovich1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sirovich</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Stoeckle</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>Y</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A scalable method for analysis and display of DNA sequences.</article-title>             <source>PLoS ONE</source>             <volume>4</volume>             <fpage>e7051</fpage>             <comment><ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/article/info:doi%2F10.1371%2Fjournal.pone.0007051" xlink:type="simple">http://www.plosone.org/article/info:doi%2F10.1371%2Fjournal.pone.0007051</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0009266-Kimura1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kimura</surname><given-names>K</given-names></name>
+</person-group>             <year>1980</year>             <article-title>A simple method for estimating evolutionary rates of base substitutions through studies of nucleotide sequences.</article-title>             <source>J Mol Evol</source>             <volume>16</volume>             <fpage>111</fpage>             <lpage>120</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Tamura1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tamura</surname><given-names>K</given-names></name>
+</person-group>             <year>1992</year>             <article-title>Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C content biases.</article-title>             <source>Mol Biol Evol</source>             <volume>9</volume>             <fpage>678</fpage>             <lpage>687</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Tamura2"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tamura</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Nei</surname><given-names>M</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Estimation of the number of nucleotide substitutions in the control region of mitochondrial DNA in humans and chimpanzees.</article-title>             <source>Mol Biol Evol</source>             <volume>10</volume>             <fpage>512</fpage>             <lpage>526</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Hasegawa1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hasegawa</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Kishino</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Yano</surname><given-names>T</given-names></name>
+</person-group>             <year>1985</year>             <article-title>Dating the human-ape splitting by a molecular clock of mitochondrial dna.</article-title>             <source>J Mol Evol</source>             <volume>22</volume>             <fpage>160</fpage>             <lpage>174</lpage>          </element-citation></ref>
+<ref id="pone.0009266-1"><label>11</label><element-citation publication-type="other" xlink:type="simple">             <year>2009</year>             <article-title>American Ornithologists' Union Check-list of North American Birds, 7th edition and supplements.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://www.aou.org/checklist/north/print.php" xlink:type="simple">http://www.aou.org/checklist/north/print.php</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0009266-Kerr1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kerr</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Stoeckle</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Dove</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Weigt</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Francis</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Comprehensive DNA barcode coverage of North American birds.</article-title>             <source>Mol Ecol Notes</source>             <volume>7</volume>             <fpage>535</fpage>             <lpage>543</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Saitou1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Saitou</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Nei</surname><given-names>M</given-names></name>
+</person-group>             <year>1987</year>             <article-title>The neighbor-joining method: a new method for reconstructing phylogenetic trees.</article-title>             <source>Mol Biol Evol</source>             <volume>4</volume>             <fpage>406</fpage>             <lpage>425</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Atteson1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Atteson</surname><given-names>K</given-names></name>
+</person-group>             <year>1999</year>             <article-title>The performance of neighbor-joining methods of phylogenetic reconstruction.</article-title>             <source>Algorithmica</source>             <volume>25</volume>             <fpage>251</fpage>             <lpage>278</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Gascuel1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gascuel</surname><given-names>O</given-names></name>
+</person-group>             <year>1994</year>             <article-title>A note on Sattath and Tversky's Saitou and Nei's, and Studier and Keppler's algorithms.</article-title>             <source>Mol Biol Evol</source>             <volume>11</volume>             <fpage>961</fpage>             <lpage>963</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Bryant1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bryant</surname><given-names>D</given-names></name>
+</person-group>             <year>2005</year>             <article-title>On the uniqueness of the selection criterion in neighbor-joining.</article-title>             <source>J of Classification</source>             <volume>22</volume>             <fpage>3</fpage>             <lpage>15</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Mihaescu1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mihaescu</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Levy</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Pachter</surname><given-names>L</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Why neighbor-joining works.</article-title>             <source>Algorithmica</source>             <volume>54</volume>             <fpage>1</fpage>             <lpage>24</lpage>          </element-citation></ref>
+<ref id="pone.0009266-deRosnay1"><label>18</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>de Rosnay</surname><given-names>J</given-names></name>
+</person-group>             <year>1979</year>             <source>The Macroscope: A New World Scientific System</source>             <publisher-name>Harper &amp; Row</publisher-name>          </element-citation></ref>
+<ref id="pone.0009266-Ausubel1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ausubel</surname><given-names>J</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A botanical macroscope.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>106</volume>             <fpage>12569</fpage>          </element-citation></ref>
+<ref id="pone.0009266-Eldredge1"><label>20</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eldredge</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Gould</surname><given-names>S</given-names></name>
+</person-group>             <year>1972</year>             <source>Punctuated equilibria: An alternative to phyletic gradualism</source>             <publisher-loc>San Francisco</publisher-loc>             <publisher-name>Freeman Cooper Company</publisher-name>          </element-citation></ref>
+<ref id="pone.0009266-Petersen1"><label>21</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Petersen</surname><given-names>K</given-names></name>
+</person-group>             <year>1990</year>             <source>Ergodic Theory (Cambridge Studies in Advanced Mathematics)</source>             <publisher-name>Cambridge University Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0009266-Moritz1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moritz</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Cicero</surname><given-names>C</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Dna barcoding: promise and pitfalls.</article-title>             <source>PLoS Biology</source>             <volume>2</volume>             <fpage>e354</fpage>          </element-citation></ref>
+<ref id="pone.0009266-Castoe1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Castoe</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>de Koning</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>HM</given-names></name>
+<name name-style="western"><surname>Gu</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Noonan</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Evidence for an ancient adaptive episode of convergent molecular evolution.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>106</volume>             <fpage>8986</fpage>          </element-citation></ref>
+<ref id="pone.0009266-Kallersjo1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kallersjo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Farris</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Chase</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Bremer</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Fay</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>1988</year>             <article-title>Simultaneous parsimony jackknife analysis of 2538 rbcL DNA sequences reveals support for major clades of green plants, land plants, seed plants and flowering plants.</article-title>             <source>Plant Systematics Evol</source>             <volume>213</volume>             <fpage>259</fpage>          </element-citation></ref>
+<ref id="pone.0009266-McMahon1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McMahon</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Sanderson</surname><given-names>M</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Phylogenetic supermatrix analysis of genbank sequences f from 2228 papilionoid legumes.</article-title>             <source>Syst Biol</source>             <volume>55</volume>             <fpage>818</fpage>          </element-citation></ref>
+<ref id="pone.0009266-Sanderson1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sanderson</surname><given-names>M</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Paloverde: an OpenGL 3D phylogeny browser.</article-title>             <source>Bioinformatics</source>             <volume>22</volume>             <fpage>1004</fpage>             <lpage>1006</lpage>          </element-citation></ref>
+<ref id="pone.0009266-Smith1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Beaulier</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Donoghue</surname><given-names>M</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Mega-phylogeny approach from comparative biology: an alternative to supertree and supermatrix approaches.</article-title>             <source>BMC Evol Biol</source>             <volume>9</volume>             <fpage>37</fpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

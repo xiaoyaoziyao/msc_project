@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-06731</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0072096</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein interactions</subject><subject>Protein structure</subject></subj-group></subj-group><subj-group><subject>Biochemistry simulations</subject><subject>Macromolecular assemblies</subject></subj-group></subj-group><subj-group><subject>Biophysics</subject><subj-group><subject>Biomacromolecule-ligand interactions</subject><subject>Biophysics simulations</subject><subject>Macromolecular assemblies</subject></subj-group></subj-group><subj-group><subject>Computational biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>Protein structure</subject></subj-group></subj-group><subj-group><subject>Biophysic al simulations</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Replica Exchange Improves Sampling in Low-Resolution Docking Stage of RosettaDock</article-title>
+<alt-title alt-title-type="running-head">Replica Exchange for Protein-Protein Docking</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Zhe</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Lange</surname><given-names>Oliver F.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Biomolecular NMR and Munich Center for Integrated Protein Science, Department Chemie, Technische Universität München, Garching, Germany</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Institute of Structural Biology, Helmholtz Zentrum München, Neuherberg, Germany</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Yang</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Michigan, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">oliver.lange@tum.de</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: OFL. Performed the experiments: ZZ. Analyzed the data: ZZ. Contributed reagents/materials/analysis tools: ZZ OFL. Wrote the paper: ZZ OFL.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>29</day><month>8</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>8</issue>
+<elocation-id>e72096</elocation-id>
+<history>
+<date date-type="received"><day>14</day><month>2</month><year>2013</year></date>
+<date date-type="accepted"><day>10</day><month>7</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Zhang and Lange</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Many protein-protein docking protocols are based on a <italic>shotgun</italic> approach, in which thousands of independent random-start trajectories minimize the rigid-body degrees of freedom. Another strategy is enumerative sampling as used in ZDOCK. Here, we introduce an alternative strategy, ReplicaDock, using a small number of long trajectories of temperature replica exchange. We compare replica exchange sampling as low-resolution stage of RosettaDock with RosettaDock's original shotgun sampling as well as with ZDOCK. A benchmark of 30 complexes starting from structures of the unbound binding partners shows improved performance for ReplicaDock and ZDOCK when compared to shotgun sampling at equal or less computational expense. ReplicaDock and ZDOCK consistently reach lower energies and generate significantly more near-native conformations than shotgun sampling. Accordingly, they both improve typical metrics of prediction quality of complex structures after refinement. Additionally, the refined ReplicaDock ensembles reach significantly lower interface energies and many previously hidden features of the docking energy landscape become visible when ReplicaDock is applied.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported by DFG grant LA 1817/3-1. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="13"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Protein-protein interactions are one of the fundamental molecular mechanisms of life, and to investigate them it is important to know the atomic structures of the formed complexes. Since many proteins have multiple interaction partners, the number of protein complexes is far larger than the number of individually folded proteins. At the same time, the number of known complex structures is far lower than that of monomeric proteins, illustrating the experimental challenges involved in solving the structure of protein complexes <xref ref-type="bibr" rid="pone.0072096-Garma1">[1]</xref>–<xref ref-type="bibr" rid="pone.0072096-Stein1">[3]</xref>.</p>
+<p>Computational protein docking describes any <italic>in silico</italic> methodology for combining structural knowledge of individual protein components with general knowledge about protein complexes (often in form of a potential energy function) and, if available, sparse data of the complex <xref ref-type="bibr" rid="pone.0072096-Nooren1">[4]</xref>–<xref ref-type="bibr" rid="pone.0072096-Cowieson1">[7]</xref>. Popular sources of sparse data include, cryo-EM, SAXS, NMR chemical shift perturbations or chemical crosslinking <xref ref-type="bibr" rid="pone.0072096-Garma1">[1]</xref>–<xref ref-type="bibr" rid="pone.0072096-Stein1">[3]</xref>, <xref ref-type="bibr" rid="pone.0072096-Karaca1">[8]</xref>, <xref ref-type="bibr" rid="pone.0072096-Koehler1">[9]</xref>.</p>
+<p>Currently, many popular docking programs employ a two-stage approach: First, conformational space is sampled broadly, keeping partner structures rigid. Second, structures are refined in one or multiple steps <xref ref-type="bibr" rid="pone.0072096-Schneider1">[10]</xref>–<xref ref-type="bibr" rid="pone.0072096-Vajda1">[14]</xref>. To account for possible side-chain or loop motion, many docking methods employ a low-resolution model during their initial rigid-body search to create the required level of softness without adding extra degrees of freedom <xref ref-type="bibr" rid="pone.0072096-Smith1">[13]</xref>, <xref ref-type="bibr" rid="pone.0072096-Sternberg1">[15]</xref>, <xref ref-type="bibr" rid="pone.0072096-Lorenzen1">[16]</xref>. Whereas some methods use solely a low-resolution representation, others refine structures in an all-atom representation, often allowing also side-chain and loop motion <xref ref-type="bibr" rid="pone.0072096-Zacharias1">[17]</xref>–<xref ref-type="bibr" rid="pone.0072096-Dominguez1">[20]</xref>. While the all-atom representation allows a more exact modeling of the energetics of protein-protein interfaces, it also leads to a rugged energy landscape that is hard to sample <xref ref-type="bibr" rid="pone.0072096-Fleishman1">[21]</xref>. As a result, the high-resolution stage generally serves only to discriminate conformations, not to generate them.</p>
+<p>The initial (low-resolution) structural exploration stage of common docking programs such as Haddock <xref ref-type="bibr" rid="pone.0072096-Dominguez1">[20]</xref>, Attract <xref ref-type="bibr" rid="pone.0072096-Zacharias1">[17]</xref>, ICM-DISCO <xref ref-type="bibr" rid="pone.0072096-FernndezRecio1">[22]</xref> or RosettaDock <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref> is driven by a shotgun approach of short energy minimizations started from many thousands of randomly generated initial conformations. Another large class of programs such as DOT <xref ref-type="bibr" rid="pone.0072096-Mandell1">[23]</xref>, ZDOCK <xref ref-type="bibr" rid="pone.0072096-Chen1">[18]</xref>, 3D-DOCK <xref ref-type="bibr" rid="pone.0072096-Aloy1">[24]</xref>, and Gramm-X <xref ref-type="bibr" rid="pone.0072096-Tovchigrechko1">[25]</xref> employ grid-based fast Fourier transform (FFT) search of rigid-body degrees of freedom to find the low-energy conformations <xref ref-type="bibr" rid="pone.0072096-Moreira1">[12]</xref>, <xref ref-type="bibr" rid="pone.0072096-Vajda1">[14]</xref>. Recently, geometric hashing has been applied to quickly identify possible binding modes <xref ref-type="bibr" rid="pone.0072096-SchneidmanDuhovny1">[26]</xref>.</p>
+<p>The philosophy behind the low-resolution sampling in most docking programs, and in particular those that employ shotgun sampling, is to guarantee an even sampling in the low-resolution stage. A contrasting philosophy is Importance Sampling, which is constructed to spend more computer time in regions of low energy than in those with high energy. It is often argued that using Importance Sampling, too much computer time is spent in a small number of low-energy regions of a potentially misleading low-resolution energy function, while a thorough exploration of conformational space is neglected. Temperature Replica Exchange, however, might overcome the lack of exploration. Thus we address the following questions in this study: First, does Importance Sampling in the form of Replica Exchange have a benefit over shotgun sampling for the low-resolution stage of protein-protein docking despite the potentially misleading low-energy function. Second, whether the highly skewed populations of conformations generated by Importance Sampling are advantageous or disadvantageous for the subsequent refinement stage.</p>
+<p>We thus introduced <italic>ReplicaDock</italic>, a replica exchange Metropolis-Monte Carlo method <xref ref-type="bibr" rid="pone.0072096-Swendsen1">[27]</xref>, <xref ref-type="bibr" rid="pone.0072096-Sugita1">[28]</xref> for the low-resolution stage of protein-protein docking, which has been implemented within the RosettaDock program. We chose temperature levels such that the lowest temperature reflects a bound state and the highest temperature an unbound state within the RosettaDock <italic>centroid</italic> energy function. Within the unbound state, the binding partners are free to sample the whole surface. In the bound state, the binding partners stick together and explore local conformational space to find the lowest energy conformation accessible within the current binding mode <xref ref-type="bibr" rid="pone.0072096-Kim1">[29]</xref>.</p>
+<p>Of course protein-binding partners would freely diffuse in the unbound state, rendering collision events rather rare. To counter-act this physical but undesired behavior we introduced an artificial restraint energy. This <italic>encounter constraint</italic> is a flat-bottom restraint energy that acts on the distance of the center of mass of both binding partners. As it penalizes only those conformations that are too far away to touch, the encounter constraint has no effect on the bound conformational ensemble whatsoever. However, by constricting the available conformational space volume, it increases the local concentration of the binding partners and enhances their collision rate dramatically.</p>
+<p>As prediction of protein complex structures is still an unsolved problem <xref ref-type="bibr" rid="pone.0072096-Lensink1">[30]</xref>, protein-protein docking programs are most useful in combination with sparse experimental data <xref ref-type="bibr" rid="pone.0072096-Stratmann1">[6]</xref>, <xref ref-type="bibr" rid="pone.0072096-Dominguez1">[20]</xref>. Nevertheless, here, we tested ReplicaDock without any additional experimental data to fully focus on the sampling strategy and exclude any other possible interference factors. Performance is compared to shotgun sampling, and enumerative sampling (represented by ZDOCK) foremost via the ability to sample the lowest-energy structures after refinement and secondly by the ability to sample near-native conformations. Furthermore, we analyzed how well accurate predictions of native conformations are possible after all-atom refinement with Rosetta.</p>
+<p>The manuscript is organized as follows. At first, we analyze the shotgun sampling employed currently in RosettaDock <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref> and demonstrate that it strongly depends on the initial random placement and little on the energy function (Section 4.1). Subsequently, ReplicaDock sampling is introduced and it is showcased at hand of target 1ppf (Section 4.2). In Section 4.3, we show that near-native sampling below 4 Å I_rms to the native conformation is a necessary condition to achieve a positive effect on structural accuracy in subsequent refinement. Thus, we analyze the frequency of “hits” over a benchmark of 30 proteins for shotgun and ReplicaDock sampling (Section 4.4), and compare to ZDOCK (Section 4.5). Next, we consider all-atom refinement and analyze the sampling of distinct energy landscape features and the recovery of the native energy basins (Section 4.6). Finally, we analyze the capability to predict accurate complex structures from the refined shotgun, ReplicaDock and ZDOCK ensembles, respectively, by employing commonly employed metrics of prediction quality (Section 4.7). As discussed above, Importance Sampling might suffer from a misleading low-resolution energy function, and indeed we find some targets in the benchmark where this is the case. We discuss some of the shortcomings of the low-resolution energy function of RosettaDock that lead to alternative non-native binding modes in Section 4.8.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>3.1 Energy Function</title>
+<sec id="s2a1">
+<title>3.1.1 Low-resolution energy</title>
+<p>The low-resolution stage uses the <italic>interchain_cen</italic> energy function which has been previously introduced for RosettaDock <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref>, <xref ref-type="bibr" rid="pone.0072096-Chaudhury1">[31]</xref>. This energy function consists of a term to reward contacting residues (<italic>interchain_contact</italic>), a penalty term for overlapping residues (<italic>interchain_vdw</italic>), a docking-specific statistical residue environment (<italic>interchain_env</italic>) and residue-residue pair-wise potentials (<italic>interchain_pair</italic>) with weights 2.0, 1.0, 1.0 and 1.0, respectively.</p>
+<p>The <italic>interchain_contact</italic> component of the low-resolution energy function in Rosetta has originally been capped at −10 Rosetta Energy Units (REU) <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref>, which corresponds to 40 contacting residues within a distance cutoff of 6 Å between centroid-interaction centers of the two binding partners. The centroid pseudo atom is the interaction center representing all sidechain atoms in Rosetta's low-resolution representation. The cap avoids over-stabilization of spurious binding interfaces with large contact area, but also has the disadvantage that perturbations away from an optimal conformation with a large contact area are no longer penalized. Here, we obtained optimal performance by combining conformations sampled with and without energy capping. Thus, if not otherwise noted, for Shotgun (Section 3.3) and ReplicaDock (Section 3.4) always half of the generated conformations in low-resolution stage are sampled with capping at −10 REU. For ReplicaDock this is realized by running 2 of 4 trajectories with the capped energy function.</p>
+</sec><sec id="s2a2">
+<title>3.1.2 All-atom energy</title>
+<p>The high-resolution stage uses the standard all-atom energy for RosettaDock as given by the weight-set <italic>docking</italic> <xref ref-type="bibr" rid="pone.0072096-Chaudhury1">[31]</xref>. For final analysis an interface energy is computed by subtracting the all-atom energy of non-interacting partners from the all-atom energy of the interacting binding partners. To compute the energy of non-interacting partners the two binding partners are moved far away from each other while keeping all internal degrees of freedom fixed.</p>
+</sec></sec><sec id="s2b">
+<title>3.2 Generating initial conformations</title>
+<p>To generate initial conformations we randomly perturb the orientation of both binding partners. To this end, we uniformly draw rotation matrices from the rotation group <italic>SO</italic>(3) by generating Euler angles <italic>α</italic>, <italic>β</italic>, <italic>γ</italic> (in <italic>z</italic>, <italic>y</italic>, <italic>z</italic> notation) with α, <italic>γ</italic> drawn uniformly from the interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e001" xlink:type="simple"/></inline-formula> and setting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e002" xlink:type="simple"/></inline-formula> with <italic>z</italic> drawn uniformly from interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e003" xlink:type="simple"/></inline-formula></p>
+<p>Subsequently, the binding partners are slid into contact using steps of 1 Å by first increasing the distance between the binding partners until the energy term <italic>interchain_vdw &lt;0.1</italic>, and then again decreasing until <italic>interchain_vdw &gt;0.1</italic>.</p>
+</sec><sec id="s2c">
+<title>3.3 Shotgun Protocol (low-resolution stage)</title>
+<p>Shotgun sampling in RosettaDock's low-resolution stage proceeds in two steps. First, a random initial conformation is generated as described in the preceding section. Second, a Monte-Carlo (MC) sampling procedure with 500 steps is applied to optimize the low-resolution energy. At step <italic>i</italic> a proposed conformation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e004" xlink:type="simple"/></inline-formula> is accepted according to the Metropolis Criterion <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e005" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e006" xlink:type="simple"/></inline-formula> denotes the potential energy of conformation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e007" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e008" xlink:type="simple"/></inline-formula> the inverse temperature. The inverse temperature is kept constant at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e009" xlink:type="simple"/></inline-formula> and the step-sizes are adjusted every 50 steps to maintain a 50% acceptance rate. The initial step-sizes are drawn from normal distributions with mean value of 0.7 Å (translation along all the three axes) and 5° (rotation around the axis of protein centers and tilt off this axis in a randomly-chosen direction) <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref>. At the end, the lowest energy conformation observed during the 500 MC-steps is recorded as final output.</p>
+<p>By presetting the number of generated decoys (<italic>-nstruct</italic>) we adjusted the computer time expense to match ReplicaDock's expense. We have generated about 120,000 decoys with shotgun sampling for each target. Decoys with <italic>interchain_contact</italic> &gt;10 are discarded and the top 40,000 in energy are selected for analysis or refinement. (Method S1: protocol_capture/rosetta_dock/centroid in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>)</p>
+</sec><sec id="s2d">
+<title>3.4 ReplicaDock (alternative low-resolution stage)</title>
+<p>As an alternative to the shotgun sampling described above we applied here a replica exchange procedure <xref ref-type="bibr" rid="pone.0072096-Swendsen1">[27]</xref>, <xref ref-type="bibr" rid="pone.0072096-Sugita1">[28]</xref>. Inverse temperatures are set to, <italic>β</italic>, of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e010" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e011" xlink:type="simple"/></inline-formula>and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e012" xlink:type="simple"/></inline-formula>, and swaps are attempted every 1,000 Monte-Carlo steps <xref ref-type="bibr" rid="pone.0072096-Metropolis1">[32]</xref>, <xref ref-type="bibr" rid="pone.0072096-Hastings1">[33]</xref>. 4 trajectories with 3 temperature levels are run for 5×10<sup>6</sup> Monte-Carlo steps, and snapshots are stored every 1,000 steps. In total, 60,000 decoys are generated for each target with this protocol. For further analysis or refinement, the highest temperature level (inverse temperature <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e013" xlink:type="simple"/></inline-formula>) and decoys with <italic>interchain_cen</italic> &gt;10 were excluded. Initial configurations of trajectories were generated as described in Section 3.2. All targets of the benchmark are sampled with the same three temperature levels. The choice of temperature levels is discussed in Results Section 4.2. For all targets good exchange rates (∼25%) are achieved and no further target dependent optimization is required.</p>
+<p>To avoid unbounded diffusion of the two binding partners away from each other, we generated an <italic>encounter constraint</italic>. This constraint is realized as flat-bottom distance restraint between the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e014" xlink:type="simple"/></inline-formula> closest to the center of mass of the respective binding partners. These center atoms are denoted in the following as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e015" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e016" xlink:type="simple"/></inline-formula>. The constraint does not penalize the conformations unless they are further than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e017" xlink:type="simple"/></inline-formula> apart, where <italic>g</italic> denotes the chosen gap parameter (here 8 Å), and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e018" xlink:type="simple"/></inline-formula> denotes the furthest distance of a surface <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e019" xlink:type="simple"/></inline-formula> of binding partner <italic>i</italic> to its center <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e020" xlink:type="simple"/></inline-formula>. For distances <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e021" xlink:type="simple"/></inline-formula> the harmonic penalty energy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e022" xlink:type="simple"/></inline-formula> is applied. (Method S2: protocol_capture/replica_dock/centroid in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>)</p>
+</sec><sec id="s2e">
+<title>3.5 ZDOCK</title>
+<p>To prepare for ZDOCK, protons are removed and the individual binding partners are marked using <italic>mark_sur</italic> from ZDOCK's toolbox. 54,000 decoys are generated with ZDOCK3.0.2 for each target and top 36,000 decoys by ZDOCK score are evaluated and refined (Section 3.6).</p>
+</sec><sec id="s2f">
+<title>3.6 Refinement (high-resolution stage)</title>
+<p>The high-resolution stage of RosettaDock described by <italic>Gray et al.</italic> <xref ref-type="bibr" rid="pone.0072096-Gray1">[19]</xref> was applied without alteration and used to refine conformations generated with shotgun, ZDOCK or ReplicaDock. (Method S3: protocol_capture/rosetta_dock/refine and Method S4: protocol_capture/replica_dock/refine in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>)</p>
+</sec><sec id="s2g">
+<title>3.7 Construction of Benchmark</title>
+<p>30 Targets were selected from the Dockground Benchmark <xref ref-type="bibr" rid="pone.0072096-Gao1">[34]</xref>, for which the x-ray resolution of the bound complex is no worse than 2.5 Å and the x-ray resolution of the individual unbound partner is no worse than 2.2 Å. Since the current method does not allow backbone motion, we restricted the benchmark to targets where the monomer <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e023" xlink:type="simple"/></inline-formula> between bound and unbound structure is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e024" xlink:type="simple"/></inline-formula> for both binding partners (Table S1).</p>
+</sec><sec id="s2h">
+<title>3.8 Implementation of ReplicaDock in Rosetta3</title>
+<p>We implemented replica exchange within the general Metropolis-Hastings framework of the Rosetta3 software package. The replica-exchange module is accessible through the <italic>RosettaScripts</italic> <xref ref-type="bibr" rid="pone.0072096-Fleishman2">[35]</xref> interface and can be combined with any conformational moves that are implemented as children of the <italic>ThermodynamicMover</italic> class. To ensure detailed balance, either Movers have to yield unbiased conformational perturbations or they have to provide the proposal density of the perturbation through implementation of an abstract virtual function in the <italic>ThermodynamicMover</italic> interface. For docking we have provided the <italic>ThermodynamicRigidBodyPerturbNoCenterMover</italic> which performs unbiased rotational and translational moves. Random translations drawn from Gaussian distribution are performed along all three axes. The axis-angle notation is used to represent rotations. A rotation axis is generated using<disp-formula id="pone.0072096.e025"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0072096.e025" xlink:type="simple"/></disp-formula><disp-formula id="pone.0072096.e026"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0072096.e026" xlink:type="simple"/></disp-formula><disp-formula id="pone.0072096.e027"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0072096.e027" xlink:type="simple"/></disp-formula>where <italic>x</italic>, <italic>y</italic> are randomly drawn from uniform distribution. This is sufficient to guarantee unbiased rotational sampling, and a distribution for the positive rotation angle can be chosen freely. In order to be consistent in rotational step sizes with the parameterization of the original RigidBodyPerturbNoCenterMover, we first draw Euler angles from a Gaussian distribution with specified magnitude, and then transform the resulting rotation into axis-angle representation. Second, we combine the rotation axis obtained using our unbiased sampling method, with the rotation angle that corresponds to the Gaussian Euler angles. The resulting distribution of rotation angles is shown for different parameters in Figure S1 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>.</p>
+<p>Additionally, we have implemented the <italic>DockSetupMover</italic> to select the rigid-body degrees of freedom to be sampled (via <italic>FoldTree</italic>) and implemented the <italic>parse_my_tag</italic> method of the existing <italic>DockingInitialPerturbationMover</italic> <xref ref-type="bibr" rid="pone.0072096-Chaudhury1">[31]</xref> to render it accessible through the RosettaScripts interface.</p>
+</sec><sec id="s2i">
+<title>3.9 Metrics for structural accuracy and docking performance</title>
+<p>The metrics interface RMSD (I_rms), ligand RMSD (L_rms), fraction of native contacts (<italic>f<sub>nat</sub></italic>) and fraction of non-native contacts (<italic>f<sub>non-nat</sub></italic>) are defined as in CAPRI <xref ref-type="bibr" rid="pone.0072096-Mndez1">[36]</xref> and are calculated against the bound complex.</p>
+<p>For the low-resolution ensemble we consider a decoy with I_rms <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e028" xlink:type="simple"/></inline-formula> as ‘hit’.</p>
+</sec><sec id="s2j">
+<title>3.10 Sampling the native energy basin</title>
+<p>Additionally, we were interested in the native energy basin accessible by the applied fixed-backbone, flexible-sidechain docking protocol from the unbound monomeric starting structures. Accordingly, we started 1000 trajectories of refinement (Section 3.6) from the unbound monomers superimposed onto the bound complex to generate <italic>RelaxedNative</italic> ensembles. (Method S5: protocol_capture/relax_native in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>)</p>
+<p>To assess how well a protocol samples the native energy basin, we count conformations that overlap with the RelaxedNative ensembles as follows. A lower left region in the interface energy vs. I_rms plots relative to the RelaxedNative ensemble was defined by the 50%-tile interface energy of RelaxedNatives as upper confinement and by the 75%-tile I_rms of the RelaxedNatives as the right confinement (Figure S2 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>). All conformations in this region are counted.</p>
+<p>We define 4 categories based on the number of conformations <italic>n</italic> that overlap with the RelaxedNative ensemble: none (0), magic points (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e029" xlink:type="simple"/></inline-formula>), sporadic (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e030" xlink:type="simple"/></inline-formula>), dense (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e031" xlink:type="simple"/></inline-formula>).</p>
+</sec><sec id="s2k">
+<title>3.11 Clustering after all-atom refinement</title>
+<p>The top-2000 conformations by interface energy after all-atom refinement were clustered using a cutoff of 5.0 Å of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e032" xlink:type="simple"/></inline-formula> RMSD. Clusters are ranked by size and are represented by the decoy with lowest interface energy within the cluster.</p>
+<p>Ranking clusters by interface energy resulted in slightly worse performance when evaluated using CAPRI criteria (Table S2).</p>
+</sec><sec id="s2l">
+<title>3.12 Automated Setup</title>
+<p>The automated setup tools available with the CS-Rosetta toolbox (<ext-link ext-link-type="uri" xlink:href="http://www.csrosetta.org" xlink:type="simple">www.csrosetta.org</ext-link>) have been used to generate all production runs of the benchmark. We advise users to install this toolbox from <italic>protocol_capture/2012/replica_docking/csrosetta3</italic> or from the website. If installed from the website, the docking plugins <italic>_docking_base</italic>, <italic>rosetta_dock</italic> and <italic>replica_dock</italic> have to be copied into the <italic>flag_library/methods</italic> folder from<italic>/protocol_capture/2012/replica_docking/csrosetta3/flag_library/methods</italic>. All methods presented in this work are implemented as plugins in <italic>csrosetta3/flag_library</italic> and can be accessed through the <italic>–method</italic> option of the <italic>setup_xxx</italic> commands. Example usage of these tools for docking can be found in the protocol capture section (Figure S3 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>, Method S7: Automated Setup in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>) and general documentation is provided at <ext-link ext-link-type="uri" xlink:href="http://www.csrosetta.org/manual" xlink:type="simple">www.csrosetta.org/manual</ext-link>.</p>
+</sec><sec id="s2m">
+<title>3.13 Computational Cost</title>
+<p>For shotgun sampling and ReplicaDock the same amount of computer time was used. The amount of computer time required depends on the size of the binding partners and ranges from 66 core-hours to 900 core-hours on 2.6 GHz AMD Opteron Processors. ZDOCK requires significantly less computer time, with 1.25–7.25 core-hours on the same machine. We refined 40,000, 36,000 and ∼36,000 conformations for shotgun, ZDOCK and ReplicaDock, respectively. Refinement requires between 14–120 core-seconds per conformation, again depending strongly on the protein sizes.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>4.1 Shotgun sampling is dominated by initial random placement</title>
+<p>In this section we address the question how conformational space is explored in the shotgun approach of RosettaDock. Shotgun sampling consists of a random initial placement followed by a short energy optimization procedure using 500 steps of Monte Carlo sampling with adjusted step-sizes and constant inverse temperature of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e033" xlink:type="simple"/></inline-formula>(<xref ref-type="sec" rid="s2">Methods</xref>).</p>
+<p>The short Monte-Carlo sampling explores only a small region of conformational space around the respective starting position, which is reflected by a strong correlation between I_rms to the native complex structure before and after the Monte Carlo optimization (<xref ref-type="fig" rid="pone-0072096-g001">Figure 1A</xref>). Thus, the generated ensemble of structures is highly biased by the initial starting structures, rather than by the low-resolution energy (<xref ref-type="fig" rid="pone-0072096-g002">Figure 2C+G</xref>; Figure S4C+G in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>).</p>
+<fig id="pone-0072096-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g001</object-id><label>Figure 1</label><caption>
+<title>Detailed analysis of individual docking stages on bound target 1sq2.</title>
+<p>A) Interface RMSD (I_rms) before and after the Monte-Carlo optimization in the low-resolution stage of RosettaDock's shotgun sampling, B–C) I_rms before and after all-atom refinement for shotgun and ReplicaDock sampled ensembles, respectively. The colorbar indicates the density of data points at given position of the scatter plot, A–C) use a same colorbar range. The insets show the distribution of differences between I_rms after and before the respective sampling stage has been applied (negative values reflect an improvement in I_rms).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g001" position="float" xlink:type="simple"/></fig><fig id="pone-0072096-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g002</object-id><label>Figure 2</label><caption>
+<title>Detailed analysis of shotgun and ReplicaDock sampling on target 1ppf.</title>
+<p>A) energy distribution of shotgun sampling generated low-resolution decoys. B) energy distribution of conformations sampled by ReplicaDock at respective inverse temperatures. C–F) Population of sampled conformations in spherical coordinates. Partner A is fixed at the center and the position of Partner B with respect to an idealized spherical surface around Partner A is recorded. The native structure is labeled as white dot (arrow in C). G–J) Conformations are assigned to grid-cells as in C–F, but shown is the lowest energy of all conformations assigned to the respective grid cell. The same color-scale is used for each plot of a row, and the colorbars are attached to the rightmost panel.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g002" position="float" xlink:type="simple"/></fig>
+<p>Subsequently, the decoys of the low-resolution phase are refined using an all-atom model and allowing side-chain flexibility on top of the rigid body motion. The energy landscape in this phase is very rugged and the applied refinement protocol is not very explorative. Indeed, the I_rms of low-resolution input structures and all-atom refined structures are also strongly correlated (<xref ref-type="fig" rid="pone-0072096-g001">Figure 1B</xref>). Thus, a necessary requirement for the prediction of the native complex structure is that the initial random placement already generates sufficiently many near-native conformations.</p>
+</sec><sec id="s3b">
+<title>4.2 Sampling with ReplicaDock generates energy-biased populations</title>
+<p>The previous section showed that the relative populations of conformations in the shotgun ensemble are dominated by the initial perturbation and do not reflect the low-resolution energy landscape. Nevertheless, differences in energy are apparent and the native structure is found in one of the low-energy basins (<xref ref-type="fig" rid="pone-0072096-g002">Figure 2G</xref>).</p>
+<p>We argued that Importance Sampling might generate ensembles of better quality with more near-native conformations that are better suited for continuation in the high-resolution refinement stage. Accordingly, we employ unbiased rigid body moves and replica exchange Monte-Carlo (REXMC). The temperature levels are chosen such that the lowest and highest temperatures reflect the bound and unbound state, respectively.</p>
+<p>To achieve efficient exchange rates between replica's, the energy distribution at any given temperature level has to overlap with the energy distributions of neighboring temperature levels. Generally, in applications of replica exchange to biomolecular systems this can only be achieved by employing a large number of temperature levels combined with careful optimization for each individual system <xref ref-type="bibr" rid="pone.0072096-Patriksson1">[37]</xref>–<xref ref-type="bibr" rid="pone.0072096-Sanbonmatsu1">[39]</xref>. Here, however, only the six rigid body degrees of freedom are sampled rendering energy distributions rather broad, such that only a small number of temperature levels is required <xref ref-type="bibr" rid="pone.0072096-Fukunishi1">[40]</xref>. In an initial survey, simulations on bound target 1sq2 were carried out with inverse temperatures, <italic>β</italic>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e034" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e035" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e036" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e037" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e038" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e039" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e040" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e041" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e042" xlink:type="simple"/></inline-formula> (Section 3.3, Figure S5 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>). We found that the lowest temperature levels lead to sharp energy distributions centered at relatively low energies. Inspection of the corresponding conformations reveals predominantly large number of contacts consistent with bound conformations. Another peak in the energy distribution is found at the higher temperature levels, and inspection of the corresponding conformations shows that binding partners have little or no contact. Inverse temperatures between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e043" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e044" xlink:type="simple"/></inline-formula> yield broad distributions that connect the low-energies of bound conformations with the sharp energy-peak of unbound conformations. In our initial tests, this temperature range turned out to be most suitable to broadly sample different binding modes, and we chose the inverse temperatures (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e045" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e046" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e047" xlink:type="simple"/></inline-formula>) for the final protocol. This choice yields consistent results across the full range of benchmark cases in terms of energy distributions (Figure S6 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>) and exchange rates around 25% between replica's with little variation between targets (Table S3).</p>
+<p>Replica Exchange with inverse temperatures <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e048" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e049" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e050" xlink:type="simple"/></inline-formula> is show-cased at the example of target 1ppf in <xref ref-type="fig" rid="pone-0072096-g002">Figure 2</xref>. Indeed, ReplicaDock achieves good overlap in the energy distributions (<xref ref-type="fig" rid="pone-0072096-g002">Figure 2B</xref>) and frequent exchanges (Figure S7 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>). Obviously, at high temperature the unbound (non-contacting) conformations are more populated, whereas at low temperatures bound (contacting) conformations are more populated. Thus, thermodynamically speaking, the high-temperature state reflects the unbound state, whereas the low-temperature state reflects the bound state, and the replica exchange scheme achieves frequent exchange between both.</p>
+<p>Independent trajectories started from different random conformations converge to the same populations (Figure S8 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>) demonstrating that convergence is achieved within the simulation time. Accordingly, all generated trajectories can be combined to improve statistics (<xref ref-type="fig" rid="pone-0072096-g002">Figure 2D–F</xref>). As expected from Importance Sampling, areas of high population in the ReplicaDock ensemble coincide with the low-energy regions in the conformational energy landscape (<xref ref-type="fig" rid="pone-0072096-g002">Figure 2H–J</xref>), which is in stark contrast to the shotgun ensemble.</p>
+<p>Surprisingly, with the lowest temperature set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e051" xlink:type="simple"/></inline-formula>, ReplicaDock achieved significantly lower energies than shotgun sampling with temperatures set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e052" xlink:type="simple"/></inline-formula>. This demonstrates that significantly more than 500 Monte-Carlo steps, as employed in the shotgun protocol, are required to consistently equilibrate at the chosen temperature.</p>
+</sec><sec id="s3c">
+<title>4.3 Only near-native conformations are pulled into the native energy funnel in the refinement stage</title>
+<p>Refinement of the ReplicaDock ensemble results in a dramatically different behavior than refinement of the corresponding shotgun ensemble (<xref ref-type="fig" rid="pone-0072096-g001">Figure 1B+C</xref>). When conformations below I_rms 3 Å are refined, they are likely to be pulled into the native energy funnel, resulting in I_rms between 0 and 1 Å (<xref ref-type="fig" rid="pone-0072096-g001">Figure 1B+C</xref>). Decoys further than 4 Å do not systematically improve their I_rms in refinement.</p>
+<p>Since the shotgun centroid ensemble has a very low number of conformations with I_rms <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e053" xlink:type="simple"/></inline-formula> refinement is less beneficial for shotgun than for ReplicaDock ensembles. However, for ReplicaDock decoys, some refinement trajectories also seem to move away from the near-native regions. This seems to be caused by clashes after switching to the high-resolution representation (data not shown). As discussed later (Section 4.8), the centroid energy is dominated by <italic>interchain_cen</italic> which may cause some overly compact conformations.</p>
+</sec><sec id="s3d">
+<title>4.4 ReplicaDock efficiently samples near native conformations</title>
+<p>In the previous section, we showed dense sampling of near native conformations during the low-resolution phase is a necessary condition for identifying the native energy basin in the refinement phase. In the following, we analyze how successful the shotgun approach and ReplicaDock sample near-native conformations in the low-resolution phase on a benchmark of 30 protein-protein complexes (<xref ref-type="sec" rid="s2">Methods</xref>), where the docking partners are given as PDB-structures of the unbound proteins.</p>
+<p>We applied ReplicaDock with inverse temperatures, <italic>β</italic>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e054" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e055" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e056" xlink:type="simple"/></inline-formula>for low-resolution sampling. For ReplicaDock, 4 trajectories with 5×10<sup>6</sup> MC-steps were run using different amounts of computer time depending on the target size. The same amount of computer time per target was given to shotgun sampling by adjusting the number of generated decoys (<italic>-nstruct</italic>), accordingly.</p>
+<p>As shown in <xref ref-type="fig" rid="pone-0072096-g003">Figure 3</xref>, ReplicaDock generates significantly higher fractions of near-native decoys for nearly all targets than shotgun sampling. In three cases (1a2k, 1v7p, and 2a42) ReplicaDock did not generate any near-native decoys. Scrutinizing the targets in detail, we find that for 1a2k a few residues on the terminus of the receptor stick into the binding pocket and cause clashes between backbone atoms in the superimposed structures. Similarly, in complex structure 1v7p and 2a42 loops in the interface area deviate substantially from the position they occupy in the unbound monomer conformation. Without these backbone changes crucial side-chains cannot be packed without clashes in the interface, causing the binding partners being pushed apart. In these cases shotgun sampling also produced only a small fraction of near-native decoys. Obviously, these problems cannot be overcome with rigid-body docking, and thus explain the bad performance of the methods.</p>
+<fig id="pone-0072096-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g003</object-id><label>Figure 3</label><caption>
+<title>Fraction of hits in low-resolution docking.</title>
+<p>Conformation with I_rms ≤2.5 Å to the bound complex are considered as a hit (Section 3.9). Blue, green and red represent the results of shotgun sampling, ZDOCK and ReplicaDock, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g003" position="float" xlink:type="simple"/></fig>
+<p>Additionally, if we impose further energy cut-offs and only keep the low-20k, low-5k or low-2k of conformations (Figure S9 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>), we find that a) for an increasing number of targets no near-native conformations are retained, and b) that the fraction of near-native decoys become more similar between shotgun and ReplicaDock sampling. This shows that ranking by low-resolution energy is problematic and only generous filters should be applied before refinement.</p>
+<p>In summary, ReplicaDock yields a dramatic improvement of near-native sampling for most targets. Some targets, however, are not improved or get slightly worse, and aggressive energy-cuts have a negative impact. Possible reason for these failures of the low-resolution energy function will be discussed further in Section 4.8.</p>
+</sec><sec id="s3e">
+<title>4.5 Comparison to ZDOCK</title>
+<p>As shown above, ReplicaDock yields ensembles with a higher fraction of near-native decoys than RosettaDock's shotgun sampling method. Another large class of docking programs uses enumerative sampling on a translational and rotational grid. Here, we run ZDOCK 3.0 as a representative of these programs. ZDOCK has been shown to be one of the most successful docking programs <xref ref-type="bibr" rid="pone.0072096-Hwang1">[41]</xref>–<xref ref-type="bibr" rid="pone.0072096-Wiehe2">[43]</xref>.</p>
+<p>As shown in <xref ref-type="fig" rid="pone-0072096-g003">Figure 3</xref>, the performance of ZDOCK and ReplicaDock is comparable. For most targets both methods yield fractions of near-native decoys between 10<sup>−4</sup> and 10<sup>−2</sup>. Moreover, both methods fail in some targets: 2a42 and 2a5t for ZDOCK, and 1a2k, 1v7p and 2a42 for ReplicaDock. However, one should mention that ZDOCK is more efficient due to its FFT based sampling of translational degrees of freedom and requires only a small fraction (∼1%) of the computational expense (<xref ref-type="sec" rid="s2">Methods</xref>).</p>
+</sec><sec id="s3f">
+<title>4.6 All-atom refinement of ReplicaDock ensembles</title>
+<p>As shown above, ReplicaDock and ZDOCK yield ensembles with a higher fraction of near-native decoys than shotgun sampling. To analyze whether these improvements also have a positive impact on the all-atom refinement stage of the docking protocol, we refined the shotgun, ZDOCK and ReplicaDock ensembles for all targets in the benchmark. For ReplicaDock and shotgun sampling we have made sure that ReplicaDock use always equal or slightly less overall computer time compared to the shotgun based approach. In any case the computational expense for refinement of any conformation, whether generated by ZDOCK, ReplicaDock or shotgun sampling is approximately the same.</p>
+<p>Next we want to test the respective sampling strategies for their ability to detect the native energy basin of the all-atom energy function after refinement. To show the position and form of the native energy funnel, we also generated RelaxedNative ensembles (<xref ref-type="sec" rid="s2">Methods</xref>) by starting multiple trajectories of refinement from unbound monomers superimposed onto the bound complex.</p>
+<p>We first introduce the typical differences between refined shotgun and ReplicaDock ensembles at the example of target 1ppf and 1mlc. As shown in <xref ref-type="fig" rid="pone-0072096-g004">Figure 4A</xref>, the refined shotgun ensemble of target 1ppf (blue) is higher in energy than the RelaxedNative ensemble (red). Only 3–4 isolated conformations reach significantly lower energies. The ReplicaDock ensemble, on the contrary, shows three distinct energy funnels that are well sampled (<xref ref-type="fig" rid="pone-0072096-g004">Figure 4B</xref>). One of the funnels coincides in form and position with the funnel formed by the RelaxedNative structures, demonstrating that the native energy basin has been found and is well sampled. But unfortunately it is neither the lowest nor the most pronounced energy funnel, rendering discrimination of native from non-native decoys challenging. Apparently, the Rosetta all-atom energy function features at least three well-resolved energy funnels for this target complex, which is confirmed by finding corresponding clusters that are well populated (data not shown). All three of these funnels remain poorly sampled with shotgun sampling. For target 1mlc the RelaxedNative conformations have higher energies than the shotgun or ReplicaDock ensembles (<xref ref-type="fig" rid="pone-0072096-g004">Figure 4C+D</xref>). This points to deficiencies of the energy function. However, also for 1mlc shotgun sampling produces only sporadic sampling of low energies, whereas ReplicaDock detects distinct funnels in the energy landscape.</p>
+<fig id="pone-0072096-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g004</object-id><label>Figure 4</label><caption>
+<title>Interface RMSD vs. Interface Energy after refinement on target 1ppf and 1mlc.</title>
+<p>A) and C) refinement of shotgun sampling generated ensembles, B) and D) refinement of ReplicaDock generated ensembles. The red dots represent the RelaxedNative ensembles (Results).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g004" position="float" xlink:type="simple"/></fig>
+<p>The main observations for ReplicaDock for targets 1ppf and 1mlc are a) that much lower energies are sampled, b) that distinct energy funnels are sampled densely, and c) that for 1ppf the native energy funnel is sampled densely. Next, we ask whether similar differences in behavior between shotgun and ReplicaDock are observable for all 30 targets. Indeed, equivalent scatter plots of all targets (<xref ref-type="fig" rid="pone-0072096-g005">Figure 5</xref>) show similar differences between shotgun and ReplicaDock as already observed for targets 1ppf and 1mlc. To quantify, we computed histograms of the lowest energies sampled per target by the respective approaches (shotgun, ZDOCK, ReplicaDock and RelaxedNative). Whether we focus on the lowest 0.1%, 1% or 5% of decoys, energies of shotgun ensembles are higher for all targets, and even the RelaxedNative ensembles often do not reach energies as low as ReplicaDock (<xref ref-type="fig" rid="pone-0072096-g006">Figure 6</xref>). Energies of refined ZDOCK conformations are in-between those of ReplicaDock and shotgun. These results demonstrate that the conformations in the centroid ReplicaDock ensemble are well poised to reach low interface energies in the subsequent all-atom refinement.</p>
+<fig id="pone-0072096-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g005</object-id><label>Figure 5</label><caption>
+<title>Interface RMSD vs. Interface Energy after refinement for all the 30 unbound docking targets.</title>
+<p>The red dots represent the RelaxedNative ensembles(Results). The interface RMSD is shown on the <italic>x</italic>-axis, the interface energy on the <italic>y</italic>-axis. The same energy range is used for displaying both, shotgun sampling (blue) and ReplicaDock (black), results of each target, respectively. The vertical gray lines correspond to I_rms of 5.0 Å, and the two horizontal gray lines correspond to interface energy −4 and −8 Rosetta Energy Units.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g005" position="float" xlink:type="simple"/></fig><fig id="pone-0072096-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g006</object-id><label>Figure 6</label><caption>
+<title>Interface energy distribution obtained with different simulation protocols.</title>
+<p>The energies for each target and method have been normallized to the dynamic range of interface energies observed for the respective target across all methods. The interface energies are normalized by the absolute value of mean energy of the 10 lowest observed energies for this target (highest energy is always 0). The <italic>x</italic>-percentile energy is the scaled energy value that separates off <italic>x</italic>% of the lowest energy decoys for a given simulation result. Shown are the distributions of <italic>x</italic>-percentile energies across all 30 targets for a) the 5%-tile, b) the 1%-tile and c) the 0.1%-tile, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g006" position="float" xlink:type="simple"/></fig>
+<p>For target 1ppf and 1mlc, ReplicaDock detected funnels in the energy landscape that were not revealed by shotgun ensembles. The same impression is reached from a comparison of the sampling methods on all targets (<xref ref-type="fig" rid="pone-0072096-g005">Figure 5</xref>). Refined ZDOCK ensembles are more comparable with refined ReplicaDock ensembles than shotgun ensembles, but also show slightly less distinct energy funnels overall (Figure S10 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>).</p>
+<p>We would like to quantify the performance of the two sampling strategies in detecting funnels in the energy landscape. However, <italic>a priori</italic> it is impossible to tell how many and which funnels should be detected by an optimal sampling strategy. The only funnel whose existence is known <italic>a priori</italic> is the funnel formed by the RelaxedNative ensemble (red). We thus restrict ourselves to ask whether overlap with the RelaxedNative ensemble is achieved. Model selection is often based on clustering, and it has been shown that cluster size is an important criterion for ranking that it is often found to be more reliable than energies <xref ref-type="bibr" rid="pone.0072096-Lorenzen2">[44]</xref>. Thus a relatively high population is crucial for the confident selection of a binding mode. Accordingly, we discriminate four cases (<xref ref-type="sec" rid="s2">Methods</xref>): a) <italic>dense</italic>, the native funnel is densely sampled (1ppf; ReplicaDock) b) <italic>sporadic</italic>, the native funnel is sampled sporadically (1ppe; shotgun or 1a2y; ReplicaDock) c) <italic>magic points</italic>, individual decoy structures coincide with the native funnel (1fqj; shotgun) and d) <italic>none</italic>, no decoy structures fall within the native funnel (2hle; shotgun).</p>
+<p>The individual classifications for shotgun, ZDOCK and ReplicaDock are shown in <xref ref-type="table" rid="pone-0072096-t001">Table 1</xref>. In summary, we found 2 <italic>densely</italic> sampled native funnels for shotgun but 22 and 19 for ZDOCK and ReplicaDock, respectively. <italic>No funnel</italic> is found for 8 targets in shotgun ensembles, and for 2 targets in ZDOCK or ReplicaDock ensembles. For 13 targets, ReplicaDock improves the category by at least two steps, and for 11 targets by one step. ReplicaDock and ZDOCK dramatically improves the ability to detect existing funnels in the energy landscape compared to the shotgun approach.</p>
+<table-wrap id="pone-0072096-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.t001</object-id><label>Table 1</label><caption>
+<title>Qualitative classification in ability to sample native energy basin.</title>
+</caption><alternatives><graphic id="pone-0072096-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">target</td>
+<td align="left" rowspan="1" colspan="1">shotgun</td>
+<td align="left" rowspan="1" colspan="1">ZDOCK</td>
+<td align="left" rowspan="1" colspan="1">ReplicaDock</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1a2k</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1a2y</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1acb</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1bvn</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1cse</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1e96</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1f7z</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1fm9</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1fqj</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1jps</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1mlc</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1nby</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1oph</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1ppe</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1ppf</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1r0r</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1t6b</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1tmq</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1tx4</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1v7p</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1wq1</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1z5y</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2a42</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2a5t</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2b42</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2bnq</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2hle</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2mta</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2oob</td>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">magic</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2pav</td>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">dense</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">dense</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">sporadic</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">magic</td>
+<td align="left" rowspan="1" colspan="1">13</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">none</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>At the end is the summary of each category achieved by each method.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3g">
+<title>4.7 Performance in structure prediction/ranking</title>
+<p>In previous sections we established that ZDOCK and ReplicaDock dramatically improve sampling in the initial docking stage compared to shotgun sampling, and refined ensembles of ReplicaDock reveal many more distinct funnel like features in the high-resolution energy landscape. However, we also found that the improved probing of the high-resolution energy landscape reveals many non-native energy funnels with lower energies than the native energy. Thus, it is not clear whether the improved sampling also leads to improved structure prediction in RosettaDock for unbound docking with relatively rigid targets as they were selected for our benchmark (<xref ref-type="sec" rid="s2">Methods</xref>).</p>
+<p>To address this question, we clustered refined ensembles and ranked clusters by size. From the ten largest clusters we selected the lowest interface energy model and evaluated using CAPRI criteria. As customary in CAPRI assessment we report metrics for the best of the ten models (<xref ref-type="table" rid="pone-0072096-t002">Table 2</xref>). As a summary, ZDOCK and ReplicaDock performed both better than shotgun in structure prediction, but ZDOCK displayed the overall best performance. In CAPRI, 0, 1, 2 or 3 stars are awarded for incorrect, acceptable, medium and high quality models <xref ref-type="bibr" rid="pone.0072096-Mndez1">[36]</xref>. Here, ZDOCK, ReplicaDock and shotgun generate acceptable or better models for 14, 8 and 5 targets, respectively. Indeed, the consistent appearance of non-native energy funnels in ReplicaDock ensembles obviously impedes concise selection of the native funnel despite its dense sampling.</p>
+<table-wrap id="pone-0072096-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.t002</object-id><label>Table 2</label><caption>
+<title>Summary of structure prediction accuracy in unbound docking.</title>
+</caption><alternatives><graphic id="pone-0072096-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="5" align="left" rowspan="1">shotgun refined</td>
+<td colspan="5" align="left" rowspan="1">ZDOCK refined</td>
+<td colspan="5" align="left" rowspan="1">ReplicaDock refined</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Target</td>
+<td align="left" rowspan="1" colspan="1">CQ<xref ref-type="table-fn" rid="nt106">1</xref></td>
+<td align="left" rowspan="1" colspan="1">L_rms</td>
+<td align="left" rowspan="1" colspan="1">I_rms</td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nat</sub></italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nonnat</sub></italic></td>
+<td align="left" rowspan="1" colspan="1">CQ<xref ref-type="table-fn" rid="nt106">1</xref></td>
+<td align="left" rowspan="1" colspan="1">L_rms</td>
+<td align="left" rowspan="1" colspan="1">I_rms</td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nat</sub></italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nonnat</sub></italic></td>
+<td align="left" rowspan="1" colspan="1">CQ<xref ref-type="table-fn" rid="nt106">1</xref></td>
+<td align="left" rowspan="1" colspan="1">L_rms</td>
+<td align="left" rowspan="1" colspan="1">I_rms</td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nat</sub></italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>f<sub>nonnat</sub></italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1a2k</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">43.76</td>
+<td align="left" rowspan="1" colspan="1">13.51</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.000</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">38.93</td>
+<td align="left" rowspan="1" colspan="1">15.42</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.062</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">30.01</td>
+<td align="left" rowspan="1" colspan="1">12.32</td>
+<td align="left" rowspan="1" colspan="1">0.146</td>
+<td align="left" rowspan="1" colspan="1">1.729</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1a2y</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">21.73</td>
+<td align="left" rowspan="1" colspan="1">12.39</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.295</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">22.91</td>
+<td align="left" rowspan="1" colspan="1">6.98</td>
+<td align="left" rowspan="1" colspan="1">0.068</td>
+<td align="left" rowspan="1" colspan="1">1.455</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">24.48</td>
+<td align="left" rowspan="1" colspan="1">7.64</td>
+<td align="left" rowspan="1" colspan="1">0.023</td>
+<td align="left" rowspan="1" colspan="1">1.273</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1acb</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.51</td>
+<td align="left" rowspan="1" colspan="1">7.62</td>
+<td align="left" rowspan="1" colspan="1">0.014</td>
+<td align="left" rowspan="1" colspan="1">0.667</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">9.81</td>
+<td align="left" rowspan="1" colspan="1">3.89</td>
+<td align="left" rowspan="1" colspan="1">0.145</td>
+<td align="left" rowspan="1" colspan="1">0.899</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">4.87</td>
+<td align="left" rowspan="1" colspan="1">2.70</td>
+<td align="left" rowspan="1" colspan="1">0.333</td>
+<td align="left" rowspan="1" colspan="1">0.580</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1bvn</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.78</td>
+<td align="left" rowspan="1" colspan="1">7.68</td>
+<td align="left" rowspan="1" colspan="1">0.068</td>
+<td align="left" rowspan="1" colspan="1">0.753</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">14.73</td>
+<td align="left" rowspan="1" colspan="1">6.10</td>
+<td align="left" rowspan="1" colspan="1">0.110</td>
+<td align="left" rowspan="1" colspan="1">1.014</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">4.72</td>
+<td align="left" rowspan="1" colspan="1">2.48</td>
+<td align="left" rowspan="1" colspan="1">0.274</td>
+<td align="left" rowspan="1" colspan="1">0.781</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1cse</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.63</td>
+<td align="left" rowspan="1" colspan="1">7.98</td>
+<td align="left" rowspan="1" colspan="1">0.013</td>
+<td align="left" rowspan="1" colspan="1">1.228</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">18.93</td>
+<td align="left" rowspan="1" colspan="1">7.81</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.823</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">12.44</td>
+<td align="left" rowspan="1" colspan="1">3.90</td>
+<td align="left" rowspan="1" colspan="1">0.241</td>
+<td align="left" rowspan="1" colspan="1">0.544</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1e96</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">39.15</td>
+<td align="left" rowspan="1" colspan="1">8.17</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.366</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.80</td>
+<td align="left" rowspan="1" colspan="1">6.26</td>
+<td align="left" rowspan="1" colspan="1">0.122</td>
+<td align="left" rowspan="1" colspan="1">1.146</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">27.70</td>
+<td align="left" rowspan="1" colspan="1">7.01</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.951</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1f7z</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.72</td>
+<td align="left" rowspan="1" colspan="1">3.81</td>
+<td align="left" rowspan="1" colspan="1">0.098</td>
+<td align="left" rowspan="1" colspan="1">0.705</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">14.40</td>
+<td align="left" rowspan="1" colspan="1">3.73</td>
+<td align="left" rowspan="1" colspan="1">0.066</td>
+<td align="left" rowspan="1" colspan="1">1.066</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.70</td>
+<td align="left" rowspan="1" colspan="1">4.16</td>
+<td align="left" rowspan="1" colspan="1">0.197</td>
+<td align="left" rowspan="1" colspan="1">0.836</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1fm9</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">49.56</td>
+<td align="left" rowspan="1" colspan="1">17.72</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.606</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">4.03</td>
+<td align="left" rowspan="1" colspan="1">2.60</td>
+<td align="left" rowspan="1" colspan="1">0.364</td>
+<td align="left" rowspan="1" colspan="1">0.455</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">58.34</td>
+<td align="left" rowspan="1" colspan="1">19.29</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.242</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1fqj</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">40.84</td>
+<td align="left" rowspan="1" colspan="1">12.25</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.283</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">43.10</td>
+<td align="left" rowspan="1" colspan="1">13.27</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.150</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">27.66</td>
+<td align="left" rowspan="1" colspan="1">11.89</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">2.250</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1jps</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">28.48</td>
+<td align="left" rowspan="1" colspan="1">7.35</td>
+<td align="left" rowspan="1" colspan="1">0.014</td>
+<td align="left" rowspan="1" colspan="1">0.803</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">13.23</td>
+<td align="left" rowspan="1" colspan="1">3.17</td>
+<td align="left" rowspan="1" colspan="1">0.254</td>
+<td align="left" rowspan="1" colspan="1">0.620</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">25.41</td>
+<td align="left" rowspan="1" colspan="1">10.73</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.070</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1mlc</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">56.02</td>
+<td align="left" rowspan="1" colspan="1">15.87</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.036</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">26.80</td>
+<td align="left" rowspan="1" colspan="1">6.88</td>
+<td align="left" rowspan="1" colspan="1">0.054</td>
+<td align="left" rowspan="1" colspan="1">0.964</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">56.51</td>
+<td align="left" rowspan="1" colspan="1">12.38</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.250</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1nby</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">45.97</td>
+<td align="left" rowspan="1" colspan="1">13.09</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.000</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">19.89</td>
+<td align="left" rowspan="1" colspan="1">10.58</td>
+<td align="left" rowspan="1" colspan="1">0.041</td>
+<td align="left" rowspan="1" colspan="1">0.743</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">52.93</td>
+<td align="left" rowspan="1" colspan="1">14.69</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.135</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1oph</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">50.10</td>
+<td align="left" rowspan="1" colspan="1">17.46</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.806</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">5.07</td>
+<td align="left" rowspan="1" colspan="1">2.56</td>
+<td align="left" rowspan="1" colspan="1">0.581</td>
+<td align="left" rowspan="1" colspan="1">0.306</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">19.40</td>
+<td align="left" rowspan="1" colspan="1">4.60</td>
+<td align="left" rowspan="1" colspan="1">0.145</td>
+<td align="left" rowspan="1" colspan="1">0.935</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1ppe</td>
+<td align="left" rowspan="1" colspan="1">***</td>
+<td align="left" rowspan="1" colspan="1">2.65</td>
+<td align="left" rowspan="1" colspan="1">0.95</td>
+<td align="left" rowspan="1" colspan="1">0.746</td>
+<td align="left" rowspan="1" colspan="1">0.085</td>
+<td align="left" rowspan="1" colspan="1">***</td>
+<td align="left" rowspan="1" colspan="1">1.76</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+<td align="left" rowspan="1" colspan="1">0.761</td>
+<td align="left" rowspan="1" colspan="1">0.197</td>
+<td align="left" rowspan="1" colspan="1">***</td>
+<td align="left" rowspan="1" colspan="1">2.11</td>
+<td align="left" rowspan="1" colspan="1">0.88</td>
+<td align="left" rowspan="1" colspan="1">0.775</td>
+<td align="left" rowspan="1" colspan="1">0.113</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1ppf</td>
+<td align="left" rowspan="1" colspan="1">***</td>
+<td align="left" rowspan="1" colspan="1">2.69</td>
+<td align="left" rowspan="1" colspan="1">0.94</td>
+<td align="left" rowspan="1" colspan="1">0.824</td>
+<td align="left" rowspan="1" colspan="1">0.196</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">3.57</td>
+<td align="left" rowspan="1" colspan="1">1.12</td>
+<td align="left" rowspan="1" colspan="1">0.824</td>
+<td align="left" rowspan="1" colspan="1">0.275</td>
+<td align="left" rowspan="1" colspan="1">***</td>
+<td align="left" rowspan="1" colspan="1">2.89</td>
+<td align="left" rowspan="1" colspan="1">0.99</td>
+<td align="left" rowspan="1" colspan="1">0.745</td>
+<td align="left" rowspan="1" colspan="1">0.255</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1r0r</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">15.11</td>
+<td align="left" rowspan="1" colspan="1">7.13</td>
+<td align="left" rowspan="1" colspan="1">0.106</td>
+<td align="left" rowspan="1" colspan="1">0.621</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">10.35</td>
+<td align="left" rowspan="1" colspan="1">2.76</td>
+<td align="left" rowspan="1" colspan="1">0.394</td>
+<td align="left" rowspan="1" colspan="1">0.424</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">9.17</td>
+<td align="left" rowspan="1" colspan="1">2.47</td>
+<td align="left" rowspan="1" colspan="1">0.455</td>
+<td align="left" rowspan="1" colspan="1">0.394</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1t6b</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">69.14</td>
+<td align="left" rowspan="1" colspan="1">24.11</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.338</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.94</td>
+<td align="left" rowspan="1" colspan="1">10.19</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.815</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">69.09</td>
+<td align="left" rowspan="1" colspan="1">19.68</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.415</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1tmq</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">19.81</td>
+<td align="left" rowspan="1" colspan="1">11.88</td>
+<td align="left" rowspan="1" colspan="1">0.026</td>
+<td align="left" rowspan="1" colspan="1">0.776</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">4.94</td>
+<td align="left" rowspan="1" colspan="1">1.43</td>
+<td align="left" rowspan="1" colspan="1">0.579</td>
+<td align="left" rowspan="1" colspan="1">0.447</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">4.45</td>
+<td align="left" rowspan="1" colspan="1">1.36</td>
+<td align="left" rowspan="1" colspan="1">0.618</td>
+<td align="left" rowspan="1" colspan="1">0.513</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1tx4</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">27.23</td>
+<td align="left" rowspan="1" colspan="1">9.99</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.015</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">28.38</td>
+<td align="left" rowspan="1" colspan="1">12.40</td>
+<td align="left" rowspan="1" colspan="1">0.031</td>
+<td align="left" rowspan="1" colspan="1">0.954</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">22.10</td>
+<td align="left" rowspan="1" colspan="1">11.11</td>
+<td align="left" rowspan="1" colspan="1">0.062</td>
+<td align="left" rowspan="1" colspan="1">1.200</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1v7p</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">26.58</td>
+<td align="left" rowspan="1" colspan="1">14.58</td>
+<td align="left" rowspan="1" colspan="1">0.016</td>
+<td align="left" rowspan="1" colspan="1">1.081</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">23.99</td>
+<td align="left" rowspan="1" colspan="1">8.62</td>
+<td align="left" rowspan="1" colspan="1">0.145</td>
+<td align="left" rowspan="1" colspan="1">1.081</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">23.53</td>
+<td align="left" rowspan="1" colspan="1">11.85</td>
+<td align="left" rowspan="1" colspan="1">0.048</td>
+<td align="left" rowspan="1" colspan="1">1.290</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1wq1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">14.01</td>
+<td align="left" rowspan="1" colspan="1">7.10</td>
+<td align="left" rowspan="1" colspan="1">0.121</td>
+<td align="left" rowspan="1" colspan="1">0.527</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">7.27</td>
+<td align="left" rowspan="1" colspan="1">3.80</td>
+<td align="left" rowspan="1" colspan="1">0.220</td>
+<td align="left" rowspan="1" colspan="1">0.396</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">11.50</td>
+<td align="left" rowspan="1" colspan="1">6.87</td>
+<td align="left" rowspan="1" colspan="1">0.011</td>
+<td align="left" rowspan="1" colspan="1">1.011</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1z5y</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">4.12</td>
+<td align="left" rowspan="1" colspan="1">1.92</td>
+<td align="left" rowspan="1" colspan="1">0.273</td>
+<td align="left" rowspan="1" colspan="1">0.424</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">6.18</td>
+<td align="left" rowspan="1" colspan="1">3.22</td>
+<td align="left" rowspan="1" colspan="1">0.333</td>
+<td align="left" rowspan="1" colspan="1">0.500</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">10.22</td>
+<td align="left" rowspan="1" colspan="1">5.68</td>
+<td align="left" rowspan="1" colspan="1">0.076</td>
+<td align="left" rowspan="1" colspan="1">0.697</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2a42</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">42.29</td>
+<td align="left" rowspan="1" colspan="1">12.10</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.250</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">82.18</td>
+<td align="left" rowspan="1" colspan="1">23.67</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.500</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">51.95</td>
+<td align="left" rowspan="1" colspan="1">12.84</td>
+<td align="left" rowspan="1" colspan="1">0.021</td>
+<td align="left" rowspan="1" colspan="1">1.667</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2a5t</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.50</td>
+<td align="left" rowspan="1" colspan="1">4.82</td>
+<td align="left" rowspan="1" colspan="1">0.186</td>
+<td align="left" rowspan="1" colspan="1">0.797</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">23.51</td>
+<td align="left" rowspan="1" colspan="1">14.07</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.932</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">25.50</td>
+<td align="left" rowspan="1" colspan="1">8.97</td>
+<td align="left" rowspan="1" colspan="1">0.068</td>
+<td align="left" rowspan="1" colspan="1">1.102</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2b42</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">21.95</td>
+<td align="left" rowspan="1" colspan="1">11.42</td>
+<td align="left" rowspan="1" colspan="1">0.079</td>
+<td align="left" rowspan="1" colspan="1">0.494</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">9.28</td>
+<td align="left" rowspan="1" colspan="1">4.15</td>
+<td align="left" rowspan="1" colspan="1">0.157</td>
+<td align="left" rowspan="1" colspan="1">0.742</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">17.64</td>
+<td align="left" rowspan="1" colspan="1">7.31</td>
+<td align="left" rowspan="1" colspan="1">0.079</td>
+<td align="left" rowspan="1" colspan="1">0.730</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2bnq</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">74.85</td>
+<td align="left" rowspan="1" colspan="1">29.64</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.182</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">57.16</td>
+<td align="left" rowspan="1" colspan="1">16.52</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.977</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">70.08</td>
+<td align="left" rowspan="1" colspan="1">14.78</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">2.341</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2hle</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">24.94</td>
+<td align="left" rowspan="1" colspan="1">12.76</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.774</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">6.63</td>
+<td align="left" rowspan="1" colspan="1">2.91</td>
+<td align="left" rowspan="1" colspan="1">0.464</td>
+<td align="left" rowspan="1" colspan="1">0.405</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">36.60</td>
+<td align="left" rowspan="1" colspan="1">10.28</td>
+<td align="left" rowspan="1" colspan="1">0.083</td>
+<td align="left" rowspan="1" colspan="1">0.619</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2mta</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">7.25</td>
+<td align="left" rowspan="1" colspan="1">3.34</td>
+<td align="left" rowspan="1" colspan="1">0.457</td>
+<td align="left" rowspan="1" colspan="1">0.630</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">10.11</td>
+<td align="left" rowspan="1" colspan="1">2.52</td>
+<td align="left" rowspan="1" colspan="1">0.543</td>
+<td align="left" rowspan="1" colspan="1">0.565</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">47.15</td>
+<td align="left" rowspan="1" colspan="1">17.22</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">1.543</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2oob</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">8.38</td>
+<td align="left" rowspan="1" colspan="1">3.38</td>
+<td align="left" rowspan="1" colspan="1">0.333</td>
+<td align="left" rowspan="1" colspan="1">0.704</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">11.03</td>
+<td align="left" rowspan="1" colspan="1">5.51</td>
+<td align="left" rowspan="1" colspan="1">0.111</td>
+<td align="left" rowspan="1" colspan="1">0.852</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">11.45</td>
+<td align="left" rowspan="1" colspan="1">6.96</td>
+<td align="left" rowspan="1" colspan="1">0.000</td>
+<td align="left" rowspan="1" colspan="1">0.963</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2pav</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">33.95</td>
+<td align="left" rowspan="1" colspan="1">13.71</td>
+<td align="left" rowspan="1" colspan="1">0.035</td>
+<td align="left" rowspan="1" colspan="1">1.158</td>
+<td align="left" rowspan="1" colspan="1">**</td>
+<td align="left" rowspan="1" colspan="1">3.35</td>
+<td align="left" rowspan="1" colspan="1">1.45</td>
+<td align="left" rowspan="1" colspan="1">0.509</td>
+<td align="left" rowspan="1" colspan="1">0.333</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">7.65</td>
+<td align="left" rowspan="1" colspan="1">3.00</td>
+<td align="left" rowspan="1" colspan="1">0.421</td>
+<td align="left" rowspan="1" colspan="1">0.877</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">summary</td>
+<td colspan="5" align="left" rowspan="1">3*/2***</td>
+<td colspan="5" align="left" rowspan="1">7*/6**/1***</td>
+<td colspan="5" align="left" rowspan="1">4*/2**/2***</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Clusters are ranked by size and represented by the lowest interface energy decoy. In column ‘CQ’ (CAPRI Quality),</p></fn><fn id="nt103"><label/><p>‘0’ indicates that none of the top 10 models was of accetable quality,</p></fn><fn id="nt104"><label/><p>‘*’, ‘**’ and ‘***’ indicates that at least one of the top 10 models is of acceptable, medium or high quality, respectively (Section 4.7).</p></fn><fn id="nt105"><label/><p>Columns ‘L_rms’, ‘I_rms’, ‘<italic>f<sub>nat</sub></italic>’ and ‘<italic>f<sub>non-nat</sub></italic>’ record the respective information of the best model within these top 10 models.</p></fn><fn id="nt106"><label>1</label><p>CQ refers to CAPRI quality.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3h">
+<title>4.8 Targets with insufficient near-native sampling</title>
+<p>As shown in Section 4.4, for some targets none or only a few near-native decoys are sampled by both approaches. We found that in these cases the centroid energy function fails to stabilize the native conformation and/or over-stabilizes non-native conformations (<xref ref-type="fig" rid="pone-0072096-g007">Figure 7</xref>). In this section, we explore possible reasons for these failures of the low-resolution energy function.</p>
+<fig id="pone-0072096-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g007</object-id><label>Figure 7</label><caption>
+<title>The centroid energy function prefers an alternative binding modes for the bound docking target 1emv.</title>
+<p>A–B) shotgun and ReplicaDock sample the low-resolution docking stage with ‘capped’ centroid energy function. C–D) shotgun and ReplicaDock sample the low-resolution docking stage with centroid energy function with no cap. The structure indicated by the red circle will be shown in <xref ref-type="fig" rid="pone-0072096-g008">Figure 8</xref>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g007" position="float" xlink:type="simple"/></fig>
+<p>The low-resolution energies are dominated by the <italic>interchain_contact</italic> term, which awards large contact surfaces (Figure S11 in <xref ref-type="supplementary-material" rid="pone.0072096.s001">Supporting Information S1</xref>). Indeed, all over-stabilized alternative binding modes that we found have significantly larger contact surfaces compared to the native complex (<xref ref-type="fig" rid="pone-0072096-g008">Figure 8</xref>). For example, 1emv features a spurious binding mode with significantly larger buried surface area of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e057" xlink:type="simple"/></inline-formula> than its native state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0072096.e058" xlink:type="simple"/></inline-formula> (<xref ref-type="fig" rid="pone-0072096-g008">Figure 8</xref>). Buried surface was calculated from the low-resolution models using the POPSCOMP sever <xref ref-type="bibr" rid="pone.0072096-Fraternali1">[45]</xref>, <xref ref-type="bibr" rid="pone.0072096-Kleinjung1">[46]</xref>. Performing additional docking runs starting from the bound monomers we ruled out the possibility, that lack of backbone flexibility prohibits full stabilization of the native conformation.</p>
+<fig id="pone-0072096-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0072096.g008</object-id><label>Figure 8</label><caption>
+<title>Electrostatic surface potential of native (A–D) and <italic>interchain_cen</italic> preferred conformation (E–H) in all-atom representation.</title>
+<p>A) native complex with receptor in green and ligand in red B) electrostatics map of the native complex C) electrostatics map of native ligand interface D) electrostatics map of native receptor interface E) <italic>interchain_cen</italic> preferred conformation after refinement F) electrostatics map G) electrostatics map of receptor interface H) electrostatics map of ligand interface. The yellow lines in C, D, G and H indicate the respective interface regions, and number pairs (e.g. 1 in C and 1′ in D) indicate corresponding contact regions. Relations of viewing angle are given between panels where required.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0072096.g008" position="float" xlink:type="simple"/></fig>
+<p>A qualitative comparison of the electrostatic potentials at the native and alternative binding interfaces reveals a possible energetic counter-weight to the dramatic difference in buried surface area. Whereas the native state binding mode consists of surface patches of complementary charges, the alternative binding mode would superpose surface patches of equal charge. A more quantitative analysis is necessary, but this observation suggests that the electrostatic interactions are not captured sufficiently well by the empirical <italic>interchain_pair</italic> and <italic>interchain_env</italic> potential terms.</p>
+</sec></sec><sec id="s4">
+<title>Conclusions</title>
+<p>In this study, we introduced ReplicaDock, which uses temperature replica exchange to switch between bound and unbound thermodynamic states, and benchmarked its performance for sampling the low-resolution stage of protein-protein docking in RosettaDock.</p>
+<p>For most targets tested in our benchmark, ReplicaDock reached significantly lower energies and generates drastically higher fraction of near-native decoys than shotgun sampling. After refinement, ReplicaDock-generated decoys reach lower interface energies and reveal funnel-like features of the energy landscape that are hardly visible when shotgun sampling is applied. The new funnel-like features seem to reflect distinct binding modes. Most importantly, the native energy funnels are often exactly matched in shape and position by ReplicaDock.</p>
+<p>Enumerative search of rigid body degrees of freedom as carried out by ZDOCK 3.0 yields similar results as ReplicaDock. It also yields a higher fraction of near-native decoys and lower energies after refinement with Rosetta when compared to shotgun sampling. But ZDOCK does not reveal quite as many distinct funnels in the high-resolution Rosetta energy landscape as ReplicaDock. This is an advantage when the goal is to predict complex structures with the correct energy function. However, to improve methods further, it is important to have sampling methods that can identify <italic>all</italic> low-energy regions. We expect that this and other improvements in sampling of the Rosetta energy landscape <xref ref-type="bibr" rid="pone.0072096-Tyka1">[47]</xref>, <xref ref-type="bibr" rid="pone.0072096-Tyka2">[48]</xref> will help to iteratively improve the energy function until non-native conformations will no longer obtain spuriously low energies.</p>
+<p>As expected, Importance Sampling, here in the form of replica exchange Monte Carlo, is more susceptible to spurious low energy regions than the shotgun approach. However, our results also show that this disadvantage is far outweighed by the much improved quality of final ensembles. Moreover, the improved sampling of the new method will allow to thoroughly probe the docking energy landscape, and thus to improve energy functions of both low- and high-resolution stage.</p>
+<p>Computationally, the original shotgun approach has the advantage that it runs in an embarrassingly parallel fashion and thus can utilize more computer power in the same period of time than ReplicaDock. Indeed, the ReplicaDock trajectories generated here, required 5 h–72 h of computing on current hardware (using 12 processors), whereas the shotgun sampling can in principle be carried out in a few hours, if thousands of processors are used in parallel. ZDOCK uses an FFT based search of the translational degrees of freedom, rendering it computationally efficient. Only about 1–7 core-hours are required in total, which is &lt;1% of the computational expense for shotgun or ReplicaDock sampling. Additionally, ZDOCK's search could in principle be re-implemented to support an embarrassingly parallel scheme, too. The FFT based search, however, requires grid-based energy functions, and thus is more challenging or even limiting in the possibilities to model interaction energies and to incorporate experimental data.</p>
+<p>Despite of the drastic improvement of ReplicaDock to sample low energy structures and to recover near-native basins, there are still a few cases in which ReplicaDock samples very few or even no near-native conformations in the low-resolution stage and thus fails to recover near-native basins after refinement. In these cases, sampling is led astray by alternative binding modes with dramatically increased buried surface area. As it might be difficult or even impossible to ever balance out different contributions to the binding energies, especially at low-resolution and without better treatment of electrostatics (<xref ref-type="fig" rid="pone-0072096-g008">Figure 8</xref>), it seems advisable to develop energy functions that are globally flat but locally discriminative, in the sense that well contacting conformations are stabilized regardless their overall buried surface area, whereas miss-aligned conformations with bad shape complementarity are dis-favored. Unfortunately, this is not achieved by simply capping the energy function at a certain cutoff, as this quick fix removes local differences, too. Experimental data, or a higher-resolution energy function, can then be used to discriminate native from non-native conformations.</p>
+<p>In this study we benchmarked the performance of replica exchange sampling in RosettaDock. RosettaDock performs a rigid-body minimization followed by all-atom refinement like many other docking programs. The developed method and the conclusions derived from the presented benchmark should thus transfer well to other programs.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0072096.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0072096.s001" position="float" xlink:type="simple"><label>Supporting Information S1</label><caption>
+<p><bold>This Supporting Information file (PDF) contains supporting Figures S1–S11, Tables S1–S3 and Methods S1–S7.</bold> Figure S1, The distribution of rotation angles. Figure S2, Example of refined decoys overlap with the RelaxedNative ensemble. Figure S3, Automated setup work flow. Figure S4, Detailed analysis of shotgun and ReplicaDock sampling on a bound target 1sq2. Figure S5, Initial survey of temperature selection on bound target 1sq2. Figure S6, Energy distribution of the three temperatures in ReplicaDock for all the benchmark targets. Figure S7, Frequent exchange between bound and unbound state. Figure S8, Different start conformation converge to the same populations. Figure S9, Fraction of hits in low-resolution decoys with different cutoffs. Figure S10, Interface RMSD vs. Interface Energy after refinement of ZDOCK and ReplicaDock ensembles. Figure S11, Interchain_contact dominates docking centroid energy. Table S1, Targets in the benchmark set. Table S2, summary of structure prediction accuracy in unbound docking. Table S3, Average exchange rate between temperature levels across the tested benchmark. Method S1, protocol_capture/rosetta_dock/centroid. Method S2, protocol_capture/replica_dock/centroid. Method S3, protocol_capture/rosetta_dock/refine. Method S4, protocol_capture/replica_dock/refine. Method S5, protocol_capture/relax_native. Method S6, Flags in commandlines in Method S1–S5. Method S7, Automated Setup.</p>
+<p>(PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Colin Smith for fruitful discussions, Justin Porter for carefully reading the manuscript, Daisuke Kuroda for carefully checking and verifying our protocol capture, and the John von Neumann Institute for Computing (NIC) for granting access to the JUROPA supercomputer at Jülich Supercomputing Centre (JSC).</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0072096-Garma1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garma</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Mukherjee</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mitra</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Y</given-names></name> (<year>2012</year>) <article-title>How Many Protein-Protein Interactions Types Exist in Nature?</article-title> <source>PLoS ONE</source> <volume>7</volume>: <fpage>e38913</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Melquiond1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Melquiond</surname><given-names>ASJ</given-names></name>, <name name-style="western"><surname>Karaca</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Kastritis</surname><given-names>PL</given-names></name>, <name name-style="western"><surname>Bonvin</surname><given-names>AMJJ</given-names></name> (<year>2011</year>) <article-title>Next challenges in protein-protein docking: from proteome to interactome and beyond</article-title>. <source>WIREs Comput Mol Sci</source> <volume>2</volume>: <fpage>642</fpage>–<lpage>651</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Stein1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stein</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Mosca</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Aloy</surname><given-names>P</given-names></name> (<year>2011</year>) <article-title>Three-dimensional modeling of protein interactions and complexes is going “omics.”</article-title>. <source>Current Opinion in Structural Biology</source> <volume>21</volume>: <fpage>200</fpage>–<lpage>208</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Nooren1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nooren</surname><given-names>IMA</given-names></name>, <name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name> (<year>2003</year>) <article-title>Diversity of protein–protein interactions</article-title>. <source>EMBO J</source> <volume>22</volume>: <fpage>3486</fpage>–<lpage>3492</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Halperin1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Halperin</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Wolfson</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2002</year>) <article-title>Principles of docking: An overview of search algorithms and a guide to scoring functions</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>47</volume>: <fpage>409</fpage>–<lpage>443</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Stratmann1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stratmann</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Boelens</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Bonvin</surname><given-names>AMJJ</given-names></name> (<year>2011</year>) <article-title>Quantitative use of chemical shifts for the modeling of protein complexes</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>79</volume>: <fpage>2662</fpage>–<lpage>2670</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Cowieson1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cowieson</surname><given-names>NP</given-names></name>, <name name-style="western"><surname>Kobe</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>JL</given-names></name> (<year>2008</year>) <article-title>United we stand: combining structural methods</article-title>. <source>Current Opinion in Structural Biology</source> <volume>18</volume>: <fpage>617</fpage>–<lpage>622</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Karaca1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Karaca</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Bonvin</surname><given-names>AMJJ</given-names></name> (<year>2013</year>) <article-title>Advances in integrative modeling of biomolecular complexes</article-title>. <source>Methods</source> <volume>59</volume>: <fpage>372</fpage>–<lpage>381</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.ymeth.2012.12.004" xlink:type="simple">10.1016/j.ymeth.2012.12.004</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Koehler1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koehler</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Meiler</surname><given-names>J</given-names></name> (<year>2011</year>) <article-title>Expanding the utility of NMR restraints with paramagnetic compounds: background and practical aspects</article-title>. <source>Progress in Nuclear Magnetic Resonance Spectroscopy</source> <volume>59</volume>: <fpage>360</fpage>–<lpage>389</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Schneider1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schneider</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zacharias</surname><given-names>M</given-names></name> (<year>2011</year>) <article-title>Scoring optimisation of unbound protein-protein docking including protein binding site predictions</article-title>. <source>J Mol Recognit</source> <volume>25</volume>: <fpage>15</fpage>–<lpage>23</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Ritchie1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ritchie</surname><given-names>DW</given-names></name> (<year>2008</year>) <article-title>Recent progress and future directions in protein-protein docking</article-title>. <source>Current Protein and Peptide Science</source> <volume>9</volume>: <fpage>1</fpage>–<lpage>15</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Moreira1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moreira</surname><given-names>IS</given-names></name>, <name name-style="western"><surname>Fernandes</surname><given-names>PA</given-names></name>, <name name-style="western"><surname>Ramos</surname><given-names>MJ</given-names></name> (<year>2009</year>) <article-title>Protein-protein docking dealing with the unknown</article-title>. <source>J Comput Chem</source> <volume>31</volume>: <fpage>317</fpage>–<lpage>342</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Smith1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>GR</given-names></name>, <name name-style="western"><surname>Sternberg</surname><given-names>MJE</given-names></name> (<year>2002</year>) <article-title>Prediction of protein–protein interactions by docking methods</article-title>. <source>Current Opinion in Structural Biology</source> <volume>12</volume>: <fpage>28</fpage>–<lpage>35</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Vajda1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vajda</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kozakov</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>Convergence and combination of methods in protein–protein docking</article-title>. <source>Current Opinion in Structural Biology</source> <volume>19</volume>: <fpage>164</fpage>–<lpage>170</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Sternberg1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sternberg</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Gabb</surname><given-names>HA</given-names></name>, <name name-style="western"><surname>Jackson</surname><given-names>RM</given-names></name> (<year>1998</year>) <article-title>Predictive docking of protein-protein and protein-DNA complexes</article-title>. <source>Current Opinion in Structural Biology</source> <volume>8</volume>: <fpage>250</fpage>–<lpage>256</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Lorenzen1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lorenzen</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Y</given-names></name> (<year>2007</year>) <article-title>Monte Carlo refinement of rigid-body protein docking structures with backbone displacement and side-chain optimization</article-title>. <source>Protein Sci</source> <volume>16</volume>: <fpage>2716</fpage>–<lpage>2725</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Zacharias1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zacharias</surname><given-names>M</given-names></name> (<year>2003</year>) <article-title>Protein-protein docking with a reduced protein model accounting for side-chain flexibility</article-title>. <source>Protein Sci</source> <volume>12</volume>: <fpage>1271</fpage>–<lpage>1282</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Chen1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Weng</surname><given-names>Z</given-names></name> (<year>2003</year>) <article-title>ZDOCK: An initial-stage protein-docking algorithm</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>52</volume>: <fpage>80</fpage>–<lpage>87</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Gray1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gray</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Moughon</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Schueler-Furman</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Kuhlman</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>Protein–Protein Docking with Simultaneous Optimization of Rigid-body Displacement and Side-chain Conformations</article-title>. <source>Journal of Molecular Biology</source> <volume>331</volume>: <fpage>281</fpage>–<lpage>299</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Dominguez1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dominguez</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Boelens</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Bonvin</surname><given-names>AMJJ</given-names></name> (<year>2003</year>) <article-title>HADDOCK: A Protein–Protein Docking Approach Based on Biochemical or Biophysical Information</article-title>. <source>J Am Chem Soc</source> <volume>125</volume>: <fpage>1731</fpage>–<lpage>1737</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Fleishman1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fleishman</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Baker</surname><given-names>D</given-names></name> (<year>2012</year>) <article-title>Role of the Biomolecular Energy Gap in Protein Design, Structure, and Evolution</article-title>. <source>Cell</source> <volume>149</volume>: <fpage>262</fpage>–<lpage>273</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-FernndezRecio1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fernández Recio</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Totrov</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Abagyan</surname><given-names>R</given-names></name> (<year>2003</year>) <article-title>ICM-DISCO docking by global energy optimization with fully flexible side-chains</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>52</volume>: <fpage>113</fpage>–<lpage>117</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Mandell1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mandell</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Roberts</surname><given-names>VA</given-names></name>, <name name-style="western"><surname>Pique</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Kotlovyi</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Mitchell</surname><given-names>JC</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Protein docking using continuum electrostatics and geometric fit</article-title>. <source>Protein Engineering</source> <volume>14</volume>: <fpage>105</fpage>–<lpage>113</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Aloy1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aloy</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Querol</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Aviles</surname><given-names>FX</given-names></name>, <name name-style="western"><surname>Sternberg</surname><given-names>MJE</given-names></name> (<year>2001</year>) <article-title>Automated structure-based prediction of functional sites in proteins: applications to assessing the validity of inheriting protein function from homology in genome annotation and to protein docking</article-title>. <source>Journal of Molecular Biology</source> <volume>311</volume>: <fpage>395</fpage>–<lpage>408</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Tovchigrechko1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tovchigrechko</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Vakser</surname><given-names>IA</given-names></name> (<year>2006</year>) <article-title>GRAMM-X public web server for protein-protein docking</article-title>. <source>Nucleic Acids Research</source> <volume>34</volume>: <fpage>W310</fpage>–<lpage>W314</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkl206" xlink:type="simple">10.1093/nar/gkl206</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-SchneidmanDuhovny1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schneidman-Duhovny</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Inbar</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Wolfson</surname><given-names>HJ</given-names></name> (<year>2005</year>) <article-title>Geometry-based flexible and symmetric protein docking</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>60</volume>: <fpage>224</fpage>–<lpage>231</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Swendsen1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Swendsen</surname><given-names>RH</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>JS</given-names></name> (<year>1986</year>) <article-title>Replica Monte Carlo simulation of spin-glasses</article-title>. <source>Physical Review Letters</source> <volume>57</volume>: <fpage>2607</fpage>–<lpage>2609</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Sugita1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sugita</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Okamoto</surname><given-names>Y</given-names></name> (<year>1999</year>) <article-title>Replica-exchange molecular dynamics method for protein folding</article-title>. <source>Chemical Physics Letters</source> <volume>314</volume>: <fpage>141</fpage>–<lpage>151</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Kim1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>YC</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Clore</surname><given-names>GM</given-names></name>, <name name-style="western"><surname>Hummer</surname><given-names>G</given-names></name> (<year>2008</year>) <article-title>Replica exchange simulations of transient encounter complexes in protein–protein association</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>105</volume>: <fpage>12855</fpage>–<lpage>12860</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Lensink1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lensink</surname><given-names>MF</given-names></name>, <name name-style="western"><surname>Wodak</surname><given-names>SJ</given-names></name> (<year>2010</year>) <article-title>Docking and scoring protein interactions: CAPRI 2009</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>78</volume>: <fpage>3073</fpage>–<lpage>3084</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.22818" xlink:type="simple">10.1002/prot.22818</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Chaudhury1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chaudhury</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Berrondo</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Weitzner</surname><given-names>BD</given-names></name>, <name name-style="western"><surname>Muthu</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Bergman</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Benchmarking and Analysis of Protein Docking Performance in Rosetta v3.2</article-title>. <source>PLoS ONE</source> <volume>6</volume>: <fpage>e22477</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Metropolis1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Metropolis</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname><given-names>AW</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Teller</surname><given-names>AH</given-names></name>, <name name-style="western"><surname>Teller</surname><given-names>E</given-names></name> (<year>1953</year>) <article-title>Equation of State Calculations by Fast Computing Machines</article-title>. <source>J Chem Phys</source> <volume>21</volume>: <fpage>1087</fpage>–<lpage>1092</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Hastings1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hastings</surname><given-names>WK</given-names></name> (<year>1970</year>) <article-title>Monte Carlo sampling methods using Markov chains and their applications</article-title>. <source>Biometrika</source> <volume>57</volume>: <fpage>97</fpage>–<lpage>109</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Gao1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Douguet</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Tovchigrechko</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Vakser</surname><given-names>IA</given-names></name> (<year>2007</year>) <article-title>DOCKGROUND system of databases for protein recognition studies: Unbound structures for docking</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>69</volume>: <fpage>845</fpage>–<lpage>851</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Fleishman2"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fleishman</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Leaver-Fay</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Corn</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Strauch</surname><given-names>E-M</given-names></name>, <name name-style="western"><surname>Khare</surname><given-names>SD</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>RosettaScripts: A Scripting Language Interface to the Rosetta Macromolecular Modeling Suite</article-title>. <source>PLoS ONE</source> <volume>6</volume>: <fpage>e20161</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Mndez1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Méndez</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Leplae</surname><given-names>R</given-names></name>, <name name-style="western"><surname>De Maria</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Wodak</surname><given-names>SJ</given-names></name> (<year>2003</year>) <article-title>Assessment of blind predictions of protein–protein interactions: current status of docking methods</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>52</volume>: <fpage>51</fpage>–<lpage>67</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Patriksson1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patriksson</surname><given-names>A</given-names></name>, <name name-style="western"><surname>van der Spoel</surname><given-names>D</given-names></name> (<year>2008</year>) <article-title>A temperature predictor for parallel tempering simulations</article-title>. <source>Physical Chemistry Chemical Physics</source> <volume>10</volume>: <fpage>2073</fpage>–<lpage>2077</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Rathore1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rathore</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Chopra</surname><given-names>M</given-names></name>, <name name-style="western"><surname>de Pablo</surname><given-names>JJ</given-names></name> (<year>2005</year>) <article-title>Optimal allocation of replicas in parallel tempering simulations</article-title>. <source>J Chem Phys</source> <volume>122</volume>: <fpage>024111</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1063/1.1831273" xlink:type="simple">10.1063/1.1831273</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Sanbonmatsu1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sanbonmatsu</surname><given-names>KY</given-names></name>, <name name-style="western"><surname>Garc a</surname><given-names>AE</given-names></name> (<year>2002</year>) <article-title>Structure of Met-enkephalin in explicit aqueous solution using replica exchange molecular dynamics</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>46</volume>: <fpage>225</fpage>–<lpage>234</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Fukunishi1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fukunishi</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Watanabe</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Takada</surname><given-names>S</given-names></name> (<year>2002</year>) <article-title>On the Hamiltonian replica exchange method for efficient sampling of biomolecular systems: Application to protein structure prediction</article-title>. <source>J Chem Phys</source> <volume>116</volume>: <fpage>9058</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1063/1.1472510" xlink:type="simple">10.1063/1.1472510</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Hwang1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hwang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Vreven</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Pierce</surname><given-names>BG</given-names></name>, <name name-style="western"><surname>Hung</surname><given-names>J-H</given-names></name>, <name name-style="western"><surname>Weng</surname><given-names>Z</given-names></name> (<year>2010</year>) <article-title>Performance of ZDOCK and ZRANK in CAPRI rounds 13–19</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>78</volume>: <fpage>3104</fpage>–<lpage>3110</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.22764" xlink:type="simple">10.1002/prot.22764</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Wiehe1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wiehe</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Pierce</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tong</surname><given-names>WW</given-names></name>, <name name-style="western"><surname>Hwang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Mintseris</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>The performance of ZDOCK and ZRANK in rounds 6–11 of CAPRI</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>69</volume>: <fpage>719</fpage>–<lpage>725</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Wiehe2"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wiehe</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Pierce</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Mintseris</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Tong</surname><given-names>WW</given-names></name>, <name name-style="western"><surname>Anderson</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>ZDOCK and RDOCK performance in CAPRI rounds 3, 4, and 5</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>60</volume>: <fpage>207</fpage>–<lpage>213</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.20559" xlink:type="simple">10.1002/prot.20559</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Lorenzen2"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lorenzen</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Y</given-names></name> (<year>2007</year>) <article-title>Identification of near-native structures by clustering protein docking conformations</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>68</volume>: <fpage>187</fpage>–<lpage>194</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.21442" xlink:type="simple">10.1002/prot.21442</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Fraternali1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fraternali</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Cavallo</surname><given-names>L</given-names></name> (<year>2002</year>) <article-title>Parameter optimized surfaces (POPS): analysis of key interactions and conformational changes in the ribosome</article-title>. <source>Nucleic Acids Research</source> <volume>30</volume>: <fpage>2950</fpage>–<lpage>2960</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Kleinjung1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kleinjung</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fraternali</surname><given-names>F</given-names></name> (<year>2005</year>) <article-title>POPSCOMP: an automated interaction analysis of biomolecular complexes</article-title>. <source>Nucleic Acids Research</source> <volume>33</volume>: <fpage>342</fpage>–<lpage>346</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gki369" xlink:type="simple">10.1093/nar/gki369</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0072096-Tyka1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tyka</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Keedy</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>André</surname><given-names>I</given-names></name>, <name name-style="western"><surname>DiMaio</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Song</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Alternate States of Proteins Revealed by Detailed Energy Landscape Mapping</article-title>. <source>Journal of Molecular Biology</source> <volume>405</volume>: <fpage>607</fpage>–<lpage>618</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0072096-Tyka2"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tyka</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Jung</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Baker</surname><given-names>D</given-names></name> (<year>2012</year>) <article-title>Efficient sampling of protein conformational space using fast loop building and batch minimization on highly parallel computers</article-title>. <source>J Comput Chem</source> <volume>33</volume>: <fpage>2483</fpage>–<lpage>2491</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.23069" xlink:type="simple">10.1002/jcc.23069</ext-link></comment></mixed-citation>
+</ref>
+</ref-list></back>
+</article>

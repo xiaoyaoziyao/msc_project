@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-26309</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0077503</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>A Hierarchical Poisson Log-Normal Model for Network Inference from RNA Sequencing Data</article-title>
+<alt-title alt-title-type="running-head">A Model for Network Inference from RNA-Seq Data</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Gallopin</surname><given-names>Mélina</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rau</surname><given-names>Andrea</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Jaffrézic</surname><given-names>Florence</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Département de Génétique Animale, INRA, Jouy-en-Josas, France</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Département de Génétique Animale, AgroParis Tech, Paris, France</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Département de Mathématiques, Université Paris-Sud 11, Orsay, France</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>Lin</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>The University of Chicago, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">melina.gallopin@jouy.inra.fr</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: AR FJ. Performed the experiments: MG. Analyzed the data: MG. Contributed reagents/materials/analysis tools: MG AR FJ. Wrote the paper: MG AR FJ.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>17</day><month>10</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>10</issue>
+<elocation-id>e77503</elocation-id>
+<history>
+<date date-type="received"><day>25</day><month>6</month><year>2013</year></date>
+<date date-type="accepted"><day>3</day><month>9</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Gallopin et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Gene network inference from transcriptomic data is an important methodological challenge and a key aspect of systems biology. Although several methods have been proposed to infer networks from microarray data, there is a need for inference methods able to model RNA-seq data, which are count-based and highly variable. In this work we propose a hierarchical Poisson log-normal model with a Lasso penalty to infer gene networks from RNA-seq data; this model has the advantage of directly modelling discrete data and accounting for inter-sample variance larger than the sample mean. Using real microRNA-seq data from breast cancer tumors and simulations, we compare this method to a regularized Gaussian graphical model on log-transformed data, and a Poisson log-linear graphical model with a Lasso penalty on power-transformed data. For data simulated with large inter-sample dispersion, the proposed model performs better than the other methods in terms of sensitivity, specificity and area under the ROC curve. These results show the necessity of methods specifically designed for gene network inference from RNA-seq data.</p>
+</abstract>
+<funding-group><funding-statement>The authors have no support or funding to report.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>In recent years, high-throughput sequencing technology has become an essential tool for genomic studies. In particular, it allows the transcriptome to be directly sequenced (RNA sequencing), which provides count-based measures of gene expression. Typically, the first biological question arising from these data is to identify genes differently expressed across biological conditions. Because RNA-seq data are known to exhibit a large amount of variability among biological replicates, most methods for differential analysis are based either on overdispersed Poisson <xref ref-type="bibr" rid="pone.0077503-Auer1">[1]</xref> or negative binomial models <xref ref-type="bibr" rid="pone.0077503-Anders1">[2]</xref>, <xref ref-type="bibr" rid="pone.0077503-Robinson1">[3]</xref>.</p>
+<p>In order to study the relationships between these large numbers of genes, several authors have worked on co-expression networks and used methods based on Pearson correlation <xref ref-type="bibr" rid="pone.0077503-Giorgi1">[4]</xref> or canonical correlation <xref ref-type="bibr" rid="pone.0077503-Hong1">[5]</xref>, <xref ref-type="bibr" rid="pone.0077503-Iancu1">[6]</xref>, but no specific models have been designed for RNA-seq data. A further question is how these genes interact with each other. Inference of gene networks from transcriptomic data is indeed a key aspect of systems biology that may help unravel and better understand the underlying biological regulatory mechanisms. Various models have been proposed for network inference from microarray data, mainly based on Gaussian graphical models <xref ref-type="bibr" rid="pone.0077503-Friedman1">[7]</xref>, <xref ref-type="bibr" rid="pone.0077503-Meinshausen1">[8]</xref>. Until now, very few authors have addressed the question of network inference from RNA-seq data. Some authors simply use methods based on a Gaussian assumption for RNA-seq data <xref ref-type="bibr" rid="pone.0077503-Cai1">[9]</xref>. We propose in this paper to compare various approaches to tackle this issue.</p>
+<p>The simplest idea is to perform an appropriate transformation of the data, using for example a Box-Cox transformation <xref ref-type="bibr" rid="pone.0077503-Box1">[10]</xref> and apply methods that rely on an assumption of normality. Another possibility is to use models specifically designed for count data with large variability. Allen and Liu <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref> recently proposed a Poisson log-linear graphical model adapted to count data. This model requires a power transformation of the data <xref ref-type="bibr" rid="pone.0077503-Li1">[12]</xref> when the inter-sample variance is greater than the sample mean. We propose in this paper a hierarchical log-normal Poisson model with a Lasso penalty, which has the advantage of directly modelling inter-sample variability and can therefore be readily applied to the raw data. Performance of these different methods for gene network inference are compared on data simulated under a multivariate Poisson distribution <xref ref-type="bibr" rid="pone.0077503-Karlis1">[13]</xref> with various amounts of additional inter-sample variability, as well as on publicly available microRNA-seq data collected on breast invasive carcinoma (BRCA) tumors, downloaded from The Cancer Genome Atlas (TCGA) Data Portal.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>We first define the notation that will be used throughout this paper. Let <italic>Y<sub>ij</sub></italic> be the random variable corresponding to the gene expression measure for the sample <italic>i</italic> (<italic>i</italic> = 1, …, <italic>n</italic>) for the gene <italic>j</italic> (<italic>j</italic> = 1, …, <italic>p</italic>), with <italic>y<sub>ij</sub></italic> being the corresponding observed value of <italic>Y<sub>ij</sub></italic>. Note that <italic>i</italic> always indexes samples and <italic>j</italic> always indexes genes with <italic>n</italic> the number of samples and <italic>p</italic> the number of genes. A network represents gene interactions. The nodes are random variables modelling the gene expression levels and the edges indicate the dependencies between those variables. In this section we provide a short description of the models that will be compared for gene network inference from RNA-seq data.</p>
+<sec id="s2a">
+<title>Gaussian graphical model</title>
+<p>The underlying assumption of this model is that the data are normally distributed. In the case of untransformed RNA-seq data, this assumption is not valid since data counts cannot take negative values. We investigated a variety of Box-Cox transformations to lead to approximately normal data <xref ref-type="bibr" rid="pone.0077503-Box1">[10]</xref>, where the <italic>δ</italic> value was chosen to maximize the log-likelihood of the transformed data: <disp-formula id="pone.0077503.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e001" xlink:type="simple"/></disp-formula></p>
+<p>Since gene expression data may contain zero counts, we usually use (<italic>y</italic>+1) instead of <italic>y</italic> in the Box-Cox formula above. Let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e002" xlink:type="simple"/></inline-formula> be the transformed vector of expression values for <italic>p</italic> genes for the <italic>i</italic> th biological sample (<italic>i</italic> = 1, …, <italic>n</italic>). We assume that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e003" xlink:type="simple"/></inline-formula>. The edges of the inferred network correspond to non-zero partial correlations, i.e. the non-zero elements of matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e004" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pone.0077503-Friedman1">[7]</xref>, <xref ref-type="bibr" rid="pone.0077503-Whittaker1">[14]</xref>.</p>
+<p>Let <bold><italic>S</italic></bold> be the empirical covariance matrix. The log-likelihood of the model is: <disp-formula id="pone.0077503.e005"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e005" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>A common assumption in the context of gene networks is that the matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e006" xlink:type="simple"/></inline-formula> is sparse. We add an <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e007" xlink:type="simple"/></inline-formula> penalty to the log-likelihood (1) so that some coefficients in the estimated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e008" xlink:type="simple"/></inline-formula> matrix are precisely equal to 0: <disp-formula id="pone.0077503.e009"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e009" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>Network inference using a Gaussian graphical model has been extensively studied and used over the past years. Many methods exist to compute the penalized maximum likelihood estimate of the <bold>Σ</bold> matrix above. We use the method implemented in the glasso R package <xref ref-type="bibr" rid="pone.0077503-Friedman1">[7]</xref> which makes use of a coordinate descent algorithm.</p>
+<p>The choice of the regularization parameter <italic>λ</italic> has also been extensively studied <xref ref-type="bibr" rid="pone.0077503-Giraud1">[15]</xref>. We choose to perform model selection by maximizing the Bayesian Information Criterion (BIC) <xref ref-type="bibr" rid="pone.0077503-Schwarz1">[16]</xref> defined below, where <italic>ν</italic> represents the number of free parameters in the model: <disp-formula id="pone.0077503.e010"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e010" xlink:type="simple"/><label>(3)</label></disp-formula></p>
+<p>Note that a single parameter <italic>λ</italic> is chosen for the entire network.</p>
+</sec><sec id="s2b">
+<title>Log-linear Poisson graphical model</title>
+<p>A log-linear Poisson graphical model specifically designed for network inference from count data has been recently proposed <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>. This model is based on a Poisson distribution which assumes the mean and variance to be equal. Therefore, the model does not account for the high dispersion of the data, also called over-dispersion with respect to the Poisson distribution, when the sample variance is higher than the sample mean. To apply it to RNA-seq data, the authors propose to use a power transformation of the data <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e011" xlink:type="simple"/></inline-formula>, with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e012" xlink:type="simple"/></inline-formula> implemented in the R package PoiClaClu <xref ref-type="bibr" rid="pone.0077503-Li1">[12]</xref>. The coefficient <italic>α</italic> is chosen to maximize an adequacy criterion between the transformed data <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e013" xlink:type="simple"/></inline-formula> and a Poisson distribution.</p>
+<p>Let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e014" xlink:type="simple"/></inline-formula> be the transformed vector of expression values for gene <italic>j</italic> in the <italic>n</italic> biological samples. It is assumed that the conditional distribution of <italic>Z<sub>ij</sub></italic> given all the other genes <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e015" xlink:type="simple"/></inline-formula> is a Poisson distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e016" xlink:type="simple"/></inline-formula>, with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e017" xlink:type="simple"/></inline-formula> modelled as a linear regression on all the other genes: <disp-formula id="pone.0077503.e018"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e018" xlink:type="simple"/></disp-formula></p>
+<p>with <disp-formula id="pone.0077503.e019"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e019" xlink:type="simple"/></disp-formula></p>
+<p>The notation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e020" xlink:type="simple"/></inline-formula> corresponds to a standardization of the log-transformed data. This standardization is a necessity since we model the mean of the gene <italic>j</italic> and not the random variable itself. An edge is present in the inferred graph if one or both parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e021" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e022" xlink:type="simple"/></inline-formula> are different from zero. The log-likelihood for gene <italic>j</italic> can be written in this case as: <disp-formula id="pone.0077503.e023"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e023" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+<p>Similar to the previous model, we assume that the vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e024" xlink:type="simple"/></inline-formula> is sparse. We add an <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e025" xlink:type="simple"/></inline-formula> penalty to the log-likelihood (4) so that some coefficients in the estimated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e026" xlink:type="simple"/></inline-formula> vector are set to 0. Estimation of parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e027" xlink:type="simple"/></inline-formula> can be obtained by a coordinate gradient algorithm as implemented in the R package glmnet <xref ref-type="bibr" rid="pone.0077503-Friedman2">[17]</xref>. We propose to perform the model selection with the Stability Approach to Regularization Selection creterion (StARS), as suggested by <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>. This stability-based method selects the network with the smallest amout of regularization that simultaneously makes the network sparse and replicable under random sampling. Note that we select only one regularization parameter for all the regressions in the network problem.</p>
+</sec><sec id="s2c">
+<title>Hierarchical log-normal Poisson graphical model</title>
+<p>We note that the Poisson model presented above requires a transformation of the data to account for the high dispersion. Here we propose to deal with it directly with a hierarchical log-normal Poisson model. The count expression of gene <italic>j</italic> for sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e028" xlink:type="simple"/></inline-formula> is modeled as: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e029" xlink:type="simple"/></inline-formula> with <disp-formula id="pone.0077503.e030"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e030" xlink:type="simple"/></disp-formula><disp-formula id="pone.0077503.e031"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e031" xlink:type="simple"/></disp-formula></p>
+<p>As before, the notation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e032" xlink:type="simple"/></inline-formula> corresponds to a standardization of the log-transformed data. Here, the vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e033" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e034" xlink:type="simple"/></inline-formula> is itself a random variable: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e035" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e036" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e037" xlink:type="simple"/></inline-formula>. Note that the variance of the random variable <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e038" xlink:type="simple"/></inline-formula> is larger than its mean if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e039" xlink:type="simple"/></inline-formula> is positive. As previously, an edge is present in the graph between genes <italic>j</italic> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e040" xlink:type="simple"/></inline-formula> if one or both parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e041" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e042" xlink:type="simple"/></inline-formula> are different from zero.</p>
+<p>In this model, the likelihood for gene <italic>j</italic> can be written as: <disp-formula id="pone.0077503.e043"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e043" xlink:type="simple"/><label>(5)</label></disp-formula></p>
+<p>Similar to the previous model, we assume that the vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e044" xlink:type="simple"/></inline-formula> is sparse. We add an <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e045" xlink:type="simple"/></inline-formula> penalty to a function of the log-likelihood (5) so that some coefficients in the estimated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e046" xlink:type="simple"/></inline-formula> vector are set to 0: <disp-formula id="pone.0077503.e047"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0077503.e047" xlink:type="simple"/></disp-formula></p>
+<p>Estimation of parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e048" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e049" xlink:type="simple"/></inline-formula> was done using the R function glmmixedlasso <xref ref-type="bibr" rid="pone.0077503-Schelldorfer1">[18]</xref>, based on a Laplace approximation of the penalized likelihood and a coordinate descent algorithm.</p>
+<p>An important aspect of this method is the choice of the regularization parameter <italic>λ</italic>. To choose a common <italic>λ</italic> parameter for all the gene-by-gene regressions, we propose to use a two stage approach for this parameter. First, for each gene <italic>j</italic>, a <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e050" xlink:type="simple"/></inline-formula> parameter is chosen by maximizing the BIC criterion defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e051" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e052" xlink:type="simple"/></inline-formula> is the unpenalized log-likelihood and <italic>ν</italic> is the number of free parameters in the model. Then the mean of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e053" xlink:type="simple"/></inline-formula> parameters is taken as the regularization parameter and used for all the regressions: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e054" xlink:type="simple"/></inline-formula>. Since BIC is an asymptotic criterion, taking the average of the regularization parameters over all the regressions helps to improve network inference performance.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Simulation study</title>
+<sec id="s3a1">
+<title>Multivariate Poisson data simulation</title>
+<p>In order to simulate multivariate Poisson data, we use a method described by Karlis <xref ref-type="bibr" rid="pone.0077503-Karlis1">[13]</xref>. As an illustration, for a two dimensional multivariate Poisson distribution, we simulate three independent Poisson variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e055" xlink:type="simple"/></inline-formula> and sum them up (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e056" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e057" xlink:type="simple"/></inline-formula>) so that the resulting variables are not independent: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e058" xlink:type="simple"/></inline-formula> if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e059" xlink:type="simple"/></inline-formula>. In the general case, a sample <bold>y</bold> of dimension <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e060" xlink:type="simple"/></inline-formula> where <italic>p</italic> is the number of nodes in the network, <italic>n</italic> the number of samples is obtained by summing samples from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e061" xlink:type="simple"/></inline-formula> independent Poisson random variables. The adjacency matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e062" xlink:type="simple"/></inline-formula> encodes the underlying graph structure: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e063" xlink:type="simple"/></inline-formula> means that the expression level of genes <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e064" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e065" xlink:type="simple"/></inline-formula> are conditionally independent given the other gene expression levels. In order to sum the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e066" xlink:type="simple"/></inline-formula> terms accordingly, we fix the matrix <bold><italic>B</italic></bold> of dimension <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e067" xlink:type="simple"/></inline-formula>: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e068" xlink:type="simple"/></inline-formula> where <bold><italic>P</italic></bold> is a permutation matrix of dimension (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e069" xlink:type="simple"/></inline-formula>) of vector (1,1,0,…,0), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e070" xlink:type="simple"/></inline-formula> denotes the matrix multiplication element by element and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e071" xlink:type="simple"/></inline-formula> is the vector of dimension <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e072" xlink:type="simple"/></inline-formula> containing the elements of the upper triangular adjacency matrix. The matrix product <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e073" xlink:type="simple"/></inline-formula> gives a count data table of size <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e074" xlink:type="simple"/></inline-formula>: <italic>n</italic> samples from a <italic>p</italic>-dimensional Poisson random variable whose underlying dependency structure is encoded in the known <bold><italic>A</italic></bold> matrix.</p>
+<p>RNA-seq data are known to be overdispersed relative to a Poisson distribution with the sample variance of a gene expression vector larger than the sample mean. In our simulation study, we also consider the possibility of inflating the variance of the independent Poisson random variables used in the <bold><italic>X</italic></bold> matrix of the formula above by simulating independent variables according to a log-normal Poisson model. For gene <italic>j</italic> and sample <italic>i</italic>, we sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e075" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e076" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e077" xlink:type="simple"/></inline-formula>. We use this log-normal Poisson distribution only for the first <italic>p</italic> columns of the matrix, the other columns being sampled from a simple Poisson distribution.</p>
+</sec><sec id="s3a2">
+<title>Simulation settings</title>
+<p>The three methods were compared on two sets of simulations: multivariate Poisson data and overdispersed multivariate Poisson. For each type of data, we simulated 50 different adjacency matrices <bold><italic>A</italic></bold> with a scale-free structure. This implies that degrees of the edges are assumed to follow a power law distribution, i.e. few nodes in the network are well connected and most of the nodes have only one or two neighbours. The number of nodes <italic>p</italic> was set to 50. With a scale-free structure, the maximum degree of a node is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e078" xlink:type="simple"/></inline-formula> and the average degree is less than 2. To avoid the ultra-high dimensional setting, defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e079" xlink:type="simple"/></inline-formula> for Gaussian linear regression <xref ref-type="bibr" rid="pone.0077503-Verzelen1">[19]</xref>, we set the number of biological samples to <italic>n</italic> = 100. For each of the 50 different adjacency matrices, 1225 samples of size <italic>n</italic> were simulated from Poisson random variables (adding extra inter-sample variance or not) and summed up as explained above to obtain the final data set of size 100×50. We chose to use Poisson distributions of mean <italic>μ</italic> = 100 to build the <bold><italic>X</italic></bold> data matrix, resulting in data counts ranging from around 100 to 2500. In the case of Poisson data with inflated variance, the parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e080" xlink:type="simple"/></inline-formula> was set to 0.25, which is slightly smaller than the amount of dispersion observed in the real data presented below.</p>
+<p>To evaluate the different methods, we tried to infer the adjacency matrix <bold><italic>A</italic></bold> from the simulated dataset <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e081" xlink:type="simple"/></inline-formula> and compared the inferred matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e082" xlink:type="simple"/></inline-formula> with the real adjacency matrix <bold><italic>A</italic></bold> used to simulate the data. For each type of data (with and without extra inter-sample variance) and for each network inference method (Gaussian, log-linear Poisson, and the proposed hierarchical log-normal Poisson graphical models), Receiver Operating Characteristic (ROC) curves were constructed by varying values of the regularization parameter from an empty network (sensitivity equal to 0) to a full network (specificity equal to 0). The sensitivity and specificity values were also compared for the different methods using the chosen regularization parameter (with the BIC criterion for the Gaussian graphical model, StARS criterion for the log-linear Poisson graphical model and the mean-BIC criterion presented above for the hierarchical log-normal Poisson model). Note that in the case of the Poisson graphical model, a power transformation is applied only in the simulation setting inducing inflated variance.</p>
+</sec><sec id="s3a3">
+<title>Results</title>
+<p>ROC curves, averaged over the 50 simulated datasets, are presented in <xref ref-type="fig" rid="pone-0077503-g001">Figures 1</xref> for the two simulation settings (multivariate Poisson data with or without inflated variance). It can be noticed that in the first setting, with no over-dispersion, the log-linear Poisson model outperforms the Gaussian graphical model applied to transformed data. This result was already observed <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>. As expected, in this case the performance of the log-linear Poisson model and the proposed hierarchical model are very similar. When adding extra variability to the data, we are compelled to use a power-transformation of the data to apply the log-linear Poisson model <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>, since the data no longer respect the Poisson assumption of equal mean and variance. The performance of the log-linear Poisson model in this case is considerably deteriorated, and is now comparable to the poor performance of the Gaussian graphical model on log-transformed data. The proposed hierarchical log-normal Poisson model therefore outperforms the two other methods in this case, keeping in mind that the data were simulated under a closely related model that was deemed to be a reasonable choice to approximate the dynamics of RNA-seq data. It has to be pointed out that for the over-dispersed data, performances of the three methods are considerably worse compared to the simple case of multivariate Poisson data due to the presence of additional variability.</p>
+<fig id="pone-0077503-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g001</object-id><label>Figure 1</label><caption>
+<title>ROC curves, averaged over 50 simulated data sets on scale-free graphs.</title>
+<p>Results are presented for the Gaussian graphical model on log-transformed data (blue), the log-linear Poisson graphical model on power-transformed data (red) and the hierarchical log-normal Poisson model on raw data (black) on multivariate Poisson data (A) and multivariate Poisson data with inflated variance (B). The dotted black lines represent the diagonals.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g001" position="float" xlink:type="simple"/></fig>
+<p>Sensitivity and specificity obtained by each method for the chosen regularization parameters are represented in diamond-shape squares on the ROC curves (<xref ref-type="fig" rid="pone-0077503-g001">Figures 1</xref>) and are summarized in <xref ref-type="table" rid="pone-0077503-t001">Table 1</xref>. The regularization parameter chosen with the mean-BIC criterion for the proposed hierarchical log-normal Poisson model offers a higher sensitivity than the Poisson or Gaussian graphical models, even when no over-dispersion was simulated (0.84 compared to 0.71 and 0.57, respectively), while keeping a high specificity (0.97 compared to 0.99 and 0.98, respectively). The number of correctly detected edges is therefore larger for the proposed model compared to the other two methods, even in the case of multivariate Poisson data with no over-dispersion. When adding extra inter-sample variability, the differences between the three methods are even larger, even if the performances deteriorate for all methods (sensitivity equal to 0.4 for the proposed model compared to 0.1 for the Gaussian graphical model and 0.05 for the Poisson graphical model). These very low sensitivity values can partly be explained by the fact that scale-free structures were considered for the simulated graphs, therefore generating only a small number of edges compared to a random graph structure that are difficult to correctly detect. This also explains, on the other hand, the high specificity values. In fact, as the models infer very few edges for low numbers of biological replicates, they have less chance to detect incorrect edges. Both the ROC curves and the sensitivity/specificity for the chosen regularization parameter therefore show much better performances for the proposed hierarchical model than the Gaussian graphical model on log-transformed data or the Poisson graphical model on power-transformed data, especially in the case of overdispersed multivariate Poisson data.</p>
+<table-wrap id="pone-0077503-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.t001</object-id><label>Table 1</label><caption>
+<title>Average sensitivity and specificity (standard deviation in parentheses) for the selected network across 50 simulated networks with scale-free structure.</title>
+</caption><alternatives><graphic id="pone-0077503-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GGM</td>
+<td align="left" rowspan="1" colspan="1">Log-linear Poisson</td>
+<td align="left" rowspan="1" colspan="1">Hierarchical model</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Multivariate Poisson Data</td>
+<td align="left" rowspan="1" colspan="1">Sens.</td>
+<td align="left" rowspan="1" colspan="1">0.568 (0.069)</td>
+<td align="left" rowspan="1" colspan="1">0.714 (0.036)</td>
+<td align="left" rowspan="1" colspan="1">0.838 (0.050)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Spec.</td>
+<td align="left" rowspan="1" colspan="1">0.984 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.990 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.967 (0.006)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Over-dispersed Poisson Data</td>
+<td align="left" rowspan="1" colspan="1">Sens.</td>
+<td align="left" rowspan="1" colspan="1">0.107 (0.045)</td>
+<td align="left" rowspan="1" colspan="1">0.046 (0.033)</td>
+<td align="left" rowspan="1" colspan="1">0.383 (0.064)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Spec.</td>
+<td align="left" rowspan="1" colspan="1">0.965 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.991 (0.004)</td>
+<td align="left" rowspan="1" colspan="1">0.982 (0.027)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Results are averaged over 50 datasets for multivariate Poisson data and overdispersed multivariate Poisson data. GGM: Gaussian graphical model on transformed data (log(y+1)), Log-linear Poisson: log-linear Poisson graphical model proposed by <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref> on power transformed data (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e083" xlink:type="simple"/></inline-formula>), Hierarchical model: proposed model as detailed in the Methods section and applied on the raw data.</p></fn></table-wrap-foot></table-wrap>
+<p><xref ref-type="fig" rid="pone-0077503-g002">Figures 2</xref> represents the relationships between the degree of the nodes in the estimated network and in the simulated structure for both the Poisson graphical model and the proposed hierarchical model. It can be observed that, as expected, in the case of no over-dispersion, both methods perform quite similarly, as already seen in the ROC curves above. In the case of over-dispersion, however, even if the sensitivity was quite poor for all methods (<xref ref-type="table" rid="pone-0077503-t001">Table 1</xref>), the structure of the graph was much better preserved with the proposed model than with the Poisson graphical model on power transformed data.</p>
+<fig id="pone-0077503-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g002</object-id><label>Figure 2</label><caption>
+<title>Relationship between the degree of the nodes in the estimated network and in the simulated network on scale-free graphs.</title>
+<p>Results are presented for the log-linear Poisson graphical model without over-dispersion (A) and with over-dispersion (B), for the proposed hierarchical log-normal Poisson graphical model without over-dispersion (C) and with over-dispersion (D). Black dotted lines represent the diagonal, and red lines represent loess curves.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g002" position="float" xlink:type="simple"/></fig>
+<p>To ensure that these results do not depend on the scale-free structure of the graphs, we have drawn ROC curves and performed similar model selection on data simulated with an Erdös-Rényi structure <xref ref-type="bibr" rid="pone.0077503-Erdos1">[20]</xref> (<xref ref-type="fig" rid="pone-0077503-g003">Figures 3</xref> and <xref ref-type="table" rid="pone-0077503-t002">Table 2</xref>). For Erdös-Rényi graphs, each pair of nodes are connected with the same probability, independently of the other pairs of nodes. Although the differences among the three methods are less pronounced for Erdös-Rényi structures than for scale-free structures as previously observed <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>, the same general conclusions hold.</p>
+<fig id="pone-0077503-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g003</object-id><label>Figure 3</label><caption>
+<title>ROC curves, averaged over 30 simulated data sets on Erdös-Rényi graphs.</title>
+<p>Results are presented for the Gaussian graphical model on log-transformed data (blue), the log-linear Poisson graphical model on power-transformed data (red) and the hierarchical log-normal Poisson model on raw data (black) on multivariate Poisson data (A Erdös-Rényi) and multivariate Poisson data with inflated variance (B Erdös-Rényi). The dotted black lines represent the diagonals.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g003" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0077503-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.t002</object-id><label>Table 2</label><caption>
+<title>Average sensitivity and specificity (standard deviation in parentheses) for the selected network across 30 simulated networks with Erdös-Rényi structure.</title>
+</caption><alternatives><graphic id="pone-0077503-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">GGM</td>
+<td align="left" rowspan="1" colspan="1">Log-linear Poisson</td>
+<td align="left" rowspan="1" colspan="1">Hierarchical model</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Multivariate Poisson Data</td>
+<td align="left" rowspan="1" colspan="1">Sens.</td>
+<td align="left" rowspan="1" colspan="1">0.571 (0.059)</td>
+<td align="left" rowspan="1" colspan="1">0.691 (0.061)</td>
+<td align="left" rowspan="1" colspan="1">0.763 (0.093)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Spec.</td>
+<td align="left" rowspan="1" colspan="1">0.992 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.990 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.975 (0.005)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Over-dispersed Poisson Data</td>
+<td align="left" rowspan="1" colspan="1">Sens.</td>
+<td align="left" rowspan="1" colspan="1">0.112 (0.065)</td>
+<td align="left" rowspan="1" colspan="1">0.050 (0.041)</td>
+<td align="left" rowspan="1" colspan="1">0.198 (0.060)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Spec.</td>
+<td align="left" rowspan="1" colspan="1">0.971 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.990 (0.003)</td>
+<td align="left" rowspan="1" colspan="1">0.958 (0.009)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Results are averaged over 30 datasets for multivariate Poisson data and overdispersed multivariate Poisson data. GGM: Gaussian graphical model on transformed data (log(y+1)), Log-linear Poisson: log-linear Poisson graphical model proposed by <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref> on power transformed data (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e084" xlink:type="simple"/></inline-formula>), Hierarchical model: proposed model as detailed in the Methods section and applied on the raw data.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s3b">
+<title>Real data analysis</title>
+<sec id="s3b1">
+<title>Data description</title>
+<p>The three methods were applied to a publicly available microRNA-seq data set available at The Cancer Genome Atlas (TCGA) Data Portal (<ext-link ext-link-type="uri" xlink:href="http://cancergenome.nih.gov/" xlink:type="simple">http://cancergenome.nih.gov/</ext-link>). We selected 100 samples from breast invasive carcinoma (BRCA) tumors. To avoid being in an ultra high-dimensionality setting <xref ref-type="bibr" rid="pone.0077503-Verzelen1">[19]</xref>, we reduced the number of microRNAs used for network inference to 50 (among 863). To do so, we first removed all microRNAs that had at least one null count. Among the remaining 207, we selected the microRNAs with the largest inter-sample variance (as suggested by <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>). These microRNAs are the most likely to be linked to breast cancer development since they are selected among the most highly variable microRNAs. Note that we did not perfom any normalization for differences in library sizes on this data set, as contrary to differential analyses <xref ref-type="bibr" rid="pone.0077503-Anders1">[2]</xref>, <xref ref-type="bibr" rid="pone.0077503-Robinson2">[21]</xref>, differences in library sizes have no impact on the network inference results since we do not compare two different biological samples, but relate the expression of genes within each biological sample. Since each miRNA has an equal number of nucleotides, there is no need for a gene length correction either.</p>
+</sec><sec id="s3b2">
+<title>Modelling the data</title>
+<p>Shapiro-Wilk tests on miRNA expression vectors showed that the data, even for highly expressed miRNAs, could not be directly modelled as a normal distribution <xref ref-type="bibr" rid="pone.0077503-Shapiro1">[22]</xref>. We therefore used a Box-Cox transformation <xref ref-type="bibr" rid="pone.0077503-Box1">[10]</xref> prior to applying a Gaussian graphical model to these data. The optimal Box-Cox parameter to make the data as normally distributed as possible was found to be close to zero, which corresponds to a log-transformation of the data (<xref ref-type="fig" rid="pone-0077503-g004">Figure 4</xref>).</p>
+<fig id="pone-0077503-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g004</object-id><label>Figure 4</label><caption>
+<title>Optimal parameter for the Box-Cox transformation of data.</title>
+<p>Curve obtained with the R package MASS.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g004" position="float" xlink:type="simple"/></fig>
+<p>For these data, the Poisson assumption is not verified either, as shown in <xref ref-type="fig" rid="pone-0077503-g005">Figure 5</xref>, since the sample variance is considerably larger than the sample mean for all miRNAs. As suggested in <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref>, we therefore applied the power-transformation implemented in the PoiClaClu package prior to applying the log-linear Poisson graphical model.</p>
+<fig id="pone-0077503-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g005</object-id><label>Figure 5</label><caption>
+<title>Sample mean-variance relationship for the 207 microRNAs.</title>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g005" position="float" xlink:type="simple"/></fig>
+<p>The Gaussian graphical model with the BIC criterion detected 48 edges, the log-linear Poisson graphical model with the StARS criterion <xref ref-type="bibr" rid="pone.0077503-Allen1">[11]</xref> detected 74 edges, and the proposed hierarchical log-normal Poisson graphical model detected 369 edges among the 50 miRNAs considered here. As shown in <xref ref-type="fig" rid="pone-0077503-g005">Figure 5</xref>, these data exhibit significant over-dispersion with respect to the Poisson assumption. We are therefore close to the second simulation setting presented above. In this case, the sensitivity of the proposed hierarchical model is expected to be much higher than for the other two methods, which explains the much larger number of detected edges. <xref ref-type="fig" rid="pone-0077503-g006">Figure 6</xref> presents the network inferred by the hierarchical model. <xref ref-type="table" rid="pone-0077503-t003">Table 3</xref> presents the biological functions of the most highly connected nodes found with the proposed hierarchical model. It can be noticed that a large majority of these miRNAs are already known to be related to breast cancer. Further biological validation would be interesting for the remaining ones that could be new potential therapeutic targets.</p>
+<fig id="pone-0077503-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.g006</object-id><label>Figure 6</label><caption>
+<title>Network inferred with the hierarchical model.</title>
+<p>The representation was obtained using the software Gephi <xref ref-type="bibr" rid="pone.0077503-Bastian1">[25]</xref>. The size of nodes represents the number of edges associated with the corresponding gene in the network.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.g006" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0077503-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0077503.t003</object-id><label>Table 3</label><caption>
+<title>Ten most highly connected genes in the network inferred by the proposed hierarchical model.</title>
+</caption><alternatives><graphic id="pone-0077503-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0077503.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">miRNA</td>
+<td align="left" rowspan="1" colspan="1">reference</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-451</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Kovalchuk1">[26]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-let-7b</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Peter1">[27]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-486</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Dalmay1">[28]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-let-7f-2</td>
+<td align="left" rowspan="1" colspan="1">cancer <xref ref-type="bibr" rid="pone.0077503-Peter1">[27]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-150</td>
+<td align="left" rowspan="1" colspan="1">no reference</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-145</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Zou1">[29]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-24-2</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Srivastava1">[30]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-200c</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-Gregory1">[31]</xref>, <xref ref-type="bibr" rid="pone.0077503-Peter1">[27]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-143</td>
+<td align="left" rowspan="1" colspan="1">BC <xref ref-type="bibr" rid="pone.0077503-StahlhutEspinosa1">[32]</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">hsa-mir-142</td>
+<td align="left" rowspan="1" colspan="1">no reference</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>BC corresponds to miRNAs known to be linked to Breast Cancer, with the corresponding references.</p></fn></table-wrap-foot></table-wrap></sec></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>Network inference from RNA-seq data is an important methodological challenge. This work is a pioneer study to provide some guidelines on the best methods to achieve this goal. There are two main approaches. The first and simplest idea is to perform a transformation of the data and apply previously proposed methods for microarray studies based on Gaussian graphical models, for example using a Box-Cox transformation. Another possibility is to apply methods specifically developed for the analysis of count data using Poisson graphical models, either with a power transformation of the data or by accounting for over-dispersion directly in the model using for example a hierarchical log-normal Poisson graphical model as proposed here. We found in both simulation study and real data application that the power transformation did not work well to correct for over-dispersion. It has to be noted that the same <italic>α</italic> parameter was used here for all the genes. It might be possible to improve the performance of this method if a different coefficient was estimated for each gene. This is, however, not possible with the method proposed by <xref ref-type="bibr" rid="pone.0077503-Witten1">[23]</xref>, which finds the optimal value by maximizing the adequacy criterion for a group of genes. In this work the best suited methodology for network inference from RNA-seq data currently appears to be the proposed hierarchical Poisson log-normal model, which seems to be able to appropriately deal with highly dispersed count data. However, the implementation of this approach based on the R package glmmixedlasso <xref ref-type="bibr" rid="pone.0077503-Schelldorfer1">[18]</xref> is quite slow for a large number of biological samples and more research is needed to optimize this function.</p>
+<p>It has to be pointed out that in high-dimensional settings (number of genes much larger than the number of biological samples), all methods were unsurprisingly found to perform very poorly, despite the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0077503.e085" xlink:type="simple"/></inline-formula> regularization. As for microarray studies, the limited number of biological replicates available in RNA-seq experiments considerably restrains the number of genes that can be included in the network. Future research is needed to tackle this issue. A first possibility may be to try to reduce the number of parameters to be estimated. In fact, in a first step we aim at finding the regulatory relationships between genes without necessarily estimating their strength precisely. Therefore, in the regression models presented above, instead of trying to estimate one parameter for each gene we could infer parameters for groups of genes. Alternatively, to face the problem of small numbers of biological replicates, instead of inferring regulatory networks within each experimental condition, it would be interesting to use joint graphical model approaches <xref ref-type="bibr" rid="pone.0077503-Guo1">[24]</xref> to jointly infer a network in multiple conditions, thus highlighting the common or differing patterns across conditions.</p>
+</sec></body>
+<back>
+<ack>
+<p>We are grateful to Gilles Celeux and to the two anonymous reviewers for their useful comments on this work.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0077503-Auer1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname><given-names>PL</given-names></name>, <name name-style="western"><surname>Doerge</surname><given-names>RW</given-names></name> (<year>2011</year>) <article-title>A two-stage Poisson model for testing RNA-seq data</article-title>. <source>Statistical Applications in Genetics and Molecular</source> <volume>10</volume>: <comment>Article 26</comment></mixed-citation>
+</ref>
+<ref id="pone.0077503-Anders1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anders</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Huber</surname><given-names>W</given-names></name> (<year>2010</year>) <article-title>Differential expression analysis for sequence count data</article-title>. <source>Genome Biology</source> <volume>11</volume>: <fpage>R106</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Robinson1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Robinson</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>McCarthy</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Smyth</surname><given-names>GK</given-names></name> (<year>2010</year>) <article-title>edgeR: a Bioconductor package for differential expression analysis of digital gene expression data</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>139</fpage>–<lpage>40</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Giorgi1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Giorgi</surname><given-names>FM</given-names></name>, <name name-style="western"><surname>Del Fabbro</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Licausi</surname><given-names>F</given-names></name> (<year>2013</year>) <article-title>Comparative study of RNA-seq and Microarray-derived coexpression networks in Arabidopsis thaliana</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>717</fpage>–<lpage>24</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Hong1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hong</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Jin</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Xiong</surname><given-names>M</given-names></name> (<year>2013</year>) <article-title>Canonical correlation analysis for RNA-seq co-expression networks</article-title>. <source>Nucleic Acids Research</source> <volume>41</volume>: <fpage>e95</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Iancu1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Iancu</surname><given-names>OD</given-names></name>, <name name-style="western"><surname>Kawane</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bottomly</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Searles</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Hitzemann</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Utilizing RNA-Seq data for de novo coexpression network inference</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>1592</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Friedman1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>2008</year>) <article-title>Sparse inverse covariance estimation with the graphical lasso</article-title>. <source>Biostatistics</source> <volume>9</volume>: <fpage>432</fpage>–<lpage>441</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Meinshausen1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Meinshausen</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Buhlmann</surname><given-names>P</given-names></name> (<year>2006</year>) <article-title>High-dimensional graphs and variable selection with the lasso</article-title>. <source>The Annals of Statistics</source> <volume>34</volume>: <fpage>1436</fpage>–<lpage>1462</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Cai1"><label>9</label>
+<mixed-citation publication-type="other" xlink:type="simple">Cai Y, Fendler B, Atwal GS, Biology Q, Harbor CS, <etal>et al</etal>.. (2012) Utilizing RNA-Seq Data for Cancer Network Inference. In: IEEE International Workshop on Genomic Signal Processing and Statistics (GENSIPS). 1–4.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Box1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Box</surname><given-names>GEP</given-names></name>, <name name-style="western"><surname>Cox</surname><given-names>D</given-names></name> (<year>1964</year>) <article-title>An analysis of transformations</article-title>. <source>Journal of the Royal Statistical Society Series B</source> <volume>26</volume>: <fpage>211</fpage>–<lpage>252</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Allen1"><label>11</label>
+<mixed-citation publication-type="other" xlink:type="simple">Allen GI, Liu Z (2012) A log-linear graphical model for inferring genetic networks from highthroughput sequencing data. IEEE International Conference on Bioinformatics and Biomedicine (BIBM).</mixed-citation>
+</ref>
+<ref id="pone.0077503-Li1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Witten</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Johnstone</surname><given-names>IM</given-names></name>, <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>Normalization, testing, and false discovery rate estimation for RNA sequencing data</article-title>. <source>Biostatistics</source> <volume>13</volume>: <fpage>523</fpage>–<lpage>38</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Karlis1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Karlis</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Meligkotsidou</surname><given-names>L</given-names></name> (<year>2005</year>) <article-title>Multivariate poisson regression with covariance structure</article-title>. <source>Statistics and Computing</source> <volume>15</volume>: <fpage>255</fpage>–<lpage>265</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Whittaker1"><label>14</label>
+<mixed-citation publication-type="other" xlink:type="simple">Whittaker J (1990) Graphical Models in Applied Multivariate Statistics. Wiley Publishing.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Giraud1"><label>15</label>
+<mixed-citation publication-type="other" xlink:type="simple">Giraud C, Huet S, Verzelen N (2012) Graph selection with ggmselect. Statistical Applications in Genetics and Molecular Biology 11.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Schwarz1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schwarz</surname><given-names>G</given-names></name> (<year>1978</year>) <article-title>Estimating the dimension of a model</article-title>. <source>The Annals of Statistics</source> <volume>6</volume>: <fpage>461</fpage>–<lpage>464</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Friedman2"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Regularization paths for generalized linear models via coordinate descent</article-title>. <source>Journal of statistical software</source> <volume>33</volume>: <fpage>1</fpage>–<lpage>22</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Schelldorfer1"><label>18</label>
+<mixed-citation publication-type="other" xlink:type="simple">Schelldorfer N, Meier L, Buhlmann P (2012) GLMMLasso: An algorithm for high-dimensional generalized linear mixed models using L1-penalization. To appear in Journal of Computational and Graphical Statistics: 1–20.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Verzelen1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Verzelen</surname><given-names>N</given-names></name> (<year>2012</year>) <article-title>Minimax risks for sparse regressions: Ultra-high dimensional phenomenon</article-title>. <source>Electronic Journal of Statistics</source> <volume>6</volume>: <fpage>38</fpage>–<lpage>90</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Erdos1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Erdos</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rényi</surname><given-names>A</given-names></name> (<year>1959</year>) <article-title>On Random Graphs</article-title>. <source>Publicationes Mathematicae</source> <volume>6</volume>: <fpage>419</fpage>–<lpage>427</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Robinson2"><label>21</label>
+<mixed-citation publication-type="other" xlink:type="simple">Robinson MD, Oshlack A (2010) A scaling normalization method for differential expression analysis of RNA-seq data. Genome Biology 11.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Shapiro1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shapiro</surname><given-names>SS</given-names></name>, <name name-style="western"><surname>Wilk</surname><given-names>MB</given-names></name> (<year>1965</year>) <article-title>An analysis of variance test for normality</article-title>. <source>Biometrika</source> <volume>52</volume>: <fpage>561</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Witten1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Witten</surname><given-names>DM</given-names></name> (<year>2011</year>) <article-title>Classification and clustering of sequencing data using a poisson model</article-title>. <source>The Annals of Applied Statistics</source> <volume>5</volume>: <fpage>2493</fpage>–<lpage>2518</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Guo1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Levina</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Michailidis</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name> (<year>2011</year>) <article-title>Joint estimation of multiple graphical models</article-title>. <source>Biometrika</source> <volume>98</volume>: <fpage>1</fpage>–<lpage>15</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Bastian1"><label>25</label>
+<mixed-citation publication-type="other" xlink:type="simple">Bastian M, Heymann S, Jacomy M (2009) Gephi: An open source software for exploring and manipulating networks. International AAAI Conference on Weblogs and Social Media.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Kovalchuk1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kovalchuk</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Filkowski</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Meservy</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ilnytskyy</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tryndyak</surname><given-names>VP</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Involvement of microRNA-451 in resistance of the MCF-7 breast cancer cells to chemotherapeutic drug doxorubicin</article-title>. <source>Molecular Cancer Therapeutics</source> <volume>7</volume>: <fpage>2152</fpage>–<lpage>9</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Peter1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peter</surname><given-names>ME</given-names></name> (<year>2009</year>) <article-title>Let-7 and miR-200 microRNAs: Guardians against pluripotency and cancer progression</article-title>. <source>Cell Cycle</source> <volume>8</volume>: <fpage>843</fpage>–<lpage>52</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Dalmay1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dalmay</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Edwards</surname><given-names>DR</given-names></name> (<year>2006</year>) <article-title>MicroRNAs and the hallmarks of cancer</article-title>. <source>Oncogene</source> <volume>25</volume>: <fpage>6170</fpage>–<lpage>5</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Zou1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zou</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Xu</surname><given-names>Q</given-names></name> (<year>2012</year>) <article-title>miR-145 inhibits tumor angiogenesis and growth by N-RAS and VEGF</article-title>. <source>Cell Cycle</source> <volume>11</volume>: <fpage>2137</fpage>–<lpage>45</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Srivastava1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Srivastava</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Manvati</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Srivastava</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pal</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kalaiarasan</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>miR-24-2 controls H2AFX expression regardless of gene copy number alteration and induces apoptosis by targeting antiapoptotic gene BCL-2: a potential for therapeutic intervention</article-title>. <source>Breast Cancer Research</source> <volume>13</volume>: <fpage>R39</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-Gregory1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gregory</surname><given-names>PA</given-names></name>, <name name-style="western"><surname>Bert</surname><given-names>AG</given-names></name>, <name name-style="western"><surname>Paterson</surname><given-names>EL</given-names></name>, <name name-style="western"><surname>Barry</surname><given-names>SC</given-names></name>, <name name-style="western"><surname>Tsykin</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The miR-200 family and miR-205 regulate epithelial to mesenchymal transition by targeting ZEB1 and SIP1</article-title>. <source>Nature Cell Biology</source> <volume>10</volume>: <fpage>593</fpage>–<lpage>601</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0077503-StahlhutEspinosa1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stahlhut Espinosa</surname><given-names>CE</given-names></name>, <name name-style="western"><surname>Slack</surname><given-names>FJ</given-names></name> (<year>2006</year>) <article-title>The role of microRNAs in cancer</article-title>. <source>Yale Journal of Biology and Medicine</source> <volume>79</volume>: <fpage>131</fpage>–<lpage>40</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

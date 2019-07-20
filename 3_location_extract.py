@@ -138,11 +138,14 @@ def main_function(i):
     standard_loc(collection,i)
     client.close() 
 
-#main_function(6)
-#main_function(7)
+# main_function(6)
+# main_function(7)
+# main_function(8)
+# main_function(9)
+# main_function(10)
+# main_function(11)
 
-    
 client = pymongo.MongoClient('localhost:27017',connect = True)
 db = client['msc_project']
 collection = db['citations']
-print(collection.find({"cited_no":{"$gt":20},"location_num":{"$exists":False}}).count())
+print(collection.find({"cited_no":{"$gt":20},"location_num":{"$exists":True}}).count())

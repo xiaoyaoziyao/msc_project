@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-11-01556</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0018174</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Mathematics</subject>
+          <subj-group>
+            <subject>Statistics</subject>
+            <subj-group>
+              <subject>Statistical methods</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Epidemiology</subject>
+            <subj-group>
+              <subject>Epidemiological methods</subject>
+              <subject>Pharmacoepidemiology</subject>
+              <subject>Survey methods</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Public Health and Epidemiology</subject>
+          <subject>Mathematics</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Weight Trimming and Propensity Score Weighting</article-title><alt-title alt-title-type="running-head">Weight Trimming and Propensity Score Weighting</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lee</surname>
+            <given-names>Brian K.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lessler</surname>
+            <given-names>Justin</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Stuart</surname>
+            <given-names>Elizabeth A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Epidemiology and Biostatistics, Drexel University School of Public Health, Philadelphia, Pennsylvania, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Epidemiology, Johns Hopkins Bloomberg School of Public Health, Baltimore, Maryland, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Department of Mental Health, Johns Hopkins Bloomberg School of Public Health, Baltimore, Maryland, United States of America</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Department of Biostatistics, Johns Hopkins Bloomberg School of Public Health, Baltimore, Maryland, United States of America</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Biondi-Zoccai</surname>
+            <given-names>Giuseppe</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">University of Modena and Reggio Emilia, Italy</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">bklee@drexel.edu</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: BL JL ES. Performed the experiments: BL. Analyzed the data: BL JL ES. Contributed reagents/materials/analysis tools: BL. Wrote the paper: BL JL ES.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>31</day>
+        <month>3</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>3</issue><elocation-id>e18174</elocation-id><history>
+        <date date-type="received">
+          <day>10</day>
+          <month>10</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>25</day>
+          <month>2</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Lee et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>Propensity score weighting is sensitive to model misspecification and outlying weights that can unduly influence results. The authors investigated whether trimming large weights downward can improve the performance of propensity score weighting and whether the benefits of trimming differ by propensity score estimation method. In a simulation study, the authors examined the performance of weight trimming following logistic regression, classification and regression trees (CART), boosted CART, and random forests to estimate propensity score weights. Results indicate that although misspecified logistic regression propensity score models yield increased bias and standard errors, weight trimming following logistic regression can improve the accuracy and precision of final parameter estimates. In contrast, weight trimming did not improve the performance of boosted CART and random forests. The performance of boosted CART and random forests without weight trimming was similar to the best performance obtainable by weight trimmed logistic regression estimated propensity scores. While trimming may be used to optimize propensity score weights estimated using logistic regression, the optimal level of trimming is difficult to determine. These results indicate that although trimming can improve inferences in some settings, in order to consistently improve the performance of propensity score weighting, analysts should focus on the procedures leading to the generation of weights (i.e., proper specification of the propensity score model) rather than relying on ad-hoc methods such as weight trimming.</p>
+      </abstract><funding-group><funding-statement>This work was supported by Award Number K25MH083846 from the National Institute of Mental Health (PI: Stuart). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="6"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Propensity score methods are a means of controlling for confounding in non-experimental studies <xref ref-type="bibr" rid="pone.0018174-Rosenbaum1">[1]</xref>. Briefly, the propensity score is the probability of receiving a treatment conditional on observed covariates. By conditioning on the propensity score one can achieve an unbiased estimate of the treatment effect, assuming no unmeasured confounding. Conditioning on the propensity score typically occurs through weighting, matching, stratification, or regression adjustment. Although any of these methods can be used for propensity score adjustment, some evidence suggests that weighting and matching may be optimal in some instances <xref ref-type="bibr" rid="pone.0018174-Austin1">[2]</xref>. For example, in studies involving complex sampling methods where units have differential probabilities of inclusion, propensity score weighting may be particularly recommended <xref ref-type="bibr" rid="pone.0018174-Harder1">[3]</xref>.</p>
+      <p>Propensity score weighting is similar with survey sampling weighting, which accounts for over- or under- sampling by weighting the sample to represent the population from which the sample was drawn. In the propensity score context, weighting is used to account for different probabilities of exposure between comparison groups. Different weighting schemes are possible. The most frequently used is inverse probability of treatment weighting, where exposed and unexposed individuals are weighted to represent the population. A variation we use here, which is described in detail below, weights the unexposed group to resemble the exposed group. Propensity score weighting is frequently used in a variety of epidemiological settings to estimate causal effects (e.g. <xref ref-type="bibr" rid="pone.0018174-Harder1">[3]</xref>, <xref ref-type="bibr" rid="pone.0018174-Ma1">[4]</xref>, <xref ref-type="bibr" rid="pone.0018174-Do1">[5]</xref>, <xref ref-type="bibr" rid="pone.0018174-Trojano1">[6]</xref>, <xref ref-type="bibr" rid="pone.0018174-Petersen1">[7]</xref>, <xref ref-type="bibr" rid="pone.0018174-Harder2">[8]</xref>). Diagnostics are a crucial element of using propensity score methods in general, and in particular the key diagnostics are generally those that compare the covariate distributions in the propensity-score-adjusted samples (e.g., the weighted or matched samples), ensuring that the groups are comparable with respect to the observed covariates (see Stuart, 2010 <xref ref-type="bibr" rid="pone.0018174-Stuart1">[9]</xref>, or Rubin, 2001 <xref ref-type="bibr" rid="pone.0018174-Rubin1">[10]</xref>, for further discussion of propensity score diagnostics). A particular diagnostic concern with regard to propensity score weighting is that observations with extremely large weights may unduly influence results and yield estimates with high variance <xref ref-type="bibr" rid="pone.0018174-Rubin1">[10]</xref>, <xref ref-type="bibr" rid="pone.0018174-Kang1">[11]</xref>, <xref ref-type="bibr" rid="pone.0018174-Schafer1">[12]</xref>. Because weights are derived directly from propensity scores, misspecified propensity score models are one potential cause for extreme weights. Two possible solutions for extreme propensity score weights due to model misspecification are to improve the specification of propensity score models, and to reduce the impact of extreme weights through trimming <xref ref-type="bibr" rid="pone.0018174-Potter1">[13]</xref>, <xref ref-type="bibr" rid="pone.0018174-Scharfstein1">[14]</xref>. Weight trimming, sometimes referred to as truncation <xref ref-type="bibr" rid="pone.0018174-Cole1">[15]</xref>, refers to the reduction of weights larger than some value <italic>w<sub>0</sub></italic> to <italic>w<sub>0</sub></italic> <xref ref-type="bibr" rid="pone.0018174-Elliott1">[16]</xref>. In some cases, authors have trimmed low weights smaller than some value <italic>w<sub>0</sub></italic> to <italic>w<sub>0</sub></italic>, although we do not consider that method here <xref ref-type="bibr" rid="pone.0018174-Cole1">[15]</xref>. Although common in the survey sampling world, weight trimming has not been investigated as thoroughly in propensity score settings.</p>
+      <p>Machine learning refers to a diverse set of automated classification and prediction algorithms that are commonly used in data mining and artificial intelligence. Several authors have suggested the use of such techniques in propensity score estimation <xref ref-type="bibr" rid="pone.0018174-Glynn1">[17]</xref>, <xref ref-type="bibr" rid="pone.0018174-Luellen1">[18]</xref>, <xref ref-type="bibr" rid="pone.0018174-McCaffrey1">[19]</xref>, <xref ref-type="bibr" rid="pone.0018174-Setoguchi1">[20]</xref>, <xref ref-type="bibr" rid="pone.0018174-Westreich1">[21]</xref>, <xref ref-type="bibr" rid="pone.0018174-Zador1">[22]</xref> and empirical evidence indicates that these methods can perform well in a variety of scenarios <xref ref-type="bibr" rid="pone.0018174-Setoguchi1">[20]</xref>, <xref ref-type="bibr" rid="pone.0018174-Ridgeway1">[23]</xref>. In a previous study of propensity score estimation using classification and regression tree (CART) methods, we found that certain machine learning data fitting methods could provide substantially better bias reduction and confidence interval coverage compared with logistic regression <xref ref-type="bibr" rid="pone.0018174-Lee1">[24]</xref>. In particular, the machine learning methods of boosted CART <xref ref-type="bibr" rid="pone.0018174-McCaffrey1">[19]</xref> and random forests <xref ref-type="bibr" rid="pone.0018174-Breiman1">[25]</xref> provided consistently superior performance. In this manuscript, we build on our previous work and consider the problem of variability and potential outlier status of propensity score weights. In particular we apply weight trimming techniques to determine how trimming influences treatment effect estimates, and whether the effects of trimming vary when propensity scores are estimated using logistic regression versus machine learning methods.</p>
+    </sec>
+    <sec id="s2" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s2a">
+        <title>Simulation setup</title>
+        <p>We used a simulation framework introduced by Setoguchi and colleagues based on real-world claims data modeling statin use <xref ref-type="bibr" rid="pone.0018174-Setoguchi1">[20]</xref>. This established simulation setup allows us to investigate weight trimming in scenarios that were explored to answer other questions, therefore ensuring comparability with previously published results. Each simulated dataset consisted of N = 500 observations with a binary exposure, continuous outcome, and 10 covariates (4 associated with both exposure and outcome, 3 associated only with the exposure, and 3 associated only with the outcome). Covariates were generated as standard normal random variables with zero mean and unit variance, and several of the covariates were correlated. The exposure probability at the average of covariates was approximately 0.5. The continuous outcome was generated from a linear combination of the exposure and covariates such that the true effect of exposure equaled −0.4. One thousand datasets were simulated for each of three different scenarios where the true propensity score model had the following properties:</p>
+        <list list-type="bullet">
+          <list-item>
+            <p>Scenario 1: additivity and linearity (main effects only)</p>
+          </list-item>
+          <list-item>
+            <p>Scenario 2: mild non-additivity and non-linearity (three two-way interaction terms and one quadratic term)</p>
+          </list-item>
+          <list-item>
+            <p>Scenario 3: moderate non-additivity and non-linearity (ten two-way interaction terms and three quadratic terms).</p>
+          </list-item>
+        </list>
+        <p>Scenarios 1, 2, and 3 correspond with Scenarios A, E, and G in the study by Setoguchi et al. <xref ref-type="bibr" rid="pone.0018174-Setoguchi1">[20]</xref> and our previous study <xref ref-type="bibr" rid="pone.0018174-Lee2">[26]</xref>; the formulae used to generate these scenarios are listed in the appendix of their manuscript. In addition, for reproducibility, and to see the details of the simulation settings, R code and all parameter values to generate the simulation datasets are included in Supporting Information <xref ref-type="supplementary-material" rid="pone.0018174.s001">Text S1</xref>.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Propensity score estimation</title>
+        <p>We used R 2.9.2 to estimate propensity scores using the following methods:</p>
+        <list list-type="bullet">
+          <list-item>
+            <p>Logistic regression: standard logistic regression estimating probability of treatment from all 10 covariates, with a main effect term for each covariate (no non-linear terms or interactions)</p>
+          </list-item>
+          <list-item>
+            <p>CART: recursive partitioning; implemented with the <italic>rpart</italic> package with default settings <xref ref-type="bibr" rid="pone.0018174-Therneau1">[27]</xref></p>
+          </list-item>
+          <list-item>
+            <p>Random forests: CART iteratively fitted to repeated samples of the original dataset using random predictors; implemented with the <italic>randomForest</italic> package with default settings <xref ref-type="bibr" rid="pone.0018174-Breiman2">[28]</xref></p>
+          </list-item>
+          <list-item>
+            <p>Boosted CART: iteratively fitted CART to random subsets of data where each new iteration provides greater priority to incorrectly classified observations in the previous tree; implemented using the <italic>twang</italic> package <xref ref-type="bibr" rid="pone.0018174-Ridgeway2">[29]</xref> with recommended parameters and an iteration stopping point minimizing the mean of the Kolmogorov-Smirnov test statistics.</p>
+          </list-item>
+        </list>
+        <p>For all methods we used the default settings since that is often how these methods are implemented in practice, even if fine-tuning the settings may lead to improved performance for any particular dataset.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Propensity score weights</title>
+        <p>Although various weighting schemes have been used with propensity score weights, we choose to perform weighting by the odds to estimate the average treatment effect among the treated. This estimand, which is often of interest in observational studies, refers to the average treatment effect in a population with a covariate distribution similar to that of the sample that received the treatment <xref ref-type="bibr" rid="pone.0018174-Harder1">[3]</xref>, <xref ref-type="bibr" rid="pone.0018174-Harder2">[8]</xref>, <xref ref-type="bibr" rid="pone.0018174-McCaffrey1">[19]</xref>. Subjects in the treated/exposed group receive a weight of 1, and those in the untreated/unexposed group receive a weight of <italic>p<sub>i</sub>/(1-p<sub>i</sub>)</italic>, where <italic>p<sub>i</sub></italic> refers to an individual's probability of receiving the treatment (i.e., the individual's propensity score). This weights the control group to resemble the treatment group. In other words, untreated/unexposed subjects who are dissimilar to the exposed/treated group will have a <italic>p<sub>i</sub></italic> near zero and a weight near zero; untreated/unexposed subjects that are more similar to the exposed/treated group will have a larger <italic>p<sub>i</sub></italic> and therefore larger weights. The propensity score weights are then incorporated as weights into a standard outcome linear regression model with only the treatment as a predictor variable and no covariates <xref ref-type="bibr" rid="pone.0018174-Schafer1">[12]</xref>. To better isolate the effects of weight trimming, we do not perform ‘doubly robust’ regression adjustment for covariates after weighting is applied <xref ref-type="bibr" rid="pone.0018174-Bang1">[30]</xref>.</p>
+        <p>Trimming was performed using percentile cutpoints <xref ref-type="bibr" rid="pone.0018174-Cole1">[15]</xref>. In particular, we trimmed high weights downwards, with cutpoints ranging from the 99<sup>th</sup> to the 50<sup>th</sup> percentiles, at 1% intervals. For example, when trimming at the 90<sup>th</sup> percentile, all weights with value above the 90<sup>th</sup> percentile were set equal to the 90<sup>th</sup> percentile. We evaluate the performance of weight trimming by examining the bias (the absolute percentage difference from the true treatment effect), 95% confidence interval (CI) coverage, and standard error of effect estimates.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <p>Before trimming, propensity score weights for the unexposed group differed by estimation method and scenario (<xref ref-type="table" rid="pone-0018174-t001"><bold>Table 1</bold></xref>). For all estimation methods, the most complex scenario (3 - moderate non-additivity and non-linearity) increased the proportion of extreme weights. Compared with the other estimation methods, boosted CART produced fewer extreme weights across all scenarios. For example, in scenario 3, the average sum of unexposed observation weights above the 95<sup>th</sup> percentile (in other words, the average sum of weights for the top 5% of unexposed persons, roughly 12 observations) was as follows for each method: logistic regression  = 82.3; CART  = 59.6; random forests  = 80.6; boosted CART  = 37.1. Spearman correlations of the weights by estimation method are described in <xref ref-type="table" rid="pone-0018174-t002"><bold>Table 2</bold></xref>. Logistic regression weights were strongly correlated with random forests and boosted CART weights in scenarios 1 and 2 (r from 0.75 to 0.83) but these correlations weakened in scenario 3 (r = 0.63 and 0.65, respectively). CART weights were less strongly correlated with the weights from other methods, with correlations ranging from 0.39 to 0.59. Boosted CART and random forests weights were the most highly correlated, at approximately 0.90 in all scenarios.</p>
+      <table-wrap id="pone-0018174-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0018174.t001</object-id><label>Table 1</label><caption>
+          <title>Distribution of Propensity Score Weights for the Unexposed Group by Estimation Method and True Propensity Score Model Scenario.</title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0018174-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.t001" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">1st quartile</td>
+              <td align="left" colspan="1" rowspan="1">Median</td>
+              <td align="left" colspan="1" rowspan="1">3rd quartile</td>
+              <td align="left" colspan="1" rowspan="1">Maximum</td>
+              <td align="left" colspan="1" rowspan="1">Proportion ≥10</td>
+              <td align="left" colspan="1" rowspan="1">Proportion ≥20</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>Scenario 1: additivity and linearity</bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Logistic regression</td>
+              <td align="left" colspan="1" rowspan="1">0.30</td>
+              <td align="left" colspan="1" rowspan="1">0.60</td>
+              <td align="left" colspan="1" rowspan="1">1.22</td>
+              <td align="left" colspan="1" rowspan="1">119.5</td>
+              <td align="left" colspan="1" rowspan="1">0.37%</td>
+              <td align="left" colspan="1" rowspan="1">0.05%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.26</td>
+              <td align="left" colspan="1" rowspan="1">0.37</td>
+              <td align="left" colspan="1" rowspan="1">1.39</td>
+              <td align="left" colspan="1" rowspan="1">49.0</td>
+              <td align="left" colspan="1" rowspan="1">0.16%</td>
+              <td align="left" colspan="1" rowspan="1">0.009%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Random forests</td>
+              <td align="left" colspan="1" rowspan="1">0.41</td>
+              <td align="left" colspan="1" rowspan="1">0.74</td>
+              <td align="left" colspan="1" rowspan="1">1.35</td>
+              <td align="left" colspan="1" rowspan="1">91.5</td>
+              <td align="left" colspan="1" rowspan="1">0.25%</td>
+              <td align="left" colspan="1" rowspan="1">0.04%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Boosted CART</td>
+              <td align="left" colspan="1" rowspan="1">0.21</td>
+              <td align="left" colspan="1" rowspan="1">0.40</td>
+              <td align="left" colspan="1" rowspan="1">0.75</td>
+              <td align="left" colspan="1" rowspan="1">14.3</td>
+              <td align="left" colspan="1" rowspan="1">0.004%</td>
+              <td align="left" colspan="1" rowspan="1">0.000%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>Scenario 2: mild non-additivity and non-linearity</bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Logistic regression</td>
+              <td align="left" colspan="1" rowspan="1">0.21</td>
+              <td align="left" colspan="1" rowspan="1">0.46</td>
+              <td align="left" colspan="1" rowspan="1">1.00</td>
+              <td align="left" colspan="1" rowspan="1">110.1</td>
+              <td align="left" colspan="1" rowspan="1">0.42%</td>
+              <td align="left" colspan="1" rowspan="1">0.07%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.21</td>
+              <td align="left" colspan="1" rowspan="1">0.31</td>
+              <td align="left" colspan="1" rowspan="1">0.52</td>
+              <td align="left" colspan="1" rowspan="1">37.0</td>
+              <td align="left" colspan="1" rowspan="1">0.13%</td>
+              <td align="left" colspan="1" rowspan="1">0.008%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Random forests</td>
+              <td align="left" colspan="1" rowspan="1">0.31</td>
+              <td align="left" colspan="1" rowspan="1">0.59</td>
+              <td align="left" colspan="1" rowspan="1">1.13</td>
+              <td align="left" colspan="1" rowspan="1">59.7</td>
+              <td align="left" colspan="1" rowspan="1">0.15%</td>
+              <td align="left" colspan="1" rowspan="1">0.02%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Boosted CART</td>
+              <td align="left" colspan="1" rowspan="1">0.16</td>
+              <td align="left" colspan="1" rowspan="1">0.31</td>
+              <td align="left" colspan="1" rowspan="1">0.61</td>
+              <td align="left" colspan="1" rowspan="1">15.3</td>
+              <td align="left" colspan="1" rowspan="1">0.005%</td>
+              <td align="left" colspan="1" rowspan="1">0.000%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>Scenario 3: moderate non-additivity and non-linearity</bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Logistic regression</td>
+              <td align="left" colspan="1" rowspan="1">0.41</td>
+              <td align="left" colspan="1" rowspan="1">0.77</td>
+              <td align="left" colspan="1" rowspan="1">1.45</td>
+              <td align="left" colspan="1" rowspan="1">98.3</td>
+              <td align="left" colspan="1" rowspan="1">0.52%</td>
+              <td align="left" colspan="1" rowspan="1">0.06%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.22</td>
+              <td align="left" colspan="1" rowspan="1">0.35</td>
+              <td align="left" colspan="1" rowspan="1">1.64</td>
+              <td align="left" colspan="1" rowspan="1">49.0</td>
+              <td align="left" colspan="1" rowspan="1">0.48%</td>
+              <td align="left" colspan="1" rowspan="1">0.05%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Random forests</td>
+              <td align="left" colspan="1" rowspan="1">0.40</td>
+              <td align="left" colspan="1" rowspan="1">0.76</td>
+              <td align="left" colspan="1" rowspan="1">1.43</td>
+              <td align="left" colspan="1" rowspan="1">177.0</td>
+              <td align="left" colspan="1" rowspan="1">0.48%</td>
+              <td align="left" colspan="1" rowspan="1">0.06%</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Boosted CART</td>
+              <td align="left" colspan="1" rowspan="1">0.19</td>
+              <td align="left" colspan="1" rowspan="1">0.38</td>
+              <td align="left" colspan="1" rowspan="1">0.75</td>
+              <td align="left" colspan="1" rowspan="1">20.3</td>
+              <td align="left" colspan="1" rowspan="1">0.01%</td>
+              <td align="left" colspan="1" rowspan="1">0.000%</td>
+            </tr>
+          </tbody>
+        </table></alternatives></table-wrap>
+      <table-wrap id="pone-0018174-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0018174.t002</object-id><label>Table 2</label><caption>
+          <title>Spearman Correlations of Estimated Propensity Score Weights by Estimation Method and True Propensity Score Model Scenario.</title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0018174-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.t002" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="5" rowspan="1">Scenario 1: additivity and linearity</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.46</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">0.77</td>
+              <td align="left" colspan="1" rowspan="1">0.55</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+              <td align="left" colspan="1" rowspan="1">0.83</td>
+              <td align="left" colspan="1" rowspan="1">0.53</td>
+              <td align="left" colspan="1" rowspan="1">0.89</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+            </tr>
+          </tbody>
+        </table><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="5" rowspan="1">Scenario 2: mild non-additivity and non-linearity</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.44</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">0.75</td>
+              <td align="left" colspan="1" rowspan="1">0.55</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+              <td align="left" colspan="1" rowspan="1">0.81</td>
+              <td align="left" colspan="1" rowspan="1">0.53</td>
+              <td align="left" colspan="1" rowspan="1">0.90</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+            </tr>
+          </tbody>
+        </table><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="5" rowspan="1">Scenario 3: moderate non additivity and non-linearity</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">LGR</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CART</td>
+              <td align="left" colspan="1" rowspan="1">0.39</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">RFRST</td>
+              <td align="left" colspan="1" rowspan="1">0.63</td>
+              <td align="left" colspan="1" rowspan="1">0.59</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+              <td align="left" colspan="1" rowspan="1"/>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">BOOST</td>
+              <td align="left" colspan="1" rowspan="1">0.65</td>
+              <td align="left" colspan="1" rowspan="1">0.56</td>
+              <td align="left" colspan="1" rowspan="1">0.90</td>
+              <td align="left" colspan="1" rowspan="1">1</td>
+            </tr>
+          </tbody>
+        </table></alternatives><table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>LGR: logistic regression.</p>
+          </fn>
+          <fn id="nt102">
+            <label/>
+            <p>CART: classification and regression trees.</p>
+          </fn>
+          <fn id="nt103">
+            <label/>
+            <p>RFRST: random forests.</p>
+          </fn>
+          <fn id="nt104">
+            <label/>
+            <p>BOOST: boosted CART.</p>
+          </fn>
+        </table-wrap-foot></table-wrap>
+      <sec id="s3a">
+        <title>Bias</title>
+        <p>In the simplest scenario (1: additivity and linearity), all estimation methods except CART yielded little bias before trimming was applied (<xref ref-type="fig" rid="pone-0018174-g001"><bold>Figure 1</bold></xref>). In part because of low bias without trimming, trimming in scenario 1 did not greatly reduce bias for any estimation method – in fact, trimming only increased bias for boosted CART, random forests, and CART. However, with increasing scenario complexity, the benefit of trimming became more apparent, particularly in the case of logistic regression and CART, where some (but not too much) trimming reduced bias in the estimated treatment effect. The optimal trimming level for logistic regression was at the 95th percentile in scenario 2 (mild non-additivity and non-linearity, 7.8% absolute bias versus 17.7% untrimmed), and at the 87th percentile in scenario 3 (moderate non-additivity and non-linearity, 6.5% absolute bias versus 30.3% untrimmed). In contrast, random forests benefited only slightly from trimming. For example, in scenario 3, even at the optimal trimming level of the 92nd percentile, the absolute bias was 9.0% trimmed versus 11.6% untrimmed. Boosted CART did not benefit at all from trimming in any scenario. The amount of trimming was also crucial: for all methods and scenarios, weight trimming beyond the optimal level substantially increased bias.</p>
+        <fig id="pone-0018174-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0018174.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Average percent absolute bias in the estimate of treatment effect after propensity score weight trimming for 1000 simulated datasets of N = 500, by propensity score estimation method and degree of complexity in the true propensity score model scenario.</title>
+            <p>Scenario 1: additivity and linearity; Scenario 2: mild non-additivity and non-linearity; Scenario 3: moderate non-additivity and non-linearity. The 100th percentile of weight trimming indicates no trimming was applied.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.g001" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3b">
+        <title>Standard error</title>
+        <p>As expected, trimming decreased the standard error of effect estimates across all estimation methods and scenarios in a monotonic fashion (<xref ref-type="fig" rid="pone-0018174-g002"><bold>Figure 2</bold></xref>). In particular, trimming sharply reduced the standard error for logistic regression (e.g., for scenario 3, at the 87th percentile, 0.080 versus 0.102 untrimmed). Although trimming reduced the standard errors for boosted CART and random forests, the reductions were not as dramatic, in part because the untrimmed standard errors for boosted CART and random forests (e.g., for scenario 3, 0.083 and 0.085 respectively) were already lower than for untrimmed logistic regression (0.102).</p>
+        <fig id="pone-0018174-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0018174.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Average standard error in the estimate of treatment effect after propensity score weight trimming for 1000 simulated datasets of N = 500, by propensity score estimation method and degree of complexity in the true propensity score model scenario.</title>
+            <p>Scenario 1: additivity and linearity; Scenario 2: mild non-additivity and non-linearity; Scenario 3: moderate non-additivity and non-linearity. The 100th percentile of weight trimming indicates no trimming was applied.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.g002" xlink:type="simple"/>
+        </fig>
+        <p><italic>95% CI coverage</italic>: In scenario 1, trimming only slightly improved CI coverage for logistic regression (at the optimal trimming level of the 98th percentile, coverage was 99.4% trimmed versus 97.0% untrimmed) and did not improve coverage for any of the other estimation methods (<xref ref-type="fig" rid="pone-0018174-g003"><bold>Figure 3</bold></xref>). In more complex scenarios, trimming greatly improved the CI coverage of logistic regression even as the standard error decreased. Optimal trimming levels and corresponding coverage rates were as follows: logistic regression - scenario 2: 99.9% trimmed at the 95th percentile versus 87.5% untrimmed, scenario 3: 100% trimmed at the 92nd percentile versus 64.3% untrimmed. Trimming only improved coverage for CART in scenario 3, from 75.7% coverage untrimmed to 83.6% trimmed at the 81st percentile. Overall, trimming did not greatly improve 95% CI coverage rates for boosted CART or random forests.</p>
+        <fig id="pone-0018174-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0018174.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>95% confidence interval coverage for 1000 simulated datasets of N = 500 after propensity score weight trimming, by propensity score estimation method and degree of complexity in the true propensity score model scenario.</title>
+            <p>Scenario 1: additivity and linearity; Scenario 2: mild non-additivity and non-linearity; Scenario 3: moderate non-additivity and non-linearity. The 100th percentile of weight trimming indicates no trimming was applied.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.g003" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>In various simulation scenarios, weight trimming had the potential to improve the performance of propensity score weights, in particular for logistic regression-estimated weights. However, trimming did not improve the performance of propensity score weights estimated by boosted CART and random forests; in such situations, trimming can actually induce bias. The performance of boosted CART and random forests without weight trimming was similar to the best possible performance obtained by logistic regression with trimming. For all methods and scenarios, as the level of trimming increased, the standard error of the effect estimate progressively decreased. Note that here we refer to standard error in the statistical sense of estimated uncertainty in the effect estimate, absolute error (i.e., bias) may in fact increase even in settings where the estimated standard error decreases. Of course, decreasing the standard error is only good if the desired confidence interval coverage is maintained. Our results indicate that an ideal level of trimming exists such that bias and CI coverage are optimized, although this ideal level of trimming varies with scenario. As with other simulation studies, our results may not be generalizable to all situations utilizing propensity score weights. However, the scenarios used are similar to those typical in pharmacoepidemiologic studies, including common exposure, moderate magnitude of the exposure effect, collinearity of covariates, ranges of variables, and coefficients based on claims data modeling of statin use <xref ref-type="bibr" rid="pone.0018174-Setoguchi1">[20]</xref>.</p>
+      <p>The present results demonstrate the detrimental effects of using misspecified propensity score models. Correctly specified logistic regression models performed quite well with low bias while misspecified logistic regression models that were missing important interactions and non-linearities in pre-treatment covariates produced high bias. The poor performance of misspecified logistic regression propensity score weighting due to large weights has been reported in other situations <xref ref-type="bibr" rid="pone.0018174-Ridgeway1">[23]</xref>, <xref ref-type="bibr" rid="pone.0018174-Freedman1">[31]</xref>. However, large weights in and of themselves may not always be problematic when the propensity score model is correctly specified. Even when the distributions of weights estimated by random forests and logistic regression in our simulations were comparable (both with a number of large weights), trimming substantially improved logistic regression but not random forests (which performed well without trimming). This suggests that extreme weights alone are not largely responsible for increased bias and standard errors. Rather, it is the systematic misspecification of propensity scores by logistic regression models with only main effects terms that induced problems.</p>
+      <p>Although weight trimming appears to improve the performance of logistic regression-estimated propensity score weights in a variety of scenarios and is computationally easy to carry out, questions remain regarding how to implement trimming. The use of ad hoc adjustment methods such as propensity score weight trimming may be considered an admission of the failure of the underlying statistical methods used to estimate the propensity score. Hence, before trimming is implemented, it may be useful to examine and modify other aspects of the propensity score estimation process, especially concerning specification of non-linearities and interactions, variable selection, and variable parameterization <xref ref-type="bibr" rid="pone.0018174-Brookhart1">[32]</xref>, <xref ref-type="bibr" rid="pone.0018174-Drake1">[33]</xref>. Machine learning algorithms such as boosted CART and random forests may be helpful in these tasks <xref ref-type="bibr" rid="pone.0018174-Westreich1">[21]</xref>. In addition, the distributions of weights should be examined to determine if results are sensitive to the few most extreme weights. It should be noted that methods to address extreme weights can be implemented directly within (instead of in addition to) machine learning methods. For example, Ridgeway and McCaffrey describe how the boosted CART algorithm (which we implemented here) has the effect of reducing the risk of obtaining spurious probabilities near 0 and 1 that lead to extreme weights <xref ref-type="bibr" rid="pone.0018174-Ridgeway1">[23]</xref>. Finally, without guidance on the optimal level of trimming, there exists the dangerous potential for trimming being used to artificially achieve a desired result. Bayesian methods to perform weight pooling and weight smoothing may be useful to objectively optimize weights <xref ref-type="bibr" rid="pone.0018174-Elliott1">[16]</xref>, <xref ref-type="bibr" rid="pone.0018174-Elliott2">[34]</xref> for propensity score adjustment, although this has not been explored.</p>
+      <p>In conclusion, our results show that weight trimming can help reduce bias and standard error associated with logistic regression-estimated propensity score weights. However, weight trimming is of little to no utility for boosted CART and random forests-estimated propensity score weights, possibly because those methods perform so well already. We suggest that analysts should focus attention on improving propensity score model specification and rely less on weight trimming to optimize propensity score weighting.</p>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0018174.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0018174.s001" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <p>The R code used to generate the simulation data is presented in the Supporting Information <xref ref-type="supplementary-material" rid="pone.0018174.s001">Text S1</xref>.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0018174-Rosenbaum1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rosenbaum</surname><given-names>PR</given-names></name><name name-style="western"><surname>Rubin</surname><given-names>DB</given-names></name></person-group>             <year>1983</year>             <article-title>The central role of the propensity score in observational studies for causal effects.</article-title>             <source>Biometrika</source>             <volume>70</volume>             <fpage>41</fpage>             <lpage>55</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Austin1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Austin</surname><given-names>PC</given-names></name></person-group>             <year>2009</year>             <article-title>The relative ability of different propensity score methods to balance measured covariates between treated and untreated subjects in observational studies.</article-title>             <source>Med Decis Making</source>             <volume>29</volume>             <fpage>661</fpage>             <lpage>677</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Harder1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Harder</surname><given-names>VS</given-names></name><name name-style="western"><surname>Morral</surname><given-names>AR</given-names></name><name name-style="western"><surname>Arkes</surname><given-names>J</given-names></name></person-group>             <year>2006</year>             <article-title>Marijuana use and depression among adults: Testing for causal associations.</article-title>             <source>Addiction</source>             <volume>101</volume>             <fpage>1463</fpage>             <lpage>1472</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Ma1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ma</surname><given-names>S</given-names></name></person-group>             <year>2008</year>             <article-title>Paternal race/ethnicity and birth outcomes.</article-title>             <source>Am J Public Health</source>             <volume>98</volume>             <fpage>2285</fpage>             <lpage>2292</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Do1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Do</surname><given-names>DP</given-names></name><name name-style="western"><surname>Finch</surname><given-names>BK</given-names></name></person-group>             <year>2008</year>             <article-title>The link between neighborhood poverty and health: context or composition?</article-title>             <source>Am J Epidemiol</source>             <volume>168</volume>             <fpage>611</fpage>             <lpage>619</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Trojano1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Trojano</surname><given-names>M</given-names></name><name name-style="western"><surname>Pellegrini</surname><given-names>F</given-names></name><name name-style="western"><surname>Fuiani</surname><given-names>A</given-names></name><name name-style="western"><surname>Paolicelli</surname><given-names>D</given-names></name><name name-style="western"><surname>Zipoli</surname><given-names>V</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>New natural history of interferon-beta-treated relapsing multiple sclerosis.</article-title>             <source>Ann Neurol</source>             <volume>61</volume>             <fpage>300</fpage>             <lpage>306</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Petersen1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Petersen</surname><given-names>JL</given-names></name><name name-style="western"><surname>Barron</surname><given-names>JJ</given-names></name><name name-style="western"><surname>Hammill</surname><given-names>BG</given-names></name><name name-style="western"><surname>Cziraky</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Anstrom</surname><given-names>KJ</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Clopidogrel use and clinical events after drug-eluting stent implantation: findings from the HealthCore Integrated Research Database.</article-title>             <source>Am Heart J</source>             <volume>159</volume>             <fpage>462</fpage>             <lpage>470 e461</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Harder2">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Harder</surname><given-names>VS</given-names></name><name name-style="western"><surname>Stuart</surname><given-names>EA</given-names></name><name name-style="western"><surname>Anthony</surname><given-names>JC</given-names></name></person-group>             <year>2008</year>             <article-title>Adolescent cannabis problems and young adult depression: male-female stratified propensity score analyses.</article-title>             <source>Am J Epidemiol</source>             <volume>168</volume>             <fpage>592</fpage>             <lpage>601</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Stuart1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Stuart</surname><given-names>EA</given-names></name></person-group>             <year>2010</year>             <article-title>Matching methods for causal inference: A review and a look forward.</article-title>             <source>Stat Sci</source>             <volume>25</volume>             <fpage>1</fpage>             <lpage>21</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Rubin1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rubin</surname><given-names>DB</given-names></name></person-group>             <year>2001</year>             <article-title>Using propensity scores to help design observational studies: application to the tobacco litigation.</article-title>             <source>Health Services and Outcomes Research Methodology</source>             <volume>2</volume>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Kang1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kang</surname><given-names>J</given-names></name><name name-style="western"><surname>Schafer</surname><given-names>J</given-names></name></person-group>             <year>2007</year>             <article-title>Demystifying double robustness: a comparison of alternative strategies for estimating a population mean from incomplete data.</article-title>             <source>Statistical Science</source>             <volume>22</volume>             <fpage>523</fpage>             <lpage>580</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Schafer1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Schafer</surname><given-names>JL</given-names></name><name name-style="western"><surname>Kang</surname><given-names>J</given-names></name></person-group>             <year>2008</year>             <article-title>Average causal effects from nonrandomized studies: a practical guide and simulated example.</article-title>             <source>Psychol Methods</source>             <volume>13</volume>             <fpage>279</fpage>             <lpage>313</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Potter1">
+        <label>13</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Potter</surname><given-names>FJ</given-names></name></person-group>             <article-title>The effect of weight trimming on nonlinear survey estimates; 1993;</article-title>             <publisher-loc>San Francisco, CA</publisher-loc>             <publisher-name>American Statistical Association</publisher-name>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Scharfstein1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Scharfstein</surname><given-names>DO</given-names></name><name name-style="western"><surname>Rotnitzky</surname><given-names>A</given-names></name><name name-style="western"><surname>Robins</surname><given-names>JM</given-names></name></person-group>             <year>1999</year>             <article-title>Adjusting for non-ignorable drop-out using semiparametric non-response models.</article-title>             <source>Journal of the American Statistical Association</source>             <volume>94</volume>             <fpage>1096</fpage>             <lpage>1120</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Cole1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Cole</surname><given-names>SR</given-names></name><name name-style="western"><surname>Hernan</surname><given-names>MA</given-names></name></person-group>             <year>2008</year>             <article-title>Constructing inverse probability weights for marginal structural models.</article-title>             <source>Am J Epidemiol</source>             <volume>168</volume>             <fpage>656</fpage>             <lpage>664</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Elliott1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Elliott</surname><given-names>M</given-names></name><name name-style="western"><surname>Little</surname><given-names>R</given-names></name></person-group>             <year>2000</year>             <article-title>Model-based alternatives to trimming survey weights.</article-title>             <source>Journal of Official Statistics</source>             <volume>16</volume>             <fpage>191</fpage>             <lpage>209</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Glynn1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Glynn</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Schneeweiss</surname><given-names>S</given-names></name><name name-style="western"><surname>Sturmer</surname><given-names>T</given-names></name></person-group>             <year>2006</year>             <article-title>Indications for propensity scores and review of their use in pharmacoepidemiology.</article-title>             <source>Basic Clin Pharmacol Toxicol</source>             <volume>98</volume>             <fpage>253</fpage>             <lpage>259</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Luellen1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Luellen</surname><given-names>JK</given-names></name><name name-style="western"><surname>Shadish</surname><given-names>WR</given-names></name><name name-style="western"><surname>Clark</surname><given-names>MH</given-names></name></person-group>             <year>2005</year>             <article-title>Propensity scores: an introduction and experimental test.</article-title>             <source>Eval Rev</source>             <volume>29</volume>             <fpage>530</fpage>             <lpage>558</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-McCaffrey1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>McCaffrey</surname><given-names>DF</given-names></name><name name-style="western"><surname>Ridgeway</surname><given-names>G</given-names></name><name name-style="western"><surname>Morral</surname><given-names>AR</given-names></name></person-group>             <year>2004</year>             <article-title>Propensity score estimation with boosted regression for evaluating causal effects in observational studies.</article-title>             <source>Psychol Methods</source>             <volume>9</volume>             <fpage>403</fpage>             <lpage>425</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Setoguchi1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Setoguchi</surname><given-names>S</given-names></name><name name-style="western"><surname>Schneeweiss</surname><given-names>S</given-names></name><name name-style="western"><surname>Brookhart</surname><given-names>MA</given-names></name><name name-style="western"><surname>Glynn</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Cook</surname><given-names>EF</given-names></name></person-group>             <year>2008</year>             <article-title>Evaluating uses of data mining techniques in propensity score estimation: a simulation study.</article-title>             <source>Pharmacoepidemiol Drug Saf</source>             <volume>17</volume>             <fpage>546</fpage>             <lpage>555</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Westreich1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Westreich</surname><given-names>D</given-names></name><name name-style="western"><surname>Lessler</surname><given-names>J</given-names></name><name name-style="western"><surname>Funk</surname><given-names>M</given-names></name></person-group>             <year>In press</year>             <article-title>Propensity score estimation and classification methods: alternatives to logistic regression.</article-title>             <source>Journal of Clinical Epidemiology</source>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Zador1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zador</surname><given-names>P</given-names></name><name name-style="western"><surname>Judkins</surname><given-names>D</given-names></name><name name-style="western"><surname>Das</surname><given-names>B</given-names></name></person-group>             <year>2001</year>             <article-title>Experiments with MART to Automate Model Building in Survey Research: Applications to the National Survey of Parents and Youth.</article-title>             <source>Proceedings of the Section on Survey Research Methods of the American Statistical Association</source>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Ridgeway1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ridgeway</surname><given-names>G</given-names></name><name name-style="western"><surname>McCaffrey</surname><given-names>DF</given-names></name></person-group>             <year>2007</year>             <article-title>Comment: Demystifying double robustness: a comparison of alternative strategies for estimating a population mean from incomplete data.</article-title>             <source>Statistical Science</source>             <volume>22</volume>             <fpage>540</fpage>             <lpage>543</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Lee1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lee</surname><given-names>BK</given-names></name><name name-style="western"><surname>Lessler</surname><given-names>J</given-names></name><name name-style="western"><surname>Stuart</surname><given-names>EA</given-names></name></person-group>             <year>2009</year>             <article-title>Improving propensity score weighting using machine learning.</article-title>             <source>Stat Med</source>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Breiman1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Breiman</surname><given-names>L</given-names></name></person-group>             <year>2001</year>             <article-title>Random Forests.</article-title>             <source>Machine Learning</source>             <volume>45</volume>             <fpage>5</fpage>             <lpage>32</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Lee2">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lee</surname><given-names>BK</given-names></name><name name-style="western"><surname>Lessler</surname><given-names>J</given-names></name><name name-style="western"><surname>Stuart</surname><given-names>EA</given-names></name></person-group>             <year>2010</year>             <article-title>Improving propensity score weighting using machine learning.</article-title>             <source>Stat Med</source>             <volume>29</volume>             <fpage>337</fpage>             <lpage>346</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Therneau1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Therneau</surname><given-names>TM</given-names></name><name name-style="western"><surname>Atkinson</surname><given-names>B</given-names></name></person-group>             <year>2007</year>             <article-title>rpart: Recursive Partitioning. R port by Brian Ripley.</article-title>             <comment>R package version 3.1-38</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Breiman2">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Breiman</surname><given-names>L</given-names></name><name name-style="western"><surname>Cutler</surname><given-names>A</given-names></name></person-group>             <year>2008</year>             <article-title>randomForest: Breiman and Cutler's random forests for classification and regression.</article-title>             <comment>Software package (R port by Andy Liaw and Matthew Wiener)</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Ridgeway2">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ridgeway</surname><given-names>G</given-names></name><name name-style="western"><surname>McCaffrey</surname><given-names>DF</given-names></name><name name-style="western"><surname>Morral</surname><given-names>AR</given-names></name></person-group>             <year>2006</year>             <article-title>twang: Toolkit for Weighting and Analysis of Nonequivalent Groups.</article-title>             <comment>R package version 1.0-1</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Bang1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bang</surname><given-names>H</given-names></name><name name-style="western"><surname>Robins</surname><given-names>JM</given-names></name></person-group>             <year>2005</year>             <article-title>Doubly robust estimation in missing data and causal inference models.</article-title>             <source>Biometrics</source>             <volume>61</volume>             <fpage>962</fpage>             <lpage>973</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Freedman1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Freedman</surname><given-names>DA</given-names></name><name name-style="western"><surname>Berk</surname><given-names>RA</given-names></name></person-group>             <year>2008</year>             <article-title>Weighting regressions by propensity scores.</article-title>             <source>Eval Rev</source>             <volume>32</volume>             <fpage>392</fpage>             <lpage>409</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Brookhart1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Brookhart</surname><given-names>MA</given-names></name><name name-style="western"><surname>Schneeweiss</surname><given-names>S</given-names></name><name name-style="western"><surname>Rothman</surname><given-names>KJ</given-names></name><name name-style="western"><surname>Glynn</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Avorn</surname><given-names>J</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Variable selection for propensity score models.</article-title>             <source>Am J Epidemiol</source>             <volume>163</volume>             <fpage>1149</fpage>             <lpage>1156</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Drake1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Drake</surname><given-names>C</given-names></name></person-group>             <year>1993</year>             <article-title>Effects of misspecification of the propensity score on estimators of treatment effect.</article-title>             <source>Biometrics</source>             <volume>49</volume>             <fpage>1231</fpage>             <lpage>1236</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0018174-Elliott2">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Elliott</surname><given-names>MR</given-names></name></person-group>             <year>2008</year>             <article-title>Model Averaging Methods for Weight Trimming.</article-title>             <source>J Off Stat</source>             <volume>24</volume>             <fpage>517</fpage>             <lpage>540</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

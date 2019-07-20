@@ -1,0 +1,1821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+	<front>
+		<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="publisher">pcbi</journal-id><journal-id journal-id-type="allenpress-id">plcb</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+				<publisher-name>Public Library of Science</publisher-name>
+				<publisher-loc>San Francisco, USA</publisher-loc>
+			</publisher></journal-meta>
+		<article-meta><article-id pub-id-type="doi">10.1371/journal.pcbi.0030122</article-id><article-id pub-id-type="publisher-id">07-PLCB-RA-0114R2</article-id><article-id pub-id-type="sici">plcb-03-06-14</article-id><article-categories>
+				<subj-group subj-group-type="heading">
+					<subject>Research Article</subject>
+				</subj-group>
+				<subj-group subj-group-type="Discipline">
+					<subject>Computational Biology</subject>
+					<subject>Computer Science</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Genetics and Genomics</subject>
+					<subject>Mathematics</subject>
+				</subj-group>
+				<subj-group subj-group-type="System Taxonomy">
+					<subject>Homo (human)</subject>
+					<subject>Eukaryotes</subject>
+				</subj-group>
+			</article-categories><title-group><article-title>Flexible and Accurate Detection of Genomic Copy-Number Changes from aCGH</article-title><alt-title alt-title-type="running-head">Analysis of aCGH Data</alt-title></title-group><contrib-group>
+				<contrib contrib-type="author" xlink:type="simple">
+					<name name-style="western">
+						<surname>Rueda</surname>
+						<given-names>Oscar M</given-names>
+					</name>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+					<xref ref-type="aff" rid="aff1"/>
+				</contrib>
+				<contrib contrib-type="author" xlink:type="simple">
+					<name name-style="western">
+						<surname>Díaz-Uriarte</surname>
+						<given-names>Ramón</given-names>
+					</name>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+					<xref ref-type="aff" rid="aff1"/>
+				</contrib>
+			</contrib-group><aff id="aff1"><label>1</label><addr-line>Structural and Computational Biology Programme, Spanish National Cancer Centre (CNIO), Madrid, Spain</addr-line></aff><contrib-group>
+				<contrib contrib-type="editor" xlink:type="simple">
+					<name name-style="western">
+						<surname>Tucker-Kellogg</surname>
+						<given-names>Greg</given-names>
+					</name>
+					<role>Editor</role><xref ref-type="aff" rid="edit1"/>
+				</contrib>
+			</contrib-group><aff id="edit1">Lilly Singapore Centre for Drug Discovery, Singapore</aff><author-notes>
+			<fn fn-type="con" id="ack1">
+				<p>OMR developed the statistical model, did most of the programming, and conducted analysis. RDU conceived the model, participated in model development and programming, and conducted simulations. Both authors wrote the paper.</p>
+			</fn>				<corresp id="cor1">* To whom correspondence should be addressed. E-mail: <email xlink:type="simple">omrueda@cnio.es</email> (OMR), <email xlink:type="simple">rdiaz02@gmail.com</email> (RDU)</corresp>
+			<fn fn-type="conflict" id="ack3">
+				<p> The authors have declared that no competing interests exist.</p>
+			</fn></author-notes><pub-date pub-type="ppub">
+				<month>6</month>
+				<year>2007</year>
+			</pub-date><pub-date pub-type="epub">
+				<day>22</day>
+				<month>6</month>
+				<year>2007</year>
+			</pub-date><pub-date pub-type="epreprint">
+				<day>16</day>
+				<month>5</month>
+				<year>2007</year>
+			</pub-date><volume>3</volume><issue>6</issue><elocation-id>e122</elocation-id><history>
+				<date date-type="received">
+					<day>6</day>
+					<month>3</month>
+					<year>2007</year>
+				</date>
+				<date date-type="accepted">
+					<day>16</day>
+					<month>5</month>
+					<year>2007</year>
+				</date>
+			</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2007</copyright-year><copyright-holder>Rueda and Díaz-Uriarte</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+				<p>Genomic DNA copy-number alterations (CNAs) are associated with complex diseases, including cancer: CNAs are indeed related to tumoral grade, metastasis, and patient survival. CNAs discovered from array-based comparative genomic hybridization (aCGH) data have been instrumental in identifying disease-related genes and potential therapeutic targets. To be immediately useful in both clinical and basic research scenarios, aCGH data analysis requires accurate methods that do not impose unrealistic biological assumptions and that provide direct answers to the key question, “What is the probability that this gene/region has CNAs?” Current approaches fail, however, to meet these requirements. Here, we introduce reversible jump aCGH (RJaCGH), a new method for identifying CNAs from aCGH; we use a nonhomogeneous hidden Markov model fitted via reversible jump Markov chain Monte Carlo; and we incorporate model uncertainty through Bayesian model averaging. RJaCGH provides an estimate of the probability that a gene/region has CNAs while incorporating interprobe distance and the capability to analyze data on a chromosome or genome-wide basis. RJaCGH outperforms alternative methods, and the performance difference is even larger with noisy data and highly variable interprobe distance, both commonly found features in aCGH data. Furthermore, our probabilistic method allows us to identify minimal common regions of CNAs among samples and can be extended to incorporate expression data. In summary, we provide a rigorous statistical framework for locating genes and chromosomal regions with CNAs with potential applications to cancer and other complex human diseases.</p>
+			</abstract><abstract abstract-type="summary">
+				<title>Author Summary</title>
+				<sec id="st1"><title/>
+					<p>As a consequence of problems during cell division, the number of copies of a gene in a chromosome can either increase or decrease. These copy-number alterations (CNAs) can play a crucial role in the emergence of complex multigenic diseases. For example, in cancer, amplification of oncogenes can drive tumor activation, and CNAs are associated with metastasis development and patient survival. Studies on the relationship between CNAs and disease have been recently fueled by the widespread use of array-based comparative genomic hybridization (aCGH), a technique with much finer resolution than previous experimental approaches. Detection of CNAs from these data depends on methods of analysis that do not impose biologically unrealistic assumptions and that provide direct answers to fundamental research questions. We have developed a statistical method, using a Bayesian approach, that returns estimates of the probabilities of CNAs from aCGH data, the most direct and valuable answer to the key biological question: “What is the probability that this gene/region has an altered copy number?” The output of the method can therefore be immediately used in different settings from clinical to basic research scenarios, and is applicable over a wide variety of aCGH technologies.</p>
+				</sec>
+			</abstract><funding-group><funding-statement>Funding was provided by Fundación de Investigación Médica Mutua Madrileña and Project TIC2003–09331-C02–02 of the Spanish Ministry of Education and Science (MEC).</funding-statement></funding-group><counts>
+				<page-count count="8"/>
+			</counts><!--===== Restructure custom-meta-wrap to custom-meta-group =====--><custom-meta-group>
+				<custom-meta>
+					<meta-name>citation</meta-name>
+					<meta-value>Rueda OM, Díaz-Uriarte R (2007) Flexible and accurate detection of genomic copy-number changes from aCGH. PLoS Comput Biol 3(6): e122. doi:<ext-link ext-link-type="doi" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.0030122" xlink:type="simple">10.1371/journal.pcbi.0030122</ext-link></meta-value>
+				</custom-meta>
+			</custom-meta-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1">
+			<title>Introduction</title>
+			<p>Alterations in the number of copies (gains, losses) of genomic DNA have been associated with several hereditary anomalies and are involved in human cancers [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b007">7</xref>]. For example, amplification of some genes, especially oncogenes, is one well-known mechanism for tumor activation [<xref ref-type="bibr" rid="pcbi-0030122-b008">8</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b009">9</xref>], and it is involved in the deregulation of cellular control [<xref ref-type="bibr" rid="pcbi-0030122-b010">10</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b011">11</xref>]. Copy-number alterations (CNAs) have been associated with tumoral grade, metastasis development, and patient survival [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b007">7</xref>], and studies about copy-number changes have been instrumental for identifying relevant genes for cancer development and patient classification [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b002">2</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b012">12</xref>].</p>
+			<p>A widely used technique to identify copy-number changes in genomic DNA is array-based comparative genomic hybridization (aCGH). Two DNA samples (e.g., problem and control) are differentially labeled (often with fluorescent dyes) and competitively hybridized to chromosomal DNA targets. After hybridization, emission from each of the two fluorescent dyes is measured, and the signal intensity ratios are indicative of the relative copy number of the two samples [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b002">2</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b013">13</xref>]. Therefore, a key step in any study of the relationship between altered copy numbers and disease is using the fluorescence ratio data to identify genes and contiguous chromosomal regions with altered copy numbers.</p>
+			<p>The main biomedical problem, both for the study of the CNAs per se and for downstream analysis (e.g., relationship with gene expression changes or patient classification), is the accurate identification of the genes/chromosomal regions that have an altered copy number. Satisfactorily dealing with this problem requires a method that (1) provides direct answers that can be used in different settings (e.g., clinical versus basic research), (2) reflects the underlying biology and accounts for key features of the technological platform, and (3) can accommodate the different levels of analysis (types of questions) addressed with these data.</p>
+			<p>First, estimates of the probabilities of alteration (instead of <italic>p</italic>-values or smoothed means) are the most direct and usable answer to this problem [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b015">15</xref>]. Probabilities can be used in contexts that cover basic research to clinical applications [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b002">2</xref>] so that, for instance, a clinician might require high certainty of alteration of a specific gene before more invasive procedures, whereas a basic researcher can consider for further study genes that show only a moderate probability of alteration (e.g., probability &gt;0.5). Finally, appropriately used, probabilities of alteration can account for uncertainty in model building [<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b017">17</xref>].</p>
+			<p>Second, the analysis should incorporate distance between probes [<xref ref-type="bibr" rid="pcbi-0030122-b002">2</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b015">15</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b018">18</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b021">21</xref>]: widely used aCGH platforms such as those based on cDNA microarrays, oligonucleotide arrays, and representational oligeonucleotide microarray analysis (ROMA) lead to variable coverage across chromosomes, with unequal distances between probes (i.e., some regions have probes that are very close to each other, whereas in other regions probes are very far apart). As copy-number changes involve chromosome segments, contiguous loci will have the same copy number, unless there is an abrupt change to another copy number [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b022">22</xref>]: the farther apart two loci are, the more likely it is that a copy-number event will have taken place in between them. Thus, in densely covered regions, the copy number of a probe is a good predictor of the copy number of the neighboring probes. In contrast, in poorly covered regions, contiguous probes or loci might be many thousands of kilobases apart, making it more likely that at least one copy-number change has taken place, and consequently, a probe provides less information about the likely state of its neighboring probes. Therefore, unless we use a platform where all probes are equally spaced, we need to use the distance between probes (and not just the order) so that the information that consecutive probes provide is adequately accounted for.</p>
+			<p>Third, depending on the focus of the study, the analysis should be conducted either chromosome by chromosome, or genome-wide [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>]. Analyses at the chromosome level are appropriate to detect alterations in copy numbers of loci relative to the rest of the loci in that same chromosome, regardless of that chromosome's ploidy (a trivial example would be detection of copy-number changes in loci of the human Y chromosome in an otherwise diploid genome). On the other hand, detection of copy-number changes that affect most of a chromosome often require genome-wide analysis (in chromosome-wide analysis, as the mean or median chromosome level is used as the reference, detection of such changes is virtually impossible). Moreover, the use of genome-wide analysis can offer statistical advantages (e.g., reduced variance of estimation). As both types of analysis offer complementary information because they focus on different biological phenomena (chromosomal gains/losses versus gains of loci within chromosomes), a suitable method should allow these two approaches.</p>
+			<sec id="s1a">
+				<title>Previous Approaches</title>
+				<p>Available methods for the analysis of aCGH fail some or most of these requirements. Smoothing techniques [<xref ref-type="bibr" rid="pcbi-0030122-b021">21</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b023">23</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b028">28</xref>] do not use interprobe distance, nor do they provide posterior estimates of the likely state of each probe/clone, and data from each chromosome are analyzed independently of each other. Hidden Markov models (HMMs) and related techniques offer a flexible modeling framework, and can provide probabilities of alteration [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>]. Some HMM-based methods [<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b019">19</xref>], however, do not incorporate the distance between probes, assuming instead that interprobe distance is constant. In addition, most of them do not deal satisfactorily with the unknown number of hidden states (the true number of states of copy number). Some methods fix in advance the number of hidden states to three [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b015">15</xref>] or four [<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>]: prespecification of the number of states has the consequence of jumbling all changes involving multiple gains into a single state with a common mean, which is biologically questionable [<xref ref-type="bibr" rid="pcbi-0030122-b022">22</xref>], especially as the resolution of the technology improves. Moreover, the identification of important genes for disease sometimes requires examining the amplitude of CNAs and not just their presence and location [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>]; collapsing states into three or four, however, precludes examining in fine enough detail the amplitude of CNAs. A better approach would provide posterior probabilities of the number of states; using such a procedure over many different experiments will tell us whether three- or four-state models are a reasonable simplification. Of those methods that do not assume a fixed number of hidden states [<xref ref-type="bibr" rid="pcbi-0030122-b018">18</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b019">19</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b022">22</xref>], one of them [<xref ref-type="bibr" rid="pcbi-0030122-b022">22</xref>] cannot be used for questions about the number of hidden states, or for breaking the data into more categories than gained/lost/no change, which are increasingly important questions with higher-resolution techniques and are needed for distinguishing regions of moderate copy gains from regions of large copy gains; see also above for relationship between amplitude of CNAs and presence of disease genes. The remaining two [<xref ref-type="bibr" rid="pcbi-0030122-b018">18</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b019">19</xref>] fit HMMs for a range of number of states and then use Akaike information criterion (AIC)–based model selection, but AIC-based selection with HMMs has not been theoretically justified [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>] and does not provide a probability of the likely number of states; moreover, selecting a single model leads to underestimation of the true variability in the data. These two methods, in addition, use a final clustering step of hidden states that introduces several ad hoc decisions.</p>
+			</sec>
+			<sec id="s1b">
+				<title>Statistical Model: Overview</title>
+				<p>We have developed a method, reversible jump aCGH (RJaCGH), that fulfills the three requirements above, and does not suffer from the limitations discussed for other methods. Our method is applicable to aCGH from platforms including ROMA, oligonucleotide aCGH (oaCGH; including Agilent, NimbleGen, and many noncommercial, in-house oligonucleotide arrays), bacterial artificial chromosome (BAC), and cDNA arrays [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b013">13</xref>]. We start our modeling by noting that, for a given chromosome or genome, the copy numbers of genomic DNA (e.g., 0, 1, 2 copies, . . . ) of different probes or segments are an unknown finite number. Thus, probes or segments could be classified into several groups with respect to their (unknown) copy number. In addition, as mentioned above, we expect that the copy number of a probe will be similar to the copy number of its closest neighbors, with that expected similarity decreasing when probes are farther apart. Finally, for a given copy number, the aCGH fluorescence ratios should be centered around a log<sub>2</sub> value, with some random noise. We want to use the observed log-ratios to identify regions with altered copy number.</p>
+				<p>The biological features of this model (a finite number of unknown or hidden states that are indirectly measured, with states of close elements likely to be similar, and variable distances between probes) can be modeled with a nonhomogeneous HMM [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>]. To provide a direct estimate of the probability that a given probe or region has an altered copy number, we use a Bayesian model computed via Markov chain Monte Carlo (MCMC). Since we do not know the true number of hidden states, we fit models with varying numbers of hidden states and, to allow for transdimensional moves between models with different numbers of states, we used reversible jump [<xref ref-type="bibr" rid="pcbi-0030122-b030">30</xref>]. After running a large number of MCMC iterations, we can summarize the posterior probabilities. First, we obtain posterior probabilities for the number of states. Conditional on a given number of states, each model provides posterior distributions of the parameters of interest (e.g., means, variances, transition matrices). From the latter, we can obtain posterior probabilities that a probe is gained or lost. To obtain our final estimates, we incorporate the uncertainty in model selection by using Bayesian model averaging [<xref ref-type="bibr" rid="pcbi-0030122-b017">17</xref>], with estimates weighted by the posterior probability of each number of states, for the probabilities of probes being gained or lost. We call the complete statistical method RJaCGH (from reversible jump–based analysis of aCGH data).</p>
+			</sec>
+		</sec>
+		<sec id="s2">
+			<title>Results</title>
+			<p>We applied RJaCGH and the best performing alternative methods (based on two recent reviews [<xref ref-type="bibr" rid="pcbi-0030122-b020">20</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>]) to the 500 simulated datasets of [<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>] (see also <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>). These are data “...simulated to emulate the complexity of real tumor profiles” and designed to become “...a standard for systematic comparisons of computational segmentation approaches,” [<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>] and are not data simulated under our own model. To assess the effect of variable interprobe distance, we randomly deleted data points (see details in <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>) so that each original simulated dataset gives rise to another four datasets with (an average of) 10%, 25%, 50%, and 65% of observations missing. The length of these gaps is modeled by a Poisson distribution, so larger percentages of missing data correspond to larger variability in interprobe distances.</p>
+			<p>Results in <xref ref-type="fig" rid="pcbi-0030122-g001">Figure 1</xref> (see also <xref ref-type="fig" rid="pcbi-0030122-g001">Figure 1</xref> in <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>) show the excellent performance of RJaCGH, and how it outperforms alternative methods. Moreover, <xref ref-type="fig" rid="pcbi-0030122-g002">Figure 2</xref> (see also <xref ref-type="fig" rid="pcbi-0030122-g002">Figures 2</xref> and 3 in <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>) shows that the difference between RJaCGH and alternative approaches is accentuated when we consider jointly the effects of noise and variability in interprobe distance. Analysis using three other performance statistics (false discovery rate, sensitivity, and specificity) show the same overall patterns (see <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>, <xref ref-type="fig" rid="pcbi-0030122-g002">Figures 2</xref> and 3): for some specific statistics, RJaCGH can be second (but very close) to another approach; this other approach, however, performs poorly with respect to the remaining statistics.</p>
+			<fig id="pcbi-0030122-g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.0030122.g001</object-id>
+				<label>Figure 1</label>
+				<caption>
+					<title>Effects of Variability in Interprobe Distance (Percentage of Probes Missing) on Correct Classification</title>
+					<p>Shown are the mean and 95% confidence interval around the mean of the correct classification error rate. Each mean and confidence interval is computed from 500 datasets [<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>]; see text and <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref> for generation of interprobe distance variability. Alternative methods compared are ACE, developed by [<xref ref-type="bibr" rid="pcbi-0030122-b027">27</xref>]; BioHMM, a nonhomogeneous HMM by [<xref ref-type="bibr" rid="pcbi-0030122-b018">18</xref>]; DNAcopy with mergeLevels, with the original method developed by [<xref ref-type="bibr" rid="pcbi-0030122-b024">24</xref>] (and use of mergeLevels following [<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>]); HMM, a homogeneous HMM developed by [<xref ref-type="bibr" rid="pcbi-0030122-b019">19</xref>]; CGHseg, a random Gaussian process with abrupt changes in the mean by [<xref ref-type="bibr" rid="pcbi-0030122-b028">28</xref>]; and GLAD, which uses a nonparametric likelihood method with adaptive weights for breakpoint detection, by [<xref ref-type="bibr" rid="pcbi-0030122-b023">23</xref>].</p>
+				</caption>
+				<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.0030122.g001" xlink:type="simple"/>
+			</fig>
+			<fig id="pcbi-0030122-g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.0030122.g002</object-id>
+				<label>Figure 2</label>
+				<caption>
+					<title>Joint Effects of Variability in Interprobe Distance and Noise on Correct Classification</title>
+					<p>The same data are shown as those in <xref ref-type="fig" rid="pcbi-0030122-g001">Figure 1</xref>. The noise (standard deviation) of each sample is split into ten non-overlapping ranges, and each panel shows the mean correct classification success versus the proportion of missing probes (i.e., increasing levels of variance in interprobe distance). Each mean is based on approximately 50 samples. See <xref ref-type="fig" rid="pcbi-0030122-g001">Figure 1</xref> for method references.</p>
+				</caption>
+				<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.0030122.g002" xlink:type="simple"/>
+			</fig>
+			<p>This paper focuses on the statistical performance of the methods compared. In terms of speed, nevertheless, our approach is clearly the slowest one. We are currently working on improving the speed of the execution both by using more efficient algorithms and by using parallel computing.</p>
+			<p>Similar results are obtained when applying these methods to a real dataset of nine cell lines [<xref ref-type="bibr" rid="pcbi-0030122-b032">32</xref>], and when comparing the predicted ploidy with the known ploidy (see <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>, Figure 4). Overall, therefore, there is strong evidence that RJaCGH is the best performing of the existing methods.</p>
+		</sec>
+		<sec id="s3">
+			<title>Discussion</title>
+			<p>The excellent performance of RJaCGH is a result of the statistical method used, which is essentially a careful and rigorous development from first principles. We set out to obtain a method that allows us to seamlessly incorporate interprobe distances (to allow usage over varied technological platforms), that makes no untenable assumptions about the true number of copy levels (since this is likely to vary between datasets), that permits analysis at the chromosome and the genome level, and, finally, that returns posterior probabilities of alteration, because these posterior probabilities constitute the direct answer to the basic biomedical question (“Is this gene likely to have an altered copy number?”).</p>
+			<p>Based simply on our usage of interprobe distance, we should expect RJaCGH to perform better than all alternative approaches, with the possible exception of BioHMM [<xref ref-type="bibr" rid="pcbi-0030122-b018">18</xref>], as interprobe distance variability increases. Moreover, RJaCGH adapts to variable noise in the data, without the need for fine-tuning of parameters (all results reported are obtained from the default settings of RJaCGH). As noted above, the relative advantage of RJaCGH increases as the interprobe variability increases and the noise in the data increases, which shows that our theoretical developments have practical consequences and emphasizes the importance of both accounting for interprobe distance and appropriately modeling variance in the data.</p>
+			<p>In addition, we use Bayesian model averaging, which has been repeatedly shown [<xref ref-type="bibr" rid="pcbi-0030122-b033">33</xref>] not only to account for uncertainty in model selection but also to lead to point estimators and predictions that minimize mean square error. On its own, our usage of Bayesian model averaging could be largely responsible for the better performance of RJaCGH over all other methods, even in the absence of interprobe distance variability and when there is low noise in the data (left of <xref ref-type="fig" rid="pcbi-0030122-g001">Figure 1</xref>, and left of bottom-row panels in <xref ref-type="fig" rid="pcbi-0030122-g002">Figure 2</xref>). In addition, reversible jump allows us to consider a variety of models (regarding number of states), and its birth and split moves are also beneficial for a more thorough exploration of the posterior probability (within a model with a given number of states) when the density is multimodal. Finally, our method, in contrast to other approaches (e.g., DNAcopy), can identify single-clone aberrations, which might be key for large-scale genomic deregulation if the single-clone aberrations affect certain specific genes or promoters; for example, the inability to detect single-gene alterations is shown to have an effect in a study of pancreatic adenocarcinoma [<xref ref-type="bibr" rid="pcbi-0030122-b005">5</xref>], where the loss of the <italic>SMAD4</italic> tumor suppressor is undetected.</p>
+			<p>In addition to features that can be compared with other methods, RJaCGH has two unique features that set it apart from most alternative approaches. First, the user can analyze data at either the genome or the chromosome level, thus addressing different types of questions. Some approaches (e.g., BioHMM, HMM, GLAD, DNAcopy) allow us to perform genome-wide inferences, but they use essentially an ad hoc postprocessing of results of analysis that is conducted at the chromosome level. Finally, one of the main features of RJaCGH, its returning of posterior probabilities of CNAs, simply cannot be compared with most alternative methods as they do not provide this type of output. What most alternative approaches return are smoothed means, <italic>p</italic>-values, or a classification into states without any assessment of the uncertainty of this assignment to states. But a probability of alteration (which RJaCGH returns) is much easier to interpret and to use (with possibly different thresholds depending on the type of research question), and is often the direct answer to the basic biomedical question. The few alternative approaches that return probabilities of alteration [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>–<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>] all make the untenable assumption that the true number of biological states of alteration is three [<xref ref-type="bibr" rid="pcbi-0030122-b014">14</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b015">15</xref>] or four [<xref ref-type="bibr" rid="pcbi-0030122-b016">16</xref>].</p>
+			<p>Directly returning probabilities of alterations has profound consequences, both for current practices and for future developments. As argued above, these probabilities are the direct answer to the question “Does this gene have an altered copy number?”; <italic>p</italic>-values or smoothed means are not a direct (and often not even an indirect) answer to that question. In addition, the improvement in the resolution of aCGH techniques [<xref ref-type="bibr" rid="pcbi-0030122-b002">2</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b013">13</xref>] is increasingly allowing for multiple assayed spots per gene. Probabilities of alteration for each spot can be combined to find the gene-level probability of alteration, a distinct advantage over smoothed means or <italic>p</italic>-values.</p>
+			<p>For currently active research areas, the availability of rigorously obtained probabilities of alterations has far-reaching consequences, both in terms of the biological phenomena that can be exposed and as an avenue of further research. First, the availability of probabilities of alteration should improve the identification of regions with consistent alterations across samples [<xref ref-type="bibr" rid="pcbi-0030122-b034">34</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b035">35</xref>] in a statistically rigorous way (including, if needed, control of false discovery rate), and the detection of subgroups of samples according to recurrence patterns [<xref ref-type="bibr" rid="pcbi-0030122-b004">4</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b035">35</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b036">36</xref>]. Critical disease genes are often located in CNAs that are recurrent across individuals and that have at least some high-amplitude changes [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b035">35</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b037">37</xref>], and analysis of aCGH data has allowed us to identify subgroups, within established diseases, that could have therapeutic relevance (e.g., in glioblastoma [<xref ref-type="bibr" rid="pcbi-0030122-b004">4</xref>]). Available methods use the assignment of each gene to one state (equivalent to assuming that there is complete certainty in this assignment); however, we would not want to give the same weight, when looking for minimal common regions, to a gene with a probability of being gained of 51% and to a gene with a probability of being gained of 90%, since this practice will lead to a coarser definition of boundaries and can even preclude the detection of some minimal regions altogether. The inherent limitations of methods that use a simple categorization into gain/loss/no change with an assumed 100% certainty have already been recognized by some of the developers of such methods [<xref ref-type="bibr" rid="pcbi-0030122-b035">35</xref>]. Moreover, incorporation of amplitude of change, which might be a crucial feature of minimal common regions that harbor critical disease genes [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b005">5</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b035">35</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b037">37</xref>], is not feasible with some methods [<xref ref-type="bibr" rid="pcbi-0030122-b034">34</xref>], but should be straightforward by combining posterior probabilities and posterior means of each state, as returned from RJaCGH.</p>
+			<p>Second, posterior probabilities of being in a specific state, together with the estimated posterior mean of each state, can be used as the basis for a statistically rigorous and biologically sound approach for identifying breakpoints. At present, the identification of breakpoints depends completely on the resolution of the method, and does not allow us to combine the probability of membership in different states with the biological relevance of an estimated mean difference; however, the precise definition of boundaries and amplification maxima are important not only for the study of genomic copy numbers, but also for understanding the relationship between aCGH and expression data [<xref ref-type="bibr" rid="pcbi-0030122-b038">38</xref>].</p>
+			<p>Third, the model of RJaCGH can be extended to provide rigorous downstream analysis of aCGH, including patient classification [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>] and the integration of gene expression and proteomic data [<xref ref-type="bibr" rid="pcbi-0030122-b012">12</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b031">31</xref>]. CNA data analysis, compared with mRNA expression data, can be performed on formalin-fixed paraffin-embedded material, and CNAs define key events that drive tumorigenesis, and thus are probably more valuable as prognostic markers and as predictors of treatment response [<xref ref-type="bibr" rid="pcbi-0030122-b039">39</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b040">40</xref>]. Improved resolution of CNA data analysis, however, can be crucial in obtaining very valuable classifiers, as evidenced from the “almost success” of some studies attempting to differentiate <italic>BRCA2</italic> from <italic>BRCA1, BRCAX,</italic> and sporadic cases in breast tumors (see <xref ref-type="sec" rid="s3">discussion</xref> in [<xref ref-type="bibr" rid="pcbi-0030122-b040">40</xref>]); the finer resolution provided by probabilities and posterior mean estimates might be pivotal here. Incorporating expression and proteomic data, on the other hand, is the basis for the identification of copy-number changes that are significant in the development of disease [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b041">41</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b042">42</xref>]. Since changes in copy number are not always reflected in changes in expression [<xref ref-type="bibr" rid="pcbi-0030122-b001">1</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b005">5</xref>], analytical methods that provide finer resolution are crucial. Moreover, within a probabilistic framework it is possible to systematically and rigorously address questions of how CNAs in a given chromosome affect expression changes in genes located in other chromosomes, an increasingly important research question [<xref ref-type="bibr" rid="pcbi-0030122-b043">43</xref>]. Finally, the posterior probabilities and means returned from aCGH can be considered as denoised [<xref ref-type="bibr" rid="pcbi-0030122-b044">44</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b045">45</xref>] signals from the log<sub>2</sub> aCGH ratios that reflect underlying copy number variation; as such, these are highly relevant to the recent studies on the relationship between copy-number variation and complex phenotypes [<xref ref-type="bibr" rid="pcbi-0030122-b046">46</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b047">47</xref>], which emphasize the importance of copy-number variation in genetic diversity and disease in humans.</p>
+		</sec>
+		<sec id="s4">
+			<title>Materials and Methods</title>
+			<sec id="s4a">
+				<title>Model.</title>
+				<p>We use a nonhomogeneous HMM with Gaussian emissions. We can either fit one model to all the chromosomes of an array, or we can fit a different model for each chromosome of an array. Let <italic>n</italic> be the number of probes, and <italic>k</italic> the number of different copy numbers in the collection of probes. Let <italic>S<sub>i</sub></italic> be the true state (copy number) of the probe <italic>i</italic>: <italic>S<sub>i</sub></italic> = {<italic>1, …, k</italic>}<italic><sub>i</sub></italic> <sub>=1,...,<italic>n</italic></sub>. Let <italic>Y<sub>i</sub></italic> be the relative copy number of the probe <italic>i</italic>, that is the log ratio of fluorescence intensities between tumor and control samples. Let <italic>d<sub>i</sub></italic> be the distance in bases between probe <italic>i</italic> and probe <italic>i +</italic> 1. How distance is measured depends on the platform: distance can be the distance from the end of the spot to the start of the next, if the length of the spots is proportional to the length of the probe (so we have the same information for every probe), or the distance between the midpoint of the spots, if the length of the spots is not proportional to the length of the probe. We normalize these distances between 0 and 1 to increase numerical stability (with probes in adjacent bases with a scaled distance of 0).</p>
+				<p>We assume that {<italic>S<sub>i</sub></italic>} follows a nonhomogeneous first-order Markov process, as: <italic>P</italic>(<italic>S<sub>i</sub></italic> = <italic>s<sub>i</sub></italic> | <italic>S<sub>i</sub></italic><sub>−1</sub> = <italic>s<sub>i</sub></italic><sub>−1</sub>, <italic>X<sub>i</sub></italic><sub>−1</sub> = <italic>x<sub>i</sub></italic><sub>−1</sub>) = <inline-formula id="pcbi-0030122-ex001"><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.0030122.ex001" xlink:type="simple"/></inline-formula>
+					 Biologically, we expect that <inline-formula id="pcbi-0030122-ex002"><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.0030122.ex002" xlink:type="simple"/></inline-formula>
+					,the probability of staying in the same hidden state, is a decreasing function of <italic>X<sub>i</sub></italic><sub>−1</sub>, so the dependence of the state of a probe onto the next one is lower the farther the probes are. We also expect that when the distance between two probes is maximal, the state of a probe should be independent from the state of its predecessor. Thus, we model the transition probabilities as:
+					<disp-formula id="pcbi-0030122-e001"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e001" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msub><mml:mi>Q</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi><mml:mo>,</mml:mo><mml:mi>x</mml:mi></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:mfrac><mml:mrow><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mi>p</mml:mi><mml:mrow><mml:mo>&lcub;</mml:mo><mml:mrow><mml:mo>&minus;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>&plus;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mi>x</mml:mi></mml:mrow><mml:mo>&rcub;</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mstyle displaystyle='true'><mml:msubsup><mml:mo>&sum;</mml:mo><mml:mrow><mml:mi>p</mml:mi><mml:mo>&equals;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>k</mml:mi></mml:msubsup><mml:mrow><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mi>p</mml:mi><mml:mrow><mml:mo>&lcub;</mml:mo><mml:mrow><mml:mo>&minus;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>p</mml:mi></mml:mrow></mml:msub><mml:mo>&plus;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>p</mml:mi></mml:mrow></mml:msub><mml:mi>x</mml:mi></mml:mrow><mml:mo>&rcub;</mml:mo></mml:mrow></mml:mrow></mml:mstyle></mml:mrow></mml:mfrac></mml:mrow></mml:math> --></disp-formula>where <italic>β</italic> has the form:
+					<disp-formula id="pcbi-0030122-e002"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e002" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mi>&beta;</mml:mi><mml:mo>&equals;</mml:mo><mml:mrow><mml:mo stretchy='true'>(</mml:mo><mml:mtable><mml:mtr><mml:mtd><mml:mn>0</mml:mn></mml:mtd><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mover><mml:mi>&mldr;</mml:mi></mml:mover></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msub></mml:mrow></mml:mtd><mml:mtd><mml:mn>0</mml:mn></mml:mtd><mml:mtd><mml:mrow><mml:mover><mml:mi>&mldr;</mml:mi></mml:mover></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mi>&vellip;</mml:mi></mml:mtd><mml:mtd><mml:mi>&vellip;</mml:mi></mml:mtd><mml:mtd><mml:mi>&dellip;</mml:mi></mml:mtd><mml:mtd><mml:mi>&vellip;</mml:mi></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>k</mml:mi><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msub></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>k</mml:mi><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mover><mml:mi>&mldr;</mml:mi></mml:mover></mml:mrow></mml:mtd><mml:mtd><mml:mn>0</mml:mn></mml:mtd></mml:mtr></mml:mtable><mml:mo stretchy='true'>)</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>with all <italic>β<sub>ij</sub></italic> ≥ 0 <italic>∀ i, j</italic>. Finally, conditioned on {<italic>S<sub>i</sub></italic>}, {<italic>Y<sub>i</sub></italic>} follows a Gaussian process: <inline-formula id="pcbi-0030122-ex003"><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.0030122.ex003" xlink:type="simple"/></inline-formula>
+					
+				</p>
+				<p>Similar approaches have been used before with nonhomogeneous HMM [<xref ref-type="bibr" rid="pcbi-0030122-b048">48</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b049">49</xref>]. In our case, the transition matrix should fulfill the following biologically based properties: (1) the probability of remaining in the same hidden state should be a decreasing function of the distance between a probe and the previous probe; and (2) when the distance between two probes is maximal, the state of a probe should not be affected by the state of the previous probe. With the above parameterization, and since the diagonal of <italic>β</italic> is zero (which is also needed for the parameters to be uniquely defined), the probability of remaining in the same state <italic>i</italic> is <inline-formula id="pcbi-0030122-ex004"><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.0030122.ex004" xlink:type="simple"/></inline-formula>
+					, a decreasing function of distance (<italic>x</italic>). Moreover, as distances are scaled between 0 and 1, when the distance between two probes is 1, the probability of staying in the same state is <italic>1 / k</italic>, where <italic>k</italic> is the number of states; therefore, when the distance is maximal, the state of a probe does not depend on the state of the previous probe. (The value of this “maximal distance” beyond which two probes are considered independent is a parameter to the model, and can be adjusted taking into account the specific array characteristics).
+				</p>
+				<p>For computational reasons and modeling flexibility, we opted for Bayesian methods using MCMC. To fit models with varying number of hidden states, we used reversible jump. Suppose that we have a collection of <italic>K</italic> HMM models, and each of them has a number of <italic>k</italic> hidden states, from <italic>k =</italic> {<italic>1, . . ., K</italic>}. Let <italic>θ</italic>(<italic>k</italic>) be the HMM associated to <italic>k</italic>, that is, <italic>θ</italic>(<italic>k</italic>) <italic>=</italic> {<italic>μ</italic>(<italic>k</italic>)<italic>, σ</italic><sup>2</sup>(<italic>k</italic>)<italic>, β</italic>(<italic>k</italic>)}. The prior distributions for the model are the usual ones in mixture problems [<xref ref-type="bibr" rid="pcbi-0030122-b050">50</xref>]: <italic>p</italic>(<italic>k</italic>) is the prior for the number of hidden states with <italic>p</italic>(<italic>k</italic>) <italic>~ U</italic>(<italic>1,k</italic>), <italic>p</italic>(<italic>θ</italic>(<italic>k</italic>)| <italic>k</italic>) is the prior of the HMM conditioned to <italic>k</italic>, the number of hidden states with <italic>u</italic>(<italic>k</italic>) ~ <italic>N</italic>(<italic>α</italic>,<italic>ϱ</italic><sup>2</sup>), where <italic>α</italic> and ϱ are the median and range of <italic>Y<sub>i</sub></italic>; <italic>σ</italic><sup>2</sup>(<italic>k</italic>) <italic>~ IG</italic>(<italic>ka, g</italic>), where <italic>ka</italic> is 2 and <italic>g</italic> is <italic>ϱ</italic><sup>2</sup>(<italic>Y<sub>i</sub></italic>) / 50; <italic>βk</italic>) ~ <italic>Γ</italic>(<italic>1, 1</italic>). The likelihood of the model, <italic>L</italic>(<italic>y; k, θ</italic>(<italic>k</italic>)) can be computed by forward filtering [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>], so the joint distribution is <italic>p</italic>(<italic>k</italic>)<italic>p</italic>(<italic>θ</italic>(<italic>k</italic>)|<italic>k</italic>) <italic>L</italic>(<italic>y; k, θ</italic>(<italic>k</italic>)).</p>
+			</sec>
+			<sec id="s4b">
+				<title>Estimation and fitting.</title>
+				<p>We can draw samples from the posterior distribution through a reversible jump MCMC (RJMCMC) algorithm [<xref ref-type="bibr" rid="pcbi-0030122-b030">30</xref>]. In RJMCMC, we explore the posterior distribution of possible models, jumping not only within a model but also between models with a different number of parameters. To match the difference between degrees of freedom, some random numbers <italic>u</italic> with density <italic>P</italic>(<italic>u</italic>) are generated, so if we are in state <italic>x</italic>, the new one is proposed in a deterministic way <italic>x′</italic>(<italic>x,u</italic>). The reverse move is the inverse of that function: <italic>x</italic>(<italic>x′,u′</italic>). This way, the usual Metropolis-Hastings acceptance probability can be computed [<xref ref-type="bibr" rid="pcbi-0030122-b050">50</xref>]:
+					<disp-formula id="pcbi-0030122-e003"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e003" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mrow><mml:mo>&lcub;</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mfrac><mml:mrow><mml:mi>L</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:mi>y</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy='false'>)</mml:mo><mml:mi>p</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:msup><mml:mi>x</mml:mi><mml:mo>&prime;</mml:mo></mml:msup><mml:mo stretchy='false'>)</mml:mo><mml:mi>p</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:msup><mml:mi>u</mml:mi><mml:mo>&prime;</mml:mo></mml:msup><mml:mo>|</mml:mo><mml:msup><mml:mi>x</mml:mi><mml:mo>&prime;</mml:mo></mml:msup><mml:mo stretchy='false'>)</mml:mo></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:mi>y</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy='false'>)</mml:mo><mml:mi>p</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy='false'>)</mml:mo><mml:mi>p</mml:mi><mml:mo stretchy='false'>(</mml:mo><mml:mi>u</mml:mi><mml:mo>|</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy='false'>)</mml:mo></mml:mrow></mml:mfrac><mml:mo>|</mml:mo><mml:mi>J</mml:mi><mml:mo>|</mml:mo></mml:mrow><mml:mo>&rcub;</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>where <italic>L</italic>(<italic>y</italic> | <italic>x)</italic> is the likelihood, <italic>p</italic>(<italic>x</italic>) are the priors, <italic>p</italic>(<italic>u | x</italic>) are the densities of the candidates, and <inline-formula id="pcbi-0030122-ex005"><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.0030122.ex005" xlink:type="simple"/></inline-formula>
+					 the determinant of the Jacobian of the change of variable. We combine several Metropolis steps in a sweep [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b051">51</xref>]. 
+				</p>
+				<p>(1) Update HMM of a model using a series of Metropolis-Hastings moves. (We do not use Gibbs Sampler to avoid the hidden state sequence from becoming part of the state space of the sampler, so dimensionality is reduced and reaching convergence is easier). </p>
+				<p>(2) Update model (birth/death). When we have <italic>r</italic> states, a birth/death move is chosen with probabilities <italic>p<sub>birth</sub></italic>(<italic>r</italic>) and <italic>p<sub>death</sub></italic>(<italic>r</italic>) (these are 1/2 except in the cases when no movement of that type can be made, [e.g., a death move when there is only one state]). If a birth move is selected, a new state is created from the prior distributions and accepted with probability
+					<disp-formula id="pcbi-0030122-e004"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e004" xlink:type="simple"/><!-- <mml:math display='block'><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mrow><mml:mo>&lcub;</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>p</mml:mi></mml:mrow><mml:mo>&rcub;</mml:mo></mml:mrow></mml:mrow><mml:mtext>, where</mml:mtext></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>p</mml:mi><mml:mo>&equals;</mml:mo><mml:mfrac><mml:mrow><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>y</mml:mi><mml:mo>;</mml:mo><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>k</mml:mi><mml:mo>&equals;</mml:mo><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mrow><mml:mi>d</mml:mi><mml:mi>e</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>y</mml:mi><mml:mo>;</mml:mo><mml:mi>r</mml:mi><mml:mo>,</mml:mo><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>r</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>k</mml:mi><mml:mo>&equals;</mml:mo><mml:mi>r</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mi>p</mml:mi><mml:mrow><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>r</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mi>r</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mo>&times;</mml:mo><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>J</mml:mi><mml:mrow><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>r</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mtext>and</mml:mtext><mml:mrow><mml:msub><mml:mi>J</mml:mi><mml:mrow><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>r</mml:mi><mml:mi>t</mml:mi><mml:mi>h</mml:mi></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math> --></disp-formula>If a death move is chosen, a random state is deleted  with a probability inverse to <xref ref-type="disp-formula" rid="pcbi-0030122-e004">Equation 4</xref>. 
+				</p>
+				<p>(3) Update model (split/combine). A split/combine move is attempted with probabilities <italic>p<sub>split</sub></italic>(<italic>r</italic>) and <italic>p<sub>combine</sub></italic>(r) (again, 1/2 except when a move cannot be made). If a split move is selected, an existing state <italic>i</italic><sub>0</sub> is split into two, <italic>i</italic><sub>1</sub>, <italic>i</italic><sub>2</sub>:
+					<disp-formula id="pcbi-0030122-e006"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e006" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msub><mml:mi>&mu;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&mu;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&minus;</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&mu;</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>&mu;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&mu;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&plus;</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&mu;</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&mu;</mml:mi></mml:msub><mml:mo>~</mml:mo><mml:mi>N</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:msub><mml:mi>&tau;</mml:mi><mml:mi>&mu;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>
+					<disp-formula id="pcbi-0030122-e007"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e007" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msubsup><mml:mi>&sigma;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:mo>&equals;</mml:mo><mml:msubsup><mml:mi>&sigma;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&sigma;</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mtext>&ensp;</mml:mtext><mml:msubsup><mml:mi>&sigma;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:mo>&equals;</mml:mo><mml:msubsup><mml:mi>&sigma;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>&minus;</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&sigma;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>,&ensp;</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&sigma;</mml:mi></mml:msub><mml:mo>~</mml:mo><mml:mi>&beta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow><mml:mo>)</mml:mo><mml:mo>.</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>Split column
+					<disp-formula id="pcbi-0030122-e008"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e008" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>~</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:msub><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&beta;</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&beta;</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow></mml:math> --></disp-formula> 
+					<disp-formula id="pcbi-0030122-e009"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e009" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&beta;</mml:mi></mml:msub><mml:mo>~</mml:mo><mml:mi>L</mml:mi><mml:mi>N</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:msub><mml:mi>&tau;</mml:mi><mml:mi>&beta;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext>for</mml:mtext><mml:mi>i</mml:mi><mml:mo>&ne;</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:math> --></disp-formula>Split row
+					<disp-formula id="pcbi-0030122-e010"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e010" xlink:type="simple"/><!-- <mml:math display='block'><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>~</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mi>U</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>&minus;</mml:mo><mml:msub><mml:mi>U</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mtext>where</mml:mtext><mml:msub><mml:mi>U</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>~</mml:mo><mml:mi>&beta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mn>2</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mtext>for</mml:mtext><mml:mi>j</mml:mi><mml:mo>&ne;</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mtd></mml:mtr></mml:mtable></mml:math> --></disp-formula> 
+					<disp-formula id="pcbi-0030122-e011"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e011" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:msub><mml:mo>~</mml:mo><mml:mi>&Gamma;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo><mml:mo>.</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>This move is accepted with probability
+					<disp-formula id="pcbi-0030122-e012"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e012" xlink:type="simple"/><!-- <mml:math display='block'><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mrow><mml:mo>&lcub;</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>p</mml:mi></mml:mrow><mml:mo>&rcub;</mml:mo></mml:mrow></mml:mrow><mml:mtext>, where</mml:mtext></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>p</mml:mi><mml:mo>&equals;</mml:mo><mml:mfrac><mml:mrow><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>y</mml:mi><mml:mo>;</mml:mo><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>y</mml:mi><mml:mo>;</mml:mo><mml:mi>r</mml:mi><mml:mo>,</mml:mo><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>r</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math> --></disp-formula>
+					<disp-formula id="pcbi-0030122-e013"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e013" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mo>&times;</mml:mo><mml:mfrac><mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>k</mml:mi><mml:mo>&equals;</mml:mo><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mtext>combine</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>k</mml:mi><mml:mo>&equals;</mml:mo><mml:mi>r</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>&theta;</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>r</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mtext>split</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mi>r</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>r</mml:mi><mml:mo>&plus;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math> --></disp-formula>
+					<disp-formula id="pcbi-0030122-e014"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e014" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mo>&times;</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mn>2</mml:mn><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&mu;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&sigma;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mstyle displaystyle='true'><mml:mo>&Pi;</mml:mo><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&sigma;</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mstyle><mml:mstyle displaystyle='true'><mml:mo>&Pi;</mml:mo><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>U</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mstyle></mml:mrow></mml:mfrac><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>J</mml:mi><mml:mrow><mml:mtext>split</mml:mtext></mml:mrow></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>
+					<disp-formula id="pcbi-0030122-e015"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e015" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mrow><mml:mtext>and</mml:mtext><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>J</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>i</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow><mml:mo>&equals;</mml:mo><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msup><mml:mn>2</mml:mn><mml:mi>r</mml:mi></mml:msup><mml:msubsup><mml:mi>&sigma;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:mstyle displaystyle='true'><mml:munder><mml:mo>&Pi;</mml:mo><mml:mrow><mml:mi>j</mml:mi><mml:mo>&ne;</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:munder><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mstyle><mml:mstyle displaystyle='true'><mml:munder><mml:mo>&Pi;</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>&ne;</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:munder><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>&beta;</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>i</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>&epsiv;</mml:mi><mml:mi>&beta;</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mstyle></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:math> --></disp-formula>The split move must follow the adjacency condition [<xref ref-type="bibr" rid="pcbi-0030122-b050">50</xref>]: the resulting states must be closer between them than to any other existing ones. If a combine step is selected, the symmetric move is performed, and the inverse probability of acceptance is computed.
+				</p>
+				<p>The combination of birth and split moves makes it possible not only to visit models with a different number of parameters, but also to explore more thoroughly the posterior probability in the case of a parameter with a multimodal density.</p>
+				<p>These moves are common ones [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b051">51</xref>], but we have changed several aspects of their design to improve the probability of acceptance, which is the most difficult step in reversible jump [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b030">30</xref>,<xref ref-type="bibr" rid="pcbi-0030122-b051">51</xref>]. We constrain the variance of every state so that it cannot be greater than the variance of the entire data. Also, we have added the adjacency condition mentioned before, and used centering proposals [<xref ref-type="bibr" rid="pcbi-0030122-b052">52</xref>]. To prevent label-switching of states, we have ordered the states according to means after every iteration of the sweep [<xref ref-type="bibr" rid="pcbi-0030122-b050">50</xref>].</p>
+			</sec>
+			<sec id="s4c">
+				<title>Inference.</title>
+				<p>We run the former algorithm a large number of times (e.g., 50,000) and, after discarding the first iterations as burn-in, we keep the last (e.g., 10,000) samples as observations from the joint distribution so that we can make inferences from it. For every model that has been visited, we obtain the posterior probabilities of the mean copy number of every state, the variance of the copy number of every state, and the function of transitions between hidden states. By counting the number of times that each model has been visited, we obtain an estimate of the posterior probability of each model (i.e., we avoid using Bayesian information criterion [BIC] or AIC). Then, applying the Viterbi algorithm [<xref ref-type="bibr" rid="pcbi-0030122-b029">29</xref>] to every sample obtained from the MCMC, and, as this sample is a function of the HMM, we can obtain its posterior probability, something that usual Viterbi cannot. From the Viterbi paths for all the samples, we can then compute the posterior probability that a probe belongs to every state or the probability that a sequence of probes is in a given state.</p>
+				<p>When obtaining posterior probabilities of copy-number change, we use Bayesian model averaging [<xref ref-type="bibr" rid="pcbi-0030122-b017">17</xref>] over all models visited. Let <italic>S<sub>i</sub></italic> be the lost, gained, no-change status of probe <italic>i</italic>, <italic>K</italic> the set of the models considered (in our case, that would be HMMs with 1, . . ., <italic>K</italic> number of states), <italic>M<sub>k</sub></italic> the model with <italic>k</italic> number of states, and <italic>S<sub>i</sub></italic> | <italic>M<sub>k</sub></italic> the state of probe <italic>i</italic> according to model <italic>k</italic>. We compute the unconditional (with respect to model selection) probability for the probe <italic>i</italic> as:
+					<disp-formula id="pcbi-0030122-e016"><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.0030122.e016" xlink:type="simple"/><!-- <mml:math display='block'><mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>s</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mi>y</mml:mi></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>&equals;</mml:mo><mml:mstyle displaystyle='true'><mml:munder><mml:mo>&sum;</mml:mo><mml:mrow><mml:mi>k</mml:mi><mml:mo>&isin;</mml:mo><mml:mi>K</mml:mi></mml:mrow></mml:munder><mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>M</mml:mi><mml:mi>k</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mi>y</mml:mi></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>p</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>&equals;</mml:mo><mml:msub><mml:mi>s</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>M</mml:mi><mml:mi>k</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>y</mml:mi></mml:mrow></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mstyle><mml:mo>.</mml:mo></mml:mrow></mml:math> --></disp-formula>
+				</p>
+			</sec>
+			<sec id="s4d">
+				<title>Checking convergence and influence of priors.</title>
+				<p>As in any MCMC approach, it is crucial to assess convergence of the  sampler. We follow common practice [<xref ref-type="bibr" rid="pcbi-0030122-b053">53</xref>] of running several  chains in parallel. The convergence of the sampler depends strongly on  the distribution of the candidates in Metropolis-Hastings. That is,  for every iteration, a new value for the parameters is proposed from a  distribution centered in their current values. The standard deviation  of that distribution must be chosen in a way that samples explore all  the parameter space. These standard deviations are not parameters of  the model in the sense that different values give different fits, but  values that can speed up convergence of the algorithm. The convergence  of the posterior probability of the number of hidden states is reached  when a large enough number of transdimensional moves is made. This  number need not to be large if the likelihood is substantially higher  in a particular model and data size is big enough. The birth and death  moves only depend on the priors, but the split and combine moves  depend also on their own design and the values of  <italic>τ<sub>μ</sub></italic> and  <italic>τ<sub>β</sub></italic> (see <xref ref-type="disp-formula" rid="pcbi-0030122-e006">Equation    5</xref> and <xref ref-type="disp-formula" rid="pcbi-0030122-e009">Equation 7</xref>). The priors chosen have been extensively tested in mixture models [<xref ref-type="bibr" rid="pcbi-0030122-b050">50</xref>]. In addition, the priors and rest of the parameters have very little effect: even small CGH arrays contain thousands of points, so that the likelihood from the data dominates any prior. With the 2,500 simulated datasets analyzed, we have only needed to specify the number of burn-in—50,000—and to-keep samples—10,000, and the number of chains—four, and in only nine cases was there evidence of nonconvergence, which was solved by rerunning the samplers.</p>
+			</sec>
+			<sec id="s4e">
+				<title>Implementation and analysis.</title>
+				<p>We have implemented RJaCGH using C (for the sweep algorithm) and R [<xref ref-type="bibr" rid="pcbi-0030122-b054">54</xref>], and all analysis and comparisons have been done in R. The code that implements RJaCGH is freely available from the usual Comprehensive R Archive Network (CRAN) repositories as package RJaCGH (<ext-link ext-link-type="uri" xlink:href="http://cran.r-project.org/src/contrib/Descriptions/RJaCGH.html" xlink:type="simple">http://cran.r-project.org/src/contrib/Descriptions/RJaCGH.html</ext-link>) or from the repository at Launchpad (<ext-link ext-link-type="uri" xlink:href="https://launchpad.net/rjacgh" xlink:type="simple">https://launchpad.net/rjacgh</ext-link>). All data and code used for this paper are also publicly and freely available (see details in <xref ref-type="supplementary-material" rid="pcbi-0030122-sd001">Protocol S1</xref>).</p>
+			</sec>
+		</sec>
+		<sec id="s5">
+			<title>Supporting Information</title>
+			<supplementary-material id="pcbi-0030122-sd001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.0030122.sd001" xlink:type="simple">
+				<label>Protocol S1</label>
+				<caption>
+					<title>Supplementary Material</title>
+					<p>(551 KB PDF)</p>
+				</caption>
+			</supplementary-material>
+		</sec>
+	</body>
+	<back>
+		<ack>
+			<p>C. Lázaro-Perea, A. Alibés, L. Hsu, D. Grove, two anonymous reviewers, and J. F. Poyatos especially provided discussion and comments on the paper. RDU is partially supported by the Ramón y Cajal programme of the Spanish Ministry of Education and Science (MEC).</p>
+		</ack>
+		
+		<glossary>
+			<title>Abbreviations</title>
+			<def-list>
+				<def-item>
+					<term>aCGH</term>
+					<def>
+						<p>array-based comparative genomic hybridization</p>
+					</def>
+				</def-item>
+				<def-item>
+					<term>CNA</term>
+					<def>
+						<p>copy-number alteration</p>
+					</def>
+				</def-item>
+				<def-item>
+					<term>HMM</term>
+					<def>
+						<p>hidden Markov model</p>
+					</def>
+				</def-item>
+				<def-item>
+					<term>MCMC</term>
+					<def>
+						<p>Markov chain Monte Carlo</p>
+					</def>
+				</def-item>
+				<def-item>
+					<term>RJaCGH</term>
+					<def>
+						<p>reversible jump aCGH</p>
+					</def>
+				</def-item>
+				<def-item>
+					<term>RJMCMC</term>
+					<def>
+						<p>reversible jump MCMC</p>
+					</def>
+				</def-item>
+			</def-list>
+		</glossary>
+		<ref-list>
+			<title>References</title>
+			<ref id="pcbi-0030122-b001">
+<label>1</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Pinkel</surname>
+							<given-names>D</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Albertson</surname>
+							<given-names>DG</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>Array comparative genomic hybridization and its applications in cancer.</article-title>
+					<source>Nat Genet</source>
+					<volume>37</volume>
+					<issue>(Supplement)</issue>
+					<fpage>S11</fpage>
+					<lpage>S17</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b002">
+<label>2</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Lockwood</surname>
+							<given-names>WW</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Chari</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Chi</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lam</surname>
+							<given-names>WLa</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>Recent advances in array comparative genomic hybridization technologies and their applications in human genetics.</article-title>
+					<source>Eur J Hum Genet</source>
+					<volume>14</volume>
+					<fpage>139</fpage>
+					<lpage>148</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b003">
+<label>3</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Urban</surname>
+							<given-names>AE</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Korbel</surname>
+							<given-names>JO</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Selzer</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Richmond</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Hacker</surname>
+							<given-names>A</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>High-resolution mapping of DNA copy alterations in human chromosome 22 using high-density tiling oligonucleotide arrays.</article-title>
+					<source>Proc Natl Acad Sci U S A</source>
+					<volume>103</volume>
+					<fpage>4534</fpage>
+					<lpage>4539</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b004">
+<label>4</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Misra</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Pellarin</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Nigro</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Smirnov</surname>
+							<given-names>I</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Moore</surname>
+							<given-names>D</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2005</year>
+					<article-title>Array comparative genomic hybridization identifies genetic subgroups in grade 4 human astrocytoma.</article-title>
+					<source>Clin Cancer Res</source>
+					<volume>11</volume>
+					<fpage>2907</fpage>
+					<lpage>2918</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b005">
+<label>5</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Aguirre</surname>
+							<given-names>AJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Brennan</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Bailey</surname>
+							<given-names>G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Sinha</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Feng</surname>
+							<given-names>B</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2004</year>
+					<article-title>High-resolution characterization of the pancreatic adenocarcinoma genome.</article-title>
+					<source>Proc Natl Acad Sci U S A</source>
+					<volume>101</volume>
+					<fpage>9067</fpage>
+					<lpage>9072</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b006">
+<label>6</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Sebat</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lakshmi</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Troge</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Alexander</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Young</surname>
+							<given-names>J</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2004</year>
+					<article-title>Large-scale copy number polymorphism in the human genome.</article-title>
+					<source>Science</source>
+					<volume>305</volume>
+					<fpage>525</fpage>
+					<lpage>528</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b007">
+<label>7</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Forozan</surname>
+							<given-names>F</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Mahlamäki</surname>
+							<given-names>EH</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Monni</surname>
+							<given-names>O</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Chen</surname>
+							<given-names>Y</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Veldman</surname>
+							<given-names>R</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2000</year>
+					<article-title>Comparative genomic hybridization analysis of 38 breast cancer cell lines: A basis for interpreting complementary DNA microarray data.</article-title>
+					<source>Cancer Res</source>
+					<volume>60</volume>
+					<fpage>4519</fpage>
+					<lpage>4525</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b008">
+<label>8</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Heiskanen</surname>
+							<given-names>MA</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Bittner</surname>
+							<given-names>ML</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Chen</surname>
+							<given-names>Y</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Khan</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Adler</surname>
+							<given-names>KE</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2000</year>
+					<article-title>Detection of gene amplification by genomic hybridization to cDNA microarrays.</article-title>
+					<source>Cancer Res</source>
+					<volume>60</volume>
+					<fpage>799</fpage>
+					<lpage>802</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b009">
+<label>9</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Holzmann</surname>
+							<given-names>K</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Kohlhammer</surname>
+							<given-names>H</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Schwaenen</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wessendorf</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Kestler</surname>
+							<given-names>HA</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2004</year>
+					<article-title>Genomic DNA-chip hybridization reveals a higher incidence of genomic amplifications in pancreatic cancer than conventional comparative genomic hybridization and leads to the identification of novel candidate genes.</article-title>
+					<source>Cancer Res</source>
+					<volume>64</volume>
+					<fpage>4428</fpage>
+					<lpage>4433</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b010">
+<label>10</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Veltman</surname>
+							<given-names>JA</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Fridlyand</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Pejavar</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Olshen</surname>
+							<given-names>AB</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Korkola</surname>
+							<given-names>JE</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2003</year>
+					<article-title>Array-based comparative genomic hybridization for genome-wide screening of DNA copy number in bladder tumors.</article-title>
+					<source>Cancer Res</source>
+					<volume>63</volume>
+					<fpage>2872</fpage>
+					<lpage>2880</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b011">
+<label>11</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Vogelstein</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Kinzler</surname>
+							<given-names>KW</given-names>
+						</name>
+					</person-group>
+					<year>2004</year>
+					<article-title>Cancer genes and the pathways they control.</article-title>
+					<source>Nat Med</source>
+					<volume>10</volume>
+					<fpage>789</fpage>
+					<lpage>799</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b012">
+<label>12</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Pollack</surname>
+							<given-names>JR</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Sørlie</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Perou</surname>
+							<given-names>CM</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Rees</surname>
+							<given-names>CA</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Jeffrey</surname>
+							<given-names>SS</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2002</year>
+					<article-title>Microarray analysis reveals a major direct role of DNA copy number alteration in the transcriptional program of human breast tumors.</article-title>
+					<source>Proc Natl Acad Sci U S A</source>
+					<volume>99</volume>
+					<fpage>12963</fpage>
+					<lpage>12968</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b013">
+<label>13</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Ylstra</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>van den Ijssel</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Carvalho</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Brakenhoff</surname>
+							<given-names>RH</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Meijer</surname>
+							<given-names>GA</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>BAC to the future! or oligonucleotides: A perspective for micro array comparative genomic hybridization (array CGH).</article-title>
+					<source>Nucleic Acids Res</source>
+					<volume>34</volume>
+					<fpage>445</fpage>
+					<lpage>450</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b014">
+<label>14</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Engler</surname>
+							<given-names>D</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Mohaptra</surname>
+							<given-names>G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Louis</surname>
+							<given-names>D</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Betensky</surname>
+							<given-names>R</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>A pseudolikelihood approach for simultaneous analysis of array comparative genomic hybridizations.</article-title>
+					<source>Biostatistics</source>
+					<volume>7</volume>
+					<fpage>399</fpage>
+					<lpage>421</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b015">
+<label>15</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Broët</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Richardson</surname>
+							<given-names>S</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>Detection of gene copy number changes in CGH microarrays using a spatially correlated mixture model.</article-title>
+					<source>Bioinformatics</source>
+					<volume>22</volume>
+					<fpage>911</fpage>
+					<lpage>918</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b016">
+<label>16</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Shah</surname>
+							<given-names>SP</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Xuan</surname>
+							<given-names>X</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Deleeuw</surname>
+							<given-names>RJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Khojasteh</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lam</surname>
+							<given-names>WL</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Integrating copy number polymorphisms into array CGH analysis using a robust HMM.</article-title>
+					<source>Bioinformatics</source>
+					<volume>22</volume>
+					<fpage>e431</fpage>
+					<lpage>e439</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b017">
+<label>17</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Hoeting</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Madigan</surname>
+							<given-names>H</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Raftery</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Volinsky</surname>
+							<given-names>C</given-names>
+						</name>
+					</person-group>
+					<year>1999</year>
+					<article-title>Bayesian model averaging: A tutorial.</article-title>
+					<source>Stat Sci</source>
+					<volume>14</volume>
+					<fpage>382</fpage>
+					<lpage>417</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b018">
+<label>18</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Marioni</surname>
+							<given-names>JC</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Thorne</surname>
+							<given-names>NP</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Tavaré</surname>
+							<given-names>S</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>BioHMM: A heterogeneous hidden Markov model for segmenting array CGH data.</article-title>
+					<source>Bioinformatics</source>
+					<volume>22</volume>
+					<fpage>1144</fpage>
+					<lpage>1146</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b019">
+<label>19</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Fridlyand</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Snijders</surname>
+							<given-names>AM</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Pinkel</surname>
+							<given-names>D</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Albertson</surname>
+							<given-names>DGa</given-names>
+						</name>
+					</person-group>
+					<year>2004</year>
+					<article-title>Hidden Markov models approach to the analysis of array CGH data.</article-title>
+					<source>J Multivariate Anal</source>
+					<volume>90</volume>
+					<fpage>132</fpage>
+					<lpage>153</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b020">
+<label>20</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Lai</surname>
+							<given-names>WRR</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Johnson</surname>
+							<given-names>MDD</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Kucherlapati</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Park</surname>
+							<given-names>PJJ</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>Comparative analysis of algorithms for identifying amplifications and deletions in array CGH data.</article-title>
+					<source>Bioinformatics</source>
+					<volume>21</volume>
+					<fpage>3763</fpage>
+					<lpage>3770</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b021">
+<label>21</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Huang</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wu</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lizardi</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Zhao</surname>
+							<given-names>H</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>Detection of DNA copy number alterations using penalized least squares regression.</article-title>
+					<source>Bioinformatics</source>
+					<volume>21</volume>
+					<fpage>3811</fpage>
+					<lpage>3817</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b022">
+<label>22</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Daruwala</surname>
+							<given-names>RS</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Rudra</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Ostrer</surname>
+							<given-names>H</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lucito</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wigler</surname>
+							<given-names>M</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2004</year>
+					<article-title>A versatile statistical analysis algorithm to detect genome copy number variation.</article-title>
+					<source>Proc Natl Acad Sci U S A</source>
+					<volume>101</volume>
+					<fpage>16292</fpage>
+					<lpage>16297</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b023">
+<label>23</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Hupé</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Stransky</surname>
+							<given-names>N</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Thiery</surname>
+							<given-names>JP</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Radvanyi</surname>
+							<given-names>F</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Barillot</surname>
+							<given-names>E</given-names>
+						</name>
+					</person-group>
+					<year>2004</year>
+					<article-title>Analysis of array CGH data: From signal ratio to gain and loss of DNA regions.</article-title>
+					<source>Bioinformatics</source>
+					<volume>20</volume>
+					<fpage>3413</fpage>
+					<lpage>3422</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b024">
+<label>24</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Olshen</surname>
+							<given-names>AB</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Venkatraman</surname>
+							<given-names>ES</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lucito</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wigler</surname>
+							<given-names>M</given-names>
+						</name>
+					</person-group>
+					<year>2004</year>
+					<article-title>Circular binary segmentation for the analysis of array-based DNA copy number data.</article-title>
+					<source>Biostatistics</source>
+					<volume>5</volume>
+					<fpage>557</fpage>
+					<lpage>572</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b025">
+<label>25</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Price</surname>
+							<given-names>TS</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Regan</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Mott</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Hedman</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Honey</surname>
+							<given-names>B</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2005</year>
+					<article-title>SW-array: A dynamic programming solution for the identification of copy-number changes in genomic DNA using array comparative genome hybridization data.</article-title>
+					<source>Nucleic Acids Res</source>
+					<volume>33</volume>
+					<fpage>3455</fpage>
+					<lpage>3464</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b026">
+<label>26</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Hsu</surname>
+							<given-names>L</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Self</surname>
+							<given-names>SG</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Grove</surname>
+							<given-names>D</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Randolph</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wang</surname>
+							<given-names>K</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2005</year>
+					<article-title>Denoising array-based comparative genomic hybridization data using wavelets.</article-title>
+					<source>Biostatistics</source>
+					<volume>6</volume>
+					<fpage>211</fpage>
+					<lpage>226</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b027">
+<label>27</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Lingjaerde</surname>
+							<given-names>OC</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Baumbusch</surname>
+							<given-names>LO</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Liestøl</surname>
+							<given-names>K</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Glad</surname>
+							<given-names>IK</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Borresen-Dale</surname>
+							<given-names>AL</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>CGH-explorer: A program for analysis of array-CGH data.</article-title>
+					<source>Bioinformatics</source>
+					<volume>21</volume>
+					<fpage>821</fpage>
+					<lpage>822</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b028">
+<label>28</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Picard</surname>
+							<given-names>F</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Robin</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lavielle</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Vaisse</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Daudin</surname>
+							<given-names>JJ</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>A statistical approach for array CGH data analysis.</article-title>
+					<source>BMC Bioinformatics</source>
+					<volume>6</volume>
+					<fpage>27</fpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b029">
+<label>29</label>
+				<element-citation publication-type="other" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Cappé</surname>
+							<given-names>O</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Moulines</surname>
+							<given-names>E</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Ryden</surname>
+							<given-names>T</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<source>Inference in hidden Markov models (Springer series in statistics)</source>
+					<publisher-loc>New York</publisher-loc>
+					<publisher-name>Springer</publisher-name>
+					<!--===== Restructure page-count as size[@units="page"] =====--><size units="page">652</size>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b030">
+<label>30</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Green</surname>
+							<given-names>P</given-names>
+						</name>
+					</person-group>
+					<year>1995</year>
+					<article-title>Reversible jump Markov chain Monte Carlo computation and Bayesian model determination.</article-title>
+					<source>Biometrika</source>
+					<volume>82</volume>
+					<fpage>711</fpage>
+					<lpage>732</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b031">
+<label>31</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Willenbrock</surname>
+							<given-names>H</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Fridlyand</surname>
+							<given-names>J</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<article-title>A comparison study: Applying segmentation to array CGH data for downstream analyses.</article-title>
+					<source>Bioinformatics</source>
+					<volume>21</volume>
+					<fpage>4084</fpage>
+					<lpage>4091</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b032">
+<label>32</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Snijders</surname>
+							<given-names>AM</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Nowak</surname>
+							<given-names>N</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Segraves</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Blackwood</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Brown</surname>
+							<given-names>N</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2001</year>
+					<article-title>Assembly of microarrays for genome-wide measurement of DNA copy number.</article-title>
+					<source>Nat Genet</source>
+					<volume>29</volume>
+					<fpage>263</fpage>
+					<lpage>264</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b033">
+<label>33</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Raftery</surname>
+							<given-names>AE</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Zheng</surname>
+							<given-names>Y</given-names>
+						</name>
+					</person-group>
+					<year>2003</year>
+					<article-title>Discussion: Performance of bayesian model averaging.</article-title>
+					<source>J Am Statist Assoc</source>
+					<volume>98</volume>
+					<fpage>931</fpage>
+					<lpage>938</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b034">
+<label>34</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Rouveirol</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Stransky</surname>
+							<given-names>N</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Hupé</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>La Rosa</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Viara</surname>
+							<given-names>E</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Computation of recurrent minimal genomic alterations from array-CGH data.</article-title>
+					<source>Bioinformatics</source>
+					<volume>22</volume>
+					<fpage>2066</fpage>
+					<lpage>2073</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b035">
+<label>35</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Diskin</surname>
+							<given-names>SJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Eck</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Greshock</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Mosse</surname>
+							<given-names>YPP</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Naylor</surname>
+							<given-names>T</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>STAC: A method for testing the significance of DNA copy number aberrations across multiple array-CGH experiments.</article-title>
+					<source>Genome Res</source>
+					<volume>16</volume>
+					<fpage>1149</fpage>
+					<lpage>1158</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b036">
+<label>36</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Misra</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Pellarin</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Nigro</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Smirnov</surname>
+							<given-names>I</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Moore</surname>
+							<given-names>D</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2005</year>
+					<article-title>Array comparative genomic hybridization identifies genetic subgroups in grade 4 human astrocytoma.</article-title>
+					<source>Clin Cancer Res</source>
+					<volume>11</volume>
+					<fpage>2907</fpage>
+					<lpage>2918</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b037">
+<label>37</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Tonon</surname>
+							<given-names>G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wong</surname>
+							<given-names>KK</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Maulik</surname>
+							<given-names>G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Brennan</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Feng</surname>
+							<given-names>B</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2005</year>
+					<article-title>High-resolution genomic profiles of human lung cancer.</article-title>
+					<source>Proc Natl Acad Sci U S A</source>
+					<volume>102</volume>
+					<fpage>9625</fpage>
+					<lpage>9630</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b038">
+<label>38</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Albertson</surname>
+							<given-names>DG</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Pinkel</surname>
+							<given-names>D</given-names>
+						</name>
+					</person-group>
+					<year>2003</year>
+					<article-title>Genomic microarrays in human genetic disease and cancer.</article-title>
+					<source>Hum Mol Genet</source>
+					<volume>12</volume>
+					<fpage>R145</fpage>
+					<lpage>R152</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b039">
+<label>39</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Bergamaschi</surname>
+							<given-names>A</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Kim</surname>
+							<given-names>YH</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Wang</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Sørlie</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Hernandez-Boussard</surname>
+							<given-names>T</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Distinct patterns of DNA copy number alteration are associated with different clinicopathological features and gene-expression subtypes of breast cancer.</article-title>
+					<source>Genes Chromosomes Cancer</source>
+					<volume>45</volume>
+					<fpage>1033</fpage>
+					<lpage>1040</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b040">
+<label>40</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>van Beers</surname>
+							<given-names>EH</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Nederlof</surname>
+							<given-names>PM</given-names>
+						</name>
+					</person-group>
+					<year>2006</year>
+					<article-title>Array-CGH and breast cancer.</article-title>
+					<source>Breast Cancer Res</source>
+					<volume>8</volume>
+					<fpage>210</fpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b041">
+<label>41</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Yao</surname>
+							<given-names>J</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Weremowicz</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Feng</surname>
+							<given-names>B</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Gentleman</surname>
+							<given-names>RC</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Marks</surname>
+							<given-names>JR</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Combined cDNA array comparative genomic hybridization and serial analysis of gene expression analysis of breast tumor progression.</article-title>
+					<source>Cancer Res</source>
+					<volume>66</volume>
+					<fpage>4065</fpage>
+					<lpage>4078</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b042">
+<label>42</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Habermann</surname>
+							<given-names>JKK</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Paulsen</surname>
+							<given-names>U</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Roblick</surname>
+							<given-names>UJJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Upender</surname>
+							<given-names>MBB</given-names>
+						</name>
+						<name name-style="western">
+							<surname>McShane</surname>
+							<given-names>LMM</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2007</year>
+					<article-title>Stage-specific alterations of the genome, transcriptome, and proteome during colorectal carcinogenesis.</article-title>
+					<source>Genes Chromosomes Cancer</source>
+					<volume>46</volume>
+					<fpage>10</fpage>
+					<lpage>26</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b043">
+<label>43</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Bussey</surname>
+							<given-names>KJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Chin</surname>
+							<given-names>K</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Lababidi</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Reimers</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Reinhold</surname>
+							<given-names>WC</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Integrating data on DNA copy number with gene expression levels and drug sensitivities in the NCI-60 cell line panel.</article-title>
+					<source>Mol Cancer Ther</source>
+					<volume>5</volume>
+					<fpage>853</fpage>
+					<lpage>867</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b044">
+<label>44</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Parmigiani</surname>
+							<given-names>G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Garrett</surname>
+							<given-names>E</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Anbazhaghan</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Gabrielson</surname>
+							<given-names>E</given-names>
+						</name>
+					</person-group>
+					<year>2002</year>
+					<article-title>A statistical framework for expression-based molecular classification in cancer.</article-title>
+					<source>J R Stat Soc Ser B Stat Methodol</source>
+					<volume>64</volume>
+					<fpage>717</fpage>
+					<lpage>736</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b045">
+<label>45</label>
+				<element-citation publication-type="other" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Garrett</surname>
+							<given-names>E</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Parmigiani</surname>
+							<given-names>G</given-names>
+						</name>
+					</person-group>
+					<year>2003</year>
+					<article-title>POE: Statistical methods for qualitative analysis of gene expression.</article-title>
+					<comment>In:</comment>
+					<person-group person-group-type="editor">
+						<name name-style="western">
+							<surname>Parmigi</surname>
+							<given-names>ani G</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Garrett</surname>
+							<given-names>ES</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Irizarry</surname>
+							<given-names>RA</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Zeger</surname>
+							<given-names>SL</given-names>
+						</name>
+					</person-group>
+					<source>The analysis of gene expression data: Methods and software</source>
+					<publisher-loc>New York</publisher-loc>
+					<publisher-name>Springer</publisher-name>
+					<fpage>362</fpage>
+					<lpage>387</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b046">
+<label>46</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Redon</surname>
+							<given-names>R</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Ishikawa</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Fitch</surname>
+							<given-names>KR</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Feuk</surname>
+							<given-names>L</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Perry</surname>
+							<given-names>GH</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2006</year>
+					<article-title>Global variation in copy number in the human genome.</article-title>
+					<source>Nature</source>
+					<volume>444</volume>
+					<fpage>444</fpage>
+					<lpage>454</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b047">
+<label>47</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Stranger</surname>
+							<given-names>BE</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Forrest</surname>
+							<given-names>MS</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Dunning</surname>
+							<given-names>M</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Ingle</surname>
+							<given-names>CE</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Beazley</surname>
+							<given-names>C</given-names>
+						</name><etal/>
+					</person-group>
+					<year>2007</year>
+					<article-title>Relative impact of nucleotide and copy number variation on gene expression phenotypes.</article-title>
+					<source>Science</source>
+					<volume>315</volume>
+					<fpage>848</fpage>
+					<lpage>853</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b048">
+<label>48</label>
+				<element-citation publication-type="other" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Kirshner</surname>
+							<given-names>S</given-names>
+						</name>
+					</person-group>
+					<year>2005</year>
+					<source>Modeling of multivariate time series using hidden Markov models [dissertation]</source>
+					<publisher-loc>Irvine (California)</publisher-loc>
+					<publisher-name>University of California Irvine</publisher-name>
+					<comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.datalab.uci.edu/papers/kirshner_thesis.pdf" xlink:type="simple">http://www.datalab.uci.edu/papers/kirshner_thesis.pdf</ext-link>. Accessed 22 May 2007.</comment>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b049">
+<label>49</label>
+				<element-citation publication-type="other" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Hughes</surname>
+							<given-names>PJ</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Guttorp</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Charles</surname>
+							<given-names>PS</given-names>
+						</name>
+					</person-group>
+					<year>1999</year>
+					<source>A nonhomogeneous hidden Markov model for precipitation. Northwest Research Center for Statistics and the Environment</source>
+					<comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.nrcse.washington.edu/pdf/trs04_hgc.pdf" xlink:type="simple">http://www.nrcse.washington.edu/pdf/trs04_hgc.pdf</ext-link>. Accessed 22 May 2007.</comment>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b050">
+<label>50</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Richardson</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Green</surname>
+							<given-names>PJ</given-names>
+						</name>
+					</person-group>
+					<year>1997</year>
+					<article-title>On Bayesian analysis of mixtures with an unknown number of components.</article-title>
+					<source>J R Stat Soc Ser B Stat Methodol</source>
+					<volume>59</volume>
+					<fpage>731</fpage>
+					<lpage>792</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b051">
+<label>51</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Robert</surname>
+							<given-names>C</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Ryden</surname>
+							<given-names>T</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Titterington</surname>
+							<given-names>D</given-names>
+						</name>
+					</person-group>
+					<year>2000</year>
+					<article-title>Bayesian inference in hidden Markov models through reversible jump Markov chain Monte Carlo.</article-title>
+					<source>J R Stat Soc Ser B Stat Methodol</source>
+					<volume>62</volume>
+					<fpage>57</fpage>
+					<lpage>75</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b052">
+<label>52</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Brooks</surname>
+							<given-names>SP</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Giudici</surname>
+							<given-names>P</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Roberts</surname>
+							<given-names>GO</given-names>
+						</name>
+					</person-group>
+					<year>2003</year>
+					<article-title>Efficient construction of reversible jump Markov chain Monte Carlo proposal distributions.</article-title>
+					<source>J R Stat Soc Ser B Stat Methodol</source>
+					<volume>65</volume>
+					<fpage>3</fpage>
+					<lpage>39</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b053">
+<label>53</label>
+				<element-citation publication-type="journal" xlink:type="simple">
+					<person-group person-group-type="author">
+						<name name-style="western">
+							<surname>Brooks</surname>
+							<given-names>S</given-names>
+						</name>
+						<name name-style="western">
+							<surname>Gelman</surname>
+							<given-names>A</given-names>
+						</name>
+					</person-group>
+					<year>1998</year>
+					<article-title>General methods for monitoring convergence of iterative simulations.</article-title>
+					<source>J Comput Graph Statist</source>
+					<volume>7</volume>
+					<fpage>434</fpage>
+					<lpage>455</lpage>
+				</element-citation>
+			</ref>
+			<ref id="pcbi-0030122-b054">
+<label>54</label>
+				<element-citation publication-type="other" xlink:type="simple">
+					<collab xlink:type="simple">R Development Core Team</collab>
+					<year>2006</year>
+					<article-title>R: A language and environment for statistical computing.</article-title>
+					<source>R Foundation for Statistical Computing</source>
+					<comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.R-project.org" xlink:type="simple">http://www.R-project.org</ext-link>. Accessed 22 May 2007.</comment>
+				</element-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>

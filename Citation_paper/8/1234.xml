@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-11764</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0066952</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein interactions</subject></subj-group></subj-group></subj-group><subj-group><subject>Computational biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Chemistry</subject><subj-group><subject>Computational chemistry</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Computer science</subject><subj-group><subject>Algorithms</subject></subj-group><subj-group><subject>Computer applications</subject><subj-group><subject>Computer-aided design</subject></subj-group></subj-group><subj-group><subject>Computer modeling</subject></subj-group><subj-group><subject>Computing methods</subject><subj-group><subject>Mathematical computing</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Mathematics</subject><subj-group><subject>Statistics</subject><subj-group><subject>Statistical methods</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine</subject><subj-group><subject>Drugs and devices</subject><subj-group><subject>Drug research and development</subject><subj-group><subject>Drug discovery</subject></subj-group></subj-group><subj-group><subject>Drug interactions</subject><subject>Theoretical pharmacology</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Predicting Drug-Target Interactions for New Drug Compounds Using a Weighted Nearest Neighbor Profile</article-title>
+<alt-title alt-title-type="running-head">Predicting Interactions for New Drugs</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>van Laarhoven</surname><given-names>Twan</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Marchiori</surname><given-names>Elena</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><addr-line>Institute for Computing and Information Sciences, Radboud University Nijmegen, Nijmegen, The Netherlands</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Csermely</surname><given-names>Peter</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Semmelweis University, Hungary</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">tvanlaarhoven@cs.ru.nl</email> (TVL); <email xlink:type="simple">elenam@cs.ru.nl</email> (EM)</corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: TVL EM. Performed the experiments: TVL EM. Analyzed the data: TVL EM. Wrote the paper: TVL EM.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>26</day><month>6</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>6</issue>
+<elocation-id>e66952</elocation-id>
+<history>
+<date date-type="received"><day>21</day><month>3</month><year>2013</year></date>
+<date date-type="accepted"><day>13</day><month>5</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>van Laarhoven, Marchiori</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>In silico discovery of interactions between drug compounds and target proteins is of core importance for improving the efficiency of the laborious and costly experimental determination of drug-target interaction. Drug-target interaction data are available for many classes of pharmaceutically useful target proteins including enzymes, ion channels, GPCRs and nuclear receptors. However, current drug-target interaction databases contain a small number of drug-target pairs which are experimentally validated interactions. In particular, for some drug compounds (or targets) there is no available interaction. This motivates the need for developing methods that predict interacting pairs with high accuracy also for these 'new' drug compounds (or targets). We show that a simple weighted nearest neighbor procedure is highly effective for this task. We integrate this procedure into a recent machine learning method for drug-target interaction we developed in previous work. Results of experiments indicate that the resulting method predicts true interactions with high accuracy also for new drug compounds and achieves results comparable or better than those of recent state-of-the-art algorithms. Software is publicly available at <ext-link ext-link-type="uri" xlink:href="http://cs.ru.nl/~tvanlaarhoven/drugtarget2013/" xlink:type="simple">http://cs.ru.nl/~tvanlaarhoven/drugtarget2013/</ext-link>.</p>
+</abstract>
+<funding-group><funding-statement>This work has been partially funded by the Netherlands Organization for Scientic Research (NWO) within the NWO project 612.066.927. No additional external funding was received for this study. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="6"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>A core problem in pharmacology is the determination of interactions between drug compounds and target proteins in order to understand and study their effects. The in silico prediction of such interactions is of crucial importance for improving the efficiency of the laborious and costly experimental determination of drug-target interaction (see e.g. <xref ref-type="bibr" rid="pone.0066952-Csermely1">[1]</xref>–<xref ref-type="bibr" rid="pone.0066952-RieraFernndez2">[4]</xref>).</p>
+<p>Drug-target interaction data are available for various classes of pharmaceutically useful target proteins including enzymes, ion channels, GPCRs and nuclear receptors <xref ref-type="bibr" rid="pone.0066952-Hopkins1">[5]</xref>. Publicly available databases have been built and maintained, such as KEGG BRITE <xref ref-type="bibr" rid="pone.0066952-Kanehisa1">[6]</xref>, DrugBank <xref ref-type="bibr" rid="pone.0066952-Wishart1">[7]</xref>, GLIDA <xref ref-type="bibr" rid="pone.0066952-Okuno1">[8]</xref>, SuperTarget and Matador <xref ref-type="bibr" rid="pone.0066952-Gnther1">[9]</xref>, BRENDA <xref ref-type="bibr" rid="pone.0066952-Schomburg1">[10]</xref>, and ChEMBL <xref ref-type="bibr" rid="pone.0066952-Overington1">[11]</xref>, containing drug-target interaction and other related sources of information, like chemical and genomic data.</p>
+<p>The availability of these data has boosted the development of machine learning methods for the in silico prediction of drug-target interactions, including the seminal paper by Yamanishi et al. <xref ref-type="bibr" rid="pone.0066952-Yamanishi1">[12]</xref>. In that paper the authors distinguish between prediction for 'known' drug compounds or targets, for which at least one interaction is present in the training set; and prediction for 'new' drug compounds or targets, for which no interaction in the training set is available. This results in four possible settings for predicting drug-target interaction, depending on whether the drug compounds and/or targets are known or new.</p>
+<p>The current state-of-the-art for the <italic>in silico</italic> prediction of drug-target interaction involves methods that employ similarity measures for drug compounds and for targets in the form of kernel functions, e.g., <xref ref-type="bibr" rid="pone.0066952-Yamanishi1">[12]</xref>–<xref ref-type="bibr" rid="pone.0066952-Yamanishi2">[19]</xref>.</p>
+<p>In this paper we generalize the applicability of the method introduced in <xref ref-type="bibr" rid="pone.0066952-vanLaarhoven1">[16]</xref> to so-called <italic>new drug compounds</italic>, that is, drug compounds for which no interactions are known. The method, hereafter called GIP, uses known interactions of a drug for predicting novel ones by means of a regularized least square algorithm incorporating a product of kernels constructed from drug compound and target interaction profiles. We propose a simple weighted nearest neighbor algorithm, called WNN, for constructing an interaction score profile for a new drug compound using chemical and interaction information about known compounds in the dataset. The WNN method can be used as a stand-alone algorithm for predicting interactions for new drug compounds. It can also be directly incorporated into the GIP method for handling new drug compounds. We call the resulting combination WNN-GIP. The methods can be directly adapted to handle also unknown targets or both unknown drug compounds and targets.</p>
+<p>We test the predictive performance of WNN and WNN-GIP on four drug-target interaction networks in humans involving enzymes, ion channels, GPCRs and nuclear receptors. Results as measured by the area under the curve (AUC) and area under the precision-recall curve (AUPR) <xref ref-type="bibr" rid="pone.0066952-Davis1">[20]</xref> show that the weighted nearest neighbor profile algorithm and its incorporation into the GIP method are capable to predict true interactions for new drug compounds with satisfactory accuracy. The algorithms achieve competitive or better results than the recent state-of-the-art algorithms KBMF2K <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref> and BLM-NII <xref ref-type="bibr" rid="pone.0066952-Mei1">[17]</xref>. KBMF2K is based on a fully probabilistic approach to model drug-target interaction, which can be applied to discover target (respectively drug compound) interactions for new drug compounds (respectively target proteins). Results in <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref> indicate improved accuracy over the method introduced in <xref ref-type="bibr" rid="pone.0066952-Yamanishi2">[19]</xref>. BLM-NII is an extension of the BLM method <xref ref-type="bibr" rid="pone.0066952-Bleakley1">[13]</xref> to deal with new drug compounds (or targets). In BLM-NII a drug-target interaction for a new drug compound is inferred by constructing an estimated interaction profile from the drug compounds in the training data. The resulting profile is then used as label information to learn an interaction model for that drug compound with the BLM method.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>The Problem</title>
+<p>We consider the problem of predicting interactions using a drug-target interaction network, chemical similarity between drug compounds and genomic similarity between targets proteins. Formally we are given a set <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e001" xlink:type="simple"/></inline-formula> of drug compounds and a set <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e002" xlink:type="simple"/></inline-formula> of target proteins. A set of interactions between drug compounds and targets is known. A bipartite network (between drug compounds and targets) can be constructed whose edges are such known interactions. Its corresponding adjacency matrix is a <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e003" xlink:type="simple"/></inline-formula> matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e004" xlink:type="simple"/></inline-formula> such that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e005" xlink:type="simple"/></inline-formula> if drug compound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e006" xlink:type="simple"/></inline-formula> interacts with target <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e007" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e008" xlink:type="simple"/></inline-formula> otherwise. Furthermore, information about the the chemical similarity between drug compounds and genomic similarity between targets is given in the form of the similarity matrices <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e009" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e010" xlink:type="simple"/></inline-formula>, respectively.</p>
+<p>The goal is to assign scores to drug-target pairs (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e011" xlink:type="simple"/></inline-formula>) such that pairs with higher scores are more likely to interact.</p>
+</sec><sec id="s2b">
+<title>The GIP Method</title>
+<p>Machine learning methods for tackling this problem are mainly based on the assumption that drug compounds exhibiting a similar pattern of interaction and non-interaction with the targets in a drug-target interaction network are likely to show similar interaction behavior with respect to new targets. A similar assumption on targets is considered. Here use the method introduced in <xref ref-type="bibr" rid="pone.0066952-vanLaarhoven1">[16]</xref>. It is based on the so-called (target) <italic>interaction profile</italic> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e012" xlink:type="simple"/></inline-formula> of a drug compound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e013" xlink:type="simple"/></inline-formula>, defined to be row <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e014" xlink:type="simple"/></inline-formula> of the adjacency matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e015" xlink:type="simple"/></inline-formula>, and the (drug compound) interaction profile <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e016" xlink:type="simple"/></inline-formula> of a target protein <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e017" xlink:type="simple"/></inline-formula>, defined to be column <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e018" xlink:type="simple"/></inline-formula> of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e019" xlink:type="simple"/></inline-formula>. The interaction profiles generated from a drug-target interaction network are used as feature vectors for a classifier. A kernel from the interaction profiles is constructed using topology of the drug-target network, defined for drug compounds <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e020" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e021" xlink:type="simple"/></inline-formula> as follows:<disp-formula id="pone.0066952.e022"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066952.e022" xlink:type="simple"/></disp-formula>where</p>
+<p><disp-formula id="pone.0066952.e023"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066952.e023" xlink:type="simple"/></disp-formula></p>
+<p>A kernel <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e024" xlink:type="simple"/></inline-formula> for the similarities between target proteins is defined analogously. Moreover, the kernels <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e025" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e026" xlink:type="simple"/></inline-formula> are considered, containing information about the chemical and genomic space. They are constructed from the chemical and genomic similarity matrices <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e027" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e028" xlink:type="simple"/></inline-formula> between drug compounds and between targets, by applying a simple transformation to make them symmetric and positive definite. The interaction profile kernel can be easily combined with these kernels using a weighted average.</p>
+<p>The kernel for drug compounds and the kernel for target proteins can be combined using the Kronecker product <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e029" xlink:type="simple"/></inline-formula>, such that for drug-target pairs <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e030" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e031" xlink:type="simple"/></inline-formula><disp-formula id="pone.0066952.e032"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066952.e032" xlink:type="simple"/></disp-formula></p>
+<p>For each drug compound with at least one known interaction in the training data, a score interaction profile <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e033" xlink:type="simple"/></inline-formula> is computed from its interaction profile <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e034" xlink:type="simple"/></inline-formula> and the kernel matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e035" xlink:type="simple"/></inline-formula>, using the Regularized Least Squared (RLS) classifier. This is achieved by means of the simple closed form solution formula<disp-formula id="pone.0066952.e036"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066952.e036" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e037" xlink:type="simple"/></inline-formula> is a regularization parameter.</p>
+<p>We refer the reader to <xref ref-type="bibr" rid="pone.0066952-vanLaarhoven1">[16]</xref> for a more detailed description and analysis of this method.</p>
+<p>For simplicity in the sequel we call GIP the RLS algorithm that uses the kernel defined as the Kronecker product of the weighted averages of the interaction kernels and chemical and genomic kernels.</p>
+</sec><sec id="s2c">
+<title>Weighted Nearest Neighbor for New Drug Compounds</title>
+<p>We want to extend GIP to new drug compounds, that is, compounds for which no interaction is known. To this aim, we propose a simple weighted nearest neighbor procedure. For a new drug compound, its chemical similarity with other known drug compounds and their corresponding profiles are used in order to infer a score interaction profile for that drug compound.</p>
+<p>Specifically, the score interaction profile <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e038" xlink:type="simple"/></inline-formula> of a new drug compound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e039" xlink:type="simple"/></inline-formula> is the weighted sum of the profiles of the drug compounds in the training data, where a higher weight is assigned to profiles of those drug compounds more similar to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e040" xlink:type="simple"/></inline-formula>. Let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e041" xlink:type="simple"/></inline-formula> be the interaction profiles of the other compounds in the dataset (that is, the rows of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e042" xlink:type="simple"/></inline-formula>), listed in decreasing order with respect to their chemical similarity to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e043" xlink:type="simple"/></inline-formula>. Then<disp-formula id="pone.0066952.e044"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0066952.e044" xlink:type="simple"/></disp-formula>where the weights <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e045" xlink:type="simple"/></inline-formula>'s are computed using a given decay value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e046" xlink:type="simple"/></inline-formula> as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e047" xlink:type="simple"/></inline-formula>. For computational reasons we only sum over drug compounds with weight at least <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e048" xlink:type="simple"/></inline-formula>. In our experiments we choose the decay rate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e049" xlink:type="simple"/></inline-formula> with 5 fold cross-validation to maximize AUC. We call the resulting procedure WNN.</p>
+<p>An extension of GIP to handle new drug compounds using WNN, hereafter called WNN-GIP, can be directly formulated: for each new drug compound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e050" xlink:type="simple"/></inline-formula>, add <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e051" xlink:type="simple"/></inline-formula> as new row to the matrix <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e052" xlink:type="simple"/></inline-formula> and apply GIP to predict the score interaction profile <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e053" xlink:type="simple"/></inline-formula> of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e054" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s2d">
+<title>A Method to Show the Bias of a LOOCV Procedure</title>
+<p>In a recent paper <xref ref-type="bibr" rid="pone.0066952-Mei1">[17]</xref> the BLM-NII algorithm is introduced and assessed using the following leave-one-out cross validation (LOOCV) procedure. Each compound with only one interaction in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e055" xlink:type="simple"/></inline-formula> is treated as a 'new candidate' in the cross validation and the BLM-NII procedure is applied to it. We observe that in this way a strong prior is implicitly used in the cross validation, namely the fact that the considered compound had at least one interaction.</p>
+<p>To illustrate how this prior introduces a bias on the results, we consider the following simple procedure, called Const. Const constructs an all '1's profile for the drug compounds or target proteins with only one interaction.</p>
+<p>We can incorporate Const into GIP in the same way as WNN, giving the Const-GIP method. With this method all possible interactions for drug/targets with only one interaction will be ranked before interactions with drugs/targets that also have other interactions. Essentially, for such interactions the method only has to do half the work, since the fact that the drug/target is correct can be known with certainty. In real world situations there are also drug compounds that interact with none of the target under consideration, and vice versa, which would invalidate the Const-GIP method.</p>
+</sec></sec><sec id="s3">
+<title>Experiments</title>
+<p>We perform a comparative experimental analysis of the proposed algorithms and two recently published methods <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref>, <xref ref-type="bibr" rid="pone.0066952-Mei1">[17]</xref>.</p>
+<sec id="s3a">
+<title>Datasets</title>
+<p>To this end we use the four drug-target interaction networks in humans involving enzymes, ion channels, G-protein-coupled receptors (GPCRs) and nuclear receptors from <xref ref-type="bibr" rid="pone.0066952-Yamanishi1">[12]</xref>. <xref ref-type="table" rid="pone-0066952-t001">Table 1</xref> lists some properties of the datasets.</p>
+<table-wrap id="pone-0066952-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066952.t001</object-id><label>Table 1</label><caption>
+<title>The number of drug compounds and target proteins, their ratio, and the number of interactions in the drug-target datasets from<xref ref-type="bibr" rid="pone.0066952-Yamanishi1">[12]</xref>.</title>
+</caption><alternatives><graphic id="pone-0066952-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066952.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Dataset</td>
+<td align="left" rowspan="1" colspan="1">Drugs</td>
+<td align="left" rowspan="1" colspan="1">Targets</td>
+<td align="left" rowspan="1" colspan="1"><italic>n</italic><sub>d</sub>/<italic>n</italic><sub>t</sub></td>
+<td align="left" rowspan="1" colspan="1">Interactions</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Enzyme</td>
+<td align="left" rowspan="1" colspan="1">445</td>
+<td align="left" rowspan="1" colspan="1">664</td>
+<td align="left" rowspan="1" colspan="1">0.67</td>
+<td align="left" rowspan="1" colspan="1">2926</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Ion Channel</td>
+<td align="left" rowspan="1" colspan="1">210</td>
+<td align="left" rowspan="1" colspan="1">204</td>
+<td align="left" rowspan="1" colspan="1">1.03</td>
+<td align="left" rowspan="1" colspan="1">1476</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GPCR</td>
+<td align="left" rowspan="1" colspan="1">223</td>
+<td align="left" rowspan="1" colspan="1">95</td>
+<td align="left" rowspan="1" colspan="1">2.35</td>
+<td align="left" rowspan="1" colspan="1">635</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Nuclear Receptor</td>
+<td align="left" rowspan="1" colspan="1">54</td>
+<td align="left" rowspan="1" colspan="1">26</td>
+<td align="left" rowspan="1" colspan="1">2.08</td>
+<td align="left" rowspan="1" colspan="1">90</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>Drug-target interaction information was retrieved from the KEGG BRITE <xref ref-type="bibr" rid="pone.0066952-Kanehisa1">[6]</xref>, BRENDA <xref ref-type="bibr" rid="pone.0066952-Schomburg1">[10]</xref>, SuperTarget <xref ref-type="bibr" rid="pone.0066952-Gnther1">[9]</xref> and DrugBank <xref ref-type="bibr" rid="pone.0066952-Wishart1">[7]</xref> databases. Chemical structures of the compounds was derived from the DRUG and COMPOUND sections in the KEGG LIGAND database <xref ref-type="bibr" rid="pone.0066952-Kanehisa1">[6]</xref>. The chemical structure similarity between compounds was computed using SIMCOMP <xref ref-type="bibr" rid="pone.0066952-Hattori1">[21]</xref>, which tries to find a graph matching between two compound structures. This resulted in a similarity matrix for the denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e056" xlink:type="simple"/></inline-formula>, which represents the chemical space. Amino acid sequences of the target (human) proteins were obtained from the KEGG GENES database <xref ref-type="bibr" rid="pone.0066952-Kanehisa1">[6]</xref>. Sequence similarity between proteins was computed using a normalized version of Smith-Waterman score <xref ref-type="bibr" rid="pone.0066952-Smith1">[22]</xref>, resulting in a similarity matrix denoted <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e057" xlink:type="simple"/></inline-formula>, which represents the genomic space.</p>
+<p>These datasets are publicly available at <ext-link ext-link-type="uri" xlink:href="http://web.kuicr.kyoto-u.ac.jp/supp/yoshi/drugtarget/" xlink:type="simple">http://web.kuicr.kyoto-u.ac.jp/supp/yoshi/drugtarget/</ext-link> and <ext-link ext-link-type="uri" xlink:href="http://cbio.ensmp.fr/~yyamanishi/bipartitelocal/" xlink:type="simple">http://cbio.ensmp.fr/~yyamanishi/bipartitelocal/</ext-link>. They are used as current standard benchmark data for comparing the performance of machine learning algorithms for drug-target interaction. We use these datasets as they are without adding new interactions from source databases.</p>
+</sec><sec id="s3b">
+<title>Results</title>
+<p>We follow the experimental procedure adopted in <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref>, <xref ref-type="bibr" rid="pone.0066952-Yamanishi2">[19]</xref>. Specifically, for each dataset, drug compounds are split into five subsets of roughly equal size. Each subset is then used in turn as the test set and training is performed on the data consisting of the remaining four subsets. This procedure is repeated five times.</p>
+<p>Results are assessed using the AUC and AUPR quality measures, generally used in this type of studies. Specifically, the ROC curve of true positives as a function of false positives is computed, and the area under the ROC curve (AUC) is considered as quality measure (see for instance <xref ref-type="bibr" rid="pone.0066952-Fawcett1">[23]</xref>). Furthermore, the precision-recall curve is computed, that is, the plot of the ratio of true positives among all positive predictions for each given recall rate. The area under this curve (AUPR) provides a quantitative assessment of how well, on average, predicted scores of true interactions are separated from predicted scores of true non-interactions. Since there are few true drug-target interactions, the AUPR is a more informative quality measure than the AUC, as it punishes much more the existence of false positive examples found among the top ranked prediction scores <xref ref-type="bibr" rid="pone.0066952-Davis1">[20]</xref>.</p>
+<p>Average AUC and AUPR results and standard deviations are reported in <xref ref-type="table" rid="pone-0066952-t002">Table 2</xref>. They indicate that a WNN-GIP has slightly better (average) AUC on all datasets except Enzyme. However, WNN has slightly better AUPR than WNN-GIP. By itself the GIP method does not work well in this setting, which is to be expected, since it was not designed to handle new drugs.</p>
+<table-wrap id="pone-0066952-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066952.t002</object-id><label>Table 2</label><caption>
+<title>Results of 5 fold cross validation: average AUC and AUPR over 5 runs.</title>
+</caption><alternatives><graphic id="pone-0066952-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066952.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Method</td>
+<td align="left" rowspan="1" colspan="1">AUC (std)</td>
+<td align="left" rowspan="1" colspan="1">AUPR (std)</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e058" xlink:type="simple"/></inline-formula> (std)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="4" align="left" rowspan="1">Enzyme</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.685 (0.006)</td>
+<td align="left" rowspan="1" colspan="1">0.150 (0.008)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.819 (0.004)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.299</bold> (0.023)</td>
+<td align="left" rowspan="1" colspan="1">0.809 (0.068)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.861</bold> (0.004)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.280</italic> (0.014)</td>
+<td align="left" rowspan="1" colspan="1">0.908 (0.019)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">KBMF2K</td>
+<td align="left" rowspan="1" colspan="1">0.812 (0.004)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.287</italic> (0.021)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td colspan="4" align="left" rowspan="1">Ion Channel</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.637 (0.008)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.179</italic> (0.013)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.757 (0.006)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.249</bold> (0.046)</td>
+<td align="left" rowspan="1" colspan="1">0.535 (0.200)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1">0.775 (0.006)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.233</italic> (0.024)</td>
+<td align="left" rowspan="1" colspan="1">0.730 (0.171)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">KBMF2K</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.802</bold> (0.006)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.245</italic> (0.023)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td colspan="4" align="left" rowspan="1">GPCR</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.679 (0.014)</td>
+<td align="left" rowspan="1" colspan="1">0.260 (0.023)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.848 (0.008)</td>
+<td align="left" rowspan="1" colspan="1">0.308 (0.032)</td>
+<td align="left" rowspan="1" colspan="1">0.713 (0.084)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.872</bold> (0.008)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.311</italic> (0.021)</td>
+<td align="left" rowspan="1" colspan="1">0.702 (0.081)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">KBMF2K</td>
+<td align="left" rowspan="1" colspan="1">0.840 (0.009)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.347</bold> (0.028)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td colspan="4" align="left" rowspan="1">Nuclear Receptor</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.758 (0.026)</td>
+<td align="left" rowspan="1" colspan="1">0.357 (0.060)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.788 (0.027)</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.434</italic> (0.068)</td>
+<td align="left" rowspan="1" colspan="1">0.305 (0.205)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.839</bold> (0.023)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.456</bold> (0.065)</td>
+<td align="left" rowspan="1" colspan="1">0.527 (0.103)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">KBMF2K</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.810</italic> (0.025)</td>
+<td align="left" rowspan="1" colspan="1">0.354 (0.063)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Standard deviation is reported between parentheses. The best AUC and AUPR results are indicated in bold, results that are not significantly different from the best (at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e059" xlink:type="simple"/></inline-formula>) are indicated in italic.</p></fn></table-wrap-foot></table-wrap>
+<p>To estimate the statistical significance of the AUC results we used the method described in <xref ref-type="bibr" rid="pone.0066952-DeLong1">[24]</xref>. To determine significance of the AUPR results we used bootstrapping.</p>
+<p>The last column of <xref ref-type="table" rid="pone-0066952-t002">table 2</xref> lists the average value of the decay rate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e060" xlink:type="simple"/></inline-formula> over the folds and repetitions. In general, the larger dataset have a higher (slower) decay rate, which means that more neighbors are taken into account.</p>
+</sec><sec id="s3c">
+<title>Comparison with other Methods</title>
+<p>We consider the two following recent methods: KBMF2K <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref> and BLM-NII <xref ref-type="bibr" rid="pone.0066952-Mei1">[17]</xref>.</p>
+<p>KBMF2K is based on a Bayesian formulation that combines dimensionality reduction, matrix factorization and binary classification for predicting drug-target interaction networks using only chemical similarity between drug compounds and genomic similarity between target proteins.</p>
+<p>In BLM-NII a drug-target interaction for a new drug compound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e062" xlink:type="simple"/></inline-formula> is inferred by constructing an estimated interaction profile for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e063" xlink:type="simple"/></inline-formula> as follows. For each target, an entry of the profile for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e064" xlink:type="simple"/></inline-formula> is defined as the sum of the similarity values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e065" xlink:type="simple"/></inline-formula> and each of the drug compounds interacting with that target. The resulting profile is then used as label information to learn an interaction model for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e066" xlink:type="simple"/></inline-formula> by means of the BLM method.</p>
+<sec id="s3c1">
+<title>Comparison with KBMF2K</title>
+<p>To compare results of WNN and WNN-GIP with those reported in <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref>, we follow the experimental procedure therein used (described in the previous section). <xref ref-type="table" rid="pone-0066952-t002">Table 2</xref> also includes the AUC and AUPR for the KBMF2K method. They indicate similar performance of KBMF2K and the simpler WNN algorithm, and slightly better overall results achieved by WNN-GIP, except on the Ion Channel dataset.</p>
+<p>We could test the prediction capability of the proposed methods on unknown drug-target interactions of the given network using the procedure adopted in <xref ref-type="bibr" rid="pone.0066952-Gnen1">[15]</xref>. Therein, the complete interaction network for each dataset is used as training data, and the predictions on non-interacting pairs in the training set are ranked with respect to their interaction scores. However, since each drug compound or target in the training set has at least one interaction, we do not need to use WNN and the results are those of GIP. We report the top five predicted interactions for each dataset in <xref ref-type="table" rid="pone-0066952-t003">Table 3</xref>. The full lists of all predicted interactions ranked by interaction score can be found in <ext-link ext-link-type="uri" xlink:href="http://cs.ru.nl/~tvanlaarhoven/drugtarget2013/" xlink:type="simple">http://cs.ru.nl/~tvanlaarhoven/drugtarget2013/</ext-link>.</p>
+<table-wrap id="pone-0066952-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066952.t003</object-id><label>Table 3</label><caption>
+<title>Highest ranked predicted new interactions for each of the datasets.</title>
+</caption><alternatives><graphic id="pone-0066952-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066952.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Rank</td>
+<td colspan="2" align="left" rowspan="1">Drug compound</td>
+<td colspan="2" align="left" rowspan="1">Target protein</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="6" align="left" rowspan="1">Enzyme</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">M</td>
+<td align="left" rowspan="1" colspan="1"><italic>1</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00574</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Aminoglutethimide</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1589</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cytochrome P450, family 21, subfamily A, polypeptide 2</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C,M,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>2</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00542</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Halothane</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1571</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cytochrome P450, family 2, subfamily E, polypeptide 1</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">M,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>3</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00139</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Methoxsalen</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1543</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cytochrome P450, family 1, subfamily A, polypeptide 1</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">M</td>
+<td align="left" rowspan="1" colspan="1"><italic>4</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00437</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Nifedipine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1585</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cytochrome P450, family 11, subfamily B, polypeptide 2</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C,M,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>5</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00437</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Nifedipine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1559</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cytochrome P450, family 2, subfamily C, polypeptide 9</italic></td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1">Ion Channel</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">D,K</td>
+<td align="left" rowspan="1" colspan="1"><italic>1</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00438</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Nimodipine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa779</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>calcium channel, voltage-dependent, L type, alpha 1S subunit</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">D00726</td>
+<td align="left" rowspan="1" colspan="1">Metoclopramide</td>
+<td align="left" rowspan="1" colspan="1">hsa1138</td>
+<td align="left" rowspan="1" colspan="1">cholinergic receptor, nicotinic, alpha 5 (neuronal)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>3</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D03365</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Nicotine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1137</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>cholinergic receptor, nicotinic, alpha 4 (neuronal)</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">D02098</td>
+<td align="left" rowspan="1" colspan="1">Proparacaine hydrochloride</td>
+<td align="left" rowspan="1" colspan="1">hsa8645</td>
+<td align="left" rowspan="1" colspan="1">KCNK5: potassium channel, subfamily K, member 5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">K</td>
+<td align="left" rowspan="1" colspan="1"><italic>5</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00552</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Benzocaine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa6331</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>sodium channel, voltage-gated, type V, alpha subunit</italic></td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1">GPCR</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C,M,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>1</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00283</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Clozapine</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa1814</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>dopamine receptor D3</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C,D</td>
+<td align="left" rowspan="1" colspan="1"><italic>2</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D02358</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Metoprolol</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa154</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>adrenoceptor beta 2, surface</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">D00604</td>
+<td align="left" rowspan="1" colspan="1">Clonidine hydrochloride</td>
+<td align="left" rowspan="1" colspan="1">hsa147</td>
+<td align="left" rowspan="1" colspan="1">adrenoceptor alpha 1B</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C</td>
+<td align="left" rowspan="1" colspan="1"><italic>4</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D03966</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Eglumetad</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa2914</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>glutamate receptor, metabotropic 4</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C</td>
+<td align="left" rowspan="1" colspan="1"><italic>5</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00255</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Carvedilol</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa152</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>adrenoceptor alpha 2C</italic></td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1">Nuclear Receptor</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">D00316</td>
+<td align="left" rowspan="1" colspan="1">Etretinate</td>
+<td align="left" rowspan="1" colspan="1">hsa6096</td>
+<td align="left" rowspan="1" colspan="1">RAR-related orphan receptor B</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C</td>
+<td align="left" rowspan="1" colspan="1"><italic>2</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00182</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Norethindrone</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa2099</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>estrogen receptor 1</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">K</td>
+<td align="left" rowspan="1" colspan="1"><italic>3</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00348</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Isotretinoin</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa5915</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>retinoic acid receptor, beta</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">D01132</td>
+<td align="left" rowspan="1" colspan="1">Tazarotene</td>
+<td align="left" rowspan="1" colspan="1">hsa6097</td>
+<td align="left" rowspan="1" colspan="1">RAR-related orphan receptor C</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">K</td>
+<td align="left" rowspan="1" colspan="1"><italic>5</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>D00348</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>Isotretinoin</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>hsa5916</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>retinoic acid receptor, gamma</italic></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Interactions found in ChEMBL, Matador, DrugBank and KEGG are indicated in italic and marked as C, M, D and K respectively.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c2">
+<title>Comparison with BLM-NII</title>
+<p><xref ref-type="table" rid="pone-0066952-t004">Table 4</xref> shows the results of the LOOCV experiments. As expected, both Const-GIP and BLM-NII achieve very good results, with comparable AUC, and slightly better AUPR performance achieved by Const-GIP. To asses the statistical significance of these differences we used an upper bound on the variance of the AUC and AUPR for BLM-NII, because the actual variance is unknown. With this bound the differences in AUC scores are not statistically significant.</p>
+<table-wrap id="pone-0066952-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0066952.t004</object-id><label>Table 4</label><caption>
+<title>Results of LOOCV on pairs.</title>
+</caption><alternatives><graphic id="pone-0066952-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0066952.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Method</td>
+<td align="left" rowspan="1" colspan="1">AUC</td>
+<td align="left" rowspan="1" colspan="1">AUPR</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="3" align="left" rowspan="1">Enzyme</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.978</td>
+<td align="left" rowspan="1" colspan="1">0.915</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.558</td>
+<td align="left" rowspan="1" colspan="1">0.141</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1">0.983</td>
+<td align="left" rowspan="1" colspan="1">0.944</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const</td>
+<td align="left" rowspan="1" colspan="1">0.577</td>
+<td align="left" rowspan="1" colspan="1">0.179</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.991</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>0.969</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">BLM-NII</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.988</italic></td>
+<td align="left" rowspan="1" colspan="1">0.929</td>
+</tr>
+<tr>
+<td colspan="3" align="left" rowspan="1">Ion Channel</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.984</td>
+<td align="left" rowspan="1" colspan="1">0.943</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.528</td>
+<td align="left" rowspan="1" colspan="1">0.125</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1">0.986</td>
+<td align="left" rowspan="1" colspan="1">0.953</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const</td>
+<td align="left" rowspan="1" colspan="1">0.535</td>
+<td align="left" rowspan="1" colspan="1">0.138</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.991</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>0.966</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">BLM-NII</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.990</italic></td>
+<td align="left" rowspan="1" colspan="1">0.950</td>
+</tr>
+<tr>
+<td colspan="3" align="left" rowspan="1">GPCR</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.954</td>
+<td align="left" rowspan="1" colspan="1">0.790</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.580</td>
+<td align="left" rowspan="1" colspan="1">0.219</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1">0.972</td>
+<td align="left" rowspan="1" colspan="1">0.863</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const</td>
+<td align="left" rowspan="1" colspan="1">0.604</td>
+<td align="left" rowspan="1" colspan="1">0.266</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.988</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>0.910</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">BLM-NII</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.984</italic></td>
+<td align="left" rowspan="1" colspan="1">0.865</td>
+</tr>
+<tr>
+<td colspan="3" align="left" rowspan="1">Nuclear Receptor</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GIP</td>
+<td align="left" rowspan="1" colspan="1">0.922</td>
+<td align="left" rowspan="1" colspan="1">0.684</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN</td>
+<td align="left" rowspan="1" colspan="1">0.694</td>
+<td align="left" rowspan="1" colspan="1">0.478</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WNN-GIP</td>
+<td align="left" rowspan="1" colspan="1">0.958</td>
+<td align="left" rowspan="1" colspan="1">0.857</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const</td>
+<td align="left" rowspan="1" colspan="1">0.744</td>
+<td align="left" rowspan="1" colspan="1">0.568</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Const-GIP</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.989</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>0.926</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">BLM-NII</td>
+<td align="left" rowspan="1" colspan="1"><italic>0.981</italic></td>
+<td align="left" rowspan="1" colspan="1">0.866</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>Results of BLM-NNII are from <xref ref-type="bibr" rid="pone.0066952-Mei1">[17]</xref>. The best AUC and AUPR results are indicated in bold, results that are not significantly different from the best (at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e061" xlink:type="simple"/></inline-formula>) are indicated in italic, see the main text for details.</p></fn></table-wrap-foot></table-wrap>
+<p>In general, these results indicate that cross validation should be applied and interpreted with care. Note that the cross validation procedure used in the comparison with KBMF2K is also positively biased, since we know that each 'new' drug compound has at least one interaction, but there the bias is much smaller.</p>
+</sec></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>In this work, we proposed a simple yet effective procedure to predict interaction profiles for unknown drug compounds and show how it can be directly integrated into a recent machine learning algorithm for the in-silico prediction of drug-target interactions. The novelty of our approach comes in the use of a weighted nearest neighbor procedure for inferring a profile for a drug compound by using interaction profiles of the compounds in the training data, where each profile is weighted using information about chemical similarity between drug compounds integrated with a simple decay scheme. The method can be directly modified to predict interaction scores of unknown targets (or of both unknown targets and drug compounds).</p>
+<p>We performed a comparative assessment of the proposed methods on four different drug-target interaction networks from humans involving enzymes, ion channels, GPCRs and nuclear receptors. Results indicated that WNN is competitive in predicting interaction for unknown drug compounds with more involved machine learning methods recently proposed, notably a fully probabilistic method based on a Bayesian formulation that combines kernel-based nonlinear dimensionality reduction, matrix factorization and binary classification. Furthermore we showed that the direct integration of WNN in a recent kernel based machine learning method provides a general and powerful tool for finding drug-target interactions.</p>
+<p>The computational complexity of WNN is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e067" xlink:type="simple"/></inline-formula>, while the computational complexity of WNN-GIP is dominated by the RLS prediction using the Kronecker product kernel, which is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e068" xlink:type="simple"/></inline-formula> as implemented in <xref ref-type="bibr" rid="pone.0066952-vanLaarhoven1">[16]</xref>, but can be further improved yielding a quadratic computational complexity by applying recent techniques for large-scale kernel methods for computing the two kernel decompositions, e.g. <xref ref-type="bibr" rid="pone.0066952-Kashima1">[25]</xref>. Therefore WNN-GIP is more efficient than KBMF2K, since the total time complexity of <italic>each iteration</italic> in the variational approximation method used in KBMF2K is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e069" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0066952.e070" xlink:type="simple"/></inline-formula> is the subspace dimensionality used in the method.</p>
+<p>A limitation of our approach is that it does not make a difference between an inactive target and a target that has not been measured for a compound.</p>
+<p>Compounds with a higher mutual chemical similarity also have a higher chance of having the same bioactivity. This information could be considered by WNN by determining directly the weights from the similarity, instead of using the proposed ranking-based decay mechanism. In this way all the compounds with high similarity would be considered with a high weight and all the compounds with low similarity would only have a minor contribution to the final predicted profile. On the same reasoning there is also a similarity threshold from where the chance is so low that two compounds have the same profile that it would be better not to predict something in the first place. In particular for new screening data from very large screening libraries chances are high that none of the references are really similar to the screening hits, which would most likely have a detrimental effect in the overall prediction performance, if predictions would be made for all such compounds. Many published target prediction algorithms apply such "applicability domain" or confidence estimations for their predictions. WNN could be modified to address this issue for instance by including a binary annotation based on a similarity threshold, or a more advanced procedure based on the similarities of all compounds considered for the generation of the profile.</p>
+</sec></body>
+<back>
+<ack>
+<p>We would like to thank the academic editor and reviewers for their constructive comments.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0066952-Csermely1"><label>1</label>
+<mixed-citation publication-type="other" xlink:type="simple">Csermely P, Korcsmáros T, Kiss HJ, London G, Nussinov R (2013) Structure and dynamics of molecular networks: A novel paradigm of drug discovery: A comprehensive review. Pharmacology &amp; therapeutics.</mixed-citation>
+</ref>
+<ref id="pone.0066952-PradoPrado1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prado-Prado</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Garca-Mera</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Abeijn</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Alonso</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Caamao</surname><given-names>O</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Using entropy of drug and protein graphs to predict {FDA} drug-target network: Theoretic-experimental study of {MAO} inhibitors and hemoglobin peptides from fasciola hepatica</article-title>. <source>European Journal of Medicinal Chemistry</source> <volume>46</volume>: <fpage>1074</fpage>–<lpage>1094</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-RieraFernndez1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Riera-Fernández</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Munteanu</surname><given-names>CR</given-names></name>, <name name-style="western"><surname>Dorado</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Martin-Romalde</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Duardo-Sanchez</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>From chemical graphs in computer-aided drug design to general markov-galvez indices of drug-target, proteome, drug-parasitic disease, technological, and social-legal networks</article-title>. <source>Current computer-aided drug design</source> <volume>7</volume>: <fpage>315</fpage>–<lpage>337</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-RieraFernndez2"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Riera-Fernndez</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Martn-Romalde</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Prado-Prado</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Escobar</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Munteanu</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>From qsar models of drugs to complex networks: state-of-art review and introduction of new markovspectral moments indices</article-title>. <source>Curr Top Med Chem</source> <volume>12</volume>: <fpage>927</fpage>–<lpage>60</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Hopkins1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hopkins</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Groom</surname><given-names>CR</given-names></name> (<year>2002</year>) <article-title>The druggable genome</article-title>. <source>Nature reviews Drug discovery</source> <volume>1</volume>: <fpage>727</fpage>–<lpage>730</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Kanehisa1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Goto</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hattori</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Aoki-Kinoshita</surname><given-names>KF</given-names></name>, <name name-style="western"><surname>Itoh</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>From genomics to chemical genomics: new developments in KEGG</article-title>. <source>Nucleic acids res</source> <volume>34</volume>: <fpage>D354</fpage>–<lpage>357</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Wishart1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wishart</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Knox</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Guo</surname><given-names>ACC</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Shrivastava</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>DrugBank: a knowledgebase for drugs, drug actions and drug targets</article-title>. <source>Nucleic acids res</source> <volume>36</volume>: <fpage>D901</fpage>–<lpage>906</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Okuno1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Okuno</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Tamon</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Yabuuchi</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Niijima</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Minowa</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>GLIDA: GPCR ligand database for chemical genomics drug discovery database and tools update</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D907</fpage>–<lpage>D912</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Gnther1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Günther</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kuhn</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Dunkel</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Campillos</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Senger</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>SuperTarget and Matador: resources for exploring drug-target relationships</article-title>. <source>Nucleic acids res</source> <volume>36</volume>: <fpage>D919</fpage>–<lpage>D922</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Schomburg1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schomburg</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Chang</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ebeling</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gremse</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Heldt</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>BRENDA, the enzyme database: updates and major new developments</article-title>. <source>Nucleic Acids Res</source> <volume>32</volume>: <fpage>D431</fpage>–<lpage>433</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Overington1"><label>11</label>
+<mixed-citation publication-type="other" xlink:type="simple">Overington J (2009). ChEMBL. An interview with John Overington, team leader, chemogenomics at the European Bioinformatics Institute Outstation of the European Molecular Biology Laboratory (EMBL-EBI).</mixed-citation>
+</ref>
+<ref id="pone.0066952-Yamanishi1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yamanishi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Araki</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Gutteridge</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Honda</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Prediction of drug-target interaction networks from the integration of chemical and genomic spaces</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>i232</fpage>–<lpage>i240</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Bleakley1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bleakley</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Yamanishi</surname><given-names>Y</given-names></name> (<year>2009</year>) <article-title>Supervised prediction of drug-target interactions using bipartite local models</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2397</fpage>–<lpage>2403</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Chen1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yan</surname><given-names>G</given-names></name> (<year>2012</year>) <article-title>Drug-target interaction prediction by random walk on the heterogeneous network</article-title>. <source>Mol Biosyst</source> <volume>8</volume>: <fpage>1970</fpage>–<lpage>1978</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Gnen1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gönen</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>Predicting drug-target interactions from chemical and genomic kernels using bayesian matrix factorization</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>2304</fpage>–<lpage>2310</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-vanLaarhoven1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Laarhoven</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Nabuurs</surname><given-names>SB</given-names></name>, <name name-style="western"><surname>Marchiori</surname><given-names>E</given-names></name> (<year>2011</year>) <article-title>Gaussian interaction profile kernels for predicting drug-target interaction</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>3036</fpage>–<lpage>3043</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Mei1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mei</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Kwoh</surname><given-names>CK</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Zheng</surname><given-names>J</given-names></name> (<year>2013</year>) <article-title>Drug-target interaction prediction by learning from local information and neighbors</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>238</fpage>–<lpage>245</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Wassermann1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wassermann</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Geppert</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Bajorath</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>Ligand prediction for orphan targets using support vector machines and various target-ligand kernels is dominated by nearest neighbor effects</article-title>. <source>J Chem Inf Model</source> <volume>49</volume>: <fpage>2155</fpage>–<lpage>2167</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Yamanishi2"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yamanishi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kotera</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Goto</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Drug-target interaction prediction from chemical, genomic and pharmacological data in an integrated framework</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>i246</fpage>–<lpage>i254</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Davis1"><label>20</label>
+<mixed-citation publication-type="other" xlink:type="simple">Davis J, Goadrich M (2006) The relationship between Precision-Recall and ROC curves. In: ICML '06: Proceedings of the 23rd International Conference on Machine learning. ACM, 233–240.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Hattori1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hattori</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Okuno</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Goto</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name> (<year>2003</year>) <article-title>Development of a chemical structure comparison method for integrated analysis of chemical and genomic information in the metabolic pathways</article-title>. <source>J Am Chem Soc</source> <volume>125</volume>: <fpage>11853</fpage>–<lpage>65</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Smith1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>TF</given-names></name>, <name name-style="western"><surname>Waterman</surname><given-names>MS</given-names></name> (<year>1981</year>) <article-title>Identification of common molecular subsequences</article-title>. <source>J Mol Biol</source> <volume>147</volume>: <fpage>195</fpage>–<lpage>197</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Fawcett1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fawcett</surname><given-names>T</given-names></name> (<year>2006</year>) <article-title>An introduction to ROC analysis</article-title>. <source>Pattern Recognition Letters</source> <volume>27</volume>: <fpage>861</fpage>–<lpage>874</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-DeLong1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeLong</surname><given-names>ER</given-names></name>, <name name-style="western"><surname>DeLong</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Clarke-Pearson</surname><given-names>DL</given-names></name> (<year>1988</year>) <article-title>Comparing the Areas under Two or More Correlated Receiver Operating Characteristic Curves: A Nonparametric Approach</article-title>. <source>Biometrics</source> <volume>44</volume>: <fpage>837</fpage>–<lpage>845</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0066952-Kashima1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kashima</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Idé</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Kato</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sugiyama</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>Recent advances and trends in large-scale kernel methods</article-title>. <source>IEICE Transactions</source> <volume>92-D</volume>: <fpage>1338</fpage>–<lpage>1353</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

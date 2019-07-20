@@ -1,0 +1,1050 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-13-02287</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003810</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Neuroscience</subject><subj-group><subject>Cognitive science</subject><subj-group><subject>Cognitive psychology</subject><subj-group><subject>Learning</subject></subj-group></subj-group></subj-group></subj-group><subj-group><subject>Psychology</subject><subj-group><subject>Social psychology</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Social sciences</subject></subj-group></article-categories>
+<title-group>
+<article-title>Inferring on the Intentions of Others by Hierarchical Bayesian Learning</article-title>
+<alt-title alt-title-type="running-head">Inferring on the Intentions of Others</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Diaconescu</surname><given-names>Andreea O.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mathys</surname><given-names>Christoph</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Weber</surname><given-names>Lilian A. E.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Daunizeau</surname><given-names>Jean</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Kasper</surname><given-names>Lars</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Lomakina</surname><given-names>Ekaterina I.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="aff" rid="aff5"><sup>5</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Fehr</surname><given-names>Ernst</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Stephan</surname><given-names>Klaas E.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Translational Neuromodeling Unit (TNU), Institute for Biomedical Engineering, University of Zurich and ETH Zurich, Zurich, Switzerland</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Laboratory for Social and Neural Systems Research, Department of Economics, University of Zurich, Zurich, Switzerland</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Wellcome Trust Centre for Neuroimaging, University College London, London, United Kingdom</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Institut du Cerveau et de la Moelle épinière (ICM), Hôpital Pitié Salpêtrière, Paris, France</addr-line></aff>
+<aff id="aff5"><label>5</label><addr-line>Department of Computer Science, ETH Zurich, Zurich, Switzerland</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Schrater</surname><given-names>Paul</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Minnesota, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">diaconescu@biomed.ee.ethz.ch</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: AOD KES CM EF. Performed the experiments: AOD LAEW. Analyzed the data: AOD LK. Contributed reagents/materials/analysis tools: CM JD LAEW LK EIL. Wrote the paper: AOD CM LAEW JD LK EIL EF KES.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>9</month><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>4</day><month>9</month><year>2014</year></pub-date>
+<volume>10</volume>
+<issue>9</issue>
+<elocation-id>e1003810</elocation-id>
+<history>
+<date date-type="received"><day>1</day><month>1</month><year>2014</year></date>
+<date date-type="accepted"><day>14</day><month>7</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Diaconescu et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Inferring on others' (potentially time-varying) intentions is a fundamental problem during many social transactions. To investigate the underlying mechanisms, we applied computational modeling to behavioral data from an economic game in which 16 pairs of volunteers (randomly assigned to “player” or “adviser” roles) interacted. The player performed a probabilistic reinforcement learning task, receiving information about a binary lottery from a visual pie chart. The adviser, who received more predictive information, issued an additional recommendation. Critically, the game was structured such that the adviser's incentives to provide helpful or misleading information varied in time. Using a meta-Bayesian modeling framework, we found that the players' behavior was best explained by the deployment of hierarchical learning: they inferred upon the volatility of the advisers' intentions in order to optimize their predictions about the validity of their advice. Beyond learning, volatility estimates also affected the trial-by-trial variability of decisions: participants were more likely to rely on their estimates of advice accuracy for making choices when they believed that the adviser's intentions were presently stable. Finally, our model of the players' inference predicted the players' interpersonal reactivity index (IRI) scores, explicit ratings of the advisers' helpfulness and the advisers' self-reports on their chosen strategy. Overall, our results suggest that humans (i) employ hierarchical generative models to infer on the changing intentions of others, (ii) use volatility estimates to inform decision-making in social interactions, and (iii) integrate estimates of advice accuracy with non-social sources of information. The Bayesian framework presented here can quantify individual differences in these mechanisms from simple behavioral readouts and may prove useful in future clinical studies of maladaptive social cognition.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>The ability to decode another person's intentions is a critical component of social interactions. This is particularly important when we have to make decisions based on someone else's advice. Our research proposes that this complex cognitive skill (social learning) can be translated into a mathematical model, which prescribes a mechanism for mentally simulating another person's intentions. This study demonstrates that this process can be parsimoniously described as the deployment of hierarchical learning. In other words, participants learn about two quantities: the intentions of the person they interact with and the veracity of the recommendations they offer. As participants become more and more confident about their representation of the other's intentions, they make decisions more in accordance with the advice they receive. Importantly, our modeling framework captures individual differences in the social learning process: The estimated “learning fingerprint” can predict other aspects of participants' behavior, such as their perspective-taking abilities and their explicit ratings of the adviser's level of trustworthiness. The present modeling approach can be further applied in the context of psychiatry to identify maladaptive learning processes in disorders where social learning processes are particularly impaired, such as schizophrenia.</p>
+</abstract>
+<funding-group><funding-statement>We would like to acknowledge support by the Marie Curie International Fellowship and the UZH Forschungskredit awarded to AOD and the René and Susanne Braginsky Foundation (KES). CM is supported by a Joint Initiative involving Max Planck Society and University College London on Computational Psychiatry and Aging Research. JD acknowledges support from the European Research Council and the IHU-A-IM. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="19"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The process of how we represent others' intentions is an important determinant of social exchange. This inferential process becomes even more crucial when we need to rely on other people's advice regarding a course of action. Credibility can be inferred from another's reputation, which is in turn developed through recursive social interactions <xref ref-type="bibr" rid="pcbi.1003810-KingCasas1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Yoshida1">[2]</xref>. But since advice is motivated by unknown goals, which may also change in time, we are constantly challenged by the question of how accurately we represent others' intentions.</p>
+<p>As agents' intentions are hidden from observers, they have to be inferred from their actions. The monitoring of other agents' intentions represents a particular aspect of “theory of mind” <xref ref-type="bibr" rid="pcbi.1003810-Amodio1">[3]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Keysers1">[5]</xref>. Different cognitive frameworks for understanding this process have been suggested, e.g. action understanding vs. mentalizing (attribution of mental states) <xref ref-type="bibr" rid="pcbi.1003810-Canessa1">[6]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-VanOverwalle1">[8]</xref>. Bayesian models in particular provide a formal account of how observers build models of other agents and use them to predict their desires or intentions. One important approach is to formulate social cognition in terms of a partially observable Markov decision process (POMDP) that describes the relations between environmental states (accessible to the observer) and another agent's (unobservable) mental states <xref ref-type="bibr" rid="pcbi.1003810-Baker1">[9]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Ullman1">[11]</xref>. This conceptualization, however, tends to be normative and does not usually emphasize individual variability in social inference. Another framework proposes that theory of mind can be understood in terms of recursive thinking, and focuses on identifying the depth of reasoning that leads to optimal inference <xref ref-type="bibr" rid="pcbi.1003810-Yoshida1">[2]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Devaine1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Xiang1">[13]</xref>. Importantly, so far both types of approaches have been applied to situations where the other agents' intentions are stable over time.</p>
+<p>In the present study we build on these previous computational treatments of how humans infer on the intentions of others by considering the additional challenge of detecting how quickly they change in time, i.e. volatility. To this end, we propose novel generative models of how humans may infer on volatile intentions of others and apply these models to behavioral data from a new experimental paradigm. The models we employ are conceptually similar to previous POMDP models, but emphasize individual approximations to Bayes-optimality, as described below.</p>
+<p>Specifically, we addressed the following two questions by comparing the explanatory power of alternative computational models that were fitted to the observed behavior: (i) Are humans able to deploy hierarchically structured learning during social interactions and simultaneously predict the accuracy of advice and the stability of the adviser's intentions? (ii) Would humans rely more on social advice (with potentially high information but also unknown degree of uncertainty) or on non-social information that is potentially less accurate but had a known outcome distribution (i.e., risk)?</p>
+<p>To address these questions, we designed an interactive and deception-free economic game that involved situations of both aligned and conflicting interests between participants (all male) who were randomly assigned to a “player” or an “adviser” role. In this social exchange paradigm, which builds on a previous task by Behrens et al. (2008), participants received distinct information about the probability of two possible outcomes. The player had to predict the outcome of a binary lottery whose true probability distribution was displayed as a pie chart. The adviser issued an additional recommendation (advice) to the player. The information available to the adviser was still probabilistic, but with a larger and constant probability (80%) as it was generated after the outcome had been drawn (<xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1</xref>).</p>
+<fig id="pcbi-1003810-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g001</object-id><label>Figure 1</label><caption>
+<title>Experimental paradigm.</title>
+<p>Sixteen pairs of healthy male volunteers randomly assigned to the “adviser” role (A) or the “player” role (B) interacted in an economic game. The player had to predict the outcome of a binary lottery for which the odds were shown as a pie chart (cue). The player saw a progress bar, which increased with every correct prediction (and decreased with every incorrect/missed prediction). If the player reached the silver range, he received an extra bonus of CHF 10 (Swiss Francs); if he reached gold, he received an extra CHF 20. The adviser, however, received more information about the outcome (constant probability of 80%), and based on this information, advised the player on which option to choose. Critically, the adviser's motivation to provide valid or misleading information varied across the game. In addition to the player's progress bar, the adviser was shown his own gold and silver ranges (which the player did not see). If the player's score landed within the adviser's silver range at the end of the game, the adviser received an extra CHF 10; if the player's score landed in the adviser's golden range, the adviser earned an extra CHF 20. Importantly, before the experiment the player was informed (truthfully) that the adviser had his own undisclosed incentives and that his intentions might change during the game.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g001" position="float" xlink:type="simple"/></fig>
+<p>Importantly, the adviser's payment was structured such that his incentive to provide valid or misleading advice varied during the game and introduced temporal variations in aligned and conflicting interests between player and adviser. This required the player to detect changes in the adviser's intentions and adapt his own decision-making accordingly. It is not clear, however, what exact mechanism underlies adaptive behavior in this scenario: would players only track trial-wise changes in advice accuracy, or would they invoke a more complex hierarchical model, which also assumes that players track the volatility of the advisers' intentions (see <xref ref-type="bibr" rid="pcbi.1003810-Behrens1">[14]</xref>)? Furthermore, even if the latter was the case, would volatility estimates only serve to optimize inference and learning, or would they directly impact on trial-by-trial variability of decisions?</p>
+<p>To address these questions, we considered different explanations (hypotheses) for the behavior displayed by our participants, each of which was formalized as a two-component model. The first component of each model represented the player's belief updating about the causes of the advisor's behavior; we refer to this component as the “perceptual model”. The second component is the “response model”, which maps the current belief to the player's actual decision (see <xref ref-type="bibr" rid="pcbi.1003810-Daunizeau1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Daunizeau2">[16]</xref>). We constructed a factorially-structured set of 12 different models (model space) by systematically combining different perceptual and response models (see <xref ref-type="fig" rid="pcbi-1003810-g002">Figure 2</xref>), as described in detail in the Methods section. We then fitted these models to the trial-by-trial responses of each subject using Bayesian model inversion and formally compared the plausibility of all 12 models by random effects Bayesian model selection (BMS). Altogether, this corresponds to a “meta-Bayesian” approach <xref ref-type="bibr" rid="pcbi.1003810-Daunizeau1">[15]</xref>, i.e., a Bayesian treatment of Bayesian models of cognition, also known as a “doubly Bayesian” <xref ref-type="bibr" rid="pcbi.1003810-Huszr1">[17]</xref> or “ecumenical Bayes” <xref ref-type="bibr" rid="pcbi.1003810-Lee1">[18]</xref> approach. This enabled us to identify a hierarchical generative model, which may underlie social inference in our paradigm, and whose parameter estimates predicted independent behavioral data, such as explicit ratings of the players, self-reports on strategy used by the advisers and questionnaire scores.</p>
+<fig id="pcbi-1003810-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g002</object-id><label>Figure 2</label><caption>
+<title>Hierarchical structure of the model space: Perceptual models, response models, specific models.</title>
+<p>The models considered in this study have a 3×2×2 factorial structure and can be displayed as a tree. The leaves at the bottom represent individual models of social learning in which both social and non-social sources of information are considered. The nodes at the first level represent the perceptual model families (three-level HGF, reduced two-level HGF, and RW). Two response models were formalized under the HGF model: decision noise in the mapping of beliefs to decisions either (1) depended dynamically on the estimated volatility of the adviser's intentions (“Volatility” model) or (2) was a fixed entity over trials (“Decision noise” model). At the third level, the response model parameters can be divided further according to the weight of social versus non-social information – these models propose that participants' beliefs are based on (1) both cue and advice information and (2) advice only. The branch on the left-hand side proposes a model in which only the given cue probabilities (i.e., the pie chart) enter the response model (Cue Probability).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Ethics statement</title>
+<p>All participants gave written informed consent before the study, which had received ethics approval by the local responsible authorities (Kantonale Ethikkommission, KEK 2010-0312/3).</p>
+</sec><sec id="s2b">
+<title>Participants</title>
+<p>Thirty-two healthy male adult volunteers (age range: 19-30 years; median age = 22) participated in the study. Only men participated in this study to avoid potential gender-related confounds in the pairings of advisers and players, such as gender differences in the perception of trustworthiness (with women being perceived as generally more trustworthy than men <xref ref-type="bibr" rid="pcbi.1003810-Buchan1">[19]</xref>).</p>
+<p>Participants with previous neurological or psychiatric history or who were taking medication at the time were excluded from the study. Three days before the testing session, participants received a battery of psychological questionnaires, which they had to fill out online. This included the Temperament and Character Inventory (TCI-K) <xref ref-type="bibr" rid="pcbi.1003810-Cloninger1">[20]</xref> to measure personality traits and the Interpersonal Reactivity Index (IRI) <xref ref-type="bibr" rid="pcbi.1003810-Davis1">[21]</xref> to measure empathy, perspective-taking, and theory of mind traits.</p>
+</sec><sec id="s2c">
+<title>Experimental procedure</title>
+<p>Inspired by the paradigm of Behrens et al. (2008), we developed a deception-free and interactive economic game for monetary rewards. This paradigm involved pairs of volunteers (randomly assigned to a “player” and “adviser” role) who met each other for the first time on the day of the experiment. The player had to perform a standard probabilistic reinforcement learning task and was provided with truthful information about the <italic>a priori</italic> probabilities of trial-wise outcomes by a visual pie chart. The outcome was either green or blue, and all trials contained one of 6 cue types (blue:green pie charts: 75∶25, 65∶35, 55∶45, 45∶55, 35∶65, and 25∶75) (<xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1a</xref>). The adviser, however, received more accurate information: once the outcome was determined (according to the probabilities of the visual pie chart), he was informed about the result with a constant accuracy of 80%. Based on this information, the adviser issued a recommendation to the player on which option to choose. To signal his suggestion, the adviser held up a blue or a green card (<xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1b</xref>); these recommendations were recorded, using a video camera, for use as stimuli in future experiments. Throughout the experiment, both the player and the adviser sat across from each other and were not allowed to interact in any other way than the adviser holding up a card to indicate his suggestion.</p>
+<p>Notably, as detailed below, the adviser's pay-off was structured such that his motivation to provide valid or misleading information varied across the game. The player therefore needed to learn about the time-varying intentions of the adviser in order to decide whether to trust him or not on any given trial. In addition to computational modeling of trial-wise choices, we obtained an explicit readout of the player's estimates by requiring him, on 8 out of the total of 200 trials, to characterize the advisers' intentions as “helpful”, “misleading”, or “uninformative”. The timing of these questions and the order of the options was randomized, but they were presented at the same times across subjects.</p>
+<p>The player's final payment was proportional to his total score, plus a potential bonus if his score ended in a predefined silver or gold range (see <xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1</xref>). He could track the accuracy of his predictions by monitoring a progress bar at the bottom of the screen, which increased with every correct prediction and decreased with every missed or incorrect response by 1 point. By reaching the silver or the gold target, he could win CHF 10 or CHF 20, respectively (<xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1</xref> and <xref ref-type="table" rid="pcbi-1003810-t001">Table 1</xref>). The player was informed before the experiment that the adviser had incentives that were not necessarily aligned with his own and could vary throughout the experiment.</p>
+<table-wrap id="pcbi-1003810-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t001</object-id><label>Table 1</label><caption>
+<title>Player and adviser incentives.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Player</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Silver Target</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Gold Target</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">&gt;65 points</td>
+<td align="left" rowspan="1" colspan="1">&gt;115 points</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Adviser</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Gold Range</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Silver Range</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">35–50</td>
+<td align="left" rowspan="1" colspan="1">95–110</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>The adviser was able to monitor the player's progress, and was simultaneously shown his own opportunities to gain monetary rewards (i.e., gold and silver ranges, which were unknown to the player). Critically, the targets of the player and the adviser were arranged to create situations of shared and conflicting interests: the gold range of the adviser preceded the silver target of the player, and the silver range of the adviser also ended before the onset of the gold target of the player (see <xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1</xref> and <xref ref-type="table" rid="pcbi-1003810-t001">Table 1</xref>).</p>
+<p>A typical interaction between the two participants during this game unfolded in the following manner (compare <xref ref-type="fig" rid="pcbi-1003810-g001">Figure 1</xref>): the adviser initially had an incentive to assist the player until the latter reached the adviser's gold range. Once the players' score was within the adviser's gold range, the advisers' incentive to provide misleading advice increased. Once the player recognized this hidden change in intention and either ignored the advice or decided to bet on the opposite color, the player's progress bar was likely to exceed the adviser's gold range. Consequently, if the adviser was unable to confine the player to his (the adviser's) gold range, the next-best strategy for the adviser was to help the player with correct advice again and aim to push him into his (the adviser's) silver range. Once the player reached the adviser's silver range, the adviser had an additional incentive to mislead the player again to prevent the player from moving out of his (the adviser's) silver range.</p>
+<p>To distinguish general inference processes under volatility from inference specific to intentionality, each pair of participants also performed a control task. To exclude temporal order effects, the sequence of the two tasks was counterbalanced across participants. In the control task, the adviser was blindfolded and issued his recommendation by picking a card from 6 separate decks placed before him by the experimenter. The blindfolding removed any intentionality by preventing that the adviser could influence what advice he was giving the player; furthermore, the adviser was unable to witness trial outcomes. The predictive accuracy of the six decks of cards was either 80% or 20%. The players were informed in advance that the card decks varied in their predictive accuracy, but not what the probabilities were nor that they were constant per each deck. However, the players could observe from which deck the card was sampled. This control condition thus closely corresponded to the main task, except for the role of intentionality: the player was required to track advice accuracy under volatility (induced by the adviser blindly switching between decks with different accuracy) and had to make trial-wise decisions how to combine the veridical information from the visual pie chart with the more informative (but volatile) advice.</p>
+<p>Both tasks included 192 trials (plus the 8 rating trials) with an equal number of 6 cue target types (75∶25, 65∶35, 55∶45, 45∶55, 35∶65, and 25∶75 blue: green pie charts). The trial outcome was randomly drawn from these probability distributions. At the end of the study, all participants were debriefed and asked to describe the strategy that they employed during the game.</p>
+</sec><sec id="s2d">
+<title>Computational modeling</title>
+<p>In the present study, we examined how subjects updated their beliefs about others' intentions and chose to follow or disregard their advice. For this purpose, we applied two cognitive models (which we here refer to as “perceptual models”): (i) the Hierarchical Gaussian Filter (HGF), a generic Bayesian model of learning under perceptual uncertainty and environmental volatility <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref>, and (ii) the Rescorla-Wagner (RW) model <xref ref-type="bibr" rid="pcbi.1003810-Rescorla1">[23]</xref>, a commonly used reinforcement learning model. In order to verify whether players really deploy hierarchical learning and infer on the volatility of the adviser's intentions, we also included a reduced (non-hierarchical) version of the HGF as control; this alternative model contained only two levels of learning (see <xref ref-type="table" rid="pcbi-1003810-t002">Table 2</xref>).</p>
+<table-wrap id="pcbi-1003810-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t002</object-id><label>Table 2</label><caption>
+<title>Prior mean and variance of the perceptual and response model parameters.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Parameter</td>
+<td align="left" rowspan="1" colspan="1">Prior mean</td>
+<td align="left" rowspan="1" colspan="1">Prior variance</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(i) HGF model class </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e001" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">κ</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e002" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">−2</td>
+<td align="left" rowspan="1" colspan="1">100</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ϑ</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e003" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e004" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e005" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e006" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(ii) No Volatility HGF model class</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e007" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">κ</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e008" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">−2</td>
+<td align="left" rowspan="1" colspan="1">100</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ϑ</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e009" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e010" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e011" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e012" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(iii) Rescorla-Wagner model class</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e013" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e014" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.2</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e015" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(iv) Integrated model class</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e016" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e017" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e018" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">48</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(v) Reduced: Advice </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e019" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e020" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e021" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e022" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">48</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(vi) Reduced: Cue model class </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e023" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e024" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e025" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e026" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">48</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Note: The prior variances are given in the space in which parameters are estimated. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e027" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e028" xlink:type="simple"/></inline-formula><bold>,</bold> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e029" xlink:type="simple"/></inline-formula>,<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e030" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e031" xlink:type="simple"/></inline-formula> are estimated in logit-space, while <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e032" xlink:type="simple"/></inline-formula><bold>, </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e033" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e034" xlink:type="simple"/></inline-formula> are estimated in log-space.</p></fn></table-wrap-foot></table-wrap>
+<p>Furthermore, in order to link trial-by-trial beliefs to the observed decisions (and thus enable model inversion), we considered several alternative response models, which differed with regard to whether participants incorporated social and/or non-social sources of information. Together, this resulted in a factorial model space (see <xref ref-type="fig" rid="pcbi-1003810-g002">Figure 2</xref>), which is described in more detail below.</p>
+</sec><sec id="s2e">
+<title>Perceptual models</title>
+<sec id="s2e1">
+<title>Hierarchical Gaussian Filter (HGF)</title>
+<p>The HGF is a generic hierarchical model of learning, which allows for inference on an agent's beliefs about the state of the world from his/her observed behavior (see <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref> for theoretical background and <xref ref-type="bibr" rid="pcbi.1003810-Vossel1">[24]</xref> and <xref ref-type="bibr" rid="pcbi.1003810-Iglesias1">[25]</xref> for recent applications). This model is related to the “Bayesian brain” hypothesis <xref ref-type="bibr" rid="pcbi.1003810-Doya1">[26]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Tenenbaum1">[30]</xref>, which postulates that evolutionary selection should have resulted in neural and cognitive processing principles that approximate a statistical optimum. This implies that the brain maintains and continually updates a generative (predictive) model of its sensory inputs, which allows for inference on hidden environmental states that are hierarchically organized and cause the sensory inputs that the agent experiences. In the HGF, these states evolve in time as hierarchically coupled Gaussian random walks where, at any given level, the variance (step size) is controlled by the level above (see <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref> for details).</p>
+<p>In brief, the HGF proposes that an agent uses a sequence of sensory inputs to make inferences on a hierarchy of hidden states <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e035" xlink:type="simple"/></inline-formula> of its environment (where <italic>k</italic> is a trial index and <italic>n</italic> is the number of levels in the hierarchy); see <xref ref-type="fig" rid="pcbi-1003810-g003">Figure 3</xref>. In the context of our paradigm, the player has to infer on the congruence between the advice and the outcome. Thus, the hidden state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e036" xlink:type="simple"/></inline-formula> denotes the accuracy of the advice, which is binary, i.e., any single piece of advice is either accurate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e037" xlink:type="simple"/></inline-formula> or inaccurate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e038" xlink:type="simple"/></inline-formula>.</p>
+<fig id="pcbi-1003810-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g003</object-id><label>Figure 3</label><caption>
+<title>Graphical model of the HGF and the response model.</title>
+<p>In the graphical model, the diamonds represent quantities that change in time (i.e., that carry a time (or trial index <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e039" xlink:type="simple"/></inline-formula>) but that do not depend on their previous state. The hexagons, however, represent states that change in time but additionally depend on their previous state in time in a Markovian fashion. Circles, on the other hand, denote fixed parameters. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e040" xlink:type="simple"/></inline-formula> represents the accuracy of the current piece of advice, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e041" xlink:type="simple"/></inline-formula> the adviser's current tendency to give accurate advice and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e042" xlink:type="simple"/></inline-formula> the current volatility of the adviser's intentions. Parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e043" xlink:type="simple"/></inline-formula> determines how strongly <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e044" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e045" xlink:type="simple"/></inline-formula> are coupled, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e046" xlink:type="simple"/></inline-formula> represents the tonic component of the log-volatility in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e047" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e048" xlink:type="simple"/></inline-formula> denotes the meta-volatility in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e049" xlink:type="simple"/></inline-formula>. The response model has 2 layers: (1) the computation of the integrated belief or p(outcome|cued probability, advice), i.e., the probability of the outcome given both the non-social cue and the advice; (2) the chosen action, drawn from the integrated belief using a sigmoid decision rule. Parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e050" xlink:type="simple"/></inline-formula> determines the weight of the advice compared to the non-social cue. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e051" xlink:type="simple"/></inline-formula> represents the subject's binary response (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e052" xlink:type="simple"/></inline-formula>: deciding to accept the advice, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e053" xlink:type="simple"/></inline-formula>: going against the advice).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g003" position="float" xlink:type="simple"/></fig>
+<p>Beliefs about advice accuracy and advisers' intentionality are represented as time-varying states in the model, where all states higher than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e054" xlink:type="simple"/></inline-formula> are continuous and evolve as Gaussian random walks, which are hierarchically coupled to each other in the following manner: The lowest state, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e055" xlink:type="simple"/></inline-formula> represents the participant's belief about advice accuracy, i.e., the probability that the advice is accurate (<xref ref-type="disp-formula" rid="pcbi.1003810.e058">Eq. (1)</xref>), and depends on the next higher (unbounded) state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e056" xlink:type="simple"/></inline-formula> via the logistic sigmoid transformation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e057" xlink:type="simple"/></inline-formula> in <xref ref-type="disp-formula" rid="pcbi.1003810.e059">Eq. (2)</xref>.<disp-formula id="pcbi.1003810.e058"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e058" xlink:type="simple"/><label>(1)</label></disp-formula>where<disp-formula id="pcbi.1003810.e059"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e059" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>At the next higher level, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e060" xlink:type="simple"/></inline-formula> denotes the belief about the adviser's tendency to deliver accurate advice (i.e., the adviser's current degree of helpfulness). The variance or the step size with which <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e061" xlink:type="simple"/></inline-formula> evolves over time depends on the level above, the highest state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e062" xlink:type="simple"/></inline-formula>.<disp-formula id="pcbi.1003810.e063"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e063" xlink:type="simple"/><label>(3)</label></disp-formula></p>
+<p>The highest state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e064" xlink:type="simple"/></inline-formula> represents the (log) volatility of the adviser's intentions (i.e., tendency to offer accurate advice).<disp-formula id="pcbi.1003810.e065"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e065" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+<p>The temporal evolution of these states and their influence on each other is captured by three parameters, which can differ across agents to allow for individual belief-updating styles: (i) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e066" xlink:type="simple"/></inline-formula> determines the degree to which the second level <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e067" xlink:type="simple"/></inline-formula> is coupled to the third level <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e068" xlink:type="simple"/></inline-formula>, (ii) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e069" xlink:type="simple"/></inline-formula> represents the constant (tonic) component of the log-volatility at the second level, which is independent of the variable (phasic) component <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e070" xlink:type="simple"/></inline-formula>, and (iii) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e071" xlink:type="simple"/></inline-formula> determines how quickly <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e072" xlink:type="simple"/></inline-formula> evolves over time (i.e., the step size of the Gaussian random walk performed by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e073" xlink:type="simple"/></inline-formula>). This results in the following generative model (for a graphical model of our implementation of the HGF, see <xref ref-type="fig" rid="pcbi-1003810-g003">Figure 3</xref>):<disp-formula id="pcbi.1003810.e074"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e074" xlink:type="simple"/><label>(5)</label></disp-formula></p>
+<p>We assume that observers update their beliefs on these hierarchically-coupled states in a trial-by-trial fashion by applying an efficient approximation to ideal Bayesian inference. Under a generic mean-field approximation, such update rules have a simple and interpretable form: at each level of the hierarchy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e075" xlink:type="simple"/></inline-formula>, updates of beliefs (posterior means) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e076" xlink:type="simple"/></inline-formula> are proportional to the prediction error (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e077" xlink:type="simple"/></inline-formula>) from the level below, weighted by a precision ratio:<disp-formula id="pcbi.1003810.e078"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e078" xlink:type="simple"/><label>(6)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e079" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e080" xlink:type="simple"/></inline-formula> are precisions of the prediction about input from the level below and of the belief at the current level, respectively. (A note on notation: the superscript ∧ denotes the “prediction”. Hence, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e081" xlink:type="simple"/></inline-formula> refers to the prediction on trial <italic>k</italic> before experiencing the trial outcome, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e082" xlink:type="simple"/></inline-formula> is the precision of this prediction.)</p>
+</sec><sec id="s2e2">
+<title>Rescorla-Wagner (RW) model</title>
+<p>Reinforcement learning models propose that agents learn to take actions that maximize the probability of future rewards; therefore, agents learn the “value” of different stimuli and actions <xref ref-type="bibr" rid="pcbi.1003810-Montague1">[31]</xref>. One of the most widely used reinforcement learning model is the RW model <xref ref-type="bibr" rid="pcbi.1003810-Rescorla1">[23]</xref> where predictions about value are updated in proportion to a prediction error weighted by a learning rate. The RW model does not employ a hierarchy of hidden states, but a single state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e083" xlink:type="simple"/></inline-formula> (which, in our case, describes the subject's estimated value of the advice) and one free parameter, the individual learning rate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e084" xlink:type="simple"/></inline-formula>, which is constant across trials:<disp-formula id="pcbi.1003810.e085"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e085" xlink:type="simple"/><label>(7)</label></disp-formula></p>
+</sec><sec id="s2e3">
+<title>Structural interpretation of the HGF update equations: Analogy to the RW model</title>
+<p>The hierarchical Bayesian model that we used to fit the data might seem complicated at first glance, but it can be reduced (via a variational approximation) to analytical update equations that have an easily interpretable form and contain only a few parameters (see <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref> for details). As mentioned above, the form of these update equations is similar to those of RW learning, providing a Bayesian perspective on reinforcement learning theory <xref ref-type="bibr" rid="pcbi.1003810-Preuschoff1">[32]</xref>. Under our scheme, the general structure of these belief updates can be summarized as:<disp-formula id="pcbi.1003810.e086"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e086" xlink:type="simple"/><label>(8)</label></disp-formula></p>
+<p>This structure is reflected by <xref ref-type="disp-formula" rid="pcbi.1003810.e078">Eq. 6</xref>.</p>
+<p>A key difference to the RW model is that the HGF uses a dynamic learning rate that is represented as a ratio of precision estimates, where at any hierarchical level <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e087" xlink:type="simple"/></inline-formula>, the numerator represents the (likelihood) precision of the prediction at the level below <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e088" xlink:type="simple"/></inline-formula>, while the denominator contains the precision of the current belief, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e089" xlink:type="simple"/></inline-formula>. What follows from this expression is that prediction errors are given a larger weight (and thus belief updates are more pronounced) when the precision of the data (input from the lower level) is high or when the precision of the prior belief is low. This can be seen as an analogue to Kalman filtering, in the sense that the precision weighting of prediction errors corresponds to the Kalman gain.</p>
+</sec><sec id="s2e4">
+<title>Learning rates</title>
+<p>Unlike in the RW model, the learning rate modeled in the HGF is dynamic and fluctuates trial-by-trial as a result of changes in both informational uncertainty and the volatility of the adviser's intentions. Due to the hierarchical model structure, we must consider two learning rates: the first learning rate varies as a function of perceptual and informational uncertainty and is proportional to the precision (see <xref ref-type="disp-formula" rid="pcbi.1003810.e090">Eq. (9)</xref>).<disp-formula id="pcbi.1003810.e090"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e090" xlink:type="simple"/><label>(9)</label></disp-formula>where<disp-formula id="pcbi.1003810.e091"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e091" xlink:type="simple"/><label>(10)</label></disp-formula></p>
+<p>Although <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e092" xlink:type="simple"/></inline-formula> does not depend on its previous state in time but results from a sigmoid transform of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e093" xlink:type="simple"/></inline-formula> (see <xref ref-type="disp-formula" rid="pcbi.1003810.e059">Eq. (2)</xref> and <xref ref-type="fig" rid="pcbi-1003810-g003">Figure 3</xref>), <xref ref-type="disp-formula" rid="pcbi.1003810.e090">Eq. (9)</xref> transforms the learning rate at the second level into a learning rate at the first level (for more details, see Eq. D.1 in the Supplementary Material to <xref ref-type="bibr" rid="pcbi.1003810-Iglesias1">[25]</xref>).</p>
+<p>Furthermore, there is also a learning rate at the third level, which has a more complicated form that depends on the estimated mean <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e094" xlink:type="simple"/></inline-formula> of the volatility <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e095" xlink:type="simple"/></inline-formula> of the adviser's intentions and on the precision at the third level (for more details, see <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref>):<disp-formula id="pcbi.1003810.e096"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e096" xlink:type="simple"/><label>(11)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e097" xlink:type="simple"/></inline-formula>.</p>
+</sec></sec><sec id="s2f">
+<title>Response models</title>
+<p>The response model describes how the agent's beliefs (the result of perceptual inference) map onto choices (actions). In our task, subjects can integrate social and non-social information, or use either source of information exclusively. Specifically, the pie chart indicates the true <italic>a priori</italic> probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e098" xlink:type="simple"/></inline-formula> about the outcome as non-social information that is directly accessible to the player without need for inference. By contrast, the (uncertain) social information corresponds to the player's belief that the adviser gives correct advice on the current trial. In the HGF, this belief <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e099" xlink:type="simple"/></inline-formula> corresponds to the logistic sigmoid transform of the predicted tendency <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e100" xlink:type="simple"/></inline-formula> (the posterior from the previous trial) of the adviser to give correct advice (see <xref ref-type="disp-formula" rid="pcbi.1003810.e101">Eq. (12)</xref>):<disp-formula id="pcbi.1003810.e101"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e101" xlink:type="simple"/><label>(12)</label></disp-formula></p>
+<p>The response model describes how the player bases his decision on a weighted average of the two sources of information. Taking <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e102" xlink:type="simple"/></inline-formula> as the weight of the social information, we obtain the integrated belief that the advice is accurate:<disp-formula id="pcbi.1003810.e103"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e103" xlink:type="simple"/><label>(13)</label></disp-formula></p>
+<p>For the RW model, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e104" xlink:type="simple"/></inline-formula> is replaced by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e105" xlink:type="simple"/></inline-formula>.</p>
+<p>The probability of the player following the advice (i.e., making decision <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e106" xlink:type="simple"/></inline-formula> as opposed to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e107" xlink:type="simple"/></inline-formula> for going against the advice) is then described by a sigmoid function, which maps the unit interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e108" xlink:type="simple"/></inline-formula> onto itself for a given decision noise parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e109" xlink:type="simple"/></inline-formula> (note that this function differs from the logistic sigmoid above which maps the whole real line onto the unit interval).<disp-formula id="pcbi.1003810.e110"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e110" xlink:type="simple"/><label>(14)</label></disp-formula></p>
+<p>In systematic model comparisons, we compared variations in <xref ref-type="disp-formula" rid="pcbi.1003810.e103">Eqs. (13)</xref> and <xref ref-type="disp-formula" rid="pcbi.1003810.e110">(14)</xref>, examining whether (i) subjects were more likely to integrate social and non-social information or used either source of information exclusively, and whether (ii) the decision noise in the mapping from beliefs to decisions (i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e111" xlink:type="simple"/></inline-formula> in <xref ref-type="disp-formula" rid="pcbi.1003810.e110">Eq. (14)</xref>) was fixed or varied in time as a function of the estimated adviser's volatility. These variations are detailed in the section on “Model space” below.</p>
+</sec><sec id="s2g">
+<title>Model inversion</title>
+<p>Priors of the model parameters, namely <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e112" xlink:type="simple"/></inline-formula> for all models as well as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e113" xlink:type="simple"/></inline-formula> for the HGF and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e114" xlink:type="simple"/></inline-formula> for the RW model are listed in <xref ref-type="table" rid="pcbi-1003810-t002">Table 2</xref>. We defined the priors based on the experimental design and pilot data. For parameters that were strictly bounded between 0 and 1, we chose the prior mean to be 0.5. For real-valued parameters, we chose prior means that represented values under which an ideal Bayesian agent would experience the least surprise about its sensory inputs (see the functions tapas_fitModel.m and tapas_bayes_optimal_binary_config.m in the HGF toolbox). The priors were chosen to be relatively uninformative (with large variances) to allow for substantial individual differences in learning and advice weighting.</p>
+<p>In the HGF models, we also estimated participants' initial beliefs about the advice accuracy and the adviser's volatility, as well as their uncertainty about these two quantities. Parameters and states are estimated in spaces where they are unbounded. For example, parameters confined to the [0,1] interval are log-transformed and thus also estimated in an unbounded space. Given the priors over parameters and the input sequence, maximum-a-posteriori (MAP) estimates of model parameters were calculated using the HGF toolbox version 2.1. The code used is freely available as part of the open source software package TAPAS at <ext-link ext-link-type="uri" xlink:href="http://www.translationalneuromodeling.org/tapas" xlink:type="simple">http://www.translationalneuromodeling.org/tapas</ext-link>.</p>
+<p>Optimization was performed using a quasi-Newton optimization algorithm <xref ref-type="bibr" rid="pcbi.1003810-Broyden1">[33]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Shanno1">[36]</xref>. The objective function for maximization was the log-joint posterior density over all perceptual and observation parameters, given the data and the generative model. To exclude the possibility that our Gauss-Newton gradient descent optimization could have been influenced by local minima of the log-joint objective function, we used two additional global optimization methods, a Gaussian Process optimization algorithm (GPO) <xref ref-type="bibr" rid="pcbi.1003810-Osborne1">[37]</xref> and a Markov chain Monte Carlo <xref ref-type="bibr" rid="pcbi.1003810-Hastings1">[38]</xref> sampling scheme.</p>
+</sec><sec id="s2h">
+<title>Model space</title>
+<p>Overall, our model space was structured hierarchically, as shown in <xref ref-type="fig" rid="pcbi-1003810-g002">Figure 2</xref>. We combined three alternative perceptual models with four potential response models, constituting a total of 12 models, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e115" xlink:type="simple"/></inline-formula>, which are described in more detail below.</p>
+<p>Although the assumptions of hierarchically coupled-learning were well founded, we also considered that participants' decisions could be explained by simpler non-hierarchical models. To examine this hypothesis, we included two model classes, which were both non-hierarchical. The first was a simplified version of the HGF (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e116" xlink:type="simple"/></inline-formula>), in which the volatility at the third level was fixed to its prior mean and did not evolve over time (see <xref ref-type="table" rid="pcbi-1003810-t002">Table 2</xref> for the prior values used). This model assumed that participants ignored the instructions that the advisers' intentions might change in time, expecting negligible changes in log-volatility at the third level. The second model class was the classical RW model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e117" xlink:type="simple"/></inline-formula>), which assumed a fixed learning rate.</p>
+<p>Concerning the response models, the key question was whether participants integrated social and non-social sources of information or relied exclusively on one of the two sources of information. Herein, we included two (reduced) response models, which proposed that participants considered either the advice alone or the cue alone when predicting the outcome. The first model was defined by setting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e118" xlink:type="simple"/></inline-formula> to 1 (see <xref ref-type="disp-formula" rid="pcbi.1003810.e120">Eq. (15)</xref> and <xref ref-type="table" rid="pcbi-1003810-t002">Table 2</xref>), whereas the second only included the displayed winning probabilities with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e119" xlink:type="simple"/></inline-formula> fixed to 0 (see <xref ref-type="disp-formula" rid="pcbi.1003810.e121">Eq. (16)</xref> and <xref ref-type="table" rid="pcbi-1003810-t002">Table 2</xref>).<disp-formula id="pcbi.1003810.e120"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e120" xlink:type="simple"/><label>(15)</label></disp-formula><disp-formula id="pcbi.1003810.e121"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e121" xlink:type="simple"/><label>(16)</label></disp-formula></p>
+<p>Notice that the latter response model is not coupled to any of the perceptual models, because it suggests that participants do not learn about the validity of the advice and intentions of the adviser: on the contrary, they base their decisions only on the displayed winning probabilities.</p>
+<p>Furthermore, we assessed two potential mechanisms of belief-to-response mapping (see <xref ref-type="disp-formula" rid="pcbi.1003810.e110">Eq. 14</xref>), by including models which either assumed that (i) participants responded in accordance to their belief about advice accuracy but tainted by decision noise (“Decision noise” model family for models <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e122" xlink:type="simple"/></inline-formula>), or that (ii) participants' decisions were based on their estimates of the volatility of the adviser's intentions (“Volatility” model family for models <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e123" xlink:type="simple"/></inline-formula>).</p>
+<p>The “Decision noise” model refers to parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e124" xlink:type="simple"/></inline-formula> in <xref ref-type="disp-formula" rid="pcbi.1003810.e110">Eq. (14)</xref>, which represents the inverse of the decision temperature: as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e125" xlink:type="simple"/></inline-formula>, the sigmoid function becomes steeper, approaching a step function (no decision noise) at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e126" xlink:type="simple"/></inline-formula>. By contrast, the “Volatility” model family contains a time varying mapping of beliefs onto decisions. In this model set, the decision temperature parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e127" xlink:type="simple"/></inline-formula> varies with the estimate of adviser volatility or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e128" xlink:type="simple"/></inline-formula>. Hence, as the estimated volatility of the adviser's intentions decreases, the sigmoid function becomes steeper. This predicts that on trials when the player infers that the adviser's intentions are stable, he responds in accordance to his beliefs. As the volatility increases, the player becomes more uncertain of the adviser's intentions, and thus behaves in a more exploratory manner, resulting in a noisier mapping of belief-to-response probabilities. It is important to note that the mapping of beliefs onto actions is updated trial-wise, unlike in the case of the “Decision noise” response models, in which the link from beliefs to decisions is determined by a fixed, subject-specific parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e129" xlink:type="simple"/></inline-formula>. Please see the <xref ref-type="supplementary-material" rid="pcbi.1003810.s005">video S1</xref> for a demonstration of how the states of the perceptual model map onto decisions using <xref ref-type="disp-formula" rid="pcbi.1003810.e103">equations (13</xref>) and <xref ref-type="disp-formula" rid="pcbi.1003810.e110">(14)</xref>, given all possible ranges of response model parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e130" xlink:type="simple"/></inline-formula>.</p>
+<p>Thanks to our factorial model space, we used family-level inference <xref ref-type="bibr" rid="pcbi.1003810-Penny1">[39]</xref> to (i) determine the most likely class of perceptual models pooling across all response models, and (ii) the most likely response model class pooling across all perceptual models.</p>
+</sec><sec id="s2i">
+<title>Bayesian model selection and family inference</title>
+<p>Before inferring on the model parameters, we evaluated the model space using Bayesian model selection (BMS). This procedure rests on computing an approximation to the model evidence or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e131" xlink:type="simple"/></inline-formula> the probability of the data <italic>y</italic> given a model <italic>m</italic> <xref ref-type="bibr" rid="pcbi.1003810-MacKay1">[40]</xref>. The model evidence is the integral of the log-joint over the entire parameter space, which cannot be evaluated analytically. However, one can approximate the log model evidence with a lower-bound, the so-called (negative) free energy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e132" xlink:type="simple"/></inline-formula>.</p>
+<p>Alternative models can then be compared via the ratio of their respective evidences, i.e. their Bayes factor or equivalently, the difference in their log-evidences. At the group level, a group Bayes factor (GBF) can be computed by multiplying Bayes factors across subjects. The disadvantage of this procedure, however, is that it rests on the fixed-effects assumption that all participants' data are generated by the same model and variation is simply due to measurement noise <xref ref-type="bibr" rid="pcbi.1003810-Stephan1">[41]</xref>. This is not appropriate for our paradigm, as it emphasizes individual differences in social learning (e.g., by letting advisers choose their own strategy). This requires a random-effects BMS approach, where the model becomes a random variable in the population.</p>
+<p>The random-effects BMS approach we use here rests on a hierarchical scheme introduced by Stephan et al. (2009), which estimates the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e133" xlink:type="simple"/></inline-formula> of a Dirichlet distribution of the probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e134" xlink:type="simple"/></inline-formula> of all models considered; in turn, these probabilities inform a multinomial distribution over model space. This makes it straightforward to compute the posterior probability that a given model generated the data for any randomly selected participant, relative to all other models considered (for details see <xref ref-type="bibr" rid="pcbi.1003810-Stephan1">[41]</xref>). Similarly, one can compute the “exceedance probability” that a particular model is more likely than any other model in the comparison set. In other words, the exceedance probability represents the amount of evidence that, in the population studied, a given model is more frequent than the others.</p>
+<p>In case no model really stands out as a “winner” (i.e., no high exceedance probability), we can partition the model space, pool evidence over subsets of models that share a common feature (e.g., with and without a hierarchical level) and thus compare model subspaces or families, instead of single models (see <xref ref-type="bibr" rid="pcbi.1003810-Penny1">[39]</xref> for details). This idea is essentially similar to factorial experimental designs in psychology where data from all cells are used to assess the strength of main effects and interactions. It amounts to specifying a partition <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e135" xlink:type="simple"/></inline-formula>, which splits the entire model set into <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e136" xlink:type="simple"/></inline-formula> subsets (model families). The subset <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e137" xlink:type="simple"/></inline-formula> contains all models belonging to family <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e138" xlink:type="simple"/></inline-formula> where there are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e139" xlink:type="simple"/></inline-formula> models in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e140" xlink:type="simple"/></inline-formula><sup>th</sup> subset. Due to the agglomerative property of the Dirichlet distribution, for any partition of model space into families, it is straightforward to define a new Dirichlet density reflecting this split (see Eq. 18 in <xref ref-type="bibr" rid="pcbi.1003810-Stephan1">[41]</xref>). The family probabilities are then given by:<disp-formula id="pcbi.1003810.e141"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e141" xlink:type="simple"/><label>(17)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e142" xlink:type="simple"/></inline-formula> is the probability of each family occurring in the population. Exceedance probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e143" xlink:type="simple"/></inline-formula> can then be computed for each family, in the same way as for single models. They correspond to the probability that family <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e144" xlink:type="simple"/></inline-formula> is more frequent than any other family (of all <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e145" xlink:type="simple"/></inline-formula> families considered), given the data <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e146" xlink:type="simple"/></inline-formula> from all subjects:<disp-formula id="pcbi.1003810.e147"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e147" xlink:type="simple"/><label>(18)</label></disp-formula></p>
+<p>Because the conditional model probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e148" xlink:type="simple"/></inline-formula> sum to one over all models considered, this equation becomes particularly intuitive when model space is split into 2 families:<disp-formula id="pcbi.1003810.e149"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e149" xlink:type="simple"/><label>(19)</label></disp-formula></p>
+</sec><sec id="s2j">
+<title>Simulations</title>
+<p>To test the performance of BMS for our particular case, we generated 20 datasets for each of the 4 perceptual models considered under realistic levels of decision noise and using the prior means as parameter values. Thus, we augmented the softmax function in <xref ref-type="disp-formula" rid="pcbi.1003810.e110">Eq. (14)</xref>, which describes the mapping of beliefs onto actions, with a noise parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e150" xlink:type="simple"/></inline-formula>:<disp-formula id="pcbi.1003810.e151"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003810.e151" xlink:type="simple"/><label>(20)</label></disp-formula></p>
+<p>We then performed model inversion using the quasi-Newton optimization algorithm (in the same way as for the other models in this paper) and summarized the performance of BMS in terms of a confusion matrix (<xref ref-type="supplementary-material" rid="pcbi.1003810.s001">Figure S1</xref>). This matrix depicts the frequency of “correct cases” (where the model which generated the data has the highest exceedance probability of all models tested); here, rows denote the model that generated the data, and columns the model that was inverted. Thus, off-diagonal matrix elements indicate the frequency with which one generative model is “confused” with another.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Examining the robustness of model inversion and comparison</title>
+<p>As described in the Methods section, we examined the robustness of our BMS results in two ways. First, we used three different optimization schemes for inverting subject-wise models (quasi-Newton, MCMC, Gaussian process optimization). As shown by <xref ref-type="table" rid="pcbi-1003810-t003">Table 3</xref> (which lists the posterior probability of all 12 models under each optimization scheme), BMS results were consistent across all schemes. Second, the simulation results suggest that in the large majority of cases, the perceptual models that generated synthetic data could be recovered by model selection (<xref ref-type="supplementary-material" rid="pcbi.1003810.s001">Figure S1</xref>).</p>
+<table-wrap id="pcbi-1003810-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t003</object-id><label>Table 3</label><caption>
+<title>BMS results across optimization schemes (posterior model probability p(r|y) of all models).</title>
+</caption><alternatives><graphic id="pcbi-1003810-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Optimization Algorithm</td>
+<td align="left" rowspan="1" colspan="1">Response Model</td>
+<td align="left" rowspan="1" colspan="1">HGF with Volatility</td>
+<td align="left" rowspan="1" colspan="1">HGF with Decision Noise</td>
+<td align="left" rowspan="1" colspan="1">No Volatility HGF</td>
+<td align="left" rowspan="1" colspan="1">Rescorla-Wagner</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">1. GN</td>
+<td align="left" rowspan="1" colspan="1">Integrated: Cue and Advice</td>
+<td align="left" rowspan="1" colspan="1">0.78</td>
+<td align="left" rowspan="1" colspan="1">0.0274</td>
+<td align="left" rowspan="1" colspan="1">0.0169</td>
+<td align="left" rowspan="1" colspan="1">0.0166</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Advice</td>
+<td align="left" rowspan="1" colspan="1">0.0419</td>
+<td align="left" rowspan="1" colspan="1">0.0169</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+<td align="left" rowspan="1" colspan="1">0.0171</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Cue</td>
+<td align="left" rowspan="1" colspan="1">0.0167</td>
+<td align="left" rowspan="1" colspan="1">0.0166</td>
+<td align="left" rowspan="1" colspan="1">0.0168</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2. GPO</td>
+<td align="left" rowspan="1" colspan="1">Integrated: Cue and Advice</td>
+<td align="left" rowspan="1" colspan="1">0.6915</td>
+<td align="left" rowspan="1" colspan="1">0.0747</td>
+<td align="left" rowspan="1" colspan="1">0.0408</td>
+<td align="left" rowspan="1" colspan="1">0.0190</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Advice</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+<td align="left" rowspan="1" colspan="1">0.0167</td>
+<td align="left" rowspan="1" colspan="1">0.0279</td>
+<td align="left" rowspan="1" colspan="1">0.0170</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Cue</td>
+<td align="left" rowspan="1" colspan="1">0.0207</td>
+<td align="left" rowspan="1" colspan="1">0.0178</td>
+<td align="left" rowspan="1" colspan="1">0.0399</td>
+<td align="left" rowspan="1" colspan="1">0.0177</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3. MCMC</td>
+<td align="left" rowspan="1" colspan="1">Integrated: Cue and Advice</td>
+<td align="left" rowspan="1" colspan="1">0.8173</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+<td align="left" rowspan="1" colspan="1">0.0167</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Advice</td>
+<td align="left" rowspan="1" colspan="1">0.0164</td>
+<td align="left" rowspan="1" colspan="1">0.0167</td>
+<td align="left" rowspan="1" colspan="1">0.0169</td>
+<td align="left" rowspan="1" colspan="1">0.0163</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Reduced Cue</td>
+<td align="left" rowspan="1" colspan="1">0.0168</td>
+<td align="left" rowspan="1" colspan="1">0.0163</td>
+<td align="left" rowspan="1" colspan="1">0.0164</td>
+<td align="left" rowspan="1" colspan="1">0.0172</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3b">
+<title>Do subjects exploit volatility estimates of the advisers' intentions to dynamically update estimates of advice accuracy?</title>
+<p>When comparing all 12 models against each other, random effects BMS showed that the three-level HGF augmented by the “Volatility” response model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e152" xlink:type="simple"/></inline-formula> performed significantly better than the rest of the models in the majority of participants (exceedance probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e153" xlink:type="simple"/></inline-formula> = 0.99; <xref ref-type="table" rid="pcbi-1003810-t004">Table 4</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003810.s002">S2</xref>–<xref ref-type="supplementary-material" rid="pcbi.1003810.s003">S3</xref>). Across the perceptual model family, the three-level HGF family <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e154" xlink:type="simple"/></inline-formula> outperformed non-hierarchical models (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e155" xlink:type="simple"/></inline-formula>) including the reduced HGF and RW models (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e156" xlink:type="simple"/></inline-formula> = 0.99; <xref ref-type="table" rid="pcbi-1003810-t005">Table 5</xref>; <xref ref-type="fig" rid="pcbi-1003810-g004">Figure 4a</xref>). Taken together, these findings indicate that participants infer on two quantities, the advice accuracy and the volatility of the adviser's intentions, and incorporate the time-varying volatility estimates of the advisers' intentions into their learning about the advice.</p>
+<fig id="pcbi-1003810-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g004</object-id><label>Figure 4</label><caption>
+<title>Random effects family-level Bayesian model selection.</title>
+<p>(A) Posterior model probabilities pooled across all families of perceptual model families (i.e., HGF Volatility, HGF decision noise, No Volatility HGF and RW) indicate that the model class “HGF Volatility” explains participants' responses best. (B) Posterior model probabilities pooled across all response model families (i.e., Integrated (Cue and Advice), Reduced: Advice Only, and Reduced: Cue Only) indicate that the “Integrated” model family explains participants' responses best. (C) Posterior model probabilities across models that propose that the mapping of beliefs onto response probabilities is achieved via trial-by-trial adviser volatility estimates (Volatility models) or decision noise (Decision Noise). The former was the winning family.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g004" position="float" xlink:type="simple"/></fig><table-wrap id="pcbi-1003810-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t004</object-id><label>Table 4</label><caption>
+<title>Bayesian model selection results (social interactive condition): Posterior model probability or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e157" xlink:type="simple"/></inline-formula> and the model exceedance probability or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e158" xlink:type="simple"/></inline-formula>.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HGF with Volatility</td>
+<td align="left" rowspan="1" colspan="1">HGF with Decision Noise</td>
+<td align="left" rowspan="1" colspan="1">No Volatility HGF</td>
+<td align="left" rowspan="1" colspan="1">Rescorla-Wagner</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Integrated</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e159" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.7800</td>
+<td align="left" rowspan="1" colspan="1">0.0274</td>
+<td align="left" rowspan="1" colspan="1">0.0169</td>
+<td align="left" rowspan="1" colspan="1">0.0166</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e160" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.9975</td>
+<td align="left" rowspan="1" colspan="1">0.0001</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Reduced: Advice</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e161" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0419</td>
+<td align="left" rowspan="1" colspan="1">0.0169</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+<td align="left" rowspan="1" colspan="1">0.0171</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e162" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0005</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Reduced: Cue</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e163" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0167</td>
+<td align="left" rowspan="1" colspan="1">0.0166</td>
+<td align="left" rowspan="1" colspan="1">0.0168</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e164" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pcbi-1003810-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t005</object-id><label>Table 5</label><caption>
+<title>Family-level inference (perceptual model set): Posterior model probability or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e165" xlink:type="simple"/></inline-formula> and model exceedance probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e166" xlink:type="simple"/></inline-formula>.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HGF with Volatility</td>
+<td align="left" rowspan="1" colspan="1">HGF with Decision Noise</td>
+<td align="left" rowspan="1" colspan="1">No Volatility HGF</td>
+<td align="left" rowspan="1" colspan="1">Rescorla-Wagner</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e167" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.7298</td>
+<td align="left" rowspan="1" colspan="1">0.1091</td>
+<td align="left" rowspan="1" colspan="1">0.1066</td>
+<td align="left" rowspan="1" colspan="1">0.0545</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e168" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.9969</td>
+<td align="left" rowspan="1" colspan="1">0.0024</td>
+<td align="left" rowspan="1" colspan="1">0.0005</td>
+<td align="left" rowspan="1" colspan="1">0.0002</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>The HGF quantifies subject-specific learning rates at distinct temporal scales. As an example, <xref ref-type="fig" rid="pcbi-1003810-g005">Figure 5</xref> contains the learning rates for one individual subject. Here, the learning rate at the second level (transformed according to <xref ref-type="disp-formula" rid="pcbi.1003810.e090">Eq. 9</xref>) increases as the reliability of the advice unexpectedly changes (blue line in <xref ref-type="fig" rid="pcbi-1003810-g005">Figure 5</xref>). The learning rate at the third level (green line; see <xref ref-type="disp-formula" rid="pcbi.1003810.e096">Eq. 11</xref>), however, fluctuates more slowly, and increases when the adviser's intentions change from being consistently helpful to being misleading. This illustrates that the learning rate adapts to fluctuations in trial-by-trial advice reliability as well as to slower fluctuations in adviser intentionality. By contrast, the RW model assumes a constant learning rate α over trials. <xref ref-type="fig" rid="pcbi-1003810-g005">Figure 5</xref> contrasts this estimate of <italic>α</italic> with the trial-wise learning rates provided by the HGF. This comparison suggests that, in a volatile environment, such a constant learning rate is necessarily too high on many trials.</p>
+<fig id="pcbi-1003810-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g005</object-id><label>Figure 5</label><caption>
+<title>Learning rates and the estimated advice accuracy.</title>
+<p>(A) The estimated probability of the advice accuracy is computed according to the HGF and the RW perceptual models. In the RW model, the probability of advice accuracy is over- or under-estimated (compared to the HGF) on trials where the volatility of the adviser's intentions changes; this is due to the constant learning rate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e169" xlink:type="simple"/></inline-formula>. (B) The learning rates modeled in the HGF (according to <xref ref-type="disp-formula" rid="pcbi.1003810.e090">equations 9</xref> and <xref ref-type="disp-formula" rid="pcbi.1003810.e096">11</xref>) change over time as a function of the volatility of the adviser's intentions.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g005" position="float" xlink:type="simple"/></fig></sec><sec id="s3c">
+<title>Do subjects integrate social and non-social sources of information, or use one source of information exclusively?</title>
+<p>The family of response models proposing that participants integrate both social and non-social sources of information (i.e., <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e170" xlink:type="simple"/></inline-formula>) best explained participants' choices (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e171" xlink:type="simple"/></inline-formula> = 0.99; see <xref ref-type="fig" rid="pcbi-1003810-g004">Figure 4b</xref> and <xref ref-type="table" rid="pcbi-1003810-t006">Table 6</xref>). That is, to predict the winning color, most participants relied on both the uncertain advice and the known outcome probabilities indicated by the visual pie chart. However, the posterior parameter estimate of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e172" xlink:type="simple"/></inline-formula> was, on average, significantly smaller than 0.5 (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e173" xlink:type="simple"/></inline-formula>; see <xref ref-type="table" rid="pcbi-1003810-t007">Table 7</xref>), suggesting that participants weighted the visual pie chart information more than the advice.</p>
+<table-wrap id="pcbi-1003810-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t006</object-id><label>Table 6</label><caption>
+<title>Family-level inference (response model set): Posterior model probability or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e174" xlink:type="simple"/></inline-formula> and model exceedance probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e175" xlink:type="simple"/></inline-formula>.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t006" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Integrated</td>
+<td align="left" rowspan="1" colspan="1">Reduced: Advice</td>
+<td align="left" rowspan="1" colspan="1">Reduced: Cue</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e176" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.8740</td>
+<td align="left" rowspan="1" colspan="1">0.0731</td>
+<td align="left" rowspan="1" colspan="1">0.0529</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e177" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.9998</td>
+<td align="left" rowspan="1" colspan="1">0.0004</td>
+<td align="left" rowspan="1" colspan="1">0.0004</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap><table-wrap id="pcbi-1003810-t007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t007</object-id><label>Table 7</label><caption>
+<title>Average maximum a posteriori estimates of the free parameters in the winning models of the social and control tasks.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t007-7" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t007" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td colspan="3" align="left" rowspan="1">Social Interactive Task</td>
+<td colspan="3" align="left" rowspan="1">Control Task</td>
+</tr>
+<tr>
+<td colspan="3" align="left" rowspan="1">Model: HGF with Volatility (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e178" xlink:type="simple"/></inline-formula>)</td>
+<td colspan="3" align="left" rowspan="1">Model: HGF with Decision Noise (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e179" xlink:type="simple"/></inline-formula>)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Model Parameters</td>
+<td align="left" rowspan="1" colspan="1">Mean</td>
+<td align="left" rowspan="1" colspan="1">SD</td>
+<td align="left" rowspan="1" colspan="1">Model Parameters</td>
+<td align="left" rowspan="1" colspan="1">Mean</td>
+<td align="left" rowspan="1" colspan="1">SD</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e180" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.48</td>
+<td align="left" rowspan="1" colspan="1">0.53</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e181" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.37</td>
+<td align="left" rowspan="1" colspan="1">0.53</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e182" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1.06</td>
+<td align="left" rowspan="1" colspan="1">0.27</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e183" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1.11</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e184" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.42</td>
+<td align="left" rowspan="1" colspan="1">0.61</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e185" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e186" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1.05</td>
+<td align="left" rowspan="1" colspan="1">0.13</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e187" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">κ</td>
+<td align="left" rowspan="1" colspan="1">0.31</td>
+<td align="left" rowspan="1" colspan="1">0.29</td>
+<td align="left" rowspan="1" colspan="1">κ</td>
+<td align="left" rowspan="1" colspan="1">0.18</td>
+<td align="left" rowspan="1" colspan="1">0.05</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ω</td>
+<td align="left" rowspan="1" colspan="1">−5.92</td>
+<td align="left" rowspan="1" colspan="1">2.93</td>
+<td align="left" rowspan="1" colspan="1">ω</td>
+<td align="left" rowspan="1" colspan="1">−5.84</td>
+<td align="left" rowspan="1" colspan="1">2.55</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ϑ</td>
+<td align="left" rowspan="1" colspan="1">0.44</td>
+<td align="left" rowspan="1" colspan="1">0.27</td>
+<td align="left" rowspan="1" colspan="1">ϑ</td>
+<td align="left" rowspan="1" colspan="1">0.47</td>
+<td align="left" rowspan="1" colspan="1">0.06</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ζ</td>
+<td align="left" rowspan="1" colspan="1">0.39</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">ζ</td>
+<td align="left" rowspan="1" colspan="1">0.28</td>
+<td align="left" rowspan="1" colspan="1">0.11</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e188" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">4.86</td>
+<td align="left" rowspan="1" colspan="1">1.86</td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e189" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">6.33</td>
+<td align="left" rowspan="1" colspan="1">2.83</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3d">
+<title>What drives trial-by-trial variability of decisions – Estimates of volatility or general decision noise?</title>
+<p>As explained above, we considered two possibilities vis-à-vis how the player's beliefs might determine his actions trial-by-trial. A standard approach is to use a sigmoidal function (softmax or exponentiated Luce choice rule; see <xref ref-type="disp-formula" rid="pcbi.1003810.e110">Eq. 14</xref>), which conveys decision noise whose amount is fixed across trials. This approach is used in our “Decision noise” response models with a fixed, subject-specific parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e190" xlink:type="simple"/></inline-formula>. Alternatively, however, decision noise might vary dynamically across trials as a function of higher-order beliefs, such as the player's estimates of the adviser's volatility. This is represented in our “Volatility” response model family, which postulates that when the player estimates the adviser's intentions to be stable, he responds in close accordance to his beliefs. On the other hand, when the player's estimates of the adviser's volatility increase, he behaves in a more exploratory manner, resulting in a less deterministic (noisier) link between beliefs and responses. Our model comparisons indicated that the second perspective provided a better account of the data: the “Volatility” response model family clearly outperformed the “Decision noise” model family (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e191" xlink:type="simple"/></inline-formula>; <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e192" xlink:type="simple"/></inline-formula> = 0.99; <xref ref-type="fig" rid="pcbi-1003810-g004">Figure 4c</xref>).</p>
+</sec><sec id="s3e">
+<title>Do the model parameter estimates predict other aspects of behavior?</title>
+<p>We used both classical multiple regression and variational regression to examine whether model parameter estimates of the winning model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e193" xlink:type="simple"/></inline-formula>) predicted scores of relevant psychological traits, as measured by questionnaires, which the subjects completed three days prior to the experimental session. Model parameter estimates <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e194" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e195" xlink:type="simple"/></inline-formula> predicted players' scores on the IRI (R<sup>2</sup> = 50%, F = 6.03, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e196" xlink:type="simple"/></inline-formula>; log Bayes Factor (full versus null model) = 15.16; <xref ref-type="table" rid="pcbi-1003810-t008">Table 8</xref>). Thus, participants with a stronger tendency to take into account the perspective of others during social interactions showed (i) stronger coupling between inference on advice accuracy and adviser volatility and (ii) more stable belief updates about advice reliability (and adviser trustworthiness) (<xref ref-type="fig" rid="pcbi-1003810-g006">Figure 6a</xref>). Notably, this link between parameter estimates and independent questionnaire scores for model <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e197" xlink:type="simple"/></inline-formula> was absent for the other models (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e198" xlink:type="simple"/></inline-formula> for the HGF with “Decision noise” and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e199" xlink:type="simple"/></inline-formula> for the RW model).</p>
+<fig id="pcbi-1003810-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g006</object-id><label>Figure 6</label><caption>
+<title>Construct validity of model parameters.</title>
+<p>The perceptual model parameter κ and ω (A) predicted players' self-report scores on the Interpersonal Reactive Index (IRI). The perceptual model parameter <italic>ϑ</italic> and response model parameter ζ predicted players' performance accuracy (B and C). Additionally, the perceptual model parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e200" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e201" xlink:type="simple"/></inline-formula> and response model parameter ζ also predicted the strategy of the advisers with whom players interacted (C–E).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g006" position="float" xlink:type="simple"/></fig><table-wrap id="pcbi-1003810-t008" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t008</object-id><label>Table 8</label><caption>
+<title>Predictive validity of model parameters: (a) Perceptual model parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e202" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e203" xlink:type="simple"/></inline-formula> predicted participants' IRI scores.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t008-8" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t008" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">R<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">F statistic</td>
+<td align="left" rowspan="1" colspan="1">p value</td>
+<td align="left" rowspan="1" colspan="1">Log Bayes Factor (Full versus null model)</td>
+<td align="left" rowspan="1" colspan="1">Free Energy</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(i) Parameters </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e204" xlink:type="simple"/></inline-formula><bold> and </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e205" xlink:type="simple"/></inline-formula><bold> predict IRI scores</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.50</td>
+<td align="left" rowspan="1" colspan="1">6.03</td>
+<td align="left" rowspan="1" colspan="1">0.02</td>
+<td align="left" rowspan="1" colspan="1">15.16</td>
+<td align="left" rowspan="1" colspan="1">−40.87</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>(ii) Parameters</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e206" xlink:type="simple"/></inline-formula><bold> and </bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e207" xlink:type="simple"/></inline-formula><bold> predict performance</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.40</td>
+<td align="left" rowspan="1" colspan="1">9.41</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">17.59</td>
+<td align="left" rowspan="1" colspan="1">−146.29</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>Performance accuracy averaged at 73%±5% (mean ± standard deviation), indicating that, on average, the players reached the silver target and received CHF 10 bonus payment at the end of the game. Perceptual model parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e208" xlink:type="simple"/></inline-formula> and response model parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e209" xlink:type="simple"/></inline-formula> predicted participants' performance accuracy (R<sup>2</sup> = 40%, F = 9.41,<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e210" xlink:type="simple"/></inline-formula>; log Bayes Factor (full versus null model) = 17.59). Taken together, these results reflect that participants who perceived the adviser's intentions to be more stable and who weighted the social information more during decision-making performed better in the task (<xref ref-type="table" rid="pcbi-1003810-t008">Table 8</xref>; <xref ref-type="fig" rid="pcbi-1003810-g006">Figure 6b–c</xref>).</p>
+</sec><sec id="s3f">
+<title>Does the player's behavior change with helpfulness of the adviser?</title>
+<p>Advisers also reached, on average, the silver target and received CHF 10 payment at the end of the game. Across advisers, their recommendation was correct in 74%±9.8% of all trials.</p>
+<p>On debriefing, 4 of the 16 advisers reported a general intention to help the players during the task; these advisors provided correct recommendations on 85%±9.2% of the trials (note that the information available to the advisers predicted wins with 80% accuracy). The majority of the advisers (9 out of the 16), however, aimed to increase their final pay-off and provided correct recommendations on only 74%±1.6% of the trials. On the one hand, the players who interacted with more helpful advisers weighted the advice more as indexed by larger <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e211" xlink:type="simple"/></inline-formula> values and perceived the advisers' intentions as more stable as indexed by reduced <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e212" xlink:type="simple"/></inline-formula> values (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e213" xlink:type="simple"/></inline-formula>; <xref ref-type="fig" rid="pcbi-1003810-g006">Figure 6c–d</xref>). On the other hand, the players who interacted with advisers whose intentions changed over the course of the game exhibited significantly larger <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e214" xlink:type="simple"/></inline-formula> values than the rest (<xref ref-type="fig" rid="pcbi-1003810-g006">Figure 6e</xref>). This suggests that there was a more pronounced coupling between the two learning levels (advice accuracy and adviser volatility) during interactions with advisers whose intentions were changing.</p>
+<p>To demonstrate the interpretability of our model parameter estimates, we asked each player eight times at random points during the game to explicitly rate the advisers as “helpful”, “uninformative” or “misleading”. These ratings were coded such that “helpful” corresponded to a probability of accurate advice of 1, “uninformative” to a probability of 0.5, and “misleading” to a probability of 0. To relate the participants' ratings to the estimates of advice reliability as inferred from the model, we used each player's ratings as the outcome variable in a general linear model with the explanatory variable being the prediction about the advice reliability (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e215" xlink:type="simple"/></inline-formula>. This proved to be highly significant (t = 5.92, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e216" xlink:type="simple"/></inline-formula>) in a second level random effects regression analysis (see <xref ref-type="supplementary-material" rid="pcbi.1003810.s004">Figure S4</xref>). In brief, the state estimates of our model correspond well to the players' overtly expressed beliefs about the adviser's intentions during the game. Notably, the same analysis using the value of the advice as estimated by the RW model did not yield significant results (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e217" xlink:type="simple"/></inline-formula>). Altogether, this corroborates our model comparison results and provides construct validity for our model.</p>
+</sec><sec id="s3g">
+<title>Is behavior on the control task governed by different mechanisms?</title>
+<p>Distinct learning performance was observed in the control task (where the adviser was blindfolded and presented his advice by holding up a card sampled from a series of card decks, each of which was, on average, either 80% or 20% accurate). The players performed significantly worse in this task compared to the socially interactive task (t (15) = 5.48, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e218" xlink:type="simple"/></inline-formula>), with performance accuracy averaging at 64%±2.6%.</p>
+<p>In this task, the BMS yielded different results compared to the socially interactive task (see <xref ref-type="table" rid="pcbi-1003810-t009">Table 9</xref>). More precisely, the three-level HGF family (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e219" xlink:type="simple"/></inline-formula>) still outperformed non-hierarchical models (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e220" xlink:type="simple"/></inline-formula>), such as the reduced HGF and the RW model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e221" xlink:type="simple"/></inline-formula> = 0.98), suggesting that participants did incorporate time-varying estimates of volatility (resulting from the switches among card decks) into their beliefs about the advice accuracy. Furthermore, the integrated response model family (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e222" xlink:type="simple"/></inline-formula>, which proposed that participants weigh both social and non-social sources of information, explained participants' responses better than reduced response models (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e223" xlink:type="simple"/></inline-formula>) according to which subjects relied on one source of information only (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e224" xlink:type="simple"/></inline-formula> = 0.99). In contrast to the social setting, in the control task, the response model prescribing volatility-driven mapping of beliefs to decisions did not differ from the model that utilized a single decision noise parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e225" xlink:type="simple"/></inline-formula>(<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e226" xlink:type="simple"/></inline-formula> = 0.54). In other words, unlike in the social task, decision noise might not change across trials as a function of adviser volatility estimates.</p>
+<table-wrap id="pcbi-1003810-t009" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.t009</object-id><label>Table 9</label><caption>
+<title>Results of Bayesian model selection (control condition): Posterior model probability or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e227" xlink:type="simple"/></inline-formula> and model exceedance probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e228" xlink:type="simple"/></inline-formula>.</title>
+</caption><alternatives><graphic id="pcbi-1003810-t009-9" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.t009" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HGF with Volatility</td>
+<td align="left" rowspan="1" colspan="1">HGF with Decision Noise</td>
+<td align="left" rowspan="1" colspan="1">No Volatility HGF</td>
+<td align="left" rowspan="1" colspan="1">Rescorla-Wagner</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Integrated</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e229" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.3187</td>
+<td align="left" rowspan="1" colspan="1">0.3516</td>
+<td align="left" rowspan="1" colspan="1">0.0184</td>
+<td align="left" rowspan="1" colspan="1">0.0698</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e230" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.4112</td>
+<td align="left" rowspan="1" colspan="1">0.5422</td>
+<td align="left" rowspan="1" colspan="1">0.0001</td>
+<td align="left" rowspan="1" colspan="1">0.0049</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Reduced: Advice</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e231" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0166</td>
+<td align="left" rowspan="1" colspan="1">0.0168</td>
+<td align="left" rowspan="1" colspan="1">0.0178</td>
+<td align="left" rowspan="1" colspan="1">0.0165</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e232" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0001</td>
+<td align="left" rowspan="1" colspan="1">0.0005</td>
+<td align="left" rowspan="1" colspan="1">0.0003</td>
+<td align="left" rowspan="1" colspan="1">0.0003</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Reduced: Cue</bold></td>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e233" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0.0179</td>
+<td align="left" rowspan="1" colspan="1">0.0696</td>
+<td align="left" rowspan="1" colspan="1">0.0170</td>
+<td align="left" rowspan="1" colspan="1">0.0692</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e234" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0.0198</td>
+<td align="left" rowspan="1" colspan="1">0.0002</td>
+<td align="left" rowspan="1" colspan="1">0.0204</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>With respect to the posterior parameter estimates (see <xref ref-type="table" rid="pcbi-1003810-t007">Table 7</xref>), there were notable differences between the two tasks: In the control task, parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e235" xlink:type="simple"/></inline-formula> averaged at 0.28±0.11; this was significantly lower than in the social task (t (15) = 2.44, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e236" xlink:type="simple"/></inline-formula>), indicating that the players weighted the social (but unintentional) advice significantly less than in the social task. That is, although the card decks were more informative (80% predictability of wins/losses) than the non-social cue (55–75% predictability), the players relied more on the binary lottery information to predict the outcome. The difference in the performance and the response model parameters of these two tasks suggests that participants performed better and relied more on the adviser's recommendations when the adviser <italic>intentionally</italic> issued the advice.</p>
+</sec><sec id="s3h">
+<title>Differences in advisers' strategies and players' individual learning trajectories</title>
+<p>In each participant, the model parameters describe an individual learning trajectory (see <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7</xref>). As we debriefed each adviser explicitly about the strategy that he employed during the task, we were able to use these debriefings to examine how model-based quantification of individual learning and inference reflected the players' adaptive responses to the advisers' behavior during the game.</p>
+<fig id="pcbi-1003810-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003810.g007</object-id><label>Figure 7</label><caption>
+<title>The learning trajectories about advice accuracy and adviser volatility in several representative participants.</title>
+<p>(A) Subject SL_010 interacted with a consistently helpful adviser; the parameter estimate of ζ was 0.54, suggesting that he took into account the advice more than the non-social cue. (B) Subject SL_005 interacted with a consistently misleading adviser; the estimate of ζ was 0.12, indicating that he relied almost exclusively on the non-social cue when predicting the outcome. Additionally, high levels of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e237" xlink:type="simple"/></inline-formula> indicate that the player perceived the advice as highly volatile over the course of interaction. (C) Subject SL_013 interacted with an adviser who provided helpful advice at the beginning of the game, and then changed his strategy half-way through the game offering misleading advice. This player adapts to changes in his environment, i.e., to the advice accuracy and the adviser volatility. (D) Subject SL_015 interacted with an adviser who employed a similar strategy as in (C); however, the estimate of ω was significantly reduced suggesting that the player did not greatly change his beliefs during the interaction because his prior estimates were consistent with the adviser's actual strategy.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003810.g007" position="float" xlink:type="simple"/></fig>
+<p>Four out of the 16 advisers provided accurate advice throughout the game with advice reliability averaging at 85%±9.2%. Upon debriefing, they reported that they aimed for the silver range from the beginning, as they deemed it fair for both participants to reach the silver target. The players who interacted with this subset of advisers perceived their intentions to be stable over time and weighted the advice more, as indexed by larger <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e262" xlink:type="simple"/></inline-formula> values (see <xref ref-type="fig" rid="pcbi-1003810-g006">Figure 6d</xref>). An example of such a player is given in <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7a</xref> (subject SL_010), where the trajectory of estimated advice reliability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e238" xlink:type="simple"/></inline-formula> indicates that this player's estimate of advice accuracy stayed close to 90% throughout the game. For this subject, the estimate of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e239" xlink:type="simple"/></inline-formula> was 0.54, indicating that he relied more on the advice than the non-social cue when making his predictions.</p>
+<p>By contrast, another 3 of the 16 advisers were consistently uninformative, exhibiting an average of only 56%±6.6% advice reliability. Indeed, when they were debriefed, they described that in order to reach the gold range, they attempted to confuse the player from the beginning, preventing his progress bar to increase significantly throughout the game and maximising their own chances to reach gold. This turned out to be a successful strategy, as the advisers who used this strategy were the only ones who reached the gold target. The players who interacted with this subset of advisers showed a very distinct trajectory of learning from those discussed above. First, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e240" xlink:type="simple"/></inline-formula> was low in all these players averaging at 0.19, indicating that they (rightfully) assigned little weight to the advice and relied exclusively on the pie chart. A representative subject is shown in <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7b</xref> (subject SL_005), for whom the estimate of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e241" xlink:type="simple"/></inline-formula> was 0.12. Furthermore, a high value of meta-volatility <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e242" xlink:type="simple"/></inline-formula> indicated that this participant perceived the adviser's intentions as becoming more and more volatile over the course of the interaction. Additionally, high levels of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e243" xlink:type="simple"/></inline-formula> indicated fast updating of beliefs about advice correctness over trials and independently of estimates of adviser volatility. Again, this is a sign of adaptive behavior: because the adviser is consistently uninformative (random) in his advice, a high tonic learning rate for updating estimates about advice validity in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e244" xlink:type="simple"/></inline-formula> is appropriate. In other words, this scenario describes an agent who perceives the adviser's intentions as stochastic because the advice is uninformative. In this scenario, the participant necessarily performs poorly because he must base his decisions almost exclusively on the non-social cue.</p>
+<p>The largest subset of advisers (9 out of 16) used a strategy, which reflected the change in incentives induced by the payoff scheme: advisers were helpful at the beginning of the game until the players' progress bar reached their gold range. From this point on, advisers began to mislead the players, preventing them from moving beyond the gold range. Once the players detected this change in intentionality, their score began increasing again. This elicited another switch in the advisers' strategy, who now resumed a helpful attitude in order to at least reach the silver range. On average, the recommendations of these advisers were 74%±1.6% accurate. Players who interacted with these advisers exhibited a learning trajectory that reflected the advisers' dynamic incentives (see <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7c</xref>). For example, for the representative subject shown in <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7c</xref> (subject SL_013), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e245" xlink:type="simple"/></inline-formula> steadily reached 0.9 after the first 80 trials, with a concomitant decrease in estimates of the adviser's volatility <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e246" xlink:type="simple"/></inline-formula>. Once the adviser's intentions changed, the player updated his beliefs accordingly, as reflected by an increase in the learning rate in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e247" xlink:type="simple"/></inline-formula> and larger updates of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e248" xlink:type="simple"/></inline-formula>. In this scenario, the player's adaptive behavior takes into account both the volatility of the adviser's intentions and the accuracy of his advice. This is reflected by high values of the estimates for κ, <italic>ω</italic>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e249" xlink:type="simple"/></inline-formula>.</p>
+<p>Finally, to illustrate the capacity of our model-based approach for characterizing individual differences, we show an unusual subject in <xref ref-type="fig" rid="pcbi-1003810-g007">Figure 7d</xref> (subject SL_015). This player did recognize a change in the adviser's intentions halfway through the game but was much slower in updating his estimates of advice accuracy and adviser's volatility than the subject discussed above. This is because his prior beliefs were close to how the adviser actually behaved for the first half of the game and because low estimates of meta-volatility prevented a rapid response to the change in the adviser's intentions. In other words, this participant remained relatively confident about his prior estimate of the adviser's volatility and expected to see little change over the course of the social interaction.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>The question of how we infer on others' intentions is a fundamental computational problem during social transactions. To examine this process, we extended a paradigm introduced by <xref ref-type="bibr" rid="pcbi.1003810-Behrens1">[14]</xref>, turning it into an interactive social decision-making game in which each participant was assigned to a “player” or an “adviser” role. Critically, the game was designed to ensure that the adviser's incentives to cooperate or deceive the player varied, thus making his intentions volatile.</p>
+<p>While our paradigm was inspired by the previous work of Behrens and colleagues <xref ref-type="bibr" rid="pcbi.1003810-Behrens1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Behrens2">[42]</xref>, it introduced two important advances. First, whereas Behrens et al. made subjects believe that the computer-generated advice was provided by a human being, our paradigm used real participants without any deception. This provides ecological validity and eschews potential ethical concerns, which makes the recorded trials from this paradigm more widely applicable, e.g., for future patient studies. Secondly, our paradigm allows for a wide range of interactions between agents, as both the adviser and the player are not restricted to employ specific strategies during their interaction. The player can rely on the binary lottery information (the non-social cue), the advice, or both when selecting his choices. Furthermore, on every trial, the adviser can also choose to provide either helpful or misleading advice, depending on whatever strategy he may be employing; in turn, these differences in strategy across advisers elicit differences in the adaptive behavior of the players.</p>
+<p>To explain the ensuing variability in adaptive behavior across subjects, we modeled the players' learning using a systematic set of alternative models that factorially combined different models of learning behavior (“perceptual models”) and decision-making (“response models”). Using Bayesian model selection, we demonstrated that a hierarchical Bayesian model (the hierarchical Gaussian filter, HGF) with three levels best described the players' learning in the task. This suggests that participants updated their beliefs about advice reliability depending on an ongoing estimate of the volatility of the adviser's intentions, and that this estimate of volatility directly informed the trial-wise decisions. This three-level HGF outperformed simpler non-hierarchical models (such as Rescorla-Wagner), indicating that during social exchanges, participants employ a multilevel model of their environment and are capable of learning how others' intentions to be helpful or misleading fluctuate over time. These higher-order expectations are in turn exploited to update trial-by-trial predictions about advice reliability.</p>
+<p>An important contribution of this paper is the translation of a recent Bayesian framework for comparing alternative cognitive models <xref ref-type="bibr" rid="pcbi.1003810-Daunizeau1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Daunizeau2">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref> to the domain of social interactions. The implementation of this framework in the present study, however, has one significant limitation: The present models aimed to explain only the players' learning during the game, and not the advisers'. That is, they neglected the recursive process of perspective-taking (in other words, the player's belief about the adviser's belief about the player's belief etc.), which occurs in many social situations. Recent studies (see <xref ref-type="bibr" rid="pcbi.1003810-Yoshida1">[2]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Devaine1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Xiang1">[13]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Yoshida2">[43]</xref>) used recursive theory-of-mind models to explain social inference in cooperative or multi-round trust games. These models propose that the expected value of a given action (e.g., to cooperate or to compete and to choose equitable or unfair offers) is a function of the other agent's strategy. Thus, players optimize their strategies or their depth of recursive reasoning by taking into account their opponents' future actions. For example, Yoshida and colleagues (2010a) showed that players who employ higher-order strategies, which take into account the opponents' future actions, forgo immediate rewards for options that lead to higher pay-off but require multi-player cooperation.</p>
+<p>One important future direction of our work is to extend the modeling of hierarchically coupled beliefs to take the depth of recursive perspective-taking into account. Having said this, the recursive depth of social inferences is typically limited <xref ref-type="bibr" rid="pcbi.1003810-Yoshida1">[2]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Xiang1">[13]</xref>. For example, Xiang et al. (2012) classified the depth of subjects' reasoning during an investor-trustee game. Approximately half of 195 investors were classified as strategic level 0 players, suggesting that they do not simulate their partner's play, while the other half employed either level 1 or level 2 depth-of-reasoning. Yoshida et al., 2010a also reported significant variability in recursive depth across individuals. In the present study, as described in the <xref ref-type="sec" rid="s3">Results</xref> section, more than half (9/16) of the advisers reported to have adopted a fixed strategy (either consistently helpful or consistently random throughout the game) and are thus unlikely to have engaged in recursive perspective-taking. For the remaining advisers, it is possible that modeling their belief updating processes (in addition to those of the players) would lead to an even better prediction of the players' behavior. We will test this possibility in future work, contrasting models with and without the representation of recursive interactions.</p>
+    <p>As it did not incorporate recursive perspective-taking, our study focused on modeling the downstream consequences of the differential strategies that advisers employed. The players' belief-updating process reflected the advisers' policy and determined how much they were willing to take the advisers' suggestions into account during decision-making. We found that players who interacted with consistently helpful advisers perceived their intentions to be stable over time and thus weighted their advice more when predicting the outcome, as reflected by reduced values in the meta-volatility parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e250" xlink:type="simple"/></inline-formula> and larger <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e261" xlink:type="simple"/></inline-formula> values, respectively. Furthermore, players who interacted with advisers, whose intentions were changing to maximize their own winnings, showed more pronounced <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e251" xlink:type="simple"/></inline-formula> values. This result suggests that the two hierarchical learning levels were more strongly coupled in this subset of participants, and that the volatility estimate was used to update the beliefs about advice accuracy. Unlike in the case of consistently misleading advisers, in this particular social exchange, the volatility of the advisers' intentions was more traceable. Thus, players could benefit from inferring on the volatility of the advisers' intentions to predict the advice accuracy.</p>
+<p>Beyond reflecting the adviser's policy in the parameter estimates, our model exhibited construct validity in two ways: First, its posterior parameter estimates predicted participants' scores on the IRI, a questionnaire, which they completed prior to participation in the study. Players, who described themselves as proficient perspective-takers, exhibited a more stable model of the adviser as reflected by the less pronounced tonic component of the learning rate. Second, the model's posterior parameter estimates also predicted the participants' explicit ratings of the advisers' helpfulness throughout the game. Notably, this relationship was specific for the hierarchical Bayesian model while the parameter estimates from the competing RW model did not show this predictive capacity.</p>
+<p>As described above, model comparison indicated that the participants' behavior was best explained by a hierarchical model in which estimates of volatility (of the adviser's intentions) played a key role for belief updating. Furthermore, beyond inference and with respect to the translation of beliefs to decisions, we found that a response model in which participants' estimates of the volatility of the advisers' intentions determined their trial-wise decisions explained participants' choice behavior best. That is, the mapping from beliefs to choices was increasingly deterministic the more the player considered the adviser's intentions to be currently stable. By contrast, when the player's estimates of the adviser's volatility increased, the relation between beliefs and decisions became more stochastic and the player exhibited a more exploratory behavior. This result demonstrates the direct relevance of volatility estimates for determining trial-by-trial variability of decisions; note that this is distinct from (and complementary to) our findings on the role of volatility for learning and inference, described in the context of comparing different perceptual models above. The finding that volatility is an important factor determining trial-by-trial choice variability goes beyond previous studies, which examined the impact of volatility with respect to inference only (e.g., <xref ref-type="bibr" rid="pcbi.1003810-Behrens1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Mathys1">[22]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Iglesias1">[25]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-Behrens3">[44]</xref>). Moreover, in the context of social learning, these results stress the deployment of a hierarchical model and a key role of volatility estimates for both inference and decision-making. These are important in that they complement concepts of social learning, which emphasize the role of simple heuristics (e.g., <xref ref-type="bibr" rid="pcbi.1003810-Hertwig1">[45]</xref>) or refer to non-hierarchical reinforcement learning (e.g., <xref ref-type="bibr" rid="pcbi.1003810-Biele1">[46]</xref>).</p>
+<p>Similar to what Behrens and colleagues (2008) observed, we found that participants did not base their decision on a single source of information, but integrated the advice with information from the visual pie chart, which was also probabilistic but had a known outcome distribution. That is, the uncertainty of the information provided by the pie chart was directly given on each trial, whereas the uncertainty of the advice had to be estimated online. This can be related, to some degree, to the distinction between risk and ambiguity <xref ref-type="bibr" rid="pcbi.1003810-Charness1">[47]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Ellsberg1">[49]</xref>.</p>
+<p>Our modeling results show that participants were able to trade-off between these different forms of uncertainty depending on the type of adviser they faced (see <xref ref-type="fig" rid="pcbi-1003810-g006">Figures 6d–e</xref> and <xref ref-type="fig" rid="pcbi-1003810-g007">7</xref>): when interacting with generally helpful advisers, most players considered the advice strongly because, on average, it was more accurate than the visual pie chart. However, when they interacted with advisers who deliberately showed consistently uninformative (random) behavior, participants tended to discount their recommendation and relied more strongly on the visual pie chart. This is remarkable since it means that players did not display a uniform tendency to avoid ambiguity; instead, ambiguity aversion was restricted to interactions with an unhelpful adviser.</p>
+<p>Additionally, we found that the different sources of information (cue and advice) did not receive equal weight during decision-making. Consistent with previous findings <xref ref-type="bibr" rid="pcbi.1003810-Soll1">[50]</xref>, we observed that participants relied more on the non-ambiguous information (i.e., the non-social cue) compared to the advice. Previous models <xref ref-type="bibr" rid="pcbi.1003810-Collins1">[51]</xref>, <xref ref-type="bibr" rid="pcbi.1003810-VanOverwalle2">[52]</xref> describing how people integrate social and non-social sources emphasized the importance of ambiguity that is intrinsic to social exchange: We are uncertain about how uncertain our appraisal of the other agent's intentions is.</p>
+<p>Previous work on uncertainty in repeated advice taking showed that, surprisingly, decision-makers do not become more confident in their choices with increasing advice accuracy <xref ref-type="bibr" rid="pcbi.1003810-Lee2">[53]</xref>. Although we did not explicitly ask subjects to rate confidence or uncertainty, our modeling results did take into account how their inferred estimates of uncertainty (about the adviser's intentions) informed their trial-wise decisions.</p>
+<p>Furthermore, analysis of a control condition in which trial-wise advice was randomly sampled (by a blindfolded adviser) from several decks of cards with either 80% or 20% accuracy suggested that participants relied more on the advice when it was intentional, as opposed to unintentional. This behavior was observed even though it was perfectly possible to extract predictive information from the card decks with the same accuracy as from a helpful adviser. Since players based their decisions more on the visual pie chart and did not take advantage of the advice, their performance was significantly lower than in the social condition.</p>
+<p>Beyond the results per se and their implications for concepts of social learning, the modeling approach in this paper, with its emphasis on inter-individual variability in inference and decision-making, may serve useful for future studies of social learning. To facilitate this, the HGF and the BMS routines are freely available as open source MATLAB code (the HGF can be found at <ext-link ext-link-type="uri" xlink:href="http://www.translationalneuromodeling.org/tapas" xlink:type="simple">www.translationalneuromodeling.org/tapas</ext-link>; the BMS routines are part of the SPM software package: <ext-link ext-link-type="uri" xlink:href="http://www.fil.ion.ucl.ac.uk/spm" xlink:type="simple">www.fil.ion.ucl.ac.uk/spm</ext-link>).</p>
+<p>Finally, we believe that the approach presented here has potential for characterizing mechanisms of maladaptive behavior in individual patients. The present study in healthy volunteers provides a proof of concept how individual mechanisms can be elucidated in the context of social interactions, a domain where many psychiatric disorders, including schizophrenia, are characterized by particularly salient deficiencies <xref ref-type="bibr" rid="pcbi.1003810-Kishida1">[54]</xref>. For example, many patients with schizophrenia exhibit a negative attribution bias about others' intentions, which reflects the finding that negative information is perceived as more diagnostic of another person's true character than positive information <xref ref-type="bibr" rid="pcbi.1003810-Bentall1">[55]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Langdon1">[57]</xref>. One attractive option is to use models as the one described in this study for computational phenotyping of patients from heterogeneous disorders <xref ref-type="bibr" rid="pcbi.1003810-KingCasas2">[58]</xref>–<xref ref-type="bibr" rid="pcbi.1003810-Yoshida3">[60]</xref>. For example, patients may show a diminished ability to dynamically infer on the intentions of others for different reasons: they may have overly tight prior beliefs about others' motivations, or they may suffer from an abnormality in belief updating mechanisms, which in turn could be due to aberrant computations of prediction error, precision or both (see <xref ref-type="disp-formula" rid="pcbi.1003810.e078">Eq. 6</xref> above). In other words, models of cognition such as the one introduced here and in previous studies may prove useful to propose potential nosological dimensions with mechanistic interpretability and disambiguate alternative mechanisms in individual patients through model selection <xref ref-type="bibr" rid="pcbi.1003810-Stephan2">[61]</xref>. This study serves as a precursor for future neuroimaging studies, in which we hope to investigate neuronal mechanisms of social learning and tracking the volatility of another agent's intentions.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003810.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003810.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p>The performance of BMS was evaluated and the results are summarized in confusion matrices. Each cell includes the frequency with which each perceptual model wins (over simulation instances) based on data generated under each model (in rows) and inverted by itself and all other models (in columns). Thus, off-diagonal elements indicate the probability that the source of data generated by one model is “confused” with another model due to the inversion and model selection procedure.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003810.s002" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003810.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p>Log Bayes factors comparing the winning model (the three-level HGF augmented by the “Volatility” response model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e252" xlink:type="simple"/></inline-formula>) to the rest of the models across all subjects. The Bayes factors, which exceed the dotted line, (i.e., Bayes factor &gt;100 or log evidence difference &gt;10), represent strong evidence that the winning model outperforms the rest, according to conventional classifications (see <xref ref-type="bibr" rid="pcbi.1003810-Kass1">[62]</xref>). One can see that with the exception of two subjects (SL_005 and SL_010), there is strong evidence favouring model <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e253" xlink:type="simple"/></inline-formula> over all other models.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003810.s003" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003810.s003" position="float" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Group Bayes factors comparing the winning model (the three-level HGF augmented by the “Volatility” response model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e254" xlink:type="simple"/></inline-formula>) to the rest of the models. The Bayes factors, which exceed the dotted line, (i.e., Bayes factor of 100) suggest strong evidence that the winning model outperforms the rest, which exceed this threshold according to conventional classifications (see <xref ref-type="bibr" rid="pcbi.1003810-Kass1">[62]</xref>).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003810.s004" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003810.s004" position="float" xlink:type="simple"><label>Figure S4</label><caption>
+<p>Linear regression analysis of the player-specific ratings of the advisers and the model estimates: We aimed to explain participants' ratings of the advisers' intentions (dependent variable) using the estimates of advice reliability as inferred from the model (explanatory variable). The plot contains the player-specific ratings, trial-specific <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e255" xlink:type="simple"/></inline-formula> values, and the player-specific beta estimates from the first level regression analysis.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003810.s005" mimetype="video/quicktime" xlink:href="info:doi/10.1371/journal.pcbi.1003810.s005" position="float" xlink:type="simple"><label>Video S1</label><caption>
+<p>The relationship between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e256" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e257" xlink:type="simple"/></inline-formula> in the response model. Parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e258" xlink:type="simple"/></inline-formula> determines the weight of the advice, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e259" xlink:type="simple"/></inline-formula> represents the inverse of the adviser phasic volatility estimate. As the inverse of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003810.e260" xlink:type="simple"/></inline-formula> approaches ∞, the estimated volatility of the adviser's intentions decreases, and decisions are more consistent with the players' beliefs.</p>
+<p>(MOV)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pcbi.1003810-KingCasas1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>King-Casas</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tomlin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Anen</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Camerer</surname><given-names>CF</given-names></name>, <name name-style="western"><surname>Quartz</surname><given-names>SR</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Getting to Know You: Reputation and Trust in a Two-Person Economic Exchange</article-title>. <source>Science</source> <volume>308</volume>: <fpage>78</fpage>–<lpage>83</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Yoshida1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yoshida</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Dolan</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name> (<year>2008</year>) <article-title>Game Theory of Mind</article-title>. <source>PLoS Computational Biology</source> <volume>4</volume>: <fpage>e1000254</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Amodio1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Amodio</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Frith</surname><given-names>CD</given-names></name> (<year>2006</year>) <article-title>Meeting of minds: the medial frontal cortex and social cognition</article-title>. <source>Nature Reviews Neuroscience</source> <volume>7</volume>: <fpage>268</fpage>–<lpage>277</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Frith1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frith</surname><given-names>CD</given-names></name>, <name name-style="western"><surname>Frith</surname><given-names>U</given-names></name> (<year>2006</year>) <article-title>The Neural Basis of Mentalizing</article-title>. <source>Neuron</source> <volume>50</volume>: <fpage>531</fpage>–<lpage>534</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Keysers1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keysers</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gazzola</surname><given-names>V</given-names></name> (<year>2007</year>) <article-title>Integrating simulation and theory of mind: from self to social cognition</article-title>. <source>Trends in Cognitive Sciences</source> <volume>11</volume>: <fpage>194</fpage>–<lpage>196</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Canessa1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Canessa</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Alemanno</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Riva</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Zani</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Proverbio</surname><given-names>AM</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>The neural bases of social intention understanding: the role of interaction goals</article-title>. <source>PLoS ONE</source> <volume>7</volume>: <fpage>e42347</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Ciaramidaro1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ciaramidaro</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Adenzato</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Enrici</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Erk</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Pia</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>The intentional network: how the brain reads varieties of intentions</article-title>. <source>Neuropsychologia</source> <volume>45</volume>: <fpage>3105</fpage>–<lpage>3113</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-VanOverwalle1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Overwalle</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Baetens</surname><given-names>K</given-names></name> (<year>2009</year>) <article-title>Understanding others' actions and goals by mirror and mentalizing systems: a meta-analysis</article-title>. <source>Neuroimage</source> <volume>48</volume>: <fpage>564</fpage>–<lpage>584</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Baker1"><label>9</label>
+<mixed-citation publication-type="other" xlink:type="simple">Baker CL, Saxe RR, Tenenbaum JB (2011) Bayesian theory of mind: Modeling joint belief-desire attribution. Proceedings of the thirty-second annual conference of the cognitive science society. pp. 2469–2474.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Goodman1"><label>10</label>
+<mixed-citation publication-type="other" xlink:type="simple">Goodman ND, Baker CL, Tenenbaum JB (2009) Cause and intent: Social reasoning in causal learning. Proceedings of the Thirty-First Annual Conference of the Cognitive Science Society. pp. 2759–2764.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Ullman1"><label>11</label>
+<mixed-citation publication-type="other" xlink:type="simple">Ullman TD, Baker CL, Macindoe O, Evans O, Goodman ND, <etal>et al</etal>.. (2009) Help or Hinder: Bayesian Models of Social Goal Inference. NIPS. pp. 1874–1882.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Devaine1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Devaine</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hollard</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name> (<year>2014</year>) <article-title>Theory of Mind: Did Evolution Fool Us?</article-title> <source>PLoS ONE</source> <volume>9</volume>: <fpage>e87619</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Xiang1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xiang</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ray</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lohrenz</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Dayan</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Montague</surname><given-names>PR</given-names></name> (<year>2012</year>) <article-title>Computational phenotyping of two-person interactions reveals differential neural response to depth-of-thought</article-title>. <source>PLoS Comput Biol</source> <volume>8</volume>: <fpage>e1002841</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Behrens1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Behrens</surname><given-names>TEJ</given-names></name>, <name name-style="western"><surname>Hunt</surname><given-names>LT</given-names></name>, <name name-style="western"><surname>Woolrich</surname><given-names>MW</given-names></name>, <name name-style="western"><surname>Rushworth</surname><given-names>MFS</given-names></name> (<year>2008</year>) <article-title>Associative learning of social value</article-title>. <source>Nature</source> <volume>456</volume>: <fpage>245</fpage>–<lpage>U45</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Daunizeau1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>den Ouden</surname><given-names>HEM</given-names></name>, <name name-style="western"><surname>Pessiglione</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kiebel</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Stephan</surname><given-names>KE</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Observing the Observer (I): Meta-Bayesian Models of Learning and Decision-Making</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e15554</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Daunizeau2"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>den Ouden</surname><given-names>HEM</given-names></name>, <name name-style="western"><surname>Pessiglione</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kiebel</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Observing the Observer (II): Deciding When to Decide</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e15555</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Huszr1"><label>17</label>
+<mixed-citation publication-type="other" xlink:type="simple">Huszár F, Noppeney U, Lengyel M (2010) Mind reading by machine learning: a doubly Bayesian method for inferring mental representations. Proceedings of the Thirty-Second Annual Conference of the Cognitive Science Society. pp. 2810–2815.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Lee1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>MD</given-names></name> (<year>2011</year>) <article-title>In praise of Ecumenical Bayes</article-title>. <source>Behavioral and Brain Sciences</source> <volume>34</volume>: <fpage>206</fpage>–<lpage>207</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Buchan1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buchan</surname><given-names>NR</given-names></name>, <name name-style="western"><surname>Croson</surname><given-names>RTA</given-names></name>, <name name-style="western"><surname>Solnick</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Trust and gender: An examination of behavior and beliefs in the Investment Game</article-title>. <source>Journal of Economic Behavior &amp; Organization</source> <volume>68</volume>: <fpage>466</fpage>–<lpage>476</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Cloninger1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cloninger</surname><given-names>CR</given-names></name>, <name name-style="western"><surname>Svrakic</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Przybeck</surname><given-names>TR</given-names></name> (<year>1993</year>) <article-title>A psychobiological model of temperament and character</article-title>. <source>Archives of general psychiatry</source> <volume>50</volume>: <fpage>975</fpage>–<lpage>990</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Davis1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Davis</surname><given-names>MH</given-names></name> (<year>1983</year>) <article-title>Measuring individual differences in empathy: Evidence for a multidimensional approach</article-title>. <source>Journal of Personality and Social Psychology</source> <volume>44</volume>: <fpage>113</fpage>–<lpage>126</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Mathys1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mathys</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <name name-style="western"><surname>Stephan</surname><given-names>KE</given-names></name> (<year>2011</year>) <article-title>A Bayesian foundation for individual learning under uncertainty</article-title>. <source>Front Hum Neurosci</source> <volume>5</volume>: <fpage>1</fpage>–<lpage>20</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Rescorla1"><label>23</label>
+<mixed-citation publication-type="other" xlink:type="simple">Rescorla RA, Wagner AR (1972) A theory of Pavlovian conditioning: Variations in the effectiveness of reinforcement. New York: Appleton-Century-Crofts.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Vossel1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vossel</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mathys</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bauer</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Driver</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Spatial Attention, Precision, and Bayesian Inference: A Study of Saccadic Response Speed</article-title>. <source>Cereb Cortex</source> <volume>24</volume>: <fpage>1436</fpage>–<lpage>1450</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Iglesias1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Iglesias</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mathys</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Brodersen</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Kasper</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Piccirelli</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Hierarchical Prediction Errors in Midbrain and Basal Forebrain during Sensory Learning</article-title>. <source>Neuron</source> <volume>80</volume>: <fpage>519</fpage>–<lpage>530</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Doya1"><label>26</label>
+<mixed-citation publication-type="other" xlink:type="simple">Doya K, Ishii S, Pouget A, Rao RPN (2011) Bayesian brain: probabilistic approaches to neural coding. Cambridge, Mass.: MIT Press.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Friston1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friston</surname><given-names>K</given-names></name> (<year>2010</year>) <article-title>The free-energy principle: a unified brain theory?</article-title> <source>Nat Rev Neurosci</source> <volume>11</volume>: <fpage>127</fpage>–<lpage>138</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Griffiths1"><label>28</label>
+<mixed-citation publication-type="other" xlink:type="simple">Griffiths TL, Kemp C, Tenenbaum JB (2008) Bayesian models of cognition. Cambridge handbook of computational cognitive modeling: 59–100.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Krding1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Körding</surname><given-names>K</given-names></name> (<year>2007</year>) <article-title>Decision Theory: What “Should” the Nervous System Do?</article-title> <source>Science</source> <volume>318</volume>: <fpage>606</fpage>–<lpage>610</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Tenenbaum1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tenenbaum</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Kemp</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Griffiths</surname><given-names>TL</given-names></name>, <name name-style="western"><surname>Goodman</surname><given-names>ND</given-names></name> (<year>2011</year>) <article-title>How to Grow a Mind: Statistics, Structure, and Abstraction</article-title>. <source>Science</source> <volume>331</volume>: <fpage>1279</fpage>–<lpage>1285</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Montague1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Montague</surname><given-names>PR</given-names></name>, <name name-style="western"><surname>Hyman</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>JD</given-names></name> (<year>2004</year>) <article-title>Computational roles for dopamine in behavioural control</article-title>. <source>Nature</source> <volume>431</volume>: <fpage>760</fpage>–<lpage>767</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Preuschoff1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Preuschoff</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Bossaerts</surname><given-names>P</given-names></name> (<year>2007</year>) <article-title>Adding Prediction Risk to the Theory of Reward Learning</article-title>. <source>Annals of the New York Academy of Sciences</source> <volume>1104</volume>: <fpage>135</fpage>–<lpage>146</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Broyden1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Broyden</surname><given-names>CG</given-names></name> (<year>1970</year>) <article-title>The Convergence of a Class of Double-rank Minimization Algorithms 1. General Considerations</article-title>. <source>IMA J Appl Math</source> <volume>6</volume>: <fpage>76</fpage>–<lpage>90</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Fletcher1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fletcher</surname><given-names>R</given-names></name> (<year>1970</year>) <article-title>A new approach to variable metric algorithms</article-title>. <source>The Computer Journal</source> <volume>13</volume>: <fpage>317</fpage>–<lpage>322</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Goldfarb1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goldfarb</surname><given-names>D</given-names></name> (<year>1970</year>) <article-title>A family of variable metric methods derived by variational means</article-title>. <source>Mathematics of computation</source> <volume>24</volume>: <fpage>23</fpage>–<lpage>26</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Shanno1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shanno</surname><given-names>DF</given-names></name> (<year>1970</year>) <article-title>Conditioning of quasi-Newton methods for function minimization</article-title>. <source>Mathematics of computation</source> <volume>24</volume>: <fpage>647</fpage>–<lpage>656</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Osborne1"><label>37</label>
+<mixed-citation publication-type="other" xlink:type="simple">Osborne MA, Garnett R, Roberts SJ (2009) Gaussian processes for global optimization. 3rd international conference on learning and intelligent optimization (LION3). pp. 1–15.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Hastings1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hastings</surname><given-names>WK</given-names></name> (<year>1970</year>) <article-title>Monte Carlo sampling methods using Markov chains and their applications</article-title>. <source>Biometrika</source> <volume>57</volume>: <fpage>97</fpage>–<lpage>109</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Penny1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Penny</surname><given-names>WD</given-names></name>, <name name-style="western"><surname>Stephan</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Rosa</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Comparing families of dynamic causal models</article-title>. <source>PLoS computational biology</source> <volume>6</volume>: <fpage>e1000709</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-MacKay1"><label>40</label>
+<mixed-citation publication-type="other" xlink:type="simple">MacKay DJ (2003) Information theory, inference and learning algorithms. Cambridge university press.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Stephan1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stephan</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Penny</surname><given-names>WD</given-names></name>, <name name-style="western"><surname>Daunizeau</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Moran</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name> (<year>2009</year>) <article-title>Bayesian model selection for group studies</article-title>. <source>NeuroImage</source> <volume>46</volume>: <fpage>1004</fpage>–<lpage>1017</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Behrens2"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Behrens</surname><given-names>TEJ</given-names></name>, <name name-style="western"><surname>Hunt</surname><given-names>LT</given-names></name>, <name name-style="western"><surname>Rushworth</surname><given-names>MFS</given-names></name> (<year>2009</year>) <article-title>The Computation of Social Behavior</article-title>. <source>Science</source> <volume>324</volume>: <fpage>1160</fpage>–<lpage>1164</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Yoshida2"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yoshida</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Seymour</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <name name-style="western"><surname>Dolan</surname><given-names>RJ</given-names></name> (<year>2010a</year>) <article-title>Neural Mechanisms of Belief Inference during Cooperative Games</article-title>. <source>J Neurosci</source> <volume>30</volume>: <fpage>10744</fpage>–<lpage>10751</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Behrens3"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Behrens</surname><given-names>TEJ</given-names></name>, <name name-style="western"><surname>Woolrich</surname><given-names>MW</given-names></name>, <name name-style="western"><surname>Walton</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Rushworth</surname><given-names>MFS</given-names></name> (<year>2007</year>) <article-title>Learning the value of information in an uncertain world</article-title>. <source>Nat Neurosci</source> <volume>10</volume>: <fpage>1214</fpage>–<lpage>1221</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Hertwig1"><label>45</label>
+<mixed-citation publication-type="book" xlink:type="simple">Hertwig R, Hoffrage U, Group AR (2012) Simple Heuristics in a Social World. Oxford University Press. 662 p.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Biele1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Biele</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Rieskamp</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Krugel</surname><given-names>LK</given-names></name>, <name name-style="western"><surname>Heekeren</surname><given-names>HR</given-names></name> (<year>2011</year>) <article-title>The Neural Basis of Following Advice</article-title>. <source>Plos Biology</source> <volume>9</volume>: <fpage>e1001089</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Charness1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Charness</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Karni</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Levin</surname><given-names>D</given-names></name> (<year>2013</year>) <article-title>Ambiguity attitudes and social interactions: An experimental investigation</article-title>. <source>J Risk Uncertain</source> <volume>46</volume>: <fpage>1</fpage>–<lpage>25</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Chow1"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chow</surname><given-names>CC</given-names></name>, <name name-style="western"><surname>Sarin</surname><given-names>RK</given-names></name> (<year>2002</year>) <article-title>Known, Unknown, and Unknowable Uncertainties</article-title>. <source>Theory and Decision</source> <volume>52</volume>: <fpage>127</fpage>–<lpage>138</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Ellsberg1"><label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ellsberg</surname><given-names>D</given-names></name> (<year>1961</year>) <article-title>Risk, Ambiguity, and the Savage Axioms</article-title>. <source>The Quarterly Journal of Economics</source> <volume>75</volume>: <fpage>643</fpage>–<lpage>669</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Soll1"><label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Soll</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Larrick</surname><given-names>RP</given-names></name> (<year>2009</year>) <article-title>Strategies for revising judgment: How (and how well) people use others' opinions</article-title>. <source>Journal of Experimental Psychology: Learning, Memory, and Cognition</source> <volume>35</volume>: <fpage>780</fpage>–<lpage>805</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Collins1"><label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Collins</surname><given-names>EC</given-names></name>, <name name-style="western"><surname>Percy</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>ER</given-names></name>, <name name-style="western"><surname>Kruschke</surname><given-names>JK</given-names></name> (<year>2011</year>) <article-title>Integrating advice and experience: Learning and decision making with social and nonsocial cues</article-title>. <source>Journal of Personality and Social Psychology</source> <volume>100</volume>: <fpage>967</fpage>–<lpage>982</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-VanOverwalle2"><label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Overwalle</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Heylighen</surname><given-names>F</given-names></name> (<year>2006</year>) <article-title>Talking nets: A multiagent connectionist approach to communication and trust between individuals</article-title>. <source>Psychological Review</source> <volume>113</volume>: <fpage>606</fpage>–<lpage>627</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Lee2"><label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Dry</surname><given-names>MJ</given-names></name> (<year>2006</year>) <article-title>Decision Making and Confidence Given Uncertain Advice</article-title>. <source>Cognitive Science</source> <volume>30</volume>: <fpage>1081</fpage>–<lpage>1095</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Kishida1"><label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kishida</surname><given-names>KT</given-names></name>, <name name-style="western"><surname>Montague</surname><given-names>PR</given-names></name> (<year>2012</year>) <article-title>Imaging Models of Valuation During Social Interaction in Humans</article-title>. <source>Biological Psychiatry</source> <volume>72</volume>: <fpage>93</fpage>–<lpage>100</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Bentall1"><label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bentall</surname><given-names>RP</given-names></name>, <name name-style="western"><surname>Corcoran</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Howard</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Blackwood</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Kinderman</surname><given-names>P</given-names></name> (<year>2001</year>) <article-title>Persecutory delusions: A review and theoretical integration</article-title>. <source>Clinical Psychology Review</source> <volume>21</volume>: <fpage>1143</fpage>–<lpage>1192</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Fett1"><label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fett</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Shergill</surname><given-names>SS</given-names></name>, <name name-style="western"><surname>Joyce</surname><given-names>DW</given-names></name>, <name name-style="western"><surname>Riedl</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Strobel</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>To trust or not to trust: the dynamics of social interaction in psychosis</article-title>. <source>Brain</source> <volume>135</volume>: <fpage>976</fpage>–<lpage>984</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Langdon1"><label>57</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Langdon</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Corner</surname><given-names>T</given-names></name>, <name name-style="western"><surname>McLaren</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ward</surname><given-names>PB</given-names></name>, <name name-style="western"><surname>Coltheart</surname><given-names>M</given-names></name> (<year>2006</year>) <article-title>Externalizing and personalizing biases in persecutory delusions: The relationship with poor insight and theory-of-mind</article-title>. <source>Behaviour Research and Therapy</source> <volume>44</volume>: <fpage>699</fpage>–<lpage>713</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-KingCasas2"><label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>King-Casas</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Sharp</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lomax-Bream</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Lohrenz</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Fonagy</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The Rupture and Repair of Cooperation in Borderline Personality Disorder</article-title>. <source>Science</source> <volume>321</volume>: <fpage>806</fpage>–<lpage>810</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Montague2"><label>59</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Montague</surname><given-names>PR</given-names></name>, <name name-style="western"><surname>Dolan</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <name name-style="western"><surname>Dayan</surname><given-names>P</given-names></name> (<year>2012</year>) <article-title>Computational psychiatry</article-title>. <source>Trends in Cognitive Sciences</source> <volume>16</volume>: <fpage>72</fpage>–<lpage>80</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Yoshida3"><label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yoshida</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Dziobek</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Kliemann</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Heekeren</surname><given-names>HR</given-names></name>, <name name-style="western"><surname>Friston</surname><given-names>KJ</given-names></name>, <etal>et al</etal>. (<year>2010b</year>) <article-title>Cooperation and heterogeneity of the autistic mind</article-title>. <source>The Journal of neuroscience</source> <volume>30</volume>: <fpage>8815</fpage>–<lpage>8818</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Stephan2"><label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stephan</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Mathys</surname><given-names>CD</given-names></name> (<year>2014</year>) <article-title>Computational Approaches to Psychiatry</article-title>. <source>Current Opinion in Neurobiology</source> <volume>25</volume>: <fpage>85</fpage>–<lpage>92</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003810-Kass1"><label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kass</surname><given-names>RE</given-names></name>, <name name-style="western"><surname>Raftery</surname><given-names>AE</given-names></name> (<year>1995</year>) <article-title>Bayes Factors</article-title>. <source>Journal of the American Statistical Association</source> <volume>90</volume>: <fpage>773</fpage>–<lpage>795</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

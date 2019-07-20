@@ -1,0 +1,1698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article article-type="research-article" dtd-version="3.0" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pone.0145809</article-id>
+<article-id pub-id-type="publisher-id">PONE-D-15-14851</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>An Automated Summarization Assessment Algorithm for Identifying Summarizing Strategies</article-title>
+<alt-title alt-title-type="running-head">Identifying Summarizing Strategies</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Abdi</surname>
+<given-names>Asad</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Idris</surname>
+<given-names>Norisma</given-names>
+</name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Alguliyev</surname>
+<given-names>Rasim M.</given-names>
+</name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Aliguliyev</surname>
+<given-names>Ramiz M.</given-names>
+</name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Artificial Intelligence Faculty of Computer Science and Information Technology, University of Malaya, 50603, Kuala Lumpur, Malaysia</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Institute of Information Technology, Azerbaijan National Academy of Sciences, 9, B. Vahabzade Street, AZ1141 Baku, Azerbaijan</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Groza</surname>
+<given-names>Tudor</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Garvan Institute of Medical Research, AUSTRALIA</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: AA NI R.M. Alguliyev R.M. Aliguliyev. Performed the experiments: AA NI R.M. Alguliyev R.M. Aliguliyev. Analyzed the data: AA NI R.M. Alguliyev R.M. Aliguliyev. Contributed reagents/materials/analysis tools: AA NI R.M. Alguliyev R.M. Aliguliyev. Wrote the paper: AA NI R.M. Alguliyev R.M. Aliguliyev.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">asadabdi55@gmail.com</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>6</day>
+<month>1</month>
+<year>2016</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2016</year>
+</pub-date>
+<volume>11</volume>
+<issue>1</issue>
+<elocation-id>e0145809</elocation-id>
+<history>
+<date date-type="received">
+<day>8</day>
+<month>5</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>9</day>
+<month>12</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2016</copyright-year>
+<copyright-holder>Abdi et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0145809"/>
+<abstract>
+<sec id="sec001">
+<title>Background</title>
+<p>Summarization is a process to select important information from a source text. Summarizing strategies are the core cognitive processes in summarization activity. Since summarization can be important as a tool to improve comprehension, it has attracted interest of teachers for teaching summary writing through direct instruction. To do this, they need to review and assess the students' summaries and these tasks are very time-consuming. Thus, a computer-assisted assessment can be used to help teachers to conduct this task more effectively.</p>
+</sec>
+<sec id="sec002">
+<title>Design/Results</title>
+<p>This paper aims to propose an algorithm based on the combination of semantic relations between words and their syntactic composition to identify summarizing strategies employed by students in summary writing. An innovative aspect of our algorithm lies in its ability to identify summarizing strategies at the syntactic and semantic levels. The efficiency of the algorithm is measured in terms of Precision, Recall and F-measure. We then implemented the algorithm for the automated summarization assessment system that can be used to identify the summarizing strategies used by students in summary writing.</p>
+</sec>
+</abstract>
+<funding-group>
+<funding-statement>This research is supported by the postgraduate research grant (PPP)-research, grant no: PG184-2014B, University Malaya (UM).</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="11"/>
+<table-count count="10"/>
+<page-count count="34"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec003" sec-type="intro">
+<title>Introduction</title>
+<p>Reading skills are essential for success in society. Reading affects different aspects in our life, especially in school. The aim of reading is to elicit meaning from the written text. A lack of capacity in this area may affect the comprehension ability. Comprehension involves inferential and evaluative thinking, not just a reproduction of the author's words. It can be taught and improved through teaching students during their learning process.</p>
+<p>Recently, the results of some studies have shown that summarization can be an important key for reading comprehension. Summarization is the process of automatically producing a compressed version of a given text that provides useful information for the user [<xref ref-type="bibr" rid="pone.0145809.ref001">1</xref>, <xref ref-type="bibr" rid="pone.0145809.ref002">2</xref>, <xref ref-type="bibr" rid="pone.0145809.ref003">3</xref>, <xref ref-type="bibr" rid="pone.0145809.ref004">4</xref>].</p>
+<p>Summarizing strategies are the core of the cognitive processes involved in the summarization activity. These include a set of conscious tasks that are used to create a summary text. There are several summarizing strategies to determine important information, eliminate irrelevant information, and extract the main idea of a source text. According to the result of some studies, a major difficulty faced by students in summary writing is the lack of skills in applying summarizing strategies.</p>
+<p>Since summarization can be used as a measure of understanding in school [<xref ref-type="bibr" rid="pone.0145809.ref005">5</xref>, <xref ref-type="bibr" rid="pone.0145809.ref006">6</xref>], it has attracted interest of teachers for teaching summary writing through Direct Instruction [<xref ref-type="bibr" rid="pone.0145809.ref005">5</xref>]. Where teachers need to possess some information, such as what summarizing strategies are used by students, the ability of students to use summarizing strategies, how students use summarizing strategies, and their students’ weaknesses in summarizing. To collect this information manually is difficult and very time-consuming. On the other hand, in order to reduce the time they should spend on this task; many teachers choose to reduce the number of summary writing exercises given to their students. Thus, students do not have sufficient practice, which may affect their summary writing ability. To tackle these problems, Computer-Assisted Assessment (CAA), using syntactic and semantic contribution relations is proposed.</p>
+<p>Due to the rapid advances in computer, educational researchers have developed methods, tools and self-learning tools [<xref ref-type="bibr" rid="pone.0145809.ref007">7</xref>, <xref ref-type="bibr" rid="pone.0145809.ref008">8</xref>]. In other hand, due to the progress in other areas, such as e-learning, information extraction and Natural Language Processing, the automatic evaluation of summary writing has been made possible.</p>
+<p>This paper is not concerned with the summarization process, where the outcome is a summary text, but with the summarization assessment process, where the result is identifying summarizing strategies. Although previous systems have been developed to assess summarization, most of them focus only on the content coverage. A few systems have been developed to identify summarizing strategies used by students. However, these systems are not able to identify summarizing strategies at the syntactic and semantic levels. Thus, we aim to develop an algorithm for the automated summarization assessment system that can be used to identify the strategies employed by students in summary writing. The proposed algorithm is called ISSLK: Identifying Summarizing Strategies based on Linguistic Knowledge.</p>
+<p>The algorithm is based on linguistic knowledge, a combination of semantic relations between words and their syntactic composition. An innovative aspect of our algorithm lies in its ability to identify summarizing strategies syntactically and semantically. In addition, it is able to identify the synonym or similar words among all sentences using a lexical database, WordNet. It is very important to consider this aspect (identifying the synonym or similar words) when evaluating the summaries [<xref ref-type="bibr" rid="pone.0145809.ref009">9</xref>, <xref ref-type="bibr" rid="pone.0145809.ref010">10</xref>]. The objective of our study is to find a reply to the following research questions: 1) How can the summarizing strategies be identified; 2) How can algorithms to detect text relevancy and identify summarizing strategies be formulated; 3) What is the performance of the algorithm when compared to human judgment?</p>
+</sec>
+<sec id="sec004">
+<title>Summarizing Strategies Identification</title>
+<p>This section presents a set of heuristic rules to identify the summarizing strategies in summary writing. Summarization is a learning strategy that can help students construct and retain a short summary of the important information from the source text. Summarizing strategies are the core of the cognitive process in summary writing [<xref ref-type="bibr" rid="pone.0145809.ref011">11</xref>]. They include a set of conscious tasks to recognize what is important and what is not, to extract the main idea of a source text. Hence, it helps the summarizer to generate an appropriate summary. Different researchers use different terminology to describe the summarizing strategies, which are fundamentally a similar process. These authors [<xref ref-type="bibr" rid="pone.0145809.ref011">11</xref>, <xref ref-type="bibr" rid="pone.0145809.ref012">12</xref>, <xref ref-type="bibr" rid="pone.0145809.ref013">13</xref>, <xref ref-type="bibr" rid="pone.0145809.ref014">14</xref>, <xref ref-type="bibr" rid="pone.0145809.ref015">15</xref>] suggest several summarizing strategies involved in producing appropriate summaries. These strategies are explained in detail as follows:</p>
+<sec id="sec005">
+<title>Deletion</title>
+<p>To produce a summary sentence, a deletion strategy is used to remove unnecessary information in the sentence of the source text. Unnecessary information includes trivial details about the topics such as <italic>examples</italic> and <italic>scenarios</italic> or redundant information containing the rewording of some of the important information.</p>
+</sec>
+<sec id="sec006">
+<title>Sentence Combination</title>
+<p>To produce a summary sentence, sentence combination is used to combine two or more sentences/phrases from the source text. In other words, phrases from more than one sentence are merged into a summary sentence. These sentences are usually combined using conjunction words, such as <italic>for</italic>, <italic>but</italic>, <italic>and</italic>, <italic>after</italic>, <italic>since</italic>, <italic>and before</italic>.</p>
+</sec>
+<sec id="sec007">
+<title>Generalization</title>
+<p>The generalization rule replaces a general term for a list. There are two kinds of replacement. One is the replacement of a general word for a list of similar items, e.g. ‘<italic>pineapple</italic>, <italic>banana</italic>, <italic>star fruit and pear’</italic> can be replaced by ‘<italic>fruits’</italic>. The other one is the replacement of a general word for a list of similar actions, e.g. the sentences: ‘<italic>Yang eats a pear’</italic>, and ‘<italic>Chen eats a banana’</italic>, can be replaced by: ‘<italic>The boys eat fruits’</italic>.</p>
+</sec>
+<sec id="sec008">
+<title>Paraphrasing</title>
+<p>In the paraphrasing process, a word in the source sentence is replaced with a synonymous word (a different word with the same meaning) in the summary sentence.</p>
+</sec>
+<sec id="sec009">
+<title>Topic Sentence Selection (TSS)</title>
+<p>To produce a summary sentence, the topic sentence selection strategy is used to extract an important sentence from the original text to represent the main idea of a paragraph. There are four methods to identify the important sentence:</p>
+<sec id="sec010">
+<title>Key method</title>
+<p>The most frequent words in a text are the most representative of its content, thus a segment of text containing them is more relevant [<xref ref-type="bibr" rid="pone.0145809.ref016">16</xref>]. Word frequency is a method used to identify keywords that are non-stop-words, which occur frequently in a document [<xref ref-type="bibr" rid="pone.0145809.ref017">17</xref>, <xref ref-type="bibr" rid="pone.0145809.ref018">18</xref>]. According to [<xref ref-type="bibr" rid="pone.0145809.ref019">19</xref>], sentences having keywords or content words have a greater chance of being included in the summary.</p>
+</sec>
+<sec id="sec011">
+<title>Location method</title>
+<p>Important sentences are normally at the beginning and the end of a document or paragraphs, as well as immediately below section headings [<xref ref-type="bibr" rid="pone.0145809.ref020">20</xref>, <xref ref-type="bibr" rid="pone.0145809.ref021">21</xref>]. Paragraphs at the beginning and end of a document are more likely to contain material that is useful for a summary, especially the first and last sentences of the paragraphs [<xref ref-type="bibr" rid="pone.0145809.ref019">19</xref>, <xref ref-type="bibr" rid="pone.0145809.ref022">22</xref>].</p>
+</sec>
+<sec id="sec012">
+<title>Title method</title>
+<p>Important sentences normally contain words that are presented in the title and major headings of a document [<xref ref-type="bibr" rid="pone.0145809.ref020">20</xref>]. Thus, words occurring in the title are good candidates for document specific concepts [<xref ref-type="bibr" rid="pone.0145809.ref023">23</xref>].</p>
+</sec>
+<sec id="sec013">
+<title>Cue method</title>
+<p>Cue phrases are words and phrases that directly signal the structure of a discourse. They are also known as discourse markers, discourse connectives, and discourse particles in computational linguistics [<xref ref-type="bibr" rid="pone.0145809.ref024">24</xref>]. Cue phrases, such as “conclusion” or “in particular” are often followed by important information. Thus, sentences that contain one or more of these cue phrases are considered more important than sentences without cue phrases [<xref ref-type="bibr" rid="pone.0145809.ref025">25</xref>]. These cue words are context dependent. However, due to the existence of different types of text, such as scientific articles and newspaper articles, it is difficult to collect these cue words as a unique list. Hence, since discourse markers can be used as an indicator of important content in a text and are more generic [<xref ref-type="bibr" rid="pone.0145809.ref026">26</xref>], we provide the list using discourse markers. These discourse markers are collected from the previous works [<xref ref-type="bibr" rid="pone.0145809.ref016">16</xref>]. <xref ref-type="table" rid="pone.0145809.t001">Table 1</xref> shows some of these cue words that may appear in a sentence.</p>
+<table-wrap id="pone.0145809.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t001</object-id>
+<label>Table 1</label> <caption><title>Sample of cue word list.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" colspan="5">Cue words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">As a conclusion</td>
+<td align="left">Last of all</td>
+<td align="left">Because of that</td>
+<td align="left">Hardly</td>
+<td align="left">Summarize</td>
+</tr>
+<tr>
+<td align="left">As a consequence</td>
+<td align="left">As a logical</td>
+<td align="left">Result</td>
+<td align="left">The paper describe</td>
+<td align="left">Consequence</td>
+</tr>
+<tr>
+<td align="left">It can be concluded that</td>
+<td align="left">Of course</td>
+<td align="left">End, therefore</td>
+<td align="left">Because of this</td>
+<td align="left">Consequently</td>
+</tr>
+<tr>
+<td align="left">As a consequence of</td>
+<td align="left">As a result</td>
+<td align="left">Eventually</td>
+<td align="left">Significantly</td>
+<td align="left">Thereby</td>
+</tr>
+<tr>
+<td align="left">Because our investigation</td>
+<td align="left">On that condition</td>
+<td align="left">Thus</td>
+<td align="left">Conclusion</td>
+<td align="left">For this reason</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec014">
+<title>Invention</title>
+<p>A summary sentence is created using invention rule if one makes explicit topic sentences by using his or her own words to state the implicit main idea of the paragraphs. Thus, the invention rule requires that students “add information rather than just delete, select or manipulate sentences already provided for them” [<xref ref-type="bibr" rid="pone.0145809.ref013">13</xref>, <xref ref-type="bibr" rid="pone.0145809.ref015">15</xref>].</p>
+</sec>
+<sec id="sec015">
+<title>Copy–verbatim</title>
+<p>In the copy-verbatim process, a summary sentence is produced from the source sentence without any changes. This strategy is not part of the summarizing strategies but it is used by students.</p>
+<p>In this work, we consider five basic summarizing strategies–sentence combination, deletion, paraphrase, copy–verbatim, topic sentence selection–and four methods–key method, title method, cue method and location method. Since summarizing strategies are general rules and quite ambiguous for the computer to process; hence, we need to transform these general rules into a set of comprehensible rules for processing. For example, an explanation of deletion strategy is as follows:
+<disp-formula id="pone.0145809.e001">
+<alternatives>
+<graphic id="pone.0145809.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1">
+<mml:mrow><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:mi mathvariant="bold">Rule</mml:mi><mml:mspace width="10em"/><mml:mi mathvariant="bold">Process</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>D</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mspace width="8.4em"/><mml:mtext>remove unnecessary information</mml:mtext><mml:mspace width="0.25em"/><mml:mi>f</mml:mi><mml:mi>r</mml:mi><mml:mi>o</mml:mi><mml:mi>m</mml:mi><mml:mspace width="0.25em"/><mml:mi>t</mml:mi><mml:mi>h</mml:mi><mml:mi>e</mml:mi><mml:mspace width="0.25em"/><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>g</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mspace width="0.25em"/><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula></p>
+<p>The term <italic>“unnecessary information</italic>” in the example above is very subjective and quite ambiguous for the computer to process and execute. To develop a system that can identify summarizing strategies in summary writing automatically, we need to produce more measurable and precise rules for each summarizing strategy. For this purpose, an analysis has been done on human–written summary. The results of the analysis are used to formulate a more detail and precise rules on how to identify each strategy. In this study, we used the same dataset as described in section “<italic>Experimental evaluations”</italic>. Two experts: a) An English teacher with good reading skills and understanding ability in the English language as well as experience in teaching summary writing; b) A lecturer with experience in using the skills in their teaching method, were asked to identify the summarizing strategies used by summarizer in each summary sentence. The human expert disassembled the summary text into a number of sentences, and then compared each sentence of summary text with all sentences from the original text to determine whether two sentences are semantically identical or not. Semantically identical sentences include same information or talk about similar idea. However, the sentence(s) from the original text that is/are semantically equivalent with the current sentence of summary text can be considered as the source sentence(s) that has/have been associated to produce the current summary sentence. Given two sentences, the summary sentence and the source sentence, the experts determine the summarizing strategies employed by summarizer to produce the current sentence of summary text.</p>
+<p><xref ref-type="table" rid="pone.0145809.t002">Table 2</xref> displays an overview of the analysis that we have conducted on summary text. It illustrates the results achieved over the summaries. In particular, for each summary text, the number of each sentence of summary text is shown in the first column; while the second column presents the summary sentences, the third column displays the most relevant sentences which are extracted from the source text and have been used to produce summary sentences; and finally the last column shows the summarizing strategies that have been employed to produce each summary sentence. This study aims to determine most relevant sentences from the original text for each summary sentence and identify the summarizing strategies used to construct the summary sentence.</p>
+<table-wrap id="pone.0145809.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t002</object-id>
+<label>Table 2</label> <caption><title>Analysis on summary sentences.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">No. of sentence</th>
+<th align="center">Summary sentence</th>
+<th align="center">Original sentence</th>
+<th align="center">Summarizing strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">“The currents kept pushing the boat further and further away.”</td>
+<td align="left">“I took a couple of steps towards it, but the currents kept pushing the boat further and further away.”</td>
+<td align="left">Deletion</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">“I plunged into the ocean and I knew I had overcome my fear.”</td>
+<td align="left">“I plunged into the ocean and swam back to shore. As my father proudly looked on, I knew I had overcome my fear.”</td>
+<td align="left">Sentence combination</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">“I dived and swam back to shore.”</td>
+<td align="left">“I plunged into the ocean and swam back to shore.”</td>
+<td align="left">Paraphrase</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">“I was so traumatized.”</td>
+<td align="left">“In the days that followed, I was so traumatized that I would not go near the water.”</td>
+<td align="left">T.S.S (Beginning); Deletion</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">“He frantically searching for my body.”</td>
+<td align="left">“He repeatedly dived under the water, frantically searching for my body.”</td>
+<td align="left">T.S.S (End); Deletion</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">“I kicked hard, trying to remain above the surface.”</td>
+<td align="left">“Panic-stricken, I paddled and kicked hard, trying to remain above the surface.”</td>
+<td align="left">T.S.S (Title); Deletion</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">“My father was worried that the incident would scare me for life”</td>
+<td align="left">“My father was worried that the incident would scare me for life.”</td>
+<td align="left">Copy-verbatim</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">“My father plunged and swam as hard as he could to the spot where I had gone under and frantically searching for my body.”</td>
+<td align="left">“He dived in and swam as hard as he could to the spot where I had gone under. He repeatedly dived under the water, frantically searching for my body.”</td>
+<td align="left">Deletion; Sentence Combination; T.S.S (End); T.S.S (Title); Paraphrase.</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Each strategy must have a unique or specific characteristic which can be used to identify the strategies. The steps to identify the characteristics of each strategy are explained as follows.</p>
+</sec>
+</sec>
+<sec id="sec016">
+<title>Heuristic Rules for the Identification of Summarizing Strategies</title>
+<sec id="sec017">
+<title>Deletion strategy</title>
+<p>The main role of deletion strategy is to remove unimportant words or phrase from a sentence. It aims to delete phrase from the sentence if it is irrelevant to the main idea. To identify the deletion strategy, we use the following four rules:</p>
+<sec id="sec018">
+<title>Sentence length</title>
+<p>It indicates the number of words in a sentence. The main task of deletion strategy is to eliminate unimportant information such as stop–words, explanations and examples from a sentence. Hence, the length of summary sentence in the summary text is always shorter than the corresponding sentence in source text. However, given two sentences, a summary sentence and the original sentence, let <italic>S</italic><sub><italic>s</italic></sub> be a summary sentence, <italic>O</italic><sub><italic>s</italic></sub> an original sentence, Len (<italic>O</italic><sub><italic>s</italic></sub>) denotes the length of sentence <italic>O</italic><sub><italic>s</italic></sub> while Len (<italic>O</italic><sub><italic>s</italic></sub>) denotes the length of sentence <italic>S</italic><sub><italic>s</italic></sub>. The first rule for deletion strategy is as follows:
+<disp-formula id="pone.0145809.e002">
+<alternatives>
+<graphic id="pone.0145809.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2">
+<mml:mrow><mml:mtext>Length</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mspace width="0.25em"/><mml:mtext>is less than Length</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>O</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula></p>
+<p>Even though the deletion strategy removes some phrases from a sentence, it should keep the meaning of original sentence in new produced sentence. Hence, two additional rules should be considered. The following rules were also considered in order to identify deletion strategy:</p>
+</sec>
+<sec id="sec019">
+<title>Word overlapping</title>
+<p>It considers the set of words (only non-stop words) occurring in both sentences. Given two sentences, let S<sub>summary</sub> = {W<sub>1</sub>,W<sub>2</sub>, ⋯W<sub>N</sub>} be a sentence of summary text, where <italic>N</italic> is the number of words in the sentence S<sub>summary</sub>, S<sub>original</sub> = {W<sub>1</sub>,W<sub>2</sub>, ⋯W<sub>M</sub>} is a sentence of original text, where <italic>M</italic> is the number of words in sentence <italic>S</italic><sub><italic>original</italic></sub>. However, for each word from sentence <italic>S</italic><sub><italic>summary</italic></sub>, the same word or the synonym word must be restated in sentence <italic>S</italic><sub><italic>original</italic></sub>. Hence, the following statement can be made:
+<disp-formula id="pone.0145809.e003">
+<alternatives>
+<graphic id="pone.0145809.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3">
+<mml:mrow><mml:mo>∀</mml:mo><mml:mspace width="0.15em"/><mml:mi>W</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mi>s</mml:mi><mml:mi>u</mml:mi><mml:mi>m</mml:mi><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>y</mml:mi></mml:mrow></mml:msub><mml:mo stretchy="false">|</mml:mo><mml:mspace width="0.15em"/><mml:msub><mml:mi>W</mml:mi><mml:mi>O</mml:mi></mml:msub><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mi>o</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>g</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi></mml:mrow></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula></p>
+<p>Where, <italic>W</italic> is a word of <italic>S</italic><sub><italic>summary</italic></sub> and <italic>W</italic><sub><italic>o</italic></sub> can be either a similar word or synonymous word.</p>
+</sec>
+<sec id="sec020">
+<title>Syntactic composition</title>
+<p>It checks whether the syntactic composition of two sentences is equal. For example, given two sentences:
+<disp-formula id="pone.0145809.e004">
+<alternatives>
+<graphic id="pone.0145809.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4">
+<mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>original</mml:mtext></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mtext>He</mml:mtext><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>A</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>repeatedly dived under the water, frantically searching</mml:mtext><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>B</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>for my body</mml:mtext><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>C</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<disp-formula id="pone.0145809.e005">
+<alternatives>
+<graphic id="pone.0145809.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5">
+<mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>summary</mml:mtext></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mtext>He</mml:mtext><mml:mspace width="0.1em"/><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>A</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>frantically searching</mml:mtext><mml:mspace width="0.15em"/><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>B</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>for my body</mml:mtext><mml:mspace width="0.15em"/><mml:mo>/</mml:mo><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>C</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula></p>
+<p>Suppose we select three words from sentence <italic>S</italic><sub><italic>summary</italic></sub>; <italic>A</italic>, <italic>B</italic> and <italic>C</italic>. If the word <italic>B</italic> occurred after <italic>A</italic> and the word <italic>C</italic> occurred after <italic>B</italic>, this composition should occur in sentence <italic>S</italic><sub><italic>original</italic></sub>. It means the word <italic>B</italic> must appear after word <italic>A</italic> and the word <italic>C</italic> must appear after word <italic>B</italic> in the <italic>S</italic><sub><italic>original</italic></sub> sentence. Thus, the following statement can be made:
+<disp-formula id="pone.0145809.e006">
+<alternatives>
+<graphic id="pone.0145809.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6">
+<mml:mrow><mml:mo>∀</mml:mo><mml:mspace width="0.25em"/><mml:mtext>A</mml:mtext><mml:mo>,</mml:mo><mml:mtext>B</mml:mtext><mml:mo>,</mml:mo><mml:mtext>C</mml:mtext><mml:mo>∈</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>summary</mml:mtext></mml:mrow></mml:msub><mml:mspace width="0.15em"/><mml:mo>:</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mtext>A</mml:mtext><mml:mspace width="0.25em"/><mml:msub><mml:mtext>S</mml:mtext><mml:mtext>s</mml:mtext></mml:msub><mml:mtext>B</mml:mtext><mml:mspace width="0.15em"/><mml:mo>∧</mml:mo><mml:mspace width="0.15em"/><mml:mtext>B</mml:mtext><mml:mspace width="0.25em"/><mml:msub><mml:mtext>S</mml:mtext><mml:mtext>s</mml:mtext></mml:msub><mml:mtext>C</mml:mtext><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>summary</mml:mtext></mml:mrow></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>⇒</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mrow><mml:mtext>A S</mml:mtext></mml:mrow><mml:mtext>o</mml:mtext></mml:msub><mml:mspace width="0.25em"/><mml:mtext>B</mml:mtext><mml:mspace width="0.15em"/><mml:mo>∧</mml:mo><mml:mspace width="0.15em"/><mml:msub><mml:mrow><mml:mtext>B S</mml:mtext></mml:mrow><mml:mtext>o</mml:mtext></mml:msub><mml:mspace width="0.25em"/><mml:mtext>C</mml:mtext><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>original</mml:mtext></mml:mrow></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula></p>
+<p>Where,</p>
+<p><italic>A S</italic><sub><italic>s</italic></sub> <italic>B</italic>: <italic>B</italic> appears after <italic>A</italic> in sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p>
+<p><italic>B S</italic><sub><italic>s</italic></sub> <italic>C</italic>: <italic>C</italic> appears after <italic>B</italic> in sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p>
+<p><italic>A S</italic><sub><italic>o</italic></sub> <italic>B</italic>: <italic>B</italic> appears after <italic>A</italic> in sentence <italic>S</italic><sub><italic>original</italic></sub>.</p>
+<p><italic>B S</italic><sub><italic>o</italic></sub> <italic>C</italic>: <italic>C</italic> appears after <italic>B</italic> in sentence <italic>S</italic><sub><italic>original</italic></sub>.</p>
+<p>Besides these rules for identifying the deletion strategy, in this study we also consider the similarity measure between two sentences as a rule to identify the deletion strategy. The similarity measure between two sentences is computed based on the semantic similarity and syntactic similarity between two sentences. We used Eqs (<xref ref-type="disp-formula" rid="pone.0145809.e019">16</xref>) and (<xref ref-type="disp-formula" rid="pone.0145809.e020">17</xref>) to calculate similarity measure between two sentences.</p>
+<p>In this study we collected 163 summary sentences produced by deletion strategy and their corresponding sentences from the source text. We then calculated the similarity measure between the sentence pairs by using Eqs (<xref ref-type="disp-formula" rid="pone.0145809.e019">16</xref>)–(<xref ref-type="disp-formula" rid="pone.0145809.e023">20</xref>). <xref ref-type="fig" rid="pone.0145809.g001">Fig 1</xref> presents the results obtained in this study. Based on the analysis of the results, we found that the similarity measure between two sentences in deletion strategy was between 0 and 1, as shown in <xref ref-type="fig" rid="pone.0145809.g001">Fig 1</xref>. Thus, the following statement can be used as the fourth rule to identify deletion strategy:
+<disp-formula id="pone.0145809.e007">
+<alternatives>
+<graphic id="pone.0145809.e007g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7">
+<mml:mrow><mml:msub><mml:mi mathvariant="italic">Similarity</mml:mi><mml:mtext>sentences</mml:mtext></mml:msub><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>2</mml:mn></mml:msub><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>is less than</mml:mtext><mml:mspace width="0.25em"/><mml:mn>1</mml:mn></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<fig id="pone.0145809.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Sentence similarity measure in Deletion strategy.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g001" xlink:type="simple"/>
+</fig>
+<p>From this study, we also found that in deletion strategy, only one sentence from the original text was used to create a summary sentence. Hence, we also consider this feature to identify deletion strategy. So, if <italic>N</italic> is the number of sentences that have been used for creating a summary sentence, then in deletion strategy we have the following statement:
+<disp-formula id="pone.0145809.e008">
+<alternatives>
+<graphic id="pone.0145809.e008g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8">
+<mml:mrow><mml:mtext>The number of sentence</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mspace width="0.25em"/><mml:mtext>is equal to</mml:mtext><mml:mspace width="0.25em"/><mml:mn>1</mml:mn><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula></p>
+</sec>
+</sec>
+<sec id="sec021">
+<title>Topic Sentence Selection (TSS) Strategy</title>
+<p>The main objective of this strategy is to determine a sentence from a paragraph, which represents the main idea of the paragraph. To identify topic sentence selection strategy, we consider 4 methods which are key method, location method, cue method and title method. The methods are explained as follows.</p>
+<sec id="sec022">
+<title>Location method</title>
+<p>This method assumes that sentences at the beginning as well as at the end of a document or a paragraph indicate the important information.</p>
+<p>In this study, we investigated the use of location method to produce a summary sentence. For this purpose, we examined 560 summary sentences. We found that topic sentences tend to appear at the beginning or at the end of a paragraph. As shown in <xref ref-type="fig" rid="pone.0145809.g002">Fig 2</xref>, 49% and 51% of the topic sentences appeared at the beginning and the end of paragraphs, respectively. These findings are in agreement with the previous studies of Fattah and Ren [<xref ref-type="bibr" rid="pone.0145809.ref021">21</xref>] and Bawakid and Oussalah [<xref ref-type="bibr" rid="pone.0145809.ref027">27</xref>].</p>
+<fig id="pone.0145809.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Use of Location Method amongst 560 sentences.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g002" xlink:type="simple"/>
+</fig>
+<p>The following steps are used to identify topic sentence selection using location method:
+<list list-type="order">
+<list-item><p>Select all sentences from the source text that appeared at the beginning or at the end of a paragraph.</p></list-item>
+<list-item><p>Add the selected sentences from step 1 to <italic>Sentence Location List (SLL)</italic>.</p></list-item>
+<list-item><p>For each summary sentence, find the corresponding sentence from the source text. Let <italic>S</italic><sub><italic>summary</italic></sub> be a sentence of summary text, while <italic>S</italic><sub><italic>original</italic></sub> is a corresponding sentence of the original text that is used to produce the sentence <italic>S</italic><sub>summary.</sub></p></list-item>
+<list-item><p>Check the following statement to identify topic sentence selection:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e009">
+<alternatives>
+<graphic id="pone.0145809.e009g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e009" xlink:type="simple"/>
+<mml:math display="block" id="M9">
+<mml:mrow><mml:mtext>F</mml:mtext><mml:mo stretchy="false">(</mml:mo><mml:mtext>X</mml:mtext><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>X</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:mi>S</mml:mi><mml:mi>L</mml:mi><mml:mi>L</mml:mi></mml:mtd></mml:mtr>
+<mml:mtr><mml:mtd><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>X</mml:mi><mml:mspace width="0.25em"/><mml:mo>∉</mml:mo><mml:mspace width="0.25em"/><mml:mi>S</mml:mi><mml:mi>L</mml:mi><mml:mi>L</mml:mi></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula></p>
+<p>Where <italic>X</italic> indicates the sentence <italic>S</italic><sub><italic>original</italic></sub>.</p>
+</sec>
+<sec id="sec023">
+<title>Key word method</title>
+<p>The assumption made by key word method is that the important sentences of a source text include one or more of key words. Key words are non-stop words, which occur frequently in the source text. We used term frequency (<italic>Tf</italic>) methods to identify words with high frequency in the source text, and then the words with high frequency were selected as the keywords. In this study, words with high frequency are shown in <xref ref-type="fig" rid="pone.0145809.g003">Fig 3</xref>.</p>
+<fig id="pone.0145809.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Frequency of keywords.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g003" xlink:type="simple"/>
+</fig>
+<p>In this study, we identified the sentences from the source text that are used to produce summary sentences which consist of these key words. From the analysis of these sentences, we found that all of these sentences include keywords. The result of our study is presented in <xref ref-type="fig" rid="pone.0145809.g004">Fig 4</xref>. It shows the percentage use of keywords in summarises for identifying topic sentence selection strategy.</p>
+<fig id="pone.0145809.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Use of keywords in summaries.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g004" xlink:type="simple"/>
+</fig>
+<p>The following steps are used to identify topic sentence selection using keyword method:</p>
+<list list-type="order">
+<list-item><p>Remove all stop-words from the source sentences.</p></list-item>
+<list-item><p>Identify the frequency of each word of the source text.</p></list-item>
+<list-item><p>Select top <italic>N</italic> words with high frequency, and then add them to <italic>Keywords List (KL)</italic>.</p></list-item>
+<list-item><p>Find the corresponding sentence from source text for each summary sentence. Let <italic>S</italic><sub><italic>summary</italic></sub> be a summary sentence, and <italic>S</italic><sub><italic>original</italic></sub> be a corresponding sentence of the original text that is used to produce the sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p></list-item>
+<list-item><p>Check the following statement to identify topic sentence selection:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e010">
+<alternatives>
+<graphic id="pone.0145809.e010g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e010" xlink:type="simple"/>
+<mml:math display="block" id="M10">
+<mml:mrow><mml:mtext>F</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mtext>Y</mml:mtext><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>Y</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:mi>K</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>Y</mml:mi><mml:mspace width="0.25em"/><mml:mo>∉</mml:mo><mml:mspace width="0.25em"/><mml:mi>K</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(7)</label>
+</disp-formula>
+<p>Where <italic>Y</italic> indicates a word of S<sub>original</sub>.</p>
+</sec>
+<sec id="sec024">
+<title>Title Method</title>
+<p>In title method, if a sentence of the original text contains one or more of the words that appeared in the title, the sentences can be considered as a topic sentence. In this study, we identified the sentences from the source text that are used to produce summary sentences which consist of title words. The result of our study is presented in <xref ref-type="fig" rid="pone.0145809.g005">Fig 5</xref>. It shows the percentage use of each word from text title that has been used to select an important sentence in topic sentence selection strategy.</p>
+<fig id="pone.0145809.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Use of Title words amongst summaries.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g005" xlink:type="simple"/>
+</fig>
+<p>The following steps are used to identify topic sentence selection using title method:</p>
+<list list-type="order">
+<list-item><p>Add all words (non-stop words) to <italic>Title List (TL)</italic>.</p></list-item>
+<list-item><p>Find the corresponding sentence from source text for each sentence of summary text. Let <italic>S</italic><sub><italic>summary</italic></sub> be a sentence of summary text, <italic>S</italic><sub><italic>original</italic></sub> be a corresponding sentence of the original text that is used to produce the sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p></list-item>
+<list-item><p>Check out the following statement for identifying topic sentence selection:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e011">
+<alternatives>
+<graphic id="pone.0145809.e011g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e011" xlink:type="simple"/>
+<mml:math display="block" id="M11">
+<mml:mrow><mml:mi>F</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>Z</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>Z</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:mi>T</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>Z</mml:mi><mml:mspace width="0.25em"/><mml:mo>∉</mml:mo><mml:mspace width="0.25em"/><mml:mi>T</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(8)</label>
+</disp-formula>
+<p>Where <italic>Z</italic> indicates a word of <italic>S</italic><sub><italic>original</italic></sub>.</p>
+</sec>
+<sec id="sec025">
+<title>Cue method</title>
+<p>Cue method includes cue words or phrases such as “<italic>in conclusion”</italic>, “<italic>in this paper”</italic>, “<italic>our investigation has shown”</italic>, and “<italic>a major result is”</italic>. The presence of these words in a sentence indicates the important information in the source text. These cue words are context dependent. However, due to the existence of different type of text, such as scientific article and newspaper article, it is difficult to collect these cue word as a unit list. Hence, since discourse markers can be used as an indicator of important content in a text and are more generic, a list of cue words has been built using discourse markers. In this study, we found some discourse markers that were used to indicate the significance of a sentence. <xref ref-type="fig" rid="pone.0145809.g006">Fig 6</xref> presents some of these cue words.</p>
+<fig id="pone.0145809.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Frequency of cue words in summaries.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g006" xlink:type="simple"/>
+</fig>
+<p>The following steps are used to identify topic sentence selection using cue method:</p>
+<list list-type="order">
+<list-item><p>Construct a <italic>Cue word list (CWL)</italic> using the discourse marker.</p></list-item>
+<list-item><p>Find the corresponding sentence from source text for each summary sentence. Let <italic>S</italic><sub><italic>summary</italic></sub> be a summary sentence, <italic>S</italic><sub><italic>original</italic></sub> be a corresponding sentence of the original text that is used to produce the sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p></list-item>
+<list-item><p>Check the following statement to identify topic sentence selection:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e012">
+<alternatives>
+<graphic id="pone.0145809.e012g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e012" xlink:type="simple"/>
+<mml:math display="block" id="M12">
+<mml:mrow><mml:mtext>F</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mtext>CWL</mml:mtext></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>K</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:mi>C</mml:mi><mml:mi>W</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>S</mml:mi><mml:mi>S</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>K</mml:mi><mml:mspace width="0.25em"/><mml:mo>∉</mml:mo><mml:mspace width="0.25em"/><mml:mi>C</mml:mi><mml:mi>W</mml:mi><mml:mi>L</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(9)</label>
+</disp-formula>
+<p>Where <italic>CWL</italic> indicates a word of <italic>S</italic><sub><italic>original</italic></sub>.</p>
+</sec>
+</sec>
+<sec id="sec026">
+<title>Paraphrasing strategy</title>
+<p>Paraphrase strategy is a way to replace a word in source sentence with a synonym or similar word in summary sentence. For example, given two sentences (A: “<italic>I plunged into the ocean and swam back to shore</italic>.”) and (B: “<italic>I dived into the ocean and swam back to shore</italic>.<italic>”</italic>). The word ‘<italic>plunged</italic>’ in sentence <italic>A</italic> was replaced by a synonym word “<italic>dived”</italic>.</p>
+<p>The following steps are used to identify paraphrasing strategy:</p>
+<list list-type="order">
+<list-item><p>Let S<sub>summary</sub> = {W<sub>1</sub>,W<sub>2</sub>, ⋯W<sub>N</sub>} be a summary sentence and S<sub>original</sub> = {W<sub>1</sub>,W<sub>2</sub>, ⋯W<sub>M</sub>} be a corresponding sentence of the original text that is used to produce the sentence <italic>S</italic><sub><italic>summary</italic></sub>, where <italic>M and N</italic> are the number of words.</p></list-item>
+<list-item><p>Get the root of each word of <italic>S</italic><sub><italic>original</italic></sub> using WordNet, and then add to <italic>Array Root (AR)</italic>.</p></list-item>
+<list-item><p>Get the synonym of each word of <italic>S</italic><sub><italic>original</italic></sub> using WordNet, and then add to <italic>Array Synonym (AS)</italic>.</p></list-item>
+<list-item><p>For each word of <italic>S</italic><sub><italic>summary</italic></sub>, get the root of word using the WordNet, Let <italic>RW</italic> be the root of the word, then check out the following conditions:.
+<list list-type="roman-lower">
+<list-item><p>If <italic>RW</italic> was in <italic>AR</italic>, then set paraphrase strategy to “0”, then jump to step 4; otherwise continue the following step.</p></list-item>
+<list-item><p>If <italic>RW</italic> was in <italic>AS</italic>, then set paraphrase to “1”; Stop the current loop; Otherwise jump to (iii);</p></list-item>
+<list-item><p>Calculate the semantic similarity between <italic>RW</italic> and all word from <italic>S</italic><sub><italic>original</italic></sub> using Eqs (<xref ref-type="disp-formula" rid="pone.0145809.e019">16</xref>) and (<xref ref-type="disp-formula" rid="pone.0145809.e020">17</xref>).</p></list-item>
+<list-item><p>If there is a similar value, then set paraphrase to “1”; Stop the current loop; Otherwise jump to 4;</p></list-item>
+</list></p></list-item></list>
+</sec>
+<sec id="sec027">
+<title>Sentence Combination Strategy</title>
+<p>The main objective of the sentence combination strategy is to combine one or more sentences from the source text to construct a summary sentence. It uses conjunction words such as <italic>and</italic>, <italic>or</italic>, <italic>so</italic> and etc., to merge sentences into a single sentence. In this study, we examined two features such as the number of source sentences combined in each summary sentence and the similarity measure between two sentences, summary sentence and the corresponding sentence of the source text. For this purpose, we collected 105 summary sentences produced using sentence combination strategy.</p>
+<p>To examine how many sentences are normally merged in a summary sentence, we analysed the number of source sentences that have been used to create a summary sentence. From the analysis, we found that most summary sentences are generated from two or three sentences of the source text. <xref ref-type="fig" rid="pone.0145809.g007">Fig 7</xref> presents the number of source sentences included in summary sentences. As we can see in <xref ref-type="fig" rid="pone.0145809.g007">Fig 7</xref>, out of 105 summary sentences created using sentence combination strategy, 70 summary sentences were usually a combination of two source sentences, 28 summary sentences were produced from 3 source sentences and 7 summary sentences were generated by 4 source sentences. As a result from this study, the following statement can be used as a rule to identify sentence combination strategy:
+<disp-formula id="pone.0145809.e013">
+<alternatives>
+<graphic id="pone.0145809.e013g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e013" xlink:type="simple"/>
+<mml:math display="block" id="M13">
+<mml:mrow><mml:mtext>The number of sentences</mml:mtext><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>N</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mtext>is greater than</mml:mtext><mml:mspace width="0.25em"/><mml:mn>1</mml:mn><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(10)</label>
+</disp-formula></p>
+<p>Where, <italic>N</italic> is the number of source sentences which have been used to produce a summary sentence.</p>
+<fig id="pone.0145809.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Number of source sentences combined in each summary sentence.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g007" xlink:type="simple"/>
+</fig>
+<p>Besides the aforementioned rules for identifying sentence combination, in this study we also consider <italic>the similarity measure between a summary sentence and the number of sentences from the source text involved in summary sentence</italic>, as a rule to identify this strategy. The similarity measure is computed based on the semantic similarity and syntactic similarity between two sentences.</p>
+<p>The following steps are used to calculate the similarity measure in sentence combination strategy:</p>
+<list list-type="order">
+<list-item><p>Given a Summary Sentence (SS) = {P<sub>1</sub>, P<sub>2</sub>⋯P<sub>N</sub>}, where <italic>P</italic><sub><italic>1</italic></sub>, <italic>P</italic><sub><italic>2</italic></sub> and <italic>P</italic><sub><italic>N</italic></sub> are phrases from summary sentence that came from <italic>T</italic><sub><italic>1</italic></sub>, <italic>T</italic><sub><italic>2</italic></sub>, and <italic>T</italic><sub><italic>M</italic></sub> respectively. <italic>T</italic><sub><italic>1</italic></sub>, <italic>T</italic><sub><italic>2</italic></sub>, and <italic>T</italic><sub><italic>M</italic></sub> are source sentences that are used to produce the summary sentence.</p></list-item>
+<list-item><p>Calculate the similarity measure between each pair of sentences, such as (T<sub>1</sub>,SS), (T<sub>2</sub>,SS)⋯, and (T<sub>M</sub>,SS) using the following steps:
+<list list-type="alpha-lower">
+<list-item><p>Create a “word Set”.</p></list-item>
+<list-item><p>Calculate semantic similarity between two sentences using <xref ref-type="disp-formula" rid="pone.0145809.e021">Eq 18</xref>.</p></list-item>
+<list-item><p>Calculate syntactic similarity between two sentences using <xref ref-type="disp-formula" rid="pone.0145809.e022">Eq 19</xref>.</p></list-item>
+<list-item><p>Calculate similarity measure between two sentences based on the semantic similarity and syntactic similarity using <xref ref-type="disp-formula" rid="pone.0145809.e023">Eq 20</xref>.</p></list-item></list></p></list-item>
+<list-item><p>Calculate the average similarity measure between sentences using the following equation:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e014">
+<alternatives>
+<graphic id="pone.0145809.e014g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e014" xlink:type="simple"/>
+<mml:math display="block" id="M14">
+<mml:mrow><mml:mi>A</mml:mi><mml:mi>v</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mtext>similarity measure</mml:mtext></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mspace width="0.1em"/><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>M</mml:mi></mml:msubsup><mml:mspace width="0.15em"/><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>u</mml:mi><mml:mi>m</mml:mi><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>y</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mi>M</mml:mi></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(11)</label>
+</disp-formula>
+<p>Where, <italic>M</italic> is the number of source sentences.</p>
+<p>In this study, we collected 100 summary sentences produced by sentence combination strategy and the corresponding sentences from the source text. Then, we calculate the similarity measure between sentence pairs by using Eqs (<xref ref-type="disp-formula" rid="pone.0145809.e019">16</xref>) and (<xref ref-type="disp-formula" rid="pone.0145809.e020">17</xref>). From the analysis of the results, we found that the similarity measure between sentences in sentence combination strategy is between 0 and 1, as shown in <xref ref-type="fig" rid="pone.0145809.g008">Fig 8</xref>. Therefore, the following statement can be used as a rule to identify sentence combination strategy:
+<disp-formula id="pone.0145809.e015">
+<alternatives>
+<graphic id="pone.0145809.e015g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e015" xlink:type="simple"/>
+<mml:math display="block" id="M15">
+<mml:mrow><mml:mi>A</mml:mi><mml:mi>v</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mtext>similarity measure</mml:mtext></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mspace width="0.15em"/><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>M</mml:mi></mml:msubsup><mml:mspace width="0.1em"/><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>u</mml:mi><mml:mi>m</mml:mi><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>y</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mi>M</mml:mi></mml:mfrac><mml:mo>&lt;</mml:mo><mml:mn>1</mml:mn></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(12)</label>
+</disp-formula></p>
+<fig id="pone.0145809.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Sentence similarity measure in Sentence combination strategy.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g008" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec028">
+<title>Copy–verbatim</title>
+<p>In the copy–verbatim process, a summary sentence is created from the source sentence without any changes. This strategy is not part of the summarizing strategies but it is one of the common strategies that is used by students. To identify the copy–verbatim strategy, we use the following three rules:</p>
+<sec id="sec029">
+<title>Sentence length</title>
+<p>Sentence length, contains the number of words in a sentence. The main task of copy–verbatim strategy is to produce a summary sentence using a source sentence without any changes. Therefore, the length of summary sentence in summary text is always equal to the length of the corresponding sentence in the source text. Given two sentences, summary sentence and original sentence, let <italic>S</italic><sub><italic>s</italic></sub> be a summary sentence, <italic>O</italic><sub><italic>s</italic></sub> be an original sentence, let Len (<italic>O</italic><sub><italic>s</italic></sub>) denote the length of sentence <italic>O</italic><sub><italic>s</italic></sub> and Len (<italic>S</italic><sub><italic>s</italic></sub>) denote the length of sentence <italic>S</italic><sub><italic>s</italic></sub>. The first rule can have the following statement:
+<disp-formula id="pone.0145809.e016">
+<alternatives>
+<graphic id="pone.0145809.e016g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e016" xlink:type="simple"/>
+<mml:math display="block" id="M16">
+<mml:mrow><mml:mtext>The Length</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>S</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mspace width="0.25em"/><mml:mtext>is equal to the Length</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>O</mml:mi><mml:mi>S</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(13)</label>
+</disp-formula></p>
+</sec>
+<sec id="sec030">
+<title>Similarity measure between sentences</title>
+<p>In this study, to identify copy–verbatim strategy, we also consider the similarity measure between two sentences as a rule to identify this strategy. The following steps are used to calculate similarity measure between two sentences:</p>
+<list list-type="order">
+<list-item><p><italic>Create a “word set”</italic>.
+<list list-type="order">
+<list-item><p>Calculate semantic similarity between two sentences using <xref ref-type="disp-formula" rid="pone.0145809.e021">Eq 18</xref>.</p></list-item>
+<list-item><p>Calculate syntactic similarity between two sentences using <xref ref-type="disp-formula" rid="pone.0145809.e022">Eq 19</xref>.</p></list-item>
+<list-item><p>Calculate similarity measure between two sentences based on the semantic similarity and syntactic similarity using <xref ref-type="disp-formula" rid="pone.0145809.e023">Eq 20</xref>.</p></list-item>
+</list></p></list-item>
+</list>
+<p>We collected 80 summary sentences produced by copy–verbatim strategy and the corresponding sentences from the source text. Then, we calculated the similarity measure between sentence pairs. We found that the similarity measure between two sentences in copy–verbatim strategy is bigger than 0 and equal to 1. Thus, the following statement can be used as a second rule to identify copy–verbatim strategy:
+<disp-formula id="pone.0145809.e017">
+<alternatives>
+<graphic id="pone.0145809.e017g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e017" xlink:type="simple"/>
+<mml:math display="block" id="M17">
+<mml:mrow><mml:mtext>The</mml:mtext><mml:mspace width="0.25em"/><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mi>i</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>r</mml:mi><mml:mi>i</mml:mi><mml:mi>t</mml:mi><mml:msub><mml:mi>y</mml:mi><mml:mrow><mml:mtext>sentences</mml:mtext></mml:mrow></mml:msub><mml:mspace width="0.2em"/><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mspace width="0.1em"/><mml:mo>,</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.15em"/><mml:mtext>is equal to</mml:mtext><mml:mspace width="0.25em"/><mml:mn>1</mml:mn><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(14)</label>
+</disp-formula></p>
+</sec>
+<sec id="sec031">
+<title>Total number of sentences</title>
+<p>In copy–verbatim strategy we detected only one sentence from the original text used to produce a summary sentence. Hence, we also consider this feature to identify this strategy. So, if <italic>N</italic> is the number of sentences that have been used to produce a summary sentence, then in copy–verbatim strategy we have the following statement that can be used as a third rule to identify strategy:
+<disp-formula id="pone.0145809.e018">
+<alternatives>
+<graphic id="pone.0145809.e018g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e018" xlink:type="simple"/>
+<mml:math display="block" id="M18">
+<mml:mrow><mml:mtext>The number of sentence</mml:mtext><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:mi>N</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mspace width="0.25em"/><mml:mtext>is equal to</mml:mtext><mml:mspace width="0.25em"/><mml:mn>1</mml:mn><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(15)</label>
+</disp-formula></p>
+<p>The summarizing strategies found from the decomposition of summary text were analyzed and formalized into a set of heuristic rules on how to identify the summarizing strategies. These rules are given in <xref ref-type="table" rid="pone.0145809.t003">Table 3</xref>.</p>
+<table-wrap id="pone.0145809.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t003</object-id>
+<label>Table 3</label> <caption><title>The rules to identify summarizing strategies and methods.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t003" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Summarizing Strategies</th>
+<th align="left">Heuristic rules to identify summarizing strategies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify">Deletion</td>
+<td align="justify">1. Words of summary sentence are found in source sentence.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">2. The syntactic composition of the words in the summary sentence and in the corresponding source sentence is the same.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">3. The number of words in summary sentence is less than the number of words in the corresponding source sentence.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">4. <italic>TN</italic> = 1 &amp;&amp; Sim (S<sub>r,</sub> S<sub>s</sub><bold>) &lt;</bold> 1</td>
+</tr>
+<tr>
+<td align="justify">Sentence combination</td>
+<td align="justify"><italic>1</italic>. The summary sentence contains a combination of phrases from two or more sentences in the original text.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">2. TN &gt; 1 &amp;&amp; (∑<sub>(i = 1)</sub><sup>TN</sup> Sim (S<sub>r,</sub> S<sub>s</sub>)) / TN &lt; 1</td>
+</tr>
+<tr>
+<td align="justify">Paraphrase</td>
+<td align="justify">1. A word in the source sentence is replaced with a synonym word in the summary sentence.</td>
+</tr>
+<tr>
+<td align="justify">Topic Sentence Selection (TSS)</td>
+<td align="justify">A summary sentence is created by TSS, if it used:</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">1. Title method: The sentence includes one or more of Title words.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">2. Location method: The sentence should be the first or last sentence of paragraph.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">3. Cue method: The sentence includes one or more of cue phrases.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">4. Keyword method: The sentence includes one or more of Key words.</td>
+</tr>
+<tr>
+<td align="justify">Copy–verbatim</td>
+<td align="justify">1. All words of summary sentence are found in source sentence.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">2. The position of the words in the summary sentence and in the corresponding source sentence is the same.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">3. The number of words in summary sentence is equal to the number of words in the source sentence.</td>
+</tr>
+<tr>
+<td align="justify"/>
+<td align="justify">4. <italic>TN</italic> = 1 &amp;&amp; Sim (S<sub>r,</sub> S<sub>s</sub>) <bold>=</bold> 1</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001"><p>Where,</p></fn>
+<fn id="t003fn002"><p>S<sub>s</sub>: denotes a summary sentence.</p></fn>
+<fn id="t003fn003"><p>RS = {S<sub>1</sub>,…S<sub>n</sub>}: denotes the Relevant Sentences (<italic>RS</italic>) that are used to produce the <italic>S</italic><sub>S.</sub></p></fn>
+<fn id="t003fn004"><p>TN: denotes the total number of sentences in <italic>RS</italic>.</p></fn>
+<fn id="t003fn005"><p>S<sub>r</sub>: denotes a sentence of <italic>RS</italic>.</p></fn>
+<fn id="t003fn006"><p>Sim (S<sub>r,</sub> S<sub>S</sub>): denotes the sentence similarity measurement, Eq (<xref ref-type="disp-formula" rid="pone.0145809.e023">20</xref>).</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+</sec>
+</sec>
+<sec id="sec032">
+<title>Related Works</title>
+<p>There exists a large research on how the computer can help writing summaries: either by carrying out summarization or by evaluating students’ summaries. However, computer models of the methods employed by instructors to evaluate students’ summaries are yet lacking. An implementation of these models is more difficult, since many complicated goals must be considered to implement these models: those have to identify the important information or main idea from a source text (i.e., sentences/paragraph), then to perform a summarizing strategy (i.e., what kind of summarizing strategies to accomplish on these sentences/paragraph). Despite of the difficulty to implement these models, recently, researchers have developed a few systems for summary assessment.</p>
+<p>In this section, first, the summary assessment systems those focus on content and style are introduced. Then, the summary assessment systems those focus on identifying summarizing strategies are introduced.</p>
+<p>Laburpen Ebaluaka Automatikoa (LEA)[<xref ref-type="bibr" rid="pone.0145809.ref028">28</xref>], which is based on Latent Semantic Analysis (LSA) and cosine similarity measure, has been proposed to evaluate the output of the summarizing process. It is designed for both teachers and students, and enables teachers to examine the student-written summary, as well as allows students to produce a summary text using their own words. The summaries are evaluated based on certain features, such as cohesion, coherence, the use of language, and the adequacy of the summary.</p>
+<p>Summary Street [<xref ref-type="bibr" rid="pone.0145809.ref029">29</xref>], which is based on LSA, is a computer-based assessment system that is used to evaluate the content of the summary text. Summary Street ranks a student-written summary by comparing the summary text and source text. It creates an environment to give appropriate feedback to the students, such as content coverage, length, redundancy and plagiarism.</p>
+<p>Lin [<xref ref-type="bibr" rid="pone.0145809.ref030">30</xref>] proposed an automatic summary assessment system named Recall-Oriented Understudy for Gisting Evaluation. It is used to assess the quality of the summary text. The current system includes various automatic assessment approaches, such as ROUGE-N, ROUGE-L and ROUGE-S. ROUGE-N compares two summaries based on the total number of matches. ROUGE-L calculates the similarity between a reference text and a candidate’s text based on the Longest Common Subsequence (LCS). ROUGE-S (Skip-Bigram Co-Occurrence): skip-bigram is any pair of words in their sentence order, allowing for arbitrary gaps.</p>
+<p>FRESA (Framework for Evaluating Summaries Automatically) [<xref ref-type="bibr" rid="pone.0145809.ref031">31</xref>], which is based on Jensen-Shannon divergence and ROUGE is a framework that is used to evaluate the multilingual summarization without Human references. It used the Rouge package such as uni-grams, bigrams, and the skip bi-grams with maximum skip distance of 4 (ROUGE-1, ROUGE-2 and ROUGE-SU4), to compute various statistics.</p>
+<p>Mohler, Bunescu [<xref ref-type="bibr" rid="pone.0145809.ref032">32</xref>] introduced an Answer Grading System, which combines a graph alignment model and a text similarity model. This system aims to improve the existing approaches that automatically assign a grade to an answer provided by a student, using the dependency parse structure of a text and machine learning techniques. The current system uses the Stanford Dependency Parser [<xref ref-type="bibr" rid="pone.0145809.ref033">33</xref>] to create the dependency graphs for both the student (<italic>A</italic><sub><italic>1</italic></sub>) and teacher (<italic>A</italic><sub><italic>2</italic></sub>) answers. For each node in the student’s dependency graph the system computes a similarity score for each node in the teacher’s dependency graph using a set of lexical, semantic, and syntactic features. The similarity scores are used to weight the edges that connect the nodes in <italic>A</italic><sub><italic>1</italic></sub> on one side and the nodes in <italic>A</italic><sub><italic>2</italic></sub> on the other. The system then applies the Hungarian algorithm to determine both an optimal matching and the score associated with such a matching for the answer pair. Finally, the system produces a total grade based on the alignment scores and semantic similarity measures.</p>
+<p>Although previous systems [<xref ref-type="bibr" rid="pone.0145809.ref028">28</xref>, <xref ref-type="bibr" rid="pone.0145809.ref029">29</xref>, <xref ref-type="bibr" rid="pone.0145809.ref030">30</xref>, <xref ref-type="bibr" rid="pone.0145809.ref031">31</xref>] have developed to assess summary writing, they focus on the content of the summary. A few summarization assessment systems have been developed to identify the summarizing strategies used by students in writing a summary. To the best of our knowledge, there are two systems which have been developed for summary assessment. We explain each of them as follows.</p>
+<p>Modelling summarization assessment strategies (MSAS)[<xref ref-type="bibr" rid="pone.0145809.ref014">14</xref>] based on LSA have been developed. This model is based on the identification of 5 types of strategies which are:</p>
+<list list-type="order">
+<list-item><p><italic>Copy</italic>, a sentence from a summary text is semantically very close to a sentence in a source text.</p></list-item>
+<list-item><p><italic>Paraphrase</italic>, a sentence from a summary text is close to only one sentence in a source text.</p></list-item>
+<list-item><p><italic>Generalization</italic>, a sentence from a summary text is close to several sentences in a source text.</p></list-item>
+<list-item><p><italic>Construction</italic>, if no sentences of the original text are close to the summary sentence but at least one of them is related.</p></list-item>
+<list-item><p><italic>Off-the-subject</italic>, if all sentences of the original text are not related to the summary sentence.</p></list-item>
+</list>
+<p>Using LSA and cosine similarity, each sentence from summary text is semantically compared with all sentences in a source text to identify the summarizing strategies. Three similarity thresholds have been used to create four categories: not enough similarity (cosine is less than 0.2), low similarity (cosine is greater than 0.2 and less than 0.5), good similarity (cosine is greater than 0.5 and less than 0.8), too high similarity (cosine is greater than 0.8). The comparison between each sentence from summary text and each sentence from source text results in a distribution of similarities among these four categories which lead to the identification of the student strategy.</p>
+<p>Summary Sentence Decomposition Algorithm (SSDA) [<xref ref-type="bibr" rid="pone.0145809.ref015">15</xref>], which is based on word–position, has been proposed to identify the summarizing strategies used by students in summary writing. In this system, the summary text is syntactically compared with the source text to identify the summarizing strategies such as deletion, sentence combination and copy–verbatim. It does not use the semantic relationships between words in comparison between two sentences; hence, it cannot find summarizing strategies at the semantic level, such as paraphrasing, generalization, and invention.</p>
+</sec>
+<sec id="sec033">
+<title>Focusing on Main Problem</title>
+<p>Conceptually, the process of identifying summarizing strategies involves two sub- processes as shown in <xref ref-type="fig" rid="pone.0145809.g009">Fig 9</xref>: 1) identifying the sentences from the source text that were used to create the summary sentences; and 2) identifying the summarizing strategies based on the sentences that have been identified in the first process. Before identifying the summarizing strategies, the Text Relevance Detection Component (TRDC) should be able to determine the relevant sentences from the source text, for each summary sentence. If the relevant sentences cannot be determined from the source text, no matter how well other components in the system perform, the summarizing strategies will not be identified. Therefore, the text relevance detection component is an important engine in identifying summarizing strategies. This module provides a list of sentences which will be analysed in further steps. These sentences are then further processed using a variety of techniques to identify the summarizing strategies has been used in summary writing.</p>
+<fig id="pone.0145809.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>The processes of identifying summarizing strategies.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g009" xlink:type="simple"/>
+</fig>
+<p>In text relevance context, linguistic knowledge such as semantic relations between words and their syntactic composition, play key role in sentence understanding. This is particularly important in comparison between two sentences where a single word token was used as a basic lexical unit for comparison.</p>
+<p>Syntactic information, such as word order, can provide useful information to distinguish the meaning of two sentences, when two sentences share the similar bag-of-words. For example, “<italic>student helps teacher</italic>” and “<italic>teacher helps student</italic>” will be judged as similar sentences because they have the same surface text. However, these sentences convey different meanings. On other hand, two sentences are considered to be similar if most of the words are the same or if they are a paraphrase of each other. However, it is not always the case that sentences with similar meaning necessarily share many similar words. Hence, semantic information such as semantic similarity between words and synonym words can provide useful information when two sentences have similar meaning, but they used different words in the sentences.</p>
+<p>While both semantic information and syntactic information contribute in sentence understanding [<xref ref-type="bibr" rid="pone.0145809.ref034">34</xref>, <xref ref-type="bibr" rid="pone.0145809.ref035">35</xref>, <xref ref-type="bibr" rid="pone.0145809.ref036">36</xref>, <xref ref-type="bibr" rid="pone.0145809.ref037">37</xref>, <xref ref-type="bibr" rid="pone.0145809.ref038">38</xref>] the current systems that have been proposed to identify summarizing strategies did not use the combination of semantic relations between words and their syntactic composition to identify text relevancy. Obviously this drawback has a negative influence on the performance of the previous systems.</p>
+<p>As shown in <xref ref-type="fig" rid="pone.0145809.g009">Fig 9</xref>, there are two levels of summarizing strategies, semantic and syntactic levels. The strategies in semantic levels include paraphrase, generalization, topic sentence selection and invention. The strategies in syntactic level include deletion, copy verbatim and sentence combination. A few systems have been proposed to identify summarizing strategies [<xref ref-type="bibr" rid="pone.0145809.ref014">14</xref>, <xref ref-type="bibr" rid="pone.0145809.ref015">15</xref>]. However, these systems can identify strategies either in semantic level or in syntactic level. On the other hand, these systems did not use the combination of semantic and syntactic information to determine the relevant sentences from the source text, for each summary sentence. Obviously these disadvantages have a negative effect on the performance of current systems.</p>
+</sec>
+<sec id="sec034">
+<title>ISSLK Algorithm</title>
+<p>The ISSLK combines semantic information and syntactic information to identify relevant sentences and summarizing strategies. The ISSLK algorithm is developed to:</p>
+<list list-type="order">
+<list-item><p>Determine whether a sentence in the summary text is from the original text. Let <italic>S</italic><sub><italic>s</italic></sub> represent a sentence of the summary text.</p></list-item>
+<list-item><p>Identify all sentences from the original text that have relations with <italic>S</italic><sub>s.</sub> Let <italic>R</italic><sub><italic>relations</italic></sub> include these sentences.</p></list-item>
+<list-item><p>Identify all sentences from <italic>R</italic><sub><italic>relations</italic></sub> that are used to produce sentence <italic>S</italic><sub>s.</sub> Let <italic>P</italic><sub><italic>Relevant Sentences</italic></sub> include these sentences.</p></list-item>
+<list-item><p>Identify the summarizing strategies and methods used to produce a summary sentence using sentences from <italic>P</italic><sub><italic>Relevant Sentences</italic></sub>.</p></list-item>
+</list>
+<p>This algorithm includes two sub-algorithms, which are:</p>
+<sec id="sec035">
+<title>Sentences Relevance Identification Algorithm</title>
+<p>The sentences relevance identification algorithm is a process for identifying sentences from the source text, which are used to produce a sentence in the summary text. It uses the combination of semantic similarity and syntactic similarity to identify these sentences. The steps to determine these sentences are presented in the <italic>intermediate-processing stage</italic>.</p>
+</sec>
+<sec id="sec036">
+<title>Summarizing Strategies Identification Algorithm</title>
+<p>After identifying the relevant sentences for each sentence of summary text, the summarizing strategies that have been used to produce a summary sentence are identified. This process involves the use of the rules, as shown in <xref ref-type="table" rid="pone.0145809.t003">Table 3</xref>, in which the rules are transformed into an algorithm as presented in the <italic>post-processing stage</italic>.</p>
+<p><xref ref-type="fig" rid="pone.0145809.g010">Fig 10</xref> displays the general architecture of the ISSLK algorithm, which consists of three main stages: a) Pre-processing, b) Intermediate-processing, and, c) Post-processing.</p>
+<fig id="pone.0145809.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Overview of the development of the ISSLK.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g010" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec037">
+<title>Pre-processing</title>
+<p>This stage aims to perform a basic linguistic analysis on both the source text and students' summaries. Thus, it prepares them for further processing. In order to perform this analysis, external tool and resource are used. The pre-processing module provides text pre-processing functions, such as sentence segmentation, tokenization, part-of-speech tagging, stemming, stop word removal, finding sentences location (FSL), keyword extraction (KE) and title word extraction (TWE). The FSL finds the location of each sentence in a source text and determines whether it is the first or the last sentence of a paragraph or document. The TWE extracts all the nouns and verbs from the title of a document. The KE uses the Term Frequency (TF) method to identify words with high frequency.</p>
+</sec>
+<sec id="sec038">
+<title>Intermediate-processing</title>
+<p>Intermediate processing is the core of the ISSLK algorithm and determines whether the summary sentence is generated from the source text, and, if so, identifies all the relevant sentences from the original text that are used to produce the summary sentence. To do so, the intermediate processing uses the Sentence Similarity Computation Component (SSCC) and Sentences Relevance Detection Component (SRDC). We describe each of them as follows:</p>
+<sec id="sec039">
+<title>Sentence Similarity Computation Component (SSCC)</title>
+<p>The sentence similarity computation component includes a computation model to calculate the sentence similarity measure. The Sentence Similarity Computation Model (SSCM) is presented in <xref ref-type="fig" rid="pone.0145809.g011">Fig 11</xref>. It shows the overall process of applying the semantic and syntactic information to determine the similarity measure between two sentences. The main task of SSCM is to identify all the sentences from the original text that have relations with a sentence of summary text. This model includes a few components, such as word set, semantic similarity between words, semantic similarity between sentences, syntactic similarity between sentences, and sentence similarity measurement. The task of each component is as follows:</p>
+<fig id="pone.0145809.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Sentence similarity computation model.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.g011" xlink:type="simple"/>
+</fig>
+<p>The word set–Given two sentences <italic>S</italic><sub><italic>1</italic></sub> and <italic>S</italic><sub><italic>2</italic></sub>, a “word set” is created using distinct words from the pair of sentences. Let WS = {W<sub>1</sub>, W<sub>2</sub>⋯W<sub>N</sub>} denote word set, where <italic>N</italic> is the number of distinct words in the word set. The word set between two sentences is obtained through certain steps as follows:</p>
+<list list-type="order">
+<list-item><p>Two sentences are taken as input.</p></list-item>
+<list-item><p>Using a loop for each word, <italic>W</italic>, from <italic>S</italic><sub><italic>1</italic></sub>, certain tasks are undertaken, which include:
+<list list-type="roman-lower">
+<list-item><p>Determining the root of <italic>W</italic> (denoted by <italic>RW</italic>) using the WordNet.</p></list-item>
+<list-item><p>if the <italic>RW</italic> appears in the <italic>WS</italic>, jumping to step 2 and continuing the loop using the next word from <italic>S</italic><sub><italic>1</italic></sub>, otherwise, jumping to step iii;</p></list-item>
+<list-item><p>If the <italic>RW</italic> does not appear in the <italic>WS</italic>, then assigning the <italic>RW</italic> to the <italic>WS</italic> and then jumping to step 2 to continue the loop using the next word from <italic>S</italic><sub><italic>1</italic></sub>.</p></list-item>
+<list-item><p>Conducting the same process for Sentence 2.</p></list-item>
+</list></p></list-item>
+</list>
+<p>Semantic Similarity between Words (SSW)–Semantic word similarity [<xref ref-type="bibr" rid="pone.0145809.ref039">39</xref>, <xref ref-type="bibr" rid="pone.0145809.ref040">40</xref>] plays an important role in this method. It is used to create a word order vector and semantic vector. The semantic similarity between two words is determined through these steps:</p>
+<list list-type="order">
+<list-item><p>Two words, <italic>W</italic><sub><italic>1</italic></sub> and <italic>W</italic><sub><italic>2</italic></sub>, are taken as input.</p></list-item>
+<list-item><p>the root of each word is obtained using the lexical database, WordNet;</p></list-item>
+<list-item><p>the synonym of each word is obtained using the WordNet;</p></list-item>
+<list-item><p>the number of synonyms for each word is determined;</p></list-item>
+<list-item><p>the Least Common Subsume (LCS) of two words and their length are determined;</p></list-item>
+<list-item><p>The similarity score between words using Eqs (<xref ref-type="disp-formula" rid="pone.0145809.e019">16</xref>) and (<xref ref-type="disp-formula" rid="pone.0145809.e020">17</xref>) is computed.</p></list-item>
+</list>
+<p>We use the following equations to calculate the semantic similarity between words [<xref ref-type="bibr" rid="pone.0145809.ref041">41</xref>, <xref ref-type="bibr" rid="pone.0145809.ref042">42</xref>, <xref ref-type="bibr" rid="pone.0145809.ref043">43</xref>, <xref ref-type="bibr" rid="pone.0145809.ref044">44</xref>]:
+<disp-formula id="pone.0145809.e019">
+<alternatives>
+<graphic id="pone.0145809.e019g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e019" xlink:type="simple"/>
+<mml:math display="block" id="M19">
+<mml:mrow><mml:mi>I</mml:mi><mml:mi>C</mml:mi><mml:mspace width="0.25em"/><mml:mrow><mml:mo>(</mml:mo><mml:mi>w</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.15em"/><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:mi>L</mml:mi><mml:mi>o</mml:mi><mml:mi>g</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>s</mml:mi><mml:mi>y</mml:mi><mml:mi>n</mml:mi><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>w</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mtext>log</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mtext>max</mml:mtext><mml:mo>_</mml:mo><mml:mtext>w</mml:mtext></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(16)</label>
+</disp-formula>
+<disp-formula id="pone.0145809.e020">
+<alternatives>
+<graphic id="pone.0145809.e020g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e020" xlink:type="simple"/>
+<mml:math display="block" id="M20">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>w</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>w</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.15em"/><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:mfrac><mml:mrow><mml:mn>2</mml:mn><mml:mo>*</mml:mo><mml:mtext>IC</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mtext>LCS</mml:mtext><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:msub><mml:mtext>w</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>w</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mtext>IC</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>w</mml:mtext><mml:mn>1</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mtext>IC</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>w</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mspace width="0.25em"/><mml:mtext>if</mml:mtext><mml:mspace width="0.25em"/><mml:msub><mml:mtext>w</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>≠</mml:mo><mml:msub><mml:mtext>w</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mspace width="1em"/><mml:mn>1</mml:mn><mml:mspace width="3.5em"/><mml:mtext>if</mml:mtext><mml:mspace width="0.25em"/><mml:msub><mml:mtext>w</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mtext>w</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(17)</label>
+</disp-formula></p>
+<p>Where LCS stands for the least common subsume, max_w is the number of words in WordNet, Synset (<italic>w</italic>) is the number of synonyms of word w, and IC (<italic>w</italic>) is the information content of word w based on the lexical database WordNet.</p>
+<p>Semantic similarity between sentences–We used semantic–vector approach [<xref ref-type="bibr" rid="pone.0145809.ref001">1</xref>, <xref ref-type="bibr" rid="pone.0145809.ref045">45</xref>, <xref ref-type="bibr" rid="pone.0145809.ref046">46</xref>] to measure the semantic similarity between sentences. The following tasks are performed to measure the semantic similarity between two sentences.</p>
+<list list-type="order">
+<list-item><p>To create the semantic-vector.</p>
+<p>The semantic-vector is created using the word set and corresponding sentence. Each cell of the semantic-vector corresponds to a word in the word set, so the dimension equals the number of words in the word set.</p></list-item>
+<list-item><p>To weight each cell of the semantic-vector.</p>
+<p>Each cell of the semantic-vector is weighted using the calculated semantic similarity between words from the word set and corresponding sentence. As an example:
+<list list-type="alpha-lower">
+<list-item><p>If the word, <italic>w</italic>, from the word set appears in the sentence <italic>S</italic><sub><italic>1</italic></sub>, the weight of the <italic>w</italic> in the semantic vector is set to 1. Otherwise, go to the next step;</p></list-item>
+<list-item><p>If the sentence <italic>S</italic><sub><italic>1</italic></sub> does not contain the <italic>w</italic>, then compute the similarity score between the <italic>w</italic> and the words from sentence <italic>S</italic><sub><italic>1</italic></sub> using the <italic>SSW</italic> method.</p></list-item>
+<list-item><p>If exist similarity values, then the weight of the <italic>w</italic> in the semantic-vector is set to the highest similarity value. Otherwise, go to the next step;</p></list-item>
+<list-item><p>If there is no similarity value, then the weight of the <italic>w</italic> in the semantic-vector is set to 0.</p></list-item></list></p></list-item>
+<list-item><p>The semantic-vector is created for each of the two sentences. The semantic similarity measure is computed based on the two semantic-vectors. The cosine similarity is used to calculate the semantic similarity between sentences:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e021">
+<alternatives>
+<graphic id="pone.0145809.e021g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e021" xlink:type="simple"/>
+<mml:math display="block" id="M21">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:msub><mml:mi>m</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>m</mml:mi><mml:mi>a</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mspace width="0.15em"/><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>m</mml:mi></mml:msubsup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mn>1</mml:mn><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>×</mml:mo><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mn>2</mml:mn><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:msqrt><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>m</mml:mi></mml:msubsup><mml:msubsup><mml:mi>w</mml:mi><mml:mrow><mml:mn>1</mml:mn><mml:mi>j</mml:mi></mml:mrow><mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:msqrt><mml:mo>×</mml:mo><mml:msqrt><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>m</mml:mi></mml:msubsup><mml:msubsup><mml:mi>w</mml:mi><mml:mrow><mml:mn>2</mml:mn><mml:mi>j</mml:mi></mml:mrow><mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(18)</label>
+</disp-formula>
+<p>Where S<sub>1</sub> = (w<sub>11</sub>,w<sub>12</sub>,⋯,w<sub>1m</sub>) and S<sub>2</sub> = (w<sub>21</sub>,w<sub>22</sub>,⋯,w<sub>2m</sub>) are the semantic vectors of sentences <italic>S</italic><sub><italic>1</italic></sub> and <italic>S</italic><sub><italic>2</italic></sub>, respectively; <italic>w</italic><sub><italic>pj</italic></sub> is the weight of the <italic>j</italic><sup><italic>th</italic></sup> word in vector <italic>S</italic><sub><italic>p</italic></sub>, <italic>m</italic> is the number of words.</p>
+<p>Word order similarity between sentences–We use the syntactic–vector approach [<xref ref-type="bibr" rid="pone.0145809.ref047">47</xref>, <xref ref-type="bibr" rid="pone.0145809.ref048">48</xref>] to measure the word-order similarity between sentences. The following tasks are performed to measure the word-order similarity between two sentences.</p>
+<list list-type="order">
+<list-item><p>To create the syntactic-vector.</p>
+<p>The syntactic-vector is created using the word set and corresponding sentence. The dimension of current vector is equal to the number of words in the word set.</p></list-item>
+<list-item><p>To weight each cell of the syntactic-vector.</p>
+<p>Unlike the semantic-vector, each cell of the syntactic-vector is weighted using a unique index. The unique index can be the index position of the words that appear in the corresponding sentence. However, the weight of each cell in syntactic-vector is determined by the following steps:
+<list list-type="roman-lower">
+<list-item><p>For each word, <italic>w</italic>, from the word set. If the <italic>w</italic> appears in the sentence <italic>S</italic><sub><italic>1</italic></sub> the cell in the syntactic-vector is set to the index position of the corresponding word in the sentence <italic>S</italic><sub><italic>1</italic></sub>. Otherwise, go to the next step;</p></list-item>
+<list-item><p>If the word <italic>w</italic> does not appear in the sentence <italic>S</italic><sub><italic>1</italic></sub>, then compute the similarity score between the <italic>w</italic> and the words from sentence <italic>S</italic><sub><italic>1</italic></sub> using the <italic>SSW</italic> method.</p></list-item>
+<list-item><p>If exist similarity values, then the value of the cell is set to the index position of the word from the sentence <italic>S</italic><sub><italic>1</italic></sub> with the highest similarity measure.</p></list-item>
+<list-item><p>If there is not a similar value between the <italic>w</italic> and the words in the sentence <italic>S</italic><sub><italic>1</italic></sub>, the weight of the cell in the syntactic-vector is set to 0.</p></list-item></list></p></list-item>
+<list-item><p>For both sentences the syntactic-vector is created. Then, the syntactic similarity measure is computed based on the two syntactic-vectors. The following equation is used to calculate word-order similarity between sentences:</p></list-item>
+</list>
+<disp-formula id="pone.0145809.e022">
+<alternatives>
+<graphic id="pone.0145809.e022g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e022" xlink:type="simple"/>
+<mml:math display="block" id="M22">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:msub><mml:mi>m</mml:mi><mml:mrow><mml:mtext>word order</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>O</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>O</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msub><mml:mi>O</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>O</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(19)</label>
+</disp-formula>
+<p>Where O<sub>1</sub> = (d<sub>11</sub>, d<sub>12</sub>,⋯, d<sub>1m</sub>) and O<sub>2</sub> = (d<sub>21</sub>, d<sub>22</sub>,⋯, d<sub>2m</sub>) are the syntactic vectors of sentences <italic>S</italic><sub><italic>1</italic></sub> and <italic>S</italic><sub><italic>2</italic></sub>, respectively; <italic>d</italic><sub><italic>pj</italic></sub> is the weight of the <italic>j</italic><sup><italic>th</italic></sup> cell in vector <italic>O</italic><sub><italic>p</italic></sub>.</p>
+<p>Sentence similarity measurement–The similarity measure between two sentences is calculated using a linear equation that combines the semantic and word-order similarity. The similarity measure is computed as follows:
+<disp-formula id="pone.0145809.e023">
+<alternatives>
+<graphic id="pone.0145809.e023g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e023" xlink:type="simple"/>
+<mml:math display="block" id="M23">
+<mml:mrow><mml:msub><mml:mrow><mml:mtext>Sim</mml:mtext></mml:mrow><mml:mrow><mml:mtext>sentences</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mi mathvariant="normal">α</mml:mi><mml:mo>⋅</mml:mo><mml:msub><mml:mrow><mml:mtext>sim</mml:mtext></mml:mrow><mml:mrow><mml:mtext>semantic</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mspace width="0.15em"/><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi mathvariant="normal">α</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>⋅</mml:mo><mml:msub><mml:mrow><mml:mtext>sim</mml:mtext></mml:mrow><mml:mrow><mml:mtext>wordorder</mml:mtext></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mtext>S</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>,</mml:mo><mml:mspace width="0.5em"/><mml:mn>0</mml:mn><mml:mo>&lt;</mml:mo><mml:mi>α</mml:mi><mml:mo>&lt;</mml:mo><mml:mn>1</mml:mn></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(20)</label>
+</disp-formula></p>
+<p>Where <italic>alpha</italic> is the weighting parameter, specifying the relative contributions to the overall similarity measure from the semantic and syntactic similarity measures. The larger the alpha, the heavier the weight for the semantic similarity. If alpha equals 0.5 the semantic and syntactic similarity measures are assumed to be equally important.</p>
+</sec>
+<sec id="sec040">
+<title>Sentences Relevance Detection Component (SRDC)</title>
+<p>Let T<sub>Original Text</sub> = {S<sub>1</sub>, S<sub>2</sub>⋯S<sub>N</sub>} represent all sentences from the original text, where <italic>N</italic> is the number of sentences. <italic>S</italic><sub><italic>s</italic></sub> denotes a summary sentence.</p>
+<p>Let <italic>Arr</italic><sub><italic>Relations</italic></sub> <italic>= {(S</italic><sub><italic>1</italic></sub>,<italic>S</italic><sub><italic>s</italic></sub>,<italic>Value</italic><sub><italic>sim(S1</italic>,<italic>Ss)</italic></sub><italic>)</italic>,<italic>(S</italic><sub><italic>2</italic></sub>,<italic>S</italic><sub><italic>s</italic></sub>,<italic>Value</italic><sub><italic>sim(S2</italic>,<italic>Ss)</italic></sub> <italic>)</italic> ⋯<italic>(S</italic><sub><italic>M</italic></sub>, <italic>Ss</italic>, <italic>Value</italic><sub><italic>sim(SM</italic>,<italic>Ss)</italic></sub> <italic>)}</italic> represent all the sentences from the original text that have relations with <italic>S</italic><sub><italic>s</italic></sub>, where <italic>M</italic> is less than or equal to <italic>N</italic> and <italic>Value</italic><sub><italic>sim(SM</italic>,<italic>Ss)</italic></sub> indicates the similarity measure between two sentences <italic>S</italic><sub><italic>M</italic></sub> and <italic>S</italic><sub><italic>s</italic></sub>.</p>
+<p>Based on the previous section (<italic>Intermediate-processing</italic>), a summary sentence is related to any sentences of the original text, if the two sentences share at least a word. Hence, a set of sentences from the original text are found to have relations with a sentence of the summary text. Thus, it is important to determine which sentences from the source text have been used to create the summary sentence. In other words, we attempt to find a subset of the sentences <italic>Arr</italic><sub><italic>Relations</italic></sub> that are used to produce <italic>Ss</italic>. <italic>Brr</italic><sub><italic>Relevant sentences</italic></sub>, <italic>Brr</italic><sub><italic>RS</italic></sub> represent a subset of the sentences <italic>Arr</italic><sub><italic>Relations</italic></sub>. The steps to determine these sentences are as follows:</p>
+<p><bold>Step 1</bold>. It selects a relation from <italic>Arr</italic><sub><italic>Relations</italic></sub> with the greatest similarity score. Let <italic>S</italic><sub><italic>1</italic></sub> be a sentence of ArrRelations that has relation to <italic>S</italic><sub><italic>s</italic></sub> with the greatest similarity score, <italic>Value</italic><sub><italic>sim(S1</italic>,<italic>Ss)</italic></sub>). Thus, this pair of sentences is taken to the next step.</p>
+<p><bold>Step 2</bold>. In the current step, all the common words between two sentences <italic>S</italic><sub><italic>1</italic></sub> and <italic>S</italic><sub><italic>s</italic></sub> are eliminated; then, the length of sentence <italic>S</italic><sub><italic>s</italic></sub> is checked. If it is equal to zero, it indicates that sentence <italic>S</italic><sub><italic>s</italic></sub> includes a phrase from one sentence in the original text and sentence <italic>S</italic><sub><italic>1</italic></sub> is used to create the sentence <italic>S</italic><sub><italic>s</italic></sub>. In this case, sentence <italic>S</italic><sub><italic>1</italic></sub> is assigned to <italic>Brr</italic><sub><italic>RS</italic></sub> and then the cell (<italic>S</italic><sub><italic>1</italic></sub>,<italic>Ss</italic>,<italic>Value</italic><sub><italic>sim(S1</italic>,<italic>Ss)</italic></sub>) is removed from <italic>Arr</italic><sub><italic>Relations</italic></sub>. Finally, the algorithm stops the current process. If the length of the sentence <italic>S</italic><sub><italic>s</italic></sub> is not equal to zero, the algorithm continues the process to the next step.</p>
+<p><bold>Step 3</bold>. Let <italic>S</italic><sub><italic>1</italic></sub><sup><italic>'</italic></sup> represent sentence <italic>S</italic><sub><italic>1</italic></sub> with its remaining words and <italic>S</italic><sub><italic>s</italic></sub><sup><italic>'</italic></sup> represent sentence <italic>S</italic><sub><italic>s</italic></sub> with its remaining words. Using the <italic>SSW</italic> method, the semantic similarity measure between the words of sentence <italic>S</italic><sub><italic>s</italic></sub><sup><italic>'</italic></sup> and <italic>S</italic><sub><italic>1</italic></sub><sup><italic>'</italic></sup> is calculated. If there is a similarity measure, the similar words would be removed. We then check the length of <italic>S</italic><sub><italic>s</italic></sub><sup><italic>'</italic></sup>. If it is equal to zero, this state shows that sentence <italic>S</italic><sub><italic>s</italic></sub> contains a phrase from one sentence in the original text, and that sentence <italic>S</italic><sub><italic>1</italic></sub> is used to create the sentence <italic>S</italic><sub><italic>s</italic></sub>. Thus, sentence <italic>S</italic><sub><italic>1</italic></sub> is assigned to <italic>Brr</italic><sub><italic>RS</italic></sub> and then the cell (<italic>S</italic><sub><italic>1</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>, <italic>Value</italic><sub><italic>sim(S1</italic>, <italic>Ss)</italic></sub>) is removed from <italic>Arr</italic><sub><italic>Relations</italic></sub>. Finally, the algorithm stops the current process.</p>
+<p>If the length of the sentence <italic>S</italic><sub><italic>s</italic></sub><sup><italic>'</italic></sup> is not yet equal to zero, it shows that the sentence <italic>S</italic><sub><italic>s</italic></sub> contains a combination of phrases from two or more sentences in the original text. Thus, sentence <italic>S</italic><sub><italic>1</italic></sub> is assigned to <italic>Brr</italic><sub><italic>RS</italic></sub> and then the cell (<italic>S</italic><sub><italic>1</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>,<italic>Value</italic><sub><italic>sim(S1</italic>,<italic>Ss)</italic></sub>) is removed from <italic>Arr</italic><sub><italic>Relations</italic></sub>. Finally, the algorithm continues the process to the final step.</p>
+<p><bold>Step 4</bold>. In this step, to calculate sentence similarity and to find other sentences that are used to create sentence <italic>S</italic><sub><italic>s</italic></sub>, <italic>Arr</italic><sub><italic>Relations</italic></sub><sup><italic>'</italic></sup> with the remaining elements and sentence <italic>S</italic><sub><italic>s</italic></sub><sup><italic>"</italic></sup> with the remaining words of <italic>S</italic><sub><italic>s</italic></sub><sup><italic>'</italic></sup> are sent to the SSCC.</p>
+</sec>
+</sec>
+<sec id="sec041">
+<title>Post–processing</title>
+<p>The final step of ISSLK is to support the automatic assessment of summaries by identifying summarizing strategies. In fact, it aims, to answer the following questions:</p>
+<list list-type="order">
+<list-item><p>What summarizing strategies have been used to create a summary sentence?</p></list-item>
+<list-item><p>How can a topic sentence selection strategy be identified?</p></list-item>
+<list-item><p>What are the methods used to identify a topic sentence selection strategy?</p></list-item>
+</list>
+<p><xref ref-type="table" rid="pone.0145809.t003">Table 3</xref> summarizes the rules to identify each summarizing strategy and method. The overall processes for applying these rules to identify the summarizing strategies and methods are described as follows:</p>
+<sec id="sec042">
+<title>Identifying summarizing strategies used in summary writing</title>
+<p>Deletion, sentence combination, copy-verbatim strategies–Given two texts, summary text and original text, Let <italic>S</italic><sub><italic>s</italic></sub> <italic>= {W</italic><sub><italic>1</italic></sub>,<italic>W</italic><sub><italic>2</italic></sub>⋯<italic>W</italic><sub><italic>K</italic></sub><italic>}</italic> be a sentence of the summary text and <italic>Brr</italic><sub><italic>RS</italic></sub> <italic>= {(T</italic><sub><italic>1</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>, <italic>P</italic><sub><italic>1</italic></sub><italic>)</italic>, <italic>(T</italic><sub><italic>2</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>, <italic>P</italic><sub><italic>2</italic></sub><italic>)</italic> ⋯<italic>(T</italic><sub><italic>N</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>, <italic>P</italic><sub><italic>M</italic></sub><italic>)}</italic> represent all the sentences from the original text that are used to produce sentence <italic>S</italic><sub><italic>s</italic></sub>, where <italic>k</italic> is the number of words in <italic>S</italic><sub><italic>s</italic></sub>, <italic>M</italic> is the number of phrases in the sentence <italic>S</italic><sub><italic>s</italic></sub>, <italic>T</italic><sub><italic>N</italic></sub> is the <italic>N</italic><sup><italic>th</italic></sup> sentence from the original text and <italic>(T</italic><sub><italic>N</italic></sub>, <italic>S</italic><sub><italic>s</italic></sub>, <italic>P</italic><sub><italic>M</italic></sub><italic>)</italic> indicates that the <italic>M</italic><sup><italic>th</italic></sup> phrase of sentence <italic>S</italic><sub><italic>s</italic></sub> comes from the <italic>N</italic><sup><italic>th</italic></sup> sentence from the original text. The steps for identifying deletion, copy-pasting and sentence combination strategies are as follows:</p>
+<p><bold>Step 1.</bold> The algorithm checks the value of <italic>N</italic>. If it is equal to 1, then the algorithm attempts to find the deletion strategy and copy-verbatim strategy using step 2, otherwise, it attempts to identify the sentence combination strategy using step 3.</p>
+<p><bold>Step 2.</bold> Given two sentences, <italic>T</italic> and <italic>Ss</italic>, the algorithm computes the length of each sentence. Let <italic>Len (T)</italic> denote the length of sentence <italic>T</italic> and <italic>Len (Ss)</italic> denote the length of sentence <italic>S</italic><sub><italic>s</italic></sub>. It also calculates the similarity measure between two sentences. Using <italic>Len (T)</italic>, <italic>Len (Ss)</italic> and <italic>Sim (T, Ss)</italic>, the following statements can be made:
+<disp-formula id="pone.0145809.e024">
+<alternatives>
+<graphic id="pone.0145809.e024g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e024" xlink:type="simple"/>
+<mml:math display="block" id="M24">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mi>C</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>N</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mi mathvariant="normal">˄</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>L</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mi>L</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi mathvariant="normal">˄</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(21)</label>
+</disp-formula>
+<disp-formula id="pone.0145809.e025">
+<alternatives>
+<graphic id="pone.0145809.e025g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e025" xlink:type="simple"/>
+<mml:math display="block" id="M25">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mi>D</mml:mi><mml:mi>e</mml:mi><mml:mi>l</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>N</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mi>˄</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>L</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>T</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>&gt;</mml:mo><mml:mi>L</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>˄</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>S</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi><mml:mspace width="0.25em"/><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mo>&lt;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(22)</label>
+</disp-formula></p>
+<p>Where <italic>T</italic> indicates a sentence of <italic>Brr</italic><sub><italic>RS</italic></sub> and <italic>Sim (T</italic><sub>,</sub> <italic>S</italic><sub><italic>s</italic></sub><bold><italic>)</italic></bold> denotes the sentence similarity measure between <italic>T</italic> and <italic>S</italic><sub><italic>s</italic></sub>.</p>
+<p>The <italic>State</italic><sub><italic>CP</italic></sub> describes that the sentence <italic>S</italic><sub><italic>s</italic></sub> used the copy-verbatim strategy if one sentence is used to produce <italic>S</italic><sub>s,</sub> the length of two sentences is equal, and the similarity measure between two sentences is between 0 and 1 (but not 0).</p>
+<p>The <italic>State</italic><sub><italic>Del</italic></sub> describes that sentence <italic>S</italic><sub><italic>s</italic></sub> used the deletion strategy and that if one sentence is used to produce <italic>S</italic><sub><italic>s</italic></sub>, the length of sentence <italic>S</italic><sub><italic>s</italic></sub> is less than the length of sentence <italic>T</italic> and the similarity measure between two sentences is between 0 and 1 (but not 0 and 1). The algorithm also considers the two following rules to identify deletion strategy.</p>
+<disp-formula id="pone.0145809.e026">
+<alternatives>
+<graphic id="pone.0145809.e026g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e026" xlink:type="simple"/>
+<mml:math display="block" id="M26">
+<mml:mrow><mml:mo>∀</mml:mo><mml:mspace width="0.2em"/><mml:mi>W</mml:mi><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:msub><mml:mtext>S</mml:mtext><mml:mi>s</mml:mi></mml:msub><mml:mo stretchy="false">|</mml:mo><mml:mspace width="0.2em"/><mml:msub><mml:mi>W</mml:mi><mml:mi>O</mml:mi></mml:msub><mml:mspace width="0.25em"/><mml:mo>∈</mml:mo><mml:mspace width="0.25em"/><mml:mi>T</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(23)</label>
+</disp-formula>
+<p>Where, <italic>W</italic> is a word of <italic>S</italic><sub><italic>s</italic></sub> and <italic>W</italic><sub><italic>o</italic></sub> can be either a similar word or synonymous word.</p>
+<disp-formula id="pone.0145809.e027">
+<alternatives>
+<graphic id="pone.0145809.e027g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e027" xlink:type="simple"/>
+<mml:math display="block" id="M27">
+<mml:mrow><mml:mo>∀</mml:mo><mml:mspace width="0.5em"/><mml:msub><mml:mtext>W</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mtext>W</mml:mtext><mml:mn>2</mml:mn></mml:msub><mml:mspace width="0.1em"/><mml:mo>,</mml:mo><mml:msub><mml:mtext>W</mml:mtext><mml:mn>3</mml:mn></mml:msub><mml:mo>∈</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>s</mml:mtext></mml:mrow></mml:msub><mml:mspace width="0.2em"/><mml:mo>:</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>1</mml:mn></mml:msub><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>S</mml:mtext></mml:mrow><mml:mtext>s</mml:mtext></mml:msub><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>2</mml:mn></mml:msub><mml:mo>∧</mml:mo><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>2</mml:mn></mml:msub><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>S</mml:mtext></mml:mrow><mml:mtext>s</mml:mtext></mml:msub><mml:mspace width="0.5em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>3</mml:mn></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:msub><mml:mtext>S</mml:mtext><mml:mrow><mml:mtext>s</mml:mtext></mml:mrow></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>⇒</mml:mo><mml:mspace width="0.25em"/><mml:mo stretchy="false">(</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mtext>W</mml:mtext><mml:mn>1</mml:mn></mml:msub><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>S</mml:mtext></mml:mrow><mml:mtext>o</mml:mtext></mml:msub><mml:mspace width="0.5em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>2</mml:mn></mml:msub><mml:mspace width="0.25em"/><mml:mo>∧</mml:mo><mml:mspace width="0.5em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>2</mml:mn></mml:msub><mml:mspace width="0.25em"/><mml:msub><mml:mrow><mml:mtext>S</mml:mtext></mml:mrow><mml:mtext>o</mml:mtext></mml:msub><mml:mspace width="0.5em"/><mml:msub><mml:mrow><mml:mtext>W</mml:mtext></mml:mrow><mml:mn>3</mml:mn></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>∈</mml:mo><mml:mtext>T</mml:mtext><mml:mo stretchy="false">)</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(24)</label>
+</disp-formula>
+<p>Where,</p>
+<p><italic>W</italic><sub><italic>1</italic></sub> <italic>S</italic><sub><italic>s</italic></sub> <italic>W</italic><sub><italic>2</italic></sub>: <italic>W</italic><sub><italic>2</italic></sub> appears after <italic>W</italic><sub><italic>1</italic></sub> in sentence <italic>S</italic><sub><italic>s</italic></sub>.</p>
+<p><italic>W</italic><sub><italic>2</italic></sub> <italic>S</italic><sub><italic>s</italic></sub> <italic>W</italic><sub>3:</sub> <italic>W</italic><sub><italic>3</italic></sub> appears after <italic>W</italic><sub><italic>2</italic></sub> in sentence <italic>S</italic><sub><italic>s</italic></sub>.</p>
+<p><italic>W</italic><sub><italic>1</italic></sub> <italic>S</italic><sub><italic>o</italic></sub> <italic>W</italic><sub><italic>2</italic></sub>: <italic>W</italic><sub><italic>2</italic></sub> appears after <italic>W</italic><sub><italic>1</italic></sub> in sentence <italic>T</italic>.</p>
+<p><italic>W</italic><sub><italic>2</italic></sub> <italic>S</italic><sub><italic>o</italic></sub> <italic>W</italic><sub><italic>3</italic></sub>: <italic>W</italic><sub><italic>3</italic></sub> appears after <italic>W</italic><sub><italic>2</italic></sub> in sentence <italic>T</italic>.</p>
+<p><bold>Step 3.</bold> If the value of <italic>N</italic> is greater than 1, it indicates that more than one sentence from the original text is used to produce the sentence <italic>S<sub>s</sub></italic>. Hence, the <italic>S<sub>s</sub></italic> used the sentence combination strategy if the value of <italic>N</italic> was greater than 1 and the average of the semantic similarity measure is between 0 and 1 (but not 0). The corresponding statement is provided below:
+<disp-formula id="pone.0145809.e028">
+<alternatives>
+<graphic id="pone.0145809.e028g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e028" xlink:type="simple"/>
+<mml:math display="block" id="M28">
+<mml:mrow><mml:mi>S</mml:mi><mml:mi>t</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>n</mml:mi><mml:mi>c</mml:mi><mml:mi>e</mml:mi><mml:mspace width="0.25em"/><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>m</mml:mi><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>N</mml:mi><mml:mo>&gt;</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mi>˄</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mspace width="0.25em"/><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>∑</mml:mi><mml:mrow><mml:mi mathvariant="bold-italic">J</mml:mi><mml:mo mathvariant="bold">=</mml:mo><mml:mn mathvariant="bold">1</mml:mn></mml:mrow><mml:mi mathvariant="bold-italic">i</mml:mi></mml:msubsup><mml:mi mathvariant="bold-italic">Sim</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="bold-italic">s</mml:mi><mml:mi mathvariant="bold-italic">r</mml:mi></mml:msub><mml:msub><mml:mrow/><mml:mi mathvariant="bold-italic">j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mspace width="0.15em"/><mml:msub><mml:mi mathvariant="bold-italic">S</mml:mi><mml:mi mathvariant="bold-italic">s</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi mathvariant="bold-italic">TN</mml:mi></mml:mrow></mml:mfrac><mml:mo>&lt;</mml:mo><mml:mn mathvariant="bold">1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(25)</label>
+</disp-formula></p>
+<p>Since the summary sentence <italic>S</italic><sub><italic>s</italic></sub> contains a combination of phrases from two or more sentences in the original text, each phrase of sentence <italic>S</italic><sub><italic>s</italic></sub> can be analyzed to identify other summarizing strategies, such as deletion, copy-pasting, topic sentence selection and paraphrasing.</p>
+<p>Paraphrase strategy–Given two sentences, let <italic>S</italic><sub><italic>summary</italic></sub> <italic>= {W</italic><sub><italic>1</italic></sub>, <italic>W</italic><sub><italic>2</italic></sub>, ⋯<italic>W</italic><sub><italic>N</italic></sub><italic>}</italic> be a sentence of a summary text, where <italic>N</italic> is the number of words in the sentence <italic>S</italic><sub><italic>summary</italic></sub>, <italic>S</italic><sub><italic>RS</italic></sub> <italic>= {W</italic><sub><italic>1</italic></sub>, <italic>W</italic><sub><italic>2</italic></sub>, ⋯<italic>W</italic><sub><italic>M</italic></sub><italic>}</italic> be a sentence of <italic>Brr</italic><sub><italic>RS</italic></sub> that is used to create the sentence <italic>S</italic><sub><italic>summary</italic></sub>, where <italic>M</italic> is the number of words in sentence <italic>S</italic><sub><italic>RS</italic></sub>. <italic>A</italic><sub><italic>Root</italic></sub> <italic>= {W</italic><sub><italic>R1</italic></sub>, <italic>W</italic><sub><italic>R2</italic></sub>,⋯<italic>W</italic><sub><italic>RN</italic></sub><italic>}</italic> includes the root of each word of sentence <italic>S</italic><sub><italic>summary</italic></sub>, where <italic>W</italic><sub><italic>Rj</italic></sub> is the root of <italic>j</italic><sup><italic>th</italic></sup> word in sentence <italic>S</italic><sub><italic>summary</italic></sub>.</p>
+<p><italic>B</italic><sub><italic>Synonym</italic></sub> <italic>= {W</italic><sub><italic>1</italic></sub>, <italic>W</italic><sub><italic>2</italic></sub>,⋯<italic>W</italic><sub><italic>K</italic></sub><italic>}</italic>includes the synonym of each word of the sentence <italic>S</italic><sub><italic>summary</italic></sub>. In the first step, the algorithm by a loop for each word of sentence <italic>S</italic><sub><italic>RS</italic></sub> obtains the root and the synonyms using WordNet, then assign them to <italic>A</italic><sub><italic>Root</italic></sub> and <italic>B</italic><sub><italic>Synonym</italic></sub>, respectively.</p>
+<p>In the second step, the algorithm by a loop for each word of sentence <italic>S</italic><sub><italic>summary</italic></sub> determines the root of the word using the WordNet. Let <italic>RW</italic> be the root of the word. It checks if the <italic>RW</italic> was in <italic>A</italic><sub><italic>Root</italic></sub>, and then continues the loop by the next word, otherwise, it searches for <italic>RW</italic> in <italic>B</italic><sub><italic>Synonym</italic></sub>, then, if the search result is true, it indicates that the sentence <italic>S</italic><sub><italic>summary</italic></sub> used the paraphrase strategy, and the current loop will then stop.</p>
+<p>Topic sentence selection strategy: cue, title, keyword, location methods–Given two sentences, let</p>
+<list list-type="order">
+<list-item><p>S<sub>summary</sub> be a sentence of summary text, <italic>S</italic><sub><italic>RS</italic></sub> be a sentence of <italic>Arr</italic><sub><italic>Relevant sentences</italic></sub> that is used to produce the sentence <italic>S</italic><sub><italic>summary</italic></sub>;</p></list-item>
+<list-item><p>L<sub>cue word</sub> = {CW<sub>1</sub>,CW<sub>2</sub>, ⋯ CW<sub>N</sub>} denote a list of cue words;</p></list-item>
+<list-item><p>L<sub>key word</sub> = {KW<sub>1</sub>, KW<sub>2</sub>, ⋯KW<sub>k</sub>} denote a list of keywords;</p></list-item>
+<list-item><p>L<sub>title word</sub> = {TW<sub>1</sub>,TW<sub>2</sub>, ⋯TW<sub>M</sub>} denote a list of title words;</p></list-item>
+<list-item><p>L<sub>sentence location</sub> = {(S<sub>1</sub>,L<sub>B</sub>,L<sub>E</sub>),(S<sub>2</sub>,L<sub>B</sub>,L<sub>E</sub>), ⋯S<sub>j</sub>, L<sub>B</sub>,L<sub>E</sub>)} denote the location of the sentences in the source text, where <italic>L</italic><sub><italic>B</italic></sub> indicates the first sentence of a paragraph, <italic>L</italic><sub><italic>E</italic></sub> indicates the last sentence of a paragraph, and <italic>(S</italic><sub><italic>j</italic></sub>, <italic>L</italic><sub><italic>B</italic></sub>, <italic>L</italic><sub><italic>E</italic></sub><italic>)</italic> indicates that the <italic>j</italic><sup><italic>th</italic></sup> sentence, <italic>S</italic>, from source text is the first or the last sentence of a paragraph. Usually, those sentences are at the beginning and end of a document, the first and last sentences of paragraphs and also immediately below section headings. The steps for identifying the topic sentence selection (TSS) strategy using the four methods, cue, title, location and keyword are identified as follows:</p></list-item>
+</list>
+<p>Title method–In the first step, it checks the sentence <italic>S</italic><sub><italic>RS</italic></sub> for identifying the title method. Thus, if a word of <italic>L</italic><sub><italic>title word</italic></sub> is in sentence <italic>S</italic><sub><italic>RS</italic></sub>, it indicates that the sentence <italic>S</italic><sub><italic>summary</italic></sub> used the title method; otherwise it did not use this method.</p>
+<p>Key word method–In the second step, it checks the sentence <italic>S</italic><sub><italic>RS</italic></sub> for identifying the keyword method. Thus, if a word of the <italic>L</italic><sub><italic>key word</italic></sub> is in the sentence <italic>S</italic><sub><italic>RS</italic></sub>, it indicates that the sentence <italic>S</italic><sub><italic>summary</italic></sub> used the keyword method; otherwise it did not use this method.</p>
+<p>Location method—In the third step, it checks the sentence <italic>S</italic><sub><italic>RS</italic></sub> for identifying the location method. Thus, if the sentence <italic>S</italic><sub><italic>RS</italic></sub> is in L<sub>sentence location</sub>, it indicates that the sentence <italic>S</italic><sub><italic>summary</italic></sub> used the location method, otherwise it did not use this method.</p>
+<p>Cue method–In the fourth step, it checks sentence <italic>S</italic><sub><italic>RS</italic></sub> to identify the cue method. Thus, if a word of <italic>L</italic><sub><italic>cue word</italic></sub> is in sentence <italic>S</italic><sub><italic>RS</italic></sub>, it indicates that the summary sentence <italic>S</italic><sub><italic>summary</italic></sub> used the cue method; otherwise it did not use this method.</p>
+<p>Finally, the sentence <italic>S</italic><sub><italic>summary</italic></sub> used topic sentence selection if it used at least one of these methods–keyword, cue, title and location.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec043">
+<title>Experimental Evaluations</title>
+<p>To evaluate the ISSLK algorithm, we carried out two experiments. In the first experiment, we measured the performance of the algorithm against human judgment to identify the summarizing strategies. In second experiment, we compare the performance of the algorithm with the existing method. To do this, we now explain our experiments on the single-document summarization datasets provided by Document Understanding Conference (DUC) (<ext-link ext-link-type="uri" xlink:href="http://duc.nist.gov/" xlink:type="simple">http://duc.nist.gov</ext-link>).</p>
+<sec id="sec044">
+<title>Data set</title>
+<p>In this section, we describe the data that used throughout our experiments. For assessment of the performance of the proposed method we used the document datasets DUC 2002 and corresponding 100-word summaries generated for each of documents. DUC 2002 contains 567 documents-summary pairs from Document Understanding Conference. It is worth mentioning that each document of DUC 2002 is denoted by original text or source text and the corresponding summary is denoted by candidate summary. We also used a set of students’ summaries. In our experiments, the documents and corresponding summaries were randomly divided into two separate dataset. <xref ref-type="table" rid="pone.0145809.t004">Table 4</xref> gives a brief description of the datasets.</p>
+<table-wrap id="pone.0145809.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t004</object-id>
+<label>Table 4</label> <caption><title>Description of dataset.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t004g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t004" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" colspan="2">DUC 2002</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify">Number of cluster</td>
+<td align="justify">59</td>
+</tr>
+<tr>
+<td align="justify">Number of documents in each cluster</td>
+<td align="justify">~ 10</td>
+</tr>
+<tr>
+<td align="justify">Number of documents</td>
+<td align="justify">567</td>
+</tr>
+<tr>
+<td align="justify">Data source</td>
+<td align="justify">TREC</td>
+</tr>
+<tr>
+<td align="justify">Summary length</td>
+<td align="justify">100 words</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec045">
+<title>Evaluation Metric</title>
+<p>To evaluate the performance of the ISSLK, an evaluation metric is required. Various evaluation metrics are widely used in different natural language processing applications. In our experiment, the evaluation is performed using precision, recall and F-measure.</p>
+<sec id="sec046">
+<title>Precision, Recall and F–score</title>
+<p>Precision, recall and F-score are the prevalent measures for evaluating a system [<xref ref-type="bibr" rid="pone.0145809.ref049">49</xref>]. Precision is the fraction of selected items that are correct and recall is the fraction of correct items that are selected. In this work, the summarizing strategies identified by a human refer to a set of ideal items, and the strategies identified by an algorithm refer to a set of system items. Precision is used to assess the fraction of the system items that the algorithm correctly identified and recall is used to assess the fraction of the ideal items that the algorithm identified. The precision is computed using <xref ref-type="disp-formula" rid="pone.0145809.e029">Eq 26</xref>. It is the division of identified summarizing strategies by ISSLK and human expert over the number of summarizing strategies identified by Algorithm only. The recall is computed using <xref ref-type="disp-formula" rid="pone.0145809.e030">Eq 27</xref>. It is the division of identified summarizing strategies by ISSLK and human expert intersection over the number of summarizing strategies identified by human expert.</p>
+<disp-formula id="pone.0145809.e029">
+<alternatives>
+<graphic id="pone.0145809.e029g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e029" xlink:type="simple"/>
+<mml:math display="block" id="M29">
+<mml:mrow><mml:mtext>Pericision</mml:mtext><mml:mo>=</mml:mo><mml:mfrac><mml:mi>A</mml:mi><mml:mrow><mml:mi>A</mml:mi><mml:mo>+</mml:mo><mml:mi>B</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(26)</label>
+</disp-formula>
+<disp-formula id="pone.0145809.e030">
+<alternatives>
+<graphic id="pone.0145809.e030g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e030" xlink:type="simple"/>
+<mml:math display="block" id="M30">
+<mml:mrow><mml:mtext>Recall</mml:mtext><mml:mo>=</mml:mo><mml:mfrac><mml:mi>A</mml:mi><mml:mrow><mml:mi>A</mml:mi><mml:mo>+</mml:mo><mml:mi>C</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(27)</label>
+</disp-formula>
+<p>Where,</p>
+<p><italic>A</italic> = The number of summarizing strategies identified by Algorithm and Human expert.</p>
+<p><italic>B</italic> = The number of summarizing strategies identified by Algorithm only.</p>
+<p><italic>C</italic> = The number of summarizing strategies identified by Human expert only.</p>
+<p>There is an anti–correlation between precision and recall (Manning et al., 2008). It means, the recall drops when the precision drops and vice versa. To take into consideration the two metrics together, a single measure, called F-score, is used. F-score is a statistical measure that merges both precision and recall. It is calculated as follows:
+<disp-formula id="pone.0145809.e031">
+<alternatives>
+<graphic id="pone.0145809.e031g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e031" xlink:type="simple"/>
+<mml:math display="block" id="M31">
+<mml:mrow><mml:mtext>F</mml:mtext><mml:mo>−</mml:mo><mml:mtext>measure</mml:mtext><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mi>α</mml:mi><mml:mo>×</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>P</mml:mi></mml:mfrac><mml:mo>+</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>α</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mfrac><mml:mn>1</mml:mn><mml:mi>R</mml:mi></mml:mfrac></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msup><mml:mi>β</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>R</mml:mi></mml:mrow><mml:mrow><mml:msup><mml:mi>β</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>×</mml:mo><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>R</mml:mi></mml:mrow></mml:mfrac><mml:mo>,</mml:mo><mml:mspace width="0.8em"/><mml:msup><mml:mi mathvariant="normal">β</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi mathvariant="normal">α</mml:mi></mml:mrow><mml:mi mathvariant="normal">α</mml:mi></mml:mfrac><mml:mspace width="0.15em"/><mml:mo>,</mml:mo><mml:mspace width="0.5em"/><mml:mi mathvariant="normal">α</mml:mi><mml:mo>∈</mml:mo><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="0.25em"/><mml:mo>,</mml:mo><mml:mspace width="0.15em"/><mml:mn>1</mml:mn></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:mo>,</mml:mo><mml:mspace width="0.5em"/><mml:msup><mml:mi mathvariant="normal">β</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>∈</mml:mo><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="0.25em"/><mml:mo>,</mml:mo><mml:mi>∞</mml:mi></mml:mrow><mml:mo>]</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(28)</label>
+</disp-formula></p>
+<p>If a large value assigns to the beta, it indicates that precision has more priority. If a small value assigns to the beta it indicates that recall has more priority. If beta is equal to 1 the precision and recall are assumed to have equally priority in computing F-score. F-score for beta equals 1 is computed as follows:
+<disp-formula id="pone.0145809.e032">
+<alternatives>
+<graphic id="pone.0145809.e032g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e032" xlink:type="simple"/>
+<mml:math display="block" id="M32">
+<mml:mrow><mml:mtext>F</mml:mtext><mml:mo>−</mml:mo><mml:mtext>measure</mml:mtext><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mn>2</mml:mn><mml:mo>×</mml:mo><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>R</mml:mi></mml:mrow><mml:mrow><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>R</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(29)</label>
+</disp-formula></p>
+<p>Where <italic>P</italic> is precision and <italic>R</italic> is recall.</p>
+</sec>
+</sec>
+<sec id="sec047">
+<title>Experiment 1—Evaluation of the algorithm with the human judgment</title>
+<sec id="sec048">
+<title>Procedure</title>
+<p>Method H<sub>0</sub> –Summary Text—Source text. One method that can be used to identify the strategies employed by the summarizer is as follows. The first split the summary text into a number of sentences. The second, for each summary sentence determine all relevant sentences from the source text that are associated to produce the current summary sentence. Finally, ccompare the current summary sentence and the all relevant sentences from the source text to identify the strategies used to produce the current summary sentence.</p>
+<p>To evaluate the algorithm, we need a gold standard data, which is a set of all correct results. Based on this dataset, also known as judgment data, we can decide whether the output of the algorithm is correct or not. For this purpose, two experts: a) An English teacher with good reading skills and understanding ability in the English language as well as experience in teaching summary writing; b) A lecturer with experience in using the skills in their teaching method, were asked to identify the summarizing strategies used by summarizer in each summary sentence. Once the subjects completed the task using method H<sub>0</sub>, we compared the results, the summarizing strategies identified by the ISSLK with those identified by subjects. <xref ref-type="table" rid="pone.0145809.t005">Table 5</xref> shows summarizing strategies identified ISSLK and Human expert as an example.</p>
+<table-wrap id="pone.0145809.t005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t005</object-id>
+<label>Table 5</label> <caption><title>Summarizing strategies identified by RDSSIA and Human expert.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t005g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t005" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left"/>
+<th align="center" colspan="2">Summarizing Strategies / Methods Identified</th>
+</tr>
+<tr>
+<th align="left">Summary sentences</th>
+<th align="left">Human expert</th>
+<th align="left">ISSLK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify">“My father dived and swam as hard as he could to the spot where i had gone under.”</td>
+<td align="justify">Deletion; Key word; T.S.S</td>
+<td align="left">Deletion; Sentence combination; Key word; T.S.S</td>
+</tr>
+<tr>
+<td align="justify">“I gasped for air in desperation; the salty water filled my throat and nostrils.”</td>
+<td align="left">Deletion; Title word; T.S.S</td>
+<td align="left">Deletion; Title word; T.S.S</td>
+</tr>
+<tr>
+<td align="justify">“The currents kept pushing the boat further and further away.”</td>
+<td align="left">Deletion; Key word; Location; Cue; T.S.S</td>
+<td align="left">Deletion; Key word; Location; T.S.S</td>
+</tr>
+<tr>
+<td align="justify">“I was determined not to lose it.”</td>
+<td align="left">Location; T.S.S; Copy- verbatim</td>
+<td align="left">Copy-verbatim</td>
+</tr>
+<tr>
+<td align="justify">“I felt myself sinking to the bottom and my father save me.”</td>
+<td align="left">Deletion; Sentence combination; Key word; T.S.S; Invention</td>
+<td align="left">Deletion; Sentence combination; Paraphrase; Key word; Location; T.S.S</td>
+</tr>
+<tr>
+<td align="justify">“I was determined not to go lose it and I stretched my arm as far as it could go and tried to grab the boat.”</td>
+<td align="left">Deletion; Sentence combination; Key word; Location; Title word; T.S.S; Copy-verbatim</td>
+<td align="left">Deletion; Sentence combination; Key word; Title word; T.S.S</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We used Cohen's Kappa [<xref ref-type="bibr" rid="pone.0145809.ref050">50</xref>, <xref ref-type="bibr" rid="pone.0145809.ref051">51</xref>] as a measure of agreement between the two raters. The Kappa coefficient for measuring the inter-raters agreement was 0.61. This value indicated that our assessors had good agreement [<xref ref-type="bibr" rid="pone.0145809.ref052">52</xref>] for grading each student summary.</p>
+</sec>
+<sec id="sec049">
+<title>Parameter setting</title>
+<p>The proposed algorithm requires parameter to be determined before use: a weighting parameter (<italic>alpha</italic>) (refer to <xref ref-type="disp-formula" rid="pone.0145809.e023">Eq 20</xref>) for weighting the significance between semantic information and syntactic information. The parameter in the current experiment was found using training data. We ran our proposed algorithm, ISSLK, on the training dataset. We evaluate ISSLK for each <italic>alpha</italic> between 0.1 to 0.9 with a step of 0.1. <xref ref-type="table" rid="pone.0145809.t006">Table 6</xref> presents our experimental results obtained by using various the alpha values. We evaluate the results in terms of precision, recall and F-measure. By analyzing the results, we find that the best performance is achieved by an alpha value 0.7. This alpha produced the scores for three metrics as follows: 0.8126 (precision), 0.6818 (recall), 0.7415 (F-measure). The best values of <xref ref-type="table" rid="pone.0145809.t006">Table 6</xref> have been marked in boldface. As a result, using the current data set, we obtain the best result when we use 0.7 as the alpha value. Therefore, we can recommend this the alpha values for use on the testing data.</p>
+<table-wrap id="pone.0145809.t006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t006</object-id>
+<label>Table 6</label> <caption><title>Comparison between human and RDSSIA against various α values.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t006g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t006" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Weighting (α)</th>
+<th align="left">Precision</th>
+<th align="left">Recall</th>
+<th align="left">F-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0.1</td>
+<td align="center">0.6229</td>
+<td align="center">0.5381</td>
+<td align="center">0.5774</td>
+</tr>
+<tr>
+<td align="center">0.2</td>
+<td align="center">0.6312</td>
+<td align="center">0.5340</td>
+<td align="center">0.5785</td>
+</tr>
+<tr>
+<td align="center">0.3</td>
+<td align="center">0.6404</td>
+<td align="center">0.5760</td>
+<td align="center">0.6065</td>
+</tr>
+<tr>
+<td align="center">0.4</td>
+<td align="center">0.6525</td>
+<td align="center">0.5934</td>
+<td align="center">0.6215</td>
+</tr>
+<tr>
+<td align="center">0.5</td>
+<td align="center">0.6867</td>
+<td align="center">0.5800</td>
+<td align="center">0.6289</td>
+</tr>
+<tr>
+<td align="center">0.6</td>
+<td align="center">0.7216</td>
+<td align="center">0.6922</td>
+<td align="center">0.7066</td>
+</tr>
+<tr>
+<td align="center">0.7</td>
+<td align="center">0.8126</td>
+<td align="center">0.6818</td>
+<td align="center">0.7415</td>
+</tr>
+<tr>
+<td align="center">0.8</td>
+<td align="center">0.7432</td>
+<td align="center">0.7094</td>
+<td align="center">0.7259</td>
+</tr>
+<tr>
+<td align="center">0.9</td>
+<td align="center">0.7559</td>
+<td align="center">0.6354</td>
+<td align="center">0.6904</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec050">
+<title>Performance analysis</title>
+<p>To confirm the aforementioned results, we validate our proposed algorithm, ISSLK. To do this, we measure the performance of the algorithm against human judgment to identify the summarizing strategies using unused data set, testing data. We apply ISSLK to the testing data set only with the alpha value 0.7. To compute the precision, recall and F-measure, we determine the values of <italic>A</italic>, <italic>B</italic> and <italic>C</italic> by analysing the number of summarizing strategies identified by the algorithm and human (<italic>A</italic>), the number of summarizing strategies identified by algorithm only (<italic>B</italic>), and the number of summarizing strategies identified by human only (<italic>C</italic>). Then, the equations of precision, recall and F-measure are applied to obtain the values for each summary.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec051" sec-type="conclusions">
+<title>Results and Discussion</title>
+<p>According to the results presented in <xref ref-type="table" rid="pone.0145809.t007">Table 7</xref>, the algorithm obtained an average of 77% precision, 66% recall and 70% F-score for summaries. It did not attain a high percentage for the precision, recall and F-score in comparison to human judgment due to various reasons, such as:</p>
+<list list-type="order">
+<list-item><p>The algorithm failed to identify some of the summarizing strategies identified by the expert. These strategies are generalization and invention. It has affected the result of the algorithm and is the reason why we did not achieve the high percentage for precision and finally F-score. However, this limitation is understandable because the algorithm was designed to identify the summarizing strategies and methods–paraphrase, topic sentence selection, sentence combination, copy–verbatim, key–words method, title method, location method and cue method–and is not able to identify strategies such as invention and generalization.</p></list-item>
+<list-item><p>Another reason is that when the algorithm and human want to identify the topic sentence selection strategy using the cue method. The cue method used cue words, such as “in conclusion” and “as result”, to display the important sentence in a text. These cue words rely on the content of the text. Thus, it is difficult to derive the list of cue words, since different types of text may generate a different list of cue words. Hence, there is no standard list of cue words; the lack of this standard list affects the results of the algorithm.</p></list-item>
+<list-item><p>The algorithm used WordNet as the main semantic knowledge base for the calculation of semantic similarity between words. The comprehensiveness of WordNet is determined by the proportion of words in the text that are covered by its knowledge base. However, the main criticism of WordNet concerns its limited word coverage to calculate semantic similarity between words. Obviously, this disadvantage has a negative effect on the performance of our proposed algorithm.</p></list-item>
+<list-item><p>The algorithm is not able to distinguish between an active sentence and a passive sentence. Given a summary sentence (A: ‘<italic>Father likes his child</italic>.<italic>’</italic>) and two original sentences (B: ‘<italic>child likes his father</italic>.<italic>’; C</italic>: ‘<italic>child is liked by his father</italic>.<italic>’</italic>), although the similarity measure between sentences (<italic>A</italic> and <italic>B</italic>) and (<italic>A</italic> and <italic>C</italic>) is same, but as we can see the meaning of sentence <italic>A</italic> is more similar to the sentence <italic>C</italic>. hence, it is important to know what passive and active sentences are before comparisons can be drawn.</p></list-item>
+</list>
+<table-wrap id="pone.0145809.t007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t007</object-id>
+<label>Table 7</label> <caption><title>Precision, Recall and F-score, (Due to space limitations of this paper, a sample results are shown).</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t007g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t007" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Summary</th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">Precision</th>
+<th align="left">Recall</th>
+<th align="left">F-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">0.57</td>
+<td align="center">0.67</td>
+<td align="center">0.62</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">9</td>
+<td align="center">0</td>
+<td align="center">3</td>
+<td align="center">1.00</td>
+<td align="center">0.69</td>
+<td align="center">0.82</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">8</td>
+<td align="center">0</td>
+<td align="center">7</td>
+<td align="center">1.00</td>
+<td align="center">0.47</td>
+<td align="center">0.64</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">.</td>
+<td align="center">0.77</td>
+<td align="center">0.66</td>
+<td align="center">0.70</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<sec id="sec052">
+<title>Experiment 2—Comparison with related methods</title>
+<p>In this section, the performance of our algorithm is compared with other well-known or recently proposed methods. In particular, to evaluate our methods on data set, we select the following methods: SSDA [<xref ref-type="bibr" rid="pone.0145809.ref015">15</xref>] and MSAS [<xref ref-type="bibr" rid="pone.0145809.ref014">14</xref>]. The evaluation metrics values are presented in Tables <xref ref-type="table" rid="pone.0145809.t008">8</xref> and <xref ref-type="table" rid="pone.0145809.t009">9</xref>. In <xref ref-type="table" rid="pone.0145809.t009">Table 9</xref> ‘‘- - -” means the proposed method could not identify the corresponding summarizing strategies. The above mentioned approaches use different data sources in their experiments. This makes a direct comparison between evaluation results of the different approaches impossible. In addition, they used different evaluation measures. Therefore, we re-examined the mentioned approaches upon the same dataset.</p>
+<table-wrap id="pone.0145809.t008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t008</object-id>
+<label>Table 8</label> <caption><title>Performance comparison between ISSLK and other methods.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t008g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t008" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">System</th>
+<th align="left">Precision</th>
+<th align="left">Recall</th>
+<th align="left">F-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ISSLK</td>
+<td align="center">0.86</td>
+<td align="center">0.81</td>
+<td align="center">0.83</td>
+</tr>
+<tr>
+<td align="left">MSAS</td>
+<td align="center">0.81</td>
+<td align="center">0.78</td>
+<td align="center">0.79</td>
+</tr>
+<tr>
+<td align="left">SSDA</td>
+<td align="center">0.76</td>
+<td align="center">0.68</td>
+<td align="center">0.72</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<table-wrap id="pone.0145809.t009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t009</object-id>
+<label>Table 9</label> <caption><title>Performance comparison between ISSLK and other methods.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t009g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t009" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Systems</th>
+<th align="left">Metrics</th>
+<th align="left">Copy-verbatim</th>
+<th align="left">Deletion</th>
+<th align="left">Paraphrasing</th>
+<th align="left">Sentence Combination</th>
+<th align="left">T.S.S</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">ISSLK</td>
+<td align="left">Precision</td>
+<td align="center">0.89</td>
+<td align="center">0.91</td>
+<td align="center">0.90</td>
+<td align="center">0.94</td>
+<td align="center">0.87</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="left">Recall</td>
+<td align="center">0.82</td>
+<td align="center">0.87</td>
+<td align="center">0.84</td>
+<td align="center">0.89</td>
+<td align="center">0.79</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="left">F-measure</td>
+<td align="center">0.85</td>
+<td align="center">0.89</td>
+<td align="center">0.87</td>
+<td align="center">0.91</td>
+<td align="center">0.83</td>
+</tr>
+<tr>
+<td align="center">MSAS</td>
+<td align="left">Precision</td>
+<td align="center">0.84</td>
+<td align="center">- - -</td>
+<td align="center">0.83</td>
+<td align="center">- - -</td>
+<td align="center">- - -</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="left">Recall</td>
+<td align="center">0.77</td>
+<td align="center">- - -</td>
+<td align="center">0.78</td>
+<td align="center">- - -</td>
+<td align="center">- - -</td>
+</tr>
+<tr>
+<td align="center"/>
+<td align="left">F-measure</td>
+<td align="center">0.80</td>
+<td align="center">- - -</td>
+<td align="center">0.80</td>
+<td align="center">- - -</td>
+<td align="center">- - -</td>
+</tr>
+<tr>
+<td align="center">SSDA</td>
+<td align="left">Precision</td>
+<td align="center">0.79</td>
+<td align="center">0.6</td>
+<td align="center">- - -</td>
+<td align="center">0.77</td>
+<td align="center">- - -</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Recall</td>
+<td align="center">0.74</td>
+<td align="center">0.57</td>
+<td align="center">- - -</td>
+<td align="center">0.73</td>
+<td align="center">- - -</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">F-measure</td>
+<td align="center">0.76</td>
+<td align="center">0.58</td>
+<td align="center">- - -</td>
+<td align="center">0.75</td>
+<td align="center">- - -</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<sec id="sec053">
+<title>Detailed comparison</title>
+<p>With comparison to the precision and F-score values for other methods, our proposed method achieved significant improvement. <xref ref-type="table" rid="pone.0145809.t010">Table 10</xref> shows the improvement of ISSLK for all two metrics. It is clear that ISSLK obtains the high F-measure values and outperforms all the other methods. We use the relative improvement, <xref ref-type="disp-formula" rid="pone.0145809.e033">Eq 30</xref>, for comparison. In <xref ref-type="table" rid="pone.0145809.t010">Table 10</xref> ‘‘+” means the proposed method improves the related methods. <xref ref-type="table" rid="pone.0145809.t010">Table 10</xref> presents among other methods the MSAS shows the best results compared to SSDA. Compared with the method MSAS, our method improves the performance by (6.1728) %, and (4.9746) % in terms precision and F-score metrics, respectively.</p>
+<disp-formula id="pone.0145809.e033">
+<alternatives>
+<graphic id="pone.0145809.e033g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0145809.e033" xlink:type="simple"/>
+<mml:math display="block" id="M33">
+<mml:mrow><mml:mtext>Improvement</mml:mtext><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mtext>Our method</mml:mtext><mml:mo>−</mml:mo><mml:mtext>Other method</mml:mtext></mml:mrow><mml:mrow><mml:mtext>Other method</mml:mtext></mml:mrow></mml:mfrac></mml:mrow><mml:mo stretchy="false">)</mml:mo><mml:mspace width="0.25em"/><mml:mo>×</mml:mo><mml:mspace width="0.15em"/><mml:mn>100</mml:mn></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(30)</label>
+</disp-formula>
+<table-wrap id="pone.0145809.t010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0145809.t010</object-id>
+<label>Table 10</label> <caption><title>Performance evaluation compared between the ISSLK and other methods.</title></caption>
+<alternatives>
+<graphic id="pone.0145809.t010g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.t010" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">System</th>
+<th align="left">Precision</th>
+<th align="left">F-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">MSAS</td>
+<td align="center">+ 6.1728</td>
+<td align="center">+ 4.9746</td>
+</tr>
+<tr>
+<td align="left">SSDA</td>
+<td align="center">+ 13.1578</td>
+<td align="center">+ 16.2269</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+</sec>
+<sec id="sec054" sec-type="conclusions">
+<title>Conclusion</title>
+<p>Summarizing strategies are the core of the cognitive processes involved in the summarization activity. In this paper, we propose an algorithm based on the linguistic measure to identify the summarizing strategies used by summarizer in summary writing. The algorithm employs three similarity metrics to calculate similarity measure between two sentences: <italic>a)</italic> semantic similarity between sentences; <italic>b)</italic> word-order similarity between sentences; and <italic>c)</italic> semantic similarity between words. The main feature of the proposed algorithm is its ability to capture the meaning in comparison between a source text sentence and a summary text sentence, when two sentences have same surface text or different words have been used in the sentences. This algorithm is also able to identify summarizing strategies at both the semantic and syntactic levels. The algorithm is able to identify summarizing strategies and methods such as deletion, sentence combination, paraphrase, copy-verbatim, topic sentence selection, cue method, title method, keyword method and location method.</p>
+<p>The evaluation of ISSLK is conducted over DUC dataset. The proposed algorithm is very easy to follow and requires minimal text processing cost. Initially, parameter of ISSLK is optimized over the training dataset. Later the actual summarizing strategies identification evaluation is done over test dataset. The first experiment was conducted to evaluate the performance of the algorithm using the comparison between the algorithm and human judgments. The result demonstrates that the algorithm obtained an average of 77% precision, 66% recall, 70% F-score. ISSLK is compared with the current systems which are well-known existing systems that are proposed to identify summarizing strategies. The experimental results display that the performance of the proposed algorithm is very competitive when compared with other systems. The results also displayed that ISSLK improved the performance of the existing system. We observed that ISSLK is able to obtain an average of 86% precision, 81% recall, 83% F-score.</p>
+<p>This paper presents the following suggestions for future work. Firstly, the algorithm failed to identify some of the strategies, such as generalization and invention. To improve the performance of the algorithm in identifying summarizing strategies, it needs to work on algorithm to identify the strategies, such as generalization and invention. Obviously, this can improve the precision, recall, F-measure, and, finally, the accuracy of the algorithm. Finally, we are confident that the idea of incorporating semantic and syntactic information can be further explored by using a combination of more complex techniques and modules for text analysis. This is because once a passive or active sentence has been used in writing, it is important to know what passive and active sentences are before comparisons can be drawn. Finally, our method used WordNet as the main semantic knowledge base for the calculation of semantic similarity between words. The comprehensiveness of WordNet is determined by the proportion of words in the text that are covered by its knowledge base. However, the main criticism of WordNet concerns its limited word coverage to calculate semantic similarity between words. Obviously, this disadvantage has a negative effect on the performance of our proposed method. One solution is that, in addition to WordNet, other knowledge resources must be used.</p>
+<p>In addition future works, we aim to examine other method to compute semantic similarity between words. It can be useful for increasing the overall performance of the proposed method.</p>
+</sec>
+<sec id="sec055">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0145809.s001" mimetype="text/xml" position="float" xlink:href="info:doi/10.1371/journal.pone.0145809.s001" xlink:type="simple">
+<label>S1 Dataset</label>
+<caption>
+<title>Used to evaluate the proposed algorithm.</title>
+<p>(XML)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>This research is supported by the postgraduate research grant (PPP)-research, grant no: PG184-2014B, University Malaya (UM).</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0145809.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aliguliyev</surname> <given-names>RM</given-names></name>. <article-title>A new sentence similarity measure and sentence based extractive technique for automatic text summarization</article-title>. <source>Expert Systems with Applications</source>. <year>2009</year>;<volume>36</volume>:<fpage>7764</fpage>–<lpage>72</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Galgani</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Compton</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Hoffmann</surname> <given-names>A</given-names></name>. <article-title>HAUSS: Incrementally building a summarizer combining multiple techniques</article-title>. <source>International Journal of Human-Computer Studies</source>. <year>2014</year>;<volume>72</volume>:<fpage>584</fpage>–<lpage>605</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yang</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>N-S</given-names></name>, <name name-style="western"><surname>Sutinen</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Anderson</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Wen</surname> <given-names>D</given-names></name>. <article-title>The effectiveness of automatic text summarization in mobile learning contexts</article-title>. <source>Computers &amp; Education</source>. <year>2013</year>;<volume>68</volume>:<fpage>233</fpage>–<lpage>43</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Abdi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Idris</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Alguliyev</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Aliguliyev</surname> <given-names>RM</given-names></name>. <article-title>Query-based multi-documents summarization using linguistic knowledge and content word expansion</article-title>. <source>Soft Computing</source>. <year>2015</year>:<fpage>1</fpage>–<lpage>17</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Westby</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Culatta</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Lawrence</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Hall-Kenyon</surname> <given-names>K</given-names></name>. <article-title>Summarizing expository texts</article-title>. <source>Topics in Language Disorders</source>. <year>2010</year>;<volume>30</volume>:<fpage>275</fpage>–<lpage>87</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chiu</surname> <given-names>C-H</given-names></name>, <name name-style="western"><surname>Wu</surname> <given-names>C-Y</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>H-W</given-names></name>. <article-title>Integrating reviewing strategies into shared electronic note-taking: Questioning, summarizing and note reading</article-title>. <source>Computers &amp; Education</source>. <year>2013</year>;<volume>67</volume>:<fpage>229</fpage>–<lpage>38</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tseng</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Chu</surname> <given-names>H-C</given-names></name>, <name name-style="western"><surname>Hwang</surname> <given-names>G-J</given-names></name>, <name name-style="western"><surname>Tsai</surname> <given-names>C-C</given-names></name>. <article-title>Development of an adaptive learning system with two sources of personalization information</article-title>. <source>Computers &amp; Education</source>. <year>2008</year>;<volume>51</volume>:<fpage>776</fpage>–<lpage>86</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ponce</surname> <given-names>HR</given-names></name>, <name name-style="western"><surname>Lopez</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Mayer</surname> <given-names>RE</given-names></name>. <article-title>Instructional effectiveness of a computer-supported program for teaching reading comprehension strategies</article-title>. <source>Computers &amp; Education</source>. <year>2012</year>;<volume>59</volume>:<fpage>1170</fpage>–<lpage>83</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Deerwester</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Dumais</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>Landauer</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Furnas</surname> <given-names>GW</given-names></name>, <name name-style="western"><surname>Harshman</surname> <given-names>RA</given-names></name>. <article-title>Indexing by latent semantic analysis</article-title>. <source>JASIS</source>. <year>1990</year>;<volume>41</volume>:<fpage>391</fpage>–<lpage>407</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref010"><label>10</label><mixed-citation publication-type="other" xlink:type="simple">Pérez D, Gliozzo AM, Strapparava C, Alfonseca E, Rodríguez P, Magnini B, Automatic Assessment of Students' Free-Text Answers Underpinned by the Combination of a BLEU-Inspired Algorithm and Latent Semantic Analysis. 2005: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kintsch</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Van Dijk</surname> <given-names>TA</given-names></name>. <article-title>Toward a model of text comprehension and production</article-title>. <source>Psychological review</source>. <year>1978</year>;<volume>85</volume>:<fpage>363</fpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Johnson</surname> <given-names>NS</given-names></name>. <article-title>What do you do if you can't tell the whole story? The development of summarization skills</article-title>. <source>Children's language</source>. <year>1983</year>;<volume>4</volume>:<fpage>315</fpage>–<lpage>83</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Day</surname> <given-names>JD</given-names></name>. <article-title>Macrorules for summarizing texts: The development of expertise</article-title>. <source>Journal of verbal learning and verbal behavior</source>. <year>1983</year>;<volume>22</volume>:<fpage>1</fpage>–<lpage>14</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lemaire</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Mandin</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Dessus</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Denhière</surname> <given-names>G</given-names></name>. <article-title>Computational cognitive models of summarization assessment skills</article-title>. <year>2005</year>.</mixed-citation></ref>
+<ref id="pone.0145809.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Idris</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Baba</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Abdullah</surname> <given-names>R</given-names></name>. <article-title>A Summary Sentence Decomposition Algorithm for Summarizing Strategies Identification</article-title>. <source>Computer and Information Science</source>. <year>2009</year>;<volume>2</volume>:<fpage>P200</fpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alonso</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Castellón</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Climent</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Fuentes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Padró</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Rodrıguez</surname> <given-names>H</given-names></name>. <article-title>Approaches to text summarization: Questions and answers</article-title>. <source>Inteligencia Artificial</source>. <year>2004</year>;<volume>8</volume>:<fpage>22</fpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>. <article-title>Improving supervised learning for meeting summarization using sampling and regression</article-title>. <source>Computer Speech &amp; Language</source>. <year>2010</year>;<volume>24</volume>:<fpage>495</fpage>–<lpage>514</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref018"><label>18</label><mixed-citation publication-type="other" xlink:type="simple">Xie S, Liu Y, Using corpus and knowledge-based similarity measure in maximum marginal relevance for meeting summarization. 2008: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gupta</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Lehal</surname> <given-names>GS</given-names></name>. <article-title>A Survey of Text Summarization Extractive Techniques</article-title>. <source>Journal of Emerging Technologies in Web Intelligence</source>. <year>2010</year>;<volume>2</volume>.</mixed-citation></ref>
+<ref id="pone.0145809.ref020"><label>20</label><mixed-citation publication-type="other" xlink:type="simple">Kupiec J, Pedersen J, Chen F, A trainable document summarizer. 1995: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fattah</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Ren</surname> <given-names>F</given-names></name>. <article-title>GA, MR, FFNN, PNN and GMM based models for automatic text summarization</article-title>. <source>Computer Speech &amp; Language</source>. <year>2009</year>;<volume>23</volume>:<fpage>126</fpage>–<lpage>44</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref022"><label>22</label><mixed-citation publication-type="other" xlink:type="simple">Xie S, Liu Y, Lin H, Evaluating the effectiveness of features and sampling in extractive meeting summarization. 2008: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref023"><label>23</label><mixed-citation publication-type="other" xlink:type="simple">Teufel S, Moens M, Sentence extraction as a classification task. 1997: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hirschberg</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Litman</surname> <given-names>D</given-names></name>. <article-title>Empirical studies on the disambiguation of cue phrases</article-title>. <source>Computational linguistics</source>. <year>1993</year>;<volume>19</volume>:<fpage>501</fpage>–<lpage>30</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref025"><label>25</label><mixed-citation publication-type="other" xlink:type="simple">Zhang J, Sun L, Zhou Q, A cue-based hub-authority approach for multi-document text summarization. 2005: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fraser</surname> <given-names>B</given-names></name>. <article-title>What are discourse markers?</article-title> <source>Journal of pragmatics</source>. <year>1999</year>;<volume>31</volume>:<fpage>931</fpage>–<lpage>52</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref027"><label>27</label><mixed-citation publication-type="other" xlink:type="simple">Bawakid A, Oussalah M, A semantic summarization system: University of Birmingham at TAC 2008. 2008: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref028"><label>28</label><mixed-citation publication-type="other" xlink:type="simple">Zipitria I, Elorriaga JA, Arruarte A, de Ilarraza AD, From human to automatic summary evaluation. 2004: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref029"><label>29</label><mixed-citation publication-type="other" xlink:type="simple">Franzke M, Streeter LA. Building student summarization, writing and reading comprehension skills with guided practice and automated feedback. Highlights From Research at the University of Colorado, A white paper from Pearson Knowledge Technologies. 2006.</mixed-citation></ref>
+<ref id="pone.0145809.ref030"><label>30</label><mixed-citation publication-type="other" xlink:type="simple">Lin, Rouge: A package for automatic evaluation of summaries. 2004: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fan</surname> <given-names>Y-C</given-names></name>. <article-title>The Effect of Comprehension Strategy Instruction on EFL Learners' Reading Comprehension</article-title>. <source>Asian Social Science</source>. <year>2010</year>;<volume>6</volume>.</mixed-citation></ref>
+<ref id="pone.0145809.ref032"><label>32</label><mixed-citation publication-type="other" xlink:type="simple">Mohler M, Bunescu R, Mihalcea R, Learning to grade short answer questions using semantic similarity measures and dependency graph alignments. 2011: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref033"><label>33</label><mixed-citation publication-type="other" xlink:type="simple">De Marneffe M-C, MacCartney B, Manning CD, Generating typed dependency parses from phrase structure parses. 2006: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref034"><label>34</label><mixed-citation publication-type="other" xlink:type="simple">Wiemer-Hastings P, Wiemer P, Adding syntactic information to LSA. 2000: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref035"><label>35</label><mixed-citation publication-type="other" xlink:type="simple">Kanejiya D, Kumar A, Prasad S, Automatic evaluation of students' answers using syntactically enhanced LSA. 2003: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref036"><label>36</label><mixed-citation publication-type="other" xlink:type="simple">Pérez, Gliozzo AM, Strapparava C, Alfonseca E, Rodríguez P, Magnini B, Automatic Assessment of Students' Free-Text Answers Underpinned by the Combination of a BLEU-Inspired Algorithm and Latent Semantic Analysis. 2005: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref037"><label>37</label><mixed-citation publication-type="other" xlink:type="simple">Wiemer-Hastings P, Zipitria I, Rules for syntax, vectors for semantics. 2001: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref038"><label>38</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Achananuparp</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Hu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>X</given-names></name>. <chapter-title>The evaluation of sentence similarity measures</chapter-title>. <source>Data Warehousing and Knowledge Discovery</source>: <publisher-name>Springer</publisher-name>; <year>2008</year>. p. <fpage>305</fpage>–<lpage>16</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref039"><label>39</label><mixed-citation publication-type="other" xlink:type="simple">Tian Y, Li H, Cai Q, Zhao S, Measuring the similarity of short texts by word similarity and tree kernels. 2010: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref040"><label>40</label><mixed-citation publication-type="other" xlink:type="simple">Lin D, An information-theoretic definition of similarity. 1998: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Warin</surname> <given-names>M</given-names></name>. <article-title>Using WordNet and Semantic Similarity to Disambiguate an Ontology</article-title>. <source>Retrieved January</source>. <year>2004</year>;<volume>25</volume>:<fpage>2008</fpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref042"><label>42</label><mixed-citation publication-type="other" xlink:type="simple">Mihalcea R, Corley C, Strapparava C, Corpus-based and knowledge-based measures of text semantic similarity. 2006: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref043"><label>43</label><mixed-citation publication-type="other" xlink:type="simple">Aytar Y, Shah M, Luo J, Utilizing semantic word similarity measures for video retrieval. 2008: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Abdi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Idris</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Alguliyev</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Aliguliyev</surname> <given-names>RM</given-names></name>. <article-title>PDLK: Plagiarism detection using linguistic knowledge</article-title>. <source>Expert Systems with Applications</source>. <year>2015</year>.</mixed-citation></ref>
+<ref id="pone.0145809.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alguliev</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Aliguliyev</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Mehdiyev</surname> <given-names>CA</given-names></name>. <article-title>Sentence selection for generic document summarization using an adaptive differential evolution algorithm</article-title>. <source>Swarm and Evolutionary Computation</source>. <year>2011</year>;<volume>1</volume>:<fpage>213</fpage>–<lpage>22</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>McLean</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Bandar</surname> <given-names>ZA</given-names></name>, <name name-style="western"><surname>O'shea</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Crockett</surname> <given-names>K</given-names></name>. <article-title>Sentence similarity based on semantic nets and corpus statistics</article-title>. <source>Knowledge and Data Engineering, IEEE Transactions on</source>. <year>2006</year>;<volume>18</volume>:<fpage>1138</fpage>–<lpage>50</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref047"><label>47</label><mixed-citation publication-type="other" xlink:type="simple">Li S, Ouyang Y, Sun B, Guo Z, Peking University at DUC 2006. 2006: Publisher.</mixed-citation></ref>
+<ref id="pone.0145809.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Abdi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Idris</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Alguliev</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Aliguliyev</surname> <given-names>RM</given-names></name>. <article-title>Automatic summarization assessment through a combination of semantic and syntactic information for intelligent educational systems</article-title>. <source>Information Processing &amp; Management</source>. <year>2015</year>;<volume>51</volume>:<fpage>340</fpage>–<lpage>58</lpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref049"><label>49</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Manning</surname> <given-names>CD</given-names></name>, <name name-style="western"><surname>Raghavan</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Schütze</surname> <given-names>H</given-names></name>. <chapter-title>Introduction to information retrieval</chapter-title>: <publisher-name>Cambridge university press</publisher-name> <publisher-loc>Cambridge</publisher-loc>; <year>2008</year>.</mixed-citation></ref>
+<ref id="pone.0145809.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fleiss</surname> <given-names>JL</given-names></name>. <article-title>Measuring nominal scale agreement among many raters</article-title>. <source>Psychological bulletin</source>. <year>1971</year>;<volume>76</volume>:<fpage>378</fpage>.</mixed-citation></ref>
+<ref id="pone.0145809.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohen</surname> <given-names>J</given-names></name>. <article-title>Weighted kappa: Nominal scale agreement provision for scaled disagreement or partial credit</article-title>. <source>Psychological bulletin</source>. <year>1968</year>;<volume>70</volume>:<fpage>213</fpage>. <object-id pub-id-type="pmid">19673146</object-id></mixed-citation></ref>
+<ref id="pone.0145809.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Landis</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Koch</surname> <given-names>GG</given-names></name>. <article-title>The measurement of observer agreement for categorical data</article-title>. <source>biometrics</source>. <year>1977</year>:<fpage>159</fpage>–<lpage>74</lpage>. <object-id pub-id-type="pmid">843571</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

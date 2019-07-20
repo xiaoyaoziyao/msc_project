@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article article-type="research-article" dtd-version="1.1d3" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-01585</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004886</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Ecology</subject><subj-group><subject>Community ecology</subject><subj-group><subject>Trophic interactions</subject><subj-group><subject>Predation</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Ecology and environmental sciences</subject><subj-group><subject>Ecology</subject><subj-group><subject>Community ecology</subject><subj-group><subject>Trophic interactions</subject><subj-group><subject>Predation</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Game theory</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject><subj-group><subject>Evolutionary genetics</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Engineering and technology</subject><subj-group><subject>Mechanical engineering</subject><subj-group><subject>Robotics</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Evolutionary biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Evolutionary algorithms</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Simulation and modeling</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Evolutionary algorithms</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Computational techniques</subject><subj-group><subject>Evolutionary computation</subject><subj-group><subject>Evolutionary algorithms</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Population biology</subject><subj-group><subject>Population dynamics</subject><subj-group><subject>Predator-prey dynamics</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Engineering and technology</subject><subj-group><subject>Mechanical engineering</subject><subj-group><subject>Robotics</subject><subj-group><subject>Robotic behavior</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>To Cooperate or Not to Cooperate: Why Behavioural Mechanisms Matter</article-title>
+<alt-title alt-title-type="running-head">Mechanistic Aspects of Cooperation</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0003-4615-5414</contrib-id>
+<name name-style="western">
+<surname>Bernard</surname> <given-names>Arthur</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>André</surname> <given-names>Jean-Baptiste</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Bredeche</surname> <given-names>Nicolas</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Sorbonne Universités, UPMC Univ Paris 06, CNRS, Institute of Intelligent Systems and Robotics (ISIR), Paris, France</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Institut des Sciences de l’Evolution, Université de Montpellier, CNRS, IRD, EPHE, CC065, Pl. E. Bataillon, Montpellier, France</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Adami</surname> <given-names>Christoph</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Michigan State University, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: AB JBA NB. Performed the experiments: AB. Analyzed the data: AB JBA NB. Contributed reagents/materials/analysis tools: AB. Wrote the paper: AB JBA NB.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">arthur.bernard@isir.upmc.fr</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>5</month>
+<year>2016</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>5</day>
+<month>5</month>
+<year>2016</year>
+</pub-date>
+<volume>12</volume>
+<issue>5</issue>
+<elocation-id>e1004886</elocation-id>
+<history>
+<date date-type="received">
+<day>18</day>
+<month>9</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>29</day>
+<month>3</month>
+<year>2016</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2016</copyright-year>
+<copyright-holder>Bernard et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004886"/>
+<abstract>
+<p>Mutualistic cooperation often requires multiple individuals to behave in a coordinated fashion. Hence, while the evolutionary stability of mutualistic cooperation poses no particular theoretical difficulty, its evolutionary emergence faces a chicken and egg problem: an individual cannot benefit from cooperating unless other individuals already do so. Here, we use evolutionary robotic simulations to study the consequences of this problem for the evolution of cooperation. In contrast with standard game-theoretic results, we find that the transition from solitary to cooperative strategies is very unlikely, whether interacting individuals are genetically related (cooperation evolves in 20% of all simulations) or unrelated (only 3% of all simulations). We also observe that successful cooperation between individuals requires the evolution of a specific and rather complex behaviour. This behavioural complexity creates a large fitness valley between solitary and cooperative strategies, making the evolutionary transition difficult. These results reveal the need for research on biological mechanisms which may facilitate this transition.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Mutualistic behaviours wherein several individuals act together for a common benefit, such as a collective hunt, are often deemed of minor interest by theoreticians in evolutionary biology. These behaviours benefit all the individuals involved, and therefore, so the argument goes, their evolution is straightforward. However, mutualistic behaviours do pose a specific kind of evolutionary problem: they require the coordination of several partners. Indeed, a single individual expressing a preference for cooperation cannot benefit if others wish to remain solitary. Here we use simulations in evolutionary robotics to study the consequences of this problem. We show that it constitutes a far more serious obstacle for the evolution of cooperation than was previously thought on the basis of game theoretical analyses. We find that the transition from solitary to cooperative strategies is very unlikely, and we also observe that successful cooperation requires the evolution of a specific and rather complex behaviour, necessary for individuals to coordinate with each other. This reveals the critical role of the practical mechanics of behaviour in evolution.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution>ANR CreAdapt</institution>
+</funding-source>
+<award-id>ANR-12-JS03-0009</award-id>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution>European Union Horizon 2020</institution>
+</funding-source>
+<award-id>640891</award-id>
+</award-group>
+<funding-statement>This work has received funding from the European Union’s Horizon 2020 research and innovation programme (<ext-link ext-link-type="uri" xlink:href="http://ec.europa.eu/programmes/horizon2020/" xlink:type="simple">http://ec.europa.eu/programmes/horizon2020/</ext-link>) under grant agreement No 640891 (DREAM project) and the Agence Nationale de la Recherche (<ext-link ext-link-type="uri" xlink:href="http://www.agence-nationale-recherche.fr/" xlink:type="simple">http://www.agence-nationale-recherche.fr/</ext-link>) CreAdapt project (ANR-12-JS03-0009). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="8"/>
+<table-count count="3"/>
+<page-count count="14"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>It is well known that, in the absence of genetic relatedness, altruistic behaviours in which individuals pay a fitness cost for the benefit of others cannot evolve by natural selection [<xref ref-type="bibr" rid="pcbi.1004886.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref002">2</xref>]. However, it is often assumed that mutualistic behaviours, wherein individuals collectively gain a common benefit [<xref ref-type="bibr" rid="pcbi.1004886.ref028">28</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref029">29</xref>], do not pose such a problem, and are therefore of limited interest to evolutionists: they simply evolve because they benefit the individuals who express them.</p>
+<p>However, mutualistic behaviours do often pose a different kind of evolutionary problem than altruism: they require coordination [<xref ref-type="bibr" rid="pcbi.1004886.ref003">3</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref005">5</xref>–<xref ref-type="bibr" rid="pcbi.1004886.ref028">28</xref>]. Many collective traits are only mutually beneficial if several individuals express them together in a coordinated fashion. That is, it would not be beneficial for a single individual to express the cooperative trait if others did not express it as well. Consequently, whereas altruistic behaviours pose a problem of <italic>stability</italic>, which can only be solved by genetic relatedness, many forms of mutualistic behaviours pose a problem of <italic>evolution</italic>. These collective strategies are stable equilibria but their evolution is complex.</p>
+<p>This problem has been formalized in game theory as the stag hunt game [<xref ref-type="bibr" rid="pcbi.1004886.ref006">6</xref>]. In the stag hunt, two hunters are confronted with the choice of either hunting a hare alone for a small but guaranteed benefit, or coordinating to hunt a stag cooperatively for a bigger reward, with the risk of not being rewarded at all if they hunt the stag alone. There are two evolutionarily stable Nash equilibria in this game: (1) simultaneous defection (i.e. both players hunt hares), which is risk-dominant as it maximizes the minimum payoff an individual can expect, and (2) simultaneous cooperation (i.e. both players hunt stags), which is payoff-dominant as it maximizes the total payoff at equilibrium. One of the aims of evolutionary analyses of the stag hunt is to characterize the mechanisms that facilitate the transition from the solitary equilibrium to the cooperative equilibrium. The difficulty is that cooperation can only be favoured by selection when a sufficient proportion of individuals in the population also cooperate. The transition from a population with a majority of solitary individuals to one with a majority of social individuals requires the rise of cooperation above an invasion threshold, which must occur for non-selective reasons.</p>
+<p>In game-theoretic analyses, the hunting strategy of individuals is generally assumed to be encoded by a single genetic locus with two alleles: solitary or social [<xref ref-type="bibr" rid="pcbi.1004886.ref006">6</xref>]. In this case, random mutations and/or demographic stochasticity can lead to the appearance of a subpopulation of mutants playing the social strategy which is sufficient to overcome the invasion threshold. Moreover, Skyrms [<xref ref-type="bibr" rid="pcbi.1004886.ref006">6</xref>] showed that this cooperation can be further facilitated in a spatially structured population in which individuals tend to interact more with genetically related partners.</p>
+<p>However, this approach makes a very strong assumption about the underlying mechanistic nature of behaviour: that a single mutation is sufficient to transform an individual playing a solitary strategy into an individual playing a perfectly efficient social strategy. In reality, hunting socially implies several novel behavioural abilities. In particular, it implies the ability to coordinate with others in order to focus on the same prey, which is unlikely to occur with only a single random mutation. In this paper, we postulate that critical aspects of coordinated cooperation have been neglected by game-theoretic analyses and investigate the mechanistic constraints which interfere with the evolution of coordination in a more realistic setting where the mapping between genotype and phenotype is not limited to a strict binary encoding.</p>
+<p>Evolutionary robotics is a useful methodology for the simulation and study of this more realistic conception of behaviour and its genetic underpinnings [<xref ref-type="bibr" rid="pcbi.1004886.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref008">8</xref>]. This approach allows to simulate the evolution of complex genotypes and observe the resulting behaviours in robotic agents. Such simulations also make it possible to investigate the complex mechanistic constraints at play in the translation from genotype to phenotype [<xref ref-type="bibr" rid="pcbi.1004886.ref024">24</xref>]. A considerable body of work has already been dedicated to modeling social evolution with robotic approaches [<xref ref-type="bibr" rid="pcbi.1004886.ref014">14</xref>]. These studies have been interested in a large diversity of issues: the evolution of swarms [<xref ref-type="bibr" rid="pcbi.1004886.ref011">11</xref>], the mechanics of division of labour in social insects [<xref ref-type="bibr" rid="pcbi.1004886.ref015">15</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref016">16</xref>] or the evolution of communication [<xref ref-type="bibr" rid="pcbi.1004886.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref017">17</xref>–<xref ref-type="bibr" rid="pcbi.1004886.ref019">19</xref>]. The evolution of cooperation in particular has been addressed in numerous papers. In the vast majority of this literature, however, social partners are genetically related [<xref ref-type="bibr" rid="pcbi.1004886.ref020">20</xref>], whether motivated by design [<xref ref-type="bibr" rid="pcbi.1004886.ref021">21</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref022">22</xref>] or to study the evolution of altruism [<xref ref-type="bibr" rid="pcbi.1004886.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref023">23</xref>]. Few articles, in comparison, have been interested in the evolution of mutualistic cooperation between genetically unrelated individuals [<xref ref-type="bibr" rid="pcbi.1004886.ref019">19</xref>]. Moreover the specific problem posed by the stag hunt game, where cooperation is not the only evolutionarily stable strategy and a non-collective solution acts as a stable attractor, has never been studied in evolutionary robotics.</p>
+<p>In this paper, we use an experimental model where simulated robotic agents interact in a situation equivalent to the stag hunt and compare the results of our model to those of standard game-theoretic analyses. Our results shed new light on the influence of mechanistic constraints in the evolution of coordinated actions. We then use this model to explore realistic mechanisms that could drive the transition to collective behaviours.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec003">
+<title>Experimental setup</title>
+<p>We consider an environment with two hunters and several prey, both hares and stags. Hunters can choose to hunt either of these prey, earning different food rewards depending on whether they hunt alone or cooperate (see <xref ref-type="fig" rid="pcbi.1004886.g001">Fig 1</xref>).</p>
+<fig id="pcbi.1004886.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Screenshot of a robotic simulation.</title>
+<p>The red dots represent the two hunters, the green dots the hares, and the pink dots the stags. The black lines around the agents’ body represent the proximity sensors and the black cones on front the cameras described in the text. Hunters are allowed to move throughout the environment. Hares and stags remain at their starting positions.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g001" xlink:type="simple"/>
+</fig>
+<p>Food rewards for killing a prey are shown in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>. A hare yields a reward of 50, regardless of whether it is hunted in a solitary or cooperative fashion. A stag yields a reward of 500 for each hunter only if it is hunted cooperatively. If a stag is killed by a single hunter, it is still removed from the arena but is considered a failed hunt and rewards nothing. None of the rewards are split between cooperators.</p>
+<table-wrap id="pcbi.1004886.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Food rewards for hunting different prey.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004886.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" colspan="2">Prey</th>
+<th align="center">Food Reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Hare</td>
+<td align="right"><italic>alone</italic></td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="right"><italic>coop.</italic></td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="left">Stag</td>
+<td align="right"><italic>alone</italic></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="right"><italic>coop.</italic></td>
+<td align="center">500</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001">
+<p>The reward depends on whether these prey were hunted alone or cooperatively. There is no reward for stags hunted alone in this case.</p>
+</fn>
+</table-wrap-foot>
+</table-wrap>
+<p>Simulated robotic agents are evaluated in an 800 by 800 unit square arena, which has four solid walls and is devoid of any obstacles aside from other agents. Each circular-shaped agent, with a diameter of 14 units, is equipped with two independent wheels and a collection of sensors. Hunters can use the information provided by 12 proximity sensors and a front camera. Proximity sensors have a range of approximately twice the diameter of the agent’s body, and provide the agent with the proximity of the nearest obstacle. They are evenly distributed around the agent’s body. The front camera consists of 12 rays with infinite range spread out in a 90 degree cone in front of the body. Each ray in the camera provides two different pieces of information about the first target it intersects with: the type of target (hunter, hare, or stag) and its proximity. This robot model facilitates the evolution of basic walls avoidance and agents recognition behaviours, which we consider not to be of interest here. Hence we separate obstacles recognition (by the proximity sensors) from agents’ recognition (by the camera).</p>
+<p>Only the hunters are capable of movement; prey remain at their initial positions. (Complementary experiments with moving prey capable of avoidance behaviours did not produce significantly different results; not shown.) A prey is caught if any hunter remains close enough during a fixed amount of time steps (800 steps, in a simulation lasting 20.000 time steps). Cooperative hunting is defined as a prey with two hunters in catching distance at the time of its capture. Therefore, cooperation happens even if only one of the two hunters is in catching distance of the prey for most of the time, as long as the two hunters are there in the final step. The prey is then immediately replaced at a random position in the arena, thus keeping a fixed number of agents and prey during the whole simulation.</p>
+</sec>
+<sec id="sec004">
+<title>Neural network for agent control</title>
+<p>The hunters’ behaviour is computed by an artificial neural network which maps sensory inputs to motor outputs. The neural network is a fully connected multi-layer perceptron with a single hidden layer of 8 neurons. The inputs of this network are the perceptions of the agent, with 12 neurons for the proximity sensors and 48 for the camera (4 for each of the 12 rays) plus a bias neuron (whose value is always 1), for a total of 61 input neurons. The two outputs of the network control the speed of each of the agent’s wheels and the mapping function between inputs and outputs is a sigmoid function (see <xref ref-type="fig" rid="pcbi.1004886.g002">Fig 2</xref>). Changing the number of hidden neurons did not yield significantly different results (not shown).</p>
+<fig id="pcbi.1004886.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Diagram of the simulated robotic agent used in the simulation (inset) and its neural network controller.</title>
+<p>The blue lines represent the 12 proximity sensors and the red lines represent the front camera. Inputs “Type 1” and “Type 2” are two boolean values used to represent the type of the agent (encoded with two bits) recognized by the camera ray.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g002" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec005">
+<title>Simulating artificial evolution</title>
+<p>To simulate evolution, we use an evolutionary algorithm to evolve the genome of the hunters. This genome is comprised of a collection of 410 real values in the range [0, 1], one for each of the neural network’s weights, and is initially randomized for each individual in the population. In order to obtain its fitness, each individual is successively paired five times with a partner randomly chosen each time (except itself) in the arena presented in the Experimental Setup subsection, for an evaluation round of 20.000 time steps. The payoff of the evaluated individual at the end of a round is given by the total amount of food it has managed to obtain by killing prey in this round. As this quantity depends heavily on the initial conditions (random initial positions of the prey), five simulations are performed for each pair of individuals. The individual’s fitness is then obtained by computing the sum of payoffs averaged over the total number of simulations for the individual. In this case the number of simulations is 25, with 5 partners and 5 simulations with each partner.</p>
+<p>Experiments were conducted using a Wright-Fisher model [<xref ref-type="bibr" rid="pcbi.1004886.ref012">12</xref>] with constant population size (20 individuals), which is commonly known as a fitness-proportionate selection method in evolutionary robotics [<xref ref-type="bibr" rid="pcbi.1004886.ref013">13</xref>]. Using this model, the population of the next generation is formed by a random sampling of offspring from the previous generation, with the probability of sampling a particular parent proportional to the parent’s fitness. Each offspring is simply a mutated clone of its parent; recombination is not included in our simulation. Consequently, new genotypes appear only through mutation. These mutations are performed using a Gaussian function, with a standard deviation of 2 × 10<sup>−1</sup> and a mutation probability of 5 × 10<sup>−3</sup>. Each experiment lasted 3000 generations. All simulation parameters are summarised in <xref ref-type="table" rid="pcbi.1004886.t002">Table 2</xref>.</p>
+<table-wrap id="pcbi.1004886.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Simulation parameters.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004886.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.t002" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" colspan="2">Parameter</th>
+<th align="center">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><bold>Evolutionary Algorithm</bold></td>
+<td align="left"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Selection method</td>
+<td align="center">Fitness-proportionate</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Population size</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Gene mutation probability</td>
+<td align="center">5 × 10<sup>−3</sup></td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Mutation operator</td>
+<td align="center">Gaussian <inline-formula id="pcbi.1004886.e001"><alternatives><graphic id="pcbi.1004886.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004886.e001" xlink:type="simple"/><mml:math display="inline" id="M1"><mml:mrow><mml:mi mathvariant="script">N</mml:mi> <mml:mo>(</mml:mo> <mml:mn>0</mml:mn> <mml:mo>,</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>01</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula></td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Number of partners</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Number of simulations per pair</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="left"><bold>Artificial Neural Network</bold></td>
+<td align="left"/>
+<td align="center"/>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Input neurons</td>
+<td align="center">61</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Hidden neurons</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="left">Output neurons</td>
+<td align="center">2</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec006" sec-type="results">
+<title>Results</title>
+<sec id="sec007">
+<title>Starting with a population of hare hunters</title>
+<p>In order to explore the evolutionary transition between the risk-dominant equilibrium (hare hunting) and the payoff-dominant equilibrium (cooperative stag hunting), individuals first evolved in an environment composed solely of hares. This ensured that the populations initially reached the solitary equilibrium. Only then did we add stags and study the dynamics of evolution. <xref ref-type="fig" rid="pcbi.1004886.g003">Fig 3(a)</xref> shows the evolution of the mean percentage of stags hunted successfully (i.e., hunted cooperatively) out of the total number of prey hunted over time for 30 independent runs. <xref ref-type="fig" rid="pcbi.1004886.g003">Fig 3(b)</xref> shows the mean proportion of each type of prey hunted during the last generation of each run. Stag hunting evolved in only one run out of 30 and even in that run accounted for less than 30% of the total number of prey hunted. In the other 29 runs, the individuals hunted only hares as they had previously evolved to do. These simulations demonstrate that the evolution of collective hunting is very unlikely when the population is composed of individuals who are already efficient solitary hunters.</p>
+<fig id="pcbi.1004886.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Evolution of cooperation in a robotic simulation with an initial hare-hunting strategy.</title>
+<p><italic>(a)</italic> Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted. <italic>(b)</italic> Mean number of prey hunted during the last generation of evolution for each independent run. The bottom green bar represents the number of hares hunted, the middle pink bar the number of stags hunted successfully (cooperatively), and the top grey bar the number of failed hunts (stags hunted alone). The standard deviation for each quantity is shown by black lines. The population for each of the 30 independent runs was previously evolved in an environment with only hares. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>. The number of prey (18) was kept constant throughout the simulation by replacing killed prey by a prey of the same type.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g003" xlink:type="simple"/>
+</fig>
+<p>For comparison we simulated the same scenario using the standard game-theoretic version of the stag hunt, where the expression of the two types of behaviour was encoded by a single binary locus. Each individual in the population initially possessed the allele for hare hunting (<xref ref-type="fig" rid="pcbi.1004886.g004">Fig 4</xref>).</p>
+<fig id="pcbi.1004886.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Evolution of cooperation in a game-theoretic simulation with an initial hare-hunting strategy.</title>
+<p>Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted when starting with a population of hare hunters for 30 independent runs. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g004" xlink:type="simple"/>
+</fig>
+<p>Here the transition to collective hunting occurred in each of the 30 independent runs and this strategy then remained stable. This result differs drastically from the results of our robotic simulations in which this transition never fully occurred (Mann-Whitney U test on the proportion of stags hunted successfully during the last generation, <italic>p</italic>-value &lt;0.001).</p>
+</sec>
+<sec id="sec008">
+<title>Starting with a random initial population</title>
+<p>In a second experiment, we wanted to investigate the evolution of hunting strategies “from scratch”, with the individuals’ genotypes initialized with random values, rather than evolved with a specific hunting strategy. <xref ref-type="fig" rid="pcbi.1004886.g005">Fig 5</xref> shows the mean percentage of stags hunted over time and the mean number of prey hunted during the last generation. We observed the transition to a clearly cooperative strategy in a single run, while in two other runs, 50% of prey hunted were stags. In the 27 remaining runs the proportion of stags hunted was less than 25%. In comparison, in simulations using the standard game-theoretic version of the stag hunt where individuals are initially unable to hunt, stag hunting evolved and remained stable in every run (see supporting information <xref ref-type="supplementary-material" rid="pcbi.1004886.s001">S1 Fig</xref>).</p>
+<fig id="pcbi.1004886.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Evolution of cooperation with no initial hunting strategy.</title>
+<p><italic>(a)</italic> Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted in a robotic simulation. <italic>(b)</italic> Mean number of prey hunted during the last generation of evolution for each independent run. The bottom green bar represents the number of hares hunted, the middle pink bar the number of stags hunted successfully (cooperatively) and the top grey bar the number of failed hunts (stags hunted alone). The standard deviation for each quantity is shown by black lines. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively, as presented in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>. The number of prey (18) was kept constant throughout the simulation by replacing killed prey by a prey of the same type.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g005" xlink:type="simple"/>
+</fig>
+<p>The above experiments show that mechanistic constraints have a critical effect on the evolution of coordinated collective actions. In a simple game-theoretic analysis in which the hunting strategy is encoded by a single binary gene, collective behaviour systematically evolved. However, in a setting where the hunting strategy was determined by a more complex artificial neural network, cooperative behaviour evolved in fewer than 10% of cases. These results encourage further exploration into the evolutionary origin of coordinated collective actions and the mechanisms which may facilitate their evolution. In the following section, we explore two such mechanisms.</p>
+</sec>
+<sec id="sec009">
+<title>When stags can be hunted alone</title>
+<p>In the next experiment, food was also rewarded for hunting a stag in a solitary fashion so that cooperative behaviour did not entail a risk. We wanted to study whether hunting a stag alone could act as a transition towards the evolution of the collective strategy. Hunting a stag alone was given the same reward as hunting a hare (<xref ref-type="table" rid="pcbi.1004886.t003">Table 3</xref>), differing from classical models of the stag hunt.</p>
+<table-wrap id="pcbi.1004886.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.t003</object-id>
+<label>Table 3</label>
+<caption>
+<title>Food rewards for hunting different prey.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004886.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.t003" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" colspan="2">Prey</th>
+<th align="center">Food Reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Hare</td>
+<td align="right"><italic>alone</italic></td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="right"><italic>coop.</italic></td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="left">Stag</td>
+<td align="right"><italic>alone</italic></td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="left"/>
+<td align="right"><italic>coop.</italic></td>
+<td align="center">500</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001">
+<p>The reward depends on whether these prey were hunted alone or cooperatively. There is a reward for stags hunted alone in this case.</p>
+</fn>
+</table-wrap-foot>
+</table-wrap>
+<p>
+<xref ref-type="fig" rid="pcbi.1004886.g006">Fig 6</xref> shows the results of robotic simulations where individuals initially evolved to hunt hares (as in <xref ref-type="fig" rid="pcbi.1004886.g003">Fig 3</xref>). As expected, the evolution of collective hunting was significantly facilitated when the risk of hunting stags alone was removed (Mann-Whitney, <italic>p</italic>-value &lt;0.001). The populations completely switched to hunting stags in two runs out of 30, and in three other runs, more than 50% of the prey hunted were stags, with a large part of the prey hunted cooperatively in each of these runs. However, in most of the runs (25 out of 30), the evolved strategy was to hunt both types of prey in a solitary fashion. From these results, it entails that the individuals are still hindered by the evolution of a successful coordination strategy.</p>
+<fig id="pcbi.1004886.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Evolution of cooperation with an initial hare-hunting strategy and a reward for solitary stag hunting.</title>
+<p><italic>(a)</italic> Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted in a robotic simulation. <italic>(b)</italic> Mean number of prey hunted during the last generation of evolution for each independent run. The bottom green bar represents the number of hares hunted, the middle pink bar the number of stags hunted cooperatively and the top grey bar the number of stags hunted alone. The standard deviation for each quantity is shown by black lines. The population for each of the 30 independent runs was previously evolved in an environment with only hares. Rewards were 50 for a hare, 50 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented in <xref ref-type="table" rid="pcbi.1004886.t003">Table 3</xref>. The number of prey (18) was kept constant throughout the simulation by replacing killed prey by a prey of the same type.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g006" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec010">
+<title>The role of genetic relatedness</title>
+<p>Genetic relatedness among social partners is known to influence the evolution of many types of social traits [<xref ref-type="bibr" rid="pcbi.1004886.ref001">1</xref>]. In particular, [<xref ref-type="bibr" rid="pcbi.1004886.ref006">6</xref>] showed how it can facilitate the evolution of cooperation in a stag hunt game [<xref ref-type="bibr" rid="pcbi.1004886.ref006">6</xref>, chapetr 3]. It can yield more frequent interaction between cooperators, which in turn increases their probability of benefiting from cooperative behaviour. In order to include this mechanism, we considered an extreme situation in which each individual is always paired with a clone of itself, known as “clonal selection” in robotics, ensuring a maximal genetic relatedness of 1.</p>
+<p>These results show that genetic relatedness has a positive effect on the evolution of cooperation (<xref ref-type="fig" rid="pcbi.1004886.g007">Fig 7</xref>). In four out of 30 runs the population evolved the cooperative strategy. Moreover, in two other runs, stags accounted for more than 75% of prey hunted, as compared to less than 25% without relatedness (Mann-Whitney, <italic>p</italic>-value &lt;0.005). When the initial population was random, rather than only hare hunters (see supporting information <xref ref-type="supplementary-material" rid="pcbi.1004886.s002">S2 Fig</xref>), the positive effect of genetic relatedness was also observed in 12 out of 30 runs, where more than 50% of prey hunted were stags.</p>
+<fig id="pcbi.1004886.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Evolution of cooperation under maximal genetic relatedness with an initial hare-hunting strategy.</title>
+<p><italic>(a)</italic> Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted in a robotic simulation. <italic>(b)</italic> Mean number of prey hunted during the last generation of evolution for each independent run. The bottom green bar represents the number of hares hunted, the middle pink bar the number of stags hunted successfully (cooperatively) and the top grey bar the number of failed hunts (stags hunted alone). The standard deviation for each quantity is shown by black lines. The population for each of the 30 independent runs was previously evolved in an environment with only hares. The genetic relatedness between paired individuals was 1. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>. The number of prey (18) was kept constant throughout the simulation by replacing killed prey by a prey of the same type.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g007" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec011" sec-type="conclusions">
+<title>Discussion</title>
+<p>There is a profound difference between evolutionary game-theoretic and robotic simulations of the stag hunt. Using identical model parameters, the transition from the solitary equilibrium to the social equilibrium always occurred in game-theoretic simulations, but was extremely unlikely in robotic simulations, occurring in 1 run out of 30. The complexity of the mapping between genotype and phenotype is responsible for much of this contrast. Individuals involved in a coordination game such as the stag hunt face a chicken &amp; egg problem: the cooperative behaviour must be beneficial in order to evolve, but no individual can benefit from this behaviour unless the behaviour is already expressed by other individuals. When binary variation at a single genetic locus encodes the expression of the solitary or cooperative strategy, a single mutation is sufficient for a cooperative mutant to appear in a resident population of solitary individuals. In a finite population, demographic stochasticity can then lead to the rise of cooperators above the invasion threshold, at which point natural selection leads to their fixation, switching from a solitary equilibrium to a social one. In contrast, in our robotic simulations, the mapping between genotype and phenotype is more complex. Adopting the social strategy entails both a modification of the preferred hunting target and the ability to coordinate with others. Thus, several mutations are necessary for the appearance of full-fledged cooperative behaviour. As several individuals must carry these multiple mutations for the behaviour to become beneficial, the transition to the cooperative equilibrium is nearly impossible.</p>
+<p>In particular, in our robotic simulations we were able to observe that coordination entails a specific and rather complex behaviour. <xref ref-type="fig" rid="pcbi.1004886.g008">Fig 8</xref> (see also supporting information <xref ref-type="supplementary-material" rid="pcbi.1004886.s004">S1 Movie</xref>) shows the behaviours evolved by the best individuals in the cooperative run shown in <xref ref-type="fig" rid="pcbi.1004886.g005">Fig 5</xref> (Run 9). The solution they evolved for coordination was to circle around one another, allowing each of them to constantly see their partner while both moving closer to a stag. This behaviour was replicated in every cooperative run. We thus observed the evolution of an ingenious (given the agents’ limited capabilities) and complex hunting strategy. These findings demonstrate that the practical mechanics of behaviour can have important evolutionary consequences, and that models which ignore these properties may lead to misleading predictions.</p>
+<fig id="pcbi.1004886.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004886.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Snapshots of a simulation after two hunts.</title>
+<p>In each of these snapshots, we show the path travelled by each hunter (in different colours) since their last prey was hunted. The black dots represent the positions of the hunters at their last kill.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.g008" xlink:type="simple"/>
+</fig>
+<p>Moreover, the evolution of cooperation is also strongly impacted by ecological features. Social hunting poses a bootstrapping problem because it entails both a modification of the preferred hunting target and an ability to coordinate with others. Its evolution can be facilitated, therefore, if hunters have a reasonable probability of hunting the same prey as their partner, just by chance, with no need of active coordination. Biologically, this could occur if hunters live in a dense social environment (with many other hunters in the vicinity), and/or if the density of prey is low, such that the likelihood of ending up on the same prey is large. To test this possibility, we conducted additional experiments where the density of prey was varied. The number of prey was whether (1) decreased from 18 to 6 or (2) increased from 18 to 30. The population was initially constituted of hare hunters and we kept the same ratio of prey as in previous experiments (i.e. 50% of hares and 50% of stags). We show (see supporting information <xref ref-type="supplementary-material" rid="pcbi.1004886.s003">S3 Fig(a)</xref>) that when the number of prey is decreased (6) the transition to a cooperative strategy is facilitated (Mann-Whitney, <italic>p</italic>-value &lt;0.05) as in 9 runs out of 30, more than 30% of the prey hunted are stags. In comparison, a higher density of prey (30) entails that it is impossible to evolve cooperation (see supporting information <xref ref-type="supplementary-material" rid="pcbi.1004886.s003">S3 Fig(b)</xref>). These results reinforce our claim that the practical mechanics of coordination are crucial in understanding the evolution of cooperation. In particular, here, the precise ecological situation faced by individuals plays a key role in the transition to the collective equilibrium.</p>
+<p>Finally, the complexity of coordination suggests that the recycling of a previously evolved trait could be necessary for the transition to cooperation, i.e. individuals could coordinate thanks to behavioural features that may not have been selected for cooperation at first. Such features could include the evolution of communication, or a leader-follower strategy. The role of both of these behaviours has already been studied in real-life stag hunt type interactions in chimpanzees and human children [<xref ref-type="bibr" rid="pcbi.1004886.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref026">26</xref>], and there is an already extensive literature in evolutionary robotics on their role in the evolution of collective actions [<xref ref-type="bibr" rid="pcbi.1004886.ref016">16</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref019">19</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004886.ref027">27</xref>]. This offers some directions for future works on this problem.</p>
+</sec>
+<sec id="sec012">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004886.s001" mimetype="application/eps" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.s001" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Evolution of cooperation in a game-theoretic simulation with an initial hare-hunting strategy.</title>
+<p>Evolution of the mean percentage of stags hunted with respect to the total number of prey hunted where individuals are initially unable to hunt for 30 independent runs. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004886.s002" mimetype="application/eps" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.s002" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Evolution of cooperation under maximal genetic relatedness with no initial hunting strategy.</title>
+<p>Evolution of the mean percentage of stags hunted with respect to the total number of prey hunted in a robotic simulation. The genetic relatedness between paired individuals was 1. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004886.s003" mimetype="application/eps" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.s003" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Evolution of cooperation with an initial hare-hunting strategy and a varied density of prey.</title>
+<p>Evolution of the mean percentage of stags hunted successfully (i.e. cooperatively) with respect to the total number of prey hunted in a robotic simulation when the number of prey was <italic>(a)</italic> 6 and <italic>(b)</italic> 30. The population for each of the 30 independent runs was previously evolved in an environment with only hares. Rewards were 50 for a hare, 0 for a stag hunted alone, and 500 for a stag hunted cooperatively as presented in <xref ref-type="table" rid="pcbi.1004886.t001">Table 1</xref>. The number of prey was kept constant throughout the simulation by replacing killed prey by a prey of the same type.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004886.s004" mimetype="video/mp4" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.s004" xlink:type="simple">
+<label>S1 Movie</label>
+<caption>
+<title>Movie simulation of the best individual in a cooperative run.</title>
+<p>Complete trial of the best individual in a run where a cooperative behaviour evolved. Rewards were 50 for a hare, 50 for a stag hunted alone, and 500 for a stag hunted cooperatively. The left section of the movie shows the behaviours of the simulated robots during the trial while the right section is a representation of the sensory information of each hunter. The sensory information of the agent circled in black is shown on the top part of this latter section and the sensors of the other agent on the bottom. For each agent, the top twelve rectangles represent the type of agent recognized by each ray of the camera. The activation of each proximity sensors is shown below, with the length of each ray representing the strength of activation (i.e. the proximity to an obstacle) and the blue circle representing the radius of maximum activation.</p>
+<p>(MP4)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004886.s005" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004886.s005" xlink:type="simple">
+<label>S1 Code</label>
+<caption>
+<title>Source code.</title>
+<p>(GZ)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>Experiments presented in this paper were carried out using the Grid’5000 experimental testbed, being developed under the INRIA ALADDIN development action with support from CNRS, RENATER and several Universities as well as other funding bodies (see <ext-link ext-link-type="uri" xlink:href="https://www.grid5000.fr" xlink:type="simple">https://www.grid5000.fr</ext-link>). This is paper ISEM 2016-065.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004886.ref001">
+<label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hamilton</surname> <given-names>WD</given-names></name>. <article-title>The genetical evolution of social behaviour</article-title>. <source>I. Journal of theoretical biology</source>. <year>1964</year> <month>Jul</month>;<volume>7</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>16</lpage>. Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/5875341" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/5875341</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0022-5193(64)90038-4" xlink:type="simple">10.1016/0022-5193(64)90038-4</ext-link></comment> <object-id pub-id-type="pmid">5875341</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>West</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Griffin</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Gardner</surname> <given-names>A</given-names></name>. <article-title>Social semantics: altruism, cooperation, mutualism, strong reciprocity and group selection</article-title>. <source>Journal of evolutionary biology</source>. <year>2007</year> <month>Mar</month>;<volume>20</volume>(<issue>2</issue>):<fpage>415</fpage>–<lpage>32</lpage>. Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17305808" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/17305808</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1420-9101.2006.01258.x" xlink:type="simple">10.1111/j.1420-9101.2006.01258.x</ext-link></comment> <object-id pub-id-type="pmid">17305808</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref003">
+<label>3</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Alvard</surname> <given-names>MS</given-names></name>. <chapter-title>Mutualistic Hunting</chapter-title>. In: <name name-style="western"><surname>Craig Stanford</surname> <given-names>HB</given-names></name>, editor. <source>The Early Human Diet: the Role of Meat</source>. <publisher-loc>oxford uni ed. New York, New York, USA</publisher-loc>: <publisher-name>Oxford University Press</publisher-name>; <year>2001</year>. p. <fpage>261</fpage>–<lpage>278</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Alvard</surname> <given-names>MS</given-names></name>. <article-title>Kinship, Lineage, and an Evolutionary Perspective on Cooperative Hunting Groups in Indonesia</article-title>. <source>Human Nature</source>. <year>2003</year>;<volume>14</volume>(<issue>2</issue>):<fpage>129</fpage>–<lpage>163</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s12110-003-1001-5" xlink:type="simple">10.1007/s12110-003-1001-5</ext-link></comment> <object-id pub-id-type="pmid">26190056</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Drea</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Carter</surname> <given-names>AN</given-names></name>. <article-title>Cooperative problem solving in a social carnivore</article-title>. <source>Animal Behaviour</source>. <year>2009</year> <month>Oct</month>;<volume>78</volume>(<issue>4</issue>):<fpage>967</fpage>–<lpage>977</lpage>. Available from: <ext-link ext-link-type="uri" xlink:href="http://linkinghub.elsevier.com/retrieve/pii/S000334720900339X" xlink:type="simple">http://linkinghub.elsevier.com/retrieve/pii/S000334720900339X</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.anbehav.2009.06.030" xlink:type="simple">10.1016/j.anbehav.2009.06.030</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref006">
+<label>6</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Skyrms</surname> <given-names>B</given-names></name>. <source>The Stag Hunt and the Evolution of Social Structure</source>. <publisher-name>Cambridge University Press</publisher-name>; <year>2004</year>. Available from: <ext-link ext-link-type="uri" xlink:href="http://onlinelibrary.wiley.com/doi/10.1002/cbdv.200490137/abstract" xlink:type="simple">http://onlinelibrary.wiley.com/doi/10.1002/cbdv.200490137/abstract</ext-link>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref007">
+<label>7</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Nolfi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>. <source>Evolutionary Robotics</source>. <publisher-name>A Bradford Book</publisher-name>; <year>2004</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Doncieux</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Bredeche</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Mouret</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Eiben</surname> <given-names>AE</given-names></name>. <article-title>Evolutionary robotics: what, why, and where to</article-title>. <source>Frontiers in Robotics and AI</source>. <year>2015</year>;<volume>2</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/frobt.2015.00004" xlink:type="simple">10.3389/frobt.2015.00004</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref009">
+<label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Waibel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>A quantitative test of Hamilton’s rule for the evolution of altruism</article-title>. <source>PLoS biology</source>. <year>2011</year> <month>May</month>;<volume>9</volume>(<issue>5</issue>):<fpage>e1000615</fpage>. Available from: <ext-link ext-link-type="uri" xlink:href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3086867&amp;tool=pmcentrez&amp;rendertype=abstract" xlink:type="simple">http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3086867&amp;tool=pmcentrez&amp;rendertype=abstract</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1000615" xlink:type="simple">10.1371/journal.pbio.1000615</ext-link></comment> <object-id pub-id-type="pmid">21559320</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mitri</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Magnenat</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>Evolutionary conditions for the emergence of communication in robots</article-title>. <source>Current biology: CB</source>. <year>2007</year> <month>Mar</month>;<volume>17</volume>(<issue>6</issue>):<fpage>514</fpage>–<lpage>9</lpage>. Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17320390" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/17320390</ext-link>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2007.01.058" xlink:type="simple">10.1016/j.cub.2007.01.058</ext-link></comment> <object-id pub-id-type="pmid">17320390</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Olson</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Hintze</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Dyer</surname> <given-names>FC</given-names></name>, <name name-style="western"><surname>Knoester</surname> <given-names>DB</given-names></name>, <name name-style="western"><surname>Adami</surname> <given-names>C</given-names></name>. <article-title>Predator confusion is sufficient to evolve swarming behavior</article-title>. <source>Journal of the Royal Society Interface</source>. <year>2013</year>;<volume>10</volume>(<issue>85</issue>):<fpage>20130305</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rsif.2013.0305" xlink:type="simple">10.1098/rsif.2013.0305</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wright</surname> <given-names>S</given-names></name>. <article-title>Evolution in Mendelian Populations</article-title>. <source>Genetics</source>. <year>1931</year>;<volume>16</volume>(<issue>2</issue>):<fpage>97</fpage>–<lpage>159</lpage>. <object-id pub-id-type="pmid">17246615</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref013">
+<label>13</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Eiben</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>JE</given-names></name>. <source>Introduction to Evolutionary Computing</source>. <publisher-name>Springer</publisher-name>; <year>2003</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Trianni</surname> <given-names>V</given-names></name>. <article-title>Evolutionary Robotics: Model or Design?</article-title> <source>Frontiers in Robotics and AI</source>. <year>2014</year> <month>Dec</month>;<volume>1</volume>:<fpage>1</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/frobt.2014.00013" xlink:type="simple">10.3389/frobt.2014.00013</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Tarapore</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>Task-dependent influence of genetic architecture and mating frequency on division of labour in social insect societies</article-title> <source>Behavioral Ecology and Sociobiology</source>. <year>2010</year>;<volume>64</volume>(<issue>4</issue>):<fpage>675</fpage>–<lpage>684</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00265-009-0885-4" xlink:type="simple">10.1007/s00265-009-0885-4</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ferrante</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Turgut</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Duéñez-Guzmán</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Dorigo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wenseleers</surname> <given-names>T</given-names></name>. <article-title>Evolution of self-organized task specialization in robot swarms</article-title> <source>PLOS Computational Biology</source>. <year>2015</year>;<volume>11</volume>(<issue>8</issue>):<fpage>1</fpage>–<lpage>21</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1004273" xlink:type="simple">10.1371/journal.pcbi.1004273</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mitri</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>Relatedness influences signal reliability in evolving robots</article-title> <source>Proc. R. Soc. Lond. B Biol. Sci</source>. <year>2011</year>;<volume>278</volume>:<fpage>378</fpage>–<lpage>384</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2010.1407" xlink:type="simple">10.1098/rspb.2010.1407</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wischmann</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>Historical contingency affects signaling strategies and competitive abilities in evolving populations of simulated robots</article-title> <source>Proceedings of the National Academy of Sciences of the United States of America (PNAS)</source>. <year>2012</year>;<volume>109</volume>(<issue>3</issue>):<fpage>864</fpage>–<lpage>868</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1104267109" xlink:type="simple">10.1073/pnas.1104267109</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref019">
+<label>19</label>
+<mixed-citation publication-type="other" xlink:type="simple">Solomon M, Soule T, Heckendorn, RB. A Comparison of Communication Strategies in Cooperative Learning Proceedings of the 14th Annual Conference on Genetic and Evolutionary Computation (GECCO 12). 2012;153–160</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref020">
+<label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Waibel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>. <article-title>Genetic Team Composition and Level of Selection in the Evolution of Cooperation</article-title> <source>IEEE Transactions on Evolutionary Computation</source>. <year>2009</year>;<volume>13</volume>(<issue>3</issue>):<fpage>648</fpage>–<lpage>660</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TEVC.2008.2011741" xlink:type="simple">10.1109/TEVC.2008.2011741</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref021">
+<label>21</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Hauert</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Mitri</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>. <chapter-title>Evolving Cooperation: From Biology to Engineering</chapter-title> In: <name name-style="western"><surname>Vargas</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Di Parolo</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Harvey</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Husbands</surname> <given-names>P</given-names></name>, editors. <source>The Horizons of Evolutionary Robotics</source>. <publisher-loc>Cambridge, MA</publisher-loc>: <publisher-name>MIT Press</publisher-name>; <year>2014</year>. p. <fpage>203</fpage>–<lpage>217</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref022">
+<label>22</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Trianni</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Ampatzis</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Christensen</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Tuci</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Dorigo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Nolfi</surname> <given-names>S</given-names></name>. <chapter-title>From Solitary to Collective Behaviours: Decision Making and Cooperation</chapter-title> In: <name name-style="western"><surname>Almeida e Costa</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Rocha</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Costa</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Harvey</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Coutinho</surname> <given-names>A</given-names></name>, editors. <source>Advances in Artificial Life: 9th European Conference, ECAL 2007, Lisbon, Portugal, September 10–14, 2007. Proceedings</source>. <publisher-loc>Berlin, Heidelberg</publisher-loc>: <publisher-name>Springer Berlin Heidelberg</publisher-name>; <year>2007</year>. p. <fpage>575</fpage>–<lpage>584</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref023">
+<label>23</label>
+<mixed-citation publication-type="other" xlink:type="simple">Montanier, JM, Bredeche, N. Surviving the Tragedy of Commons: Emergence of Altruism in a Population of Evolving Autonomous Agents Proceedings of the 11th International Conference on Artificial Life (ECAL’11). 2013;550–557</mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mitri</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wischmann</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>Using Robots to Understand Social Behaviour</article-title> <source>Biological Reviews</source>. <year>2013</year>;<volume>88</volume>:<fpage>31</fpage>–<lpage>39</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1469-185X.2012.00236.x" xlink:type="simple">10.1111/j.1469-185X.2012.00236.x</ext-link></comment> <object-id pub-id-type="pmid">22816672</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bullinger</surname> <given-names>AF</given-names></name>, <name name-style="western"><surname>Wyman</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Melis</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Tomasello</surname> <given-names>M</given-names></name>. <article-title>Coordination of Chimpanzees (Pan troglodyes) in a Stag Hunt Game</article-title> <source>Internation Journal of Primatology</source>. <year>2011</year>;<volume>32</volume>(<issue>6</issue>):<fpage>1296</fpage>–<lpage>1310</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10764-011-9546-3" xlink:type="simple">10.1007/s10764-011-9546-3</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref026">
+<label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Duguid</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wyman</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Bullinger</surname> <given-names>AF</given-names></name>, <name name-style="western"><surname>Herfurth-Majstorovic</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Tomasello</surname> <given-names>M</given-names></name>. <article-title>Coordination strategies of chimpanzees and human children in a Stag Hunt game</article-title> <source>Proceedings of the Royal Society of London B: Biological Sciences</source>. <year>2014</year>;<volume>281</volume>(<issue>1796</issue>) <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2014.1973" xlink:type="simple">10.1098/rspb.2014.1973</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mitri</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Floreano</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Keller</surname> <given-names>L</given-names></name>. <article-title>The evolution of information suppression in communicating robots with conflicting interests</article-title> <source>Proceedings of the National Academy of Sciences</source>. <year>2009</year>;<volume>106</volume>(<issue>37</issue>):<fpage>15786</fpage>–<lpage>15790</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0903152106" xlink:type="simple">10.1073/pnas.0903152106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref028">
+<label>28</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Leimar</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Connor</surname> <given-names>RC</given-names></name>. <chapter-title>By-product benefits, Reciprocity and Pseudoreciprocity in Mutualism</chapter-title> In: <name name-style="western"><surname>Hammerstein</surname> <given-names>P</given-names></name>, editor. <source>Genetic and Cultural Evolution of Cooperation</source>. <publisher-loc>Cambridge, MA</publisher-loc>: <publisher-name>MIT Press</publisher-name>; <year>2003</year>. p. <fpage>203</fpage>–<lpage>222</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1004886.ref029">
+<label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Leimar</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Hammerstein</surname> <given-names>P</given-names></name>. <article-title>Cooperation for direct fitness benefits</article-title> <source>Philosophical Transactions of the Royal Society of London B: Biological Sciences</source>. <year>2010</year>;<volume>365</volume>(<issue>1553</issue>):<fpage>2619</fpage>–<lpage>2626</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rstb.2010.0116" xlink:type="simple">10.1098/rstb.2010.0116</ext-link></comment> <object-id pub-id-type="pmid">20679106</object-id></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

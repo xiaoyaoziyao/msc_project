@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-09358</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0074310</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>Detecting Rare Variants in Case-Parents Association Studies</article-title>
+<alt-title alt-title-type="running-head">Detecting Rare Variants</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>Kuang-Fu</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>Jin-Hua</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Biostatistics Center and Department of Epidemiology, Taipei Medical University, Taipei, Taiwan</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Graduate Institute of Statistics, National Central University, Chungli, Taiwan</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Hsiao</surname><given-names>Chuhsing Kate</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>National Taiwan University, Taiwan</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">Kfcheng@tmu.edu.tw</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: KFC. Performed the experiments: KFC JHC. Analyzed the data: KFC JHC. Contributed reagents/materials/analysis tools: KFC. Wrote the paper: KFC.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>26</day><month>9</month><year>2013</year></pub-date>
+<volume>8</volume>
+<issue>9</issue>
+<elocation-id>e74310</elocation-id>
+<history>
+<date date-type="received"><day>27</day><month>2</month><year>2013</year></date>
+<date date-type="accepted"><day>31</day><month>7</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Cheng, Chen</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Despite the success of genome-wide association studies (GWASs) in detecting common variants (minor allele frequency ≥0.05) many suggested that rare variants also contribute to the genetic architecture of diseases. Recently, researchers demonstrated that rare variants can show a strong stratification which may not be corrected by using existing methods. In this paper, we focus on a case-parents study and consider methods for testing group-wise association between multiple rare (and common) variants in a gene region and a disease. All tests depend on the numbers of transmitted mutant alleles from parents to their diseased children across variants and hence they are robust to the effect of population stratification. We use extensive simulation studies to compare the performance of four competing tests: the largest single-variant transmission disequilibrium test (<italic>TDT</italic>), multivariable test, combined <italic>TDT</italic>, and a likelihood ratio test based on a random-effects model. We find that the likelihood ratio test is most powerful in a wide range of settings and there is no negative impact to its power performance when common variants are also included in the analysis. If deleterious and protective variants are simultaneously analyzed, the likelihood ratio test was generally insensitive to the effect directionality, unless the effects are extremely inconsistent in one direction.</p>
+</abstract>
+<funding-group><funding-statement>This research was supported in part by the National Science Council, Taiwan (NSC100-2118-M-039-001-MY3). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>In human medical genetics, one often hypothesizes that genetic susceptibility to common diseases such as diabetes is mainly due to the alleles that have moderate frequencies in the population. However, there is increasing evidence showing that there is extreme allelic and locus heterogeneity and multiple rare variants underlie susceptibility to such diseases. <xref ref-type="bibr" rid="pone.0074310-Iyengar1">[1]</xref>, <xref ref-type="bibr" rid="pone.0074310-Smith1">[2]</xref> So far, GWASs, focusing mainly on common single nucleotide polymorphisms (SNPs), have detected over 2000 loci associated with diseases and traits <xref ref-type="bibr" rid="pone.0074310-Ku1">[3]</xref>. However, many identified SNPs have very small effect sizes and the proportion of heritability explained by common variants is only modest <xref ref-type="bibr" rid="pone.0074310-Maher1">[4]</xref>. Recently, Cirulli and Goldstein <xref ref-type="bibr" rid="pone.0074310-Cirulli1">[5]</xref> evaluated the evidence for an important role of rare variants of major effect in common diseases and suggested the hypothesis that multiple rare gene variants, each with moderate to high penetrance, could play an important role in common diseases <xref ref-type="bibr" rid="pone.0074310-Bodmer1">[6]</xref>–<xref ref-type="bibr" rid="pone.0074310-Schork1">[8]</xref>. Some studies have demonstrated that both common and rare alleles may lead to the same disease. For examples, multiple rare mutations were found to be related to early-onset Alzheimer’s disease <xref ref-type="bibr" rid="pone.0074310-Bird1">[9]</xref>. Rare mutations in genes involved in immune response also confer a high risk for lupus <xref ref-type="bibr" rid="pone.0074310-Moser1">[10]</xref>. An effective way to discover disease-associated rare variants is through direct sequencing of relevant regions (for examples, linkage regions, all exons, all promoters). Botstein and Risch <xref ref-type="bibr" rid="pone.0074310-Botstein1">[11]</xref> suggested study of nonsynonymous SNPs in common diseases. With the advances in resequencing technologies, many believed that it is possible to search systematically for rare variant effects that are not tagged by panels of common SNPs.</p>
+<p>In detecting associations with common variants, two approaches are often used. One approach is the single-variant test with family-wise error rate controlled by a multiple testing correction (for example, Bonferroni, permutation). Another approach is to use a multivariable method for testing all variants simultaneously. However, application of either approach with multiple rare variants involves multiplicity (that is, large degrees of freedom or large number of comparisons) and data sparseness, which will reduce power. To solve this problem when multiple rare variants are expected to jointly influence disease risk, an often-used approach is to group the variants according to some identified function and to test the combined effect of multiple rare variants. This motivates several collapsing methods, with or without weighting, to enrich association signals and at the same time reduce degrees of freedom <xref ref-type="bibr" rid="pone.0074310-Li1">[12]</xref>–<xref ref-type="bibr" rid="pone.0074310-Lin1">[16]</xref>.</p>
+<p>Collapsing methods were mainly designed for detecting rare variants in case-control studies. However, recently, Mathieson and McVean <xref ref-type="bibr" rid="pone.0074310-Mathieson1">[17]</xref> showed that the bias due to rare variant population stratification was typically stronger than the bias due to common variant population stratification and existing association tests for case-control studies may not be able to correct for its effect. In this paper, methods for analyzing sequence data from case-parents studies are investigated. The related methods for detecting single variant association are well known to be robust to the effect of population stratification<bold>.</bold> In the case of detecting association with multiple rare variants, we show these methods continue to be robust.</p>
+<p>Here, we focus on a case-parents scenario in which a group of rare variants has been identified. Our aim is to test whether these rare variants are associated with the disease of interest. Four tests are considered for detecting rare variants. The first test is based on the largest single-variant <italic>TDT</italic> <xref ref-type="bibr" rid="pone.0074310-Spielman1">[18]</xref>. The second test is a multivariable test proposed by Zhang et al. <xref ref-type="bibr" rid="pone.0074310-Zhang1">[19]</xref>. Their approach uses a score vector based on the differences of transmitted and non-transmitted genotypic codes across all variants. The third test is a simple extension of the <italic>TDT</italic> based on combining the numbers of transmitted mutant alleles across all variants from parents, called combined TDT (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e001" xlink:type="simple"/></inline-formula>). The fourth test is a novel method derived from the use of a random-effects model. The p-values of the four tests are computed using a permutation argument. By using this approach, we only need genotype data of the variants for computing the four test statistics. All tests discussed here depend on the number of the transmitted mutant alleles from heterozygous parents. Thus they are robust to the effect of population stratification. We investigate the validity of the four tests and their power performance under various conditions on the number of families, number of functional variants and their effect sizes, number of nonfunctional variants in the region, variant frequency and effect directionality. The simulation results indicated that for non-functional gene, the type I errors of the tests all could be adequately controlled near to the designated significance level, if our permutation method was used. The results also concluded that the test based on the random-effects model was most powerful under all conditions used in simulations. We found no negative effect to its power performance when rare and common variants were analyzed simultaneously. In addition, the impact of effect directionality was small and particularly so when the number of family trios became large.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>In this section, we give a genetic model for family data under allelic heterogeneity. We briefly describe the single-variant <italic>TDT</italic> and multivariable test, and give a formal definition of the combined <italic>TDT</italic>. Lastly, we propose a new test based on a random-effects model with a mixture distribution. Simulations are used for empirical evaluation of type I error rates and power.</p>
+<sec id="s2a">
+<title>Genetic Model and Basic Results</title>
+<p>We assume that within a gene region, there are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e002" xlink:type="simple"/></inline-formula> variants that may cause disease susceptibility. Here region is referred to the unit in which the variants are collectively analyzed. For each variant, we choose which allele of the variant to consider as mutation. Usually, this will be the minor allele. We focus discussion on a family study with sample of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e003" xlink:type="simple"/></inline-formula> family trios. It is possible to extend our statistics for nuclear families or even general pedigrees <xref ref-type="bibr" rid="pone.0074310-Martin1">[20]</xref>. However, a common feature shared by common and rare variants is that they tend to give rise to a weak familial concentration of cases <xref ref-type="bibr" rid="pone.0074310-Bodmer1">[6]</xref>.</p>
+<p>At each variant site, we assume that genotypes of father, mother and a diseased child were observed across families. Let genotypes <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e004" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e005" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e006" xlink:type="simple"/></inline-formula> denote the number of mutant alleles carried by father, mother, and the diseased child, respectively, at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e007" xlink:type="simple"/></inline-formula> variant site. The minor allele frequency (MAF) of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e008" xlink:type="simple"/></inline-formula> variant is denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e009" xlink:type="simple"/></inline-formula>. For genotype <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e010" xlink:type="simple"/></inline-formula> at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e011" xlink:type="simple"/></inline-formula> variant site, let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e012" xlink:type="simple"/></inline-formula> denote the penentrance of the genotype. The genotype relative risks (RRs) at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e013" xlink:type="simple"/></inline-formula> variant site are defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e014" xlink:type="simple"/></inline-formula> and<disp-formula id="pone.0074310.e015"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e015" xlink:type="simple"/></disp-formula></p>
+<p>We assume Hardy-Weinberg Equilibrium (HWE) holds. Thus <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e016" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e017" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e018" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e019" xlink:type="simple"/></inline-formula> The usual TDT is calculated under three mating types: mating type 2, if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e020" xlink:type="simple"/></inline-formula>, mating type 4, if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e021" xlink:type="simple"/></inline-formula>, and mating type 5, if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e022" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pone.0074310-Schaid1">[21]</xref>, where at least one of the parents is heterozygous. For the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e023" xlink:type="simple"/></inline-formula> variant, the probability that the parent is heterozygous and transmits the mutant allele, conditional on the offspring having the disease, is given by<disp-formula id="pone.0074310.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e024" xlink:type="simple"/></disp-formula></p>
+<p>The same probability but not transmitting the mutant allele is given by<disp-formula id="pone.0074310.e025"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e025" xlink:type="simple"/></disp-formula></p>
+<p>Thus, given the heterozygous parent with respect to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e026" xlink:type="simple"/></inline-formula> variant (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e027" xlink:type="simple"/></inline-formula> = 1), the probability of transmitting a mutant allele to the diseased offspring is given by<disp-formula id="pone.0074310.e028"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e028" xlink:type="simple"/></disp-formula></p>
+<p>Under the null association, this probability equals to 1/2. In this paper, we focus our discussion on the dominant genetic model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e029" xlink:type="simple"/></inline-formula> We point out that since the rare variants have very low allele frequencies, the chance of a subject carrying two mutant alleles is small. Thus, the power of the proposed association tests under the recessive model tends to be small. However, the corresponding power under other genetic models is expected to be similar to that under the dominant genetic model.</p>
+</sec><sec id="s2b">
+<title>Single-variant <italic>TDT</italic></title>
+<p>One approach of association studies is to test the association of each variant separately using a univariable test and assess the significance of the overall test after correction for multiple comparisons. The <italic>TDT</italic> is the most popular univariable test in family studies. It compares the numbers of transmitted mutant alleles and non-transmitted mutant alleles from heterozygous parents of the diseased children. Specifically, for the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e030" xlink:type="simple"/></inline-formula> variant, we denote the number of transmitted mutant alleles from heterozygous parents as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e031" xlink:type="simple"/></inline-formula> and the number of non-transmitted mutant alleles as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e032" xlink:type="simple"/></inline-formula>. The <italic>TDT</italic> statistic is defined by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e033" xlink:type="simple"/></inline-formula> If the overall type I error rate of the multiple testing is determined at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e034" xlink:type="simple"/></inline-formula> level, and Bonferroni correction is used, then the significance level for each single-marker test should be <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e035" xlink:type="simple"/></inline-formula>. Unfortunately, this approach tends to have conservative type I error and is under-powered in general. To mitigate this problem, one could use the test statistic <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e036" xlink:type="simple"/></inline-formula> and apply the following permutation method to compute its p-value. This permutation method consists of n permutation steps. In the <italic>ith</italic> permutation step, the transmitted and non-transmitted genotype vectors within each family are randomly permuted and the test statistic <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e037" xlink:type="simple"/></inline-formula> based the <italic>ith</italic> permuted data set is computed. The p-value is defined as the proportion of times that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e038" xlink:type="simple"/></inline-formula> exceeds <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e039" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e040" xlink:type="simple"/></inline-formula> This test procedure is denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e041" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s2c">
+<title>Multivariable Test</title>
+<p>A multivariable test for the study of association is to test all variants simultaneously using a multivariable technique. Here, we focus on the approach suggested by Zhang et al. <xref ref-type="bibr" rid="pone.0074310-Zhang1">[19]</xref>. A very similar multi-marker method was also proposed by Shi, et al. <xref ref-type="bibr" rid="pone.0074310-Shi1">[22]</xref>. Let genotypes <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e042" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e043" xlink:type="simple"/></inline-formula> denote the number of mutant alleles carried by father, mother, and the diseased child, respectively, in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e044" xlink:type="simple"/></inline-formula> family at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e045" xlink:type="simple"/></inline-formula> variant site. Zhang et al. considered the difference of the numbers of transmitted and non-transmitted mutant alleles <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e046" xlink:type="simple"/></inline-formula> and multiple-marker scores <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e047" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e048" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e049" xlink:type="simple"/></inline-formula>). The variance-covariance estimate of the scores under the null hypothesis was given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e050" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e051" xlink:type="simple"/></inline-formula>. The statistic of the test was defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e052" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e053" xlink:type="simple"/></inline-formula> is the generalized inverse of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e054" xlink:type="simple"/></inline-formula>. Under the null hypothesis of no association, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e055" xlink:type="simple"/></inline-formula> has asymptotic <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e056" xlink:type="simple"/></inline-formula> distribution with degrees of freedom equal to the rank of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e057" xlink:type="simple"/></inline-formula>. However, the p-value based on the asymptotic result also gives conservative type I error and low power, unless the number of markers is small. In this paper, we propose using the same permutation method described above to compute its p-value.</p>
+</sec><sec id="s2d">
+<title>Combined <italic>TDT</italic></title>
+<p>Another approach based on the transmitted genotypes is the collapsing method. This method is to combine transmitted (non-transmitted) mutant alleles, usually minor alleles, across all variants to enrich the signals of mutation and simultaneously reduce the degrees of freedom. Several versions of the combining method also can be considered in this regard. However, one simple and yet more powerful version is to combine the numbers of transmitted and non-transmitted mutant alleles across all variants by defining <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e058" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e059" xlink:type="simple"/></inline-formula>. The combined <italic>TDT</italic> statistic is defined by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e060" xlink:type="simple"/></inline-formula>.</p>
+<p>Under the null hypothesis, the asymptotic distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e061" xlink:type="simple"/></inline-formula> is not totally clear, since the variants may be correlated. Here, we also propose using the same permutation method to compute its p-value.</p>
+</sec><sec id="s2e">
+<title>Likelihood Ratio Test Based on a Random-effects Model</title>
+<p>At the <italic>jth</italic> variant, we note that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e062" xlink:type="simple"/></inline-formula> is the probability of a heterozygous parent transmitting the mutant allele to his/her affected offspring, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e063" xlink:type="simple"/></inline-formula> is the total number of heterozygous parents in the sample. Thus, conditional on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e064" xlink:type="simple"/></inline-formula> heterozygous parents, the probability of observing <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e065" xlink:type="simple"/></inline-formula> mutant alleles transmitted is given by<disp-formula id="pone.0074310.e066"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e066" xlink:type="simple"/></disp-formula>a binomial probability, if there is no population stratification. However, in the case of no linkage and no association association, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e067" xlink:type="simple"/></inline-formula>  = 0.5 and the probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e068" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e069" xlink:type="simple"/></inline-formula> is a binomial probability, even there is population stratification. Thus, any test, depending only on the numbers of transmitted and non-transmitted alleles, has type I error robust to the population stratification.</p>
+<p>We note that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e070" xlink:type="simple"/></inline-formula> is bounded, 0.5&lt; <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e071" xlink:type="simple"/></inline-formula> &lt;1, if the variant is functional (defined to be risk-related, here and after) and has deleterious effect. Very often, however, one can identify an upper bound for relative risks, say <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e072" xlink:type="simple"/></inline-formula>. Under this situation and a dominant genetic model, the transmission probabilities is bounded by 0.5 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e073" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e074" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e075" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e076" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e077" xlink:type="simple"/></inline-formula> is treated as a known quantity. Here <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e078" xlink:type="simple"/></inline-formula> is the estimate of allele frequency based on the case-parents genotypes under HWE condition <xref ref-type="bibr" rid="pone.0074310-Scherag1">[23]</xref>. We let the proportion of the functional variants in the gene region be given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e079" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e080" xlink:type="simple"/></inline-formula>, and follow the formulation of random-effects model (Laird and Ware <xref ref-type="bibr" rid="pone.0074310-Laird1">[24]</xref>) to treat <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e081" xlink:type="simple"/></inline-formula> as a random variable. Then <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e082" xlink:type="simple"/></inline-formula> has a mixture distribution given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e083" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e084" xlink:type="simple"/></inline-formula> Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e085" xlink:type="simple"/></inline-formula> is a uniform distribution over the interval between 0.5 and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e086" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e087" xlink:type="simple"/></inline-formula> is a distribution with probability mass 1 at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e088" xlink:type="simple"/></inline-formula>. From this simple model one finds that association testing can be done by simply testing H<sub>0</sub>: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e089" xlink:type="simple"/></inline-formula> That is, the fraction of functional variants is zero. We note that the value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e090" xlink:type="simple"/></inline-formula> is inversely related to the magnitude of the MAF <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e091" xlink:type="simple"/></inline-formula>. Thus according to the mixture distribution, the random effect <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e092" xlink:type="simple"/></inline-formula> is assumed to take smaller mean effect value when the corresponding MAF is larger. This model property agrees with the usual observation in the genetic studies that common variants tend to have smaller effects and rare variants tend to have moderate or larger effects; see Smith and Lusis <xref ref-type="bibr" rid="pone.0074310-Smith2">[25]</xref>.</p>
+<p>To infer parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e093" xlink:type="simple"/></inline-formula> , we consider the marginal distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e094" xlink:type="simple"/></inline-formula>. This can be done by combining the binomial distribution and mixture distribution. Simple calculation shows that the marginal distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e095" xlink:type="simple"/></inline-formula> is given by<disp-formula id="pone.0074310.e096"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e096" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e097" xlink:type="simple"/></inline-formula> is the cdf of a beta distribution evaluated at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e098" xlink:type="simple"/></inline-formula> and has parameters (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e099" xlink:type="simple"/></inline-formula>,<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e100" xlink:type="simple"/></inline-formula>) and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e101" xlink:type="simple"/></inline-formula> is the usual beta function evaluated at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e102" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e103" xlink:type="simple"/></inline-formula>. We use a pseudo likelihood function, defined by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e104" xlink:type="simple"/></inline-formula> to work as if it is the true likelihood. This is because that the numbers of transmitted alleles <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e105" xlink:type="simple"/></inline-formula> across all variants may not be independent. We also use the usual likelihood ratio statistic <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e106" xlink:type="simple"/></inline-formula>  = 2log <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e107" xlink:type="simple"/></inline-formula>−2log<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e108" xlink:type="simple"/></inline-formula> to test the null hypothesis, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e109" xlink:type="simple"/></inline-formula> is the usual maximum likelihood estimate of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e110" xlink:type="simple"/></inline-formula> We suggest that the p-value of the likelihood ratio test (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e111" xlink:type="simple"/></inline-formula>) also be computed through the use of the same permutation method described above.</p>
+</sec><sec id="s2f">
+<title>Evaluation of Type I Error Rate and Power</title>
+<p>To evaluate the performance of four tests: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e112" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e113" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e114" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e115" xlink:type="simple"/></inline-formula>, simulations were used to generate diplotypes of parents and diseased children for the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e116" xlink:type="simple"/></inline-formula> variants within a gene region. We first generated parental diplotypes. We used coalescent model <xref ref-type="bibr" rid="pone.0074310-Schaffner1">[26]</xref> that mimics the LD pattern, recombination rate and population history for the Europeans to simulate realistic sequence-level genetic data. We randomly selected one gene region with 250 kb in length and used COSI <xref ref-type="bibr" rid="pone.0074310-Schaffner1">[26]</xref> to generate a pool of 25000 haplotypes. From this pool of haplotypes, we calculated the haplotype frequencies of all variants and generated parental diplotypes. The diplotype of the offspring was determined by randomly transmitting one haplotype from each of his/her parents. The disease status of the offspring was determined by the relative risks and disease prevalence. Let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e117" xlink:type="simple"/></inline-formula> denote that the child is diseased and 0, otherwise. Also recall that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e118" xlink:type="simple"/></inline-formula> is the number of mutant alleles carried by the diseased child at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e119" xlink:type="simple"/></inline-formula> variant site. The relative risk (RR) model was given by<disp-formula id="pone.0074310.e120"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0074310.e120" xlink:type="simple"/></disp-formula>where the relative risk due to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e121" xlink:type="simple"/></inline-formula> variant was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e122" xlink:type="simple"/></inline-formula>. The RR of a functional variant was determined according to its <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e123" xlink:type="simple"/></inline-formula> and the RR-range (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e124" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e125" xlink:type="simple"/></inline-formula>) of all functional variants, through the following formula: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e126" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e127" xlink:type="simple"/></inline-formula> Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e128" xlink:type="simple"/></inline-formula>(<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e129" xlink:type="simple"/></inline-formula>) was the smallest (largest) MAF of all functional variants. This in effect means that functional variant with smaller frequency was assigned larger effect size in the simulations.</p>
+<p>In all simulations, we randomly selected <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e130" xlink:type="simple"/></inline-formula> variants from the simulated region and assumed the first <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e131" xlink:type="simple"/></inline-formula> variants were functional and the rest were nonfunctional. In all scenarios, rare variants with minor allele frequencies (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e132" xlink:type="simple"/></inline-formula>) ranging from 0.1% to 1% were randomly selected. Higher frequency (common) variants had <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e133" xlink:type="simple"/></inline-formula> either 3% or 5%. Among the randomly selected rare variants in our simulations, the largest minor allele frequency (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e134" xlink:type="simple"/></inline-formula>) was 0.00936 and the smallest minor allele frequency (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e135" xlink:type="simple"/></inline-formula>) was 0.00120.</p>
+<p>Given the disease risks for all functional variants, haplotype frequencies, and disease prevalence rate equal to 1%, we determined the disease status of each offspring and sampled families until a pre-specified number of case-parents trios (500–2000) was reached. In order to evaluate type I error rate of each test under the null hypothesis, we considered regions with (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e136" xlink:type="simple"/></inline-formula> = ) 5–100 rare variants. Next, in order to study the power performance and its impact due to the inclusion of the nonfunctional variants in the studied region, we considered regions with (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e137" xlink:type="simple"/></inline-formula> = ) 2 and 10 functional variants, and RR ranges 1.8–2.0 and 3.4–3.6, respectively. The percentage of nonfunctional variants was chosen to be 0%, 50%, 67% 75%, 80%, 90%, or 95%. The functional variants may be protective or deleterious. To study its impact, we also considered a region with 10 functional variants and each variant had 10%, 20%, 30%, or 40% chance of being protective. The RR of the protective variant was taken as the inverse of that for the deleterious variant. Finally, in order to study the power performance of the tests when rare and common variants in the same region were simultaneously analyzed, we considered a region with 5 functional variants and 20 nonfunctional variants under two scenarios: (1) functional variants included 1 or 2 common variants with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e138" xlink:type="simple"/></inline-formula> equal to 3%, 5% and the rest of the variants rare; (2) nonfunctional variants included 1 or 2 common variants with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e139" xlink:type="simple"/></inline-formula> equal to 3%, 5%, and the rest of the variants rare.</p>
+<p>All simulation results given in this paper were based on 5000 independently simulated samples. In each sample, we performed n = 10,000 permutation steps to compute p-values for all tests. The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e140" xlink:type="simple"/></inline-formula> statistic was defined with the choice of relative risk upper bound <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e141" xlink:type="simple"/></inline-formula> = 5. Type I error rates and power of all tests were estimated by the proportions of replicates with p-value &lt;0.05.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Empirical Type I Error Rates</title>
+<p><xref ref-type="table" rid="pone-0074310-t001">Table 1</xref> shows empirical type I error rates of the competing tests in detecting rare variants when the significance level was designed at 5%. From <xref ref-type="table" rid="pone-0074310-t001">Table 1</xref>, we first found that the type I error rates of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e142" xlink:type="simple"/></inline-formula> were slightly conservative when sample size was small. However, its performance can be improved by increasing the number of family trios. Under all simulated conditions, the range of its type I errors was (0.0325, 0.0592). In contrast, the corresponding type I error ranges for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e143" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e144" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e145" xlink:type="simple"/></inline-formula> were respectively given by (0.0436, 0.0564), (0.0425,0.0580) and (0.0308, 0.0470). This indicates that the permutation method proposed in the paper can effectively control type I errors of all tests near the designated level.</p>
+<table-wrap id="pone-0074310-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0074310.t001</object-id><label>Table 1</label><caption>
+<title>Type I error rates of the tests when the true significance level is 5%.</title>
+</caption><alternatives><graphic id="pone-0074310-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0074310.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1">5 nonfunctional variants</td>
+<td colspan="4" align="left" rowspan="1">10 nonfunctional variants</td>
+<td colspan="4" align="left" rowspan="1">20 nonfunctional variants</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sample size</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">0.0328</td>
+<td align="left" rowspan="1" colspan="1">0.0436</td>
+<td align="left" rowspan="1" colspan="1">0.0496</td>
+<td align="left" rowspan="1" colspan="1">0.0308</td>
+<td align="left" rowspan="1" colspan="1">0.0378</td>
+<td align="left" rowspan="1" colspan="1">0.0438</td>
+<td align="left" rowspan="1" colspan="1">0.0470</td>
+<td align="left" rowspan="1" colspan="1">0.0318</td>
+<td align="left" rowspan="1" colspan="1">0.0325</td>
+<td align="left" rowspan="1" colspan="1">0.0475</td>
+<td align="left" rowspan="1" colspan="1">0.0425</td>
+<td align="left" rowspan="1" colspan="1">0.0312</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="left" rowspan="1" colspan="1">0.0336</td>
+<td align="left" rowspan="1" colspan="1">0.0440</td>
+<td align="left" rowspan="1" colspan="1">0.0462</td>
+<td align="left" rowspan="1" colspan="1">0.0380</td>
+<td align="left" rowspan="1" colspan="1">0.0478</td>
+<td align="left" rowspan="1" colspan="1">0.0518</td>
+<td align="left" rowspan="1" colspan="1">0.0460</td>
+<td align="left" rowspan="1" colspan="1">0.0420</td>
+<td align="left" rowspan="1" colspan="1">0.0522</td>
+<td align="left" rowspan="1" colspan="1">0.0548</td>
+<td align="left" rowspan="1" colspan="1">0.0508</td>
+<td align="left" rowspan="1" colspan="1">0.0438</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">0.0452</td>
+<td align="left" rowspan="1" colspan="1">0.0474</td>
+<td align="left" rowspan="1" colspan="1">0.0558</td>
+<td align="left" rowspan="1" colspan="1">0.0384</td>
+<td align="left" rowspan="1" colspan="1">0.0592</td>
+<td align="left" rowspan="1" colspan="1">0.0558</td>
+<td align="left" rowspan="1" colspan="1">0.0504</td>
+<td align="left" rowspan="1" colspan="1">0.0452</td>
+<td align="left" rowspan="1" colspan="1">0.0438</td>
+<td align="left" rowspan="1" colspan="1">0.0548</td>
+<td align="left" rowspan="1" colspan="1">0.0452</td>
+<td align="left" rowspan="1" colspan="1">0.0470</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1"><bold>50 nonfunctional variants</bold></td>
+<td colspan="4" align="left" rowspan="1"><bold>100 nonfunctional variants</bold></td>
+<td colspan="4" align="left" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Sample size</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><sup>c</sup>TDT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><sup>c</sup>TDT</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">0.0372</td>
+<td align="left" rowspan="1" colspan="1">0.0452</td>
+<td align="left" rowspan="1" colspan="1">0.0450</td>
+<td align="left" rowspan="1" colspan="1">0.0442</td>
+<td align="left" rowspan="1" colspan="1">0.0342</td>
+<td align="left" rowspan="1" colspan="1">0.0460</td>
+<td align="left" rowspan="1" colspan="1">0.0510</td>
+<td align="left" rowspan="1" colspan="1">0.0420</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="left" rowspan="1" colspan="1">0.0414</td>
+<td align="left" rowspan="1" colspan="1">0.0564</td>
+<td align="left" rowspan="1" colspan="1">0.0580</td>
+<td align="left" rowspan="1" colspan="1">0.0414</td>
+<td align="left" rowspan="1" colspan="1">0.0464</td>
+<td align="left" rowspan="1" colspan="1">0.0517</td>
+<td align="left" rowspan="1" colspan="1">0.0568</td>
+<td align="left" rowspan="1" colspan="1">0.0460</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">0.0514</td>
+<td align="left" rowspan="1" colspan="1">0.0486</td>
+<td align="left" rowspan="1" colspan="1">0.0482</td>
+<td align="left" rowspan="1" colspan="1">0.0416</td>
+<td align="left" rowspan="1" colspan="1">0.0544</td>
+<td align="left" rowspan="1" colspan="1">0.0474</td>
+<td align="left" rowspan="1" colspan="1">0.0498</td>
+<td align="left" rowspan="1" colspan="1">0.0400</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s3b">
+<title>Empirical Power when Nonfunctional Variants were Included</title>
+<p>Here, we considered the regions with 2 or 10 functional variants and 0%–95% nonfunctional variants. The effect sizes of the functional variants were inversely proportional to the number of functional variants. The results from <xref ref-type="table" rid="pone-0074310-t002">Table 2</xref> first indicated that the power of the test depends more on the effect size of the variant and less on the number of functional variants. For example, in the case of large effect size (RRs between 3.4 and 3.6) but a small number ( = 2) of functional variants, most of the power was greater than 80% when the family number was moderate or large (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e146" xlink:type="simple"/></inline-formula>1000) and the proportion of the functional variants in the gene region was at least 10%. Under the same conditions, however, the power of the tests was often smaller than 70% when the effect size was small (RRs between 1.8 and 2.0), but the number of functional variants was large ( = 10). The power of the tests tended to be decreased when the proportion of nonfunctional variants was increased to create more noise. However, we found that the tests <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e147" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e148" xlink:type="simple"/></inline-formula> were less sensitive to the nonfunctional variants, and particularly so when the functional variants had larger effect sizes. Unfortunately, the power of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e149" xlink:type="simple"/></inline-formula> was too small in most cases. In contrast, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e150" xlink:type="simple"/></inline-formula> has better empirical power under all simulation conditions considered. The power loss due to the inclusion of nonfunctional variants can be reduced by increasing sample size. For example, if the number of family trios was increased to 2000, the power of the tests <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e151" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e152" xlink:type="simple"/></inline-formula> can be maintained above 80% under all conditions. If the family number was decreased to 500, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e153" xlink:type="simple"/></inline-formula> was still able to maintain its power ranging from 0.7426 to 0.9592 when the proportion of functional variants was no less than 50%. However, under the same condition, the corresponding range for the second best test was only between 0.6650 and 0.7948. Obviously, there was a substantial power advantage accrued by using <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e154" xlink:type="simple"/></inline-formula>.</p>
+<table-wrap id="pone-0074310-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0074310.t002</object-id><label>Table 2</label><caption>
+<title>The power of the tests when nonfunctional rare variants are included.</title>
+</caption><alternatives><graphic id="pone-0074310-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0074310.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1">2 functional variants<xref ref-type="table-fn" rid="nt101">a</xref></td>
+<td colspan="4" align="left" rowspan="1">10 functional variants<xref ref-type="table-fn" rid="nt102">b</xref></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sample Size</td>
+<td align="left" rowspan="1" colspan="1">Proportion offunctional variants</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">100%</td>
+<td align="left" rowspan="1" colspan="1">0.8334</td>
+<td align="left" rowspan="1" colspan="1">0.8896</td>
+<td align="left" rowspan="1" colspan="1">0.9592</td>
+<td align="left" rowspan="1" colspan="1">0.9152</td>
+<td align="left" rowspan="1" colspan="1">0.2674</td>
+<td align="left" rowspan="1" colspan="1">0.4606</td>
+<td align="left" rowspan="1" colspan="1">0.8370</td>
+<td align="left" rowspan="1" colspan="1">0.7948</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">50%</td>
+<td align="left" rowspan="1" colspan="1">0.8000</td>
+<td align="left" rowspan="1" colspan="1">0.8376</td>
+<td align="left" rowspan="1" colspan="1">0.9254</td>
+<td align="left" rowspan="1" colspan="1">0.8146</td>
+<td align="left" rowspan="1" colspan="1">0.2438</td>
+<td align="left" rowspan="1" colspan="1">0.3412</td>
+<td align="left" rowspan="1" colspan="1">0.7426</td>
+<td align="left" rowspan="1" colspan="1">0.6650</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">33%</td>
+<td align="left" rowspan="1" colspan="1">0.7830</td>
+<td align="left" rowspan="1" colspan="1">0.7778</td>
+<td align="left" rowspan="1" colspan="1">0.8840</td>
+<td align="left" rowspan="1" colspan="1">0.6946</td>
+<td align="left" rowspan="1" colspan="1">0.2018</td>
+<td align="left" rowspan="1" colspan="1">0.2776</td>
+<td align="left" rowspan="1" colspan="1">0.6112</td>
+<td align="left" rowspan="1" colspan="1">0.4642</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">25%</td>
+<td align="left" rowspan="1" colspan="1">0.7718</td>
+<td align="left" rowspan="1" colspan="1">0.7150</td>
+<td align="left" rowspan="1" colspan="1">0.8714</td>
+<td align="left" rowspan="1" colspan="1">0.6594</td>
+<td align="left" rowspan="1" colspan="1">0.1752</td>
+<td align="left" rowspan="1" colspan="1">0.2270</td>
+<td align="left" rowspan="1" colspan="1">0.4936</td>
+<td align="left" rowspan="1" colspan="1">0.3230</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">20%</td>
+<td align="left" rowspan="1" colspan="1">0.7534</td>
+<td align="left" rowspan="1" colspan="1">0.6792</td>
+<td align="left" rowspan="1" colspan="1">0.8542</td>
+<td align="left" rowspan="1" colspan="1">0.5978</td>
+<td align="left" rowspan="1" colspan="1">0.1618</td>
+<td align="left" rowspan="1" colspan="1">0.2182</td>
+<td align="left" rowspan="1" colspan="1">0.4448</td>
+<td align="left" rowspan="1" colspan="1">0.2756</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">10%</td>
+<td align="left" rowspan="1" colspan="1">0.7240</td>
+<td align="left" rowspan="1" colspan="1">0.5516</td>
+<td align="left" rowspan="1" colspan="1">0.7888</td>
+<td align="left" rowspan="1" colspan="1">0.4376</td>
+<td align="left" rowspan="1" colspan="1">0.1308</td>
+<td align="left" rowspan="1" colspan="1">0.1542</td>
+<td align="left" rowspan="1" colspan="1">0.3178</td>
+<td align="left" rowspan="1" colspan="1">0.1842</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">5%</td>
+<td align="left" rowspan="1" colspan="1">0.6642</td>
+<td align="left" rowspan="1" colspan="1">0.3696</td>
+<td align="left" rowspan="1" colspan="1">0.6818</td>
+<td align="left" rowspan="1" colspan="1">0.1698</td>
+<td align="left" rowspan="1" colspan="1">0.1229</td>
+<td align="left" rowspan="1" colspan="1">0.1114</td>
+<td align="left" rowspan="1" colspan="1">0.2434</td>
+<td align="left" rowspan="1" colspan="1">0.1280</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="left" rowspan="1" colspan="1">100%</td>
+<td align="left" rowspan="1" colspan="1">0.9922</td>
+<td align="left" rowspan="1" colspan="1">0.9960</td>
+<td align="left" rowspan="1" colspan="1">0.9998</td>
+<td align="left" rowspan="1" colspan="1">0.9986</td>
+<td align="left" rowspan="1" colspan="1">0.5288</td>
+<td align="left" rowspan="1" colspan="1">0.8168</td>
+<td align="left" rowspan="1" colspan="1">0.9788</td>
+<td align="left" rowspan="1" colspan="1">0.9864</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">50%</td>
+<td align="left" rowspan="1" colspan="1">0.9904</td>
+<td align="left" rowspan="1" colspan="1">0.9874</td>
+<td align="left" rowspan="1" colspan="1">0.9976</td>
+<td align="left" rowspan="1" colspan="1">0.9896</td>
+<td align="left" rowspan="1" colspan="1">0.4600</td>
+<td align="left" rowspan="1" colspan="1">0.7034</td>
+<td align="left" rowspan="1" colspan="1">0.9208</td>
+<td align="left" rowspan="1" colspan="1">0.9268</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">33%</td>
+<td align="left" rowspan="1" colspan="1">0.9866</td>
+<td align="left" rowspan="1" colspan="1">0.9802</td>
+<td align="left" rowspan="1" colspan="1">0.9956</td>
+<td align="left" rowspan="1" colspan="1">0.9608</td>
+<td align="left" rowspan="1" colspan="1">0.4022</td>
+<td align="left" rowspan="1" colspan="1">0.5990</td>
+<td align="left" rowspan="1" colspan="1">0.8508</td>
+<td align="left" rowspan="1" colspan="1">0.7776</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">25%</td>
+<td align="left" rowspan="1" colspan="1">0.9812</td>
+<td align="left" rowspan="1" colspan="1">0.9662</td>
+<td align="left" rowspan="1" colspan="1">0.9898</td>
+<td align="left" rowspan="1" colspan="1">0.9304</td>
+<td align="left" rowspan="1" colspan="1">0.3530</td>
+<td align="left" rowspan="1" colspan="1">0.5108</td>
+<td align="left" rowspan="1" colspan="1">0.7834</td>
+<td align="left" rowspan="1" colspan="1">0.5870</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">20%</td>
+<td align="left" rowspan="1" colspan="1">0.9760</td>
+<td align="left" rowspan="1" colspan="1">0.9522</td>
+<td align="left" rowspan="1" colspan="1">0.9890</td>
+<td align="left" rowspan="1" colspan="1">0.8890</td>
+<td align="left" rowspan="1" colspan="1">0.3286</td>
+<td align="left" rowspan="1" colspan="1">0.4568</td>
+<td align="left" rowspan="1" colspan="1">0.7264</td>
+<td align="left" rowspan="1" colspan="1">0.5142</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">10%</td>
+<td align="left" rowspan="1" colspan="1">0.9672</td>
+<td align="left" rowspan="1" colspan="1">0.8754</td>
+<td align="left" rowspan="1" colspan="1">0.9814</td>
+<td align="left" rowspan="1" colspan="1">0.7312</td>
+<td align="left" rowspan="1" colspan="1">0.2636</td>
+<td align="left" rowspan="1" colspan="1">0.3190</td>
+<td align="left" rowspan="1" colspan="1">0.5618</td>
+<td align="left" rowspan="1" colspan="1">0.1867</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">5%</td>
+<td align="left" rowspan="1" colspan="1">0.9446</td>
+<td align="left" rowspan="1" colspan="1">0.7406</td>
+<td align="left" rowspan="1" colspan="1">0.9554</td>
+<td align="left" rowspan="1" colspan="1">0.3164</td>
+<td align="left" rowspan="1" colspan="1">0.2400</td>
+<td align="left" rowspan="1" colspan="1">0.2241</td>
+<td align="left" rowspan="1" colspan="1">0.4634</td>
+<td align="left" rowspan="1" colspan="1">0.1789</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">100%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.8724</td>
+<td align="left" rowspan="1" colspan="1">0.9886</td>
+<td align="left" rowspan="1" colspan="1">0.9974</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">50%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.8086</td>
+<td align="left" rowspan="1" colspan="1">0.9718</td>
+<td align="left" rowspan="1" colspan="1">0.9890</td>
+<td align="left" rowspan="1" colspan="1">0.9990</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">33%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9992</td>
+<td align="left" rowspan="1" colspan="1">0.7556</td>
+<td align="left" rowspan="1" colspan="1">0.9474</td>
+<td align="left" rowspan="1" colspan="1">0.9822</td>
+<td align="left" rowspan="1" colspan="1">0.9788</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">25%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9994</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9980</td>
+<td align="left" rowspan="1" colspan="1">0.7290</td>
+<td align="left" rowspan="1" colspan="1">0.9000</td>
+<td align="left" rowspan="1" colspan="1">0.9694</td>
+<td align="left" rowspan="1" colspan="1">0.8932</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">20%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9994</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9948</td>
+<td align="left" rowspan="1" colspan="1">0.6874</td>
+<td align="left" rowspan="1" colspan="1">0.8616</td>
+<td align="left" rowspan="1" colspan="1">0.9614</td>
+<td align="left" rowspan="1" colspan="1">0.8237</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">10%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9974</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9574</td>
+<td align="left" rowspan="1" colspan="1">0.6101</td>
+<td align="left" rowspan="1" colspan="1">0.7133</td>
+<td align="left" rowspan="1" colspan="1">0.8919</td>
+<td align="left" rowspan="1" colspan="1">0.5888</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">5%</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9850</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.5662</td>
+<td align="left" rowspan="1" colspan="1">0.5375</td>
+<td align="left" rowspan="1" colspan="1">0.5392</td>
+<td align="left" rowspan="1" colspan="1">0.8255</td>
+<td align="left" rowspan="1" colspan="1">0.4189</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label>a</label><p>RRs are 3.4–3.6.</p></fn><fn id="nt102"><label>b</label><p>RRs are 1.8–2.0.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>Power when the Effects were in Different Directions</title>
+<p><xref ref-type="table" rid="pone-0074310-t003">Table 3</xref> shows the power performance of four competing tests when the effects of the variants were in different directions. In the simulations, the probability of a functional variant having protective effect was assumed to be between 10% and 40%. Clearly, if the probability was 10%, then the effects were more consistent in one direction, and if the probability was 40%, then the effects were less consistent. We focus on a region with 10 functional variants. From the results of <xref ref-type="table" rid="pone-0074310-t003">Table 3</xref>, we found that when sample size was small, the power of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e155" xlink:type="simple"/></inline-formula> was more sensitive to the effect directionality. For example, when the family number was 1000, the power of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e156" xlink:type="simple"/></inline-formula> was decreased from 92.36% to 59.44% as the probability of protective variant was increased from 10% to 40%, while the power of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e157" xlink:type="simple"/></inline-formula> was decreased from 93.28% to 75.58%. When the family number was increased to 2000, the corresponding power was decreased from 99.72% to 87.78% and 99.40% to 95.58%, respectively. In the former case, the ranges for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e158" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e159" xlink:type="simple"/></inline-formula> were 47.00%–51.08%, and 73.30%–80.30%, respectively. These results show that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e160" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e161" xlink:type="simple"/></inline-formula> were more robust to the effect directionality. However, they are less powerful when the family number was small or moderate. Overall, we found that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e162" xlink:type="simple"/></inline-formula> had the best power performance when the variants have different effect directions. However, in the case of a large number of family trios ( = 2000), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e163" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e164" xlink:type="simple"/></inline-formula> were found to be more comparable in power.</p>
+<table-wrap id="pone-0074310-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0074310.t003</object-id><label>Table 3</label><caption>
+<title>The power of the tests when effects are in different directions<xref ref-type="table-fn" rid="nt103">a</xref>.</title>
+</caption><alternatives><graphic id="pone-0074310-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0074310.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="8" align="left" rowspan="1">Proportion of protective variants</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1">10%</td>
+<td colspan="4" align="left" rowspan="1">20%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Sample size</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><sup>c</sup>TDT</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">0.2628</td>
+<td align="left" rowspan="1" colspan="1">0.4380</td>
+<td align="left" rowspan="1" colspan="1">0.7510</td>
+<td align="left" rowspan="1" colspan="1">0.6480</td>
+<td align="left" rowspan="1" colspan="1">0.2476</td>
+<td align="left" rowspan="1" colspan="1">0.4198</td>
+<td align="left" rowspan="1" colspan="1">0.6836</td>
+<td align="left" rowspan="1" colspan="1">0.5582</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="left" rowspan="1" colspan="1">0.5108</td>
+<td align="left" rowspan="1" colspan="1">0.8030</td>
+<td align="left" rowspan="1" colspan="1">0.9328</td>
+<td align="left" rowspan="1" colspan="1">0.9236</td>
+<td align="left" rowspan="1" colspan="1">0.5096</td>
+<td align="left" rowspan="1" colspan="1">0.7864</td>
+<td align="left" rowspan="1" colspan="1">0.9132</td>
+<td align="left" rowspan="1" colspan="1">0.8676</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">0.8512</td>
+<td align="left" rowspan="1" colspan="1">0.9888</td>
+<td align="left" rowspan="1" colspan="1">0.9940</td>
+<td align="left" rowspan="1" colspan="1">0.9972</td>
+<td align="left" rowspan="1" colspan="1">0.8532</td>
+<td align="left" rowspan="1" colspan="1">0.9870</td>
+<td align="left" rowspan="1" colspan="1">0.9896</td>
+<td align="left" rowspan="1" colspan="1">0.9918</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1"><bold>30%</bold></td>
+<td colspan="4" align="left" rowspan="1"><bold>40%</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Sample size</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><sup>c</sup>TDT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><sup>c</sup>TDT</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="left" rowspan="1" colspan="1">0.2576</td>
+<td align="left" rowspan="1" colspan="1">0.4072</td>
+<td align="left" rowspan="1" colspan="1">0.6102</td>
+<td align="left" rowspan="1" colspan="1">0.4516</td>
+<td align="left" rowspan="1" colspan="1">0.2388</td>
+<td align="left" rowspan="1" colspan="1">0.3922</td>
+<td align="left" rowspan="1" colspan="1">0.5040</td>
+<td align="left" rowspan="1" colspan="1">0.3302</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="left" rowspan="1" colspan="1">0.5004</td>
+<td align="left" rowspan="1" colspan="1">0.7676</td>
+<td align="left" rowspan="1" colspan="1">0.8584</td>
+<td align="left" rowspan="1" colspan="1">0.7870</td>
+<td align="left" rowspan="1" colspan="1">0.4700</td>
+<td align="left" rowspan="1" colspan="1">0.7330</td>
+<td align="left" rowspan="1" colspan="1">0.7558</td>
+<td align="left" rowspan="1" colspan="1">0.5944</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">0.8284</td>
+<td align="left" rowspan="1" colspan="1">0.9832</td>
+<td align="left" rowspan="1" colspan="1">0.9842</td>
+<td align="left" rowspan="1" colspan="1">0.9758</td>
+<td align="left" rowspan="1" colspan="1">0.8194</td>
+<td align="left" rowspan="1" colspan="1">0.9768</td>
+<td align="left" rowspan="1" colspan="1">0.9558</td>
+<td align="left" rowspan="1" colspan="1">0.8778</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label>a</label><p>Deleterious variants have RRs between 1.8 and 2.0. Protective variants have RRs between 0.50 and 0.56.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3d">
+<title>Empirical Power when Common Variants were Included</title>
+<p><xref ref-type="table" rid="pone-0074310-t004">Table 4</xref> gives the power results when the common and rare variants were analyzed simultaneously. It is well known that both the magnitude of allele frequency and effect size of functional variant have impact on the power performance of test. From the results of <xref ref-type="table" rid="pone-0074310-t004">Table 4</xref> we found that in family study, low effect common variant tended to have greater positive impact in power than high effect rare variant. Although we have observed that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e165" xlink:type="simple"/></inline-formula> had the best power performance if all functional variants had low MAFs. We found that the power performance of all tests became more comparable when common but low effect variants were included in the study and the number of family trios was moderate or large (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e166" xlink:type="simple"/></inline-formula> 500). In the case of smaller number of family trios (300), however, their power differences became greater. In this case, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e167" xlink:type="simple"/></inline-formula> still had the best power performance. It had power 0.8629 and 0.9986, if one and two rare functional variants were replaced by common functional variants, respectively. The second best test was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e168" xlink:type="simple"/></inline-formula> and its power was 0.6975 and 0.9806, respectively.</p>
+<table-wrap id="pone-0074310-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0074310.t004</object-id><label>Table 4</label><caption>
+<title>The power of the tests when high frequency functional and nonfunctional variants were included<xref ref-type="table-fn" rid="nt104">a</xref>.</title>
+</caption><alternatives><graphic id="pone-0074310-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0074310.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="8" align="left" rowspan="1">Sample size</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1">300</td>
+<td colspan="4" align="left" rowspan="1">500</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Number of high frequency functional variants<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" rowspan="1" colspan="1">Number of low frequency functional variants<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><xref ref-type="table-fn" rid="nt106">c</xref>TDT</td>
+<td align="left" rowspan="1" colspan="1">T<sub>s</sub></td>
+<td align="left" rowspan="1" colspan="1">T<sub>mult</sub></td>
+<td align="left" rowspan="1" colspan="1">LRT</td>
+<td align="left" rowspan="1" colspan="1"><xref ref-type="table-fn" rid="nt106">c</xref>TDT</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">0.2186</td>
+<td align="left" rowspan="1" colspan="1">0.2182</td>
+<td align="left" rowspan="1" colspan="1">0.4386</td>
+<td align="left" rowspan="1" colspan="1">0.2353</td>
+<td align="left" rowspan="1" colspan="1">0.3506</td>
+<td align="left" rowspan="1" colspan="1">0.3230</td>
+<td align="left" rowspan="1" colspan="1">0.6200</td>
+<td align="left" rowspan="1" colspan="1">0.3568</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0.6975</td>
+<td align="left" rowspan="1" colspan="1">0.6030</td>
+<td align="left" rowspan="1" colspan="1">0.8629</td>
+<td align="left" rowspan="1" colspan="1">0.4868</td>
+<td align="left" rowspan="1" colspan="1">0.9440</td>
+<td align="left" rowspan="1" colspan="1">0.8532</td>
+<td align="left" rowspan="1" colspan="1">0.9796</td>
+<td align="left" rowspan="1" colspan="1">0.7156</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">0.9806</td>
+<td align="left" rowspan="1" colspan="1">0.9530</td>
+<td align="left" rowspan="1" colspan="1">0.9986</td>
+<td align="left" rowspan="1" colspan="1">0.8558</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9995</td>
+<td align="left" rowspan="1" colspan="1">1.0000</td>
+<td align="left" rowspan="1" colspan="1">0.9814</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="8" align="left" rowspan="1"><bold>Sample size</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="4" align="left" rowspan="1"><bold>500</bold></td>
+<td colspan="4" align="left" rowspan="1"><bold>1000</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of high frequency non-functional variants</bold><xref ref-type="table-fn" rid="nt106">c</xref></td>
+<td align="left" rowspan="1" colspan="1"><bold>Number of low frequency non-functional variants</bold><xref ref-type="table-fn" rid="nt106">c</xref></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><xref ref-type="table-fn" rid="nt106">c</xref><bold>TDT</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>s</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T<sub>mult</sub></bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>LRT</bold></td>
+<td align="left" rowspan="1" colspan="1"><xref ref-type="table-fn" rid="nt106">c</xref><bold>TDT</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="left" rowspan="1" colspan="1">0.3506</td>
+<td align="left" rowspan="1" colspan="1">0.3230</td>
+<td align="left" rowspan="1" colspan="1">0.6200</td>
+<td align="left" rowspan="1" colspan="1">0.3568</td>
+<td align="left" rowspan="1" colspan="1">0.6789</td>
+<td align="left" rowspan="1" colspan="1">0.6708</td>
+<td align="left" rowspan="1" colspan="1">0.8930</td>
+<td align="left" rowspan="1" colspan="1">0.6641</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">0.3506</td>
+<td align="left" rowspan="1" colspan="1">0.3230</td>
+<td align="left" rowspan="1" colspan="1">0.6200</td>
+<td align="left" rowspan="1" colspan="1">0.3568</td>
+<td align="left" rowspan="1" colspan="1">0.6792</td>
+<td align="left" rowspan="1" colspan="1">0.6706</td>
+<td align="left" rowspan="1" colspan="1">0.8931</td>
+<td align="left" rowspan="1" colspan="1">0.6642</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">18</td>
+<td align="left" rowspan="1" colspan="1">0.3498</td>
+<td align="left" rowspan="1" colspan="1">0.3214</td>
+<td align="left" rowspan="1" colspan="1">0.6184</td>
+<td align="left" rowspan="1" colspan="1">0.3558</td>
+<td align="left" rowspan="1" colspan="1">0.6794</td>
+<td align="left" rowspan="1" colspan="1">0.6708</td>
+<td align="left" rowspan="1" colspan="1">0.8933</td>
+<td align="left" rowspan="1" colspan="1">0.6641</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label>a</label><p>The first high frequency variant has MAF 3% and the second high frequency variant has MAF 5%. High frequency functional variants have RRs between 1.1 and 1.2. The low frequency variants have MAFs between 0.1% and 1% and low frequency functional variants have RRs between 2.4 and 2.6.</p></fn><fn id="nt105"><label>b</label><p>There are 5 high or low frequency functional variants and is no nonfunctional variants.</p></fn><fn id="nt106"><label>c</label><p>The total number of variants is 25. Among them, there are 20 high or low frequency nonfunctional variants and 5 low frequency functional variants.</p></fn></table-wrap-foot></table-wrap>
+<p>When nonfunctional common variants replaced nonfunctional rare variants in the analysis to create more noise, we also found that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e169" xlink:type="simple"/></inline-formula> had better power performance. However, the power change of any test seemed small. For example, in the case of 500 family trios and 1 or 2 nonfunctional rare variants were replaced by nonfunctional common variants, the power range for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e170" xlink:type="simple"/></inline-formula> was (0.6184, 0.6200). The corresponding ranges for other tests were (0.3498, 0.3506), (0.3214, 0.3230), and (0.3558, 0.3568). The power range became even smaller if the number of family trios became larger. These results indicated that the tests were insensitive to the nonfunctional common variants.</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>There is emerging interest in association studies of rare variants and it is hypothesized that rare variants are more likely to be functional than common variants are. Although it is still not totally clear how exactly rare and common variants affect the disease, some results have shown that the combination of GWAS and sequencing could be a good technique for studying diseases <xref ref-type="bibr" rid="pone.0074310-Johansen1">[27]</xref>. GWAS is used for localizing signals to a small region of the genome and sequencing is applied to find and define the specific variations that may be underlying the causes that led to the signal. In this process, one powerful method for identifying rare variants is to pool variants by gene or pathway into a composite test. Most tests considered so far for detecting rare variants were based on population-based case-control studies. However, the method proposed for detecting rare variants in case-control studies needs extra effort to control for the potential confounding effect due to the population stratification. Li and Leal <xref ref-type="bibr" rid="pone.0074310-Li1">[12]</xref> suggested that the problem may be overcome by implementing logistic regression in which covariates for describing ethnicity are included in the analysis; also see Wu et al. <xref ref-type="bibr" rid="pone.0074310-Wu1">[15]</xref> and Lin and Tang <xref ref-type="bibr" rid="pone.0074310-Lin1">[16]</xref>. However, Mathieson and Mcvean <xref ref-type="bibr" rid="pone.0074310-Mathieson1">[17]</xref> pointed out that the existing methods can fail to correct for rare variant stratification. They suggested that more robust approach with respect to stratification, such as family-based association, should be used for replication. In this paper, we have described four statistical methods for detecting group-wise association between multiple rare variants in a locus and a genetically heterogeneous disease, based on sequence data.</p>
+<p>All tests discussed in this paper depend on the differences between the numbers of the transmitted and non-transmitted mutant alleles from heterozygous parents to their diseased children, across all variants and families. The properties of the tests depend only on the transmission probabilities of the mutant alleles from parents to their children, and consequently, they are robust to the effect of population stratification. In the simulations, we also have investigated the effect of the population stratification on type I error rate. We considered two populations, Europeans and Africa Americans, and used the coalescent model for the Africa Americans to generate sequence-level data at the same variant locations for the Europeans (as described in the simulation section), with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e171" xlink:type="simple"/></inline-formula> ranging from 0.001 to 0.03. The disease prevalence rate and the proportion of the second population were set at 4% and 20%, respectively. Unreported results showed that all type I errors were between 0.04 and 0.06 and all tests were truly robust to the effect of population stratification.</p>
+<p>Although the tests considered depend only on the transmitted and non-transmitted genotype vectors, they are defined in different ways or use different concepts. The combined <italic>TDT</italic> is defined to enrich the association signals across variants, while the single-variant and multivariable tests are not. The likelihood ratio test based on a random-effect model is a novel test derived from the use of a completely different concept. It is designed to test zero proportion of functional variants in a gene region. Other tests were designed to compare the genotype frequencies of the “case” and “control” populations. We have compared the performance of the four tests: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e172" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e173" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e174" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e175" xlink:type="simple"/></inline-formula>. From our limited simulation study, we found that if the number of family trios is small (500), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e176" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e177" xlink:type="simple"/></inline-formula> seems to be less powerful when the region size (that is, L) is larger, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e178" xlink:type="simple"/></inline-formula> tends to have poorer power performance when the region size is smaller. Whether this is in general true, more study is needed. If the number of family trios is increased, however, the power differences of all tests become very small unless the proportion of functional variants in the gene region is very small. Overall, under any simulation condition given in this paper, we find that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e179" xlink:type="simple"/></inline-formula> has the best power performance.</p>
+<p>In our computation of p-values, a permutation method based on random permutation of the transmitted and non-transmitted genotype vectors within each family is used; Shi et al. <xref ref-type="bibr" rid="pone.0074310-Shi1">[22]</xref> also used the same technique. One advantage of using this permutation approach is that haplotype data are not required. We need genotype data only. The results from the null simulations indicate that this approach can effectively control type I errors near to the designated 5% significance level.</p>
+<p>A number of studies have shown that alleles with a wide range of frequencies are involved in disease etiology <xref ref-type="bibr" rid="pone.0074310-Ahituv1">[28]</xref>–<xref ref-type="bibr" rid="pone.0074310-Walsh1">[36]</xref>. Some simulation results showed that the collapsing methods for detecting rare variants in case-control studies could be adversely influenced by the presence of low-effect common variants (see for example Li and Leal <xref ref-type="bibr" rid="pone.0074310-Li1">[12]</xref>). In this paper, we also have compared the impacts of low-effect (RRs between 1.2 and 1.4) common variants (MAFs<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e180" xlink:type="simple"/></inline-formula>3%) and high-effect (RRs between 2.4 and 2.6) rare variants (MAFs between 0.1% and 1%) in family studies. Our simulated results suggested that the low-effect common variants have greater positive impact in power than the high-effect rare variants. We emphasize that this finding is observed under the given sample size, RRs and MAFs, chosen for comparison in simulations. Same simulation study also showed that all tests were very robust to the inclusion of nonfunctional common variants in the analysis. In general, we find no negative impact produced by analyzing rare and common variants simultaneously in a family study.</p>
+<p>The disadvantage of the usual collapsing methods is that they are not powerful when the effects are not all in the same direction. We also have investigated the properties of the competing tests when the effects are in different directions. In general, if the proportion of the variants that are protective is increased, then the power of the tests is decreased. However, if the number of family trios is increased, then the power loss can be reduced. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e181" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e182" xlink:type="simple"/></inline-formula> are more robust in the sense that their percentages of power loss are smaller. Unfortunately, they are less powerful. The power loss of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e183" xlink:type="simple"/></inline-formula> is the largest. Thus one should be careful when it is used for detecting rare variants. Finally, we observe that although <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e184" xlink:type="simple"/></inline-formula> is not the most robust test, but it is the most powerful test in all cases. Thus this method can be recommended for detecting rare variants.</p>
+<p>The definition of the combined <italic>TDT</italic> is based on the equal weighting strategy. Madsen and Browning <xref ref-type="bibr" rid="pone.0074310-Madsen1">[14]</xref> proposed a strategy to weight each variant according to allele frequencies in case-control study. Their idea is to assign lower weights for the common variants. However, our simulation results suggested that the tests considered here were robust to the inclusion of nonfunctional common variants and the power can be improved if functional common variant was included in the analysis with the same weight as that for rare variant. Price et al. <xref ref-type="bibr" rid="pone.0074310-Price1">[13]</xref> suggested a variable-threshold approach to demonstrate that the incorporation of computational predictions of the functional effects of missense variants can provide improvement in power. We note that a weighting strategy that can adapt to properties of individual variants may be applied to improve power too. For example, in our random-effect model approach, different effect distributions were used for variants with different MAFs. According to the distribution property, the range (from 0.5 to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0074310.e185" xlink:type="simple"/></inline-formula>) of the random effect was smaller for variants with larger MAFs and larger for variants with smaller MAFs. If we know more precisely the range of RRs, we also can use a more precise upper bound for RRs and hence a better random-effects model. This in general can lead to the power improvement of the likelihood ratio test. In our simulations, we have used RR upper bound equal 5 and the results seems acceptable. Thus, unless one has more information so that smaller upper bound can be used, otherwise, this upper bound is recommended.</p>
+<p>Note that the family study requires genotypes of the diseased individuals and their parents. Unfortunately, parental genotypes may not be always available. Several methods had been proposed to solve the issue of missing parental genotype, for example, using EM algorithm with the assumption that genotype missing is random conditional on the known genotypes of other family members; see the discussion in Chen and Cheng <xref ref-type="bibr" rid="pone.0074310-Chen1">[37]</xref>. These methods are difficult to extend to the cases of multiple variants with very small allele frequencies. For some diseases it might be easy to obtain the genotype of one parent either because the other parent is not available for study or he/she refuses to participate. In such circumstances, one may follow the idea of 1-<italic>TDT</italic> (Sun et al. <xref ref-type="bibr" rid="pone.0074310-Sun1">[38]</xref>) for example to utilize genotype information for diseased individuals and only one available parent for each diseased individual. Another alternative approach is to compare variant genotypes in affected and unaffected offspring, instead of using variant data from parents; see for examples, Spielman and Ewens <xref ref-type="bibr" rid="pone.0074310-Spielman2">[39]</xref>, Siegmund, et al. <xref ref-type="bibr" rid="pone.0074310-Siegmund1">[40]</xref>, Lunetta, et al. <xref ref-type="bibr" rid="pone.0074310-Lunetta1">[41]</xref>, and Zhao et al. <xref ref-type="bibr" rid="pone.0074310-Zhao1">[42]</xref>. Note that we would require more complicated method for computing p-values for the approach by Sun et al. <xref ref-type="bibr" rid="pone.0074310-Sun1">[38]</xref>. On the other hand, for the alternative approach, a within family permutation argument may be sufficient. The detailed methods and results will also be reported elsewhere.</p>
+<p>In this paper, we report only the simulation results under the multiplicative genetic model. The unreported power under the dominant genetic models only differs slightly but basic conclusions remain unchanged. One major reason is that the subject cases have only very small chance of being homozygous for the mutant allele, because of low MAF. For the same reason, we also find that all competing tests have very small power in detecting rare variants under the recessive genetic model.</p>
+</sec></body>
+<back>
+<ack>
+<p>The authors appreciate very much for the comments of reviewers and academic editor. Their suggestions have greatly improved the presentation of the paper.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0074310-Iyengar1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Iyengar</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Elston</surname><given-names>RC</given-names></name> (<year>2007</year>) <article-title>The genetic basis of complex traits: rare variants or “common gene, common disease”?</article-title> <source>Methods Mol Biol (Clifton, NJ)</source> <volume>376</volume>: <fpage>71</fpage>–<lpage>84</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Smith1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Lusis</surname><given-names>AJ</given-names></name> (<year>2002</year>) <article-title>The allelic structure of common disease</article-title>. <source>Hum Mol Genet</source> <volume>11</volume>: <fpage>2455</fpage>–<lpage>2461</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Ku1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ku</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Loy</surname><given-names>EY</given-names></name>, <name name-style="western"><surname>Pawitan</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Chia</surname><given-names>KS</given-names></name> (<year>2010</year>) <article-title>The pursuit of genome-wide association studies: where are we now?</article-title> <source>J Hum Genet</source> <volume>55</volume>: <fpage>195</fpage>–<lpage>206</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Maher1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maher</surname><given-names>B</given-names></name> (<year>2008</year>) <article-title>Personal genomes: The case of the missing heritability</article-title>. <source>Nature</source> <volume>456</volume>: <fpage>18</fpage>–<lpage>21</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Cirulli1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cirulli</surname><given-names>ET</given-names></name>, <name name-style="western"><surname>Goldstein</surname><given-names>DB</given-names></name> (<year>2010</year>) <article-title>Uncovering the roles of rare variants in common disease through whole-genome sequencing</article-title>. <source>Nat Rev Genet</source> <volume>11</volume>: <fpage>415</fpage>–<lpage>425</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Bodmer1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bodmer</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Bonilla</surname><given-names>C</given-names></name> (<year>2008</year>) <article-title>Common and rare variants in multifactorial susceptibility to common diseases</article-title>. <source>Nat Genet</source> <volume>40</volume>: <fpage>695</fpage>–<lpage>701</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Pritchard1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name> (<year>2001</year>) <article-title>Are rare variants responsible for susceptibility to complex diseases?</article-title> <source>Am J Hum Genet</source> <volume>69</volume>: <fpage>124</fpage>–<lpage>137</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Schork1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schork</surname><given-names>NJ</given-names></name>, <name name-style="western"><surname>Murray</surname><given-names>SS</given-names></name>, <name name-style="western"><surname>Frazer</surname><given-names>KA</given-names></name>, <name name-style="western"><surname>Topol</surname><given-names>EJ</given-names></name> (<year>2009</year>) <article-title>Common vs. rare allele hypotheses for complex diseases</article-title>. <source>Curr Opin Genet Dev</source> <volume>19</volume>: <fpage>212</fpage>–<lpage>219</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Bird1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bird</surname><given-names>TD</given-names></name> (<year>2005</year>) <article-title>Genetic factors in Alzheimer’s disease</article-title>. <source>N Engl J Med</source> <volume>352</volume>: <fpage>884</fpage>–<lpage>894</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Moser1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moser</surname><given-names>KL</given-names></name>, <name name-style="western"><surname>Kelly</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Lessard</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Harley</surname><given-names>JB</given-names></name> (<year>2009</year>) <article-title>Recent insights into the genetic basis of systemic lupus erythematosus</article-title>. <source>Genes Immun</source> <volume>10</volume>: <fpage>373</fpage>–<lpage>379</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Botstein1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Risch</surname><given-names>N</given-names></name> (<year>2003</year>) <article-title>Discovering genotypes underlying human phenotypes: past successes for mendelian disease, future approaches for complex disease</article-title>. <source>Nat Genet</source> <volume>33</volume>: <fpage>228</fpage>–<lpage>237</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Li1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>BS</given-names></name>, <name name-style="western"><surname>Leal</surname><given-names>SM</given-names></name> (<year>2008</year>) <article-title>Methods for detecting associations with rare variants for common diseases: Application to analysis of sequence data</article-title>. <source>Am J Hum Genet</source> <volume>83</volume>: <fpage>311</fpage>–<lpage>321</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Price1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Kryukov</surname><given-names>GV</given-names></name>, <name name-style="western"><surname>de Bakker</surname><given-names>PI</given-names></name>, <name name-style="western"><surname>Purcell</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Staples</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Pooled Association Tests for Rare Variants in Exon-Resequencing Studies</article-title>. <source>Am J Hum Genet</source> <volume>86</volume>: <fpage>832</fpage>–<lpage>838</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Madsen1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Madsen</surname><given-names>BE</given-names></name>, <name name-style="western"><surname>Browning</surname><given-names>SR</given-names></name> (<year>2009</year>) <article-title>A Groupwise Association Test for Rare Mutations Using a Weighted Sum Statistic</article-title>. <source>PLoS Genet</source> <volume>5</volume>: <fpage>e1000384</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Wu1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Cai</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Boehnke</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Rare-variant association testing for sequencing data with the sequence kernel association test</article-title>. <source>Am J Hum Genet</source> <volume>89</volume>: <fpage>82</fpage>–<lpage>93</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Lin1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname><given-names>DY</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>ZZ</given-names></name> (<year>2011</year>) <article-title>A General Framework for Detecting Disease Associations with Rare Variants in Sequencing Studies</article-title>. <source>Am J Hum Genet</source> <volume>89</volume>: <fpage>354</fpage>–<lpage>367</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Mathieson1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mathieson</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Mcvean</surname><given-names>G</given-names></name> (<year>2012</year>) <article-title>Differential counfounding of rare and common varaints in spatially structured population</article-title>. <source>Nat Genet</source> <volume>44</volume>: <fpage>243</fpage>–<lpage>246</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Spielman1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Spielman</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>McGinnis</surname><given-names>RE</given-names></name>, <name name-style="western"><surname>Ewens</surname><given-names>WJ</given-names></name> (<year>1993</year>) <article-title>Transmission test for linkage disequilibrium: the insulin gene region and insulin-dependent diabetes mellitus (IDDM)</article-title>. <source>Am J Hum Genet</source> <volume>52</volume>: <fpage>506</fpage>–<lpage>516</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Zhang1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sha</surname><given-names>Q</given-names></name> (<year>2007</year>) <article-title>A multi-marker test based on family data in genome-wide association study</article-title>. <source>BMC Genet</source> <volume>8</volume>: <fpage>65</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Martin1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martin</surname><given-names>ER</given-names></name>, <name name-style="western"><surname>Monks</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Warren</surname><given-names>LL</given-names></name>, <name name-style="western"><surname>Kaplan</surname><given-names>NL</given-names></name> (<year>2000</year>) <article-title>A test for linkage and association in general pedigrees: the pedigree disequilibrium test</article-title>. <source>Am J Hum Genet</source> <volume>67</volume>: <fpage>146</fpage>–<lpage>154</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Schaid1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schaid</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Sommer</surname><given-names>SS</given-names></name> (<year>1993</year>) <article-title>Genotype relative risks: methods for design and analysis of candidate-gene association studies</article-title>. <source>Am J Hum Genet</source> <volume>53</volume>: <fpage>1114</fpage>–<lpage>1126</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Shi1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Umbach</surname><given-names>DM</given-names></name>, <name name-style="western"><surname>Weinberg</surname><given-names>CR</given-names></name> (<year>2007</year>) <article-title>Identification of Risk-Related Haplotypes with the Use of Multiple SNPs from Nuclear Families</article-title>. <source>Am J Hum Genet</source> <volume>81</volume>: <fpage>53</fpage>–<lpage>66</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Scherag1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Scherag</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Dempfle</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Hinney</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Hebebrand</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schäfer</surname><given-names>H</given-names></name> (<year>2002</year>) <article-title>Confidence intervals for genotype relative risks and allele frequencies from the case parent trio design for candidate-gene studies</article-title>. <source>Hum Hered 54: 210–217; Erratum: 2003</source> <volume>55</volume>: <fpage>26</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Laird1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Laird</surname><given-names>NM</given-names></name>, <name name-style="western"><surname>Ware</surname><given-names>JH</given-names></name> (<year>1982</year>) <article-title>Random-effects models for longitudinal data</article-title>. <source>Biometrics</source> <volume>38</volume>: <fpage>963</fpage>–<lpage>974</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Smith2"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Lusis</surname><given-names>AJ</given-names></name> (<year>2002</year>) <article-title>The allelic structure of common disease. Hum. Mol. Genet</article-title>. <volume>11</volume>: <fpage>2455</fpage>–<lpage>2461</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Schaffner1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schaffner</surname><given-names>SF</given-names></name>, <name name-style="western"><surname>Foo</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gabriel</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Reich</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Daly</surname><given-names>MJ</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Calibrating a coalescent simulation of human genome sequence variation</article-title>. <source>Genome Res</source> <volume>15</volume>: <fpage>1576</fpage>–<lpage>1583</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Johansen1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Johansen</surname><given-names>CT</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lanktree</surname><given-names>MB</given-names></name>, <name name-style="western"><surname>Cao</surname><given-names>H</given-names></name>, <name name-style="western"><surname>McIntyre</surname><given-names>AD</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Excess of rare variants in genes identified by genome-wide association study of hypertriglyceridemia</article-title>. <source>Nat Genet</source> <volume>42</volume>: <fpage>684</fpage>–<lpage>687</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Ahituv1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ahituv</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Kavaslar</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Schackwitz</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Ustaszewska</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Medical sequencing at the extremes of human body mass</article-title>. <source>Am J Hum Genet</source> <volume>80</volume>: <fpage>779</fpage>–<lpage>791</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Azzopardi1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Azzopardi</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Dallosso</surname><given-names>AR</given-names></name>, <name name-style="western"><surname>Eliason</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Hendrickson</surname><given-names>BC</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Multiple rare nonsynonymous variants in the adenomatous polyposis coli gene predispose to colorectal adenomas</article-title>. <source>Cancer Res</source> <volume>68</volume>: <fpage>358</fpage>–<lpage>363</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Brunham1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brunham</surname><given-names>LR</given-names></name>, <name name-style="western"><surname>Singaraja</surname><given-names>RR</given-names></name>, <name name-style="western"><surname>Hayden</surname><given-names>MR</given-names></name> (<year>2006</year>) <article-title>Variations on a gene: Rare and common variants in ABCA1 and their impact on HDL cholesterol levels and atherosclerosis</article-title>. <source>Annu Rev Nutr</source> <volume>26</volume>: <fpage>105</fpage>–<lpage>129</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Cohen1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Kiss</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Marcel</surname><given-names>YL</given-names></name>, <name name-style="western"><surname>McPherson</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Multiple rare Alleles contribute to low plasma levels of HDL cholesterol</article-title>. <source>Science</source> <volume>305</volume>: <fpage>869</fpage>–<lpage>872</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Cohen2"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fahmi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Esmail</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Vega</surname><given-names>GL</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Multiple rare variants in NPC1L1 associated with reduced sterol absorption and plasma low-density lipoprotein levels</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>103</volume>: <fpage>1810</fpage>–<lpage>1815</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Romeo1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Romeo</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Pennacchio</surname><given-names>LA</given-names></name>, <name name-style="western"><surname>Fu</surname><given-names>YX</given-names></name>, <name name-style="western"><surname>Boerwinkle</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Tybjaerg-Hansen</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Population-based resequencing of ANGPTL4 uncovers variations that reduce triglycerides and increase HDL</article-title>. <source>Nat Genet</source> <volume>39</volume>: <fpage>513</fpage>–<lpage>516</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Slatter1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Slatter</surname><given-names>TL</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>GT</given-names></name>, <name name-style="western"><surname>Williams</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>van Rij</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>McCormick</surname><given-names>SP</given-names></name> (<year>2008</year>) <article-title>Novel rare mutations and promoter haplotypes in ABCA1 contribute to low-HDL-C levels</article-title>. <source>Clin Genet</source> <volume>73</volume>: <fpage>179</fpage>–<lpage>184</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Spirin1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Spirin</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Schmidt</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Cooper</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Common single-nucleotide polymorphisms act in concert to affect plasma levels of high-density lipoprotein cholesterol</article-title>. <source>Am J Hum Genet</source> <volume>81</volume>: <fpage>1298</fpage>–<lpage>1303</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Walsh1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Walsh</surname><given-names>T</given-names></name>, <name name-style="western"><surname>McClellan</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>McCarthy</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Addington</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Pierce</surname><given-names>SB</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Rare structural variants disrupt multiple genes in neurodevelopmental pathways in schizophrenia</article-title>. <source>Science</source> <volume>320</volume>: <fpage>539</fpage>–<lpage>543</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Chen1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>KF</given-names></name> (<year>2012</year>) <article-title>A Robust TDT-Type Association Test under Informative Parental Missingness</article-title>. <source>Stat Med</source> <volume>30</volume>: <fpage>291</fpage>–<lpage>297</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Sun1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sun</surname><given-names>FZ</given-names></name>, <name name-style="western"><surname>Flanders</surname><given-names>WD</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>QH</given-names></name>, <name name-style="western"><surname>Khoury</surname><given-names>MJ</given-names></name> (<year>1999</year>) <article-title>Transmission disequilibrium test (TDT) when only one parent is available: The 1-TDT</article-title>. <source>Am J Epidemiol</source> <volume>150</volume>: <fpage>97</fpage>–<lpage>104</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Spielman2"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Spielman</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Ewens</surname><given-names>WJ</given-names></name> (<year>1998</year>) <article-title>A sibship test for linkage in the presence of association: the sib transmission/disequilibrium test</article-title>. <source>Am J Hum Genet</source> <volume>62</volume>: <fpage>450</fpage>–<lpage>458</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Siegmund1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Siegmund</surname><given-names>KD</given-names></name>, <name name-style="western"><surname>Langhoz</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Kraft</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Thomas</surname><given-names>DC</given-names></name> (<year>2000</year>) <article-title>Testing linkage disequilibrium in sibships</article-title>. <source>Am J Hum Genet</source> <volume>67</volume>: <fpage>244</fpage>–<lpage>248</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Lunetta1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lunetta</surname><given-names>KL</given-names></name>, <name name-style="western"><surname>Faraone</surname><given-names>SV</given-names></name>, <name name-style="western"><surname>Biederman</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Laird</surname><given-names>NM</given-names></name> (<year>2000</year>) <article-title>Family-based tests of association and linkage that use unaffected sibs, covariates, and interactions</article-title>. <source>Am J Hum Genet</source> <volume>66</volume>: <fpage>605</fpage>–<lpage>614</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0074310-Zhao1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Hao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ter-Minassian</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Peng</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Genetic association analysis using sibship data: a multilevel model approach</article-title>. <source>PLoS ONE</source> <volume>7(2)</volume>: <fpage>e31134</fpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

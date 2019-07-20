@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PLCB-RA-1039R2</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000642</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Population Genetics</subject><subject>Computational Biology/Systems Biology</subject><subject>Genetics and Genomics/Complex Traits</subject><subject>Genetics and Genomics/Epigenetics</subject><subject>Genetics and Genomics/Gene Expression</subject><subject>Genetics and Genomics/Population Genetics</subject></subj-group></article-categories><title-group><article-title>A Bayesian Partition Method for Detecting Pleiotropic and Epistatic eQTL Modules</article-title><alt-title alt-title-type="running-head">A Bayesian Partition Method</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>Wei</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Zhu</surname><given-names>Jun</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schadt</surname><given-names>Eric E.</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>Jun S.</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>UBS Equities, Stamford, Connecticut, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Rosetta Inpharmatics, LLC, Merck &amp; Co., Inc., Seattle, Washington, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Sage Bionetworks, Seattle, Washington, United States of America</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Pacific Biosciences, Menlo Park, California, United States of America</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>Department of Statistics, Harvard University, Cambridge, Massachusetts, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Stormo</surname><given-names>Gary D.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Washington University School of Medicine, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">jliu@stat.harvard.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: WZ JZ EES JSL. Analyzed the data: WZ JZ. Contributed reagents/materials/analysis tools: WZ JZ. Wrote the paper: WZ JZ EES JSL.</p></fn>
+<fn fn-type="conflict"><p>JZ and EES worked for Merck and own Merck's stocks.</p></fn></author-notes><pub-date pub-type="collection"><month>1</month><year>2010</year></pub-date><pub-date pub-type="epub"><day>15</day><month>1</month><year>2010</year></pub-date><volume>6</volume><issue>1</issue><elocation-id>e1000642</elocation-id><history>
+<date date-type="received"><day>31</day><month>8</month><year>2009</year></date>
+<date date-type="accepted"><day>15</day><month>12</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Zhang et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Studies of the relationship between DNA variation and gene expression variation, often referred to as “expression quantitative trait loci (eQTL) mapping”, have been conducted in many species and resulted in many significant findings. Because of the large number of genes and genetic markers in such analyses, it is extremely challenging to discover how a small number of eQTLs interact with each other to affect mRNA expression levels for a set of co-regulated genes. We present a Bayesian method to facilitate the task, in which co-expressed genes mapped to a common set of markers are treated as a module characterized by latent indicator variables. A Markov chain Monte Carlo algorithm is designed to search simultaneously for the module genes and their linked markers. We show by simulations that this method is more powerful for detecting true eQTLs and their target genes than traditional QTL mapping methods. We applied the procedure to a data set consisting of gene expression and genotypes for 112 segregants of <italic>S. cerevisiae</italic>. Our method identified modules containing genes mapped to previously reported eQTL hot spots, and dissected these large eQTL hot spots into several modules corresponding to possibly different biological functions or primary and secondary responses to regulatory perturbations. In addition, we identified nine modules associated with pairs of eQTLs, of which two have been previously reported. We demonstrated that one of the novel modules containing many daughter-cell expressed genes is regulated by <italic>AMN1</italic> and <italic>BPH1</italic>. In conclusion, the Bayesian partition method which simultaneously considers all traits and all markers is more powerful for detecting both pleiotropic and epistatic effects based on both simulated and empirical data.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>Genome-wide association studies (GWAS) have yielded several causal genes for many human diseases. However, the mechanisms underlying how DNA variations affect disease phenotypes have not been well understood in many cases. Gene expression is intermediate between DNA and clinical endpoints. Linking DNA variation and gene expression variation, often referred to as “expression quantitative trait loci (eQTL) mapping”, has yielded clues of mechanisms and pathways by which DNA variations impact phenotypes. Because of the large number of genes and genetic markers in such analyses, it is extremely challenging to discover how a small number of eQTLs interact with each other to affect mRNA expression levels for a set of co-regulated genes. We present a Bayesian method to identify genetic interactions and more eQTLs by treating co-expressed genes as a module. Our method provides a tool to study genetic interactions in human disease models.</p>
+</abstract><funding-group><funding-statement>This work was supported by the US National Institutes of Health's (<ext-link ext-link-type="uri" xlink:href="http://www.nih.gov" xlink:type="simple">http://www.nih.gov</ext-link>) grants R01-HG02518-02 and R01-GM078990. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="10"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Studies in the genetics of gene expression combine gene expression and genotype data in segregating populations to detect loci linked to variations in RNA levels. These loci are referred to as expression quantitative trait loci (eQTL). To date, eQTL studies have been pursued in a number of species ranging from yeast to mouse and human <xref ref-type="bibr" rid="pcbi.1000642-Brem1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Morley1">[3]</xref>. A common theme of these studies is to treat thousands of gene expression values as quantitative traits and conduct QTL mapping for all of them.</p>
+<p>Most eQTL studies are based on linear regression models <xref ref-type="bibr" rid="pcbi.1000642-Lander1">[4]</xref> in which each trait variable is regressed against each marker variable. The p-value of the regression slope is reported as a measure of significance for the association. In the context of multiple traits and markers, procedures such as false discovery rate (FDR) controls <xref ref-type="bibr" rid="pcbi.1000642-Storey1">[5]</xref> can be used to quantify family-wise error rates. Despite the success of this type of regression approach, a number of challenging problems remain. First, these methods can not easily assess the joint effect of multiple markers beyond additive effects. Storey <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1000642-Storey1">[5]</xref> developed a step-wise regression method to find eQTL pairs, then Zou and Zeng improved it <xref ref-type="bibr" rid="pcbi.1000642-Zou1">[6]</xref>. This procedure, however, tends to miss eQTL pairs with small marginal effects but a strong interaction effect. There are methods for detecting eptistatic effects without main marginal effects <xref ref-type="bibr" rid="pcbi.1000642-Yi1">[7]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Manichaikul1">[8]</xref>. However, their applications are limited to a few clinical traits instead of thousands of expression traits due to computational constraints. Second, there are often strong correlations among expression levels for certain groups of genes, partially reflecting co-regulation of genes in biological pathways that may respond to common genetic loci and environmental perturbations <xref ref-type="bibr" rid="pcbi.1000642-Schadt1">[2]</xref>, <xref ref-type="bibr" rid="pcbi.1000642-Chen1">[9]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref>. Previous findings of eQTL “hot spots”, i.e., loci affecting a larger number of expression traits than expected by chance, and their biological implications further enhance this notion and highlight the biological importance of finding such gene “modules”. Mapping genetic loci for multiple traits simultaneously is more powerful than mapping single traits at a time <xref ref-type="bibr" rid="pcbi.1000642-Jiang1">[12]</xref>. Although for a known small set of correlated traits, one can conduct QTL mapping for the principal components <xref ref-type="bibr" rid="pcbi.1000642-Mangin1">[13]</xref>, this method becomes ineffective when the set size is moderately large or one has to enumerate all possible subsets. An alternative approach is to identify subsets of genes by a clustering method, and then fit mixture models to clusters of genes <xref ref-type="bibr" rid="pcbi.1000642-Kendziorski1">[14]</xref>. The eQTL mapping then depends on whether the distance metric used by the clustering method is appropriate, whether the method can find the right number of clusters.</p>
+<p>We address these issues by modeling the joint distribution of all genes and all markers simultaneously. Under a Bayesian framework, we introduce three sets of latent indicator variables for genes, markers, and individuals, and then systematically infer the association between groups of genes and sets of markers. In this framework, correlated expression traits and their associated set of markers are treated as a module so as to account for epistatic interactions and pleiotropic effects. Parameters of interest are the partitions of genes and markers into modules, and the partition of individuals into different types that correspond to the relationships between expression levels and marker genotypes in a given module. A Markov chain Monte Carlo (MCMC) algorithm is designed to traverse the space of all possible partitions. Simulation studies show that the proposed method achieves significantly improved power in detecting eQTLs compared to traditional regression-based methods. A particular strength of our method is its ability to detect epistasis with high power when the marginal effects are weak, addressing a key weakness of all other eQTL mapping methods.</p>
+<p>We applied our method to a previously described data set consisting of gene expression and genotypes data for 112 segregants from a cross between laboratory (BY) and wild (RM) strains of <italic>S. cerevisiae</italic> <xref ref-type="bibr" rid="pcbi.1000642-Brem2">[15]</xref>. In addition to identifying several modules linked to single eQTLs that are consistent with previous reports <xref ref-type="bibr" rid="pcbi.1000642-Brem1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref>,<xref ref-type="bibr" rid="pcbi.1000642-Brem3">[16]</xref>, our method dissected large eQTL hot spots into different modules that correspond to different causal regulators or to primary and secondary responses to causal regulators. In addition, we detected nine modules under the control of two genetic loci. One of these modules corresponds to a previously verified result regarding the interaction between <italic>GPA1</italic> and <italic>MAT</italic> <xref ref-type="bibr" rid="pcbi.1000642-Storey1">[5]</xref>,<xref ref-type="bibr" rid="pcbi.1000642-Brem3">[16]</xref>. another is regulated by both <italic>ZAP1</italic> expression and genotype, consistent with previously described results <xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref>. The other seven modules represent novel findings. Three of these appear to be artifacts of cross-hybridization in microarray experiments; while another exhibits strong epistatic interactions between two loci consisting of many daughter-cell expressed genes that we predict are under the regulation of <italic>AMN1</italic> and <italic>BPH1</italic>.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Overview of Bayesian partition method</title>
+<p>We define a <bold><italic>module</italic></bold> as a set of gene expression traits (referred to as “genes” henceforth) and a set of genetic markers (e.g., SNPs) such that the variation of the gene expression traits is associated with the variation of the markers, as shown in <xref ref-type="fig" rid="pcbi-1000642-g001">Figure 1</xref>. This association between multiple genes and markers is characterized by a latent indicator variable, individual type, conditional on which the trait and marker variables are independent of each other. The individual type latent variable can be viewed as representing a certain combination of markers that induces changes in expressions of a certain set of genes across different individual types. In the simplest case with a single marker, the individual type could correspond to a dominant genetic model, as illustrated in <xref ref-type="fig" rid="pcbi-1000642-g002">Figure 2A</xref>. In this instance, our model is mathematically equivalent to the regression model (<xref ref-type="fig" rid="pcbi-1000642-g002">Figure 2B</xref>). In the case of two markers associated with gene expression traits, there could be two to nine individual types (various genotype combinations). <xref ref-type="fig" rid="pcbi-1000642-g002">Figure 2C</xref> illustrates a case with three individual types: 1) high expression values associated with red-colored genotype combinations, 2) medium expression values with blue-colored combinations, and 3) low expression values with green-colored combinations. The goal of the Bayesian partition method is to simultaneously partition genes and SNPs into modules. The details of the Bayesian partition model are described in the <xref ref-type="sec" rid="s4">Methods</xref> section.</p>
+<fig id="pcbi-1000642-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g001</object-id><label>Figure 1</label><caption>
+<title>An illustration of the Bayesian partition model.</title>
+<p>Each row represents an individual and the columns represent gene expression traits (left) and markers (right). Data is partitioned into three modules plus a null module. Module 1 has two markers associated with a group of genes, represented by a link in green color. In this module individuals are partitioned into three individual types. Genes in module 2 are associated with one marker, represented by a link in blue color. Individuals in module 2 are partitioned into two individual types. Similarly module 3 has two markers linked with a group of genes, represented by a link in red color. Individuals in module 3 are partitioned into three individual types. Genes and markers in the null module are drawn in black. Note that different modules have different individual partitions.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g001" xlink:type="simple"/></fig><fig id="pcbi-1000642-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g002</object-id><label>Figure 2</label><caption>
+<title>Comparison of different models for associating genotypes and phenotypes.</title>
+<p>(A) the regression model; (B) the Bayesian partition (BP) model with a single biallelic marker ; (C) the BP model with two interactive biallelic markers. In the regression model, gene expression values (Y) are regressed onto marker genotypes (X). If the marker has a dominant effect on the gene expression, the regression implicitly partitions the expression values into low and high groups corresponding to genotypes aa for, say, low expression and Aa or AA for high expression. In the BP model, a latent variable, denoted here as “Individual Type”, is introduced and conditional on this variable the gene expression traits and marker genotypes are independent. In the case of a single marker, two individual types exist, colored here as green and red. In (c), gene expression is linked with a set of two biallelic markers. In this instance, individuals are partitioned into three types, colored here as green, blue and red, corresponding to low, medium, and high expression levels, respectively.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g002" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Simulation studies</title>
+<p>To test the effectiveness of our method, we simulated 120 individuals with 500 binary markers and 1000 expression traits in the context of inbred cross of haploid strains. There are eight modules (summarized in <xref ref-type="table" rid="pcbi-1000642-t001">Table 1</xref>), each consisting of 40 genes, simulated from different epistasis models based on the linear regression framework, which is different from the posited Bayesian model in our analysis. The genotypic means and frequencies for the two loci used in the simulation are listed in <xref ref-type="table" rid="pcbi-1000642-t002">Table 2</xref>. We repeated the simulation 100 times and analyzed the simulated data using two methods: (1) our Bayesian partition method using parallel tempering <xref ref-type="bibr" rid="pcbi.1000642-Liu1">[18]</xref> with 15 temperature ladders, referred to as BP; (2) the two-stage regression method of Storey <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1000642-Storey1">[5]</xref>, referred to as SR. Details of the simulation and implementation of these two methods are described in the <italic>Supplemental Material</italic>. As shown from the receiver operating characteristic (ROC) curves in <xref ref-type="fig" rid="pcbi-1000642-g003">Figure 3</xref>, BP achieved a significantly higher power to detect eQTLs compared to SR. For example, allowing for 50 false positives, BP detected more than 500 (out of 640) true gene-marker pairs, whereas SR only detected ∼100 true pairs and became plateaued even with many more false positives allowed. There are likely two reasons for this. First, we modeled the co-regulated genes as a module so that information from all genes in a given module could be aggregated to improve the signal. Multiple trait mapping has proven to be more powerful than single trait mapping <xref ref-type="bibr" rid="pcbi.1000642-Jiang1">[12]</xref> in the regression framework. Second, we modeled epistatic interactions explicitly so that markers with weak marginal but strong interactive effects could be detected.</p>
+<fig id="pcbi-1000642-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g003</object-id><label>Figure 3</label><caption>
+<title>Comparison of the receiver operator characteristic (ROC) curves for the gene-marker pair detection obtained by our Bayesian partition method (BP) and the two-stage regression method (SR).</title>
+<p>Different points along the ROC curves represent the false positive and true positive counts averaged over 100 simulations at different posterior probability thresholds (for BP) or at different FDR thresholds (for SR). There are 40 genes in each of the eight modules which are linked to two markers and thus the total number of the true positive gene-marker pairs is 640.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g003" xlink:type="simple"/></fig><table-wrap id="pcbi-1000642-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.t001</object-id><label>Table 1</label><caption>
+<title>Simulation design and genetic variance decomposition of different models.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000642-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Module</td>
+<td align="left" colspan="1" rowspan="1">Model<xref ref-type="table-fn" rid="nt101">a</xref></td>
+<td align="left" colspan="1" rowspan="1">% of Var.<xref ref-type="table-fn" rid="nt102">b</xref></td>
+<td align="left" colspan="1" rowspan="1">Locus 1<xref ref-type="table-fn" rid="nt103">c</xref></td>
+<td align="left" colspan="1" rowspan="1">Locus 2<xref ref-type="table-fn" rid="nt104">d</xref></td>
+<td align="left" colspan="1" rowspan="1">Epistasis<xref ref-type="table-fn" rid="nt105">e</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e001" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.153</td>
+<td align="left" colspan="1" rowspan="1">0.338</td>
+<td align="left" colspan="1" rowspan="1">0.339</td>
+<td align="left" colspan="1" rowspan="1">0.333</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e002" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.158</td>
+<td align="left" colspan="1" rowspan="1">0.052</td>
+<td align="left" colspan="1" rowspan="1">0.052</td>
+<td align="left" colspan="1" rowspan="1">0.895</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">C</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e003" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.160</td>
+<td align="left" colspan="1" rowspan="1">0.466</td>
+<td align="left" colspan="1" rowspan="1">0.441</td>
+<td align="left" colspan="1" rowspan="1">0.088</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">D</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e004" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.161</td>
+<td align="left" colspan="1" rowspan="1">0.133</td>
+<td align="left" colspan="1" rowspan="1">0.128</td>
+<td align="left" colspan="1" rowspan="1">0.739</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">E</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e005" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.132</td>
+<td align="left" colspan="1" rowspan="1">0.748</td>
+<td align="left" colspan="1" rowspan="1">0.138</td>
+<td align="left" colspan="1" rowspan="1">0.128</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e006" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.169</td>
+<td align="left" colspan="1" rowspan="1">0.736</td>
+<td align="left" colspan="1" rowspan="1">0.231</td>
+<td align="left" colspan="1" rowspan="1">0.043</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">G</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e007" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.168</td>
+<td align="left" colspan="1" rowspan="1">0.743</td>
+<td align="left" colspan="1" rowspan="1">0.050</td>
+<td align="left" colspan="1" rowspan="1">0.211</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">H</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e008" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.168</td>
+<td align="left" colspan="1" rowspan="1">0.131</td>
+<td align="left" colspan="1" rowspan="1">0.048</td>
+<td align="left" colspan="1" rowspan="1">0.821</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>a</label><p>The regression model that was used to generate the “core gene” in each module.</p></fn><fn id="nt102"><label>b</label><p>The average percentage of variation of genes in the module explained by the true model.</p></fn><fn id="nt103"><label>c</label><p>The average percentage of genetic variance explained by the first locus.</p></fn><fn id="nt104"><label>d</label><p>The average percentage of genetic variance explained by the second locus.</p></fn><fn id="nt105"><label>e</label><p>The average percentage of genetic variance explained by epistasis. In all modules, the heritability of the “core gene” is 0.6 and the average correlation of the module genes with the “core gene” is 0.5.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pcbi-1000642-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.t002</object-id><label>Table 2</label><caption>
+<title>Genotypic means and frequencies for a two-locus model used in the simulation studies.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000642-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="2" rowspan="1">Locus 2</td>
+<td align="left" colspan="1" rowspan="1">Mean</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">B</td>
+<td align="left" colspan="1" rowspan="1">b</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Locus 1</td>
+<td align="left" colspan="1" rowspan="1">A</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e009" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e010" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e011" xlink:type="simple"/></inline-formula></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">(<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e012" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1">(<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e013" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">a</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e014" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e015" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e016" xlink:type="simple"/></inline-formula></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">(<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e017" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1">(<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e018" xlink:type="simple"/></inline-formula>)</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="2" rowspan="1">Mean</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e019" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e020" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>The contrast of the performances of these two methods is most prominent when the marginal effect is weak. For example, in modules B, D and H, the rate of true positive detections of SR never exceeded 5% even at the generous FDR threshold of 90%. In modules E, F, and G where the major marker explains more than 70% of the genetic variation, SR detected the major marker in nearly 50% of the simulations at the 50% FDR threshold, but not the minor marker. In contrast, BP performed superiorly and robustly in all eight modules. The module by module comparisons are detailed in the <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref> and shown in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s002">Figure S1</xref>.</p>
+<p><xref ref-type="fig" rid="pcbi-1000642-g004">Figure 4</xref> provides a graphical view of the BP result for another simulated dataset with 120 individuals, 1000 genes, and 500 markers. Four distinct modules, with 60, 60, 40, and 40 genes, and controlled by 3, 2, 1, and 2 markers, respectively (shown in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s007">Table S1</xref>), are simulated similarly as in the previous example (more details in the <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>). The shape and height of a point represent the most probable module classification and the corresponding maximum posterior probability of a gene. We see that all of the “background” genes were correctly classified according to their highest posterior probabilities. Most genes in the four non-null modules were also correctly classified, other than a very few ones that were classified into the null module, most likely due to their weak signals. BP also correctly identified the truly associated markers of the four modules with high posterior probabilities (shown in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s008">Table S2</xref>).</p>
+<fig id="pcbi-1000642-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g004</object-id><label>Figure 4</label><caption>
+<title>The posterior probability plot.</title>
+<p>The height of each point is the posterior probability for the most likely classification of the gene; and the shape/color of the point represents the module type of the classification. The first 200 genes are those in one of the four non-null modules, separated by vertical lines.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g004" xlink:type="simple"/></fig></sec><sec id="s2c">
+<title>Yeast eQTL modules – a re-examination of the landscape of genetic complexity</title>
+<p>We applied our Bayesian method to a data set consisting of gene expression and genotypes for 112 segregants from a cross between laboratory (BY) and wild (RM) strains of <italic>S. cerevisiae</italic> <xref ref-type="bibr" rid="pcbi.1000642-Brem2">[15]</xref> and detected 29 modules of genes and their associated markers (<xref ref-type="sec" rid="s4">Methods</xref>). Among these 29 modules, 20 are linked to a single eQTL while the remaining nine are linked to two eQTLs. Three of the nine linking to two eQTLs give rise to significant epistatic interactions between the two loci. Twenty-six of the 29 modules significantly overlap (corrected p-value&lt;0.05) with at least one of the 13 gene groups previously reported as mapping to eQTL hot spots <xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref>. We also tested each of these modules for enrichment using GO terms, a yeast knockout compendium <xref ref-type="bibr" rid="pcbi.1000642-Hughes1">[19]</xref>, and transcription factor binding sites <xref ref-type="bibr" rid="pcbi.1000642-MacIsaac1">[20]</xref>. At p-value&lt;0.05 after multiple testing correction, 21 modules have at least one GO term enrichment; 22 modules overlap with at least one knockout signature, and 13 modules are enriched for at least one transcription factor binding site. The result is summarized in <xref ref-type="table" rid="pcbi-1000642-t003">Table 3</xref> and a breakdown result is in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s009">Table S3</xref>. In contrast, the LOD score distributions of transcripts at the associated markers under the “single-transcript-single-marker” model are shown in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s003">Figure S2</xref>. Our Bayesian method identifies significantly more weak gene-marker associations than the simple model. These GO enrichments support the biological relevance of different modules detected by our method. Each module is described in detail in the <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>.</p>
+<table-wrap id="pcbi-1000642-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.t003</object-id><label>Table 3</label><caption>
+<title>Summary of the 29 modules that were detected in the yeast data set.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000642-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Module</td>
+<td align="left" colspan="1" rowspan="1">Size<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1">Loci<xref ref-type="table-fn" rid="nt107">b</xref></td>
+<td align="left" colspan="1" rowspan="1">GO category<xref ref-type="table-fn" rid="nt108">c</xref></td>
+<td align="left" colspan="1" rowspan="1">KO<xref ref-type="table-fn" rid="nt109">d</xref></td>
+<td align="left" colspan="1" rowspan="1">TFBS<xref ref-type="table-fn" rid="nt110">e</xref></td>
+<td align="left" colspan="1" rowspan="1">eQTL hot spot<xref ref-type="table-fn" rid="nt111">f</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">38</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 548401</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">33</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 548401</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 548401</td>
+<td align="left" colspan="1" rowspan="1">cell wall (sensu Fungi)<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr III: 177850</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3<xref ref-type="table-fn" rid="nt113">*</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">137</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 548401</td>
+<td align="left" colspan="1" rowspan="1">Nucleolus<xref ref-type="table-fn" rid="nt116">****</xref></td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">0<xref ref-type="table-fn" rid="nt112">g</xref></td>
+<td align="left" colspan="1" rowspan="1">2<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">75</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 548401</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">38</td>
+<td align="left" colspan="1" rowspan="1">Chr II: 602012</td>
+<td align="left" colspan="1" rowspan="1">Protein disulfide isomerase activity<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">8<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">83</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 79091</td>
+<td align="left" colspan="1" rowspan="1">‘de novo’ IMP biosynthesis<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">4 <xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr XV: 170945</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">10<xref ref-type="table-fn" rid="nt114">**</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">12<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">69</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 79091</td>
+<td align="left" colspan="1" rowspan="1">histidine biosynthesis<xref ref-type="table-fn" rid="nt113">*</xref></td>
+<td align="left" colspan="1" rowspan="1">53</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">4<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">61</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 79091</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 81832</td>
+<td align="left" colspan="1" rowspan="1">branched chain family amino acid biosynthesis<xref ref-type="table-fn" rid="nt113">*</xref></td>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">4<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">52</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 81832</td>
+<td align="left" colspan="1" rowspan="1">nuclear nucleosome<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr VIII: 84437</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 201166</td>
+<td align="left" colspan="1" rowspan="1">Regulation of transcription from RNA polymerase II promoter<xref ref-type="table-fn" rid="nt113">*</xref></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr VIII: 111679</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">5<xref ref-type="table-fn" rid="nt113">*</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">Chr III: 201166</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">4<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">5<xref ref-type="table-fn" rid="nt114">**</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">Chr V: 116530</td>
+<td align="left" colspan="1" rowspan="1">‘de novo’ pyrimidine base biosynthesis<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">6<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">44</td>
+<td align="left" colspan="1" rowspan="1">Chr VIII: 111690</td>
+<td align="left" colspan="1" rowspan="1">Mating projection tip<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">7<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">Chr X: 22315</td>
+<td align="left" colspan="1" rowspan="1">aldehyde metabolism<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr VI: 28041</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">Chr XII: 659357</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">8<xref ref-type="table-fn" rid="nt114">**</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr XIII: 430164</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">45</td>
+<td align="left" colspan="1" rowspan="1">Chr XII: 662627</td>
+<td align="left" colspan="1" rowspan="1">ergosterol biosynthesis<xref ref-type="table-fn" rid="nt116">****</xref></td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">8<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr III: 79091</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">34</td>
+<td align="left" colspan="1" rowspan="1">Chr XII: 105609</td>
+<td align="left" colspan="1" rowspan="1">telomerase-independent telomere maintenance<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">9<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr IV: 1525327</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">Chr XIII: 49903</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">10<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Chr X: 327852</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">81</td>
+<td align="left" colspan="1" rowspan="1">Chr XIV: 449639</td>
+<td align="left" colspan="1" rowspan="1">endoplasmic reticulum<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1<xref ref-type="table-fn" rid="nt113">*</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">22</td>
+<td align="left" colspan="1" rowspan="1">52</td>
+<td align="left" colspan="1" rowspan="1">Chr XIV: 486861</td>
+<td align="left" colspan="1" rowspan="1">structural constituent of ribosome<xref ref-type="table-fn" rid="nt116">****</xref></td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">11<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">68</td>
+<td align="left" colspan="1" rowspan="1">Chr XIV: 486861</td>
+<td align="left" colspan="1" rowspan="1">Arp2/3 protein complex<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">11<xref ref-type="table-fn" rid="nt114">**</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">24</td>
+<td align="left" colspan="1" rowspan="1">39</td>
+<td align="left" colspan="1" rowspan="1">Chr XIV: 449639</td>
+<td align="left" colspan="1" rowspan="1">nuclear pore organization and biogenesis<xref ref-type="table-fn" rid="nt113">*</xref></td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">11<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25</td>
+<td align="left" colspan="1" rowspan="1">77</td>
+<td align="left" colspan="1" rowspan="1">Chr XIV: 486861</td>
+<td align="left" colspan="1" rowspan="1">mitochondrial inner membrane<xref ref-type="table-fn" rid="nt114">**</xref></td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">11<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">26</td>
+<td align="left" colspan="1" rowspan="1">83</td>
+<td align="left" colspan="1" rowspan="1">Chr XV: 170945</td>
+<td align="left" colspan="1" rowspan="1">response to stress<xref ref-type="table-fn" rid="nt115">***</xref></td>
+<td align="left" colspan="1" rowspan="1">33</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">12<xref ref-type="table-fn" rid="nt115">***</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">27</td>
+<td align="left" colspan="1" rowspan="1">45</td>
+<td align="left" colspan="1" rowspan="1">Chr XV: 170945</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">12<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">74</td>
+<td align="left" colspan="1" rowspan="1">Chr XV: 170945</td>
+<td align="left" colspan="1" rowspan="1">Fructose transporter activity<xref ref-type="table-fn" rid="nt113">*</xref></td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">12<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">29</td>
+<td align="left" colspan="1" rowspan="1">42</td>
+<td align="left" colspan="1" rowspan="1">Chr XV: 563943</td>
+<td align="left" colspan="1" rowspan="1">respiratory chain complex III (sensu Eukaryota)<xref ref-type="table-fn" rid="nt116">****</xref></td>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">13<xref ref-type="table-fn" rid="nt116">****</xref></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><label>a</label><p>Number of genes in each module.</p></fn><fn id="nt107"><label>b</label><p>The chromosome positions of markers associated with each module.</p></fn><fn id="nt108"><label>c</label><p>The most significant GO terms. A total of 510 GO terms of sizes 5 to 300 were tested. Multiple testing corrected (Fisher Exact Test p-value<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e021" xlink:type="simple"/></inline-formula>510) p-values less than 0.05 are displayed at four different levels indicated by *. *: 10<sup>−3</sup>∼0.05; **: 10<sup>−5</sup>∼10<sup>−3</sup>; ***: 10<sup>−10</sup>∼10<sup>−5</sup>; ****0∼10<sup>−10</sup>.</p></fn><fn id="nt109"><label>d</label><p>Number of knockout signatures that overlap with each module. 287 knockout signatures <xref ref-type="bibr" rid="pcbi.1000642-Hughes1">[19]</xref> were tested and the p-value cut-off is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e022" xlink:type="simple"/></inline-formula> (0.05/287).</p></fn><fn id="nt110"><label>e</label><p>Number of the transcription factors whose binding sites are enriched in each module. 119 transcription factor binding sites <xref ref-type="bibr" rid="pcbi.1000642-MacIsaac1">[20]</xref> were tested and the p-value cut-off is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e023" xlink:type="simple"/></inline-formula> (0.05/119).</p></fn><fn id="nt111"><label>f</label><p>Overlapped eQTL hot spots. Multiple testing corrected (Fisher Exact Test p-value<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e024" xlink:type="simple"/></inline-formula>13) p-values at cut-off 0.05 are displayed in four different levels indicated by *.</p></fn><fn id="nt112"><label>g</label><p>Module 4 is enriched with <italic>de novo</italic> motifs PAC and RRPE.</p></fn><fn id="nt113"><label>*</label><p>10<sup>−3</sup>∼10<sup>−2</sup>.</p></fn><fn id="nt114"><label>**</label><p>10<sup>−5</sup>∼10<sup>−3</sup>.</p></fn><fn id="nt115"><label>***</label><p>10<sup>−10</sup>∼10<sup>−5</sup>.</p></fn><fn id="nt116"><label>****</label><p>0∼10<sup>−10</sup>.</p></fn></table-wrap-foot></table-wrap><sec id="s2c1">
+<title>Modules linked to complex eQTL hot spots</title>
+<p>Several modules are linked to loci that correspond to previously identified eQTL hot spots <xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref>. For example, modules 26–28 are linked to a locus on chromosome XV that is coincident with eQTL hot spot 12, with all modules significantly overlapping with genes linked to this locus (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e025" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e026" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e027" xlink:type="simple"/></inline-formula>, respectively). The average intra-module correlation for module 26 (0.731) is higher than that for modules 27 (0.409) and 28 (0.459). <italic>PHM7</italic> was previously identified and validated as a causal regulator for this hot spot <xref ref-type="bibr" rid="pcbi.1000642-Zhu1">[10]</xref>. The <italic>PHM7</italic> knockout signature significantly overlaps with modules 26 and 28 (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e028" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e029" xlink:type="simple"/></inline-formula>, respectively). When compared to a previously constructed yeast knockout compendium <xref ref-type="bibr" rid="pcbi.1000642-Hughes1">[19]</xref>, module 26 overlaps with 33 knockout signatures, while module 28 overlaps with only four of the knockout signatures (three of the four also overlap with module 26). Application of a causality test procedure <xref ref-type="bibr" rid="pcbi.1000642-Schadt2">[21]</xref> revealed that 52 genes (out of 83) in module 26 were supported as causal for at least one gene in module 28, while only six genes (out of 74) in module 28 were supported as causal for at least one gene in module 26 (shown in Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s004">Figure S3</xref>). These results indicate that genes in module 26 serve as the primary response to the causal perturbation of <italic>PHM7</italic> and genes in module 28 serve as the secondary response. Other causal regulators for module 27 that are independent of <italic>PHM7</italic> may exist.</p>
+</sec><sec id="s2c2">
+<title>Modules linked to two loci</title>
+<p>Our results provide a number of positive controls that illustrate how our method can dissect complex eQTL hot spots into different modules and detect modules with complex genetic regulation. As summarized above, nine of the 29 modules we identified are linked to two eQTLs. Modules 3, 12 and 16 have significant epistatic interactions (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e030" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e031" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e032" xlink:type="simple"/></inline-formula>, for the interaction terms, respectively) between the two loci. Modules 12 and 20 were previously reported in the literature <xref ref-type="bibr" rid="pcbi.1000642-Brem3">[16]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref>. Among the other seven novel modules, three of them (modules 16, 17 and 19) are likely due to cross-hybridization (see details in <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>). Module 3, which consists of many daughter cell expressed genes and is linked to two eQTLs with a significant epistatic interaction, is predicted to be under the regulation of <italic>AMN1</italic> and <italic>BPH1</italic>, each located near the two eQTL loci. Modules 7 and 18 are each mapped to two previously detected eQTL hot spots suggesting that genes in these two modules are under the control of multiple mega-regulators.</p>
+<p>The interaction term for module 12 is statistically most significant (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e033" xlink:type="simple"/></inline-formula>). A previous study <xref ref-type="bibr" rid="pcbi.1000642-Brem3">[16]</xref> experimentally validated that an interaction between <italic>MAT</italic> at the chromosome III locus and <italic>GPA1</italic> at the chromosome VIII locus affects a group of 19 genes. Among these 19 genes, one of them is not in our study set; two other genes were later experimentally verified to be “false positives” <xref ref-type="bibr" rid="pcbi.1000642-Brem3">[16]</xref> and are correctly assigned to the null module in our analysis; and four other genes are negatively correlated with genes in this module and so are not placed in module 12. The remaining 12 genes are all recovered in this module. In addition, our method detects another gene, <italic>HMLALPHA2</italic>, which is also related to mating type. The heat map of the gene expression in module 12 is plotted in <xref ref-type="fig" rid="pcbi-1000642-g005">Figure 5B</xref>. This result demonstrates that our method not only is able to detect an experimentally validated interaction, but also has a higher specificity and sensitivity to detect the interaction than the regression based method.</p>
+<fig id="pcbi-1000642-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g005</object-id><label>Figure 5</label><caption>
+<title>Heat map for expression of genes in modules.</title>
+<p>(A) for module 3; (B) for module 12; (C) for module 20. Each row represents a gene with the gene name listed on the right and each column represents an individual. Individuals are divided into four groups according to the genotypes of the two eQTLs. Over- and under-expression are indicated by red and green, respectively.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g005" xlink:type="simple"/></fig>
+<p>Module 20 consists of 21 genes and is linked to two loci on chromosome XIII and X, respectively, but no epistatic interaction is detected between these loci. The heat map of the gene expression in this module is plotted in <xref ref-type="fig" rid="pcbi-1000642-g005">Figure 5C</xref>. Two transcription factor binding sites are enriched in the module, with the <italic>ZAP1</italic> binding site being the most significantly enriched (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e034" xlink:type="simple"/></inline-formula>). In fact, 14 of the 21 genes in module 20 are known or predicted to be <italic>ZAP1</italic> target genes <xref ref-type="bibr" rid="pcbi.1000642-Wu1">[22]</xref> (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e035" xlink:type="simple"/></inline-formula>). <italic>ZAP1</italic>, which is physically located at the chromosome X locus and has an eQTL at the chromosome XIII locus, is included in this module. A previously identified <italic>ZAP1</italic> module <xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref> overlaps significantly with module 20. Among the ten genes in the ZAP1 module, eight of them are also predicted in module 20. It was previously conjectured that a regulator at the chromosome XIII locus regulates <italic>ZAP1</italic> expression, and that as a result <italic>ZAP1</italic> expression and <italic>ZAP1</italic> genotype together affect <italic>ZAP1</italic> target genes <xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref>. Our model is consistent with this hypothesized mechanism and also identifies more <italic>ZAP1</italic> target genes in an objective way (i.e., regulators do not need to be pre-specified).</p>
+<p>Module 3 is comprised of 16 genes and has the second most significant interaction term (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e036" xlink:type="simple"/></inline-formula>). This module is linked to chromosomes II: 548401 and III: 177850. The heat map of the gene expression in this module is plotted in <xref ref-type="fig" rid="pcbi-1000642-g005">Figure 5A</xref>. Binding sites for <italic>ACE2</italic>, a transcription factor that activates expression of early G1-specific genes and that localizes to daughter cell nuclei after cytokinesis, are enriched in this module (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e037" xlink:type="simple"/></inline-formula>). <italic>AMN1</italic>, a protein required for daughter cell separation and multiple mitotic checkpoints, is the only gene with a <italic>cis</italic>-eQTL in the module, and is predicted as at least one of the putative regulators for the eQTL hot spot at the chromosome II locus <xref ref-type="bibr" rid="pcbi.1000642-Zhu1">[10]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref>. The <italic>AMN1</italic> allele swap signature <xref ref-type="bibr" rid="pcbi.1000642-Zhu1">[10]</xref> overlaps significantly with this module (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e038" xlink:type="simple"/></inline-formula>). In addition, of the ten daughter-specific expression (DSE) genes identified in culture-averaged microarray experiments <xref ref-type="bibr" rid="pcbi.1000642-ColmanLerner1">[23]</xref>, nine are in our study set and seven of these are included in this module (p-value = <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e039" xlink:type="simple"/></inline-formula>). At the chromosome III locus is <italic>BPH1</italic>, a gene involved in cell wall organization. The RM version of <italic>BPH1</italic> has a deletion in the middle of the coding sequence compared to the BY sequence (Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000642.s005">Figure S4</xref>), which results in an in-frame stop. Therefore, the RM version of <italic>BPH1</italic> may not be functional. When <italic>BPH1</italic> is knocked out, sporulation decreases <xref ref-type="bibr" rid="pcbi.1000642-Enyenihi1">[24]</xref>. However, we note that <italic>BPH1</italic> is in the null module, suggesting that the <italic>BPH1</italic> activity instead of its expression level may be linked to this locus.</p>
+<p>To show that module 3 is under the regulation of two loci, we examined the expression of two genes in the module, <italic>DSE1</italic> and <italic>DSE2</italic>. <italic>DSE1</italic> and <italic>DES2</italic> are up-regulated 15.1- and 20.4-fold, respectively, in segregants carrying the BY allele at the <italic>AMN1</italic> locus relative to those carrying the RM allele. If we restrict attention to those segregants carrying the BY allele at the <italic>BPH1</italic> locus, <italic>DES1</italic> and <italic>DES2</italic> are up-regulated 13.8- and 16.9-fold, respectively, in segregants carrying the BY allele at the <italic>AMN1</italic> locus relative to those carrying the RM allele. When the RM version of <italic>AMN1</italic> was introduced onto the BY background, <italic>DES1</italic> and <italic>DES2</italic> were up-regulated only 9.7- and 13.5-fold in the BY wildtype compared to the BY engineered strain <xref ref-type="bibr" rid="pcbi.1000642-Ronald1">[25]</xref>. These results combined suggest that <italic>AMN1</italic> alone can not explain all of the variation in <italic>DSE1</italic> and <italic>DSE2</italic> expression, but the combination of the <italic>AMN1</italic> and <italic>BPH1</italic> alleles explains significantly more of the variation (shown in <xref ref-type="fig" rid="pcbi-1000642-g006">Figure 6</xref>).</p>
+<fig id="pcbi-1000642-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000642.g006</object-id><label>Figure 6</label><caption>
+<title>Comparison of the expression of <italic>DSE1</italic> and <italic>DSE2</italic> in different experiments.</title>
+<p><italic>DSE1</italic> and <italic>DSE2</italic> are two daughter cell-specific genes in module 3. <italic>DSE1</italic> and <italic>DSE2</italic> are up-regulated 15.1- and 20.4-fold, respectively, in segregants bearing the BY allele at <italic>AMN1</italic> comparing to segregants bearing the RM allele at <italic>AMN1</italic> (blue bars). <italic>DSE1</italic> and <italic>DSE2</italic> are up-regulated 13.8- and 16.9-fold, respectively, in segregants bearing the BY allele at <italic>AMN1</italic> and the BY allele at <italic>BPH1</italic> comparing to segregants bearing the RM allele at <italic>AMN1</italic> and the BY allele at <italic>BHP1</italic> (green bars). <italic>DSE1</italic> and <italic>DSE2</italic> are up-regulated 9.7- and 15.3-fold, respectively, in the original BY strain relative to the engineered BY strain with RM allele at <italic>AMN1</italic> <xref ref-type="bibr" rid="pcbi.1000642-Ronald1">[25]</xref> (brown bars). It is clear that segregants categorized by both <italic>AMN1</italic> and <italic>BPH1</italic> alleles match the experimental result better.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.g006" xlink:type="simple"/></fig></sec></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>We have developed a Bayesian partition model for simultaneously mapping multiple eQTLs for multiple sets of co-regulated genes. Whereas conventional linkage analysis has been widely and successfully applied to the study of one or a small number of traits at a time, our module-based method is suitable for analyzing thousands of phenotypes simultaneously. Both simulation studies and empirical data examples demonstrated that our method is effective for detecting marker interactions, even when no marginal effects could be detected. These improvements in power are a direct result of accounting for the correlation among gene expression traits and assessing the joint effect of multiple eQTLs, including interactions, on these correlated gene sets.</p>
+<p>One of the main advances in our approach is the introduction of the “individual type” as a latent variable to describe associations between gene expression traits and markers. The individual type latent variable can be interpreted as a classification of individuals according to a combination of phenotypes and genotypes. The underlying mathematical model for this dependence structure is represented as a chain in which the joint distribution for some set of markers influences a set of expression traits via a latent “individual type” variable. After integrating out this latent variable, we observe a direct relationship between the marker and gene expression sets, similar to what would have been obtained from a the traditional regression model in the single-marker, single-gene case (<xref ref-type="fig" rid="pcbi-1000642-g002">Figures 2A and 2B</xref>). However, the advantage over the standard regression in introducing the latent individual type variable is its enabling us to model epistatic interactions and pleiotropy simultaneously.</p>
+<p>Linkage disequilibrium (LD) among adjacent markers is an important feature of the genetic marker data. For individuals produced by the laboratory crosses (e.g., F1 and F2 designs), the marker dependency can be modeled satisfactorily by a Markov chain. The BP model can easily entertain this modification of the background marker distribution, but the computation time required to run this modified model dramatically increases since we need a forward-summation-backward-sampling algorithm to update the marker indicators (see <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref> for details). Another ad hoc strategy to account for the marker correlations without directly modeling them was to first scan all markers and to enumerate those marker pairs with correlations exceeding a given threshold. Then, in the MCMC algorithm, we imposed a mutually exclusive condition for such pairs so that highly correlated marker pairs would not appear simultaneously in any module.</p>
+<p>We compared the Markov model approach with the ad hoc strategy on a small simulated data sets and a subset of the real data (data not shown). The <italic>ad hoc</italic> strategy always provided nearly identical results to that of the Markov model with only a fraction of the computation cost. Note that there are also markers that are highly correlated but are not physically linked <xref ref-type="bibr" rid="pcbi.1000642-Cervino1">[26]</xref>. In such cases the Markov model actually worked less satisfactorily than the ad hoc approach.</p>
+<p>Our method shares some similarities to other methods in the literature, but also shows clear distinctions. For example, Lee <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref> proposed to simultaneously partition the gene expression and genotype markers. However, their method requires strong priors on the potential regulators, while our method does not. Kendzioski <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1000642-Kendziorski1">[14]</xref> proposed a mixture of markers model to find the eQTLs for multiple gene expression. However, their method separates the gene clustering and eQTL mapping steps, where they first use k-means clustering to identify subsets of genes, and then apply eQTL mapping to the clusters of genes. In addition, their method does not address the epistatic effects. In contrast, gene expression partition and eQTL mapping are modeled jointly in our Bayesian method, and we are able to effectively detect epistasis by using a comprehensive statistical model on both the gene expression and the markers. Our analysis of the yeast data identified 20 modules linked to one eQTL and 9 modules linked to two eQTLs, among which three giving rise to strong epistatic interactions between markers. Some of the modules linked to two eQTLs are consistent with previously reported results <xref ref-type="bibr" rid="pcbi.1000642-Storey1">[5]</xref>,<xref ref-type="bibr" rid="pcbi.1000642-Lee1">[17]</xref>, and we were able to identify more true positive hits along with fewer false positives than previously reported.</p>
+<p>It is of note that our approach can also be applied to mammalian data and to other quantitative traits data with discrete genetic and environmental covariates. In typical mouse studies, about 2000 SNPs are genotyped and 25,000 transcripts are measured, among which about 8000 are significantly differentially expressed <xref ref-type="bibr" rid="pcbi.1000642-Schadt1">[2]</xref>. The computation time will be at a similar order of the yeast data analysis. In typical human studies, 650,000 SNPs are genotyped and 40,000 transcripts are measured. The computation time will dramatically increase. We may, however, restrict our attention to hundreds of SNPs identified as possibly associated with gene expression traits in a human cohort, or/and to fewer expression traits identified as being relevant to diseases of interest <xref ref-type="bibr" rid="pcbi.1000642-Schadt3">[27]</xref>–<xref ref-type="bibr" rid="pcbi.1000642-Emilsson1">[28]</xref>. In this type of scenarios, the input datasets would be roughly equivalent to the yeast data set described herein. Many other such applications can be imagined,</p>
+<p>We are also improving parallelization implementation. Hopefully, we will be able to appropriately generalize and improve the Bayesian model as well as the MCMC algorithm so that our method can be applied to complete mammalian and other large data sets.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Bayesian partition model</title>
+<p>A <bold><italic>module</italic></bold> is defined in the <xref ref-type="sec" rid="s2">Results</xref> section as a set of gene expression traits (referred to as “genes” henceforth) and a set of genetic markers (e.g., SNPs) such that the mRNA expression variation of the genes is associated with the allelic variation of the markers. This association between multiple genes and markers is characterized by a latent indicator variable, individual type, conditional on which the trait and marker variables are independent of each other. The individual type latent variable can be viewed as representing a certain combination of markers that induces changes in expressions of a certain set of genes across different individual types.</p>
+<p>To formally describe our model, consider a sample with <italic>N</italic> individuals. Each individual <italic>i</italic> is measured with <italic>G</italic> gene expression values denoted as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e040" xlink:type="simple"/></inline-formula> and <italic>M</italic> marker genotypes denoted as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e041" xlink:type="simple"/></inline-formula>. We assume that the observed data can be partitioned into <italic>D</italic> nontrivial modules plus a null component. The number of non-null modules, <italic>D</italic>, is pre-specified by the user and should reflect the user's prior belief in the higher level structure of the data. Every gene <italic>g</italic> or marker <italic>m</italic> belongs to one of the <italic>D</italic> nontrivial modules or the null module, determined by the gene indicator <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e042" xlink:type="simple"/></inline-formula> and the marker indicator <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e043" xlink:type="simple"/></inline-formula>. For each module <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e044" xlink:type="simple"/></inline-formula>, we further partition the <italic>N</italic> individuals into <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e045" xlink:type="simple"/></inline-formula> types denoted by the individual indicators <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e046" xlink:type="simple"/></inline-formula> for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e047" xlink:type="simple"/></inline-formula>. Each module may have a different number of individual types as well as different ways of partitioning the <italic>N</italic> individuals. For example, with a single biallelic marker (alleles ‘A’ and ‘a’) in the module, the module may have two individual types corresponding to genotypes aa vs. Aa or AA (dominant model), or 3 individual types corresponding to genotypes aa, Aa and AA (additive model). We seek module partitions in which expression patterns are similar for all genes, and gene expression variations across different individuals can be explained by the individual types. A cartoon illustration of the partition model is shown in <xref ref-type="fig" rid="pcbi-1000642-g001">Figure 1</xref>.</p>
+<p>We model the gene expression traits in module <italic>d</italic> by an ANOVA model so that each trait value is the sum of the gene effect (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e048" xlink:type="simple"/></inline-formula>), the eQTL effect for individual type <italic>k</italic> (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e049" xlink:type="simple"/></inline-formula>), the individual effect (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e050" xlink:type="simple"/></inline-formula>), and an error term:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e051" xlink:type="simple"/></disp-formula>where gene <italic>g</italic> is in module <italic>d</italic>, <italic>k</italic> is the individual type of <italic>i</italic>, and <italic>r<sub>i</sub></italic> and <italic>α<sub>g</sub></italic> are <italic>random effects</italic>, following independent Gaussian distributions with mean zero.</p>
+<p>To account for epistasis, we model the joint distribution of all the associated markers of module <italic>d</italic>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e052" xlink:type="simple"/></inline-formula>, by a multinomial distribution, whose frequency vector is determined by the individual type <italic>k</italic>, i.e.,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e053" xlink:type="simple"/></disp-formula>For example, if there are two markers <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e054" xlink:type="simple"/></inline-formula> in the module and each has three genotypes, then there are nine combinations of the marker patterns. Thus <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e055" xlink:type="simple"/></inline-formula> follows a 9-dimensional multinomial distribution.</p>
+<p>For the null component, we assume that there is no association between the genes and the markers. The gene expression traits follow a normal distribution and the marker genotypes follow an independent multinomial distribution.</p>
+<p>To avoid overfitting, we put an exponential prior on the indicator variables to penalize partitions with high complexity:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e056" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e057" xlink:type="simple"/></inline-formula> are the number of genes, markers and individual types in module <italic>d</italic>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e058" xlink:type="simple"/></inline-formula> is the number of genotypes at each marker. We use conjugate priors on the continuous parameters, such as means and variances of the Gaussian distributions and frequency vectors of the multinomials, so that most of these parameters can be integrated out analytically to reduce the complexity of the posterior distribution.</p>
+<p>The joint posterior distribution of all unknown variables is of the form:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e059" xlink:type="simple"/></disp-formula>where <italic>β</italic> represents the set of left-over continuous parameters unable to be integrated out analytically. In order to make inference on the eQTL modules from this posterior distribution, we construct a Markov chain Monte Carlo method to traverse the joint space of all unknown parameters. Each Markov chain is randomly initialized, and uses the Gibbs sampler and the Metropolis-Hasting algorithm <xref ref-type="bibr" rid="pcbi.1000642-Liu1">[18]</xref> to update the variables. We implement a split-merge algorithm, which is a special case of the reversible jump MCMC <xref ref-type="bibr" rid="pcbi.1000642-Green1">[29]</xref>, to update the individual partitions globally. Parallel tempering <xref ref-type="bibr" rid="pcbi.1000642-Geyer1">[30]</xref> is used to help mixing the Markov chain. Further details of the modeling and sampling strategies can be found in the <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>.</p>
+<p>Posterior probabilities are evaluated for each gene and candidate marker set to belong to each module based on the Monte Carlo samples. A threshold is then applied to the posterior probabilities to determine whether a particular gene and marker set should be included in a module.</p>
+</sec><sec id="s4b">
+<title>Application to the yeast data set</title>
+<p>We assembled genotypic and expression data from 112 segregants obtained from a previously described yeast cross between the BY and RM strains of <italic>S. cerevisiae</italic> <xref ref-type="bibr" rid="pcbi.1000642-Brem2">[15]</xref>. Of the 5,740 genes represented on the microarrays in this study, we selected 3,662 informative genes as input into the partition algorithm following the same criteria as previously described <xref ref-type="bibr" rid="pcbi.1000642-Zhu1">[10]</xref>. We then transformed the gene expression values by first performing quantile normalization <xref ref-type="bibr" rid="pcbi.1000642-Bolstad1">[31]</xref> to make the distribution of the log-expression ratios for each individual to be the same, and then normalizing each gene so that the mean expression level for each gene was 0 and the standard deviation was 1.</p>
+<p>Given that genes in the data set have been previously mapped to 13 distinct eQTL hot spots <xref ref-type="bibr" rid="pcbi.1000642-Yvert1">[11]</xref> and that there can be multiple causal factors for a single eQTL hot spot, we set the number of starting modules for our MCMC algorithm to 35∼45 (3×13 plus a null model) to account for these previously identified groups, and to also allow for the detection of new groups as well. For the parallel tempering implementation, we used 30 temperature ladders with almost equal spacing so that the average acceptance probability for exchanges between adjacent chains was roughly 0.15–0.3. We ran MCMC sampling for 1,000,000 iterations in each chain, which took one week of 30 CPUs (accounting for 30 parallel temperature ladders of the MCMC algorithm) on a Linux cluster with 2GHz CPUs. The log posterior probability and its auto-correlation curve depicted in <xref ref-type="supplementary-material" rid="pcbi.1000642.s006">Figures S5C</xref> and <xref ref-type="supplementary-material" rid="pcbi.1000642.s006">S5D</xref> highlight that the Markov chain became stationary after a burn-in period. See <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref> for more details.</p>
+<p>Because markers in the yeast data set are very densely distributed, adjacent markers are almost always highly correlated. After MCMC sampling, markers adjacent to the “truly” linked marker often diluted the posterior probability for the true marker-module linkage. Since a proper Markov chain model for unlinked markers is computationally too expensive to implement (see <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>), we employed a heuristic method to counter this problem. We first specified a window centered at each marker so that markers inside the window are in high LD with the marker at the center. The posterior probabilities of all markers in the window were summed up and regarded as the modified posterior probability of the central marker. The markers with peak probabilities exceeding the given threshold were selected and all other markers in the corresponding windows were masked out.</p>
+<p>Although we did not explicitly model pleiotropic effects for markers (i.e., single markers were not allowed to be associated with expression traits in multiple modules), we reported several modules mapped to the same markers in the yeast data set (See <xref ref-type="table" rid="pcbi-1000642-t003">Table 3</xref> and discussions in the <italic>Supplemental Material</italic> <xref ref-type="supplementary-material" rid="pcbi.1000642.s001">Text S1</xref>). The reason for this apparent contradiction is due to the aforementioned moving window approach and the dense distribution of the markers. In other words, if marker <italic>m</italic> is truly linked to two modules, in computation its adjacent markers can serve as its surrogates so that a subset of these markers are mapped to module 1, and the remainders mapped to module 2. Then the use of the moving window method can restore the total probability back to marker <italic>m</italic>.</p>
+<p>To test the robustness of our result with respect to the initial parameters, we ran our program using three different numbers of modules, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e060" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e061" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e062" xlink:type="simple"/></inline-formula>, each having three independent runs. Samples from the run with the highest average posterior probability for each value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000642.e063" xlink:type="simple"/></inline-formula> were used in the subsequent analyses. We chose 0.8 as the threshold for the posterior probabilities to determine the module membership for each gene and marker. We observed that more than 70% of the genes were consistently grouped together and mapped to the same markers (or null module) in all the runs with different <italic>D</italic> values. These genes and their associated markers formed the list of 29 modules.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000642.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>Supplementary methods and results</p>
+<p>(0.49 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s002" xlink:type="simple"><label>Figure S1</label><caption>
+<p>Module-by-module comparison of the Bayesian partition (BP) method and the step-wise regression (SR) method. (A) Number of the true positive gene-marker pairs detected in each module by the BP method (top) and the SR method (bottom). Nine different lines correspond to different posterior probability thresholds (for BP) or different FDR thresholds (for SR), both of which decrease from 0.9 to 0.1 linearly. There are 40 genes in each of the eight modules which are linked to two markers and thus the number of the true positive gene-marker pairs is 640. (B) Barplots of the number of true eQTLs detected in each module by the BP method (blue) and SR method (green). The shaded bar represents the number of genes detected as mapped to at least one of the true eQTLs while the solid bar represents the number of genes detected as mapped to both eQTLs. The thresholds are 0.5 for both posterior probability (BP) and FDR (SR). From <xref ref-type="fig" rid="pcbi-1000642-g001">Figure 1</xref> we know that the total number of false positive gene-marker pairs is 11.41 and 38.04 for BP and SR respectively. When the thresholds are relaxed to 0.1, more eQTLs were detected in each category, as indicated by the vertical lines above the bars. However, the total number of the false positive gene-marker pairs is still lower using BP (178.37) compared to that using SR (267.07).</p>
+<p>(0.36 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s003" xlink:type="simple"><label>Figure S2</label><caption>
+<p>The distributions of LOD scores under the “single-gene-single-marker” model for genes in the 29 modules identified by the Bayesian method. (A) the LOD score distribution for genes in modules linked to a single eQTL. The LOD scores for 56.3% of transcripts were less than 4.35, the threshold corresponding to a genome-wide FDR of 0.01, and 11.5% of transcripts were less than 1.45, corresponding to a point-wise FDR of 0.01. (B) the LOD score distribution for genes in modules linked to two eQTLs. The LOD scores for 69% and 32.5% of transcripts were less than 4.35 and 1.45, corresponding to a genome-wide and a point-wise FDR of 0.01, respectively.</p>
+<p>(0.11 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s004" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Plot of the causality test results for all pairs of genes between (A) module 4 and module 5 and (b) module 26 and 29. For a particular pair of genes (G1, G2) from module 4 and module 5, respectively, if the causality test claims that gene G1 is causal to gene G2 (corrected p-value&lt;0.05), i.e. G1→G2, then a green dot is plotted at the corresponding position. Similarly, if the causality test results in G2→G1, then a red dot is plotted at the corresponding position. Genes in module 4 and module 5 are sorted for better visualization. Similar procedure applies to (B).</p>
+<p>(0.34 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s005" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s005" xlink:type="simple"><label>Figure S4</label><caption>
+<p>A local view of the coding sequence alignment of RM vs. BY for gene BPH1. The RM sequence has a deletion in the position labeled in red which results an in-frame stop.</p>
+<p>(0.03 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s006" xlink:type="simple"><label>Figure S5</label><caption>
+<p>Trace plots and autocorrelation plots of the log posterior probabilities for one of the simulated data set ((A) and (B)) and the yeast data set analysis ((C) and (D)). In (A), the trace plot was generated from two independent chains, each having 100,000 iterations, and the autocorrelation plot in (B) was obtained from the first chain at every 50 iterations. In (C), trace plot was generated from 1,000,000 Markov chain iterations, using D = 40 (D is the number of the modules). The last 700,000 iterations were used to generate the auto-correlation plot in (D).</p>
+<p>(0.31 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s007" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s007" xlink:type="simple"><label>Table S1</label><caption>
+<p>Design for the simulation II.</p>
+<p>(0.20 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s008" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s008" xlink:type="simple"><label>Table S2</label><caption>
+<p>True markers and inferred markers in each module.</p>
+<p>(0.14 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000642.s009" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000642.s009" xlink:type="simple"><label>Table S3</label><caption>
+<p>Enrichment of (A) gene knockout signatures and (B) TFBS for each module.</p>
+<p>(0.15 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pcbi.1000642-Brem1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Yvert</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Clinton</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Genetic dissection of transcriptional regulation in budding yeast.</article-title>             <source>Science</source>             <volume>296</volume>             <fpage>752</fpage>             <lpage>755</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Schadt1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>
+<name name-style="western"><surname>Monks</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Drake</surname><given-names>TA</given-names></name>
+<name name-style="western"><surname>Lusis</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Che</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Genetics of gene expression surveyed in maize, mouse and man.</article-title>             <source>Nature</source>             <volume>422</volume>             <fpage>297</fpage>             <lpage>302</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Morley1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morley</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Molony</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Weber</surname><given-names>TM</given-names></name>
+<name name-style="western"><surname>Devlin</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Ewens</surname><given-names>KG</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Genetic analysis of genome-wide variation in human gene expression.</article-title>             <source>Nature</source>             <volume>430</volume>             <fpage>743</fpage>             <lpage>747</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Lander1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lander</surname><given-names>ES</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Mapping mendelian factors underlying quantitative traits using RFLP linkage maps.</article-title>             <source>Genetics</source>             <volume>121</volume>             <fpage>185</fpage>             <lpage>199</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Storey1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Storey</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Akey</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Multiple locus linkage analysis of genomewide expression in yeast.</article-title>             <source>PLoS Biol</source>             <volume>3</volume>             <fpage>e267</fpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Zou1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zou</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Zeng</surname><given-names>ZB</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Multiple interval mapping for gene expression QTL analysis.</article-title>             <source>Genetica</source>             <volume>137</volume>             <fpage>125</fpage>             <lpage>134</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Yi1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yi</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Shriner</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Banerjee</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Mehta</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Pomp</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>An efficient Bayesian model selection approach for interacting quantitative trait loci models with many effects.</article-title>             <source>Genetics</source>             <volume>176</volume>             <fpage>1865</fpage>             <lpage>1877</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Manichaikul1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Manichaikul</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moon</surname><given-names>JY</given-names></name>
+<name name-style="western"><surname>Sen</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Yandell</surname><given-names>BS</given-names></name>
+<name name-style="western"><surname>Broman</surname><given-names>KW</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A model selection approach for the identification of quantitative trait loci in experimental crosses, allowing epistasis.</article-title>             <source>Genetics</source>             <volume>181</volume>             <fpage>1077</fpage>             <lpage>1086</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Chen1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lum</surname><given-names>PY</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Pinto</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Variations in DNA elucidate molecular networks that cause disease.</article-title>             <source>Nature</source>             <volume>452</volume>             <fpage>429</fpage>             <lpage>435</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Zhu1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>EN</given-names></name>
+<name name-style="western"><surname>Drees</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Integrating large-scale functional genomic data to dissect the complexity of yeast regulatory networks.</article-title>             <source>Nat Genet</source>             <volume>40</volume>             <fpage>854</fpage>             <lpage>861</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Yvert1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yvert</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Whittle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Akey</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Foss</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Trans-acting regulatory variation in Saccharomyces cerevisiae and the role of transcription factors.</article-title>             <source>Nat Genet</source>             <volume>35</volume>             <fpage>57</fpage>             <lpage>64</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Jiang1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jiang</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Zeng</surname><given-names>ZB</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Multiple trait analysis of genetic mapping for quantitative trait loci.</article-title>             <source>Genetics</source>             <volume>140</volume>             <fpage>1111</fpage>             <lpage>1127</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Mangin1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mangin</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Pleiotropic QTL Analysis.</article-title>             <source>Biometrics</source>             <volume>54</volume>             <fpage>88</fpage>             <lpage>89</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Kendziorski1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kendziorski</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Yuan</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lan</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Attie</surname><given-names>AD</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Statistical methods for expression quantitative trait loci (eQTL) mapping.</article-title>             <source>Biometrics</source>             <volume>62</volume>             <fpage>19</fpage>             <lpage>27</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Brem2"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The landscape of genetic complexity across 5,700 gene expression traits in yeast.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>102</volume>             <fpage>1572</fpage>             <lpage>1577</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Brem3"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Storey</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Whittle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Genetic interactions between polymorphisms that affect gene expression in yeast.</article-title>             <source>Nature</source>             <volume>436</volume>             <fpage>701</fpage>             <lpage>703</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Lee1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lee</surname><given-names>SI</given-names></name>
+<name name-style="western"><surname>Pe'er</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Dudley</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Church</surname><given-names>GM</given-names></name>
+<name name-style="western"><surname>Koller</surname><given-names>D</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Identifying regulatory mechanisms using individual variation reveals key role for chromatin modification.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>103</volume>             <fpage>14062</fpage>             <lpage>14067</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Liu1"><label>18</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>JS</given-names></name>
+</person-group>             <year>2001</year>             <source>Monte Carlo strategies in scientific computing</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Springer</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000642-Hughes1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hughes</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Marton</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Jones</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Roberts</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Stoughton</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Functional discovery via a compendium of expression profiles.</article-title>             <source>Cell</source>             <volume>102</volume>             <fpage>109</fpage>             <lpage>126</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-MacIsaac1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>MacIsaac</surname><given-names>KD</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Gordon</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Gifford</surname><given-names>DK</given-names></name>
+<name name-style="western"><surname>Stormo</surname><given-names>GD</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>An improved map of conserved regulatory sites for Saccharomyces cerevisiae.</article-title>             <source>BMC Bioinformatics</source>             <volume>7</volume>             <fpage>113</fpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Schadt2"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>
+<name name-style="western"><surname>Lamb</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Edwards</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>An integrative genomics approach to infer causal associations between gene expression and disease.</article-title>             <source>Nat Genet</source>             <volume>37</volume>             <fpage>710</fpage>             <lpage>717</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Wu1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wu</surname><given-names>CY</given-names></name>
+<name name-style="western"><surname>Bird</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Winge</surname><given-names>DR</given-names></name>
+<name name-style="western"><surname>Eide</surname><given-names>DJ</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Regulation of the yeast TSA1 peroxiredoxin by ZAP1 is an adaptive response to the oxidative stress of zinc deficiency.</article-title>             <source>J Biol Chem</source>             <volume>282</volume>             <fpage>2184</fpage>             <lpage>2195</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-ColmanLerner1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Colman-Lerner</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Chin</surname><given-names>TE</given-names></name>
+<name name-style="western"><surname>Brent</surname><given-names>R</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Yeast Cbk1 and Mob2 activate daughter-specific genetic programs to induce asymmetric cell fates.</article-title>             <source>Cell</source>             <volume>107</volume>             <fpage>739</fpage>             <lpage>750</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Enyenihi1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Enyenihi</surname><given-names>AH</given-names></name>
+<name name-style="western"><surname>Saunders</surname><given-names>WS</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Large-scale functional genomic analysis of sporulation and meiosis in Saccharomyces cerevisiae.</article-title>             <source>Genetics</source>             <volume>163</volume>             <fpage>47</fpage>             <lpage>54</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Ronald1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ronald</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Whittle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Local regulatory variation in Saccharomyces cerevisiae.</article-title>             <source>PLoS Genet</source>             <volume>1</volume>             <fpage>e25</fpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Cervino1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cervino</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Edwards</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Laurie</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Integrating QTL and high-density SNP analyses in mice to identify Insig2 as a susceptibility gene for plasma cholesterol levels.</article-title>             <source>Genomics</source>             <volume>86</volume>             <fpage>505</fpage>             <lpage>517</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Schadt3"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>
+<name name-style="western"><surname>Molony</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Chudin</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Hao</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>X</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Mapping the genetic architecture of gene expression in human liver.</article-title>             <source>PLoS Biol</source>             <volume>6</volume>             <fpage>e107</fpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Emilsson1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Emilsson</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Thorleifsson</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Leonardson</surname><given-names>AS</given-names></name>
+<name name-style="western"><surname>Zink</surname><given-names>F</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Genetics of gene expression and its effect on disease.</article-title>             <source>Nature</source>             <volume>452</volume>             <fpage>423</fpage>             <lpage>428</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Green1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Green</surname><given-names>PJ</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Reversible jump Markov chain Monte Carlo computation and Bayesian model determination.</article-title>             <source>Biometrika</source>             <volume>82</volume>             <fpage>711</fpage>             <lpage>732</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Geyer1"><label>30</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geyer</surname><given-names>CJ</given-names></name>
+</person-group>             <year>1991</year>             <source>Markov chain Monte Carlo maximum likelihood. Computing Science and Statistics</source>             <publisher-loc>Fairfax</publisher-loc>             <publisher-name>Interface Foundations</publisher-name>             <fpage>156</fpage>             <lpage>163</lpage>          </element-citation></ref>
+<ref id="pcbi.1000642-Bolstad1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolstad</surname><given-names>BM</given-names></name>
+<name name-style="western"><surname>Irizarry</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Astrand</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Speed</surname><given-names>TP</given-names></name>
+</person-group>             <year>2003</year>             <article-title>A comparison of normalization methods for high density oligonucleotide array data based on variance and bias.</article-title>             <source>Bioinformatics</source>             <volume>19</volume>             <fpage>185</fpage>             <lpage>193</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

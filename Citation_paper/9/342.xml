@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id>
+<journal-title-group>
+<journal-title>PLOS ONE</journal-title>
+</journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-44113</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0121905</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>A Fast and Scalable Kymograph Alignment Algorithm for Nanochannel-Based Optical DNA Mappings</article-title>
+<alt-title alt-title-type="running-head">Kymograph Alignment for Nanochannel-Based Optical DNA Mappings</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Noble</surname> <given-names>Charleston</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="fn" rid="currentaff001"><sup>¤</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Nilsson</surname> <given-names>Adam N.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Freitag</surname> <given-names>Camilla</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Beech</surname> <given-names>Jason P.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Tegenfeldt</surname> <given-names>Jonas O.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Ambjörnsson</surname> <given-names>Tobias</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Astronomy and Theoretical Physics, Lund University, Lund, Sweden</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Division of Solid State Physics, Department of Physics, Lund University, Lund, Sweden</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Department of Physics, Gothenburg University, Gothenburg, Sweden</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Isalan</surname> <given-names>Mark</given-names></name>
+<role>Academic Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Imperial College London, UNITED KINGDOM</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: TA JOT. Performed the experiments: CF JB. Analyzed the data: CN ANN TA. Contributed reagents/materials/analysis tools: CN ANN TA. Wrote the paper: CN ANN JOT TA.</p>
+</fn>
+<fn fn-type="current-aff" id="currentaff001">
+<p>¤ Current address: Department of Systems Biology, Harvard Medical School, Boston, MA 02115, USA</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">tobias.ambjornsson@thep.lu.se</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>13</day>
+<month>4</month>
+<year>2015</year>
+</pub-date>
+<volume>10</volume>
+<issue>4</issue>
+<elocation-id>e0121905</elocation-id>
+<history>
+<date date-type="received">
+<day>1</day>
+<month>10</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>5</day>
+<month>2</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Noble et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pone.0121905" xlink:type="simple"/>
+<abstract>
+<p>Optical mapping by direct visualization of individual DNA molecules, stretched in nanochannels with sequence-specific fluorescent labeling, represents a promising tool for disease diagnostics and genomics. An important challenge for this technique is thermal motion of the DNA as it undergoes imaging; this blurs fluorescent patterns along the DNA and results in information loss. Correcting for this effect (a process referred to as kymograph alignment) is a common preprocessing step in nanochannel-based optical mapping workflows, and we present here a highly efficient algorithm to accomplish this via pattern recognition. We compare our method with the one previous approach, and we find that our method is orders of magnitude faster while producing data of similar quality. We demonstrate proof of principle of our approach on experimental data consisting of melt mapped bacteriophage DNA.</p>
+</abstract>
+<funding-group>
+<funding-statement>TA, Swedish Research Council, grant no. 2009-2924, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.vr.se/">http://www.vr.se/</ext-link> Funding provided to JOT, 2007-584, Swedish Research Council, grant no. 2007-584, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.vr.se/">http://www.vr.se/</ext-link>, JOT, VINNOVA, grant number P35735-1, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.vinnova.se/en/">http://www.vinnova.se/en/</ext-link>, TA, The Carl Tryggers Foundation grant no. 12:13 <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.carltryggersstiftelse.se/">http://www.carltryggersstiftelse.se/</ext-link>, and JOT, The Hasselblad Foundation <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.hasselbladfoundation.org/news">http://www.hasselbladfoundation.org/news</ext-link>. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="11"/>
+<table-count count="0"/>
+<page-count count="17"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the manuscript and on Figshare via <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.6084/m9.figshare.1312910" xlink:type="simple">http://dx.doi.org/10.6084/m9.figshare.1312910</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Optical mapping is an emergent complementary approach to DNA sequencing which produces a lower resolution (typically kbp) sequence-dependent map of individual DNA molecules [<xref ref-type="bibr" rid="pone.0121905.ref001">1</xref>–<xref ref-type="bibr" rid="pone.0121905.ref010">10</xref>]. As a direct complement to DNA sequencing, optical mapping can produce a scaffold to facilitate easier sequence assembly, and as an indirect complement, optical mapping promises a variety of applications for which low resolution maps will suffice. For example, it can be used to quickly identify large-scale structural variations, including duplications, deletions, insertions, inversions, and translocations, which are increasingly being linked to heritable traits of phenotypic significance [<xref ref-type="bibr" rid="pone.0121905.ref003">3</xref>, <xref ref-type="bibr" rid="pone.0121905.ref011">11</xref>, <xref ref-type="bibr" rid="pone.0121905.ref012">12</xref>], and it allows for the rapid identification of bacterial species and strains which could represent an important step against the growing problem of antibiotic resistance [<xref ref-type="bibr" rid="pone.0121905.ref013">13</xref>–<xref ref-type="bibr" rid="pone.0121905.ref017">17</xref>].</p>
+<p>To date, many techniques for optical mapping have been developed, and they typically rely on sequence-specific DNA modifications at short target sites, followed by imaging and analysis. These sequence-specific modifications can include staining and denaturation (“melt mapping”) [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>], fluorocoding [<xref ref-type="bibr" rid="pone.0121905.ref019">19</xref>], competitive binding of intercalating dyes [<xref ref-type="bibr" rid="pone.0121905.ref020">20</xref>, <xref ref-type="bibr" rid="pone.0121905.ref021">21</xref>], methylation [<xref ref-type="bibr" rid="pone.0121905.ref022">22</xref>], enzymatic nicking [<xref ref-type="bibr" rid="pone.0121905.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0121905.ref024">24</xref>], and enzymatic restriction [<xref ref-type="bibr" rid="pone.0121905.ref025">25</xref>–<xref ref-type="bibr" rid="pone.0121905.ref027">27</xref>].</p>
+<p>These optical mapping techniques can roughly be divided into three groups: stretching over a surface [<xref ref-type="bibr" rid="pone.0121905.ref009">9</xref>, <xref ref-type="bibr" rid="pone.0121905.ref028">28</xref>–<xref ref-type="bibr" rid="pone.0121905.ref030">30</xref>], stretching via confinement in nanochannels [<xref ref-type="bibr" rid="pone.0121905.ref004">4</xref>, <xref ref-type="bibr" rid="pone.0121905.ref031">31</xref>–<xref ref-type="bibr" rid="pone.0121905.ref036">36</xref>] or stretching via elongational flow in microchannels [<xref ref-type="bibr" rid="pone.0121905.ref037">37</xref>]. While surface–stretching techniques offer a few advantages, such as allowing for 100–140% extension [<xref ref-type="bibr" rid="pone.0121905.ref026">26</xref>], mapping via nanochannel confinement allows for integration of the stretching in a lab on a chip context that in turn can be brought to application much more easily.</p>
+<p>Note that the nanochannel-based DNA barcoding schemes, the main focus of this study, should not be confused with schemes where short genetic markers [<xref ref-type="bibr" rid="pone.0121905.ref038">38</xref>] or restriction enzyme cleavage events [<xref ref-type="bibr" rid="pone.0121905.ref025">25</xref>] are detected as landmarks. Barcodes addressed by our technique are not simply binary in the sense that one detects landmarks or the absence thereof; rather what we call “barcodes” are continuous fluorescence profiles which are more susceptible to thermal noise (see <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref>).</p>
+<fig id="pone.0121905.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Problem definition.</title>
+<p>(A) A raw kymograph depicting denaturation mapping of an intact T4GT7 bacteriophage DNA molecule. The y-axis represents time (200 time frames over 20 seconds) while the x-axis represents the DNA extension in the nanochannel (170 pixels wide; scale bar is 2<italic>μ</italic>m). Note that these specifications also apply to all of the following kymographs. (B) The image from (A) after undergoing the kymograph alignment process. (C) Trace of mean intensity over time for the raw kymograph (black) with ±1 standard deviation (red), and (D) the same for the aligned kymograph.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g001"/>
+</fig>
+<p>One particular problem inherent to nanochannel confinement techniques is that DNA tends to undergo random diffusive processes during imaging, including center-of-mass diffusion and local stretching [<xref ref-type="bibr" rid="pone.0121905.ref039">39</xref>]. To correct for these effects, a procedure we denote <italic>kymograph alignment</italic> must be performed (see section <xref ref-type="sec" rid="sec002">Problem Definition</xref>). In this paper we present WPAlign (<bold>W</bold>eighted <bold>P</bold>ath <bold>Align</bold>), an algorithm for kymograph alignment which offers linear scaling in time and can align DNA barcodes with length corresponding to an entire human genome in less than an hour on a typical desktop computer. We compare its performance to an existing technique and show that our method offers orders-of-magnitude improvement in computational speed while producing processed data of similar quality. Additionally, we present a new information score which quantifies the information content of DNA barcodes and should see widespread use as a barcode quality criterion by which experimentalists can evaluate barcodes and optimize experimental mapping conditions.</p>
+</sec>
+<sec id="sec002">
+<title>Problem Definition</title>
+<p>In <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref>, the result of a typical nanochannel-based optical DNA mapping experiment is displayed. The horizontal axis (x-axis) of this kymograph represents the DNA’s extension in the nanochannel (where the pattern results from sequence-specific staining), and the vertical (y-axis) represents images of the DNA molecule at different times.</p>
+<p>Due to thermal center of mass and local conformational fluctuations (which occur because the flexible DNA molecule is only extended to roughly 50 percent of its contour length), the images over time are misaligned both locally and at a global level, leading to significant noise during time-averaging (see <xref ref-type="fig" rid="pone.0121905.g001">Fig 1c</xref>). Thus before a useful time-average can be performed, the bright and dark bands must be “straightened”; this procedure we refer to as <italic>kymograph alignment</italic>. <xref ref-type="fig" rid="pone.0121905.g001">Fig 1b</xref> shows the result of our algorithm, WPAlign, developed for this particular task, and <xref ref-type="fig" rid="pone.0121905.g001">Fig 1d</xref> shows the corresponding time-average. The details of the algorithm can be found in the Methods section. Intuitively, the purpose of this process is to, as closely as possible, mimic the results which would be obtained if the DNA were held and stretched to 100 percent of its length during imaging. For practical experimental reasons, this is not feasible for nanochannel-based techniques, so one must correct for misalignments such as those displayed in <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref>.</p>
+<p>In Ref. [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>], the kymograph alignment challenge is mathematically presented as a global optimization problem (see <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref> for details): a template time frame, <italic>T</italic>, is first chosen. One then allows for local stretching of all the remaining frames, <italic>N</italic><sub><italic>i</italic></sub>, and maximizes the overlap between <italic>N</italic><sub><italic>i</italic></sub> and <italic>T</italic>. Finally, all the time frames are rescaled with average global stretching factors in order to ensure that the end-to-end distance of the DNA molecule after alignment is unchanged and that the time-averaged optical map is therefore consistent with thermodynamic constraints.</p>
+<p>In this study we pose the kymograph alignment challenge in slightly different mathematical terms, namely as a feature detection problem (details found in Methods). Visually, our method (see <xref ref-type="sec" rid="sec010">Results</xref>) produces appealing images which are very similar to those produced using the previous method. The main benefit of our approach is that it provides an orders-of-magnitude reduction in computational time. Furthermore, all the substeps in our algorithm use standard numerical tools and are, therefore, straightforward to implement.</p>
+<p>The rest of this study is organized as follows: in Methods we introduce our kymograph alignment algorithm, WPAlign. In Results, we compare our new algorithm to the previous method. In Discussion we summarize our results and point to further potential applications of our algorithm, and in the S1 we provide more technical details of our approach.</p>
+</sec>
+<sec id="sec003" sec-type="materials|methods">
+<title>Methods</title>
+<p>We now consider the problem defined in the previous section, i.e., the alignment of a “fuzzy” DNA barcode (see <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref> for an illustrative example) distorted by thermal fluctuations as it resides in a nanochannel. WPAlign works intuitively by detecting pronounced bright or dark ridges (“features”) and then stretching the barcode horizontally to straighten them. The advantage of this approach is that it reduces the problem to a simple two-step process of (1) <italic>single-feature detection</italic>, followed by (2) <italic>single feature alignment</italic>. This two-step process is then be applied recursively to align the entire kymograph.</p>
+<sec id="sec004">
+<title>Single Feature Detection</title>
+<p>Consider an image represented as a 2D gray scale intensity function with columns <italic>x</italic> and rows <italic>y</italic>, denoted <italic>I</italic>(<italic>x</italic>, <italic>y</italic>), <italic>x</italic> ∈ [1, <italic>n</italic>], <italic>y</italic> ∈ [1, <italic>m</italic>]. See <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref> for an illustrative example. Then a feature <italic>x</italic> = <italic>F</italic>(<italic>y</italic>) is a function mapping of rows <italic>Y</italic> to columns <italic>X</italic>. This mapping thus provides a curve, (<italic>x</italic>, <italic>y</italic>) = (<italic>F</italic>(<italic>y</italic>), <italic>y</italic>), through the image. Intuitively the feature <italic>F</italic> we would like to detect is the “most pronounced” vertical ridge or valley in <italic>I</italic> such that:
+<list list-type="order">
+<list-item><p>(Completeness) Our detected feature <italic>F</italic> traverses each row <italic>y</italic> exactly once. Actual features might not adhere to this constraint, since anomalous events such as DNA breakage could occur, but these events should be treated separately from the alignment process.</p></list-item>
+<list-item><p>(Continuity) <italic>F</italic>’s horizontal movement is constrained. I.e., |<italic>F</italic>(<italic>y</italic>+1) − <italic>F</italic>(<italic>y</italic>)| ≤ <italic>k</italic> for some integer <italic>k</italic> and for all <italic>y</italic>. This is to fit the physical constraints we inherit from the polymer physics of DNA molecules for the present application.</p></list-item>
+</list>
+Unfortunately, standard feature detection (e.g., ridge detection) methods cannot be applied directly, as the resulting features will not necessarily satisfy these constraints, so we have developed the following three-step procedure for <italic>single feature detection</italic>:</p>
+<sec id="sec005">
+<title>1. Image pre-processing</title>
+<p>First the entire image is smoothed with a 2D Gaussian kernel (here we use <italic>σ</italic><sub><italic>h</italic></sub> = 10 pixels and <italic>σ</italic><sub><italic>v</italic></sub> = 3 pixels, where <italic>h</italic> and <italic>v</italic> represent the horizontal and vertical directions, respectively) to remove noise from random intensity fluctuations (see <xref ref-type="fig" rid="pone.0121905.g002">Fig 2b</xref>). Then we apply a Laplacian of Gaussian filter to obtain the <italic>Laplacian response</italic> image which we refer to as <italic>K</italic> (see <xref ref-type="fig" rid="pone.0121905.g002">Fig 2c</xref>), a matrix with the same size as <italic>I</italic> which has large positive values in dark bands and large negative values in light bands (see also <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref>). These positive and negative values are linearly rescaled to range from (0,1] and [−1,0), respectively.</p>
+<fig id="pone.0121905.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Image preprocessing.</title>
+<p>(A) The raw, unaligned, kymograph shown in <xref ref-type="fig" rid="pone.0121905.g001">Fig 1a</xref> (scale bar is 2 <italic>μ</italic>m, 20 seconds of imaging). (B) The kymograph after Gaussian smoothing, and (C) The Laplacian response image, which we refer to as <italic>K</italic>, that results from applying the Laplacian of Gaussian filter (with <italic>σ</italic> = 10 pixels) to our smoothed kymograph. In <italic>K</italic>, dark regions represent positive values and light regions represent negative values.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g002"/>
+</fig>
+<p>Now our feature <italic>F</italic> should be represented by a continuous region of high (valley) or low (ridge) values in <italic>K</italic>. We would like to treat these as two distinct cases to avoid detecting a single feature which is partially composed of a ridge and partially composed of a valley, so we compute two separate images, <italic>K</italic><sub><italic>B</italic></sub> and <italic>K</italic><sub><italic>D</italic></sub> which emphasize bright and dark regions, respectively (see <xref ref-type="fig" rid="pone.0121905.g003">Fig 3</xref>, <xref ref-type="fig" rid="pone.0121905.g004">Fig 4</xref> and <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref>). Both are positive or zero everywhere, with the smallest values representing the most pronounced feature locations.</p>
+<fig id="pone.0121905.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Connectivity between nodes.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g003"/>
+</fig>
+<fig id="pone.0121905.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Network assembly.</title>
+<p>The Laplacian response image, <italic>K</italic>, (see <xref ref-type="fig" rid="pone.0121905.g002">Fig 2c</xref>) has been rescaled into (A) <italic>K</italic><sub><italic>D</italic></sub> and (B) <italic>K</italic><sub><italic>B</italic></sub>, images that emphasize dark and bright regions in <italic>K</italic>, respectively. White pixels represent barriers that potential features cannot cross, while continuous dark regions indicate likely features. (C) Here we show one example network, although separate networks are indeed assembled for <italic>K</italic><sub><italic>B</italic></sub> and <italic>K</italic><sub><italic>D</italic></sub>. Each node (square) within the rectangular region represents a pixel in K<sub><italic>B</italic></sub> or <italic>K</italic><sub><italic>D</italic></sub>. The top and bottom nodes (which we term “peripheral nodes”) are added to provide starting/ending points for the shortest path finding algorithm. The width of the edges corresponds to the inverse of the edge weight, and the darkness of the nodes represents the average weight of incoming edges. The red line illustrates the shortest path through the network. For the sake of visual clarity, this network was created using a small subsection of an actual Laplacian response with <italic>k</italic> = 1.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g004"/>
+</fig>
+</sec>
+<sec id="sec006">
+<title>2. Network assembly</title>
+<p>We can think of the images <italic>K</italic><sub><italic>B</italic></sub> and <italic>K</italic><sub><italic>D</italic></sub> as energy landscapes, and finding the best ridge or valley becomes a problem of finding the lowest-energy paths through <italic>K</italic><sub><italic>B</italic></sub> and <italic>K</italic><sub><italic>D</italic></sub>, respectively. To do this, we assemble directed, acyclic networks <italic>G</italic><sub><italic>B</italic></sub> and <italic>G</italic><sub><italic>D</italic></sub> as follows (see <xref ref-type="fig" rid="pone.0121905.g004">Fig 4</xref>). For simplicity, we describe our process only for <italic>G</italic><sub><italic>B</italic></sub>, as the process is identical for <italic>G</italic><sub><italic>D</italic></sub>.
+<list list-type="order">
+<list-item>
+<p>First, we create one node for every pixel in <italic>K</italic><sub><italic>B</italic></sub>, plus two “peripheral” nodes. Thus <italic>G</italic><sub><italic>B</italic></sub> consists of (<italic>m</italic> × <italic>n</italic>+2) nodes.</p>
+</list-item>
+<list-item>
+<p>Now the first of the peripheral nodes is connected to each of the nodes corresponding to the first row of <italic>G</italic><sub><italic>B</italic></sub>, and each of the last-row nodes is connected to the second peripheral node with edge weight 1.</p>
+</list-item>
+<list-item>
+<p>The rest of the nodes are connected as follows: the node corresponding to pixel (<italic>i</italic>, <italic>j</italic>) in <italic>K</italic><sub><italic>B</italic></sub> is connected to pixels in the next row directly below, to the left <italic>k</italic> columns, and to the right <italic>k</italic> columns (see <xref ref-type="fig" rid="pone.0121905.g003">Fig 3</xref>). This <italic>k</italic> value is used to satisfy the continuity constraint above. We have found <italic>k</italic> = 2 to be reasonable for our current application.</p>
+</list-item>
+<list-item>
+<p>If a pixel is too close to a border on the left or right (i.e., <italic>i</italic> − <italic>k</italic> &lt; 1 or <italic>i</italic>+<italic>k</italic> &gt; <italic>n</italic>), connections to non-existing nodes prescribed in step 3 are ignored.</p>
+</list-item>
+<list-item>
+<p>Finally, every edge is assigned a weight equal to the intensity of the pixel in <italic>K</italic><sub><italic>B</italic></sub> corresponding to the node it is directed to.</p>
+</list-item>
+</list></p>
+<p>Note that the edge weights in this connection scheme are not “biased,” in the sense that given equal intensities, movement to any of the connected pixels is equally likely. Alternatively, one could assign a non-uniform distribution such that the edge weights are given by a combination of intensities and some prior knowledge of likely fluctuations. For example, the weight of the edge connecting (<italic>i</italic>, <italic>j</italic>) to (<italic>i</italic>′, <italic>j</italic>′) could be given by <italic>w</italic><sub><italic>i</italic> → <italic>i</italic>′,<italic>j</italic> → <italic>j</italic>′</sub> = <italic>I</italic>(<italic>i</italic>′, <italic>j</italic>′)<italic>f</italic>(<italic>i</italic>′, <italic>i</italic>), where <italic>f</italic> is some probability distribution. Our scheme here represents a special uniform case where <italic>f</italic>(<italic>i</italic>′, <italic>i</italic>) = 1/(2<italic>k</italic> + 1) for ∣<italic>i</italic>′ −<italic>i</italic>∣ ≤ <italic>k</italic> and <italic>f</italic>(<italic>i</italic>′, <italic>i</italic>) = 0 otherwise.</p>
+<p>After examining several additional forms for <italic>f</italic>, we found that the simple uniform case presented above achieved the best and most consistent results for our examples. However, this weighting scheme should, in general, be carefully chosen by the user to suit the particular data being considered.</p>
+<p>As for the choice of <italic>k</italic>, we found <italic>k</italic> = 2 to be reasonable for the data presented here; now we present a method for choosing <italic>k</italic> to be used on novel data. For unbiased diffusive motion, the diffusion length Δ<italic>L</italic> of the DNA molecule is connected to time as Δ<italic>L</italic><sup>2</sup> ∝ <italic>Dt</italic> (where <italic>t</italic> is the inverse sampling frequency), and the center-of-mass diffusion constant <italic>D</italic> is inversely proportional to the number of polymer segments (i.e., the length of the polymer)[<xref ref-type="bibr" rid="pone.0121905.ref040">40</xref>]. Hence <inline-formula id="pone.0121905.e001"><mml:math id="M1" display="inline" overflow="scroll"><mml:mrow><mml:mo>Δ</mml:mo> <mml:mi>L</mml:mi> <mml:mo>∝</mml:mo> <mml:mn>1</mml:mn> <mml:mo>/</mml:mo> <mml:msqrt><mml:mi>L</mml:mi></mml:msqrt></mml:mrow></mml:math></inline-formula>, where <italic>L</italic> is the length of the DNA molecule. For experimental setups identical to ours, the choice of <italic>k</italic> will vary based on the DNA length to be aligned according to:
+<disp-formula id="pone.0121905.e002"><alternatives><graphic id="pone.0121905.e002g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121905.e002"/><mml:math id="M2" mode="display" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:msub><mml:mi>k</mml:mi> <mml:mtext>ref</mml:mtext></mml:msub> <mml:msqrt><mml:mfrac><mml:msub><mml:mi>L</mml:mi> <mml:mtext>ref</mml:mtext></mml:msub> <mml:mi>L</mml:mi></mml:mfrac></mml:msqrt></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where <italic>k</italic><sub>ref</sub> = 2, as presented here, and <italic>L</italic><sub>ref</sub> = 24<italic>μm</italic>, the length of the molecules presented above.</p>
+</sec>
+<sec id="sec007">
+<title>3. Shortest path finding</title>
+<p>Now every path between the peripheral nodes in our networks represents a potential feature which satisfies the continuity and completeness constraints above, so our task is to find the “best” such feature. Essentially, we are searching over all paths between the peripheral nodes which do not move more than <italic>k</italic> pixels horizontally between any adjacent rows. Our cost function is the sum of pixel intensities over a path, and we seek to minimize this over the space of these acceptable paths. Thus, intuitively, the best bright feature corresponds to the shortest path in <italic>K</italic><sub><italic>B</italic></sub>, and the best dark feature corresponds to the shortest path in <italic>K</italic><sub><italic>D</italic></sub>. So, our task becomes a shortest path finding problem.</p>
+<p>Since our networks are directed and acyclic, the shortest path can be computed by a standard dynamic programming algorithm based on topological sorting which grows linearly with the sum of the number of edges and nodes [<xref ref-type="bibr" rid="pone.0121905.ref041">41</xref>]. Note that, in our graph, this sum grows bilinearly with the number of time frames and the horizontal width of our input kymographs. And since the number of time frames does not change, in practice, the sum of nodes and edges in our graph grows linearly with the kymograph width. Thus the computational time of the shortest path finding algorithm also grows linearly with the kymograph width.</p>
+<p>By this process we obtain two paths, one in <italic>K</italic><sub><italic>B</italic></sub> corresponding to the best bright feature in our original kymograph, and one in <italic>K</italic><sub><italic>D</italic></sub> corresponding to the best dark feature. The path with the shorter length of these two is chosen as the best overall feature (see <xref ref-type="fig" rid="pone.0121905.g004">Fig 4</xref>). If this feature is distinct enough (i.e., its length is lower than some threshold; see <xref ref-type="sec" rid="sec003">Methods</xref> on calculating <italic>K</italic><sub><italic>D</italic></sub> and <italic>K</italic><sub><italic>B</italic></sub>) then we proceed with alignment. Otherwise the path is rejected, and recursion is terminated. This can happen, for instance, in large dark ‘gaps’ associated with low labeling density mapping approaches.</p>
+</sec>
+</sec>
+<sec id="sec008">
+<title>Single Feature Alignment</title>
+<p>Once the best feature <italic>F</italic>(<italic>y</italic>) has been detected by the three-step process above, it is aligned by setting <italic>F</italic>(<italic>y</italic>) = ⟨<italic>F</italic>(<italic>y</italic>)⟩, where ⟨.⟩ denotes the mean (rounding to the nearest integer) for all rows <italic>y</italic>, and the pixels to the left and right of <italic>F</italic>(<italic>y</italic>) are stretched (or compressed) linearly. To determine intensity values at non-integer positions during this linear stretching, we used cubic spline interpolation (see <xref ref-type="fig" rid="pone.0121905.g005">Fig 5</xref>). Note that by setting <italic>F</italic>(<italic>y</italic>) = ⟨<italic>F</italic>(<italic>y</italic>)⟩, we ensure that the feature is aligned over its position at thermodynamic equilibrium.</p>
+<fig id="pone.0121905.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Feature detection and recursion in WPAlign.</title>
+<p>(A) A raw, unaligned kymograph is given as input (see <xref ref-type="fig" rid="pone.0121905.g001">Fig 1</xref>). (B) The “best” feature is identified from the input kymograph. (C) The feature identified in (B) is aligned via linear interpolation. (D, E) The feature identification process is called recursively on the regions to the right (D) and to the left (E) of the newly-aligned feature. (F) This process is continued until all features have been aligned.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g005"/>
+</fig>
+</sec>
+<sec id="sec009">
+<title>Full Kymograph Alignment</title>
+<p>Using the scheme above, the best feature in the input image has been both (1) <italic>detected</italic> and (2) <italic>aligned</italic>. But we wish to detect and straighten all of the features. Thus to continue the process, the image is split vertically along the newly aligned feature (see Fig <xref ref-type="fig" rid="pone.0121905.g005">5c</xref>–<xref ref-type="fig" rid="pone.0121905.g005">5e</xref>), and <italic>w</italic> columns (where <italic>w</italic> is set to half the width of a typical feature) are removed from each on the side adjacent to the split. Then the (1) <italic>single feature detection</italic> and (2) <italic>single feature alignment</italic> routines are called again on each of these two smaller images if they are wider than typical a feature (i.e., 2<italic>w</italic>). In our current application, features are typically ∼ 10 pixels wide, so we use <italic>w</italic> = 5 pixels, though this parameter can easily be changed depending on the application. (see <xref ref-type="fig" rid="pone.0121905.g005">Fig 5</xref>). The algorithm then terminates when the width of the image is less than the width of a typical feature, 2<italic>w</italic>.</p>
+<p>It is worth noting that, since we remove columns before calling the process again, the algorithm is guaranteed to converge. If we did not perform this step, the same feature could conceivably be re-straightened perpetually.</p>
+<p>A pseudocode describing all the steps in our kymograph alignment method, WPAlign, is found in <xref ref-type="fig" rid="pone.0121905.g006">Fig 6</xref>.</p>
+<fig id="pone.0121905.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>WPAlign pseudocode.</title>
+<p>Note that all substeps shown here are available in a variety of standard toolboxes, open-source and otherwise. For our particular implementation, all code was written in Matlab with dependencies in the Image Processing Toolbox and the Bioinformatics Toolbox (which implements the graph data structure and shortest path finding functionality).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g006"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec010" sec-type="results">
+<title>Results</title>
+<p>In practice, WPAlign produces alignments which are visually appealing (see <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref>). To quantify the quality of these alignments, we use two quality criteria: <italic>time-trace noise reduction</italic> and <italic>information content</italic> along with empirical computational costs. We compare WPAlign to the method used in [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>] (see <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref> for a description) with respect to these measures.</p>
+<fig id="pone.0121905.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Typical T4GT7 denaturation mapping kymographs, raw and aligned via WPAlign.</title>
+<p>The numbered kymographs represent the raw data, and the aligned versions are displayed directly below each.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g007"/>
+</fig>
+<sec id="sec011">
+<title>Time Trace Noise Reduction</title>
+<p>The ultimate goal of presenting the data in a kymograph format is to produce a 1-dimensional intensity profile that is “typical” and reproducible for the DNA being analyzed. This intensity profile is then compared to existing databases for genomic analysis. To produce this intensity profile, ⟨<italic>I</italic>⟩, we simply take the time-average of an aligned kymograph
+<disp-formula id="pone.0121905.e003"><alternatives><graphic id="pone.0121905.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121905.e003"/><mml:math id="M3" mode="display" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mrow><mml:mo>⟨</mml:mo> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mi>y</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mi>m</mml:mi></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>y</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>m</mml:mi></mml:munderover> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+where <italic>m</italic> is the number of rows (time frames) in the kymograph. The reduction in noise can be quantified by the column-wise variance, given by
+<disp-formula id="pone.0121905.e004"><alternatives><graphic id="pone.0121905.e004g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121905.e004"/><mml:math id="M4" mode="display" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>σ</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mi>m</mml:mi></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>y</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>m</mml:mi></mml:munderover> <mml:msup><mml:mrow><mml:mo>[</mml:mo> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msub><mml:mrow><mml:mo>⟨</mml:mo> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mi>y</mml:mi></mml:msub> <mml:mo>]</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mo>⋅</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula></p>
+<p>To compare WPAlign and the Reisner method [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>], these variances were calculated for the 10 representative kymographs in <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref>, see <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref> for experimental details on how these kymographs were obtained. For every column in each of the kymographs, we obtained values <inline-formula id="pone.0121905.e005"><mml:math id="M5" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pone.0121905.e006"><mml:math id="M6" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>, corresponding to the variances resulting from alignment by the respective algorithms. Then a distribution of values <inline-formula id="pone.0121905.e007"><mml:math id="M7" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>/</mml:mo> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> was calculated (see <xref ref-type="fig" rid="pone.0121905.g008">Fig 8</xref>). This distribution is normal with mean <italic>μ</italic> = 0.75, indicating that, for a typical kymograph column, WPAlign reduced variance by 25% when compared to the Reisner method. Thus WPAlign, besides reducing computational costs, reduces kymograph noise and yields an improvement over the Reisner approach.</p>
+<fig id="pone.0121905.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Kymograph noise comparison of WPAlign and the Reisner approach.</title>
+<p>Column-wise variances were calculated for aligned barcodes using WPAlign (<inline-formula id="pone.0121905.e009"><mml:math id="M9" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>), and the Reisner approach (<inline-formula id="pone.0121905.e010"><mml:math id="M10" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>). Here we show the distribution of <inline-formula id="pone.0121905.e011"><mml:math id="M11" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo>/</mml:mo> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:math></inline-formula>. A Gaussian distribution was fit to this data, resulting in a mean of <italic>μ</italic> = 0.75 (with standard deviation <italic>σ</italic> = 0.32). Thus in this particular case, WPAlign reduces variance by 25% compared to the Reisner method. Overall, the fraction of columns such that <inline-formula id="pone.0121905.e012"><mml:math id="M12" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo>&lt;</mml:mo> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:math></inline-formula> was 80%. (Inset) An example time trace of barcode 6 (see <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref>) aligned via the WPAlign and Reisner methods. Error bars represent one standard deviation (i.e., <italic>σ</italic><sub><italic>W</italic></sub> and <italic>σ</italic><sub><italic>R</italic></sub>).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g008"/>
+</fig>
+<p>In addition, we examined how aligned kymograph noise is affected by the length of the time axis (see <xref ref-type="fig" rid="pone.0121905.g009">Fig 9</xref>). To do this, we calculated ⟨<italic>σ</italic><sup>2</sup>(<italic>x</italic>)⟩, the mean of the column-wise variances given above, given by
+<disp-formula id="pone.0121905.e008"><alternatives><graphic id="pone.0121905.e008g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121905.e008"/><mml:math id="M8" mode="display" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mrow><mml:mo>⟨</mml:mo> <mml:msup><mml:mi>σ</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mi>n</mml:mi></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>x</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>n</mml:mi></mml:munderover> <mml:mo>[</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mi>m</mml:mi></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>y</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>m</mml:mi></mml:munderover> <mml:msup><mml:mrow><mml:mo>[</mml:mo> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msub><mml:mrow><mml:mo>⟨</mml:mo> <mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>y</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>⟩</mml:mo></mml:mrow> <mml:mi>y</mml:mi></mml:msub> <mml:mo>]</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mo>]</mml:mo> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula>
+for kymographs with time axes ranging from 20 to 200 time frames. From the results we can see that the noise from kymographs aligned via WPAlign is independent of the number of time frames chosen during filming. However, kymographs aligned by the Reisner approach seem to undergo an increase in noise as the number of frames increases, until plateauing at roughly 120 frames.</p>
+<fig id="pone.0121905.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Effect of time axis length on aligned kymograph noise.</title>
+<p>Kymographs with time axes varying from 20 to 200 time frames in length were aligned by both methods. The resulting column-wise variances <inline-formula id="pone.0121905.e013"><mml:math id="M13" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pone.0121905.e014"><mml:math id="M14" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> were calculated as in <xref ref-type="fig" rid="pone.0121905.g008">Fig 8</xref>. Here we plot, for each kymograph, the mean of these column variances, i.e., <inline-formula id="pone.0121905.e015"><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">⟨</mml:mo> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>R</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">⟩</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pone.0121905.e016"><mml:math id="M16" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">⟨</mml:mo> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>W</mml:mi> <mml:mn>2</mml:mn></mml:msubsup> <mml:mo stretchy="false">(</mml:mo> <mml:mi>x</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">⟩</mml:mo></mml:mrow></mml:math></inline-formula>, showing that kymograph noise increases with time axis length for the Reisner method but remains constant for WPAlign.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g009"/>
+</fig>
+<p>We present a possible explanation for this result: as the number of time frames increases, the underlying DNA molecule is allowed more time to undergo conformational changes and random diffusive processes, rendering the first and last frames increasingly dissimilar. Thus any template frame chosen by the Reisner method will be increasingly dissimilar from the frames farthest from it in the kymograph. This renders the local stretching factor optimization more prone to becoming stuck in local minima for these “distantly related” frames, introducing noise in the final alignment. WPAlign, on the other hand, avoids this problem as it does not rely on the choice of a single template frame.</p>
+</sec>
+<sec id="sec012">
+<title>Information Score</title>
+<p>Before alignment, bright and dark features can stray into adjacent kymograph columns as the DNA molecule undergoes horizontal diffusion. Thus thin features are obscured in the time average, effectively broadening peaks and valleys. As alignments improve, however, features occupy less horizontal space and become more apparent in the final time-trace. Since these features are essential in later performing statistical comparisons with other data, increasing contrast between neighboring features (i.e., increasing feature sharpness) essentially increases the information contained in the time trace.</p>
+<p>To quantify this information content of the barcodes we present a new scheme based on the self-information of a random variable [<xref ref-type="bibr" rid="pone.0121905.ref042">42</xref>], see <xref ref-type="sec" rid="sec003">Methods</xref> for a comprehensive description. Here in brief, the information score, IS, of a kymograph is given by
+<disp-formula id="pone.0121905.e017"><alternatives><graphic id="pone.0121905.e017g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pone.0121905.e017"/><mml:math id="M17" mode="display" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>IS</mml:mtext> <mml:mo>=</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>k</mml:mi></mml:munder> <mml:mo>-</mml:mo> <mml:mo form="prefix">log</mml:mo> <mml:mo>[</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:msqrt><mml:mrow><mml:mn>2</mml:mn> <mml:mi>π</mml:mi> <mml:mo form="prefix">log</mml:mo> <mml:mo>(</mml:mo> <mml:msup><mml:mi>σ</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mo>+</mml:mo> <mml:mi>χ</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msqrt></mml:mfrac> <mml:mo form="prefix">exp</mml:mo> <mml:mo>{</mml:mo> <mml:mo>-</mml:mo> <mml:mfrac><mml:mrow><mml:mo form="prefix">log</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mo>|</mml:mo> <mml:mo>Δ</mml:mo> <mml:msub><mml:mi>I</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mrow/><mml:mo>|</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup></mml:mrow> <mml:mrow><mml:mn>2</mml:mn> <mml:mo form="prefix">log</mml:mo> <mml:mo>(</mml:mo> <mml:msup><mml:mi>σ</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mo>+</mml:mo> <mml:mi>χ</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac> <mml:mo>}</mml:mo> <mml:mo>]</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+where <italic>σ</italic><sup>2</sup> represents the noise of the underlying kymograph, <italic>χ</italic> = 1 is a regularization parameter ensuring that the score remains real-valued for all noise levels, and the Δ<italic>I</italic>’s represent “robust” intensity differences (see <xref ref-type="supplementary-material" rid="pone.0121905.s001">S1</xref>) between neighboring peaks and valleys. Thus information increases as the difference between neighboring peaks and valleys grows and as the noise of the underlying kymograph decreases. That is, time-traces with sharper, more well-defined local extrema will contain more information than time traces from noisy kymographs with broad extrema.</p>
+<p>Time traces and their corresponding information scores were calculated for the representative kymographs shown in <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref> after undergoing alignment by both WPAlign and the Reisner method (see <xref ref-type="fig" rid="pone.0121905.g010">Fig 10</xref>). In general, WPAlign produces visually sharper and more well-defined time-traces. Furthermore, the information content is greater for WPAlign in all examples considered. In fact, the average information gain from using WPAlign over the Reisner method on our dataset is roughly 78% (i.e., ⟨(IS<sub><italic>W</italic></sub> − IS<sub><italic>R</italic></sub>)/IS<sub><italic>R</italic></sub>⟩ = 0.78).</p>
+<fig id="pone.0121905.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Quality comparison of barcodes aligned via the Reisner approach and WPAlign.</title>
+<p>(Top) Representative kymographs aligned via the Reisner approach (above) and WPAlign (below). (Bottom) Average intensity traces from kymographs in <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref> aligned via WPAlign (red) and the Reisner approach (black). The information score is displayed below each trace for both methods, quantifying the contrast between neighboring features. Notably, ⟨(IS<sub><italic>W</italic></sub> − IS<sub><italic>R</italic></sub>)/IS<sub><italic>R</italic></sub>⟩ = 0.78, indicating that WPAlign on average produced time-traces with slightly more information than the Reisner method over our sample set. Note that the plots are in the same order as the corresponding kymographs in <xref ref-type="fig" rid="pone.0121905.g007">Fig 7</xref> and are ordered by decreasing IS<sub><italic>W</italic></sub>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g010"/>
+</fig>
+<p>Furthermore, independent of our kymograph alignment technique, this information score can serve as an objective and easily interpretable barcode quality measurement by which barcodes can be compared, providing a basis for experimental optimization. For example, expected barcodes can be calculated from theory for a number of experimental conditions [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>], and then experiments can be performed only for barcodes expected to yield the highest information content, saving valuable time and resources for experimentalists. Furthermore, if theory is not available for a particular optical mapping application, the information score can serve as a quality criterion for experimental barcodes by which experimental conditions can be rigorously optimized.</p>
+</sec>
+<sec id="sec013">
+<title>Computational Time</title>
+<p>Empirically, WPAlign exhibits linear scaling with barcode length, <italic>n</italic> (see <xref ref-type="fig" rid="pone.0121905.g011">Fig 11</xref>). This is somewhat intuitive, as the bottleneck of the approach is the shortest path finding algorithm, and this runs in linear time due to the directed and acyclic qualities of our networks. The Reisner approach, on the other hand, scales with <italic>O</italic>(<italic>n</italic><sup>2</sup>), rendering it impractical for bacterial barcodes on the order of 1 Mbp or larger (see <xref ref-type="fig" rid="pone.0121905.g011">Fig 11</xref>).</p>
+<fig id="pone.0121905.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pone.0121905.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Comparison of time scaling for WPAlign and the Reisner approach.</title>
+<p>Empirical time scaling results for both techniques on identical kymographs ranging between ∼ 10<sup>2</sup> and ∼ 10<sup>5</sup> pixels in width, where ∼ 10<sup>5</sup> pixels is roughly the length of an intact human genome at current resolutions. Power law curves of the form <italic>ax</italic><sup><italic>b</italic></sup> were fit to these data (solid lines), yielding <italic>b</italic> = 1.1 for WPAlign, and <italic>b</italic> = 2.2 for the Reisner method. Thus WPAlign exhibits approximately <italic>O</italic>(<italic>n</italic>) time scaling with barcode width, while the Reisner method scales approximately with <italic>O</italic>(<italic>n</italic><sup>2</sup>). Scaling data beyond ∼ 10<sup>3</sup> pixels was projected for the Reisner approach (dashed line), as alignment times became prohibitive. Simulated kymographs were generated by concatenating experimental T4GT7 kymographs from above.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.g011"/>
+</fig>
+<p>Perhaps most importantly, WPAlign was able to successfully align a simulated barcode with length on the order of a full human genome in only 40 minutes. The Reisner approach would require over 10<sup>8</sup> seconds, or roughly 3 years, to perform this task on an identical computer.</p>
+</sec>
+</sec>
+<sec id="sec014" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this paper we present a new DNA barcode kymograph alignment algorithm which outperforms an existing alternative [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>] in computational speed, and for the particular data presented here, also slightly improves on noise reduction properties and information content of the time-averaged barcodes. Indeed, the orders-of-magnitude improvement in computational speed could open the door for high throughput kymograph alignment at the human-genome scale as well as constituting an important step in data analysis for a number of nanofluidic optical mapping techniques, including denaturation mapping [<xref ref-type="bibr" rid="pone.0121905.ref018">18</xref>], fluorocoding [<xref ref-type="bibr" rid="pone.0121905.ref019">19</xref>], competitive binding [<xref ref-type="bibr" rid="pone.0121905.ref020">20</xref>, <xref ref-type="bibr" rid="pone.0121905.ref021">21</xref>], and enzymatic nicking [<xref ref-type="bibr" rid="pone.0121905.ref023">23</xref>, <xref ref-type="bibr" rid="pone.0121905.ref024">24</xref>]. By providing a rapid framework for this data analysis, WPAlign can help bring the many applications of optical mapping closer to application, including bacterial strain and species identification, detection of large-scale genomic structural variation, and scaffold building for third generation <italic>de novo</italic> sequencing techniques. Furthermore, the algorithm is easy to implement, as the various substeps involved are available in most standard numerical packages.</p>
+<p>Moreover, our feature detection method, suitably modified, may find application in other domains of biological image analysis, such as automated organism tracking [<xref ref-type="bibr" rid="pone.0121905.ref043">43</xref>, <xref ref-type="bibr" rid="pone.0121905.ref044">44</xref>], or automated study of cellular transport along axons (à la [<xref ref-type="bibr" rid="pone.0121905.ref045">45</xref>–<xref ref-type="bibr" rid="pone.0121905.ref048">48</xref>]), defects in which have been implicated in a number of neurodegenerative diseases, including Alzheimer’s Disease, Parkinson’s Disease, and Amytrophic Lateral Sclerosis [<xref ref-type="bibr" rid="pone.0121905.ref049">49</xref>, <xref ref-type="bibr" rid="pone.0121905.ref050">50</xref>].</p>
+<p>Finally our information score, motivated as a way to compare the quality of alignments produced by different methods, may find widespread application among the optical mapping community as an easily calculable and interpretable barcode quality criterion by which to optimize experimental conditions.</p>
+</sec>
+<sec id="sec015">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0121905.s001" position="float" xlink:href="info:doi/10.1371/journal.pone.0121905.s001" mimetype="application/pdf" xlink:type="simple">
+<label>S1 Methods</label>
+<caption>
+<title>Details on the algorithms presented herein.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Karl Åström for helpful discussions on image analysis.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0121905.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Aston</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Mishra</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>. <article-title>Optical mapping and its potential for large-scale sequencing projects</article-title>. <source>Trends in Biotechnology</source> <year>1999</year>;<volume>17</volume>: <fpage>297</fpage>–<lpage>302</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0167-7799(99)01326-8" xlink:type="simple">10.1016/S0167-7799(99)01326-8</ext-link></comment> <object-id pub-id-type="pmid">10370237</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Samad</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Huff</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Cai</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>. <article-title>Optical mapping: a novel, single-molecule approach to genomic analysis</article-title>. <source>Genome research</source> <year>1995</year>;<volume>5</volume>: <fpage>1</fpage>–<lpage>4</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.5.1.1" xlink:type="simple">10.1101/gr.5.1.1</ext-link></comment> <object-id pub-id-type="pmid">8717049</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Neely</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Deen</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hofkens</surname> <given-names>J</given-names></name>. <article-title>Optical mapping of DNA: Single-molecule-based methods for mapping genomes</article-title>. <source>Biopolymers</source> <year>2011</year>;<volume>95</volume>: <fpage>298</fpage>–<lpage>311</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/bip.21579" xlink:type="simple">10.1002/bip.21579</ext-link></comment> <object-id pub-id-type="pmid">21207457</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Das</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Austin</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Akana</surname> <given-names>MC</given-names></name>, <name name-style="western"><surname>Deshpande</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Xiao</surname> <given-names>M</given-names></name>. <article-title>Single molecule linear analysis of DNA in nano-channel labeled with sequence specific fluorescent probes</article-title>. <source>Nucleic acids research</source> <year>2010</year>;<volume>38</volume>: <fpage>e177</fpage>–<lpage>e177</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq673" xlink:type="simple">10.1093/nar/gkq673</ext-link></comment> <object-id pub-id-type="pmid">20699272</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Xiao</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Phong</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ha</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>TF</given-names></name>, <name name-style="western"><surname>Cai</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Leung</surname> <given-names>L</given-names></name>, <etal>et al</etal>. <article-title>Rapid DNA mapping by fluorescent single molecule detection</article-title>. <source>Nucleic acids research</source> <year>2007</year>;<volume>35</volume>: <fpage>e16</fpage>–<lpage>e16</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkl1044" xlink:type="simple">10.1093/nar/gkl1044</ext-link></comment> <object-id pub-id-type="pmid">17175538</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Valouev</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Waterman</surname> <given-names>MS</given-names></name>. <article-title>An algorithm for assembly of ordered restriction maps from single DNA molecules</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>2006</year>;<volume>103</volume>: <fpage>15770</fpage>–<lpage>15775</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0604040103" xlink:type="simple">10.1073/pnas.0604040103</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Valouev</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>YC</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Alignment of optical maps</article-title>. <source>Journal of Computational Biology</source> <year>2006</year>;<volume>13</volume>: <fpage>442</fpage>–<lpage>462</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1089/cmb.2006.13.442" xlink:type="simple">10.1089/cmb.2006.13.442</ext-link></comment> <object-id pub-id-type="pmid">16597251</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ananiev</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Goldstein</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Runnheim</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Forrest</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Potamousis</surname> <given-names>K</given-names></name>, <etal>et al</etal>. <article-title>Optical mapping discerns genome wide DNA methylation profiles</article-title>. <source>BMC molecular biology</source> <year>2008</year>;<volume>9</volume>: <fpage>68</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2199-9-68" xlink:type="simple">10.1186/1471-2199-9-68</ext-link></comment> <object-id pub-id-type="pmid">18667073</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jing</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Reed</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Clarke</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Edington</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Automated high resolution optical mapping using arrayed, fluid-fixed DNA molecules</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>1998</year>;<volume>95</volume>: <fpage>8046</fpage>–<lpage>8051</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.95.14.8046" xlink:type="simple">10.1073/pnas.95.14.8046</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cai</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Jing</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Irvin</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Ohler</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Rose</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Shizuya</surname> <given-names>H</given-names></name>, <etal>et al</etal>. <article-title>High-resolution restriction maps of bacterial artificial chromosomes constructed by optical mapping</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>1998</year>;<volume>95</volume>: <fpage>3390</fpage>–<lpage>3395</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.95.7.3390" xlink:type="simple">10.1073/pnas.95.7.3390</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Conrad</surname> <given-names>DF</given-names></name>, <name name-style="western"><surname>Pinto</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Redon</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Feuk</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gokcumen</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Origins and functional impact of copy number variation in the human genome</article-title>. <source>Nature</source> <year>2009</year>;<volume>464</volume>: <fpage>704</fpage>–<lpage>712</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature08516" xlink:type="simple">10.1038/nature08516</ext-link></comment> <object-id pub-id-type="pmid">19812545</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Redon</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Ishikawa</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Fitch</surname> <given-names>KR</given-names></name>, <name name-style="western"><surname>Feuk</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Perry</surname> <given-names>GH</given-names></name>, <name name-style="western"><surname>Andrews</surname> <given-names>T D</given-names></name>, <etal>et al</etal>. <article-title>Global variation in copy number in the human genome</article-title>. <source>Nature</source> <year>2006</year>;<volume>444</volume>: <fpage>444</fpage>–<lpage>454</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature05329" xlink:type="simple">10.1038/nature05329</ext-link></comment> <object-id pub-id-type="pmid">17122850</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Shukla</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Kislow</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Briska</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Henkhaus</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Dykes</surname> <given-names>C</given-names></name>. <article-title>Optical mapping reveals a large genetic inversion between two methicillin-resistant staphylococcus aureus strains</article-title>. <source>Journal of bacteriology</source> <year>2009</year>;<volume>191</volume>: <fpage>5717</fpage>–<lpage>5723</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.00325-09" xlink:type="simple">10.1128/JB.00325-09</ext-link></comment> <object-id pub-id-type="pmid">19542272</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kotewicz</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Jackson</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>LeClerc</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Cebula</surname> <given-names>TA</given-names></name>. <article-title>Optical maps distinguish individual strains of escherichia coli o157: H7</article-title>. <source>Microbiology</source> <year>2007</year>; <volume>153</volume>: <fpage>1720</fpage>–<lpage>1733</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1099/mic.0.2006/004507-0" xlink:type="simple">10.1099/mic.0.2006/004507-0</ext-link></comment> <object-id pub-id-type="pmid">17526830</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zhou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kile</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bechner</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Place</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kvikstad</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>W</given-names></name>, <etal>et al</etal>. <article-title>Single-molecule approach to bacterial genomic comparisons via optical mapping</article-title>. <source>Journal of bacteriology</source> <year>2004</year>;<volume>186</volume>: <fpage>7773</fpage>–<lpage>7782</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.186.22.7773-7782.2004" xlink:type="simple">10.1128/JB.186.22.7773-7782.2004</ext-link></comment> <object-id pub-id-type="pmid">15516592</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zhou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Anantharaman</surname> <given-names>TS</given-names></name>, <name name-style="western"><surname>Lim</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Dimalanta</surname> <given-names>ET</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>A whole-genome shotgun optical map of yersinia pestis strain KIM</article-title>. <source>Applied and environmental microbiology</source> <year>2002</year>;<volume>68</volume>: <fpage>6321</fpage>–<lpage>6331</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AEM.68.12.6321-6331.2002" xlink:type="simple">10.1128/AEM.68.12.6321-6331.2002</ext-link></comment> <object-id pub-id-type="pmid">12450857</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Welch</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Burland</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Plunkett</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Redford</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Roesch</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Rasko</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>Extensive mosaic structure revealed by the complete genome sequence of uropathogenic escherichia coli</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>2002</year>;<volume>99</volume>: <fpage>17020</fpage>–<lpage>17024</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.252529799" xlink:type="simple">10.1073/pnas.252529799</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Reisner</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Larsen</surname> <given-names>NB</given-names></name>, <name name-style="western"><surname>Silahtaroglu</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kristensen</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Tommerup</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Tegenfeldt</surname> <given-names>JO</given-names></name>, <etal>et al</etal>. <article-title>Single-molecule denaturation mapping of DNA in nanofluidic channels</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>2010</year>;<volume>107</volume>: <fpage>13294</fpage>–<lpage>13299</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1007081107" xlink:type="simple">10.1073/pnas.1007081107</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Neely</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Dedecker</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Hotta</surname> <given-names>Ji</given-names></name>, <name name-style="western"><surname>Urbanavičiūtė</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Klimašauskas</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hofkens</surname> <given-names>J</given-names></name>. <article-title>DNA fluorocode: a single molecule, optical map of DNA with nanometre resolution</article-title>. <source>Chemical Science</source> <year>2010</year>;<volume>1</volume>: <fpage>453</fpage>–<lpage>460</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/c0sc00277a" xlink:type="simple">10.1039/c0sc00277a</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Nyberg</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Persson</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Berg</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bergström</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fransson</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Olsson</surname> <given-names>L</given-names></name>, <etal>et al</etal>. <article-title>A single-step competitive binding assay for mapping of single DNA molecules</article-title>. <source>Biochemical and biophysical research communications</source> <year>2012</year>;<volume>417</volume>: <fpage>404</fpage>–<lpage>408</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bbrc.2011.11.128" xlink:type="simple">10.1016/j.bbrc.2011.11.128</ext-link></comment> <object-id pub-id-type="pmid">22166208</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Nilsson</surname> <given-names>AN</given-names></name>, <name name-style="western"><surname>Emilsson</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Nyberg</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Noble</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Stadler</surname> <given-names>LS</given-names></name>, <name name-style="western"><surname>Fritzsche</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Competitive binding-based optical DNA mapping for fast identification of bacteria-multi-ligand transfer matrix theory and experimental applications on escherichia coli</article-title>. <source>Nucleic Acids Research</source> <year>2014</year>;<volume>42</volume>: <fpage>e118</fpage>–<lpage>e118</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gku556" xlink:type="simple">10.1093/nar/gku556</ext-link></comment> <object-id pub-id-type="pmid">25013180</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lim</surname> <given-names>SF</given-names></name>, <name name-style="western"><surname>Karpusenko</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sakon</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Hook</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Lamar</surname> <given-names>TA</given-names></name>, <name name-style="western"><surname>Riehn</surname> <given-names>R</given-names></name>. <article-title>DNA methylation profiling in nanochannels</article-title>. <source>Biomicrofluidics</source> <year>2011</year>;<volume>5</volume>: <fpage>034106</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1063/1.3613671" xlink:type="simple">10.1063/1.3613671</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Baday</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cravens</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hastie</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Kudeki</surname> <given-names>DE</given-names></name>, <etal>et al</etal>. <article-title>Multicolor super-resolution DNA imaging for genetic analysis</article-title>. <source>Nano letters</source> <year>2012</year>;<volume>12</volume>: <fpage>3861</fpage>–<lpage>3866</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/nl302069q" xlink:type="simple">10.1021/nl302069q</ext-link></comment> <object-id pub-id-type="pmid">22698062</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Das</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Austin</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Akana</surname> <given-names>MC</given-names></name>, <name name-style="western"><surname>Deshpande</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Xiao</surname> <given-names>M</given-names></name>. <article-title>Single molecule linear analysis of DNA in nano-channel labeled with sequence specific fluorescent probes</article-title>. <source>Nucleic acids research</source> <year>2010</year>;<volume>38</volume>: <fpage>e177</fpage>–<lpage>e177</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq673" xlink:type="simple">10.1093/nar/gkq673</ext-link></comment> <object-id pub-id-type="pmid">20699272</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Hernandez</surname> <given-names>LI</given-names></name>, <name name-style="western"><surname>Ramnarain</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Huff</surname> <given-names>EJ</given-names></name>, <etal>et al</etal>. <article-title>Ordered restriction maps of saccharomyces cerevisiae chromosomes constructed by optical mapping</article-title>. <source>Science</source> <year>1993</year>;<volume>262</volume>: <fpage>110</fpage>–<lpage>114</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.8211116" xlink:type="simple">10.1126/science.8211116</ext-link></comment> <object-id pub-id-type="pmid">8211116</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Meng</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Benson</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chada</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Huff</surname> <given-names>EJ</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>. <article-title>Optical mapping of lambda bacteriophage clones using restriction endonucleases</article-title>. <source>Nature Genetics</source> <year>1995</year>;<volume>9</volume>: <fpage>432</fpage>–<lpage>438</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng0495-432" xlink:type="simple">10.1038/ng0495-432</ext-link></comment> <object-id pub-id-type="pmid">7795651</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cai</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Aburatani</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Stanton</surname> <given-names>VP</given-names></name>, <name name-style="western"><surname>Housman</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>YK</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>. <article-title>Ordered restriction endonuclease maps of yeast artificial chromosomes created by optical mapping on surfaces</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>1995</year>;<volume>92</volume>: <fpage>5164</fpage>–<lpage>5168</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.92.11.5164" xlink:type="simple">10.1073/pnas.92.11.5164</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Hernandez</surname> <given-names>LI</given-names></name>, <name name-style="western"><surname>Ramnarain</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Huff</surname> <given-names>EJ</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y-K</given-names></name>. <article-title>Ordered restriction maps of saccharomyces cerevisiae chromosomes constructed by optical mapping</article-title>. <source>Science</source> <year>1993</year>;<volume>262</volume>: <fpage>110</fpage>–<lpage>114</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.8211116" xlink:type="simple">10.1126/science.8211116</ext-link></comment> <object-id pub-id-type="pmid">8211116</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cai</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Aburatani</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Stanton</surname> <given-names>VP</given-names></name>, <name name-style="western"><surname>Housman</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>YK</given-names></name>, <name name-style="western"><surname>Schwartz</surname> <given-names>DC</given-names></name>. <article-title>Ordered restriction endonuclease maps of yeast artificial chromosomes created by optical mapping on surfaces</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>1995</year>;<volume>92</volume>: <fpage>5164</fpage>–<lpage>5168</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.92.11.5164" xlink:type="simple">10.1073/pnas.92.11.5164</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bensimon</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Simon</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Chiffaudel</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Croquette</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Heslot</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bensimon</surname> <given-names>D</given-names></name>. <article-title>Alignment and sensitive detection of DNA by a moving interface</article-title>. <source>Science</source> <year>1994</year>;<volume>265</volume>: <fpage>2096</fpage>–<lpage>2098</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.7522347" xlink:type="simple">10.1126/science.7522347</ext-link></comment> <object-id pub-id-type="pmid">7522347</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jo</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Dhingra</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Odijk</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>de Pablo</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Graham</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Runnheim</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>A single-molecule barcoding system using nanoslits for DNA analysis</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>2007</year>; <volume>104</volume>: <fpage>2673</fpage>–<lpage>2678</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0611151104" xlink:type="simple">10.1073/pnas.0611151104</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Douville</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Huh</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Takayama</surname> <given-names>S</given-names></name>. <article-title>DNA linearization through confinement in nanofluidic channels</article-title>. <source>Analytical and bioanalytical chemistry</source> <year>2008</year>;<volume>391</volume>: <fpage>2395</fpage>–<lpage>2409</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00216-008-1995-y" xlink:type="simple">10.1007/s00216-008-1995-y</ext-link></comment> <object-id pub-id-type="pmid">18340435</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Reisner</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Morton</surname> <given-names>KJ</given-names></name>, <name name-style="western"><surname>Riehn</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>YM</given-names></name>, <name name-style="western"><surname>Yu</surname> <given-names>Z</given-names></name>, <etal>et al</etal>. <article-title>Statics and dynamics of single DNA molecules confined in nanochannels</article-title>. <source>Physical Review Letters</source> <year>2005</year>;<volume>94</volume>: <fpage>196101</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.94.196101" xlink:type="simple">10.1103/PhysRevLett.94.196101</ext-link></comment> <object-id pub-id-type="pmid">16090189</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Reisner</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Pedersen</surname> <given-names>JN</given-names></name>, <name name-style="western"><surname>Austin</surname> <given-names>RH</given-names></name>. <article-title>DNA confinement in nanochannels: physics and biological applications</article-title>. <source>Reports on Progress in Physics</source> <year>2012</year>;<volume>75</volume>: <fpage>106601</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/0034-4885/75/10/106601" xlink:type="simple">10.1088/0034-4885/75/10/106601</ext-link></comment> <object-id pub-id-type="pmid">22975868</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tegenfeldt</surname> <given-names>JO</given-names></name>, <name name-style="western"><surname>Prinz</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Chou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Reisner</surname> <given-names>WW</given-names></name>, <name name-style="western"><surname>Riehn</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>The dynamics of genomic-length DNA molecules in 100-nm channels</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <year>2004</year>; <volume>101</volume>: <fpage>10979</fpage>–<lpage>10983</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0403849101" xlink:type="simple">10.1073/pnas.0403849101</ext-link></comment> <object-id pub-id-type="pmid">15252203</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Persson</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Tegenfeldt</surname> <given-names>JO</given-names></name>. <article-title>DNA in nanochannels-directly visualizing genomic information</article-title>. <source>Chemical Society Reviews</source> <year>2010</year>;<volume>39</volume>: <fpage>985</fpage>–<lpage>999</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/b912918a" xlink:type="simple">10.1039/b912918a</ext-link></comment> <object-id pub-id-type="pmid">20179820</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Marie</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Pedersen</surname> <given-names>JN</given-names></name>, <name name-style="western"><surname>Bauer</surname> <given-names>DL</given-names></name>, <name name-style="western"><surname>Rasmussen</surname> <given-names>KH</given-names></name>, <name name-style="western"><surname>Yusuf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Volpi</surname> <given-names>E</given-names></name>, <etal>et al</etal>. <article-title>Integrated view of genome structure and sequence of a single DNA molecule in a nanofluidic device</article-title>. <source>Proceedings of the National Academy of Sciences</source> <year>2013</year>;<volume>110</volume>: <fpage>4893</fpage>–<lpage>4898</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1214570110" xlink:type="simple">10.1073/pnas.1214570110</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hebert</surname> <given-names>PDN</given-names></name>, <name name-style="western"><surname>Cywinska</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ball</surname> <given-names>SL</given-names></name>. <article-title>Biological identifications through DNA barcodes</article-title>, <source>Proceedings of the Royal Society B</source> <year>2003</year>;<volume>270</volume>, <fpage>313</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2002.2218" xlink:type="simple">10.1098/rspb.2002.2218</ext-link></comment> <object-id pub-id-type="pmid">12614582</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Reisner</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Morton</surname> <given-names>KJ</given-names></name>, <name name-style="western"><surname>Riehn</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>YM</given-names></name>, <name name-style="western"><surname>Yu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Rosen</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Statics and dynamics of single DNA molecules confined in nanochannels</article-title>. <source>Phys. Rev. Lett.</source> <year>2005</year>;<volume>94</volume>: <fpage>196101</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevLett.94.196101" xlink:type="simple">10.1103/PhysRevLett.94.196101</ext-link></comment> <object-id pub-id-type="pmid">16090189</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>De Gennes</surname> <given-names>PG</given-names></name>, <source>Scaling concepts in polymer physics</source>. <publisher-name>Cornell university press</publisher-name>, <year>1979</year>.</mixed-citation>
+</ref>
+<ref id="pone.0121905.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Leiserson</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Rivest</surname> <given-names>RL</given-names></name>, <name name-style="western"><surname>Stein</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Cormen</surname> <given-names>TH</given-names></name>. <source>Introduction to algorithms</source>. <publisher-name>The MIT press</publisher-name>, <year>2001</year>.</mixed-citation>
+</ref>
+<ref id="pone.0121905.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cover</surname> <given-names>TM</given-names></name>, <name name-style="western"><surname>Thomas</surname> <given-names>JA</given-names></name>. <article-title>Entropy, relative entropy and mutual information</article-title>. <source>Elements of Information Theory</source> <year>1991</year>: <fpage>12</fpage>–<lpage>49</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/0471200611.ch2" xlink:type="simple">10.1002/0471200611.ch2</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tsibidis</surname> <given-names>GD</given-names></name>, <name name-style="western"><surname>Tavernarakis</surname> <given-names>N</given-names></name>. <article-title>Nemo: a computational tool for analyzing nematode locomotion</article-title>. <source>BMC neuroscience</source> (<year>2007</year>);<volume>8</volume>: <fpage>86</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2202-8-86" xlink:type="simple">10.1186/1471-2202-8-86</ext-link></comment> <object-id pub-id-type="pmid">17941975</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="other">Huang KM, Cosman P, Schafer WR. Automated detection and analysis of foraging behavior in c. elegans. In: Image Analysis and Interpretation, 2008. SSIAI 2008. IEEE Southwest Symposium on. IEEE, 2008: 29–32.</mixed-citation>
+</ref>
+<ref id="pone.0121905.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chetta</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Shah</surname> <given-names>SB</given-names></name>. <article-title>A novel algorithm to generate kymographs from dynamic axons for the quantitative analysis of axonal transport</article-title>. <source>Journal of neuroscience methods</source> <year>2011</year>;<volume>199</volume>: <fpage>230</fpage>–<lpage>240</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jneumeth.2011.05.013" xlink:type="simple">10.1016/j.jneumeth.2011.05.013</ext-link></comment> <object-id pub-id-type="pmid">21620890</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Obashi</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Okabe</surname> <given-names>S</given-names></name>. <article-title>Regulation of mitochondrial dynamics and distribution by synapse position and neuronal activity in the axon</article-title>. <source>European Journal of Neuroscience</source> <year>2013</year>;<volume>38</volume>: <fpage>2350</fpage>–<lpage>2363</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/ejn.12263" xlink:type="simple">10.1111/ejn.12263</ext-link></comment> <object-id pub-id-type="pmid">23725294</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zhou</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Brust-Mascher</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Scholey</surname> <given-names>JM</given-names></name>. <article-title>Direct visualization of the movement of the monomeric axonal transport motor unc-104 along neuronal processes in livingcaenorhabditis elegans</article-title>. <source>The Journal of Neuroscience</source> <year>2001</year>;<volume>21</volume>: <fpage>3749</fpage>–<lpage>3755</lpage>. <object-id pub-id-type="pmid">11356862</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Miller</surname> <given-names>KE</given-names></name>, <name name-style="western"><surname>Sheetz</surname> <given-names>MP</given-names></name>. <article-title>Axonal mitochondrial transport and potential are correlated</article-title>. <source>Journal of Cell Science</source> <year>2004</year>;<volume>117</volume>: <fpage>2791</fpage>–<lpage>2804</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/jcs.01130" xlink:type="simple">10.1242/jcs.01130</ext-link></comment> <object-id pub-id-type="pmid">15150321</object-id></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chevalier-Larsen</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Holzbaur</surname> <given-names>EL</given-names></name>. <article-title>Axonal transport and neurodegenerative disease</article-title>. <source>Biochimica et Biophysica Acta (BBA)-Molecular Basis of Disease</source> <year>2006</year>;<volume>1762</volume>: <fpage>1094</fpage>–<lpage>1108</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bbadis.2006.04.002" xlink:type="simple">10.1016/j.bbadis.2006.04.002</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pone.0121905.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Haghnia</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cavalli</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Shah</surname> <given-names>SB</given-names></name>, <name name-style="western"><surname>Schimmelpfeng</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Brusch</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>G</given-names></name>, <etal>et al</etal>. <article-title>Dynactin is required for coordinated bidirectional motility, but not for dynein membrane attachment</article-title>. <source>Molecular biology of the cell</source> <year>2007</year>;<volume>18</volume>: <fpage>2081</fpage>–<lpage>2089</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1091/mbc.E06-08-0695" xlink:type="simple">10.1091/mbc.E06-08-0695</ext-link></comment> <object-id pub-id-type="pmid">17360970</object-id></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

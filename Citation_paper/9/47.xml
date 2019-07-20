@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS One</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-10944</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0049445</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Genomics</subject>
+              <subj-group>
+                <subject>Genome analysis tools</subject>
+                <subj-group>
+                  <subject>Genome-wide association studies</subject>
+                </subj-group>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Genetics</subject>
+            <subj-group>
+              <subject>Human genetics</subject>
+              <subj-group>
+                <subject>Genome-wide association studies</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Genome-wide association studies</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Mathematics</subject>
+          <subj-group>
+            <subject>Probability theory</subject>
+            <subj-group>
+              <subject>Bayes theorem</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Statistics</subject>
+            <subj-group>
+              <subject>Biostatistics</subject>
+              <subject>Statistical methods</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Computational Biology</subject>
+          <subject>Mathematics</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Finite Adaptation and Multistep Moves in the Metropolis-Hastings Algorithm for Variable Selection in Genome-Wide Association Analysis</article-title>
+        <alt-title alt-title-type="running-head">MCMC Computation in Variable Selection for GWAS</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Peltola</surname>
+            <given-names>Tomi</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Marttinen</surname>
+            <given-names>Pekka</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Vehtari</surname>
+            <given-names>Aki</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Department of Biomedical Engineering and Computational Science, Aalto University, Espoo, Finland</addr-line>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <addr-line>Department of Information and Computer Science, Aalto University, Espoo, Finland</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Emmert-Streib</surname>
+            <given-names>Frank</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>Queen’s University Belfast, United Kingdom</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">tomi.peltola@aalto.fi</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: TP PM AV. Performed the experiments: TP. Analyzed the data: TP. Contributed reagents/materials/analysis tools: TP AV. Wrote the paper: TP PM AV.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>15</day>
+        <month>11</month>
+        <year>2012</year>
+      </pub-date>
+      <volume>7</volume>
+      <issue>11</issue>
+      <elocation-id>e49445</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>14</day>
+          <month>4</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>9</day>
+          <month>10</month>
+          <year>2012</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2012</copyright-year>
+        <copyright-holder>Peltola et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>High-dimensional datasets with large amounts of redundant information are nowadays available for <italic>hypothesis-free</italic> exploration of scientific questions. A particular case is genome-wide association analysis, where variations in the genome are searched for effects on disease or other traits. Bayesian variable selection has been demonstrated as a possible analysis approach, which can account for the multifactorial nature of the genetic effects in a linear regression model.</p>
+        <p>Yet, the computation presents a challenge and application to large-scale data is not routine. Here, we study aspects of the computation using the Metropolis-Hastings algorithm for the variable selection: finite adaptation of the proposal distributions, multistep moves for changing the inclusion state of multiple variables in a single proposal and multistep move size adaptation. We also experiment with a delayed rejection step for the multistep moves. Results on simulated and real data show increase in the sampling efficiency. We also demonstrate that with application specific proposals, the approach can overcome a specific mixing problem in real data with 3822 individuals and 1,051,811 single nucleotide polymorphisms and uncover a variant pair with synergistic effect on the studied trait. Moreover, we illustrate multimodality in the real dataset related to a restrictive prior distribution on the genetic effect sizes and advocate a more flexible alternative.</p>
+      </abstract>
+      <funding-group>
+        <funding-statement>This work was supported by the Finnish Doctoral Programme in Computational Sciences FICS (<ext-link ext-link-type="uri" xlink:href="http://fics.hiit.fi/" xlink:type="simple">http://fics.hiit.fi/</ext-link>; TP); and the Academy of Finland (<ext-link ext-link-type="uri" xlink:href="http://www.aka.fi/" xlink:type="simple">http://www.aka.fi/</ext-link>; grant 218248 to AV, and Pubgensens project grant 129230 to AV). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="11"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The progress in high-throughput measurement technologies has allowed application specialists to gather extensive datasets with often large amounts of redundant information for the addressed scientific question. This is particularly true in (human) genetics, where it has become cost-effective to measure individual genetic variation at the scale of millions of polymorphic sites in the DNA. Numerous genome-wide association studies (GWAS) have been published during the last decade linking the genetic variation to disease and other traits <xref ref-type="bibr" rid="pone.0049445-Hindorff1">[1]</xref>.</p>
+      <p>However, such data analysis is not without problems. The primary association analyses in GWAS are mainly conducted by testing each polymorphic site, usually single nucleotide polymorphism (SNP), for association independently and then correcting for multiple hypothesis testing. This simplification is computationally convenient, but does not acknowledge the hypothesis of multifactorial genetic background for many common diseases and traits. Alternatives, which consider all of the genetic variants simultaneously, include penalized multivariate regression and variable selection methods (e.g., <xref ref-type="bibr" rid="pone.0049445-Hoggart1">[2]</xref>, <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>).</p>
+      <p>In this work, we focus on the computation of the Bayesian linear regression model with variable selection using Markov chain Monte Carlo (MCMC) methods. The variable selection is a natural fit for the main task in GWAS of searching for the genetic variants showing association to a phenotype of interest, and such models have been recently applied successfully to various sizes of genetic datasets including full GWAS scale <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>, <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>. These models introduce latent binary indicator variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e001" xlink:type="simple"/></inline-formula> to specify the inclusion status of each genetic variant (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e002" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e003" xlink:type="simple"/></inline-formula>) in the regression model. The expected sparsity is encoded into the prior distribution of the indicators. The relevant posterior quantities are then obtained through model averaging (where model refers to a configuration of the indicator vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e004" xlink:type="simple"/></inline-formula>). However, the computation can be challenging as the Markov chains may suffer from long autocorrelation.</p>
+      <p>A general approach to the variable selection in this framework is the Metropolis-Hastings algorithm (MH) <xref ref-type="bibr" rid="pone.0049445-Metropolis1">[5]</xref>, <xref ref-type="bibr" rid="pone.0049445-Hastings1">[6]</xref>, where to generate samples from the posterior distribution, changes to the state of the indicator vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e005" xlink:type="simple"/></inline-formula> are proposed from a proposal distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e006" xlink:type="simple"/></inline-formula> and then accepted as the new state or rejected (duplicating the previous state in the MCMC chain) according to the MH acceptance probability:<disp-formula id="pone.0049445.e007"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e007" xlink:type="simple"/><label>(1)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e008" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e009" xlink:type="simple"/></inline-formula> are the current and the proposed state and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e010" xlink:type="simple"/></inline-formula> is the posterior probability.</p>
+      <p>Here, we study the following ideas in formulating the proposal distribution <italic>q</italic>: 1) finite adaptation of the proposal distributions for adding and removing variables from the model, 2) adding and removing multiple variables in a single proposal (multistep move) with finite adaptation of the move size (the number of additions/removals proposed) and 3) delayed rejection <xref ref-type="bibr" rid="pone.0049445-Mira1">[7]</xref>, <xref ref-type="bibr" rid="pone.0049445-Green1">[8]</xref>, which re-utilizes some of the computations leading to a rejected proposal in making a second proposal from a larger set of states. The resulting sampling algorithms are studied on simulated data and a real GWAS dataset with nearly four thousand individuals and over one million SNPs (analyzed previously in <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>) with a focus on the efficiency of the sampling. We further describe additional proposals tailored to the genetic data, which help against specific convergence and mixing problems encountered in the real data, and demonstrate in the real data that a prior, which is flexible to having few large effect sizes among many small, may be desirable.</p>
+      <p>The motivation for adapting the proposal distributions stems from the <italic>small n, large p</italic> property of the data with most of the <italic>p</italic> variables being irrelevant. Proposing updates to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e011" xlink:type="simple"/></inline-formula> uniformly from the large set of variables may waste lots of computation time on rejecting poor proposals and be slow to find high posterior probability models. Here, the marginal inclusion probabilities of the variables will be used to form the proposal distributions, which are adapted during an initial phase in the sampling before collecting samples for posterior inference (finite adaptation). This is similar to the (full) adaptive sampler of Nott and Kohn <xref ref-type="bibr" rid="pone.0049445-Nott1">[9]</xref>. The Bayesian adaptive sampling algorithm (BAS) <xref ref-type="bibr" rid="pone.0049445-Clyde1">[10]</xref> also uses the marginal inclusion probabilities for sampling. It differs from the above mentioned in that it samples models without replacement (and is not an MCMC method). Our previous work <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref> included finite adaptation of the proposal distribution for (single) additions, while Guan and Stephens <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref> have used statistics from single variable analyses to form the proposal distribution for additions. The latter two articles do not study the efficiency of the samplers.</p>
+      <p>Multistep moves have been used in GWAS setting by Guan and Stephens <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>, but they provide little details beyond the mention of generating them as combinations of single additions and removals. As the multistep proposals for updating <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e012" xlink:type="simple"/></inline-formula> do not come from a uniform distribution, some care is required in formulating <italic>q</italic> in a proper way. Here, the sequential Metropolis-Hastings proposal framework of Storvik <xref ref-type="bibr" rid="pone.0049445-Storvik1">[11]</xref> will be utilized to provide theoretical validity of the resulting Markov chain. Lamnisos et al. <xref ref-type="bibr" rid="pone.0049445-Lamnisos1">[12]</xref> discuss the adaptation of the move size in multistep moves with uniform proposal distribution for variable inclusion updates. They use acceptance rate coercion to adapt the move size proposal distribution, which relies on the knowledge or estimate of optimal acceptance rate. An alternative approach is provided by Pasarica and Gelman <xref ref-type="bibr" rid="pone.0049445-Pasarica1">[13]</xref>, who maximize the expected jump distance of the Markov chain (corresponding to minimizing the first autocorrelation), and is here introduced in the variable selection context. This has the advantage of not relying on the availability of the knowledge of the optimal acceptance rate.</p>
+      <p>We also experiment with a novel delayed rejection step, which re-utilizes some of the computations leading to a rejected multistep proposal. In the delayed rejection algorithm if the first proposal is rejected, another proposal may be made. Here, assuming a <italic>k</italic>-step proposal, which is rejected, the full set of posterior probabilities of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e013" xlink:type="simple"/></inline-formula> models available from changes to the inclusion status of the <italic>k</italic> variables can be computed using relatively cheap updates to the likelihood of the full model (particularly, the Cholesky decomposition of the covariance matrix), which is available fully or in part from the rejected proposal. A second proposal is then made from this set of models utilizing the computed posterior probabilities.</p>
+      <p>An open source C++ implementation of the samplers presented here is available at <ext-link ext-link-type="uri" xlink:href="http://becs.aalto.fi/en/research/bayes/bmagwa/" xlink:type="simple">http://becs.aalto.fi/en/research/bayes/bmagwa/</ext-link> and <ext-link ext-link-type="uri" xlink:href="https://github.com/to-mi/" xlink:type="simple">https://github.com/to-mi/</ext-link>. It has been specifically developed for GWA analysis allowing for fast and memory-efficient handling of large datasets.</p>
+    </sec>
+    <sec id="s2" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s2a">
+        <title>Model</title>
+        <p>The model mapping from genotypes (values of the explanatory variables) to a phenotype (the target variable) is briefly introduced here. This is essentially the same as in our previous work <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>, except here we consider only additive formulation for the genetic effects and introduce a more flexible prior for the variance of the effect sizes. For similar alternatives, see, for example, references <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>, <xref ref-type="bibr" rid="pone.0049445-Bottolo1">[14]</xref>, <xref ref-type="bibr" rid="pone.0049445-Wilson1">[15]</xref>.</p>
+        <p>A linear regression model is used:<disp-formula id="pone.0049445.e014"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e014" xlink:type="simple"/><label>(2)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e015" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e016" xlink:type="simple"/></inline-formula>, are the values of the phenotype for <italic>n</italic> individuals, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e017" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e018" xlink:type="simple"/></inline-formula>, are genotypes for <italic>m</italic> SNPs and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e019" xlink:type="simple"/></inline-formula> are residuals, which are assumed to follow a zero-mean normal distribution with variance <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e020" xlink:type="simple"/></inline-formula>: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e021" xlink:type="simple"/></inline-formula></p>
+        <p>To facilitate variable selection, binary variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e022" xlink:type="simple"/></inline-formula> are used to indicate the presence of effect <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e023" xlink:type="simple"/></inline-formula>. That is, for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e024" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e025" xlink:type="simple"/></inline-formula> and for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e026" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e027" xlink:type="simple"/></inline-formula> may be non-zero. The prior structure for the model parameters is:<disp-formula id="pone.0049445.e028"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e028" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e029"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e029" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e030"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e030" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e031"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e031" xlink:type="simple"/><label>(3)</label></disp-formula><disp-formula id="pone.0049445.e032"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e032" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e033"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e033" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e034"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e034" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e035"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e035" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e036" xlink:type="simple"/></inline-formula> is the mean of the prior for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e037" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e038" xlink:type="simple"/></inline-formula> is the Dirac delta function at zero and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e039" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e040" xlink:type="simple"/></inline-formula> refer to the degrees of freedom and scale parameters of the (scaled) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e041" xlink:type="simple"/></inline-formula> distributions. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e042" xlink:type="simple"/></inline-formula> is the prior probability of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e043" xlink:type="simple"/></inline-formula> with prior expectation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e044" xlink:type="simple"/></inline-formula> <italic>j</italic> runs from 1 to <italic>m</italic>.</p>
+        <p>The prior of the effect sizes, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e045" xlink:type="simple"/></inline-formula> is a zero-mean normal distribution with a noncentral-F prior for variance <xref ref-type="bibr" rid="pone.0049445-Gelman1">[16]</xref>. This is more flexible than the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e046" xlink:type="simple"/></inline-formula> distribution for variance, which we have used previously <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>, but is still convenient to sample. Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e047" xlink:type="simple"/></inline-formula> are also variable specific (previously a single parameter was shared), which places more mass on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e048" xlink:type="simple"/></inline-formula> with few large effects among many small ones and seems appropriate in the lipoprotein cholesterol analyses. <xref ref-type="fig" rid="pone-0049445-g001">Figure 1</xref> illustrates the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e049" xlink:type="simple"/></inline-formula> prior. The prior for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e050" xlink:type="simple"/></inline-formula> induces sparsity into the model. When available, published analyses may be used to guide the selection of the prior parameters (proportion of variance explained for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e051" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e052" xlink:type="simple"/></inline-formula>; effect sizes for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e053" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e054" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e055" xlink:type="simple"/></inline-formula>; number of associations for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e056" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e057" xlink:type="simple"/></inline-formula>; see <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>).</p>
+        <fig id="pone-0049445-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Illustration of the effect size prior.</title>
+            <p>A. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e058" xlink:type="simple"/></inline-formula> prior density with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e059" xlink:type="simple"/></inline-formula> and noncentral-F (from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e060" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e061" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e062" xlink:type="simple"/></inline-formula>) distributions for the variance. The former yields a <italic>t</italic>-distribution. The latter is more spiked. Both have heavier tails than normal distribution. Panels B and C show the comparison in two dimensions (pseudo-colored histograms with dark as low and bright as high values). In the former the two <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e063" xlink:type="simple"/></inline-formula>s share the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e064" xlink:type="simple"/></inline-formula> parameter, whereas they have independent <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e065" xlink:type="simple"/></inline-formula> parameters in the latter. The plots were constructed from 50 million samples with fixed prior parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e066" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e067" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e068" xlink:type="simple"/></inline-formula> (and assuming <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e069" xlink:type="simple"/></inline-formula>).</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g001" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2b">
+        <title>Computation</title>
+        <p>The overview of the Markov chain Monte Carlo algorithm used to sample from the posterior distribution of the parameters of the above model is given here briefly, before focusing on the specifics of the sampling of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e070" xlink:type="simple"/></inline-formula>.</p>
+        <p>The linear model given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e071" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e072" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e073" xlink:type="simple"/></inline-formula> has conjugate structure allowing integration over <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e074" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e075" xlink:type="simple"/></inline-formula> analytically, which is utilized below in the third step. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e076" xlink:type="simple"/></inline-formula> is integrated out analytically and not sampled. The following Gibbs sampling scheme is used for the remaining parameters (see <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref> for details on the conditional distributions):</p>
+        <list list-type="order">
+          <list-item>
+            <p>Sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e077" xlink:type="simple"/></inline-formula>s given the other parameters from scaled inverse-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e078" xlink:type="simple"/></inline-formula> distributions.</p>
+          </list-item>
+          <list-item>
+            <p>Sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e079" xlink:type="simple"/></inline-formula> given the other parameters from a normal distribution.</p>
+          </list-item>
+          <list-item>
+            <p>Sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e080" xlink:type="simple"/></inline-formula> given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e081" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e082" xlink:type="simple"/></inline-formula> with a Metropolis-Hastings step.</p>
+          </list-item>
+          <list-item>
+            <p>Sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e083" xlink:type="simple"/></inline-formula> given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e084" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e085" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e086" xlink:type="simple"/></inline-formula> from a scaled inverse-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e087" xlink:type="simple"/></inline-formula> distribution.</p>
+          </list-item>
+          <list-item>
+            <p>Sample <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e088" xlink:type="simple"/></inline-formula> given the other parameters from a normal distribution.</p>
+          </list-item>
+        </list>
+        <p>The last three steps are a factorized draw from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e089" xlink:type="simple"/></inline-formula>. Additionally (if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e090" xlink:type="simple"/></inline-formula> is not zero), a deterministic Metropolis proposal to flip the signs of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e091" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e092" xlink:type="simple"/></inline-formula> is included to avoid getting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e093" xlink:type="simple"/></inline-formula> stuck into negative or positive values (note that this move has no effect on the signs of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e094" xlink:type="simple"/></inline-formula>s). Steps 1, 2, 4 and 5 are done only every tenth (or hundredth for alternative algorithms) iteration in our experiments, as the sampling of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e095" xlink:type="simple"/></inline-formula> in the third step is often the most challenging one.</p>
+        <p>For posterior inference, the Rao-Blackwellization method of Guan and Stephens <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref> is used to estimate the posterior association probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e096" xlink:type="simple"/></inline-formula>, denoted <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e097" xlink:type="simple"/></inline-formula> for short (see also <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>). It essentially works by periodically computing single variable linear regressions for each variable against the residual of the current linear regression model (at some sampled state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e098" xlink:type="simple"/></inline-formula>) and updating the estimates <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e099" xlink:type="simple"/></inline-formula> accordingly.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Algorithms for Variable Inclusion Updates</title>
+        <p>Three algorithms will be described for the Metropolis-Hastings step (MH) step, which is used to update <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e100" xlink:type="simple"/></inline-formula> in the third sampling step:</p>
+        <list list-type="order">
+          <list-item>
+            <p>Single step (SS) algorithm, which proposes a change to a single <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e101" xlink:type="simple"/></inline-formula> in each iteration.</p>
+          </list-item>
+          <list-item>
+            <p>Multistep (MS) algorithm, which proposes multiple changes to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e102" xlink:type="simple"/></inline-formula> in each iteration.</p>
+          </list-item>
+          <list-item>
+            <p>Multistep algorithm with delayed rejection (MS-DR).</p>
+          </list-item>
+        </list>
+        <p>The proposals are formed in two main steps: 1) move size (number of changes) proposal and 2) sequential proposal of the variables to update (add to or remove from the model). The proposal is then accepted or rejected according to the MH acceptance probability. The single step algorithm always chooses move size of one.</p>
+        <p>The parameters of the proposal distribution may be adapted during an initial phase in the sampling (giving a total of six different samplers; three adaptive and three non-adaptive). The parameters are then fixed before collecting posterior samples (finite adaptation). Non-adaptive algorithms employ uniform distribution to generate the proposals (expect that move size adaptation is allowed here for all multistep samplers to avoid trial-and-error in finding a good proposal distribution). Brief descriptions of the sampling and adaptation are given below. Details are given in <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref>.</p>
+        <sec id="s2c1">
+          <title>Move size proposal</title>
+          <p>The proposal distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e103" xlink:type="simple"/></inline-formula> for move size <italic>k</italic> should preferably have only a single parameter in order to make adaptation simple. We have chosen to use a truncated geometric distribution, where the parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e104" xlink:type="simple"/></inline-formula> governs the shape of the distribution. Geometric distribution is more conservative a choice than, for example, the binomial distribution in the regard that the move size 1 is always the single most probable value. We use a fixed value equal to 20 as the truncation point, while <italic>p</italic> is adapted. For adaptation we use expected jump distance optimization described below (for an alternative, see <xref ref-type="bibr" rid="pone.0049445-Lamnisos1">[12]</xref>).</p>
+          <p>Pasarica and Gelman <xref ref-type="bibr" rid="pone.0049445-Pasarica1">[13]</xref> optimize the expected squared jump distance in a Gaussian proposal distribution, the motivation of which stems from the formula <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e105" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e106" xlink:type="simple"/></inline-formula>, where <italic>J</italic> is the kernel of the Markov chain with some optimizable parameter, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e107" xlink:type="simple"/></inline-formula> the lag one autocorrelation and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e108" xlink:type="simple"/></inline-formula> the stationary distribution of the sampled parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e109" xlink:type="simple"/></inline-formula>. Thus, maximizing the expectation corresponds to minimizing the first autocorrelation, which may lessen the dependencies between consecutive samples. Using the approach in variable selection context for move size proposals is straightforward and does not rely on assumptions about optimal acceptance rate for the problem at hand.</p>
+          <p>In order to derive the connection of the expected squared jump distance and lag one autocorrelation in the present context, the mean and variance of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e110" xlink:type="simple"/></inline-formula> and its lag one autocorrelation (times variance) for the Markov chain are defined as<disp-formula id="pone.0049445.e111"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e111" xlink:type="simple"/></disp-formula><disp-formula id="pone.0049445.e112"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e112" xlink:type="simple"/><label>(4)</label></disp-formula><disp-formula id="pone.0049445.e113"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e113" xlink:type="simple"/></disp-formula>where the variance and covariance are taken as sums of the variances and covariances of the individual components. With these at hand, the expected squared jump distance can be seen to be <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e114" xlink:type="simple"/></inline-formula>. We note that for vectors of binary values the squared distance is equal to the Hamming distance<sup>1</sup>. <sup>1</sup><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e115" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e116" xlink:type="simple"/></inline-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e117" xlink:type="simple"/></inline-formula> as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e118" xlink:type="simple"/></inline-formula> can take values 0 and 1.</p>
+          <p>Pasarica and Gelman <xref ref-type="bibr" rid="pone.0049445-Pasarica1">[13]</xref> suggest using covariance norm in the case of multidimensional targets, but estimating the covariance matrix would be difficult here.</p>
+          <p>The objective function to maximize with regard to the parameter <italic>p</italic> is.<disp-formula id="pone.0049445.e119"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e119" xlink:type="simple"/><label>(5)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e120" xlink:type="simple"/></inline-formula> is the stationary distribution and <italic>a</italic> is the acceptance probability of a move from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e121" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e122" xlink:type="simple"/></inline-formula>. The acceptance probability will be independent of <italic>p</italic> as the corresponding factors cancel in the MH ratio. Samples from the adaptive phase of our MCMC algorithm are used in the multiple importance sampling estimator of Pasarica and Gelman <xref ref-type="bibr" rid="pone.0049445-Pasarica1">[13]</xref> to evaluate this objective (for details, see Text S1).</p>
+        </sec>
+        <sec id="s2c2">
+          <title>Sequential proposal for variable inclusion updates</title>
+          <p>Given the move size, additions and removals are proposed in a sequence with probability 0.5 (unless there are no variables to add or remove). Denoting the sequence of proposed changes using auxiliary variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e123" xlink:type="simple"/></inline-formula>, the proposal distribution can be written as a product <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e124" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e125" xlink:type="simple"/></inline-formula> is taken as the empty sequence. The individual proposal distributions <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e126" xlink:type="simple"/></inline-formula> for selecting the variables to add or remove are formed according to the estimates of the marginal inclusion probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e127" xlink:type="simple"/></inline-formula> of the variables, which are continuously updated during the adaptive phase of sampling using the Rao-Blackwellization method <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>. The proposals for variables to add are generated by sampling variables proportional to the estimated inclusion probabilities (with bounding away from zero using a preset minimum value) unless the variable has already been proposed to be added in this round. Variables to remove are sampled identically except for the sampling probabilities being proportional to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e128" xlink:type="simple"/></inline-formula>.</p>
+          <p>Alternatively, the usual MCMC estimates of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e129" xlink:type="simple"/></inline-formula> could be used in the adaptation with a smaller computational cost than the Rao-Blackwellization, but the latter provides more robust estimates especially at the beginning of the sampling and when the number of variables is large.</p>
+          <p>The above sampling scheme is here cast into the form of Storvik <xref ref-type="bibr" rid="pone.0049445-Storvik1">[11]</xref> (with some differences in notation) to write the acceptance probability and show the validity of the scheme. The full proposal distribution is written as<disp-formula id="pone.0049445.e130"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e130" xlink:type="simple"/><label>(6)</label></disp-formula></p>
+          <p>In this, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e131" xlink:type="simple"/></inline-formula> if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e132" xlink:type="simple"/></inline-formula> is the model derived from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e133" xlink:type="simple"/></inline-formula> with the operations specified by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e134" xlink:type="simple"/></inline-formula> and zero otherwise. In order to be able to calculate the Metropolis-Hastings acceptance probability, the sequence of auxiliary variables related to the reverse proposal must be specified. To this end, a distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e135" xlink:type="simple"/></inline-formula> is introduced. The distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e136" xlink:type="simple"/></inline-formula> places unit probability to a single sequence of auxiliary variables which is obtained from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e137" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e138" xlink:type="simple"/></inline-formula> using a specific deterministic procedure (see below). Given these distributions, the acceptance probability for the proposal is<disp-formula id="pone.0049445.e139"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e139" xlink:type="simple"/><label>(7)</label></disp-formula>which, according to Proposition 2 of Storvik <xref ref-type="bibr" rid="pone.0049445-Storvik1">[11]</xref>, leads to samples from the correct target distribution with proper convergence and ergodicity results when the Markov chain is irreducible. For some insight, the move may be viewed as an iteration of an MCMC for sampling from the joint distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e140" xlink:type="simple"/></inline-formula>, which has the correct marginal for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e141" xlink:type="simple"/></inline-formula>. The iteration consists of a Gibbs step updating <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e142" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e143" xlink:type="simple"/></inline-formula>, followed by a Metropolis-Hastings step with the specified acceptance probability during which <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e144" xlink:type="simple"/></inline-formula> is proposed to be replaced by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e145" xlink:type="simple"/></inline-formula>. This is illustrated in <xref ref-type="fig" rid="pone-0049445-g002">Figure 2A</xref>.</p>
+          <fig id="pone-0049445-g002" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g002</object-id>
+            <label>Figure 2</label>
+            <caption>
+              <title>Flow diagram of the proposal.</title>
+              <p>A. View of the full move as a Gibbs step followed by a Metropolis-Hastings (MH) step. B. Delayed rejection (DR): a second proposal may be done when the first proposal is rejected. Since the DR proposal is constructed here such that it is always accepted, there is no further branching after the second proposal. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e146" xlink:type="simple"/></inline-formula> is the acceptance probability of the MH step. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e147" xlink:type="simple"/></inline-formula> refers to an old value of the auxiliary variable, which is irrelevant.</p>
+            </caption>
+            <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g002" position="float" xlink:type="simple"/>
+          </fig>
+          <p>Regarding <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e148" xlink:type="simple"/></inline-formula>, a simple approach would be to take <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e149" xlink:type="simple"/></inline-formula>, if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e150" xlink:type="simple"/></inline-formula> is the reverse of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e151" xlink:type="simple"/></inline-formula> (i.e., additions become removals with the sampling order reversed and vice versa) and zero otherwise. However, to be consistent with the delayed rejection implementation, a slightly more complex deterministic procedure is chosen here (see <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref>).</p>
+          <p>An alternative to introducing the sampling order to the acceptance probability would be to sum over the different orderings of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e152" xlink:type="simple"/></inline-formula>. See <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref> for a comment on this.</p>
+        </sec>
+        <sec id="s2c3">
+          <title>Example 1</title>
+          <p>Here we illustrate the notation and behavior of the sampling algorithm using a concrete, albeit overly simplistic, example. Suppose the total number of SNPs in data is equal to 5 and let the current state of the algorithm be <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e153" xlink:type="simple"/></inline-formula>, i.e., the second SNP is currently included in the model. Note that here, for shortcut, we represent <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e154" xlink:type="simple"/></inline-formula>, actually a vector of indicators, as a set of non-zero indicators. The sampling then proceeds as follows. 1) The number of updates, <italic>k</italic>, is drawn. Suppose that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e155" xlink:type="simple"/></inline-formula> is selected. 2) The type of update (addition/removal) and the SNP involved is determined in turn for each update. Suppose this results in the sequence of auxiliary variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e156" xlink:type="simple"/></inline-formula>, meaning that SNPs 3 and 4 are proposed to be added to the model. This, in turn, fixes the proposed new state to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e157" xlink:type="simple"/></inline-formula>. Furthermore, this fixes the sequence of auxiliary variables in the reverse proposal to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e158" xlink:type="simple"/></inline-formula>. Recall that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e159" xlink:type="simple"/></inline-formula> is determined using the distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e160" xlink:type="simple"/></inline-formula>, which places a unit mass on a single sequence of auxiliary variables using the deterministic procedure, as described earlier. Also note that applying <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e161" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e162" xlink:type="simple"/></inline-formula> would change the state back to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e163" xlink:type="simple"/></inline-formula> again, as required. 3) Finally, the acceptance probability specified in <xref ref-type="disp-formula" rid="pone.0049445.e139">Equation 7</xref> is used to decide whether to change the current state from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e164" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e165" xlink:type="simple"/></inline-formula>.</p>
+        </sec>
+        <sec id="s2c4">
+          <title>Delayed rejection</title>
+          <p>Delayed rejection <xref ref-type="bibr" rid="pone.0049445-Mira1">[7]</xref>, <xref ref-type="bibr" rid="pone.0049445-Green1">[8]</xref> builds on the result of Peskun <xref ref-type="bibr" rid="pone.0049445-Peskun1">[17]</xref>, which states that given two transition probability matrices of Markov chains, the one with greater off-diagonal elements has lower asymptotic variance for the MCMC estimate of an expectation of a function. Whereas the MH sampling algorithm replicates the old state on rejection and proceeds to the next iteration, the delayed rejection algorithm makes a second proposal (and possibly more), which is then considered for acceptance. The acceptance probability is constructed to preserve the reversibility of the Markov chain. The algorithm can only increase the off-diagonal mass in the transition matrix as the acceptance probability of the first proposal is not affected.</p>
+          <p>An essential feature of delayed rejection is that the second proposal may depend on the first. Here, this is taken advantage of by re-utilizing the computations performed for the first proposal. Note that the time complexity of computing the likelihood after the first proposal has been made is dominated by the updates to the Cholesky decomposition of the covariance matrix of the predictors (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e166" xlink:type="simple"/></inline-formula>) and computation of the covariances when variables are added (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e167" xlink:type="simple"/></inline-formula> with <italic>q</italic> the number of variables in the model and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e168" xlink:type="simple"/></inline-formula> the number of new variables). Now, following a proposal from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e169" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e170" xlink:type="simple"/></inline-formula> through auxiliary variable <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e171" xlink:type="simple"/></inline-formula> which is to be rejected, another proposal is made instead. The second proposal is sampled from the set of models, which can be constructed by flipping elements of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e172" xlink:type="simple"/></inline-formula> with the flips restricted to the variables indicated by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e173" xlink:type="simple"/></inline-formula>. There are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e174" xlink:type="simple"/></inline-formula> such models, where <italic>k</italic> is the move size of the first proposal. Given the Cholesky decomposition of the largest model, computation of the posterior probabilities of the whole set of models may be done in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e175" xlink:type="simple"/></inline-formula> (see <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref> for more details). This overhead is often small compared to making a completely new proposal, when <italic>q</italic> or <italic>n</italic> are large relative to <italic>k</italic> and allows the sampling to use the knowledge of the posterior probabilities of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e176" xlink:type="simple"/></inline-formula> models.</p>
+          <p>The acceptance probability of the second proposal preserving reversibility is given by:<disp-formula id="pone.0049445.e177"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0049445.e177" xlink:type="simple"/><label>(8)</label></disp-formula>where items related to the second proposal are marked with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e178" xlink:type="simple"/></inline-formula> and the ratio for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e179" xlink:type="simple"/></inline-formula> is dropped to simplify notation. Note that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e180" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e181" xlink:type="simple"/></inline-formula>, which are the first proposals in the forward and backward routes, are not constrained to be equal. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e182" xlink:type="simple"/></inline-formula> will be chosen to be deterministic similarly to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e183" xlink:type="simple"/></inline-formula>. We have constructed the proposal distributions such that the second proposal is always accepted. The notation and the course of action of the delayed rejection are illustrated in <xref ref-type="fig" rid="pone-0049445-g002">Figure 2B</xref> and through the following example. Further details are provided in the <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref>.</p>
+        </sec>
+        <sec id="s2c5">
+          <title>Example 2</title>
+          <p>Here we illustrate the delayed rejection part of the sampling algorithm by continuing from Example 1 and assuming that the suggested move from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e184" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e185" xlink:type="simple"/></inline-formula> was rejected. Recall also that the sequence of auxiliary variables related to the first proposal was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e186" xlink:type="simple"/></inline-formula>. Thus, in the first proposal, SNPs 3 and 4 were proposed to be added to the model. The big picture here is that starting from the rejected first proposal we make a second proposal. To calculate the Metropolis-Hastings acceptance probability of this <italic>two-step forward proposal</italic>, a corresponding <italic>two-step backward proposal</italic> must be specified. In our approach, the backward route is fixed deterministically such that the second step of the forward proposal is always accepted.</p>
+          <p>The delayed rejection part of the algorithm proceeds by sampling the second (forward) proposal from the set of all models which can be reached from the initial state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e187" xlink:type="simple"/></inline-formula> by applying any subset of operations in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e188" xlink:type="simple"/></inline-formula>. Here, we will denote this set of models by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e189" xlink:type="simple"/></inline-formula>. Consequently, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e190" xlink:type="simple"/></inline-formula> <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e191" xlink:type="simple"/></inline-formula>. The models are sampled from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e192" xlink:type="simple"/></inline-formula> using a distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e193" xlink:type="simple"/></inline-formula> which is selected such that it cancels the terms <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e194" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e195" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e196" xlink:type="simple"/></inline-formula> in the numerator of the acceptance probability given in <xref ref-type="disp-formula" rid="pone.0049445.e177">Equation 8</xref>. Suppose the model proposed is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e197" xlink:type="simple"/></inline-formula>. Note that no auxiliary variables are related to this second proposal, as the model itself is sampled directly.</p>
+          <p>Now, the two-step backward proposal is determined as follows: first, auxiliary variables related to the <italic>first step in the backward proposal</italic> are deterministically set to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e198" xlink:type="simple"/></inline-formula> corresponding to proposing the model <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e199" xlink:type="simple"/></inline-formula>. This follows, because it is required that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e200" xlink:type="simple"/></inline-formula>, i.e. that the second proposals in both forward and backward moves are sampled from the same set of models. To calculate the acceptance probability of this first step in the backward proposal, the reversed sequence <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e201" xlink:type="simple"/></inline-formula> of auxiliary variables is required similarly to the first step in the forward proposal (see Example 1), yielding <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e202" xlink:type="simple"/></inline-formula>.</p>
+          <p>After rejection of the first step in the backward proposal, the second step must change the state back to the original model <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e203" xlink:type="simple"/></inline-formula>. With these specifications at hand, the acceptance probability of the second step in the forward proposal can be evaluated using <xref ref-type="disp-formula" rid="pone.0049445.e177">Equation 8</xref>, and is found to be equal to unity. In summary, the only variables that were sampled during the whole MCMC step are: 1) the sequence of auxiliary variables sampled in the first step of the forward proposal, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e204" xlink:type="simple"/></inline-formula>, and 2) the model sampled in the second step of the forward proposal, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e205" xlink:type="simple"/></inline-formula>. All other variables required when calculating the acceptance probability follow deterministically from these two along with the initial state <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e206" xlink:type="simple"/></inline-formula>.</p>
+        </sec>
+        <sec id="s2c6">
+          <title>Additional moves for SNP data</title>
+          <p>Two additional moves are introduced specifically for genetic data, where the variables can be ordered linearly (corresponding to their locations in the genome) and neighboring variables may have block-like correlation structure (linkage disequilibrium), which may complicate the mixing of the Markov chain.</p>
+          <p>The first move type proceeds by selecting one variable in the model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e207" xlink:type="simple"/></inline-formula>) randomly to be swapped with a variable which is located in its neighborhood (defined by a cutoff in the distance of the linear indices) and is not in the model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e208" xlink:type="simple"/></inline-formula>). A similar move is also considered by Guan and Stephens <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>. The second move type begins identically by randomly selecting one variable in the model (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e209" xlink:type="simple"/></inline-formula>). Then, an update to a randomly selected neighboring variable (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e210" xlink:type="simple"/></inline-formula>) is proposed. For both of these move types, multiple updates of the same type may be incorporated into a single proposal. Further, delayed rejection is allowed for the latter move type (i.e., we allow reverting some of the proposed updates in a multistep proposal similarly to the delayed rejection described above, but with simpler acceptance probability as the updates are proposed from a uniform distribution).</p>
+          <p>In our implementation each of the additional move types is proposed with probability 0.15 and the main <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e211" xlink:type="simple"/></inline-formula> update with probability 0.7. The move size in the additional move types is determined using the truncated geometric distribution with a fixed parameter (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e212" xlink:type="simple"/></inline-formula> for the first additional move type, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e213" xlink:type="simple"/></inline-formula> for the second).</p>
+        </sec>
+      </sec>
+      <sec id="s2d">
+        <title>Comparison Algorithms</title>
+        <p>The algorithms introduced above are compared to random scan versions of Kohn-Smith-Chan (KSC) <xref ref-type="bibr" rid="pone.0049445-Kohn1">[18]</xref> and Nott-Kohn (NK) <xref ref-type="bibr" rid="pone.0049445-Nott1">[9]</xref> sampling algorithms. A proposal of both algorithms first selects <italic>k</italic> variables in random for consideration (here <italic>k</italic> is fixed to 1, 5 or 10) and propose a new model <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e214" xlink:type="simple"/></inline-formula> from the set of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e215" xlink:type="simple"/></inline-formula> models available by flipping the inclusions of the selected variables. The KSC algorithm makes this proposal with the proposal probabilities proportional to the prior probabilities of the models. The NK algorithm uses an adaptive distribution for the proposal. Here, we restrict the adaptation to be finite and use the same kind of tuning as in the proposed adaptive algorithms. The proposal distribution is taken as a independent combination of the adapted marginal inclusion probabilities: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e216" xlink:type="simple"/></inline-formula> with <italic>K</italic> representing the set of the selected <italic>k</italic> variables. See <xref ref-type="supplementary-material" rid="pone.0049445.s012">Text S1</xref> for more details and for a note on the similarity of the NK and the proposed algorithm.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Ethics Statement</title>
+        <p>Human data was not collected primarily for this article and was analyzed here anonymously. Primary collection has followed appropriate ethics guidelines.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Data</title>
+        <p>A dataset of 3895 individuals with quality controlled, measured or imputed genotypes at 1,051,811 single nucleotide polymorphisms (SNPs) is used to test the sampling algorithms. High- (HDL-C) and low-density lipoprotein cholesterol (LDL-C, for 3822 individuals) phenotype data were available for analysis. Moreover, 20 simulated datasets were generated for four simulation configurations using the genotypes of the first chromosome (85,331 SNPs) for 2002 of the individuals and a linear model for the phenotype. The simulated data had either 30 or 100 SNPs randomly selected as causal with additive genetic effects, whose sizes were generated from a double exponential distribution. Normally distributed noise was added to the phenotypes to set the proportion of variance explained (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e217" xlink:type="simple"/></inline-formula>) by the causal SNPs to 0.2 or 0.5. For more details on the dataset and the simulation procedure, see the previous analysis in Peltola et al. <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref> and references <xref ref-type="bibr" rid="pone.0049445-Perttil1">[19]</xref>, <xref ref-type="bibr" rid="pone.0049445-Vartiainen1">[20]</xref>.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Simulated Data</title>
+        <p>The efficiencies of the samplers were tested on the simulated datasets. The samplers are abbreviated as SS for single-step sampler, MS for multistep sampler, MS-DR for multistep sampler with delayed rejection, NK for Nott-Kohn and KSC for Kohn-Smith-Chan. Maximum move size in the multistep samplers is 20 and delayed rejection is restricted to moves with size of 10 or less. The (finite) adaptivity of SS, MS and MS-DR samplers refers to the tuning of the proposal probabilities of which variables to add or remove. Non-adaptive samplers employ discrete uniform distribution for this. All MS and MS-DR samplers use move size proposal adaptation. NK and KSC samplers were run with block sizes 1, 5 and 10. Three independent MCMC chains were run for 20,000,000 (KSC and NK) or 2,000,000 (others) iterations of the third step in the Computation and thinned by taking every 100th (KSC and NK) or every 10th (others) sample. The KSC and NK algorithms were run for ten times longer as they have cheaper iterations and showed convergence problems with shorter runs. First halves of all chains are discarded as burnin. Prior parameters are given in <xref ref-type="supplementary-material" rid="pone.0049445.s013">Text S2</xref>.</p>
+        <p>The effective sample size (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e218" xlink:type="simple"/></inline-formula>) for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e219" xlink:type="simple"/></inline-formula> samples forms the basis of the comparisons. It estimates the number of independent samples as a ratio of the number of collected samples and the autocorrelation time (computed using <xref ref-type="disp-formula" rid="pone.0049445.e112">Equation 4</xref> and Geyer’s initial monotone sequence estimator <xref ref-type="bibr" rid="pone.0049445-Geyer1">[21]</xref>). We compute the geometric mean of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e220" xlink:type="simple"/></inline-formula> divided by the sampling time <italic>t</italic> (spent in step 3 of the computation) over the three chains and report relative efficiencies <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e221" xlink:type="simple"/></inline-formula> where <italic>r</italic> refers to a reference.</p>
+        <p>Convergence was checked visually and by computing potential scale reduction factors <xref ref-type="bibr" rid="pone.0049445-Gelman2">[22]</xref> over all chains for model size, proportion of variance explained and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e222" xlink:type="simple"/></inline-formula> traces. These and inspection of the posterior inclusion probabilities show severe convergence and mixing problems for KSC01 and NK01 algorithms and indicate that longer runs would have been preferable on some of the dataset for other algorithms also (<xref ref-type="supplementary-material" rid="pone.0049445.s007">Table S1</xref> and Figures S1, S2, S3, S4).</p>
+        <p><xref ref-type="fig" rid="pone-0049445-g003">Figure 3</xref> presents boxplots of the relative efficiencies, where each box represents the variation over the 20 datasets normalized to the adaptive single step sampler. The adaptive samplers have greater efficiency in all configurations of the simulations, while KSC shows the poorest performance in these datasets. Multistep moves and delayed rejection increase the efficiency especially in the simulations with 30 causal SNPs, but only in combination with the proposal distribution adaptation. The ESSs are also increased in the non-adaptive samplers with multistep moves, but less so relative to the increase in the sampling time (<xref ref-type="supplementary-material" rid="pone.0049445.s008">Table S2</xref>). KSC and NK samplers have difficulties in sampling models of different sizes (<xref ref-type="supplementary-material" rid="pone.0049445.s005">Figure S5</xref> and <xref ref-type="supplementary-material" rid="pone.0049445.s008">Table S2</xref>).</p>
+        <fig id="pone-0049445-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Relative efficiencies of the samplers in the simulated datasets.</title>
+            <p>The boxplots show ESS/time values normalized to the third sampler, where the ESSs are computed for the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e223" xlink:type="simple"/></inline-formula> samples. Red dots show the geometric mean over the 20 datasets. Some outliers were truncated to fit into the figure and are shown with crosses. 1 = adaptive MS-DR, 2 = adaptive MS, 3 = adaptive SS, 4 = non-adaptive MS-DR, 5 = non-adaptive MS, 6 = non-adaptive SS, 7 = NK10, 8 = NK05, 9 = NK01, 10 = KSC10, 11 = KSC05, 12 = KSC01.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g003" position="float" xlink:type="simple"/>
+        </fig>
+        <p>The move size proposal distribution adaptation was validated by running the adaptive MS and MS-DR samplers with fixed move size proposal distributions for six parameter configurations (giving mean move sizes from 2 to 7) for the 20 simulated datasets with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e224" xlink:type="simple"/></inline-formula> and 30 causal SNPs. The results (<xref ref-type="supplementary-material" rid="pone.0049445.s009">Table S3</xref>) indicate that the move size adaptation maximizes the realized jump distance and minimizes the first autocorrelation as intended. However, it seems that the effect of other autocorrelations on ESS is notable and, for this set of parameters and simulations, the larger the proposed move size, the larger the ESS. The differences in relative efficiencies are small (within a factor of 1.2) for the six parameter configurations.</p>
+        <p>We further note that the multistep moves and delayed rejection do not necessarily increase the efficiency of moving between different model sizes (<xref ref-type="supplementary-material" rid="pone.0049445.s005">Figure S5</xref> and <xref ref-type="supplementary-material" rid="pone.0049445.s008">Table S2</xref> show the relative efficiencies when the autocorrelation time is computed for model size samples). A possible explanation is that larger moves reduce the acceptance rate and a notable proportion of the moves jump between models of same size (e.g., 18% of the moves that change the model in the adaptive MS-DR sampler in the simulations with 30 causal SNPs and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e225" xlink:type="simple"/></inline-formula> are such, while obviously none are such for the SS sampler; this comparison excludes the additional SNP switch move). Move size and rate statistics are presented in <xref ref-type="supplementary-material" rid="pone.0049445.s010">Table S4</xref>.</p>
+      </sec>
+      <sec id="s3c">
+        <title>HDL-C and LDL-C Data</title>
+        <p>Only the adaptive samplers proposed here were run for the HDL-C and LDL-C data as the others would be expected to perform worse with the large increase in the number of variables relative to the simulations. Twelve independent chains of length 8,000,000 iterations were run with each sampler and dataset and thinned by taking every tenth sample. Effective sample sizes and sampling times were computed as in the simulations. Here, results are presented as ESS/time rather than as relative efficiencies as there is no additional variation due to multiple datasets (HDL-C and LDL-C results are shown separately). Prior parameters are given in <xref ref-type="supplementary-material" rid="pone.0049445.s013">Text S2</xref>.</p>
+        <p>Convergence analysis did not indicate problems with the HDL-C dataset. The inferences regarding posterior inclusion probabilities and the proportion of variance explained did not change from the previous analysis <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>, whereas the posterior distribution of model size is here wider reflecting the change in the effect size prior (results not shown). However, the different sampling algorithms did not converge to the same posterior distribution for the LDL-C dataset. Thus, comparisons for sampling efficiency between the samplers are not valid for the LDL-C data. On the other hand, analysis of the convergence problem is interesting.</p>
+        <p>The source of the problem is a pair of correlated (Pearson’s correlation 0.91) SNPs in the <italic>PVRL2</italic> gene, which have weak effects individually but a strong effect together (and preferably in combination with a third near-by SNP, which has a strong individual association). <xref ref-type="fig" rid="pone-0049445-g004">Figure 4</xref> shows the MCMC traces for these three SNPs in all of the sampled chains. The adaptive SS sampler does not find the pair at all in these 12 chains. Most chains of the adaptive MS sampler include the pair at least at some point, but seem to mix poorly, while mixing is clearly better when delayed rejection is used. All of the samplers picked up the pair, when the dataset was reduced to contain only the SNPs in chromosome 19 (results not shown). The posterior inclusion probability for the pair is 0.79 with the MS-DR sampler. For independent evidence, a p-value of less than 0.000001 for the pair was found by computing Bayes factors using BIMBAM <xref ref-type="bibr" rid="pone.0049445-Guan2">[23]</xref> and a million permutations of the phenotype (after adjusting for the third SNP using linear regression). Similarly computed single-SNP p-values were 0.09 and 0.15 for the two SNPs. The <italic>PVRL2</italic> gene is located near a region with known associations to LDL-C (e.g., the <italic>APOE</italic> gene) <xref ref-type="bibr" rid="pone.0049445-Teslovich1">[24]</xref>.</p>
+        <fig id="pone-0049445-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>MCMC traces of the three SNPs related to convergence problems in LDL-C data.</title>
+            <p>Each subplot contains traces (including burn-in period) from 12 chains, where each trace is composed of three lines (red for snp1, blue for snp2 and black for snp3), which may be in upper state (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e226" xlink:type="simple"/></inline-formula>) or lower state (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e227" xlink:type="simple"/></inline-formula>). <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e228" xlink:type="simple"/></inline-formula> almost always, whereas <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e229" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e230" xlink:type="simple"/></inline-formula> are mostly synchronized: almost always 0 for SS, often 1 for MS-DR, but changing states often and mixed for MS (some chains are like SS, some more like MS-DR but with poorer mixing).</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g004" position="float" xlink:type="simple"/>
+        </fig>
+        <p>The SNP pair was missed in our previous analysis <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>. This may in part have also been due to a more restricting prior for the effect sizes there (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e231" xlink:type="simple"/></inline-formula> for a single variance parameter). The pair was first seen in an analysis with the noncentral-F prior for effect size variance, but with a shared <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e232" xlink:type="simple"/></inline-formula> parameter. However, the prior seemed still inadequate as there was clear modal change in the shared <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e233" xlink:type="simple"/></inline-formula> parameter to larger values on including the SNP pair in the model, which also presented as a change in the model size distribution (<xref ref-type="fig" rid="pone-0049445-g005">Figure 5</xref>). These issues spurred the change to the individual <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e234" xlink:type="simple"/></inline-formula> parameters and to include the second additional <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e235" xlink:type="simple"/></inline-formula> update tailored for SNP data.</p>
+        <fig id="pone-0049445-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Demonstration of multimodality with shared </title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e236" xlink:type="simple"/></inline-formula><bold> parameter in the LDL-C data.</bold> The multimodality is related to the SNP pair, whose state change is shown (snp1 and snp2; <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e237" xlink:type="simple"/></inline-formula> for the whole period) together with the corresponding parts of the trace of model size samples for two MCMC chains with the different priors.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g005" position="float" xlink:type="simple"/>
+        </fig>
+        <p>The ESS/time values for comparing the algorithms on sampling efficiency are shown in <xref ref-type="fig" rid="pone-0049445-g006">Figure 6</xref> (and <xref ref-type="supplementary-material" rid="pone.0049445.s011">Table S5</xref>) for both HDL-C and LDL-C data (comparisons for the latter are invalid). Similarly to the results in simulations, the multistep moves and delayed rejection seem to increase the sampling efficiency in the HDL-C dataset. On comparing the efficiency with regard to model size samples, the trend is similar to <xref ref-type="fig" rid="pone-0049445-g006">Figure 6</xref>, but more modest (<xref ref-type="supplementary-material" rid="pone.0049445.s006">Figure S6</xref> and <xref ref-type="supplementary-material" rid="pone.0049445.s011">Table S5</xref>).</p>
+        <fig id="pone-0049445-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>ESS/time in the HDL-C and LDL-C datasets.</title>
+            <p>Boxes show the variation over the 12 independent MCMC chains for each sampler. ESSs are computed for the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e238" xlink:type="simple"/></inline-formula> samples. Red dots show geometric means. 1 = adaptive MS-DR, 2 = adaptive MS, 3 = adaptive SS. Note that the LDL-C samplers have not converged to same posterior distribution and thus the comparison is not valid.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.g006" position="float" xlink:type="simple"/>
+        </fig>
+        <p>Move size and rate statistics for the sampling algorithms are shown in <xref ref-type="table" rid="pone-0049445-t001">Table 1</xref>. The average proposed move sizes in the multistep samplers are between 6 and 7 with the DR sampler having slightly larger values. The realized jump distance is clearly larger for the DR sampler as is the move rate, which is close to the value of the single step sampler. We note that the cutoff value for making the second stage proposal in the DR sampler (here 10) may affect the behavior of the jump distance optimization.</p>
+        <table-wrap id="pone-0049445-t001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0049445.t001</object-id>
+          <label>Table 1</label>
+          <caption>
+            <title>Move size and rate statistics as averages over the MCMC chains for HDL-C and LDL-C datasets.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0049445-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0049445.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Dataset/Sampler</td>
+                  <td align="left" rowspan="1" colspan="1">RJD</td>
+                  <td align="left" rowspan="1" colspan="1">PJD</td>
+                  <td align="left" rowspan="1" colspan="1">RJD/PJD</td>
+                  <td align="left" rowspan="1" colspan="1">Move rate</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <italic>p</italic>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">HDL-C</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive MS-DR</td>
+                  <td align="left" rowspan="1" colspan="1">2.00</td>
+                  <td align="left" rowspan="1" colspan="1">6.75</td>
+                  <td align="left" rowspan="1" colspan="1">0.45</td>
+                  <td align="left" rowspan="1" colspan="1">0.67</td>
+                  <td align="left" rowspan="1" colspan="1">0.12</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive MS</td>
+                  <td align="left" rowspan="1" colspan="1">1.15</td>
+                  <td align="left" rowspan="1" colspan="1">6.25</td>
+                  <td align="left" rowspan="1" colspan="1">0.33</td>
+                  <td align="left" rowspan="1" colspan="1">0.33</td>
+                  <td align="left" rowspan="1" colspan="1">0.14</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive SS</td>
+                  <td align="left" rowspan="1" colspan="1">0.66</td>
+                  <td align="left" rowspan="1" colspan="1">1.00</td>
+                  <td align="left" rowspan="1" colspan="1">0.66</td>
+                  <td align="left" rowspan="1" colspan="1">0.66</td>
+                  <td align="left" rowspan="1" colspan="1">NA</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">LDL-C</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive MS-DR</td>
+                  <td align="left" rowspan="1" colspan="1">1.95</td>
+                  <td align="left" rowspan="1" colspan="1">6.57</td>
+                  <td align="left" rowspan="1" colspan="1">0.45</td>
+                  <td align="left" rowspan="1" colspan="1">0.68</td>
+                  <td align="left" rowspan="1" colspan="1">0.12</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive MS</td>
+                  <td align="left" rowspan="1" colspan="1">1.11</td>
+                  <td align="left" rowspan="1" colspan="1">6.36</td>
+                  <td align="left" rowspan="1" colspan="1">0.31</td>
+                  <td align="left" rowspan="1" colspan="1">0.31</td>
+                  <td align="left" rowspan="1" colspan="1">0.13</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">adaptive SS</td>
+                  <td align="left" rowspan="1" colspan="1">0.69</td>
+                  <td align="left" rowspan="1" colspan="1">1.00</td>
+                  <td align="left" rowspan="1" colspan="1">0.69</td>
+                  <td align="left" rowspan="1" colspan="1">0.69</td>
+                  <td align="left" rowspan="1" colspan="1">NA</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt101">
+              <label/>
+              <p>Values are arithmetic means.</p>
+            </fn>
+            <fn id="nt102">
+              <label/>
+              <p>RJD: Realized jump distance (mean number of changes to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e239" xlink:type="simple"/></inline-formula> sample chain per iteration). PJD: Proposed jump distance (mean proposed number of changes per iteration). Move rate: proportion of moves with jump distance<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e240" xlink:type="simple"/></inline-formula> (acceptance rate for non-DR samplers). <italic>p</italic>: parameter of the geometric distribution for move size proposals.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Several aspects related to the use of the Metropolis-Hastings algorithm (MH) in Bayesian variable selection in the context of genome-wide association studies were studied here. Specifically, the focus was on the (finite) adaptation of the proposal distributions for additions and removals of variables, multistep proposals (batching of additions and removals) with move size adaptation and using a delayed rejection step in the multistep proposal. A more flexible prior formulation for the effect sizes and additional MH moves tailored to genetic data were also introduced.</p>
+      <p>The effect of the adaptation of the proposal distributions was studied on simulated datasets with 85,331 SNPs. The results suggest that the adaptation is beneficial in regard to the sampling efficiency. This is not surprising as similar ideas have been used previously in sampling from high-dimensional model spaces for variable selection <xref ref-type="bibr" rid="pone.0049445-Guan1">[3]</xref>, <xref ref-type="bibr" rid="pone.0049445-Peltola1">[4]</xref>, <xref ref-type="bibr" rid="pone.0049445-Nott1">[9]</xref>, <xref ref-type="bibr" rid="pone.0049445-Clyde1">[10]</xref>. The results on simulated data and on the HDL-C dataset imply also that the multistep moves and delayed rejection (DR) are beneficial for the sampling efficiency. The DR step is similar to a block Gibbs update and it allows for oversized multistep moves, where the second stage proposal trims poor updates out. The acceptance rates for MH algorithms in large model spaces are often high and, in such cases, the DR step may also be seen to provide a short-cut relative to full Gibbs moves. The proposed algorithms were also compared to random scan versions of Nott-Kohn <xref ref-type="bibr" rid="pone.0049445-Nott1">[9]</xref> and Kohn-Smith-Chan <xref ref-type="bibr" rid="pone.0049445-Kohn1">[18]</xref> samplers. These seemed to have problems especially in moving along the model size distribution and showed worse performance than the proposed finitely adaptive algorithms in all configurations of the simulated data.</p>
+      <p>The expected jump distance optimization <xref ref-type="bibr" rid="pone.0049445-Pasarica1">[13]</xref>, used here for adapting the move size proposals, provides an alternative to relying on the knowledge of an optimal acceptance rate. However, it has two caveats: the optimization does not account for the increase in computational effort for larger move sizes (there is no such problem with a Gaussian proposal distribution) and, in our limited experiments, minimizing the first autocorrelation did not lead to a minimum of the autocorrelation time. The acceptance rates of the multistep moves (without DR) fell in 0.30–0.42 for all experiments in this work, which corresponds well with the empirical optimal range of 0.25–0.40 found by Lamnisos et al. <xref ref-type="bibr" rid="pone.0049445-Lamnisos2">[25]</xref> in the case of variable selection for probit regression.</p>
+      <p>Problems in the mixing of the samplers were found in the LDL-C data. This was identified being related to a pair of SNPs, which are required to be together in the model to have notable contribution. The interpretation of the SNP pair is unclear to us (e.g., haplotype tag or false positive), but it is plausible that such combinations could be found in other datasets also and that they are probably missed in single-SNP analyses. Multistep moves may help in finding such SNP pairs, but it is still improbable that one move would happen to propose the correct pair amongst all possible. We introduced a specific MH move to alleviate the problem of finding such local SNP combinations. Together with the delayed rejection, which allows for some misspecification of move size, this seemed to improve the mixing for the SNP pair markedly.</p>
+      <p>Moreover, the prior distribution of the effect sizes was changed to have more probability mass near the axes for the regression coefficients (through having SNP specific <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e241" xlink:type="simple"/></inline-formula> parameters), which may be more appropriate in cases where there are large differences in the effect sizes of associated variables. This seems desirable in genome-wide association analysis. Having a shared <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e242" xlink:type="simple"/></inline-formula> parameter led to multimodal posterior distributions for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0049445.e243" xlink:type="simple"/></inline-formula> and model size in the LDL-C data. Such behavior was not observed with the more flexible prior. However, the issue highlights the potential sensitivity of the model size posterior to the prior specification, which has been long acknowledged in the literature on Bayesian varying dimensional models (e.g., <xref ref-type="bibr" rid="pone.0049445-Richardson1">[26]</xref>).</p>
+      <p>We acknowledge that comparisons for sampling efficiency may be sensitive to the implementation, sampling parameters and the computer environment, where the experiments are run. To this end, all experiments here were run on a cluster computer, where the nodes have almost identical configurations (most importantly, the same CPU model and software libraries for linear algebra; for HDL-C, and similarly for LDL-C, a single node was used to run all experiments) and the same sampling parameters were used for all algorithms (where applicable). Moreover, the third step in the Gibbs scheme, the variable inclusion update, was timed separately and was used to compute the efficiencies. Thus, the time spent in the other steps, which may account for a significant portion of the total time (especially the Rao-Blackwellization), was excluded. All of the algorithms were implemented by the first author and most of the source code is shared between them. A set of unit tests (including checks for likelihood computations and sampling on small test data, among others) was used to increase confidence in the correctness of the implementation and is available with the source code.</p>
+      <p>The results may also be expected to vary with the specifics of the data (e.g., scale, number of significant associations, effect size distribution and correlation structure) as seen to some extent between the different simulation configurations. Our experiments were specifically in the context of genome-wide association analysis, but many of the ideas are applicable to other types of high-dimensional data. However, the sampling algorithms used here may need to be combined with other means of tackling potential multimodality for general use.</p>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0049445.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s001" position="float" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p>
+            <bold>Model size posterior distributions in the simulated data (three estimated densities per method).</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s002" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s002" position="float" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p>
+            <bold>Model size posterior distributions in the simulated data (three estimated densities per method).</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s003" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s003" position="float" xlink:type="simple">
+        <label>Figure S3</label>
+        <caption>
+          <p>
+            <bold>Model size posterior distributions in the simulated data (three estimated densities per method).</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s004" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s004" position="float" xlink:type="simple">
+        <label>Figure S4</label>
+        <caption>
+          <p>
+            <bold>Model size posterior distributions in the simulated data (three estimated densities per method).</bold>
+          </p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s005" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s005" position="float" xlink:type="simple">
+        <label>Figure S5</label>
+        <caption>
+          <p><bold>Boxplot of the relative efficiencies (ESS/time normalized to third sampler) of the samplers in the simulation datasets computed for the model size samples.</bold> Red dots show the geometric mean over the 20 datasets. 1 = adaptive MS-DR, 2 = adaptive MS, 3 = adaptive SS, 4 = non-adaptive MS-DR, 5 = non-adaptive MS, 6 = non-adaptive SS, 7 = NK10, 8 = NK05, 9 = NK01, 10 = KSC10, 11 = KSC05, 12 = KSC01.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s006" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0049445.s006" position="float" xlink:type="simple">
+        <label>Figure S6</label>
+        <caption>
+          <p><bold>ESS/time boxplot, where ESS is computed based on the autocorrelation of model size samples for the HDL-C and LDL-C datasets.</bold> 1 = adaptive MS-DR, 2 = adaptive MS, 3 = adaptive SS.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s007" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s007" position="float" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p>
+            <bold>Posterior inclusion probability consistency for the simulated datasets.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s008" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s008" position="float" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p>
+            <bold>Sampling time, ESS, ESS/time and relative efficiency for the simulated datasets.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s009" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s009" position="float" xlink:type="simple">
+        <label>Table S3</label>
+        <caption>
+          <p>
+            <bold>Efficiency and move size statistics for fixed move size proposal distribution sampling experiments.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s010" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s010" position="float" xlink:type="simple">
+        <label>Table S4</label>
+        <caption>
+          <p>
+            <bold>Move size and rate statistics as averages over the 20 simulation datasets.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s011" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s011" position="float" xlink:type="simple">
+        <label>Table S5</label>
+        <caption>
+          <p>
+            <bold>Sampling time, ESS, ESS/time and relative efficiency for the LDL-C and HDL-C datasets.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s012" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s012" position="float" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <p>
+            <bold>Supplementary methods.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0049445.s013" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0049445.s013" position="float" xlink:type="simple">
+        <label>Text S2</label>
+        <caption>
+          <p>
+            <bold>Prior parameters for the simulation, HDL-C and LDL-C models.</bold>
+          </p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank Antti Jula, Markus Perola and Veikko Salomaa for access to the HDL-C and LDL-C datasets. We would also like to thank the anonymous reviewers for their contribution to improving the manuscript.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0049445-Hindorff1">
+        <label>1</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Hindorff LA, MacArthur J, Wise A, Junkins HA, Hall P, <etal>et al</etal>.. (2012) A catalog of published genome-wide association studies. Available: <ext-link ext-link-type="uri" xlink:href="http://www.genome.gov/gwastudies" xlink:type="simple">www.genome.gov/gwastudies</ext-link>. Accessed 2012 Mar 28.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Hoggart1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoggart</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Whittaker</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>De Iorio</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Balding</surname><given-names>DJ</given-names></name> (<year>2008</year>) <article-title>Simultaneous analysis of all SNPs in genome-wide and re-sequencing association studies</article-title>. <source>PLoS Genet</source> <volume>4</volume>: <fpage>e1000130</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Guan1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guan</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>M</given-names></name> (<year>2011</year>) <article-title>Bayesian variable selection regression for genome-wide association studies, and other large-scale problems</article-title>. <source>Ann Appl Stat</source> <volume>5</volume>: <fpage>1780</fpage>–<lpage>1815</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Peltola1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peltola</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Marttinen</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Jula</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Salomaa</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Perola</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Bayesian variable selection in searching for additive and dominant effects in genome-wide data</article-title>. <source>PLoS ONE</source> <volume>7</volume>: <fpage>e29115</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Metropolis1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Metropolis</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname><given-names>AW</given-names></name>, <name name-style="western"><surname>Rosenbluth</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Teller</surname><given-names>AH</given-names></name>, <name name-style="western"><surname>Teller</surname><given-names>E</given-names></name> (<year>1953</year>) <article-title>Equation of state calculations by fast computing machines</article-title>. <source>J Chem Phys</source> <volume>21</volume>: <fpage>1087</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Hastings1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hastings</surname><given-names>WK</given-names></name> (<year>1970</year>) <article-title>Monte Carlo sampling methods using Markov chains and their applications</article-title>. <source>Biometrika</source> <volume>57</volume>: <fpage>97</fpage>–<lpage>109</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Mira1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mira</surname><given-names>A</given-names></name> (<year>2001</year>) <article-title>On Metropolis-Hastings algorithms with delayed rejection</article-title>. <source>Metron</source> <volume>59</volume>: <fpage>231</fpage>–<lpage>241</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Green1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Green</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Mira</surname><given-names>A</given-names></name> (<year>2001</year>) <article-title>Delayed rejection in reversible jump Metropolis-Hastings</article-title>. <source>Biometrika</source> <volume>88</volume>: <fpage>1035</fpage>–<lpage>1053</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Nott1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nott</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Kohn</surname><given-names>R</given-names></name> (<year>2005</year>) <article-title>Adaptive sampling for bayesian variable selection</article-title>. <source>Biometrika</source> <volume>92</volume>: <fpage>747</fpage>–<lpage>763</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Clyde1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clyde</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Ghosh</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Littman</surname><given-names>ML</given-names></name> (<year>2011</year>) <article-title>Bayesian adaptive sampling for variable selection and model averaging</article-title>. <source>J Comput Graph Stat</source> <volume>20</volume>: <fpage>80</fpage>–<lpage>101</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Storvik1">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Storvik</surname><given-names>G</given-names></name> (<year>2011</year>) <article-title>On the exibility of Metropolis-Hastings acceptance probabilities in auxiliary variable proposal generation</article-title>. <source>Scand J Stat</source> <volume>38</volume>: <fpage>342</fpage>–<lpage>358</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Lamnisos1">
+        <label>12</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Lamnisos D, Griffin JE, Steel MF (2011) Adaptive Monte Carlo for Bayesian variable selection in regression models. Technical report, CRiSM Working Paper 09–41, revised version.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Pasarica1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pasarica</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gelman</surname><given-names>A</given-names></name> (<year>2010</year>) <article-title>Adaptively scaling the Metropolis algorithm using expected squared jumped distance</article-title>. <source>Stat Sinica</source> <volume>20</volume>: <fpage>343</fpage>–<lpage>364</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Bottolo1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bottolo</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Richardson</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Evolutionary stochastic search for Bayesian model exploration</article-title>. <source>Bayesian Anal</source> <volume>5</volume>: <fpage>583</fpage>–<lpage>618</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Wilson1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wilson</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Iversen</surname><given-names>ES</given-names></name>, <name name-style="western"><surname>Clyde</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Schmidler</surname><given-names>SC</given-names></name>, <name name-style="western"><surname>Schildkraut</surname><given-names>JM</given-names></name> (<year>2010</year>) <article-title>Bayesian model search and multilevel inference for SNP association studies</article-title>. <source>Ann Appl Stat</source> <volume>4</volume>: <fpage>1342</fpage>–<lpage>1364</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Gelman1">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gelman</surname><given-names>A</given-names></name> (<year>2006</year>) <article-title>Prior distributions for variance parameters in hierarchical models (comment on article by Browne and Draper)</article-title>. <source>Bayesian Anal</source> <volume>1</volume>: <fpage>515</fpage>–<lpage>534</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Peskun1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peskun</surname><given-names>P</given-names></name> (<year>1973</year>) <article-title>Optimum Monte-Carlo sampling using Markov chains</article-title>. <source>Biometrika</source> <volume>60</volume>: <fpage>607</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Kohn1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kohn</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Chan</surname><given-names>D</given-names></name> (<year>2001</year>) <article-title>Nonparametric regression using linear combinations of basis functions</article-title>. <source>Stat Comput</source> <volume>11</volume>: <fpage>313</fpage>–<lpage>322</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Perttil1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Perttilä</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Merikanto</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Naukkarinen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Surakka</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>NW</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>OSBPL10, a novel candidate gene for high triglyceride trait in dyslipidemic Finnish subjects, regulates cellular lipid metabolism</article-title>. <source>J Mol Med</source> <volume>87</volume>: <fpage>825</fpage>–<lpage>835</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Vartiainen1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vartiainen</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Laatikainen</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Peltonen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Juolevi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Männistö</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Thirty-five-year trends in cardiovascular risk factors in Finland</article-title>. <source>Int J Epidemiol</source> <volume>39</volume>: <fpage>504</fpage>–<lpage>518</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Geyer1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Geyer</surname><given-names>CJ</given-names></name> (<year>1992</year>) <article-title>Practical Markov chain Monte Carlo</article-title>. <source>Stat Sci</source> <volume>7</volume>: <fpage>473</fpage>–<lpage>511</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Gelman2">
+        <label>22</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Gelman A, Carlin JB, Stern HS, Rubin DB (2004) Bayesian data analysis. Chapman &amp; Hall/CRC, pp294–299.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Guan2">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guan</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Practical issues in imputation-based association mapping</article-title>. <source>PLoS Genet</source> <volume>4</volume>: <fpage>e1000279</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Teslovich1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Teslovich</surname><given-names>TM</given-names></name>, <name name-style="western"><surname>Musunuru</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>Edmondson</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Stylianou</surname><given-names>IM</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Biological, clinical and population relevance of 95 loci for blood lipids</article-title>. <source>Nature</source> <volume>466</volume>: <fpage>707</fpage>–<lpage>713</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Lamnisos2">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lamnisos</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Griffin</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Steel</surname><given-names>MF</given-names></name> (<year>2009</year>) <article-title>Transdimensional sampling algorithms for Bayesian variable selection in classification problems with many more variables than observations</article-title>. <source>J Comput Graph Stat</source> <volume>18</volume>: <fpage>592</fpage>–<lpage>612</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0049445-Richardson1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Richardson</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Green</surname><given-names>PJ</given-names></name> (<year>1997</year>) <article-title>On Bayesian analysis of mixtures with an unknown number of components</article-title>. <source>J Roy Stat Soc B</source> <volume>59</volume>: <fpage>731</fpage>–<lpage>792</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
