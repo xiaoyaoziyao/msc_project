@@ -7,7 +7,7 @@ Created on Sat Jul  6 14:31:40 2019
 from functools import partial
 import multiprocessing
 
-from urllib.request import urlopen,Request
+from urllib.request import urlopen, Request
 from urllib.error import URLError
 import pymongo
 import os
@@ -40,10 +40,11 @@ def PLOS_get(path,collection,i):
                 f.write(str(j)+"    "+str(link)+"    "+str(e.code)+'\n')
             pass
 
+
 '''
-According to "error.log", revise the DOI manually and  get the rest of xml files of citations from PLOS ONE
-'''      
-def PLOS_revise(t_links,path,collection):
+According to "error.log", modify the DOI manually and  get the rest of xml files of citations from PLOS ONE
+'''
+def PLOS_modify(t_links,path,collection):
     f_links = []
     f_nos = []
     with open(path + "//error.log",'r') as f:
@@ -70,27 +71,36 @@ def main_function(i):
     path = "Citation_paper\\"+str(i)
     PLOS_get(path,collection,i)
 
-def main_revise(i,t_links):
+def main_modify(i,t_links):
     client = pymongo.MongoClient('localhost:27017',connect = True)
     db = client['msc_project']
     collection = db['citations']
-    
+
     path = "Citation_paper\\"+str(i)
-    PLOS_revise(t_links,path,collection)
+    PLOS_modify(t_links,path,collection)
 
-# t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
-# t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
-# t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
-# t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
-# t_links5 = ["10.1371/journal.pone.0187044"]
-# t_links6 = ["10.1371/journal.pone.0187044"]
-# t_links7 = ["10.1371/journal.pone.0177179"]
-# t_links8 = ["10.1371/journal.pone.0204714","10.1371/journal.pone.0181873","10.1371/journal.pcbi.0030141","10.1371/journal.pcbi.0020165"]
-# t_links9 = ["10.1371/journal.pone.0176993","10.1371/journal.pone.0191812"]
-# t_links10 = ["10.1371/journal.pcbi.0020165","10.1371/journal.pone.0208196"]
-# t_links11 = ["10.1371/journal.pone.0186168", "10.1371/journal.pone.0197103"]
+for i in range(6,7):
+    main_function(i)
 
-# main_function(8)
-# main_function(9)
-# main_function(10)
-# main_function(11)
+t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
+t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
+t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
+t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
+t_links5 = ["10.1371/journal.pone.0187044"]
+t_links6 = ["10.1371/journal.pone.0187044"]
+t_links7 = ["10.1371/journal.pone.0177179"]
+t_links8 = ["10.1371/journal.pone.0204714","10.1371/journal.pone.0181873","10.1371/journal.pcbi.0030141","10.1371/journal.pcbi.0020165"]
+t_links9 = ["10.1371/journal.pone.0176993","10.1371/journal.pone.0191812"]
+t_links10 = ["10.1371/journal.pcbi.0020165","10.1371/journal.pone.0208196"]
+t_links11 = ["10.1371/journal.pone.0186168", "10.1371/journal.pone.0197103"]
+# main_modify(1,t_links1)
+# main_modify(2,t_links2)
+# main_modify(3,t_links3)
+# main_modify(4,t_links4)
+# main_modify(5,t_links5)
+main_modify(6,t_links6)
+# main_modify(7,t_links7)
+# main_modify(8,t_links8)
+# main_modify(9,t_links9)
+# main_modify(10,t_links10)
+# main_modify(11,t_links11)

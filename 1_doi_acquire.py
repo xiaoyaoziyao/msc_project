@@ -61,5 +61,8 @@ def main_function(i):
         else:
             DOI_find_highpaper(collection,file,num)
     client.close()
-    
-main_function(11)
+
+for i in range(7,12):
+    main_function(i)
+
+# main_function(7)

@@ -17,53 +17,53 @@ import numpy as np
 
 
 def data_get(condition):
-    client = pymongo.MongoClient('localhost:27017',connect = True)
+    client = pymongo.MongoClient('localhost:27017', connect = True)
     db = client['msc_project']
     collection = db['citations']
     cursor = collection.find(condition)
     cited_years = []
     cited_nos = []
-    pub_years = []
+    citation_years = []
     locations = []
     for docu in cursor:
         cited_year = docu["cited_year"]
         cited_no = docu["cited_no"]
-        pub_year = docu["pub_year"]
-        location = docu["location_num"]
+        citation_year = docu["citation_year"]
+        location = docu["location_no"]
         for i in range(len(location)):
             cited_years.append(cited_year)
-            pub_years.append(pub_year)
+            citation_years.append(citation_year)
             cited_nos.append(cited_no)
         for loc in location:
             locations.append(loc)
-    return (pub_years,cited_years,locations)
+    return citation_years, cited_years, locations
 
 
-def data_remove(range_max):
-    remove_list = []
-    client = pymongo.MongoClient('localhost:27017', connect=True)
-    db = client['msc_project']
-    collection = db['citations']
-    for i in range(21, range_max+1):
-        condition = {'$and': [{"cited_no": i}, {"location_num": {'$exists': True}}]}
-        cursor = collection.find(condition)
-        locations = []
-        for docu in cursor:
-            location = docu["location_num"]
-            for loc in location:
-                locations.append(loc)
-        loc_list = all_list(locations)
-        for k,v in loc_list.items():
-            if v/len(locations) >= 0.7:
-                remove_list.append(i)
-    return remove_list
+# def data_remove(range_max):
+#     remove_list = []
+#     client = pymongo.MongoClient('localhost:27017', connect=True)
+#     db = client['msc_project']
+#     collection = db['citations']
+#     for i in range(21, range_max+1):
+#         condition = {'$and': [{"cited_no": i}, {"location_no": {'$exists': True}}]}
+#         cursor = collection.find(condition)
+#         locations = []
+#         for docu in cursor:
+#             location = docu["location_no"]
+#             for loc in location:
+#                 locations.append(loc)
+#         loc_list = all_list(locations)
+#         for k,v in loc_list.items():
+#             if v/len(locations) >= 0.7:
+#                 remove_list.append(i)
+#     return remove_list
 
 
 def model_svm(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    model = SVC(gamma= 1e-3,C= 1)
+    model = SVC(gamma= 1e-3, C= 1)
     model.fit(X_train, y_train)
-    score = cross_val_score(model,X,y,scoring='accuracy')
+    score = cross_val_score(model, X, y, scoring='accuracy')
     return (round(model.score(X_test,y_test),2),round(score.mean(),2))
     # train_sizes, train_loss, test_loss = learning_curve(model, X, y, cv=10, scoring='neg_mean_squared_error',train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
     # train_loss_mean = -np.mean(train_loss, axis=1)
@@ -80,7 +80,7 @@ def parameter_tune(range_max):
     client = pymongo.MongoClient('localhost:27017', connect=True)
     db = client['msc_project']
     collection = db['citations']
-    condition = {'$and': [{"cited_no": {"$gt": 20, "$lte": range_max}}, {"location_num": {'$exists': True}}]}
+    condition = {'$and': [{"cited_no": {"$gt": 20, "$lte": range_max}}, {"location_no": {"$exists": True}}]}
     year_diff, cited_years, locations = data_get(condition)
     X = list(zip(cited_years, year_diff))
     y = locations
@@ -113,16 +113,16 @@ def model_score_visualize(range_max):
     for a in range(0, 275, 25):
         highly_cited = []
         for i in range(21, range_max+1):
-            condition = {'$and': [{"cited_no": i}, {"location_num": {'$exists': True}}]}
+            condition = {'$and': [{"cited_no": i}, {"location_no": {"$exists": True}}]}
             if collection.find(condition).count() >= a:
                 highly_cited.append(i)
         print(a, ":", len(highly_cited))
         # print(highly_cited)
-        condition = {'$and': [{"cited_no": {"$in": highly_cited}}, {"location_num": {'$exists': True}}]}
-        pub_years, cited_years, locations = data_get(condition)
+        condition = {'$and': [{"cited_no": {"$in": highly_cited}}, {"location_no": {"$exists": True}}, {"location_no":{"$ne":None}}]}
+        citation_years, cited_years, locations = data_get(condition)
         for j in set(locations):
             citation_loc.setdefault(j, []).append(locations.count(j))
-        X = list(zip(cited_years, pub_years))
+        X = list(zip(cited_years, citation_years))
         y = locations
         model = model_svm(X, y)
         cited_num.append(len(highly_cited))
@@ -135,7 +135,7 @@ def model_score_visualize(range_max):
     # print(score)
     print(cv_score)
     # plt.plot(citation_num, score, label='Accuracy')
-    fig = plt.figure(figsize=(12, 12))
+    fig = plt.figure(figsize = (12, 12))
     ax1 = fig.add_subplot(221)
     ax1.plot(per_citation_num, cv_score, marker='o')
     for a, b in zip(per_citation_num, cv_score):
@@ -169,9 +169,9 @@ def model_score_visualize(range_max):
 
 
 def model_pred():
-    condition = {'$and': [{"location_num": {'$exists': True}}]}
-    pub_years, cited_years, locations = data_get(condition)
-    X = list(zip(cited_years, pub_years))
+    condition = {'$and': [{"location_no": {"$exists": True}}]}
+    citation_years, cited_years, locations = data_get(condition)
+    X = list(zip(cited_years, citation_years))
     y = locations
     model = joblib.load('model.pkl')
     y_pred = model.predict(X)

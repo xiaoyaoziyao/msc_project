@@ -18,7 +18,7 @@ year_diffs = []
 locations = []
 cited_years= []
 for docu in cursor:
-    year_diff = docu["pub_year"] - docu["cited_year"]
+    year_diff = docu["citation_year"] - docu["cited_year"]
     cited_no = docu["cited_no"]
     location = docu["stand_location"]
     cited_year = docu["cited_year"]
@@ -31,9 +31,10 @@ for docu in cursor:
 no_year = list(zip(cited_nos,cited_years))
 data = {'cited_no_year':no_year,'year_diff':year_diffs,'location':locations}
 df = pd.DataFrame(data=data)
-fig,axes=plt.subplots(1,1,figsize=(24,12),dpi=80)
-#sns.violinplot(x='cited_year',y='pub_year',hue='location',inner='stick',data=df)
+plt.figure(figsize=(24,12),dpi=80)
+# sns.violinplot(x='cited_no_year',y='year_diff',hue='location',inner='stick',data=df)
 sns.swarmplot(x='cited_no_year',y='year_diff',hue='location', data=df)
+plt.show()
 plt.savefig('result.png')
 
 client.close()  
