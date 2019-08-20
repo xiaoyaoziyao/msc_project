@@ -1,10 +1,6 @@
 """
 Acquire XML files according to DOIs(every 10 cited papers as a unit and stored in a file)
 """
-from functools import partial
-import multiprocessing
-
-
 from urllib.request import urlopen, Request
 from urllib.error import URLError
 import pymongo
@@ -104,23 +100,6 @@ def main_modify(i, t_links):
 # t_links9 = ["10.1371/journal.pone.0176993","10.1371/journal.pone.0191812"]
 # t_links10 = ["10.1371/journal.pcbi.0020165","10.1371/journal.pone.0208196"]
 # t_links11 = ["10.1371/journal.pone.0186168", "10.1371/journal.pone.0197103"]
-
-
-for i in range(6,7):
-    main_function(i)
-
-t_links1 = ["10.1371/journal.pone.0186943","10.1371/journal.pone.0176993","10.1371/journal.pone.0197599","10.1371/journal.pone.0186461"]
-t_links2 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444"]
-t_links3 = ["10.1371/journal.pone.0063671","10.1371/journal.pone.0180444","10.1371/journal.pone.0188859"]
-t_links4 = ["10.1371/journal.pone.0191207","10.1371/journal.pone.0162564"]
-t_links5 = ["10.1371/journal.pone.0187044"]
-t_links6 = ["10.1371/journal.pone.0187044"]
-t_links7 = ["10.1371/journal.pone.0177179"]
-t_links8 = ["10.1371/journal.pone.0204714","10.1371/journal.pone.0181873","10.1371/journal.pcbi.0030141","10.1371/journal.pcbi.0020165"]
-t_links9 = ["10.1371/journal.pone.0176993","10.1371/journal.pone.0191812"]
-t_links10 = ["10.1371/journal.pcbi.0020165","10.1371/journal.pone.0208196"]
-t_links11 = ["10.1371/journal.pone.0186168", "10.1371/journal.pone.0197103"]
-
 # main_modify(1,t_links1)
 # main_modify(2,t_links2)
 # main_modify(3,t_links3)

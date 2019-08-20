@@ -21,13 +21,6 @@ def xml_find_loc(collection, i):
     Extract the rid and location of citations from xml files
     """
     cursor = collection.find({'cited_no': {'$gt': (i-1)*10, '$lte': i*10}})
-
-
-def xml_find_loc(collection,i):
-    '''
-    Extract the rid and location of citations from xml files
-    '''
-    cursor = collection.find({'cited_no': {'$gt': (i-1)*10 ,'$lte': i*10}})
     for docu in cursor:
         titles = {}
         location = []
@@ -43,16 +36,17 @@ def xml_find_loc(collection,i):
                 if(elm.find('.//article-title') != None and elm.find('.//article-title').text != None):
                     f_title = elm.find(".//article-title").text.lower()
                     titles[f_title] = elm.attrib['id']
-            rid_real = edit_distance(target_title,titles)
-            collection.update_one({'cited_title':target_title,'content_path': path},{'$set':{'reference_id':rid_real}})
+            rid_real = edit_distance(target_title, titles)
+            collection.update_one({'cited_title': target_title, 'content_path': path},
+                                  {'$set': {'reference_id': rid_real}})
 #            print("update path:",path,",update rid:",rid_real)
             for sec in body:
                 for xref in sec.iterfind('.//xref'):
                     if(xref != None and xref.attrib["rid"] == rid_real):
                         location.append(sec[0].text)
             if(len(rid_real) != 0 and len(location) == 0):
-                location = xml_find_modify(path,rid_real)
-            collection.update_one({'content_path': path},{'$set':{'cited_location':location}})
+                location = xml_find_modify(path, rid_real)
+            collection.update_one({'content_path': path}, {'$set': {'cited_location': location}})
             # print("update path:", path, ",update rid:", rid_real, "cited_location", location)
         except Exception as e:
             pass
@@ -96,9 +90,9 @@ def edit_distance(target, titles):
 
 
 def preprocess(sentence):
-    '''
+    """
     Preprocess the standard titles and locations to help do the comparison
-    '''
+    """
     tokens = [i.lower() for i in nltk.word_tokenize(sentence)]
     filtered = [word for word in tokens if word not in stopwords.words('english')]
     s = nltk.stem.SnowballStemmer('english')
@@ -125,11 +119,11 @@ def compare(location):
     return(loc, loc_num)
                 
 
-def standard_loc(collection,i):
-    '''
+def standard_loc(collection, i):
+    """
     Standardize the citation locations to help do the visualization
-    '''
-    cursor = collection.find({'cited_no': {'$gt': (i-1)*10 ,'$lte': i*10},"cited_location" : {'$exists': True }})
+    """
+    cursor = collection.find({'cited_no': {'$gt': (i-1)*10, '$lte': i*10}, "cited_location": {'$exists': True}})
     for docu in cursor:
         try:
             stand_loc = []
@@ -185,6 +179,5 @@ for i in range(1, 12):
 main_modify()
 
 # Count the invalid data
-# cursor = collection.find({"cited_no": {"$gt": 20}, "$or":
-# [{"location_no": None}, {"location_no": {"$exists": False}}]})
+# cursor = collection.find({"cited_no": {"$gt": 20}, "$or": [{"location_no": None}, {"location_no": {"$exists": False}}]})
 # print(cursor.count())
