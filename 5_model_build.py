@@ -100,6 +100,7 @@ def model_svm(X, y):
     # learning curve
     # train_sizes, train_loss, test_loss = learning_curve(model, X, y, cv=10,
     # scoring='neg_mean_squared_error',train_sizes=[0.1, 0.25, 0.5, 0.75, 1])
+
     # train_loss_mean = -np.mean(train_loss, axis=1)
     # test_loss_mean = -np.mean(test_loss, axis=1)
     # plt.plot(train_sizes, train_loss_mean, 'o-', color="r",label="Training")
@@ -260,8 +261,11 @@ def pre_recall():
         citation_loc.setdefault(j, []).append(locations.count(j))
     X = list(zip(cited_years, citation_years))
     y = locations
-    ros = imb.RandomOverSampler(random_state=1)
-    X, y = ros.fit_sample(X, y)
+
+    Oversampling with imbalance
+    # ros = imb.RandomOverSampler(random_state=1)
+    # X, y = ros.fit_sample(X, y)
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
     model = SVC(gamma=0.001, class_weight='balanced', C=0.15, probability=True, decision_function_shape='ovr')
     model.fit(X_train, y_train)
@@ -273,7 +277,6 @@ def pre_recall():
     # 5 classes
     target_names = ["Others", "Introduction and Background",
                "Materials and Methods", "Results and Discussion", "Conclusion"]
-
     print(classification_report(y_test, y_pred, target_names=target_names))
 
 
