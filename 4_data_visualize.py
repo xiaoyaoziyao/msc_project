@@ -173,9 +173,12 @@ def visualize2():
     client.close()
 
 
+"""
+Main function
+"""
 visualize0()
-# visualize1(1950,1979)
-# visualize1(1980,1989)
-# visualize1(1990,2005)
-# visualize1(2006,2019)
-# visualize2()
+visualize1(1950,1979)
+visualize1(1980,1989)
+visualize1(1990,2005)
+visualize1(2006,2019)
+visualize2()

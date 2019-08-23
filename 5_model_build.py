@@ -284,5 +284,5 @@ Main function
 """
 # print(data_remove(110))
 # parameter_tune(110)
-# model_score_visualize(110)
-pre_recall()
+model_score_visualize(110)
+# pre_recall()

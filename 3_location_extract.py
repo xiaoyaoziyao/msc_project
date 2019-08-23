@@ -174,10 +174,12 @@ def main_modify():
         standard_loc(collection, i)
 
 
-# for i in range(1, 12):
-#     main_function(i)
-# main_modify()
-
+"""
+Main function
+"""
+for i in range(1, 12):
+    main_function(i)
+main_modify()
 # Count the invalid data
 client = pymongo.MongoClient('localhost:27017', connect=True)
 db = client['msc_project']

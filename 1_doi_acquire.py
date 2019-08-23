@@ -73,8 +73,8 @@ def main_function(i):
 '''
 Several Iterations for Main function
 '''
-# for i in range(1,12):
-#     main_function(i)
+for i in range(1,12):
+    main_function(i)
 
 
 
