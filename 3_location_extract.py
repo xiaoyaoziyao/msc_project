@@ -174,10 +174,14 @@ def main_modify():
         standard_loc(collection, i)
 
 
-for i in range(1, 12):
-    main_function(i)
-main_modify()
+# for i in range(1, 12):
+#     main_function(i)
+# main_modify()
 
 # Count the invalid data
-# cursor = collection.find({"cited_no": {"$gt": 20}, "$or": [{"location_no": None}, {"location_no": {"$exists": False}}]})
-# print(cursor.count())
+client = pymongo.MongoClient('localhost:27017', connect=True)
+db = client['msc_project']
+collection = db['citations']
+cursor = collection.find({"cited_no": {"$gt": 20}, "$or": [{"location_no": {"$exists": True}}, {"location_no": {"$ne": None}}]})
+print(cursor.count())
+

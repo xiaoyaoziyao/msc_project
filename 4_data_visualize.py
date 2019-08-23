@@ -36,18 +36,25 @@ def visualize0():
         for loc in location:
             locations.append(loc)
     no_year = list(zip(cited_nos, cited_years))
-    # print(set(no_year))
-    data = {'cited_no_year': no_year, 'citation_interval': year_diffs, 'location': locations}
+    sort_no_year = sorted(set(no_year))
+    data = {'cited_no_year': cited_nos, 'citation_interval': year_diffs, 'location': locations}
     df = pd.DataFrame(data=data)
     fig = plt.figure(figsize=(16, 12), dpi=80)
     fig.add_subplot(211)
     sns.violinplot(x='cited_no_year', y='citation_interval', hue='location', inner='stick', data=df,
                    hue_order=["Others", "Introduction and Background",
                               "Materials and Methods", "Results and Discussion", "Conclusion"])
+    plt.xticks(range(10), sort_no_year)
+    # plt.tick_params(labelsize=16)
+    # sns.boxplot(x='cited_no_year', y='citation_interval', hue='location', data=df,
+    #                hue_order=["Others", "Introduction and Background",
+    #                           "Materials and Methods", "Results and Discussion", "Conclusion"])
     fig.add_subplot(212)
     sns.swarmplot(x='cited_no_year', y='citation_interval', hue='location', data=df,
                   hue_order=["Others", "Introduction and Background",
                              "Materials and Methods", "Results and Discussion", "Conclusion"])
+    plt.xticks(range(10), sort_no_year)
+    # plt.tick_params(labelsize=16)
     plt.show()
     client.close()
 
@@ -88,10 +95,15 @@ def visualize1(a, b):
     sns.violinplot(x='cited_year', y='citation_interval', hue='location', inner='stick', data=df,
                    hue_order=["Others", "Introduction and Background", "Materials and Methods",
                               "Results and Discussion", "Conclusion"])
+    # sns.boxplot(x='cited_year', y='citation_interval', hue='location', data=df,
+    #             hue_order=["Others", "Introduction and Background",
+    #                        "Materials and Methods", "Results and Discussion", "Conclusion"])
+    # plt.tick_params(labelsize=16)
     ax2 = fig.add_subplot(212)
     sns.swarmplot(x='cited_year', y='citation_interval', hue='location', data=df,
                   hue_order=["Others", "Introduction and Background", "Materials and Methods",
                              "Results and Discussion", "Conclusion"])
+    # plt.tick_params(labelsize=16)
     plt.show()
     client.close()
 
@@ -139,7 +151,7 @@ def visualize2():
             cited_years[i] = 6
         elif (cited_years[i] in range(2006,2019)):
             cited_years[i] = 7
-    print(len(cited_years), len(year_diffs))
+    # print(len(cited_years), len(year_diffs))
     data = {'cited_period': cited_years, 'citation_interval': year_diffs, 'location': locations}
     df = pd.DataFrame(data=data)
     fig = plt.figure(figsize=(16, 12), dpi=80)
@@ -147,19 +159,23 @@ def visualize2():
     sns.violinplot(x='cited_period', y='citation_interval', hue='location', inner='stick', data=df,
                    hue_order=["Others", "Introduction and Background", "Materials and Methods",
                               "Results and Discussion", "Conclusion"])
+    # sns.boxplot(x='cited_period', y='citation_interval', hue='location', data=df,
+    #             hue_order=["Others", "Introduction and Background",
+    #                        "Materials and Methods", "Results and Discussion", "Conclusion"])
     ax1.set_xticklabels(("1950-1959", "1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2005", "2006-2016"))
+    # plt.tick_params(labelsize=16)
     fig.add_subplot(212)
     sns.swarmplot(x='cited_period', y='citation_interval', hue='location', data=df,
                   hue_order=["Others", "Introduction and Background", "Materials and Methods",
                              "Results and Discussion", "Conclusion"], dodge=True)
+    # plt.tick_params(labelsize=16)
     plt.show()
     client.close()
 
 
-# visualize0()
-# visualize1(1950,1980)
-# visualize1(1980,1990)
-# visualize1(1990,2006)
-# visualize1(2006,2011)
-# visualize1(2011,2019)
-visualize2()
+visualize0()
+# visualize1(1950,1979)
+# visualize1(1980,1989)
+# visualize1(1990,2005)
+# visualize1(2006,2019)
+# visualize2()

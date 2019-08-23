@@ -5,8 +5,9 @@ import warnings
 import pymongo
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
+from sklearn.svm import SVC, LinearSVC
 from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import GridSearchCV
@@ -265,14 +266,15 @@ def pre_recall():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
     model = SVC(gamma=0.001, class_weight='balanced', C=0.15, probability=True, decision_function_shape='ovr')
     model.fit(X_train, y_train)
+    # print(model.predict_proba(X_test))
     y_pred = model.predict(X_test)
 
     # 3 classes
-    # target_names = ["Introduction and Background","Materials and Methods", "Results and Discussion"]
+    target_names = ["Introduction and Background", "Materials and Methods", "Results and Discussion"]
 
     # 5 classes
-    target_names = ["Others", "Introduction and Background",
-               "Materials and Methods", "Results and Discussion", "Conclusion"]
+    # target_names = ["Others", "Introduction and Background",
+    #            "Materials and Methods", "Results and Discussion", "Conclusion"]
 
     print(classification_report(y_test, y_pred, target_names=target_names))
 
@@ -281,6 +283,6 @@ def pre_recall():
 Main function
 """
 # print(data_remove(110))
-parameter_tune(110)
-model_score_visualize(110)
+# parameter_tune(110)
+# model_score_visualize(110)
 pre_recall()
