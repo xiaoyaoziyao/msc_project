@@ -53,12 +53,14 @@ def data_get(condition):
             cited_nos.append(cited_no)
         for loc in location:
             locations.append(loc)
+    # annotate this code to change 5 classes to 3 classes
     for i in range(len(locations)-1,-1,-1):
         if locations[i] == 0 or locations[i] == 4:
             locations.pop(i)
             cited_years.pop(i)
             citation_years.pop(i)
     print(all_list(locations))
+    # annotate this code to change 5 classes to 3 classes
     return citation_years, cited_years, locations
 
 
@@ -212,7 +214,7 @@ def model_score_visualize(range_max):
     # ax3.barh(per_citation_num, y1, left=y0, color='green', height = 12, label='Materials and Methods')
     # ax3.barh(per_citation_num, y2, left=y0 + y1, color='blue', height = 12, label='Results and Discussion')
 
-    # 5 classes
+    # 5 classes - annotate this code to change 5 classes to 3 classes
     y0 = np.array(citation_loc[0])
     y1 = np.array(citation_loc[1])
     y2 = np.array(citation_loc[2])
@@ -223,6 +225,7 @@ def model_score_visualize(range_max):
     ax3.barh(per_citation_num, y2, left=y0 + y1, color='blue', height = 12, label='Materials and Methods')
     ax3.barh(per_citation_num, y3, left=y0 + y1 + y2, color='orange', height = 12, label='Results and Discussion')
     ax3.barh(per_citation_num, y4, left=y0 + y1 + y2 + y3, color='purple', height = 12, label='Conclusion')
+    # annotate this code to change 5 classes to 3 classes
 
     plt.xticks(np.arange(0, 10000, 1000))
     plt.yticks(np.arange(0, 260, 20))
@@ -270,11 +273,12 @@ def pre_recall():
     y_pred = model.predict(X_test)
 
     # 3 classes
-    target_names = ["Introduction and Background", "Materials and Methods", "Results and Discussion"]
+    # target_names = ["Introduction and Background", "Materials and Methods", "Results and Discussion"]
 
-    # 5 classes
-    # target_names = ["Others", "Introduction and Background",
-    #            "Materials and Methods", "Results and Discussion", "Conclusion"]
+    # 5 classes - # annotate this code to change 5 classes to 3 classes
+    target_names = ["Others", "Introduction and Background",
+               "Materials and Methods", "Results and Discussion", "Conclusion"]
+    # annotate this code to change 5 classes to 3 classes
 
     print(classification_report(y_test, y_pred, target_names=target_names))
 
